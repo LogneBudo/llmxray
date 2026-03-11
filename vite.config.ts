@@ -2,9 +2,10 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import tailwindcss from '@tailwindcss/vite'
 import { fileURLToPath } from 'node:url'
+import { systemInfoPlugin } from './vite-plugin-system-info'
 
 export default defineConfig({
-  plugins: [vue(), tailwindcss()],
+  plugins: [vue(), tailwindcss(), systemInfoPlugin()],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),

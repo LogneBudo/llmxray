@@ -1,6 +1,7 @@
 import type {
   OllamaModel,
   OllamaModelInfo,
+  OllamaRunningModel,
   OllamaGenerateRequest,
   OllamaChatRequest,
   OllamaGenerateChunk,
@@ -121,6 +122,20 @@ class OllamaClient {
         }
       }
     }
+  }
+
+  async version(): Promise<string> {
+    const res = await fetch(`${this.baseUrl}/version`)
+    if (!res.ok) throw new Error(`Failed to get version: ${res.statusText}`)
+    const data = (await res.json()) as { version: string }
+    return data.version
+  }
+
+  async ps(): Promise<OllamaRunningModel[]> {
+    const res = await fetch(`${this.baseUrl}/ps`)
+    if (!res.ok) throw new Error(`Failed to get running models: ${res.statusText}`)
+    const data = (await res.json()) as { models: OllamaRunningModel[] }
+    return data.models ?? []
   }
 
   async embed(req: OllamaEmbedRequest): Promise<OllamaEmbedResponse> {

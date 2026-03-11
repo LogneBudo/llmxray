@@ -40,6 +40,11 @@ export const router = createRouter({
           component: () => import('@/pages/ModelsPage.vue'),
         },
         {
+          path: 'system',
+          name: 'system',
+          component: () => import('@/pages/SystemPage.vue'),
+        },
+        {
           path: 'settings',
           name: 'settings',
           component: () => import('@/pages/SettingsPage.vue'),

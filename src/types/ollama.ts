@@ -120,6 +120,17 @@ export interface OllamaChatChunk {
   eval_duration?: number
 }
 
+export interface OllamaRunningModel {
+  name: string
+  model: string
+  size: number
+  digest: string
+  details: OllamaModelDetails
+  expires_at: string
+  size_vram: number
+  context_length: number
+}
+
 export interface OllamaEmbedRequest {
   model: string
   input: string | string[]
