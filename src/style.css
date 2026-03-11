@@ -46,3 +46,138 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-border-default);
 }
+
+/* Markdown prose styling for chat messages */
+.markdown-prose {
+  font-size: 0.875rem;
+  line-height: 1.625;
+  color: var(--color-text-primary);
+}
+
+.markdown-prose p {
+  margin: 0.5em 0;
+}
+
+.markdown-prose p:first-child {
+  margin-top: 0;
+}
+
+.markdown-prose p:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-prose h1,
+.markdown-prose h2,
+.markdown-prose h3,
+.markdown-prose h4 {
+  font-weight: 600;
+  margin: 1em 0 0.5em;
+  color: var(--color-text-primary);
+}
+
+.markdown-prose h1 { font-size: 1.25em; }
+.markdown-prose h2 { font-size: 1.125em; }
+.markdown-prose h3 { font-size: 1em; }
+
+.markdown-prose h1:first-child,
+.markdown-prose h2:first-child,
+.markdown-prose h3:first-child {
+  margin-top: 0;
+}
+
+.markdown-prose strong {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.markdown-prose em {
+  font-style: italic;
+}
+
+.markdown-prose code {
+  font-family: 'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace;
+  font-size: 0.85em;
+  background: var(--color-surface-overlay);
+  padding: 0.15em 0.35em;
+  border-radius: 4px;
+  color: var(--color-accent);
+}
+
+.markdown-prose pre {
+  margin: 0.75em 0;
+  padding: 0.75em 1em;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-default);
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+.markdown-prose pre code {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  color: var(--color-text-primary);
+  font-size: 0.8em;
+}
+
+.markdown-prose ul,
+.markdown-prose ol {
+  margin: 0.5em 0;
+  padding-left: 1.5em;
+}
+
+.markdown-prose ul {
+  list-style-type: disc;
+}
+
+.markdown-prose ol {
+  list-style-type: decimal;
+}
+
+.markdown-prose li {
+  margin: 0.25em 0;
+}
+
+.markdown-prose li > ul,
+.markdown-prose li > ol {
+  margin: 0.25em 0;
+}
+
+.markdown-prose blockquote {
+  margin: 0.75em 0;
+  padding: 0.5em 1em;
+  border-left: 3px solid var(--color-accent);
+  background: var(--color-surface);
+  border-radius: 0 6px 6px 0;
+  color: var(--color-text-secondary);
+}
+
+.markdown-prose hr {
+  margin: 1em 0;
+  border: none;
+  border-top: 1px solid var(--color-border-default);
+}
+
+.markdown-prose a {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+
+.markdown-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.75em 0;
+  font-size: 0.85em;
+}
+
+.markdown-prose th,
+.markdown-prose td {
+  padding: 0.4em 0.75em;
+  border: 1px solid var(--color-border-default);
+  text-align: left;
+}
+
+.markdown-prose th {
+  background: var(--color-surface);
+  font-weight: 600;
+}

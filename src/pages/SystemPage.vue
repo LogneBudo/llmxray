@@ -117,8 +117,13 @@ onUnmounted(() => {
     </div>
 
     <!-- Loading state -->
-    <div v-if="hwLoading && !hwInfo" class="text-xs text-text-muted py-4 text-center">
-      Detecting hardware...
+    <div v-if="hwLoading && !hwInfo" class="flex flex-col items-center justify-center py-16 gap-4">
+      <svg class="h-10 w-10 animate-spin text-accent" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle class="opacity-20" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" />
+        <path class="opacity-80" d="M12 2a10 10 0 0 1 10 10" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+      </svg>
+      <p class="text-sm text-text-secondary">Detecting hardware...</p>
+      <p class="text-[10px] text-text-muted">Querying CPU, memory, GPU, and storage</p>
     </div>
 
     <!-- Fallback when hardware info unavailable -->

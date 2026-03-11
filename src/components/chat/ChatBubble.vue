@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import type { ChatMessage } from '@/types/conversation'
 import { useReasoningStore } from '@/stores/reasoning-store'
+import { renderMarkdown } from '@/composables/useMarkdown'
 import InlineThinkingBlock from './InlineThinkingBlock.vue'
 import AssistantTokenStream from './AssistantTokenStream.vue'
 import AttachmentBubble from './AttachmentBubble.vue'
@@ -32,6 +33,11 @@ const displayContent = computed(() => {
   }
   if (props.message.isStreaming) return '' // Token stream handles display
   return props.message.content.replace(/<think>[\s\S]*?<\/think>/g, '').trim()
+})
+
+const renderedHtml = computed(() => {
+  if (isUser.value || !displayContent.value) return ''
+  return renderMarkdown(displayContent.value)
 })
 
 const formattedTime = computed(() => {
@@ -72,11 +78,12 @@ const formattedTime = computed(() => {
           :session-id="message.sessionId"
         />
 
-        <!-- Completed: show plain text -->
-        <p
+        <!-- Completed: show rendered markdown -->
+        <div
           v-else-if="displayContent"
-          class="text-sm leading-relaxed text-text-primary whitespace-pre-wrap"
-        >{{ displayContent }}</p>
+          class="markdown-prose"
+          v-html="renderedHtml"
+        />
 
         <!-- Streaming cursor when no tokens yet -->
         <span
