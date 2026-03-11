@@ -1,5 +1,5 @@
-import type { SlashCommand, SlashCommandContext } from '@/types/slash-command'
-import { formatTps, formatNumber, formatDuration } from '@/utils/format'
+import type { SlashCommand } from '@/types/slash-command'
+import { formatTps, formatNumber } from '@/utils/format'
 
 const commands: SlashCommand[] = [
   // ── Chat & Conversation ──────────────────────────────────────────
@@ -350,6 +350,57 @@ const commands: SlashCommand[] = [
       ctx.openSessionDetails()
     },
   },
+
+  // ── Memory ──────────────────────────────────────────────────────
+  {
+    name: 'remember',
+    description: 'Remember a fact about you across conversations',
+    usage: '/remember <fact>',
+    category: 'memory',
+    execute(args, ctx) {
+      const fact = args.trim()
+      if (!fact) {
+        ctx.showNotification('Usage: /remember <something to remember>\nExample: /remember I prefer TypeScript over JavaScript')
+        return
+      }
+      ctx.addFact(fact)
+      ctx.showNotification(`Remembered: "${fact}"`)
+    },
+  },
+  {
+    name: 'forget',
+    description: 'Forget a previously remembered fact',
+    usage: '/forget <search>',
+    category: 'memory',
+    execute(args, ctx) {
+      const search = args.trim()
+      if (!search) {
+        ctx.showNotification('Usage: /forget <part of the fact to remove>\nExample: /forget TypeScript')
+        return
+      }
+      const removed = ctx.removeFact(search)
+      if (removed) {
+        ctx.showNotification(`Forgot fact matching "${search}".`)
+      } else {
+        ctx.showNotification(`No fact found matching "${search}". Use /memories to see all facts.`)
+      }
+    },
+  },
+  {
+    name: 'memories',
+    description: 'Show all remembered facts',
+    usage: '/memories',
+    category: 'memory',
+    execute(_args, ctx) {
+      const facts = ctx.getFacts()
+      if (facts.length === 0) {
+        ctx.showNotification('No memories stored yet. Use /remember <fact> to add one.')
+        return
+      }
+      const lines = facts.map((f, i) => `${i + 1}. ${f.content}`)
+      ctx.showNotification(`Your memories (${facts.length}):\n${lines.join('\n')}`)
+    },
+  },
 ]
 
 export function getMatchingCommands(prefix: string): SlashCommand[] {
@@ -368,7 +419,8 @@ export function getCommandsByCategory(): Record<string, SlashCommand[]> {
     const label =
       cmd.category === 'chat' ? 'Chat & Conversation'
         : cmd.category === 'settings' ? 'Model & Settings'
-          : 'Features & Navigation'
+          : cmd.category === 'memory' ? 'Memory'
+            : 'Features & Navigation'
     ;(grouped[label] ??= []).push(cmd)
   }
   return grouped

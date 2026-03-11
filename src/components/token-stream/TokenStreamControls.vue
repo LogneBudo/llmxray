@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { onMounted } from 'vue'
 import type { HeatmapMode } from '@/types/token'
 import { useModelStore } from '@/stores/model-store'
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue'

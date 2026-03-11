@@ -179,6 +179,9 @@ export async function executeChatStream(
   let tokenIndex = 0
   let lastTokenTime = startedAt
   let cumulativeText = ''
+  let thinkingText = ''
+  let completedThinkingText = ''
+  let usesThinkingField = false
   const tokenLatencies: number[] = []
 
   const reasoningParser = new ReasoningParser(sessionId)
@@ -201,6 +204,37 @@ export async function executeChatStream(
     (chunk) => {
       const now = Date.now()
       const interTokenLatency = now - lastTokenTime
+
+      // Ollama's native thinking field (DeepSeek R1, QwQ, etc.)
+      const thinkingToken = chunk.message.thinking
+      if (thinkingToken) {
+        usesThinkingField = true
+        thinkingText += thinkingToken
+        reasoningStore.setThinking(sessionId, true, thinkingText)
+        tokenLatencies.push(interTokenLatency)
+        lastTokenTime = now
+        return // Don't create a visible token for thinking content
+      }
+
+      // If we were in thinking mode and now got content, finalize thinking
+      if (usesThinkingField && thinkingText && !chunk.done) {
+        reasoningStore.setThinking(sessionId, false, thinkingText)
+        if (thinkingText.trim()) {
+          reasoningStore.addStep(sessionId, {
+            id: nanoid(),
+            index: 0,
+            type: 'thought',
+            content: thinkingText.trim(),
+            startTokenIndex: 0,
+            endTokenIndex: tokenIndex,
+            timestamp: now,
+            durationMs: now - startedAt,
+          })
+        }
+        completedThinkingText = thinkingText
+        thinkingText = '' // Only finalize once
+      }
+
       const tokenText = chunk.message.content
       cumulativeText += tokenText
 
@@ -221,11 +255,13 @@ export async function executeChatStream(
       tokenLatencies.push(interTokenLatency)
       lastTokenTime = now
 
-      // Parse reasoning and propagate thinking state
-      const step = reasoningParser.processToken(token, cumulativeText)
-      reasoningStore.setThinking(sessionId, reasoningParser.isThinking, reasoningParser.thinkingContent)
-      if (step) {
-        reasoningStore.addStep(sessionId, step)
+      // Parse reasoning via <think> tags (legacy format fallback)
+      if (!usesThinkingField) {
+        const step = reasoningParser.processToken(token, cumulativeText)
+        reasoningStore.setThinking(sessionId, reasoningParser.isThinking, reasoningParser.thinkingContent)
+        if (step) {
+          reasoningStore.addStep(sessionId, step)
+        }
       }
 
       // Detect tool calls
@@ -256,8 +292,24 @@ export async function executeChatStream(
       }
 
       if (chunk.done) {
+        // Finalize any remaining thinking content from native thinking field
+        // (handles case where thinking tokens run until done with no content)
+        if (usesThinkingField && thinkingText.trim()) {
+          completedThinkingText = thinkingText
+          reasoningStore.addStep(sessionId, {
+            id: nanoid(),
+            index: 0,
+            type: 'thought',
+            content: thinkingText.trim(),
+            startTokenIndex: 0,
+            endTokenIndex: tokenIndex,
+            timestamp: Date.now(),
+            durationMs: Date.now() - startedAt,
+          })
+        }
         reasoningParser.finalize()
-        reasoningStore.setThinking(sessionId, false, '')
+        // Preserve thinking content on completion so the UI shows "Thought process"
+        reasoningStore.setThinking(sessionId, false, usesThinkingField ? completedThinkingText : '')
 
         const session = sessionStore.sessionById(sessionId)
         if (session) {

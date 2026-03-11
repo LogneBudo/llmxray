@@ -10,7 +10,6 @@ interface ActiveStep {
 }
 
 export class ReasoningParser {
-  private sessionId: string
   private stepIndex = 0
   private activeStep: ActiveStep | null = null
   private inThinkBlock = false
@@ -25,8 +24,9 @@ export class ReasoningParser {
     return this.inThinkBlock && this.activeStep ? this.activeStep.content : ''
   }
 
-  constructor(sessionId: string) {
-    this.sessionId = sessionId
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  constructor(_sessionId?: string) {
+    // sessionId accepted for caller convenience but not stored
   }
 
   processToken(token: StreamToken, fullText: string): ReasoningStep | null {

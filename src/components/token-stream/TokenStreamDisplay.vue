@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, watch, nextTick } from 'vue'
 import type { HeatmapMode, StreamToken } from '@/types/token'
-import { useTokenStore } from '@/stores/token-store'
 import { useTokenConfidence } from '@/composables/useTokenConfidence'
 import { confidenceToColor, latencyToColor } from '@/utils/color-scales'
 import TokenChip from './TokenChip.vue'
@@ -12,7 +11,6 @@ const props = defineProps<{
   heatmapMode?: HeatmapMode
 }>()
 
-const tokenStore = useTokenStore()
 const sessionIdRef = computed(() => props.sessionId)
 const { tokens, confidenceRange } = useTokenConfidence(sessionIdRef)
 

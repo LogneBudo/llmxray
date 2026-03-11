@@ -40,25 +40,37 @@ export function useFileAttachment() {
 
   function readImage(file: File, attachment: ChatAttachment) {
     attachment.status = 'parsing'
+    const id = attachment.id
     const reader = new FileReader()
     reader.onload = () => {
-      attachment.content = reader.result as string
-      attachment.status = 'ready'
+      // Mutate via the reactive array proxy so Vue detects the change
+      const att = attachments.value.find((a) => a.id === id)
+      if (att) {
+        att.content = reader.result as string
+        att.status = 'ready'
+      }
     }
     reader.onerror = () => {
-      attachment.error = 'Failed to read image'
-      attachment.status = 'error'
+      const att = attachments.value.find((a) => a.id === id)
+      if (att) {
+        att.error = 'Failed to read image'
+        att.status = 'error'
+      }
     }
     reader.readAsDataURL(file)
   }
 
   async function parseDoc(file: File, attachment: ChatAttachment) {
     attachment.status = 'parsing'
+    const id = attachment.id
     try {
       const format = detectFormat(file.name)
       if (!format) {
-        attachment.error = 'Unsupported format'
-        attachment.status = 'error'
+        const att = attachments.value.find((a) => a.id === id)
+        if (att) {
+          att.error = 'Unsupported format'
+          att.status = 'error'
+        }
         return
       }
 
@@ -66,11 +78,17 @@ export function useFileAttachment() {
       if (text.length > MAX_DOCUMENT_CHARS) {
         text = text.slice(0, MAX_DOCUMENT_CHARS) + '\n\n[... truncated]'
       }
-      attachment.content = text
-      attachment.status = 'ready'
+      const att = attachments.value.find((a) => a.id === id)
+      if (att) {
+        att.content = text
+        att.status = 'ready'
+      }
     } catch (e) {
-      attachment.error = e instanceof Error ? e.message : 'Parse failed'
-      attachment.status = 'error'
+      const att = attachments.value.find((a) => a.id === id)
+      if (att) {
+        att.error = e instanceof Error ? e.message : 'Parse failed'
+        att.status = 'error'
+      }
     }
   }
 

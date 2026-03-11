@@ -9,7 +9,6 @@ const props = defineProps<{
 
 const reasoningStore = useReasoningStore()
 
-const chain = computed(() => reasoningStore.getChain(props.sessionId))
 const steps = computed(() => reasoningStore.getSteps(props.sessionId))
 
 const stepTypeCounts = computed(() => {

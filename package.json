@@ -6,7 +6,16 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test --project=chromium",
+    "test:e2e:headed": "playwright test --project=chromium --headed",
+    "test:e2e:ui": "playwright test --project=chromium --ui",
+    "test:e2e:live": "playwright test --project=live-ollama",
+    "test:e2e:live:headed": "playwright test --project=live-ollama --headed",
+    "test:e2e:all": "playwright test"
   },
   "dependencies": {
     "chart.js": "^4.5.1",
@@ -22,13 +31,17 @@
     "vue-router": "^5.0.3"
   },
   "devDependencies": {
+    "@playwright/test": "^1.58.2",
     "@tailwindcss/vite": "^4.2.1",
     "@types/d3": "^7.4.3",
     "@types/papaparse": "^5.5.2",
     "@vitejs/plugin-vue": "^6.0.4",
+    "@vue/test-utils": "^2.4.6",
+    "happy-dom": "^20.8.3",
     "tailwindcss": "^4.2.1",
     "typescript": "~5.9.3",
     "vite": "^7.3.1",
+    "vitest": "^4.0.18",
     "vue-tsc": "^3.2.5"
   }
 }

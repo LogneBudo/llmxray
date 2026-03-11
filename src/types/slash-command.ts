@@ -1,12 +1,13 @@
 import type { ChatMessage } from './conversation'
 import type { OllamaOptions } from './ollama'
+import type { UserFact } from './memory'
 import type { Ref } from 'vue'
 
 export interface SlashCommand {
   name: string
   description: string
   usage: string
-  category: 'chat' | 'settings' | 'navigation'
+  category: 'chat' | 'settings' | 'navigation' | 'memory'
   execute: (args: string, ctx: SlashCommandContext) => void | Promise<void>
 }
 
@@ -42,6 +43,11 @@ export interface SlashCommandContext {
   showNotification: (msg: string) => void
   messages: ChatMessage[]
   chatSettings: Ref<{ systemPrompt: string; options: OllamaOptions }>
+
+  // Memory
+  addFact: (content: string) => UserFact
+  removeFact: (search: string) => boolean
+  getFacts: () => UserFact[]
 
   // Metrics
   currentSessionId: string | null

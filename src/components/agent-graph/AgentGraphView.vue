@@ -9,7 +9,7 @@ const props = defineProps<{
 }>()
 
 const sessionIdRef = computed(() => props.sessionId)
-const { graph, layoutNodes, layoutEdges, svgWidth, svgHeight } = useAgentGraph(sessionIdRef)
+const { layoutNodes, layoutEdges, svgWidth, svgHeight } = useAgentGraph(sessionIdRef)
 
 const selectedNodeId = ref<string | null>(null)
 

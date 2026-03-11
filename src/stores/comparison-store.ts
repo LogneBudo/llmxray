@@ -3,7 +3,6 @@ import { ref, computed } from 'vue'
 import { nanoid } from 'nanoid'
 import type { ComparisonRun, ComparisonExecution } from '@/types/comparison'
 import type { SessionStatus } from '@/types/session'
-import type { SessionMetrics } from '@/types/metrics'
 
 export const useComparisonStore = defineStore('comparison', () => {
   const runs = ref<Map<string, ComparisonRun>>(new Map())

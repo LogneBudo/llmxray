@@ -4,7 +4,6 @@ import type {
   DocumentChunk,
   EmbeddedChunk,
   RagSearchResult,
-  DocumentFormat,
   ChunkingOptions,
 } from '@/types/rag'
 import { parseDocument, detectFormat } from './document-parser'

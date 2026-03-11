@@ -2,7 +2,7 @@ import type { OllamaModelInfo } from '@/types/ollama'
 import type { ModelArchitecture, LayerInfo, AttentionPattern, LayerActivation } from '@/types/introspection'
 
 export function parseModelArchitecture(
-  modelName: string,
+  _modelName: string,
   info: OllamaModelInfo,
 ): ModelArchitecture {
   const mi = info.model_info

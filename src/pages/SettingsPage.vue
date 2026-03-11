@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { ollamaClient } from '@/services/ollama-client'
 
 const ollamaUrl = ref('http://localhost:11434')
 const defaultTemperature = ref(0.7)

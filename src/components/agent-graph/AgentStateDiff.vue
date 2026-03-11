@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import type { AgentNode } from '@/types/agent'
 import JsonViewer from '@/components/common/JsonViewer.vue'
 

@@ -29,6 +29,19 @@ export const useModelStore = defineStore('models', () => {
       .map((m) => m.name),
   )
 
+  // Inverse of chatModelNames — only embedding-capable models
+  const embeddingModelNames = computed(() =>
+    models.value
+      .filter((m) => {
+        const families = m.details?.families ?? []
+        if (families.length > 0 && families.every((f) => EMBEDDING_FAMILIES.has(f))) {
+          return true
+        }
+        return EMBEDDING_NAME_PATTERNS.some((p) => p.test(m.name))
+      })
+      .map((m) => m.name),
+  )
+
   function getModelDetails(name: string): OllamaModelInfo | undefined {
     return modelInfoCache.value.get(name)
   }
@@ -61,6 +74,7 @@ export const useModelStore = defineStore('models', () => {
     error,
     modelNames,
     chatModelNames,
+    embeddingModelNames,
     getModelDetails,
     fetchModels,
     fetchModelInfo,

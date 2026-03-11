@@ -143,7 +143,7 @@ function handleSave() {
     <!-- Visual parameter builder -->
     <div v-else class="space-y-2">
       <ToolParameterRow
-        v-for="(param, i) in parameters"
+        v-for="(_param, i) in parameters"
         :key="i"
         v-model="parameters[i]!"
         @remove="removeParameter(i)"

@@ -107,6 +107,7 @@ export interface OllamaChatChunk {
   message: {
     role: 'assistant'
     content: string
+    thinking?: string
     tool_calls?: OllamaToolCall[]
   }
   done: boolean

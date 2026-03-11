@@ -10,6 +10,8 @@ import { useOllamaStream } from '@/composables/useOllamaStream'
 import { useRagStore } from '@/stores/rag-store'
 import { findCommand } from '@/services/slash-command-registry'
 import { useToolDefinitionStore } from '@/stores/tool-definition-store'
+import { useMemoryStore } from '@/stores/memory-store'
+import { prepareContext, embedNewMessages } from '@/services/context-manager'
 import type { SlashCommandContext } from '@/types/slash-command'
 import ChatMessageList from './ChatMessageList.vue'
 import ChatInput from './ChatInput.vue'
@@ -24,6 +26,7 @@ const sessionStore = useSessionStore()
 const ragStore = useRagStore()
 const metricsStore = useMetricsStore()
 const toolDefinitionStore = useToolDefinitionStore()
+const memoryStore = useMemoryStore()
 const { isStreaming, currentSessionId, startChatStream, cancel } = useOllamaStream()
 
 const selectedModel = ref('')
@@ -33,12 +36,20 @@ const chatSettings = ref<ChatSettings>({
   systemPrompt: '',
   options: {},
 })
-const chatInputRef = ref<InstanceType<typeof ChatInput> | null>(null)
 const notificationMessage = ref<string | null>(null)
 let notificationTimer: ReturnType<typeof setTimeout> | null = null
 
 const conversation = computed(() => conversationStore.activeConversation)
 const messages = computed(() => conversation.value?.messages ?? [])
+
+/** Derive the latest session ID from conversation messages so it survives navigation. */
+const latestSessionId = computed(() => {
+  const msgs = messages.value
+  for (let i = msgs.length - 1; i >= 0; i--) {
+    if (msgs[i]!.sessionId) return msgs[i]!.sessionId
+  }
+  return null
+})
 
 onMounted(async () => {
   await modelStore.fetchModels()
@@ -124,7 +135,6 @@ async function handleSend(text: string, attachments: ChatAttachment[] = []) {
         5,
       )
       if (ragContext) {
-        // Prepend a system message with RAG context
         messagesToSend.unshift({
           role: 'system',
           content: ragContext,
@@ -133,6 +143,27 @@ async function handleSend(text: string, attachments: ChatAttachment[] = []) {
     } catch {
       // RAG context injection failed silently — continue without it
     }
+  }
+
+  // Apply memory context manager (sliding window, summarization, facts, RAG memory)
+  let finalMessages = messagesToSend
+  try {
+    const existingSummary = memoryStore.getSummary(convId)?.summary
+    const result = await prepareContext({
+      conversationId: convId,
+      messages: messagesToSend,
+      model: selectedModel.value,
+      settings: memoryStore.settings,
+      userFactsPrompt: memoryStore.getFactsAsSystemPrompt(),
+      existingSummary,
+    })
+    finalMessages = result.messages
+    if (result.newSummary) {
+      const nonSystem = messagesToSend.filter((m) => m.role !== 'system')
+      memoryStore.setSummary(convId, result.newSummary, nonSystem.length)
+    }
+  } catch {
+    // Context preparation failed — send raw messages
   }
 
   try {
@@ -144,7 +175,7 @@ async function handleSend(text: string, attachments: ChatAttachment[] = []) {
     const enabledTools = toolDefinitionStore.enabledDefinitions
     const sessionId = await startChatStream(
       selectedModel.value,
-      messagesToSend,
+      finalMessages,
       mergedOptions,
       enabledTools.length > 0 ? enabledTools : undefined,
     )
@@ -164,15 +195,36 @@ async function handleSend(text: string, attachments: ChatAttachment[] = []) {
       },
     )
 
-    // Watch for completion
+    // Watch for completion — embed messages for RAG memory
+    const capturedConvId = convId
+    const capturedText = text
     const stopStatusWatch = watch(
       () => sessionStore.sessionById(sessionId)?.status,
       (status) => {
         if (status === 'completed' || status === 'error' || status === 'cancelled') {
-          conversationStore.finalizeMessage(convId!, assistantMsgId)
+          conversationStore.finalizeMessage(capturedConvId, assistantMsgId)
           isStreaming.value = false
           stopWatch()
           stopStatusWatch()
+
+          // Embed user + assistant messages for RAG-based message memory (fire and forget)
+          if (
+            status === 'completed' &&
+            memoryStore.settings.ragMemory.enabled &&
+            memoryStore.settings.ragMemory.embeddingModel
+          ) {
+            const assistantContent = sessionStore.sessionById(sessionId)?.outputText ?? ''
+            embedNewMessages(
+              capturedConvId,
+              [
+                { role: 'user', content: capturedText, timestamp: userMsg.timestamp },
+                { role: 'assistant', content: assistantContent, timestamp: Date.now() },
+              ],
+              memoryStore.settings.ragMemory.embeddingModel,
+            ).catch(() => {
+              // Embedding failed silently
+            })
+          }
         }
       },
     )
@@ -288,19 +340,24 @@ async function handleCommand(name: string, args: string) {
       showSettings.value = true
     },
     openSessionDetails: () => {
-      if (currentSessionId.value) {
-        router.push({ name: 'session', params: { id: currentSessionId.value } })
+      const sid = latestSessionId.value
+      if (sid) {
+        router.push({ name: 'session', params: { id: sid } })
       } else {
         showNotification('No active session.')
       }
     },
+    addFact: (content: string) => memoryStore.addFact(content),
+    removeFact: (search: string) => memoryStore.removeFactByContent(search),
+    getFacts: () => memoryStore.facts,
     showNotification,
     messages: messages.value,
     chatSettings,
-    currentSessionId: currentSessionId.value,
+    currentSessionId: latestSessionId.value ?? currentSessionId.value,
     getSessionTokenCount: () => {
-      if (!currentSessionId.value) return null
-      const metrics = metricsStore.getMetrics(currentSessionId.value)
+      const sid = latestSessionId.value ?? currentSessionId.value
+      if (!sid) return null
+      const metrics = metricsStore.getMetrics(sid)
       if (!metrics) return null
       return { prompt: metrics.promptTokenCount, completion: metrics.completionTokenCount }
     },
@@ -376,9 +433,9 @@ async function handleCommand(name: string, args: string) {
           <span>{{ ragEnabled ? ragStore.enabledDocuments.length : 'Off' }}</span>
         </button>
         <button
-          v-if="currentSessionId"
+          v-if="latestSessionId"
           class="rounded-lg px-3 py-1.5 text-xs text-accent hover:bg-surface-overlay transition-colors"
-          @click="openSession(currentSessionId!)"
+          @click="openSession(latestSessionId!)"
         >
           View session details
         </button>
@@ -408,7 +465,6 @@ async function handleCommand(name: string, args: string) {
       <div class="flex flex-1 flex-col min-w-0">
         <ChatMessageList :messages="messages" />
         <ChatInput
-          ref="chatInputRef"
           :is-streaming="isStreaming"
           :selected-model="selectedModel"
           @send="handleSend"
