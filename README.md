@@ -205,7 +205,11 @@ src/
 
 ## License
 
-This project is private. All rights reserved.
+Licensed under the [Apache License 2.0](LICENSE). You are free to use, modify, and distribute this software under the terms of the license.
+
+## Trademark
+
+**LLMxRay** is a trademark of Ivan Stankovic ([LogneBudo](https://github.com/LogneBudo)). See [TRADEMARK.md](TRADEMARK.md) for usage guidelines.
 
 ---
 
