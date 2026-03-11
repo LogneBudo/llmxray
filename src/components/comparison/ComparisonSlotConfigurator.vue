@@ -126,20 +126,30 @@ onMounted(async () => {
     <!-- Quick presets -->
     <div class="flex items-center gap-2">
       <span class="text-[11px] text-text-muted">Quick start:</span>
-      <button
-        class="rounded-md border border-border-default px-2.5 py-1 text-[11px] text-text-secondary hover:border-accent hover:text-text-primary transition-colors"
-        title="Add 3 slots of the same model at temp 0.2, 0.7, 1.2"
-        @click="applyPreset('temp-sweep')"
-      >
-        Temperature Sweep
-      </button>
-      <button
-        class="rounded-md border border-border-default px-2.5 py-1 text-[11px] text-text-secondary hover:border-accent hover:text-text-primary transition-colors"
-        title="Add 2 slots of the same model with same seed, different temps"
-        @click="applyPreset('deterministic-pair')"
-      >
+      <div class="group relative">
+        <button
+          class="rounded-md border border-border-default px-2.5 py-1 text-[11px] text-text-secondary hover:border-accent hover:text-text-primary transition-colors"
+          @click="applyPreset('temp-sweep')"
+        >
+          Temperature Sweep
+        </button>
+        <div class="pointer-events-none absolute left-0 top-full z-10 mt-1.5 w-64 rounded-lg border border-border-default bg-surface-raised p-3 text-xs text-text-secondary opacity-0 shadow-lg transition-opacity group-hover:pointer-events-auto group-hover:opacity-100">
+          <p class="font-medium text-text-primary mb-1">Temperature Sweep</p>
+          <p>Creates 3 slots of the same model at temperatures <strong>0.2</strong> (focused), <strong>0.7</strong> (balanced), and <strong>1.2</strong> (creative). See how temperature changes the output for the exact same prompt.</p>
+        </div>
+      </div>
+      <div class="group relative">
+        <button
+          class="rounded-md border border-border-default px-2.5 py-1 text-[11px] text-text-secondary hover:border-accent hover:text-text-primary transition-colors"
+          @click="applyPreset('deterministic-pair')"
+        >
         Deterministic Pair
       </button>
+        <div class="pointer-events-none absolute left-0 top-full z-10 mt-1.5 w-64 rounded-lg border border-border-default bg-surface-raised p-3 text-xs text-text-secondary opacity-0 shadow-lg transition-opacity group-hover:pointer-events-auto group-hover:opacity-100">
+          <p class="font-medium text-text-primary mb-1">Deterministic Pair</p>
+          <p>Creates 2 slots of the same model with the <strong>same seed</strong> but different temperatures (0.3 and 1.0). The shared seed means any difference in the output is purely from temperature, not randomness.</p>
+        </div>
+      </div>
     </div>
 
     <!-- Slot cards -->
