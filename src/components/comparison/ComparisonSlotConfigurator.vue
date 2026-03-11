@@ -102,10 +102,6 @@ onMounted(async () => {
   if (modelStore.models.length === 0) {
     await modelStore.fetchModels()
   }
-  // Auto-add one slot so the user sees the UI immediately
-  if (slots.value.length === 0 && modelStore.chatModelNames.length > 0) {
-    addSlot()
-  }
 })
 </script>
 
@@ -312,13 +308,27 @@ onMounted(async () => {
       </div>
     </div>
 
-    <!-- Add slot button -->
+    <!-- Empty state -->
+    <div v-if="slots.length === 0" class="rounded-lg border border-dashed border-border-default py-8 text-center space-y-3">
+      <p class="text-sm text-text-secondary">No slots configured yet</p>
+      <p class="text-xs text-text-muted max-w-sm mx-auto">
+        Add a slot to pick a model and settings, or use a quick-start preset above to get going.
+      </p>
+      <button
+        class="rounded-lg bg-accent px-4 py-2 text-sm font-medium text-surface hover:bg-accent-hover transition-colors"
+        @click="addSlot"
+      >
+        + Add First Slot
+      </button>
+    </div>
+
+    <!-- Add more button (when slots exist but < 4) -->
     <button
-      v-if="slots.length < 4"
+      v-else-if="slots.length < 4"
       class="w-full rounded-lg border border-dashed border-border-default py-2.5 text-sm text-text-muted hover:border-accent hover:text-text-primary transition-colors"
       @click="addSlot"
     >
-      + Add Slot {{ slots.length > 0 ? `(${slots.length}/4)` : '' }}
+      + Add Slot ({{ slots.length }}/4)
     </button>
   </div>
 </template>
