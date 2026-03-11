@@ -1,8 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { nanoid } from 'nanoid'
-import type { ComparisonRun, ComparisonExecution } from '@/types/comparison'
-import type { SessionStatus } from '@/types/session'
+import type { ComparisonRun, ComparisonExecution, ComparisonSlot } from '@/types/comparison'
 
 export const useComparisonStore = defineStore('comparison', () => {
   const runs = ref<Map<string, ComparisonRun>>(new Map())
@@ -13,12 +12,14 @@ export const useComparisonStore = defineStore('comparison', () => {
     return runs.value.get(activeRunId.value) ?? null
   })
 
-  function createRun(prompt: string, models: string[]): string {
+  function createRun(prompt: string, slots: ComparisonSlot[]): string {
     const id = nanoid()
-    const executions: ComparisonExecution[] = models.map((model) => ({
-      model,
+    const executions: ComparisonExecution[] = slots.map((slot) => ({
+      slotId: slot.slotId,
+      model: slot.model,
+      label: slot.label,
       sessionId: '',
-      status: 'idle' as SessionStatus,
+      status: 'idle',
       outputText: '',
       metrics: null,
     }))
@@ -26,7 +27,7 @@ export const useComparisonStore = defineStore('comparison', () => {
     runs.value.set(id, {
       id,
       prompt,
-      models,
+      slots,
       createdAt: Date.now(),
       status: 'running',
       executions,
@@ -38,12 +39,12 @@ export const useComparisonStore = defineStore('comparison', () => {
 
   function updateExecution(
     runId: string,
-    model: string,
+    slotId: string,
     partial: Partial<ComparisonExecution>,
   ) {
     const run = runs.value.get(runId)
     if (!run) return
-    const exec = run.executions.find((e) => e.model === model)
+    const exec = run.executions.find((e) => e.slotId === slotId)
     if (exec) Object.assign(exec, partial)
   }
 
@@ -59,9 +60,9 @@ export const useComparisonStore = defineStore('comparison', () => {
 
   function getExecution(
     runId: string,
-    model: string,
+    slotId: string,
   ): ComparisonExecution | undefined {
-    return runs.value.get(runId)?.executions.find((e) => e.model === model)
+    return runs.value.get(runId)?.executions.find((e) => e.slotId === slotId)
   }
 
   return {

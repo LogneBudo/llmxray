@@ -1,10 +1,15 @@
 <script setup lang="ts">
-import type { ComparisonExecution } from '@/types/comparison'
+import type { ComparisonExecution, ComparisonSlot } from '@/types/comparison'
 import ComparisonColumn from './ComparisonColumn.vue'
 
-defineProps<{
+const props = defineProps<{
   executions: ComparisonExecution[]
+  slots: ComparisonSlot[]
 }>()
+
+function slotFor(exec: ComparisonExecution): ComparisonSlot | undefined {
+  return props.slots.find((s) => s.slotId === exec.slotId)
+}
 </script>
 
 <template>
@@ -19,8 +24,9 @@ defineProps<{
   >
     <ComparisonColumn
       v-for="exec in executions"
-      :key="exec.model"
+      :key="exec.slotId"
       :execution="exec"
+      :slot-config="slotFor(exec)"
     />
   </div>
 </template>

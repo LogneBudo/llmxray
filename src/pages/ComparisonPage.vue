@@ -3,39 +3,51 @@ import { ref, computed } from 'vue'
 import { useComparisonStore } from '@/stores/comparison-store'
 import { useSessionStore } from '@/stores/session-store'
 import { startGeneration } from '@/services/generate-service'
-import ModelSelector from '@/components/comparison/ModelSelector.vue'
+import ComparisonSlotConfigurator from '@/components/comparison/ComparisonSlotConfigurator.vue'
 import ComparisonGrid from '@/components/comparison/ComparisonGrid.vue'
+import ComparisonDiffView from '@/components/comparison/ComparisonDiffView.vue'
+import ComparisonMetricsBar from '@/components/comparison/ComparisonMetricsBar.vue'
 import StatusBadge from '@/components/common/StatusBadge.vue'
+import type { ComparisonSlot } from '@/types/comparison'
 
 const comparisonStore = useComparisonStore()
 const sessionStore = useSessionStore()
 
-const selectedModels = ref<string[]>([])
+const slots = ref<ComparisonSlot[]>([])
 const prompt = ref('')
 const isRunning = ref(false)
+const viewMode = ref<'grid' | 'diff'>('grid')
 
 const activeRun = computed(() => comparisonStore.activeRun)
+const canRun = computed(() => slots.value.length > 0 && prompt.value.trim().length > 0 && !isRunning.value)
+const hasCompletedResults = computed(() =>
+  activeRun.value?.executions.some((e) => e.status === 'completed') ?? false,
+)
 
 async function runComparison() {
-  if (selectedModels.value.length === 0 || !prompt.value.trim()) return
+  if (!canRun.value) return
 
   isRunning.value = true
-  const runId = comparisonStore.createRun(prompt.value.trim(), selectedModels.value)
+  viewMode.value = 'grid'
+  const runId = comparisonStore.createRun(prompt.value.trim(), slots.value)
 
-  // Fire all generations in parallel
-  const promises = selectedModels.value.map(async (model) => {
+  const promises = slots.value.map(async (slot) => {
     try {
-      const result = await startGeneration({ model, prompt: prompt.value.trim() })
-      comparisonStore.updateExecution(runId, model, {
+      const result = await startGeneration({
+        model: slot.model,
+        prompt: prompt.value.trim(),
+        system: slot.system || undefined,
+        options: slot.options,
+      })
+      comparisonStore.updateExecution(runId, slot.slotId, {
         sessionId: result.sessionId,
         status: 'streaming',
       })
 
-      // Watch for completion
       const checkInterval = setInterval(() => {
         const session = sessionStore.sessionById(result.sessionId)
         if (session && (session.status === 'completed' || session.status === 'error')) {
-          comparisonStore.updateExecution(runId, model, {
+          comparisonStore.updateExecution(runId, slot.slotId, {
             status: session.status,
             outputText: session.outputText,
             metrics: session.metrics,
@@ -44,8 +56,8 @@ async function runComparison() {
           comparisonStore.finalizeRun(runId)
         }
       }, 500)
-    } catch (err) {
-      comparisonStore.updateExecution(runId, model, {
+    } catch {
+      comparisonStore.updateExecution(runId, slot.slotId, {
         status: 'error',
       })
     }
@@ -58,7 +70,7 @@ async function runComparison() {
 
 <template>
   <div class="space-y-6">
-    <ModelSelector v-model:selected-models="selectedModels" />
+    <ComparisonSlotConfigurator v-model:slots="slots" />
 
     <div class="rounded-lg border border-border-default bg-surface-raised p-4 space-y-3">
       <textarea
@@ -66,15 +78,15 @@ async function runComparison() {
         class="w-full rounded-lg border border-border-default bg-surface px-4 py-3 text-sm text-text-primary placeholder-text-muted focus:border-accent focus:outline-none resize-none"
         :disabled="isRunning"
         rows="3"
-        placeholder="Enter prompt to compare across models..."
+        placeholder="Enter prompt to compare across slots..."
       />
       <div class="flex items-center justify-between">
         <span class="text-xs text-text-muted">
-          {{ selectedModels.length }} model{{ selectedModels.length !== 1 ? 's' : '' }} selected
+          {{ slots.length }} slot{{ slots.length !== 1 ? 's' : '' }} configured
         </span>
         <button
           class="rounded-lg bg-accent px-4 py-2 text-sm font-medium text-surface hover:bg-accent-hover transition-colors disabled:opacity-50"
-          :disabled="isRunning || selectedModels.length === 0 || !prompt.trim()"
+          :disabled="!canRun"
           @click="runComparison"
         >
           {{ isRunning ? 'Running...' : 'Compare' }}
@@ -86,8 +98,38 @@ async function runComparison() {
       <div class="flex items-center gap-3">
         <h3 class="text-sm font-medium text-text-secondary">Results</h3>
         <StatusBadge :status="activeRun.status" />
+        <div v-if="hasCompletedResults" class="ml-auto flex gap-1 rounded-lg border border-border-default p-0.5">
+          <button
+            class="rounded-md px-2.5 py-1 text-[11px] transition-colors"
+            :class="viewMode === 'grid' ? 'bg-surface-overlay text-text-primary' : 'text-text-muted hover:text-text-secondary'"
+            @click="viewMode = 'grid'"
+          >
+            Grid
+          </button>
+          <button
+            class="rounded-md px-2.5 py-1 text-[11px] transition-colors"
+            :class="viewMode === 'diff' ? 'bg-surface-overlay text-text-primary' : 'text-text-muted hover:text-text-secondary'"
+            @click="viewMode = 'diff'"
+          >
+            Diff
+          </button>
+        </div>
       </div>
-      <ComparisonGrid :executions="activeRun.executions" />
+
+      <ComparisonGrid
+        v-if="viewMode === 'grid'"
+        :executions="activeRun.executions"
+        :slots="activeRun.slots"
+      />
+      <ComparisonDiffView
+        v-else
+        :executions="activeRun.executions"
+      />
+
+      <ComparisonMetricsBar
+        v-if="hasCompletedResults"
+        :executions="activeRun.executions"
+      />
     </div>
   </div>
 </template>
