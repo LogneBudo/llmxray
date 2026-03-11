@@ -35,8 +35,8 @@ const navItems = [
         <span>{{ item.label }}</span>
       </RouterLink>
     </nav>
-    <div class="border-t border-border-default p-3">
-      <div class="rounded-lg bg-surface px-3 py-2 text-xs text-text-muted">
+    <div class="mt-auto flex items-center border-t border-border-default px-3 py-[17px]">
+      <div class="rounded-lg bg-surface px-3 py-2.5 text-xs text-text-muted">
         Local LLM Observatory
       </div>
     </div>

@@ -4,6 +4,7 @@ import type { ChatMessage } from '@/types/conversation'
 import { useReasoningStore } from '@/stores/reasoning-store'
 import InlineThinkingBlock from './InlineThinkingBlock.vue'
 import AssistantTokenStream from './AssistantTokenStream.vue'
+import AttachmentBubble from './AttachmentBubble.vue'
 
 const props = defineProps<{
   message: ChatMessage
@@ -20,7 +21,15 @@ const isUser = computed(() => props.message.role === 'user')
 
 // For completed (non-streaming) assistant messages, strip think tags for display
 const displayContent = computed(() => {
-  if (isUser.value) return props.message.content
+  if (isUser.value) {
+    // Strip prepended document context from display
+    if (props.message.attachments?.length) {
+      const separator = '\n\n---\n\n'
+      const sepIndex = props.message.content.lastIndexOf(separator)
+      if (sepIndex !== -1) return props.message.content.slice(sepIndex + separator.length)
+    }
+    return props.message.content
+  }
   if (props.message.isStreaming) return '' // Token stream handles display
   return props.message.content.replace(/<think>[\s\S]*?<\/think>/g, '').trim()
 })
@@ -43,6 +52,7 @@ const formattedTime = computed(() => {
     >
       <!-- User message -->
       <template v-if="isUser">
+        <AttachmentBubble v-if="message.attachments?.length" :attachments="message.attachments" />
         <p class="text-sm leading-relaxed whitespace-pre-wrap">{{ displayContent }}</p>
       </template>
 

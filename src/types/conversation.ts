@@ -1,4 +1,5 @@
 import type { OllamaOptions } from './ollama'
+import type { ChatAttachment } from './attachment'
 
 export interface ChatMessage {
   id: string
@@ -8,6 +9,7 @@ export interface ChatMessage {
   sessionId?: string
   timestamp: number
   isStreaming: boolean
+  attachments?: ChatAttachment[]
 }
 
 export interface Conversation {

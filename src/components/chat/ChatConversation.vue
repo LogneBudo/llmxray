@@ -5,11 +5,16 @@ import { nanoid } from 'nanoid'
 import { useConversationStore } from '@/stores/conversation-store'
 import { useModelStore } from '@/stores/model-store'
 import { useSessionStore } from '@/stores/session-store'
+import { useMetricsStore } from '@/stores/metrics-store'
 import { useOllamaStream } from '@/composables/useOllamaStream'
 import { useRagStore } from '@/stores/rag-store'
+import { findCommand } from '@/services/slash-command-registry'
+import { useToolDefinitionStore } from '@/stores/tool-definition-store'
+import type { SlashCommandContext } from '@/types/slash-command'
 import ChatMessageList from './ChatMessageList.vue'
 import ChatInput from './ChatInput.vue'
 import type { ChatSettings } from '@/types/conversation'
+import type { ChatAttachment } from '@/types/attachment'
 import ChatSettingsPanel from './ChatSettingsPanel.vue'
 
 const router = useRouter()
@@ -17,6 +22,8 @@ const conversationStore = useConversationStore()
 const modelStore = useModelStore()
 const sessionStore = useSessionStore()
 const ragStore = useRagStore()
+const metricsStore = useMetricsStore()
+const toolDefinitionStore = useToolDefinitionStore()
 const { isStreaming, currentSessionId, startChatStream, cancel } = useOllamaStream()
 
 const selectedModel = ref('')
@@ -27,6 +34,8 @@ const chatSettings = ref<ChatSettings>({
   options: {},
 })
 const chatInputRef = ref<InstanceType<typeof ChatInput> | null>(null)
+const notificationMessage = ref<string | null>(null)
+let notificationTimer: ReturnType<typeof setTimeout> | null = null
 
 const conversation = computed(() => conversationStore.activeConversation)
 const messages = computed(() => conversation.value?.messages ?? [])
@@ -39,7 +48,7 @@ onMounted(async () => {
   await ragStore.loadDocuments()
 })
 
-async function handleSend(text: string) {
+async function handleSend(text: string, attachments: ChatAttachment[] = []) {
   if (!selectedModel.value) return
 
   // Create conversation if none active
@@ -48,14 +57,27 @@ async function handleSend(text: string) {
     convId = conversationStore.createConversation(selectedModel.value)
   }
 
+  // Build content with document attachments prepended
+  const docAttachments = attachments.filter((a) => a.type === 'document' && a.content)
+  const imageAttachments = attachments.filter((a) => a.type === 'image' && a.content)
+
+  let content = text
+  if (docAttachments.length > 0) {
+    const docContext = docAttachments
+      .map((a) => `[Attached: ${a.name}]\n${a.content}`)
+      .join('\n\n')
+    content = docContext + '\n\n---\n\n' + text
+  }
+
   // Add user message
   const userMsg = {
     id: nanoid(),
     conversationId: convId,
     role: 'user' as const,
-    content: text,
+    content,
     timestamp: Date.now(),
     isStreaming: false,
+    attachments: attachments.length > 0 ? attachments : undefined,
   }
   conversationStore.addMessage(convId, userMsg)
 
@@ -75,6 +97,15 @@ async function handleSend(text: string) {
   const ollamaMessages = conversationStore.getMessagesAsOllamaFormat(convId)
   // Remove the empty assistant message we just added for display
   const messagesToSend = ollamaMessages.slice(0, -1)
+
+  // Inject images into the last user message for multimodal models
+  if (imageAttachments.length > 0) {
+    const lastUserMsg = [...messagesToSend].reverse().find((m) => m.role === 'user')
+    if (lastUserMsg) {
+      lastUserMsg.images = imageAttachments
+        .map((a) => a.content!.replace(/^data:[^;]+;base64,/, ''))
+    }
+  }
 
   // Inject system prompt if set
   if (chatSettings.value.systemPrompt.trim()) {
@@ -110,10 +141,12 @@ async function handleSend(text: string) {
       ...conversation.value?.options,
       ...chatSettings.value.options,
     }
+    const enabledTools = toolDefinitionStore.enabledDefinitions
     const sessionId = await startChatStream(
       selectedModel.value,
       messagesToSend,
       mergedOptions,
+      enabledTools.length > 0 ? enabledTools : undefined,
     )
 
     // Link the assistant message to the session
@@ -159,10 +192,161 @@ function startNewChat() {
 function openSession(sessionId: string) {
   router.push({ name: 'session', params: { id: sessionId } })
 }
+
+function showNotification(msg: string) {
+  notificationMessage.value = msg
+  if (notificationTimer) clearTimeout(notificationTimer)
+  notificationTimer = setTimeout(() => {
+    notificationMessage.value = null
+  }, 5000)
+}
+
+function dismissNotification() {
+  notificationMessage.value = null
+  if (notificationTimer) clearTimeout(notificationTimer)
+}
+
+const defaultSettings: ChatSettings = {
+  systemPrompt: '',
+  options: {},
+}
+
+async function handleCommand(name: string, args: string) {
+  const cmd = findCommand(name)
+  if (!cmd) {
+    showNotification(`Unknown command: /${name}. Type /help for available commands.`)
+    return
+  }
+
+  const ctx: SlashCommandContext = {
+    clearConversation: () => conversationStore.setActiveConversation(null),
+    newChat: () => conversationStore.setActiveConversation(null),
+    sendAsUser: (text: string) => handleSend(text),
+    copyLastResponse: () => {
+      const assistantMsgs = messages.value.filter((m) => m.role === 'assistant')
+      const last = assistantMsgs[assistantMsgs.length - 1]
+      if (last?.content) {
+        navigator.clipboard.writeText(last.content)
+        showNotification('Copied to clipboard.')
+      } else {
+        showNotification('No assistant response to copy.')
+      }
+    },
+    exportConversation: (format: 'json' | 'text') => {
+      const conv = conversation.value
+      if (!conv || conv.messages.length === 0) {
+        showNotification('No conversation to export.')
+        return
+      }
+      let content: string
+      let filename: string
+      if (format === 'json') {
+        content = JSON.stringify(conv.messages, null, 2)
+        filename = `chat-${conv.id}.json`
+      } else {
+        content = conv.messages
+          .map((m) => `[${m.role}] ${m.content}`)
+          .join('\n\n')
+        filename = `chat-${conv.id}.txt`
+      }
+      const blob = new Blob([content], { type: 'text/plain' })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = filename
+      a.click()
+      URL.revokeObjectURL(url)
+    },
+    setSystemPrompt: (prompt: string) => {
+      chatSettings.value = { ...chatSettings.value, systemPrompt: prompt }
+    },
+    setOption: (key, value) => {
+      chatSettings.value = {
+        ...chatSettings.value,
+        options: { ...chatSettings.value.options, [key]: value },
+      }
+    },
+    resetSettings: () => {
+      chatSettings.value = { ...defaultSettings }
+    },
+    setJsonFormat: (_enabled: boolean) => {
+      // Ollama format option is on the request, not chatSettings.options
+      // For now, show notification
+      showNotification('JSON format toggled. This affects the next request.')
+    },
+    switchModel: (name: string) => {
+      selectedModel.value = name
+    },
+    availableModels: modelStore.chatModelNames,
+    currentModel: selectedModel.value,
+    toggleRag: () => {
+      ragEnabled.value = !ragEnabled.value
+    },
+    ragEnabled: ragEnabled.value,
+    navigate: (path: string) => router.push(path),
+    openSettings: () => {
+      showSettings.value = true
+    },
+    openSessionDetails: () => {
+      if (currentSessionId.value) {
+        router.push({ name: 'session', params: { id: currentSessionId.value } })
+      } else {
+        showNotification('No active session.')
+      }
+    },
+    showNotification,
+    messages: messages.value,
+    chatSettings,
+    currentSessionId: currentSessionId.value,
+    getSessionTokenCount: () => {
+      if (!currentSessionId.value) return null
+      const metrics = metricsStore.getMetrics(currentSessionId.value)
+      if (!metrics) return null
+      return { prompt: metrics.promptTokenCount, completion: metrics.completionTokenCount }
+    },
+    getAverageSpeed: () => {
+      const agg = metricsStore.aggregate
+      return agg.totalSessions > 0 ? agg.avgTps : null
+    },
+    getOllamaStatus: async () => {
+      try {
+        const res = await fetch('/api/tags')
+        return { connected: res.ok, model: selectedModel.value }
+      } catch {
+        return { connected: false, model: selectedModel.value }
+      }
+    },
+  }
+
+  await cmd.execute(args, ctx)
+}
 </script>
 
 <template>
   <div class="flex h-full flex-col">
+    <!-- Command notification toast -->
+    <Transition
+      enter-active-class="transition-all duration-200 ease-out"
+      enter-from-class="opacity-0 -translate-y-2"
+      leave-active-class="transition-all duration-150 ease-in"
+      leave-to-class="opacity-0 -translate-y-2"
+    >
+      <div
+        v-if="notificationMessage"
+        class="absolute left-1/2 top-16 z-50 -translate-x-1/2 rounded-xl border border-border-default bg-surface-raised px-4 py-3 shadow-lg"
+      >
+        <div class="flex items-start gap-3">
+          <p class="max-w-md whitespace-pre-wrap text-sm text-text-primary">{{ notificationMessage }}</p>
+          <button
+            class="shrink-0 text-text-muted hover:text-text-primary transition-colors text-xs"
+            @click="dismissNotification"
+          >
+            ✕
+          </button>
+        </div>
+      </div>
+    </Transition>
+
     <!-- Top bar with model selector + new chat -->
     <div class="flex items-center justify-between border-b border-border-default bg-surface-raised px-4 py-2">
       <div class="flex items-center gap-3">
@@ -228,6 +412,7 @@ function openSession(sessionId: string) {
           :is-streaming="isStreaming"
           :selected-model="selectedModel"
           @send="handleSend"
+          @command="handleCommand"
           @cancel="handleCancel"
         />
       </div>

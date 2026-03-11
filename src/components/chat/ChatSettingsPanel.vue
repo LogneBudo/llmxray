@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import type { ChatSettings } from '@/types/conversation'
+import { useToolDefinitionStore } from '@/stores/tool-definition-store'
+import ToolDefinitionList from '@/components/tool-calls/ToolDefinitionList.vue'
 
 const props = defineProps<{
   modelValue: ChatSettings
@@ -64,7 +66,9 @@ watch(
   },
 )
 
+const toolStore = useToolDefinitionStore()
 const showAdvanced = ref(false)
+const showTools = ref(false)
 </script>
 
 <template>
@@ -263,6 +267,24 @@ const showAdvanced = ref(false)
             Comma-separated strings that stop generation when produced.
           </p>
         </div>
+      </div>
+
+      <!-- Tools toggle -->
+      <button
+        class="flex w-full items-center justify-between rounded-lg px-3 py-2 text-xs text-text-secondary hover:bg-surface-overlay transition-colors"
+        @click="showTools = !showTools"
+      >
+        <span>
+          Tools
+          <span v-if="toolStore.enabledDefinitions.length > 0" class="ml-1 text-accent">
+            ({{ toolStore.enabledDefinitions.length }} active)
+          </span>
+        </span>
+        <span class="transition-transform" :class="{ 'rotate-180': showTools }">▾</span>
+      </button>
+
+      <div v-if="showTools">
+        <ToolDefinitionList />
       </div>
     </div>
   </div>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, toRef } from 'vue'
 import { useTokenStore } from '@/stores/token-store'
 import { useTokenConfidence } from '@/composables/useTokenConfidence'
 import type { StreamToken } from '@/types/token'
@@ -9,7 +9,7 @@ const props = defineProps<{
 }>()
 
 const tokenStore = useTokenStore()
-const { getColor } = useTokenConfidence()
+const { getColor } = useTokenConfidence(toRef(props, 'sessionId'))
 
 const tokens = computed<StreamToken[]>(() => tokenStore.getTokens(props.sessionId))
 
