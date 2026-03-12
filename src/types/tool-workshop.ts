@@ -1,4 +1,15 @@
 import type { OllamaToolDefinition } from './ollama'
+import type { ToolMapping, ReturnSchema } from './tool-optimizer'
+import type { ProbeConfig } from './tool-canvas'
+
+// --- Canvas Metadata (persisted with tool) ---
+
+export interface CanvasMeta {
+  mappings?: ToolMapping[]
+  probeConfig?: ProbeConfig
+  returnSchema?: ReturnSchema
+  position?: { x: number; y: number }
+}
 
 // --- Action Block Types ---
 
@@ -54,6 +65,12 @@ export interface ToolTestResult {
   durationMs: number
 }
 
+export interface OptimizedFromMeta {
+  originalToolName: string
+  selectedPaths: string[]
+  sampleResponse: unknown
+}
+
 export interface WorkshopTool {
   id: string
   definition: OllamaToolDefinition
@@ -64,6 +81,8 @@ export interface WorkshopTool {
   updatedAt: number
   lastTestedAt: number | null
   testResult: ToolTestResult | null
+  optimizedFrom?: OptimizedFromMeta
+  canvasMeta?: CanvasMeta
 }
 
 // --- Tool Execution ---

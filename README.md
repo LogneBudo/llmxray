@@ -71,6 +71,27 @@ Build a local knowledge base from your documents:
 
 Everything is stored in **IndexedDB** (your browser's built-in database). Zero cost, zero setup, zero external services.
 
+### Tool Workshop (Visual Canvas)
+Build, edit, and test tool definitions on an interactive **node-based canvas** powered by Vue Flow:
+
+- **Drag-and-drop nodes** &mdash; Each tool is a visual node showing name, description, parameters, and implementation body
+- **Inline code editing** &mdash; Full CodeMirror 6 editors with TypeScript syntax highlighting directly on each node
+- **Bidirectional code sync** &mdash; Open the Code Panel to see all tools as combined TypeScript source. Edit code, nodes update. Edit nodes, code updates. Powered by a Recast AST parser
+- **Schema viewer** &mdash; Auto-generated OpenAI-compatible JSON schemas with one-click copy
+- **Probe & Pick** &mdash; Point at any API URL, inspect the response JSON tree, and auto-generate fetch code + parameter mappings
+- **OpenAPI discovery** &mdash; Auto-detect and parse OpenAPI/Swagger specs to pick endpoints visually
+- **Live execution overlays** &mdash; During chat, tool nodes pulse when the model calls them and show results inline
+- **Templates** &mdash; Start from 15+ built-in templates (web fetch, calculator, Google Calendar/Gmail, regex tester, and more)
+- **Persistent layout** &mdash; Node positions, mappings, and probe configs survive across sessions
+
+### Tool Call Optimizer
+When the model calls a tool during chat, an **"Optimize this Tool"** button appears on the result. Click it to open the Response Optimizer Drawer:
+
+- Visualize the API response as an interactive JSON tree
+- Select only the fields the model actually needs
+- Auto-generate optimized fetch code with field extraction
+- One click to create a new optimized tool in the Workshop
+
 ### Model Browser
 See every model installed in Ollama with details like parameter count, quantization level, family, and format. Includes architecture diagrams showing the model's structure.
 
@@ -126,6 +147,9 @@ npm run preview  # Preview the build locally
 | State | Pinia 3 (one store per concern) |
 | Routing | Vue Router 5 |
 | Charts | Chart.js 4 + vue-chartjs, D3.js 7 |
+| Canvas | Vue Flow 1.x (node-based visual editor) |
+| Code Editor | CodeMirror 6 (TypeScript + JSON highlighting) |
+| AST Parser | Recast + @babel/parser (bidirectional code sync) |
 | Markdown | marked |
 | Diffing | diff (word-level) |
 | Documents | pdfjs-dist (lazy), mammoth (DOCX), papaparse (CSV) |
@@ -178,11 +202,13 @@ src/
     introspection/  Layer activations, attention, architecture
     rag/            Document upload, search, ingest
     embeddings/     Vector viz, similarity meter
-    tool-calls/     Tool timeline, definitions
+    tool-canvas/    Visual canvas, node editor, CodeMirror wrapper
+    tool-optimizer/ Response optimizer drawer, JSON tree
+    tool-calls/     Tool call timeline, definitions
     agent-graph/    Agent state flow
     common/         Layout, sidebar, shared components
   stores/           Pinia stores (one per concern)
-  services/         Ollama client, streaming, generation, RAG
+  services/         Ollama client, streaming, generation, RAG, AST parser, probe
   types/            TypeScript interfaces
   utils/            Formatting, color scales, slot labels
   composables/      Vue composables (markdown, etc.)

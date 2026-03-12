@@ -18,7 +18,16 @@
     "test:e2e:all": "playwright test"
   },
   "dependencies": {
+    "@babel/parser": "^7.29.0",
+    "@codemirror/lang-javascript": "^6.2.5",
+    "@codemirror/lang-json": "^6.0.2",
+    "@codemirror/theme-one-dark": "^6.1.3",
+    "@vue-flow/background": "^1.3.2",
+    "@vue-flow/controls": "^1.1.3",
+    "@vue-flow/core": "^1.48.2",
+    "@vue-flow/minimap": "^1.5.4",
     "chart.js": "^4.5.1",
+    "codemirror": "^6.0.2",
     "d3": "^7.9.0",
     "diff": "^8.0.3",
     "mammoth": "^1.11.0",
@@ -27,8 +36,10 @@
     "papaparse": "^5.5.3",
     "pdfjs-dist": "^5.5.207",
     "pinia": "^3.0.4",
+    "recast": "^0.23.11",
     "vue": "^3.5.30",
     "vue-chartjs": "^5.3.3",
+    "vue-codemirror": "^6.1.1",
     "vue-router": "^5.0.3"
   },
   "devDependencies": {

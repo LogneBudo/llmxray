@@ -3,34 +3,10 @@ import { ref, computed } from 'vue'
 import type { ToolCategory } from '@/types/tool-workshop'
 import { useToolWorkshopStore } from '@/stores/tool-workshop-store'
 import type { OllamaToolDefinition } from '@/types/ollama'
-import { createEmptyImplementation } from '@/types/tool-workshop'
-import ToolSidebar from '@/components/tool-workshop/ToolSidebar.vue'
-import ToolEditor from '@/components/tool-workshop/ToolEditor.vue'
+import ToolCanvasView from '@/components/tool-canvas/ToolCanvasView.vue'
 
 const store = useToolWorkshopStore()
 const showTemplateModal = ref(false)
-
-const activeTool = computed(() => {
-  if (!store.selectedToolId) return null
-  return store.allTools.find((t) => t.id === store.selectedToolId) ?? null
-})
-
-function createNewTool() {
-  const definition: OllamaToolDefinition = {
-    type: 'function',
-    function: {
-      name: 'new_tool',
-      description: '',
-      parameters: { type: 'object', properties: {}, required: [] },
-    },
-  }
-  const id = store.addTool({
-    definition,
-    implementation: createEmptyImplementation(),
-    category: 'custom',
-  })
-  store.selectTool(id)
-}
 
 // --- Templates ---
 
@@ -610,17 +586,9 @@ function addTemplate(template: ToolTemplate) {
 </script>
 
 <template>
-  <div class="flex h-full overflow-hidden">
-    <!-- Sidebar -->
-    <div class="w-56 shrink-0">
-      <ToolSidebar
-        @new-tool="createNewTool"
-        @add-template="showTemplateModal = true"
-      />
-    </div>
-
-    <!-- Editor -->
-    <ToolEditor :tool="activeTool" />
+  <div class="flex h-full overflow-hidden flex-col">
+    <!-- Canvas -->
+    <ToolCanvasView class="flex-1" @add-template="showTemplateModal = true" />
 
     <!-- Template Modal -->
     <Teleport to="body">

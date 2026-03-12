@@ -4,8 +4,14 @@ import { useToolCallStore } from '@/stores/toolcall-store'
 import { formatDuration } from '@/utils/format'
 import ToolCallCard from './ToolCallCard.vue'
 
+import type { ToolCallEntry } from '@/types/toolcall'
+
 const props = defineProps<{
   sessionId: string
+}>()
+
+const emit = defineEmits<{
+  optimize: [entry: ToolCallEntry]
 }>()
 
 const toolCallStore = useToolCallStore()
@@ -35,6 +41,7 @@ const totalDuration = computed(() => {
         v-for="tc in toolCalls"
         :key="tc.id"
         :entry="tc"
+        @optimize="emit('optimize', $event)"
       />
     </div>
 

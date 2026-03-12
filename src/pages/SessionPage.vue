@@ -2,6 +2,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useSessionStore } from '@/stores/session-store'
 import { useMetricsStore } from '@/stores/metrics-store'
+import type { ToolCallEntry } from '@/types/toolcall'
 import TabBar from '@/components/common/TabBar.vue'
 import StatusBadge from '@/components/common/StatusBadge.vue'
 import TokenStreamDisplay from '@/components/token-stream/TokenStreamDisplay.vue'
@@ -11,6 +12,7 @@ import IntrospectionPanel from '@/components/introspection/IntrospectionPanel.vu
 import ToolCallTimeline from '@/components/tool-calls/ToolCallTimeline.vue'
 import AgentGraphView from '@/components/agent-graph/AgentGraphView.vue'
 import PromptInspector from '@/components/prompt-anatomy/PromptInspector.vue'
+import ResponseOptimizerDrawer from '@/components/tool-optimizer/ResponseOptimizerDrawer.vue'
 
 const props = defineProps<{ id: string }>()
 
@@ -30,6 +32,8 @@ const tabs = [
 
 const session = computed(() => sessionStore.sessionById(props.id) ?? null)
 const metrics = computed(() => metricsStore.getMetrics(props.id))
+
+const optimizerEntry = ref<ToolCallEntry | null>(null)
 
 onMounted(() => {
   sessionStore.setActiveSession(props.id)
@@ -65,7 +69,7 @@ onMounted(() => {
       </template>
 
       <template v-else-if="activeTab === 'tools'">
-        <ToolCallTimeline :session-id="id" />
+        <ToolCallTimeline :session-id="id" @optimize="optimizerEntry = $event" />
       </template>
 
       <template v-else-if="activeTab === 'agent'">
@@ -81,4 +85,10 @@ onMounted(() => {
   <div v-else class="flex items-center justify-center py-20 text-text-muted">
     Session not found.
   </div>
+
+  <ResponseOptimizerDrawer
+    v-if="optimizerEntry"
+    :entry="optimizerEntry"
+    @close="optimizerEntry = null"
+  />
 </template>

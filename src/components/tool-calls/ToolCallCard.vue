@@ -1,13 +1,23 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import type { ToolCallEntry } from '@/types/toolcall'
 import { formatDuration } from '@/utils/format'
 import StatusBadge from '@/components/common/StatusBadge.vue'
 import JsonViewer from '@/components/common/JsonViewer.vue'
 
-defineProps<{
+const props = defineProps<{
   entry: ToolCallEntry
 }>()
+
+const emit = defineEmits<{
+  optimize: [entry: ToolCallEntry]
+}>()
+
+const canOptimize = computed(() =>
+  props.entry.status === 'completed' &&
+  props.entry.result != null &&
+  typeof props.entry.result === 'object',
+)
 
 const expanded = ref(false)
 </script>
@@ -45,6 +55,13 @@ const expanded = ref(false)
         <div class="text-xs font-medium text-error uppercase tracking-wide mb-1">Error</div>
         <pre class="rounded-lg bg-error/10 p-3 text-xs text-error">{{ entry.error }}</pre>
       </div>
+      <button
+        v-if="canOptimize"
+        class="mt-1 rounded-md border border-border-default px-3 py-1.5 text-xs font-medium text-accent hover:bg-surface-overlay transition-colors"
+        @click.stop="emit('optimize', entry)"
+      >
+        Optimize this Tool
+      </button>
     </div>
   </div>
 </template>
