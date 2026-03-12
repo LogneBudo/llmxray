@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid'
-import type { OllamaGenerateChunk, OllamaChatChunk } from '@/types/ollama'
+import type { OllamaGenerateChunk, OllamaChatChunk, OllamaToolCall } from '@/types/ollama'
 import type { StreamToken } from '@/types/token'
 import { useSessionStore } from '@/stores/session-store'
 import { useTokenStore } from '@/stores/token-store'
@@ -9,6 +9,10 @@ import { useToolCallStore } from '@/stores/toolcall-store'
 import { useAgentStore } from '@/stores/agent-store'
 import { calculateMetrics } from './metrics-calculator'
 import { ReasoningParser } from './reasoning-parser'
+
+export interface ChatStreamResult {
+  toolCalls: OllamaToolCall[]
+}
 
 export async function readNDJSONStream<T>(
   stream: ReadableStream<Uint8Array>,
@@ -167,7 +171,7 @@ export async function executeChatStream(
   sessionId: string,
   stream: ReadableStream<Uint8Array>,
   signal?: AbortSignal,
-): Promise<void> {
+): Promise<ChatStreamResult> {
   const sessionStore = useSessionStore()
   const tokenStore = useTokenStore()
   const metricsStore = useMetricsStore()
@@ -183,6 +187,7 @@ export async function executeChatStream(
   let completedThinkingText = ''
   let usesThinkingField = false
   const tokenLatencies: number[] = []
+  const collectedToolCalls: OllamaToolCall[] = []
 
   const reasoningParser = new ReasoningParser(sessionId)
 
@@ -267,6 +272,7 @@ export async function executeChatStream(
       // Detect tool calls
       if (chunk.message.tool_calls) {
         for (const tc of chunk.message.tool_calls) {
+          collectedToolCalls.push(tc)
           const entry = {
             id: nanoid(),
             sessionId,
@@ -311,33 +317,38 @@ export async function executeChatStream(
         // Preserve thinking content on completion so the UI shows "Thought process"
         reasoningStore.setThinking(sessionId, false, usesThinkingField ? completedThinkingText : '')
 
-        const session = sessionStore.sessionById(sessionId)
-        if (session) {
-          const metrics = calculateMetrics(
-            sessionId,
-            session.model,
-            startedAt,
-            chunk,
-            tokenLatencies,
-          )
-          metricsStore.recordMetrics(sessionId, metrics)
-          sessionStore.finalizeSession(sessionId, metrics)
-          metricsStore.recalculateAggregate()
-        }
+        // Only finalize metrics if no tool calls pending (the tool loop handles finalization)
+        if (collectedToolCalls.length === 0) {
+          const session = sessionStore.sessionById(sessionId)
+          if (session) {
+            const metrics = calculateMetrics(
+              sessionId,
+              session.model,
+              startedAt,
+              chunk,
+              tokenLatencies,
+            )
+            metricsStore.recordMetrics(sessionId, metrics)
+            sessionStore.finalizeSession(sessionId, metrics)
+            metricsStore.recalculateAggregate()
+          }
 
-        agentStore.addNode(sessionId, {
-          id: nanoid(),
-          type: 'output',
-          label: 'Chat Complete',
-          sessionId,
-          stepIndex: tokenIndex,
-          state: { tokenCount: tokenIndex },
-          timestamp: Date.now(),
-        })
+          agentStore.addNode(sessionId, {
+            id: nanoid(),
+            type: 'output',
+            label: 'Chat Complete',
+            sessionId,
+            stepIndex: tokenIndex,
+            state: { tokenCount: tokenIndex },
+            timestamp: Date.now(),
+          })
+        }
       }
     },
     signal,
   )
+
+  return { toolCalls: collectedToolCalls }
 }
 
 function computeConfidenceFromLatency(

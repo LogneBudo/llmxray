@@ -12,7 +12,7 @@ import AppHeader from '@/components/common/AppHeader.vue'
         <RouterView v-slot="{ Component, route }">
           <div
             class="h-full"
-            :class="route.name === 'dashboard' ? '' : 'overflow-auto p-6'"
+            :class="route.name === 'dashboard' || route.name === 'tools' ? '' : 'overflow-auto p-6'"
           >
             <component :is="Component" />
           </div>

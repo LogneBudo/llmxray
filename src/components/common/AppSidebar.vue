@@ -8,6 +8,7 @@ const navItems = [
   { path: '/compare', label: 'Compare', icon: '⇔' },
   { path: '/embeddings', label: 'Embeddings', icon: '◈' },
   { path: '/rag', label: 'Knowledge Base', icon: '📚' },
+  { path: '/tools', label: 'Tool Workshop', icon: '⚒' },
   { path: '/models', label: 'Models', icon: '◎' },
   { path: '/system', label: 'My System', icon: '🖥' },
   { path: '/settings', label: 'Settings', icon: '⚙' },

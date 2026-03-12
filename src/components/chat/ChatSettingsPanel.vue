@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import type { ChatSettings } from '@/types/conversation'
-import { useToolDefinitionStore } from '@/stores/tool-definition-store'
+import { useToolWorkshopStore } from '@/stores/tool-workshop-store'
 import { useMemoryStore } from '@/stores/memory-store'
 import { useModelStore } from '@/stores/model-store'
 import { ollamaClient } from '@/services/ollama-client'
-import ToolDefinitionList from '@/components/tool-calls/ToolDefinitionList.vue'
+import { useRouter } from 'vue-router'
 
 const props = defineProps<{
   modelValue: ChatSettings
@@ -69,7 +69,8 @@ watch(
   },
 )
 
-const toolStore = useToolDefinitionStore()
+const toolStore = useToolWorkshopStore()
+const chatRouter = useRouter()
 const memoryStore = useMemoryStore()
 const modelStore = useModelStore()
 const showAdvanced = ref(false)
@@ -329,8 +330,24 @@ async function pullEmbeddingModel(name: string) {
         <span class="transition-transform" :class="{ 'rotate-180': showTools }">▾</span>
       </button>
 
-      <div v-if="showTools">
-        <ToolDefinitionList />
+      <div v-if="showTools" class="pl-1 space-y-2">
+        <div v-if="toolStore.enabledTools.length > 0" class="space-y-1">
+          <div
+            v-for="tool in toolStore.enabledTools"
+            :key="tool.id"
+            class="flex items-center gap-2 rounded-md bg-surface px-2 py-1.5 text-[11px]"
+          >
+            <span class="h-1.5 w-1.5 rounded-full bg-success shrink-0" />
+            <span class="font-mono text-text-primary">{{ tool.definition.function.name }}</span>
+          </div>
+        </div>
+        <p v-else class="text-[10px] text-text-muted px-2">No tools enabled</p>
+        <button
+          class="w-full rounded-lg border border-dashed border-border-default px-3 py-1.5 text-[11px] text-text-muted hover:border-accent hover:text-text-primary transition-colors"
+          @click="chatRouter.push('/tools')"
+        >
+          Manage in Tool Workshop...
+        </button>
       </div>
 
       <!-- Memory toggle -->

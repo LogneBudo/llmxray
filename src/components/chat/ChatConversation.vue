@@ -9,7 +9,7 @@ import { useMetricsStore } from '@/stores/metrics-store'
 import { useOllamaStream } from '@/composables/useOllamaStream'
 import { useRagStore } from '@/stores/rag-store'
 import { findCommand } from '@/services/slash-command-registry'
-import { useToolDefinitionStore } from '@/stores/tool-definition-store'
+import { useToolWorkshopStore } from '@/stores/tool-workshop-store'
 import { useMemoryStore } from '@/stores/memory-store'
 import { prepareContext, embedNewMessages } from '@/services/context-manager'
 import type { SlashCommandContext } from '@/types/slash-command'
@@ -25,7 +25,7 @@ const modelStore = useModelStore()
 const sessionStore = useSessionStore()
 const ragStore = useRagStore()
 const metricsStore = useMetricsStore()
-const toolDefinitionStore = useToolDefinitionStore()
+const toolWorkshopStore = useToolWorkshopStore()
 const memoryStore = useMemoryStore()
 const { isStreaming, currentSessionId, startChatStream, cancel } = useOllamaStream()
 
@@ -172,7 +172,7 @@ async function handleSend(text: string, attachments: ChatAttachment[] = []) {
       ...conversation.value?.options,
       ...chatSettings.value.options,
     }
-    const enabledTools = toolDefinitionStore.enabledDefinitions
+    const enabledTools = toolWorkshopStore.enabledDefinitions
     const sessionId = await startChatStream(
       selectedModel.value,
       finalMessages,

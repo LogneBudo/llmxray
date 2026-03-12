@@ -1,9 +1,14 @@
 import type { OllamaChatMessage, OllamaOptions, OllamaToolDefinition } from '@/types/ollama'
 import { useSessionStore } from '@/stores/session-store'
 import { usePromptStore } from '@/stores/prompt-store'
+import { useToolCallStore } from '@/stores/toolcall-store'
+import { useToolWorkshopStore } from '@/stores/tool-workshop-store'
 import { ollamaClient } from './ollama-client'
 import { executeChatStream } from './stream-handler'
+import { executeTool } from './tool-executor'
 import { analyzeMessages } from './prompt-analyzer'
+
+const MAX_TOOL_ROUNDS = 5
 
 export async function startChat(params: {
   model: string
@@ -31,27 +36,21 @@ export async function startChat(params: {
 
   const abortController = new AbortController()
 
-  const streamPromise = ollamaClient
-    .streamChat(
-      {
-        model: params.model,
-        messages: params.messages,
-        tools: params.tools,
-        options: params.options,
-      },
-      abortController.signal,
-    )
-    .then((stream) =>
-      executeChatStream(sessionId, stream, abortController.signal),
-    )
-    .catch((err) => {
-      if (!abortController.signal.aborted) {
-        sessionStore.setSessionError(
-          sessionId,
-          err instanceof Error ? err.message : 'Chat failed',
-        )
-      }
-    })
+  const streamPromise = runChatWithToolLoop(
+    sessionId,
+    params.model,
+    [...params.messages],
+    params.tools,
+    params.options,
+    abortController.signal,
+  ).catch((err) => {
+    if (!abortController.signal.aborted) {
+      sessionStore.setSessionError(
+        sessionId,
+        err instanceof Error ? err.message : 'Chat failed',
+      )
+    }
+  })
 
   void streamPromise
 
@@ -61,5 +60,102 @@ export async function startChat(params: {
       abortController.abort()
       sessionStore.cancelSession(sessionId)
     },
+  }
+}
+
+async function runChatWithToolLoop(
+  sessionId: string,
+  model: string,
+  messages: OllamaChatMessage[],
+  tools: OllamaToolDefinition[] | undefined,
+  options: OllamaOptions | undefined,
+  signal: AbortSignal,
+): Promise<void> {
+  const toolCallStore = useToolCallStore()
+  const workshopStore = useToolWorkshopStore()
+
+  let round = 0
+
+  while (round < MAX_TOOL_ROUNDS) {
+    if (signal.aborted) return
+
+    const stream = await ollamaClient.streamChat(
+      { model, messages, tools, options },
+      signal,
+    )
+
+    const result = await executeChatStream(sessionId, stream, signal)
+
+    // No tool calls — the model is done responding
+    if (result.toolCalls.length === 0) return
+
+    // Model requested tool calls — execute them
+    // Add the assistant's tool-call message to the conversation history
+    messages.push({
+      role: 'assistant',
+      content: '',
+      tool_calls: result.toolCalls,
+    })
+
+    for (const tc of result.toolCalls) {
+      const tool = workshopStore.findByFunctionName(tc.function.name)
+      const pendingCalls = toolCallStore.getToolCalls(sessionId)
+      const callEntry = pendingCalls.find(
+        (c) => c.functionName === tc.function.name && c.status === 'pending',
+      )
+
+      if (!tool) {
+        // No implementation found — send error back to model
+        const errorMsg = `Tool "${tc.function.name}" has no implementation`
+        if (callEntry) {
+          toolCallStore.updateToolCall(sessionId, callEntry.id, {
+            status: 'failed',
+            error: errorMsg,
+            completedAt: Date.now(),
+          })
+        }
+        messages.push({
+          role: 'tool',
+          content: JSON.stringify({ error: errorMsg }),
+        })
+        continue
+      }
+
+      // Mark as executing
+      if (callEntry) {
+        toolCallStore.updateToolCall(sessionId, callEntry.id, {
+          status: 'executing',
+        })
+      }
+
+      // Execute the tool
+      const execResult = await executeTool(tool, tc.function.arguments)
+
+      // Update the tool call entry
+      if (callEntry) {
+        toolCallStore.updateToolCall(sessionId, callEntry.id, {
+          status: execResult.success ? 'completed' : 'failed',
+          result: execResult.result,
+          error: execResult.error,
+          completedAt: Date.now(),
+          durationMs: execResult.durationMs,
+        })
+      }
+
+      // Add tool result to conversation for the next round
+      const resultContent = execResult.success
+        ? (typeof execResult.result === 'string'
+            ? execResult.result
+            : JSON.stringify(execResult.result))
+        : JSON.stringify({ error: execResult.error })
+
+      messages.push({
+        role: 'tool',
+        content: resultContent,
+      })
+    }
+
+    round++
+    // Loop continues — sends messages with tool results back to model
   }
 }

@@ -40,6 +40,11 @@ export const router = createRouter({
           component: () => import('@/pages/ModelsPage.vue'),
         },
         {
+          path: 'tools',
+          name: 'tools',
+          component: () => import('@/pages/ToolWorkshopPage.vue'),
+        },
+        {
           path: 'system',
           name: 'system',
           component: () => import('@/pages/SystemPage.vue'),
@@ -48,6 +53,11 @@ export const router = createRouter({
           path: 'settings',
           name: 'settings',
           component: () => import('@/pages/SettingsPage.vue'),
+        },
+        {
+          path: 'auth/google/callback',
+          name: 'google-oauth-callback',
+          component: () => import('@/pages/GoogleCallbackPage.vue'),
         },
       ],
     },
