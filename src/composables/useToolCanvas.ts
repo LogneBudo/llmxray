@@ -17,6 +17,8 @@ export interface ExecutionOverlay {
   status: 'executing' | 'completed' | 'failed'
   result?: unknown
   durationMs?: number
+  callArguments?: Record<string, unknown>
+  callError?: string
 }
 
 export function useToolCanvas() {
@@ -131,6 +133,14 @@ export function useToolCanvas() {
     nextTick(() => {
       syncLock.value = null
     })
+  }
+
+  // --- Node removal (Backspace / Delete key) ---
+
+  function onNodesDelete(nodes: Node[]) {
+    for (const node of nodes) {
+      store.removeTool(node.id)
+    }
   }
 
   // --- Node drag → persist position ---
@@ -270,6 +280,8 @@ export function useToolCanvas() {
               status: 'failed',
               result: call.error,
               durationMs: call.durationMs,
+              callArguments: call.arguments,
+              callError: call.error,
             })
           }
         }
@@ -285,10 +297,14 @@ export function useToolCanvas() {
           d.executionStatus = overlay.status
           d.lastResult = overlay.result
           d.lastDurationMs = overlay.durationMs
+          d.lastCallArguments = overlay.callArguments
+          d.lastCallError = overlay.callError
         } else if (d.executionStatus !== 'idle') {
           d.executionStatus = 'idle'
           d.lastResult = undefined
           d.lastDurationMs = undefined
+          d.lastCallArguments = undefined
+          d.lastCallError = undefined
         }
       }
     },
@@ -324,6 +340,7 @@ export function useToolCanvas() {
     codeSyncStatus,
     schemas,
     onNodeDragStop,
+    onNodesDelete,
     onCodeEdit,
     addNewTool,
     handleBlockUpdate,

@@ -42,6 +42,14 @@ let notificationTimer: ReturnType<typeof setTimeout> | null = null
 const conversation = computed(() => conversationStore.activeConversation)
 const messages = computed(() => conversation.value?.messages ?? [])
 
+const sessionError = computed(() => {
+  const sid = latestSessionId.value ?? currentSessionId.value
+  if (!sid) return null
+  const session = sessionStore.sessionById(sid)
+  if (session?.status === 'error' && session.error) return session.error
+  return null
+})
+
 /** Derive the latest session ID from conversation messages so it survives navigation. */
 const latestSessionId = computed(() => {
   const msgs = messages.value
@@ -413,7 +421,7 @@ async function handleCommand(name: string, args: string) {
         >
           <option v-if="modelStore.chatModelNames.length === 0" value="" disabled>No models</option>
           <option v-for="name in modelStore.chatModelNames" :key="name" :value="name">
-            {{ name }}
+            {{ name }} {{ modelStore.capabilityIcons(name) }}
           </option>
         </select>
         <span v-if="conversation" class="text-xs text-text-muted truncate max-w-[200px]">
@@ -463,6 +471,13 @@ async function handleCommand(name: string, args: string) {
     <div class="flex flex-1 min-h-0">
       <!-- Chat column -->
       <div class="flex flex-1 flex-col min-w-0">
+        <!-- Error banner -->
+        <div
+          v-if="sessionError"
+          class="mx-4 mt-2 rounded-lg border border-error/30 bg-error/10 px-4 py-2.5 text-sm text-error"
+        >
+          <span class="font-medium">Error:</span> {{ sessionError }}
+        </div>
         <ChatMessageList :messages="messages" />
         <ChatInput
           :is-streaming="isStreaming"

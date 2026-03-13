@@ -56,7 +56,7 @@ async function handleSearch(query: string) {
       >
         <option v-if="modelStore.modelNames.length === 0" value="" disabled>No models</option>
         <option v-for="name in modelStore.modelNames" :key="name" :value="name">
-          {{ name }}
+          {{ name }} {{ modelStore.capabilityIcons(name) }}
         </option>
       </select>
     </div>

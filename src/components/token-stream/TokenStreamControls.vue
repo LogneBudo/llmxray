@@ -42,7 +42,7 @@ onMounted(async () => {
           {{ modelStore.loading ? 'Loading...' : 'No models available' }}
         </option>
         <option v-for="m in modelStore.models" :key="m.name" :value="m.name">
-          {{ m.name }}
+          {{ m.name }} {{ modelStore.capabilityIcons(m.name) }}
         </option>
       </select>
 

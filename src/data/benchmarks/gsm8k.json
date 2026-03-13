@@ -1,0 +1,908 @@
+{
+  "id": "gsm8k",
+  "name": "GSM8K",
+  "description": "100 curated grade-school math problems reformulated as multiple-choice",
+  "builtIn": true,
+  "questions": [
+    {
+      "id": "gsm_001",
+      "category": "gsm8k",
+      "subcategory": "arithmetic",
+      "question": "Sarah has 24 apples. She gives 1/3 of them to her friend and then buys 10 more. How many apples does Sarah have now?",
+      "choices": ["A) 18", "B) 26", "C) 22", "D) 30"],
+      "correctAnswer": "B",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_002",
+      "category": "gsm8k",
+      "subcategory": "arithmetic",
+      "question": "A baker makes 48 cookies in the morning and 36 in the afternoon. He packs them into boxes of 12. How many boxes does he need?",
+      "choices": ["A) 6", "B) 8", "C) 7", "D) 9"],
+      "correctAnswer": "C",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_003",
+      "category": "gsm8k",
+      "subcategory": "arithmetic",
+      "question": "Tom earns $15 per hour. He works 8 hours on Monday and 6 hours on Tuesday. How much did he earn in total?",
+      "choices": ["A) $180", "B) $210", "C) $200", "D) $195"],
+      "correctAnswer": "B",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_004",
+      "category": "gsm8k",
+      "subcategory": "arithmetic",
+      "question": "A store has 150 shirts. They sell 40% of them on Saturday and 25 more on Sunday. How many shirts remain?",
+      "choices": ["A) 65", "B) 85", "C) 75", "D) 55"],
+      "correctAnswer": "A",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_005",
+      "category": "gsm8k",
+      "subcategory": "arithmetic",
+      "question": "Maria buys 3 notebooks at $4.50 each and 2 pens at $1.75 each. How much does she spend in total?",
+      "choices": ["A) $15.50", "B) $17.00", "C) $16.00", "D) $18.25"],
+      "correctAnswer": "B",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_006",
+      "category": "gsm8k",
+      "subcategory": "arithmetic",
+      "question": "A fruit stand has 200 oranges. On Monday they sell 1/4 of them, and on Tuesday they sell 1/3 of the remaining oranges. How many oranges are left?",
+      "choices": ["A) 100", "B) 75", "C) 120", "D) 90"],
+      "correctAnswer": "A",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gsm_007",
+      "category": "gsm8k",
+      "subcategory": "arithmetic",
+      "question": "Jake has $50. He spends $12.75 on lunch and $8.50 on a book. He then finds $5 on the ground. How much money does Jake have now?",
+      "choices": ["A) $33.75", "B) $28.75", "C) $35.25", "D) $31.25"],
+      "correctAnswer": "A",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_008",
+      "category": "gsm8k",
+      "subcategory": "arithmetic",
+      "question": "A train travels at 60 miles per hour for 2.5 hours, then at 80 miles per hour for 1.5 hours. What is the total distance traveled?",
+      "choices": ["A) 250 miles", "B) 280 miles", "C) 270 miles", "D) 300 miles"],
+      "correctAnswer": "C",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_009",
+      "category": "gsm8k",
+      "subcategory": "arithmetic",
+      "question": "A classroom has 32 students. 3/8 of them are boys. How many girls are in the classroom?",
+      "choices": ["A) 12", "B) 18", "C) 20", "D) 24"],
+      "correctAnswer": "C",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_010",
+      "category": "gsm8k",
+      "subcategory": "arithmetic",
+      "question": "Lisa reads 45 pages per day. She has a 630-page book. How many days will it take her to finish the book?",
+      "choices": ["A) 12", "B) 13", "C) 14", "D) 15"],
+      "correctAnswer": "C",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_011",
+      "category": "gsm8k",
+      "subcategory": "arithmetic",
+      "question": "A farmer has 84 eggs. He puts them into cartons that hold 6 eggs each. He then sells half the cartons. How many eggs has he sold?",
+      "choices": ["A) 36", "B) 42", "C) 48", "D) 30"],
+      "correctAnswer": "B",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_012",
+      "category": "gsm8k",
+      "subcategory": "arithmetic",
+      "question": "Mike scores 78, 85, 92, and 89 on four tests. What is his average score?",
+      "choices": ["A) 84", "B) 85", "C) 86", "D) 87"],
+      "correctAnswer": "C",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_013",
+      "category": "gsm8k",
+      "subcategory": "arithmetic",
+      "question": "A recipe calls for 2/3 cup of sugar. If you want to make 4 batches, how many cups of sugar do you need?",
+      "choices": ["A) 2 cups", "B) 2 1/3 cups", "C) 2 2/3 cups", "D) 3 cups"],
+      "correctAnswer": "C",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_014",
+      "category": "gsm8k",
+      "subcategory": "arithmetic",
+      "question": "A parking lot has 240 spaces. 65% of them are occupied. How many spaces are empty?",
+      "choices": ["A) 156", "B) 84", "C) 96", "D) 78"],
+      "correctAnswer": "B",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_015",
+      "category": "gsm8k",
+      "subcategory": "arithmetic",
+      "question": "Emma buys a jacket for $85 with a 20% discount. She also pays 8% sales tax on the discounted price. What is the total she pays?",
+      "choices": ["A) $68.00", "B) $73.44", "C) $72.00", "D) $71.40"],
+      "correctAnswer": "B",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gsm_016",
+      "category": "gsm8k",
+      "subcategory": "arithmetic",
+      "question": "A school bus picks up 12 students at the first stop, 8 at the second stop, drops off 5 at the third stop, and picks up 15 at the fourth stop. How many students are on the bus?",
+      "choices": ["A) 28", "B) 30", "C) 32", "D) 35"],
+      "correctAnswer": "B",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_017",
+      "category": "gsm8k",
+      "subcategory": "arithmetic",
+      "question": "A water tank holds 500 liters. It loses 12 liters per hour due to a leak. How many liters remain after 18 hours?",
+      "choices": ["A) 284 liters", "B) 276 liters", "C) 304 liters", "D) 316 liters"],
+      "correctAnswer": "A",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_018",
+      "category": "gsm8k",
+      "subcategory": "arithmetic",
+      "question": "A candy store sells chocolate bars for $2.50 each and lollipops for $0.75 each. Daniel buys 6 chocolate bars and 8 lollipops. How much does he spend?",
+      "choices": ["A) $20.00", "B) $21.00", "C) $22.50", "D) $19.50"],
+      "correctAnswer": "B",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_019",
+      "category": "gsm8k",
+      "subcategory": "arithmetic",
+      "question": "A factory produces 350 widgets per day. If 4% of them are defective, how many non-defective widgets are produced in 5 days?",
+      "choices": ["A) 1680", "B) 1700", "C) 1750", "D) 1610"],
+      "correctAnswer": "A",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gsm_020",
+      "category": "gsm8k",
+      "subcategory": "arithmetic",
+      "question": "Sophie has 96 stickers. She divides them equally among her 8 friends, then each friend gives back 3 stickers. How many stickers does Sophie have now?",
+      "choices": ["A) 12", "B) 24", "C) 36", "D) 15"],
+      "correctAnswer": "B",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_021",
+      "category": "gsm8k",
+      "subcategory": "arithmetic",
+      "question": "A movie theater has 15 rows with 22 seats each. If 78% of seats are filled for a showing, how many empty seats are there?",
+      "choices": ["A) 63", "B) 72", "C) 73", "D) 66"],
+      "correctAnswer": "C",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gsm_022",
+      "category": "gsm8k",
+      "subcategory": "arithmetic",
+      "question": "A gardener plants 5 rows of tomatoes with 12 plants per row and 3 rows of peppers with 8 plants per row. How many plants did she plant in total?",
+      "choices": ["A) 72", "B) 80", "C) 84", "D) 96"],
+      "correctAnswer": "C",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_023",
+      "category": "gsm8k",
+      "subcategory": "arithmetic",
+      "question": "Marcus has $200. He spends 15% on food, 30% on rent, and saves the rest. How much does he save?",
+      "choices": ["A) $90", "B) $100", "C) $110", "D) $120"],
+      "correctAnswer": "C",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_024",
+      "category": "gsm8k",
+      "subcategory": "arithmetic",
+      "question": "A library has 1,200 books. They remove 150 old books and receive a donation of 280 new books. They then buy 95 more. How many books does the library have now?",
+      "choices": ["A) 1,425", "B) 1,325", "C) 1,525", "D) 1,375"],
+      "correctAnswer": "A",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_025",
+      "category": "gsm8k",
+      "subcategory": "arithmetic",
+      "question": "A runner completes a 10 km race in 52 minutes and 30 seconds. What is her average speed in km per hour?",
+      "choices": ["A) 10.5 km/h", "B) 11.0 km/h", "C) 11.4 km/h", "D) 12.0 km/h"],
+      "correctAnswer": "C",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gsm_026",
+      "category": "gsm8k",
+      "subcategory": "algebra",
+      "question": "A number is tripled and then 7 is subtracted. The result is 29. What is the number?",
+      "choices": ["A) 10", "B) 11", "C) 12", "D) 13"],
+      "correctAnswer": "C",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_027",
+      "category": "gsm8k",
+      "subcategory": "algebra",
+      "question": "The sum of two consecutive even numbers is 54. What is the larger number?",
+      "choices": ["A) 26", "B) 28", "C) 30", "D) 32"],
+      "correctAnswer": "B",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_028",
+      "category": "gsm8k",
+      "subcategory": "algebra",
+      "question": "Amy is 4 years older than Ben. In 6 years, their ages will add up to 38. How old is Amy now?",
+      "choices": ["A) 13", "B) 14", "C) 15", "D) 16"],
+      "correctAnswer": "C",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gsm_029",
+      "category": "gsm8k",
+      "subcategory": "algebra",
+      "question": "A movie ticket costs $12. A group buys some tickets and pays $132 in total. How many tickets did they buy?",
+      "choices": ["A) 10", "B) 11", "C) 12", "D) 13"],
+      "correctAnswer": "B",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_030",
+      "category": "gsm8k",
+      "subcategory": "algebra",
+      "question": "Five times a number minus 8 equals three times the number plus 12. What is the number?",
+      "choices": ["A) 8", "B) 9", "C) 10", "D) 11"],
+      "correctAnswer": "C",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_031",
+      "category": "gsm8k",
+      "subcategory": "algebra",
+      "question": "A phone plan costs $35 per month plus $0.10 per text message. If Mia's bill is $52, how many text messages did she send?",
+      "choices": ["A) 150", "B) 160", "C) 170", "D) 180"],
+      "correctAnswer": "C",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_032",
+      "category": "gsm8k",
+      "subcategory": "algebra",
+      "question": "The perimeter of a rectangle is 56 cm. The length is 4 cm more than the width. What is the length?",
+      "choices": ["A) 14 cm", "B) 16 cm", "C) 18 cm", "D) 12 cm"],
+      "correctAnswer": "B",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gsm_033",
+      "category": "gsm8k",
+      "subcategory": "algebra",
+      "question": "A father is 3 times as old as his son. The difference in their ages is 30 years. How old is the son?",
+      "choices": ["A) 10", "B) 12", "C) 15", "D) 18"],
+      "correctAnswer": "C",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_034",
+      "category": "gsm8k",
+      "subcategory": "algebra",
+      "question": "A car rental costs $40 per day plus $0.25 per mile. If the total cost for one day is $77.50, how many miles were driven?",
+      "choices": ["A) 140", "B) 150", "C) 160", "D) 130"],
+      "correctAnswer": "B",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_035",
+      "category": "gsm8k",
+      "subcategory": "algebra",
+      "question": "Three friends share the cost of a gift equally. After a fourth friend joins, each person's share decreases by $6. What was the original cost of the gift?",
+      "choices": ["A) $54", "B) $60", "C) $72", "D) $48"],
+      "correctAnswer": "C",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gsm_036",
+      "category": "gsm8k",
+      "subcategory": "algebra",
+      "question": "A shop sells pens for $3 each and erasers for $1 each. Kevin buys a total of 14 items for $30. How many pens did he buy?",
+      "choices": ["A) 6", "B) 7", "C) 8", "D) 9"],
+      "correctAnswer": "C",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gsm_037",
+      "category": "gsm8k",
+      "subcategory": "algebra",
+      "question": "Twice a number increased by 15 gives 63. What is half of that number?",
+      "choices": ["A) 10", "B) 12", "C) 14", "D) 24"],
+      "correctAnswer": "B",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_038",
+      "category": "gsm8k",
+      "subcategory": "algebra",
+      "question": "A pool fills at a rate of 15 gallons per minute. It already has 200 gallons. How many minutes until it reaches 650 gallons?",
+      "choices": ["A) 28", "B) 30", "C) 32", "D) 35"],
+      "correctAnswer": "B",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_039",
+      "category": "gsm8k",
+      "subcategory": "algebra",
+      "question": "One number is 5 more than twice another number. Their sum is 35. What is the smaller number?",
+      "choices": ["A) 8", "B) 10", "C) 12", "D) 15"],
+      "correctAnswer": "B",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gsm_040",
+      "category": "gsm8k",
+      "subcategory": "algebra",
+      "question": "A savings account starts with $500 and earns $12.50 in interest each month. After how many months will the balance reach $750?",
+      "choices": ["A) 18", "B) 20", "C) 22", "D) 25"],
+      "correctAnswer": "B",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_041",
+      "category": "gsm8k",
+      "subcategory": "algebra",
+      "question": "At a bake sale, cupcakes cost $2.50 and brownies cost $3.50. If 40 items were sold for a total of $118, how many cupcakes were sold?",
+      "choices": ["A) 18", "B) 20", "C) 22", "D) 24"],
+      "correctAnswer": "C",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gsm_042",
+      "category": "gsm8k",
+      "subcategory": "algebra",
+      "question": "A number is decreased by 20% and then increased by 25%. The final result is 60. What was the original number?",
+      "choices": ["A) 56", "B) 58", "C) 60", "D) 64"],
+      "correctAnswer": "C",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gsm_043",
+      "category": "gsm8k",
+      "subcategory": "algebra",
+      "question": "Hannah scored 5 points more than twice what Grace scored in a game. Together they scored 44 points. How many points did Grace score?",
+      "choices": ["A) 11", "B) 13", "C) 15", "D) 17"],
+      "correctAnswer": "B",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_044",
+      "category": "gsm8k",
+      "subcategory": "algebra",
+      "question": "A taxi ride costs $3.50 for the first mile and $1.25 for each additional mile. If the fare is $13.50, how many total miles was the ride?",
+      "choices": ["A) 7", "B) 8", "C) 9", "D) 10"],
+      "correctAnswer": "C",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gsm_045",
+      "category": "gsm8k",
+      "subcategory": "algebra",
+      "question": "The product of two consecutive odd numbers is 143. What is the sum of these two numbers?",
+      "choices": ["A) 22", "B) 24", "C) 26", "D) 28"],
+      "correctAnswer": "B",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gsm_046",
+      "category": "gsm8k",
+      "subcategory": "geometry",
+      "question": "A rectangular garden is 12 meters long and 8 meters wide. A path 1 meter wide runs along the inside of the garden. What is the area of the path?",
+      "choices": ["A) 34 sq m", "B) 36 sq m", "C) 38 sq m", "D) 40 sq m"],
+      "correctAnswer": "B",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gsm_047",
+      "category": "gsm8k",
+      "subcategory": "geometry",
+      "question": "A circular pool has a radius of 7 meters. What is the approximate area of the pool? (Use pi = 3.14)",
+      "choices": ["A) 143.86 sq m", "B) 148.26 sq m", "C) 150.72 sq m", "D) 153.86 sq m"],
+      "correctAnswer": "D",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_048",
+      "category": "gsm8k",
+      "subcategory": "geometry",
+      "question": "A box is 30 cm long, 20 cm wide, and 15 cm tall. What is its volume in cubic centimeters?",
+      "choices": ["A) 8,000", "B) 9,000", "C) 10,000", "D) 9,500"],
+      "correctAnswer": "B",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_049",
+      "category": "gsm8k",
+      "subcategory": "geometry",
+      "question": "A triangular flag has a base of 40 cm and a height of 25 cm. What is its area?",
+      "choices": ["A) 400 sq cm", "B) 450 sq cm", "C) 500 sq cm", "D) 1000 sq cm"],
+      "correctAnswer": "C",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_050",
+      "category": "gsm8k",
+      "subcategory": "geometry",
+      "question": "A fence is built around a square yard that measures 25 meters on each side. Fence posts are placed every 5 meters. How many posts are needed?",
+      "choices": ["A) 16", "B) 18", "C) 20", "D) 24"],
+      "correctAnswer": "C",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gsm_051",
+      "category": "gsm8k",
+      "subcategory": "geometry",
+      "question": "A cylindrical water tank has a radius of 3 meters and a height of 10 meters. What is its approximate volume? (Use pi = 3.14)",
+      "choices": ["A) 254.7 cubic m", "B) 272.2 cubic m", "C) 282.6 cubic m", "D) 290.4 cubic m"],
+      "correctAnswer": "C",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gsm_052",
+      "category": "gsm8k",
+      "subcategory": "geometry",
+      "question": "A room measures 5 meters by 4 meters. Tiles measuring 50 cm by 50 cm are used to cover the floor. How many tiles are needed?",
+      "choices": ["A) 60", "B) 70", "C) 80", "D) 100"],
+      "correctAnswer": "C",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gsm_053",
+      "category": "gsm8k",
+      "subcategory": "geometry",
+      "question": "A right triangle has legs measuring 6 cm and 8 cm. What is the length of the hypotenuse?",
+      "choices": ["A) 9 cm", "B) 10 cm", "C) 11 cm", "D) 12 cm"],
+      "correctAnswer": "B",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_054",
+      "category": "gsm8k",
+      "subcategory": "geometry",
+      "question": "A running track is a rectangle with semicircles on each end. The rectangle is 100 m long and 60 m wide. What is the approximate total length of the track? (Use pi = 3.14)",
+      "choices": ["A) 368.4 m", "B) 388.4 m", "C) 400.0 m", "D) 410.2 m"],
+      "correctAnswer": "B",
+      "difficulty": "hard"
+    },
+    {
+      "id": "gsm_055",
+      "category": "gsm8k",
+      "subcategory": "geometry",
+      "question": "A cube has a surface area of 150 square cm. What is the length of one edge?",
+      "choices": ["A) 4 cm", "B) 5 cm", "C) 6 cm", "D) 7 cm"],
+      "correctAnswer": "B",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gsm_056",
+      "category": "gsm8k",
+      "subcategory": "geometry",
+      "question": "A circular track has a circumference of 400 meters. What is its approximate radius? (Use pi = 3.14)",
+      "choices": ["A) 60.5 m", "B) 63.7 m", "C) 65.2 m", "D) 68.0 m"],
+      "correctAnswer": "B",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gsm_057",
+      "category": "gsm8k",
+      "subcategory": "geometry",
+      "question": "A trapezoid has parallel sides of 10 cm and 16 cm and a height of 8 cm. What is its area?",
+      "choices": ["A) 96 sq cm", "B) 100 sq cm", "C) 104 sq cm", "D) 108 sq cm"],
+      "correctAnswer": "C",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_058",
+      "category": "gsm8k",
+      "subcategory": "geometry",
+      "question": "A picture frame is 30 cm by 20 cm on the outside. The frame is 3 cm wide on all sides. What is the area of the glass inside the frame?",
+      "choices": ["A) 288 sq cm", "B) 312 sq cm", "C) 336 sq cm", "D) 360 sq cm"],
+      "correctAnswer": "C",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gsm_059",
+      "category": "gsm8k",
+      "subcategory": "geometry",
+      "question": "A cone has a radius of 4 cm and a height of 9 cm. What is its approximate volume? (Use pi = 3.14)",
+      "choices": ["A) 140.7 cubic cm", "B) 145.2 cubic cm", "C) 150.7 cubic cm", "D) 155.4 cubic cm"],
+      "correctAnswer": "C",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gsm_060",
+      "category": "gsm8k",
+      "subcategory": "geometry",
+      "question": "A rectangular swimming pool is 25 m long, 10 m wide, and 2 m deep. How many liters of water does it hold? (1 cubic meter = 1000 liters)",
+      "choices": ["A) 400,000 liters", "B) 450,000 liters", "C) 500,000 liters", "D) 550,000 liters"],
+      "correctAnswer": "C",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gsm_061",
+      "category": "gsm8k",
+      "subcategory": "ratios",
+      "question": "A recipe for 6 servings calls for 2 cups of flour. How many cups of flour are needed for 15 servings?",
+      "choices": ["A) 4 cups", "B) 4.5 cups", "C) 5 cups", "D) 5.5 cups"],
+      "correctAnswer": "C",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_062",
+      "category": "gsm8k",
+      "subcategory": "ratios",
+      "question": "A car uses 8 liters of gasoline to travel 100 km. How many liters are needed to travel 375 km?",
+      "choices": ["A) 28 liters", "B) 30 liters", "C) 32 liters", "D) 34 liters"],
+      "correctAnswer": "B",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_063",
+      "category": "gsm8k",
+      "subcategory": "ratios",
+      "question": "On a map, 1 cm represents 25 km. Two cities are 7.2 cm apart on the map. What is the actual distance between them?",
+      "choices": ["A) 160 km", "B) 170 km", "C) 175 km", "D) 180 km"],
+      "correctAnswer": "D",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_064",
+      "category": "gsm8k",
+      "subcategory": "ratios",
+      "question": "The ratio of boys to girls in a class is 3:5. If there are 40 students in total, how many boys are there?",
+      "choices": ["A) 12", "B) 15", "C) 18", "D) 20"],
+      "correctAnswer": "B",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_065",
+      "category": "gsm8k",
+      "subcategory": "ratios",
+      "question": "A worker earns $18 per hour. How much does she earn for 45 minutes of work?",
+      "choices": ["A) $12.00", "B) $12.50", "C) $13.00", "D) $13.50"],
+      "correctAnswer": "D",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_066",
+      "category": "gsm8k",
+      "subcategory": "ratios",
+      "question": "A paint mixture requires red and blue paint in a 2:3 ratio. If you use 10 liters of red paint, how many liters of the mixture do you have in total?",
+      "choices": ["A) 20 liters", "B) 22 liters", "C) 25 liters", "D) 30 liters"],
+      "correctAnswer": "C",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gsm_067",
+      "category": "gsm8k",
+      "subcategory": "ratios",
+      "question": "If 5 workers can build a wall in 12 days, how many days would it take 10 workers to build the same wall?",
+      "choices": ["A) 4 days", "B) 5 days", "C) 6 days", "D) 8 days"],
+      "correctAnswer": "C",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_068",
+      "category": "gsm8k",
+      "subcategory": "ratios",
+      "question": "A juice drink is made by mixing concentrate and water in a 1:4 ratio. If you want 2.5 liters of juice, how much concentrate do you need?",
+      "choices": ["A) 0.4 liters", "B) 0.5 liters", "C) 0.6 liters", "D) 0.75 liters"],
+      "correctAnswer": "B",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gsm_069",
+      "category": "gsm8k",
+      "subcategory": "ratios",
+      "question": "A 3-meter shadow is cast by a 2-meter pole. At the same time, a tree casts a 12-meter shadow. How tall is the tree?",
+      "choices": ["A) 6 m", "B) 7 m", "C) 8 m", "D) 9 m"],
+      "correctAnswer": "C",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_070",
+      "category": "gsm8k",
+      "subcategory": "ratios",
+      "question": "Convert 5 miles to kilometers. (1 mile = 1.6 km)",
+      "choices": ["A) 7.5 km", "B) 8.0 km", "C) 8.5 km", "D) 9.0 km"],
+      "correctAnswer": "B",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_071",
+      "category": "gsm8k",
+      "subcategory": "ratios",
+      "question": "A car travels 210 miles on 7 gallons of gas. How many gallons does it need to travel 450 miles?",
+      "choices": ["A) 12 gallons", "B) 13 gallons", "C) 14 gallons", "D) 15 gallons"],
+      "correctAnswer": "D",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_072",
+      "category": "gsm8k",
+      "subcategory": "ratios",
+      "question": "A photograph that is 4 inches by 6 inches is enlarged so that the longer side is 15 inches. What is the length of the shorter side?",
+      "choices": ["A) 8 inches", "B) 9 inches", "C) 10 inches", "D) 11 inches"],
+      "correctAnswer": "C",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_073",
+      "category": "gsm8k",
+      "subcategory": "ratios",
+      "question": "A school has teachers and students in a 1:18 ratio. If there are 475 people in the school total, how many teachers are there?",
+      "choices": ["A) 22", "B) 25", "C) 27", "D) 30"],
+      "correctAnswer": "B",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gsm_074",
+      "category": "gsm8k",
+      "subcategory": "ratios",
+      "question": "A machine fills 120 bottles in 8 minutes. At this rate, how many bottles will it fill in 1 hour?",
+      "choices": ["A) 800", "B) 850", "C) 900", "D) 960"],
+      "correctAnswer": "C",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_075",
+      "category": "gsm8k",
+      "subcategory": "ratios",
+      "question": "The exchange rate is 1 USD = 0.92 EUR. How many euros do you get for $250?",
+      "choices": ["A) 215 EUR", "B) 225 EUR", "C) 230 EUR", "D) 235 EUR"],
+      "correctAnswer": "C",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gsm_076",
+      "category": "gsm8k",
+      "subcategory": "multi_step",
+      "question": "A store buys 200 shirts at $15 each and sells them at $25 each. However, 30 shirts are damaged and sold at half price. What is the store's total profit?",
+      "choices": ["A) $1,625", "B) $1,675", "C) $1,725", "D) $1,875"],
+      "correctAnswer": "A",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gsm_077",
+      "category": "gsm8k",
+      "subcategory": "multi_step",
+      "question": "A taxi charges $3.00 base fare, $2.50 per mile, and a $1.50 fuel surcharge. If a family takes a 6-mile ride, splits the cost evenly among 3 people, and each tips $2, how much does each person pay in total?",
+      "choices": ["A) $7.50", "B) $8.00", "C) $8.50", "D) $9.00"],
+      "correctAnswer": "C",
+      "difficulty": "hard"
+    },
+    {
+      "id": "gsm_078",
+      "category": "gsm8k",
+      "subcategory": "multi_step",
+      "question": "Emma earns $2,000 per month. She spends 30% on rent, 15% on food, and 10% on transportation. She saves the rest. After 3 months of saving, she buys a laptop for $950. How much savings does she have left?",
+      "choices": ["A) $1,550", "B) $1,650", "C) $1,750", "D) $1,850"],
+      "correctAnswer": "C",
+      "difficulty": "hard"
+    },
+    {
+      "id": "gsm_079",
+      "category": "gsm8k",
+      "subcategory": "multi_step",
+      "question": "A garden center sells plants in flats of 6. Tom buys 5 flats of petunias at $2 per plant and 3 flats of marigolds at $1.50 per plant. He gets a 10% discount on his total purchase. How much does he pay?",
+      "choices": ["A) $72.00", "B) $75.60", "C) $78.30", "D) $81.00"],
+      "correctAnswer": "C",
+      "difficulty": "hard"
+    },
+    {
+      "id": "gsm_080",
+      "category": "gsm8k",
+      "subcategory": "multi_step",
+      "question": "A pool can be filled by pipe A in 6 hours and by pipe B in 4 hours. If both pipes are opened together, how long will it take to fill the pool?",
+      "choices": ["A) 2 hours", "B) 2.4 hours", "C) 2.5 hours", "D) 3 hours"],
+      "correctAnswer": "B",
+      "difficulty": "hard"
+    },
+    {
+      "id": "gsm_081",
+      "category": "gsm8k",
+      "subcategory": "multi_step",
+      "question": "A school is organizing a field trip. There are 156 students going. Each bus holds 45 students. Bus rental costs $250 per bus. If the cost is split equally among all students, how much does each student pay (rounded to the nearest cent)?",
+      "choices": ["A) $5.77", "B) $6.41", "C) $6.67", "D) $7.00"],
+      "correctAnswer": "B",
+      "difficulty": "hard"
+    },
+    {
+      "id": "gsm_082",
+      "category": "gsm8k",
+      "subcategory": "multi_step",
+      "question": "A printer prints 30 pages per minute. A report has 450 pages. If the printer jams every 150 pages and takes 5 minutes to fix each time, how long does it take to print the entire report?",
+      "choices": ["A) 20 minutes", "B) 23 minutes", "C) 25 minutes", "D) 30 minutes"],
+      "correctAnswer": "C",
+      "difficulty": "hard"
+    },
+    {
+      "id": "gsm_083",
+      "category": "gsm8k",
+      "subcategory": "multi_step",
+      "question": "A farmer sells eggs at $4 per dozen. On Monday he collected 72 eggs, Tuesday 84, and Wednesday 60. He keeps 2 dozen for his family. How much money does he make selling the rest?",
+      "choices": ["A) $56", "B) $60", "C) $64", "D) $68"],
+      "correctAnswer": "C",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gsm_084",
+      "category": "gsm8k",
+      "subcategory": "multi_step",
+      "question": "A smartphone originally costs $800. It is discounted 25%, then an additional 10% off the sale price. If sales tax is 7% on the final price, what is the total cost?",
+      "choices": ["A) $556.20", "B) $562.80", "C) $577.80", "D) $583.20"],
+      "correctAnswer": "C",
+      "difficulty": "hard"
+    },
+    {
+      "id": "gsm_085",
+      "category": "gsm8k",
+      "subcategory": "multi_step",
+      "question": "A bakery makes 120 loaves of bread daily. Each loaf uses 350g of flour. Flour costs $0.80 per kilogram. How much does the bakery spend on flour in a 5-day work week?",
+      "choices": ["A) $148.00", "B) $156.00", "C) $168.00", "D) $175.00"],
+      "correctAnswer": "C",
+      "difficulty": "hard"
+    },
+    {
+      "id": "gsm_086",
+      "category": "gsm8k",
+      "subcategory": "multi_step",
+      "question": "Lisa walks to school at 3 km/h and arrives 20 minutes late. If she bikes at 12 km/h, she arrives 10 minutes early. What is the distance from her home to school?",
+      "choices": ["A) 1.5 km", "B) 2 km", "C) 3 km", "D) 4 km"],
+      "correctAnswer": "B",
+      "difficulty": "hard"
+    },
+    {
+      "id": "gsm_087",
+      "category": "gsm8k",
+      "subcategory": "multi_step",
+      "question": "A camp has enough food for 80 campers for 15 days. After 3 days, 20 more campers arrive. For how many more days will the remaining food last?",
+      "choices": ["A) 8 days", "B) 9 days", "C) 9.6 days", "D) 10 days"],
+      "correctAnswer": "C",
+      "difficulty": "hard"
+    },
+    {
+      "id": "gsm_088",
+      "category": "gsm8k",
+      "subcategory": "multi_step",
+      "question": "A shop sells 3 types of candy: A at $0.50, B at $0.75, and C at $1.25. On a day they sold 40 of A, 60 of B, and 30 of C. The shop pays 60% of selling price as cost. What is the day's profit?",
+      "choices": ["A) $38.50", "B) $41.00", "C) $42.50", "D) $45.00"],
+      "correctAnswer": "B",
+      "difficulty": "hard"
+    },
+    {
+      "id": "gsm_089",
+      "category": "gsm8k",
+      "subcategory": "multi_step",
+      "question": "Two cars start from the same point. Car A heads north at 50 km/h and Car B heads east at 60 km/h. How far apart are they after 2 hours? (Hint: use the Pythagorean theorem)",
+      "choices": ["A) 140.0 km", "B) 148.7 km", "C) 156.2 km", "D) 164.0 km"],
+      "correctAnswer": "C",
+      "difficulty": "hard"
+    },
+    {
+      "id": "gsm_090",
+      "category": "gsm8k",
+      "subcategory": "multi_step",
+      "question": "A family's electricity bill is calculated at $0.12 per kWh for the first 500 kWh and $0.18 per kWh above 500 kWh. If they used 850 kWh, what is their bill?",
+      "choices": ["A) $102.00", "B) $115.00", "C) $123.00", "D) $130.00"],
+      "correctAnswer": "C",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gsm_091",
+      "category": "gsm8k",
+      "subcategory": "multi_step",
+      "question": "A company donates 5% of its profits to charity. Last quarter they earned $450,000 in revenue and had $320,000 in expenses. How much did they donate to charity?",
+      "choices": ["A) $5,500", "B) $6,000", "C) $6,500", "D) $7,000"],
+      "correctAnswer": "C",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gsm_092",
+      "category": "gsm8k",
+      "subcategory": "multi_step",
+      "question": "A rectangular room is 6 m long, 4 m wide, and 3 m tall. It has 2 doors (each 2 m by 0.8 m) and 3 windows (each 1.2 m by 1 m). If paint covers 10 sq m per liter, how many liters are needed to paint all four walls?",
+      "choices": ["A) 5.0 liters", "B) 5.32 liters", "C) 5.6 liters", "D) 6.0 liters"],
+      "correctAnswer": "B",
+      "difficulty": "hard"
+    },
+    {
+      "id": "gsm_093",
+      "category": "gsm8k",
+      "subcategory": "multi_step",
+      "question": "A train leaves City A at 8:00 AM traveling at 90 km/h toward City B, which is 360 km away. Another train leaves City B at 9:00 AM traveling at 110 km/h toward City A. At what time do they meet?",
+      "choices": ["A) 10:15 AM", "B) 10:21 AM", "C) 10:30 AM", "D) 10:45 AM"],
+      "correctAnswer": "B",
+      "difficulty": "hard"
+    },
+    {
+      "id": "gsm_094",
+      "category": "gsm8k",
+      "subcategory": "multi_step",
+      "question": "A student needs an average of 85 across 5 tests to earn an A. Her first four test scores are 82, 88, 79, and 91. What is the minimum score she needs on the fifth test?",
+      "choices": ["A) 82", "B) 83", "C) 84", "D) 85"],
+      "correctAnswer": "D",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gsm_095",
+      "category": "gsm8k",
+      "subcategory": "multi_step",
+      "question": "A store buys T-shirts for $8 each and marks them up 75%. During a sale, they discount the retail price by 20%. What is the profit per shirt during the sale?",
+      "choices": ["A) $2.80", "B) $3.00", "C) $3.20", "D) $3.40"],
+      "correctAnswer": "C",
+      "difficulty": "hard"
+    },
+    {
+      "id": "gsm_096",
+      "category": "gsm8k",
+      "subcategory": "multi_step",
+      "question": "A rectangular fish tank is 80 cm long, 40 cm wide, and 50 cm tall. It is filled to 3/4 of its height. If 20 liters of water are removed, what is the new water level height? (1 liter = 1000 cubic cm)",
+      "choices": ["A) 28.75 cm", "B) 31.25 cm", "C) 33.50 cm", "D) 35.00 cm"],
+      "correctAnswer": "B",
+      "difficulty": "hard"
+    },
+    {
+      "id": "gsm_097",
+      "category": "gsm8k",
+      "subcategory": "multi_step",
+      "question": "A cyclist rides uphill at 8 km/h for 2 hours, then downhill at 24 km/h for 1 hour. What is his average speed for the entire trip?",
+      "choices": ["A) 12 km/h", "B) 13.3 km/h", "C) 14 km/h", "D) 16 km/h"],
+      "correctAnswer": "B",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gsm_098",
+      "category": "gsm8k",
+      "subcategory": "multi_step",
+      "question": "A class of 40 students took a test. 75% scored above 70 and 1/3 of those scored above 90. How many students scored between 70 and 90 (inclusive of 70, exclusive of above 90)?",
+      "choices": ["A) 18", "B) 20", "C) 22", "D) 24"],
+      "correctAnswer": "B",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gsm_099",
+      "category": "gsm8k",
+      "subcategory": "multi_step",
+      "question": "An investor puts $5,000 into an account that earns 6% simple interest per year. After 3 years, she withdraws half the total amount. How much remains in the account?",
+      "choices": ["A) $2,750", "B) $2,900", "C) $2,950", "D) $3,000"],
+      "correctAnswer": "C",
+      "difficulty": "hard"
+    },
+    {
+      "id": "gsm_100",
+      "category": "gsm8k",
+      "subcategory": "multi_step",
+      "question": "A factory produces 250 units per day. Each unit requires 1.5 kg of material at $4 per kg. Overhead costs are $500 per day. Each unit is sold for $12. What is the factory's profit over a 22-day working month?",
+      "choices": ["A) $18,000", "B) $20,000", "C) $22,000", "D) $24,000"],
+      "correctAnswer": "C",
+      "difficulty": "hard"
+    }
+  ]
+}

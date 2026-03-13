@@ -14,6 +14,43 @@ export interface ChatStreamResult {
   toolCalls: OllamaToolCall[]
 }
 
+export async function readSSEStream<T>(
+  stream: ReadableStream<Uint8Array>,
+  onChunk: (chunk: T) => void,
+  signal?: AbortSignal,
+): Promise<void> {
+  const reader = stream.getReader()
+  const decoder = new TextDecoder()
+  let buffer = ''
+
+  try {
+    while (true) {
+      if (signal?.aborted) break
+      const { done, value } = await reader.read()
+      if (done) break
+
+      buffer += decoder.decode(value, { stream: true })
+      const lines = buffer.split('\n')
+      buffer = lines.pop() ?? ''
+
+      for (const line of lines) {
+        const trimmed = line.trim()
+        if (!trimmed || !trimmed.startsWith('data: ')) continue
+        const data = trimmed.slice(6)
+        if (data === '[DONE]') return
+        try {
+          const parsed = JSON.parse(data) as T
+          onChunk(parsed)
+        } catch {
+          // Skip malformed lines
+        }
+      }
+    }
+  } finally {
+    reader.releaseLock()
+  }
+}
+
 export async function readNDJSONStream<T>(
   stream: ReadableStream<Uint8Array>,
   onChunk: (chunk: T) => void,
@@ -351,7 +388,7 @@ export async function executeChatStream(
   return { toolCalls: collectedToolCalls }
 }
 
-function computeConfidenceFromLatency(
+export function computeConfidenceFromLatency(
   currentLatency: number,
   previousLatencies: number[],
 ): number {

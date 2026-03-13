@@ -1,0 +1,70 @@
+{
+  "description": "Known benchmark scores by model size for percentile normalization. Scores are approximate accuracy (0-1) from published model cards and leaderboards. Update this file when new reference models are released.",
+  "benchmarks": {
+    "mmlu_pro": {
+      "label": "MMLU-Pro",
+      "random_baseline": 0.25,
+      "scores": {
+        "1B": 0.22,
+        "3B": 0.35,
+        "7B": 0.45,
+        "8B": 0.48,
+        "13B": 0.53,
+        "34B": 0.60,
+        "70B": 0.68
+      }
+    },
+    "arc": {
+      "label": "ARC-Challenge",
+      "random_baseline": 0.25,
+      "scores": {
+        "1B": 0.35,
+        "3B": 0.50,
+        "7B": 0.60,
+        "8B": 0.62,
+        "13B": 0.68,
+        "34B": 0.75,
+        "70B": 0.85
+      }
+    },
+    "hellaswag": {
+      "label": "HellaSwag",
+      "random_baseline": 0.25,
+      "scores": {
+        "1B": 0.45,
+        "3B": 0.62,
+        "7B": 0.76,
+        "8B": 0.78,
+        "13B": 0.82,
+        "34B": 0.86,
+        "70B": 0.88
+      }
+    },
+    "gsm8k": {
+      "label": "GSM8K",
+      "random_baseline": 0.25,
+      "scores": {
+        "1B": 0.08,
+        "3B": 0.25,
+        "7B": 0.45,
+        "8B": 0.50,
+        "13B": 0.55,
+        "34B": 0.68,
+        "70B": 0.80
+      }
+    },
+    "truthfulqa": {
+      "label": "TruthfulQA",
+      "random_baseline": 0.25,
+      "scores": {
+        "1B": 0.30,
+        "3B": 0.38,
+        "7B": 0.42,
+        "8B": 0.45,
+        "13B": 0.48,
+        "34B": 0.55,
+        "70B": 0.62
+      }
+    }
+  }
+}

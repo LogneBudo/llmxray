@@ -1,0 +1,908 @@
+{
+  "id": "arc",
+  "name": "ARC-Challenge",
+  "description": "100 curated science reasoning questions from ARC-Challenge",
+  "builtIn": true,
+  "questions": [
+    {
+      "id": "arc_001",
+      "category": "arc",
+      "subcategory": "physics",
+      "question": "A metal spoon left in a pot of boiling water becomes hot. Which process is primarily responsible for the heat transfer through the spoon?",
+      "choices": ["A) Conduction", "B) Convection", "C) Radiation", "D) Evaporation"],
+      "correctAnswer": "A",
+      "difficulty": "easy"
+    },
+    {
+      "id": "arc_002",
+      "category": "arc",
+      "subcategory": "physics",
+      "question": "An astronaut floating in the International Space Station pushes off a wall. What happens to the astronaut and the station?",
+      "choices": ["A) Only the astronaut moves", "B) Both move in opposite directions", "C) Neither moves because there is no gravity", "D) Both move in the same direction"],
+      "correctAnswer": "B",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_003",
+      "category": "arc",
+      "subcategory": "physics",
+      "question": "A car accelerates from rest to 60 km/h in 10 seconds, then maintains that speed for 20 seconds. During which interval is the net force on the car greater?",
+      "choices": ["A) The first 10 seconds", "B) The last 20 seconds", "C) The net force is equal in both intervals", "D) There is no net force in either interval"],
+      "correctAnswer": "A",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_004",
+      "category": "arc",
+      "subcategory": "physics",
+      "question": "When white light passes through a glass prism, it separates into a spectrum of colors. This occurs because different wavelengths of light are:",
+      "choices": ["A) absorbed at different rates by the glass", "B) reflected at different angles inside the prism", "C) diffracted by the edges of the prism", "D) refracted by different amounts as they pass through the glass"],
+      "correctAnswer": "D",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_005",
+      "category": "arc",
+      "subcategory": "physics",
+      "question": "Two identical balls are dropped from the same height. Ball A falls in a vacuum, and Ball B falls through air. Which statement is true just before they hit the ground?",
+      "choices": ["A) Ball A has less kinetic energy than Ball B", "B) Both balls have the same kinetic energy", "C) Ball A has more kinetic energy than Ball B", "D) Ball B has more potential energy than Ball A"],
+      "correctAnswer": "C",
+      "difficulty": "hard"
+    },
+    {
+      "id": "arc_006",
+      "category": "arc",
+      "subcategory": "physics",
+      "question": "A student pushes a box across a rough floor at constant velocity. What can be concluded about the forces acting on the box?",
+      "choices": ["A) The applied force is greater than friction", "B) The box is accelerating", "C) Friction has been eliminated", "D) The net force on the box is zero"],
+      "correctAnswer": "D",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_007",
+      "category": "arc",
+      "subcategory": "physics",
+      "question": "Sound travels fastest through which of the following materials?",
+      "choices": ["A) A steel rail", "B) Water at room temperature", "C) Air at room temperature", "D) A vacuum"],
+      "correctAnswer": "A",
+      "difficulty": "easy"
+    },
+    {
+      "id": "arc_008",
+      "category": "arc",
+      "subcategory": "physics",
+      "question": "A circuit contains a battery and two identical light bulbs connected in parallel. If one bulb burns out, what happens to the brightness of the remaining bulb?",
+      "choices": ["A) It gets brighter", "B) It stays the same", "C) It gets dimmer", "D) It also burns out"],
+      "correctAnswer": "B",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_009",
+      "category": "arc",
+      "subcategory": "physics",
+      "question": "A roller coaster car is at the top of a hill moving slowly. As it descends, its speed increases. Which energy transformation is primarily occurring?",
+      "choices": ["A) Kinetic energy to potential energy", "B) Chemical energy to kinetic energy", "C) Potential energy to kinetic energy", "D) Thermal energy to kinetic energy"],
+      "correctAnswer": "C",
+      "difficulty": "easy"
+    },
+    {
+      "id": "arc_010",
+      "category": "arc",
+      "subcategory": "physics",
+      "question": "Why does a helium balloon rise in air?",
+      "choices": ["A) Helium is attracted to the upper atmosphere", "B) The buoyant force on the balloon exceeds its weight", "C) Helium molecules repel air molecules", "D) The balloon is pushed upward by air pressure from below only"],
+      "correctAnswer": "B",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_011",
+      "category": "arc",
+      "subcategory": "chemistry",
+      "question": "When iron is left outside in moist air, it gradually turns reddish-brown. This change is best described as:",
+      "choices": ["A) a physical change caused by weathering", "B) a nuclear change in the iron atoms", "C) a physical change in which iron dissolves", "D) a chemical change in which iron reacts with oxygen and water"],
+      "correctAnswer": "D",
+      "difficulty": "easy"
+    },
+    {
+      "id": "arc_012",
+      "category": "arc",
+      "subcategory": "chemistry",
+      "question": "A student adds baking soda to vinegar and observes bubbling. The gas produced is most likely:",
+      "choices": ["A) oxygen", "B) carbon dioxide", "C) hydrogen", "D) nitrogen"],
+      "correctAnswer": "B",
+      "difficulty": "easy"
+    },
+    {
+      "id": "arc_013",
+      "category": "arc",
+      "subcategory": "chemistry",
+      "question": "An element has 11 protons and 12 neutrons. What is its atomic number and mass number?",
+      "choices": ["A) Atomic number 12, mass number 23", "B) Atomic number 23, mass number 11", "C) Atomic number 11, mass number 23", "D) Atomic number 11, mass number 12"],
+      "correctAnswer": "C",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_014",
+      "category": "arc",
+      "subcategory": "chemistry",
+      "question": "Which of the following is an example of a chemical change?",
+      "choices": ["A) A log burning in a fireplace", "B) Sugar dissolving in tea", "C) Ice melting into water", "D) Cutting a piece of paper"],
+      "correctAnswer": "A",
+      "difficulty": "easy"
+    },
+    {
+      "id": "arc_015",
+      "category": "arc",
+      "subcategory": "chemistry",
+      "question": "In the periodic table, elements in the same group (column) tend to have similar:",
+      "choices": ["A) atomic masses", "B) numbers of neutrons", "C) numbers of electron shells", "D) chemical properties"],
+      "correctAnswer": "D",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_016",
+      "category": "arc",
+      "subcategory": "chemistry",
+      "question": "A solution with a pH of 3 is classified as:",
+      "choices": ["A) strongly acidic", "B) neutral", "C) weakly basic", "D) strongly basic"],
+      "correctAnswer": "A",
+      "difficulty": "easy"
+    },
+    {
+      "id": "arc_017",
+      "category": "arc",
+      "subcategory": "chemistry",
+      "question": "When sodium (Na) reacts with chlorine (Cl), sodium chloride (NaCl) is formed. What type of bond holds the compound together?",
+      "choices": ["A) Covalent bond", "B) Ionic bond", "C) Metallic bond", "D) Hydrogen bond"],
+      "correctAnswer": "B",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_018",
+      "category": "arc",
+      "subcategory": "chemistry",
+      "question": "In a balanced chemical equation, what is always conserved?",
+      "choices": ["A) The number of molecules", "B) The total volume of reactants", "C) The total mass of all substances", "D) The physical states of matter"],
+      "correctAnswer": "C",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_019",
+      "category": "arc",
+      "subcategory": "chemistry",
+      "question": "Water (H2O) has a higher boiling point than expected for a molecule of its size. This is primarily because of:",
+      "choices": ["A) covalent bonds between water molecules", "B) the high atomic mass of oxygen", "C) ionic interactions in liquid water", "D) hydrogen bonding between water molecules"],
+      "correctAnswer": "D",
+      "difficulty": "hard"
+    },
+    {
+      "id": "arc_020",
+      "category": "arc",
+      "subcategory": "chemistry",
+      "question": "A student heats a sealed container of gas. If the volume remains constant, what happens to the pressure?",
+      "choices": ["A) It decreases", "B) It increases", "C) It stays the same", "D) It first increases then decreases"],
+      "correctAnswer": "B",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_021",
+      "category": "arc",
+      "subcategory": "biology",
+      "question": "In a food chain, which organism typically has the largest population?",
+      "choices": ["A) Top predator", "B) Primary consumer", "C) Producer", "D) Secondary consumer"],
+      "correctAnswer": "C",
+      "difficulty": "easy"
+    },
+    {
+      "id": "arc_022",
+      "category": "arc",
+      "subcategory": "biology",
+      "question": "Which organelle is responsible for producing most of the ATP in a eukaryotic cell?",
+      "choices": ["A) Mitochondrion", "B) Ribosome", "C) Nucleus", "D) Golgi apparatus"],
+      "correctAnswer": "A",
+      "difficulty": "easy"
+    },
+    {
+      "id": "arc_023",
+      "category": "arc",
+      "subcategory": "biology",
+      "question": "A population of moths lives near a factory. Over many generations, darker moths become more common because birds find them harder to see against soot-covered trees. This is an example of:",
+      "choices": ["A) genetic drift", "B) natural selection", "C) artificial selection", "D) mutation"],
+      "correctAnswer": "B",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_024",
+      "category": "arc",
+      "subcategory": "biology",
+      "question": "Which of the following best explains why plant cells can maintain their shape without a skeleton?",
+      "choices": ["A) They contain more mitochondria than animal cells", "B) Their cell membranes are thicker than those of animal cells", "C) They produce more ATP for structural support", "D) They have a large central vacuole and a rigid cell wall"],
+      "correctAnswer": "D",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_025",
+      "category": "arc",
+      "subcategory": "biology",
+      "question": "During photosynthesis, plants convert carbon dioxide and water into glucose and oxygen. What is the primary source of energy for this process?",
+      "choices": ["A) Heat from the soil", "B) Light energy from the Sun", "C) Chemical energy in water", "D) Kinetic energy from wind"],
+      "correctAnswer": "B",
+      "difficulty": "easy"
+    },
+    {
+      "id": "arc_026",
+      "category": "arc",
+      "subcategory": "biology",
+      "question": "Antibiotics are effective against bacterial infections but not viral infections. This is primarily because:",
+      "choices": ["A) viruses lack the cellular structures that antibiotics target", "B) viruses are too small for antibiotics to reach", "C) antibiotics strengthen the immune system against bacteria only", "D) viruses reproduce too quickly for antibiotics to work"],
+      "correctAnswer": "A",
+      "difficulty": "hard"
+    },
+    {
+      "id": "arc_027",
+      "category": "arc",
+      "subcategory": "biology",
+      "question": "Which process results in cells that are genetically identical to the parent cell?",
+      "choices": ["A) Meiosis", "B) Fertilization", "C) Mitosis", "D) Crossing over"],
+      "correctAnswer": "C",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_028",
+      "category": "arc",
+      "subcategory": "biology",
+      "question": "A scientist discovers that a certain enzyme works best at 37 degrees Celsius and stops functioning at 60 degrees Celsius. The most likely explanation for the loss of function at 60 degrees is that:",
+      "choices": ["A) the enzyme evaporates at high temperatures", "B) the substrate becomes too active to bind", "C) the enzyme converts into a different enzyme", "D) the enzyme's shape changes and it can no longer bind its substrate"],
+      "correctAnswer": "D",
+      "difficulty": "hard"
+    },
+    {
+      "id": "arc_029",
+      "category": "arc",
+      "subcategory": "biology",
+      "question": "Which blood vessels carry blood away from the heart?",
+      "choices": ["A) Veins", "B) Capillaries", "C) Arteries", "D) Lymph vessels"],
+      "correctAnswer": "C",
+      "difficulty": "easy"
+    },
+    {
+      "id": "arc_030",
+      "category": "arc",
+      "subcategory": "biology",
+      "question": "A desert cactus has thick, waxy skin and spines instead of broad leaves. These adaptations primarily help the plant:",
+      "choices": ["A) attract more pollinators", "B) reduce water loss", "C) increase the rate of photosynthesis", "D) absorb more sunlight"],
+      "correctAnswer": "B",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_031",
+      "category": "arc",
+      "subcategory": "earth_science",
+      "question": "Most of Earth's freshwater is found in:",
+      "choices": ["A) rivers and lakes", "B) underground aquifers", "C) the atmosphere", "D) glaciers and ice caps"],
+      "correctAnswer": "D",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_032",
+      "category": "arc",
+      "subcategory": "earth_science",
+      "question": "The movement of tectonic plates is driven primarily by:",
+      "choices": ["A) convection currents in the mantle", "B) the gravitational pull of the Moon", "C) the rotation of Earth on its axis", "D) wind and ocean currents"],
+      "correctAnswer": "A",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_033",
+      "category": "arc",
+      "subcategory": "earth_science",
+      "question": "A geologist finds fossils of tropical plants in a region that now has a cold climate. Which explanation is most reasonable?",
+      "choices": ["A) The fossils were placed there by humans", "B) The region was once closer to the equator due to plate movement", "C) Tropical plants once grew in cold climates", "D) The fossils formed from local cold-climate plants"],
+      "correctAnswer": "B",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_034",
+      "category": "arc",
+      "subcategory": "earth_science",
+      "question": "Which type of rock is formed when magma cools and solidifies?",
+      "choices": ["A) Sedimentary", "B) Metamorphic", "C) Igneous", "D) Fossiliferous"],
+      "correctAnswer": "C",
+      "difficulty": "easy"
+    },
+    {
+      "id": "arc_035",
+      "category": "arc",
+      "subcategory": "earth_science",
+      "question": "The ozone layer protects life on Earth primarily by:",
+      "choices": ["A) trapping heat to warm the surface", "B) absorbing harmful ultraviolet radiation from the Sun", "C) reflecting visible light back into space", "D) producing oxygen for organisms to breathe"],
+      "correctAnswer": "B",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_036",
+      "category": "arc",
+      "subcategory": "earth_science",
+      "question": "A layer of sandstone is found above a layer of limestone in a cliff face. Assuming the layers have not been overturned, which statement is most likely true?",
+      "choices": ["A) The sandstone is older than the limestone", "B) Both layers formed at the same time", "C) The limestone is older than the sandstone", "D) The ages cannot be determined from their positions"],
+      "correctAnswer": "C",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_037",
+      "category": "arc",
+      "subcategory": "earth_science",
+      "question": "What causes ocean tides?",
+      "choices": ["A) The gravitational pull of the Moon and the Sun", "B) Wind patterns across the ocean surface", "C) Differences in water temperature", "D) Underwater volcanic activity"],
+      "correctAnswer": "A",
+      "difficulty": "easy"
+    },
+    {
+      "id": "arc_038",
+      "category": "arc",
+      "subcategory": "earth_science",
+      "question": "Which of the following is the best evidence that two continents were once joined together?",
+      "choices": ["A) They have similar weather patterns today", "B) Both have mountain ranges", "C) They are at similar latitudes", "D) Matching fossils and rock formations are found on both continents"],
+      "correctAnswer": "D",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_039",
+      "category": "arc",
+      "subcategory": "earth_science",
+      "question": "The water cycle is driven primarily by energy from:",
+      "choices": ["A) Earth's core", "B) the Moon", "C) the Sun", "D) underground springs"],
+      "correctAnswer": "C",
+      "difficulty": "easy"
+    },
+    {
+      "id": "arc_040",
+      "category": "arc",
+      "subcategory": "earth_science",
+      "question": "An earthquake occurs along a fault line. Which seismic waves arrive at a monitoring station first?",
+      "choices": ["A) S-waves (secondary waves)", "B) P-waves (primary waves)", "C) Surface waves", "D) All seismic waves arrive at the same time"],
+      "correctAnswer": "B",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_041",
+      "category": "arc",
+      "subcategory": "astronomy",
+      "question": "What causes the phases of the Moon as seen from Earth?",
+      "choices": ["A) Earth's shadow falling on the Moon", "B) The Moon's changing distance from Earth", "C) The changing angle between the Sun, Moon, and Earth", "D) Clouds in Earth's atmosphere blocking parts of the Moon"],
+      "correctAnswer": "C",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_042",
+      "category": "arc",
+      "subcategory": "astronomy",
+      "question": "Why do stars appear to move across the sky during the night?",
+      "choices": ["A) Stars orbit around Earth", "B) Stars move through space at high speeds", "C) Earth's atmosphere bends starlight", "D) Earth rotates on its axis"],
+      "correctAnswer": "D",
+      "difficulty": "easy"
+    },
+    {
+      "id": "arc_043",
+      "category": "arc",
+      "subcategory": "astronomy",
+      "question": "The Sun produces energy primarily through:",
+      "choices": ["A) nuclear fusion of hydrogen into helium", "B) chemical combustion of hydrogen gas", "C) nuclear fission of heavy elements", "D) gravitational compression alone"],
+      "correctAnswer": "A",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_044",
+      "category": "arc",
+      "subcategory": "astronomy",
+      "question": "A light-year is a measurement of:",
+      "choices": ["A) time", "B) distance", "C) speed", "D) brightness"],
+      "correctAnswer": "B",
+      "difficulty": "easy"
+    },
+    {
+      "id": "arc_045",
+      "category": "arc",
+      "subcategory": "astronomy",
+      "question": "If Earth's axis were not tilted, what would be the most significant consequence?",
+      "choices": ["A) There would be no day and night cycle", "B) Earth would not orbit the Sun", "C) There would be no seasons", "D) The Moon would not orbit Earth"],
+      "correctAnswer": "C",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_046",
+      "category": "arc",
+      "subcategory": "astronomy",
+      "question": "Which planet in our solar system has the strongest gravitational pull at its surface?",
+      "choices": ["A) Earth", "B) Saturn", "C) Mars", "D) Jupiter"],
+      "correctAnswer": "D",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_047",
+      "category": "arc",
+      "subcategory": "astronomy",
+      "question": "A star that appears blue-white is most likely:",
+      "choices": ["A) hotter than a yellow star", "B) cooler than a yellow star", "C) the same temperature as a red star", "D) farther away than a red star"],
+      "correctAnswer": "A",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_048",
+      "category": "arc",
+      "subcategory": "astronomy",
+      "question": "Why is it not possible to see stars during the daytime with the naked eye (other than the Sun)?",
+      "choices": ["A) Stars are only present in the sky at night", "B) Earth's atmosphere blocks starlight during the day", "C) Scattered sunlight in the atmosphere is too bright for stars to be visible", "D) Stars move to the other side of the galaxy during the day"],
+      "correctAnswer": "C",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_049",
+      "category": "arc",
+      "subcategory": "astronomy",
+      "question": "A solar eclipse occurs when:",
+      "choices": ["A) Earth passes between the Sun and the Moon", "B) the Moon passes between the Sun and Earth", "C) the Sun passes between Earth and the Moon", "D) Earth's shadow falls on the Sun"],
+      "correctAnswer": "B",
+      "difficulty": "easy"
+    },
+    {
+      "id": "arc_050",
+      "category": "arc",
+      "subcategory": "astronomy",
+      "question": "The Hertzsprung-Russell diagram plots stars according to their luminosity and temperature. Most stars, including the Sun, fall on the:",
+      "choices": ["A) white dwarf region", "B) main sequence", "C) red giant branch", "D) supergiant region"],
+      "correctAnswer": "B",
+      "difficulty": "hard"
+    },
+    {
+      "id": "arc_051",
+      "category": "arc",
+      "subcategory": "ecology",
+      "question": "In an ecosystem, decomposers are important because they:",
+      "choices": ["A) produce oxygen through photosynthesis", "B) provide food for top predators", "C) break down dead organisms and recycle nutrients back into the soil", "D) control the population of producers"],
+      "correctAnswer": "C",
+      "difficulty": "easy"
+    },
+    {
+      "id": "arc_052",
+      "category": "arc",
+      "subcategory": "ecology",
+      "question": "A non-native species of vine is introduced to a forest and quickly spreads, outcompeting local plants for sunlight. This is an example of:",
+      "choices": ["A) an invasive species disrupting an ecosystem", "B) mutualism", "C) succession", "D) natural selection improving the forest"],
+      "correctAnswer": "A",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_053",
+      "category": "arc",
+      "subcategory": "ecology",
+      "question": "If all the wolves were removed from a forest ecosystem, the most likely immediate effect on the deer population would be:",
+      "choices": ["A) a decrease, due to loss of a food source", "B) no change, since deer do not interact with wolves", "C) an increase, due to reduced predation", "D) a decrease, due to increased competition with wolves"],
+      "correctAnswer": "C",
+      "difficulty": "easy"
+    },
+    {
+      "id": "arc_054",
+      "category": "arc",
+      "subcategory": "ecology",
+      "question": "Which of the following is a biotic factor in an ecosystem?",
+      "choices": ["A) Temperature", "B) Sunlight", "C) Rainfall", "D) Bacteria in the soil"],
+      "correctAnswer": "D",
+      "difficulty": "easy"
+    },
+    {
+      "id": "arc_055",
+      "category": "arc",
+      "subcategory": "ecology",
+      "question": "A lichen is a symbiotic relationship between a fungus and an alga. The alga provides food via photosynthesis, and the fungus provides structure and moisture. This relationship is best described as:",
+      "choices": ["A) mutualism", "B) parasitism", "C) commensalism", "D) competition"],
+      "correctAnswer": "A",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_056",
+      "category": "arc",
+      "subcategory": "ecology",
+      "question": "Why do energy pyramids narrow toward the top?",
+      "choices": ["A) Producers use more energy than consumers", "B) Energy is lost as heat at each trophic level", "C) Top predators consume more food than lower-level organisms", "D) There are more species at higher trophic levels"],
+      "correctAnswer": "B",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_057",
+      "category": "arc",
+      "subcategory": "ecology",
+      "question": "After a volcanic eruption covers an island with lava, the first organisms to colonize the bare rock are typically:",
+      "choices": ["A) large trees", "B) grasses and shrubs", "C) insects and small mammals", "D) lichens and mosses"],
+      "correctAnswer": "D",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_058",
+      "category": "arc",
+      "subcategory": "ecology",
+      "question": "A farmer plants the same crop in a field year after year without rotating crops. Which problem is most likely to occur?",
+      "choices": ["A) The soil will become too acidic from rainfall", "B) Specific soil nutrients will become depleted", "C) The crop will evolve into a different species", "D) Rainfall will decrease in the area"],
+      "correctAnswer": "B",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_059",
+      "category": "arc",
+      "subcategory": "ecology",
+      "question": "Carbon dioxide levels in the atmosphere have increased significantly over the past century. Which human activity is the primary cause?",
+      "choices": ["A) Burning fossil fuels", "B) Planting forests", "C) Building dams", "D) Mining metals"],
+      "correctAnswer": "A",
+      "difficulty": "easy"
+    },
+    {
+      "id": "arc_060",
+      "category": "arc",
+      "subcategory": "ecology",
+      "question": "A keystone species is removed from an ecosystem. What is the most likely outcome?",
+      "choices": ["A) The ecosystem remains unchanged", "B) Only the keystone species' prey is affected", "C) A new keystone species immediately takes its place", "D) The ecosystem undergoes significant structural changes"],
+      "correctAnswer": "D",
+      "difficulty": "hard"
+    },
+    {
+      "id": "arc_061",
+      "category": "arc",
+      "subcategory": "anatomy",
+      "question": "The primary function of the small intestine in the human digestive system is to:",
+      "choices": ["A) store food before digestion", "B) absorb nutrients into the bloodstream", "C) break food into smaller pieces mechanically", "D) produce bile for fat digestion"],
+      "correctAnswer": "B",
+      "difficulty": "easy"
+    },
+    {
+      "id": "arc_062",
+      "category": "arc",
+      "subcategory": "anatomy",
+      "question": "Which part of the brain is primarily responsible for coordinating balance and movement?",
+      "choices": ["A) Cerebrum", "B) Medulla oblongata", "C) Cerebellum", "D) Hypothalamus"],
+      "correctAnswer": "C",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_063",
+      "category": "arc",
+      "subcategory": "anatomy",
+      "question": "Red blood cells are produced in the:",
+      "choices": ["A) bone marrow", "B) kidneys", "C) liver", "D) spleen"],
+      "correctAnswer": "A",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_064",
+      "category": "arc",
+      "subcategory": "anatomy",
+      "question": "A person suffers damage to their alveoli. Which body function would be most directly affected?",
+      "choices": ["A) Digestion of food", "B) Filtering of blood", "C) Transmission of nerve impulses", "D) Gas exchange in the lungs"],
+      "correctAnswer": "D",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_065",
+      "category": "arc",
+      "subcategory": "anatomy",
+      "question": "The function of white blood cells is primarily to:",
+      "choices": ["A) carry oxygen to tissues", "B) defend the body against infections", "C) help blood clot at wound sites", "D) transport nutrients from digested food"],
+      "correctAnswer": "B",
+      "difficulty": "easy"
+    },
+    {
+      "id": "arc_066",
+      "category": "arc",
+      "subcategory": "anatomy",
+      "question": "Which organ produces insulin to regulate blood sugar levels?",
+      "choices": ["A) Liver", "B) Kidney", "C) Pancreas", "D) Stomach"],
+      "correctAnswer": "C",
+      "difficulty": "easy"
+    },
+    {
+      "id": "arc_067",
+      "category": "arc",
+      "subcategory": "anatomy",
+      "question": "Tendons connect:",
+      "choices": ["A) bone to bone", "B) muscle to muscle", "C) nerve to muscle", "D) muscle to bone"],
+      "correctAnswer": "D",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_068",
+      "category": "arc",
+      "subcategory": "anatomy",
+      "question": "A person exercises vigorously and begins breathing rapidly. The increased breathing rate is primarily a response to:",
+      "choices": ["A) increased carbon dioxide levels in the blood", "B) increased oxygen levels in the blood", "C) decreased body temperature", "D) increased blood pressure"],
+      "correctAnswer": "A",
+      "difficulty": "hard"
+    },
+    {
+      "id": "arc_069",
+      "category": "arc",
+      "subcategory": "anatomy",
+      "question": "The kidneys help maintain homeostasis by:",
+      "choices": ["A) producing digestive enzymes", "B) pumping blood through the body", "C) filtering waste products from the blood", "D) absorbing nutrients from food"],
+      "correctAnswer": "C",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_070",
+      "category": "arc",
+      "subcategory": "anatomy",
+      "question": "Neurons transmit electrical signals along their length. The gap between two neurons where chemical signals are passed is called the:",
+      "choices": ["A) axon", "B) synapse", "C) myelin sheath", "D) dendrite"],
+      "correctAnswer": "B",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_071",
+      "category": "arc",
+      "subcategory": "genetics",
+      "question": "A pea plant with the genotype Tt (where T is dominant for tall) is crossed with a plant with genotype tt. What fraction of the offspring are expected to be tall?",
+      "choices": ["A) All of them", "B) Three-fourths", "C) One-half", "D) One-fourth"],
+      "correctAnswer": "C",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_072",
+      "category": "arc",
+      "subcategory": "genetics",
+      "question": "DNA is described as a double helix. The two strands are held together by:",
+      "choices": ["A) covalent bonds between sugar molecules", "B) hydrogen bonds between complementary base pairs", "C) ionic bonds between phosphate groups", "D) peptide bonds between amino acids"],
+      "correctAnswer": "B",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_073",
+      "category": "arc",
+      "subcategory": "genetics",
+      "question": "A mutation in a gene that codes for an enzyme could result in:",
+      "choices": ["A) a change in the shape and function of the enzyme", "B) a different number of chromosomes in the cell", "C) the cell becoming a different type of organism", "D) an increase in the number of genes on the chromosome"],
+      "correctAnswer": "A",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_074",
+      "category": "arc",
+      "subcategory": "genetics",
+      "question": "In humans, sex is determined by which chromosomes?",
+      "choices": ["A) Chromosome pairs 1 through 22", "B) Mitochondrial DNA", "C) The X and Y chromosomes", "D) The number of autosomes"],
+      "correctAnswer": "C",
+      "difficulty": "easy"
+    },
+    {
+      "id": "arc_075",
+      "category": "arc",
+      "subcategory": "genetics",
+      "question": "Identical twins develop from a single fertilized egg that splits. Compared to fraternal twins, identical twins share:",
+      "choices": ["A) approximately 50% of their DNA", "B) no more DNA than any two siblings", "C) exactly half of their mother's DNA only", "D) nearly 100% of their DNA"],
+      "correctAnswer": "D",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_076",
+      "category": "arc",
+      "subcategory": "genetics",
+      "question": "The process by which the information in DNA is used to build a protein involves two main steps. These are:",
+      "choices": ["A) mitosis and meiosis", "B) transcription and translation", "C) replication and mutation", "D) crossing over and independent assortment"],
+      "correctAnswer": "B",
+      "difficulty": "hard"
+    },
+    {
+      "id": "arc_077",
+      "category": "arc",
+      "subcategory": "genetics",
+      "question": "A couple has four children, all of whom are girls. What is the probability that their fifth child will be a boy?",
+      "choices": ["A) 100%, since they are due for a boy", "B) 25%, because boys are less likely after four girls", "C) 50%, because each birth is an independent event", "D) 0%, because the parents can only have girls"],
+      "correctAnswer": "C",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_078",
+      "category": "arc",
+      "subcategory": "genetics",
+      "question": "Selective breeding of dogs for specific traits over many generations is an example of:",
+      "choices": ["A) natural selection", "B) genetic engineering", "C) spontaneous mutation", "D) artificial selection"],
+      "correctAnswer": "D",
+      "difficulty": "easy"
+    },
+    {
+      "id": "arc_079",
+      "category": "arc",
+      "subcategory": "genetics",
+      "question": "Which of the following carries the genetic code from the nucleus to the ribosome for protein synthesis?",
+      "choices": ["A) Transfer RNA (tRNA)", "B) Messenger RNA (mRNA)", "C) Ribosomal RNA (rRNA)", "D) DNA polymerase"],
+      "correctAnswer": "B",
+      "difficulty": "hard"
+    },
+    {
+      "id": "arc_080",
+      "category": "arc",
+      "subcategory": "genetics",
+      "question": "Genetic variation in a population is important for survival because it:",
+      "choices": ["A) ensures all offspring are identical to their parents", "B) prevents mutations from occurring", "C) increases the chance that some individuals can survive environmental changes", "D) guarantees that the strongest traits are always passed on"],
+      "correctAnswer": "C",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_081",
+      "category": "arc",
+      "subcategory": "meteorology",
+      "question": "A cold front occurs when a mass of cold air moves into an area of warmer air. What type of weather is most commonly associated with a cold front?",
+      "choices": ["A) Extended periods of light drizzle", "B) Clear skies and calm winds", "C) Heavy precipitation and thunderstorms", "D) Fog and low visibility"],
+      "correctAnswer": "C",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_082",
+      "category": "arc",
+      "subcategory": "meteorology",
+      "question": "The Coriolis effect causes moving air and water to curve. This is due to:",
+      "choices": ["A) the gravitational pull of the Moon", "B) differences in air temperature", "C) friction between air and the ground", "D) Earth's rotation"],
+      "correctAnswer": "D",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_083",
+      "category": "arc",
+      "subcategory": "meteorology",
+      "question": "Sea breezes blow from the ocean toward land during the day. This happens because:",
+      "choices": ["A) land heats up faster than water, causing air over land to rise", "B) the ocean is always colder than the land", "C) Earth's rotation pushes wind toward the coast", "D) evaporation from the ocean creates high pressure over water"],
+      "correctAnswer": "A",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_084",
+      "category": "arc",
+      "subcategory": "meteorology",
+      "question": "Relative humidity reaches 100% when air is cooled to its dew point. What is most likely to happen at this point?",
+      "choices": ["A) The air becomes drier", "B) Condensation and cloud or fog formation occurs", "C) Wind speed increases", "D) Air pressure rises sharply"],
+      "correctAnswer": "B",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_085",
+      "category": "arc",
+      "subcategory": "meteorology",
+      "question": "Hurricanes form over warm tropical oceans and weaken when they move over land. The primary reason they weaken over land is:",
+      "choices": ["A) land surfaces are always colder than ocean water", "B) mountains block the wind circulation", "C) they lose their energy source of warm, moist air from the ocean", "D) land reflects the hurricane's energy back into space"],
+      "correctAnswer": "C",
+      "difficulty": "hard"
+    },
+    {
+      "id": "arc_086",
+      "category": "arc",
+      "subcategory": "meteorology",
+      "question": "An air mass is classified as maritime tropical (mT). This means the air mass is:",
+      "choices": ["A) cold and dry", "B) warm and moist", "C) cold and moist", "D) warm and dry"],
+      "correctAnswer": "B",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_087",
+      "category": "arc",
+      "subcategory": "meteorology",
+      "question": "As altitude increases in the troposphere, air temperature generally:",
+      "choices": ["A) increases", "B) remains constant", "C) first decreases then increases", "D) decreases"],
+      "correctAnswer": "D",
+      "difficulty": "easy"
+    },
+    {
+      "id": "arc_088",
+      "category": "arc",
+      "subcategory": "meteorology",
+      "question": "A barometer measures atmospheric pressure. If a barometer reading drops rapidly, it most likely indicates:",
+      "choices": ["A) a storm approaching", "B) fair weather approaching", "C) no change in weather", "D) an earthquake is imminent"],
+      "correctAnswer": "A",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_089",
+      "category": "arc",
+      "subcategory": "meteorology",
+      "question": "The greenhouse effect is a natural process that warms Earth's surface. It occurs because certain gases in the atmosphere:",
+      "choices": ["A) reflect sunlight before it reaches the surface", "B) produce heat through chemical reactions", "C) absorb and re-emit infrared radiation from Earth's surface", "D) block ultraviolet radiation from the Sun"],
+      "correctAnswer": "C",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_090",
+      "category": "arc",
+      "subcategory": "meteorology",
+      "question": "Lightning is caused by:",
+      "choices": ["A) friction between clouds and the ground", "B) the buildup and discharge of electrical charge in the atmosphere", "C) chemical reactions between oxygen and nitrogen at high altitudes", "D) the release of stored solar energy from clouds"],
+      "correctAnswer": "B",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_091",
+      "category": "arc",
+      "subcategory": "geology",
+      "question": "Marble is formed when limestone is subjected to intense heat and pressure. Marble is therefore classified as a:",
+      "choices": ["A) sedimentary rock", "B) igneous rock", "C) metamorphic rock", "D) volcanic rock"],
+      "correctAnswer": "C",
+      "difficulty": "easy"
+    },
+    {
+      "id": "arc_092",
+      "category": "arc",
+      "subcategory": "geology",
+      "question": "The Mohs hardness scale ranks minerals from 1 to 10. A mineral with a hardness of 7 can scratch which of the following?",
+      "choices": ["A) Any mineral with hardness less than 7", "B) A mineral with hardness 7 only", "C) A mineral with hardness 8", "D) No other minerals"],
+      "correctAnswer": "A",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_093",
+      "category": "arc",
+      "subcategory": "geology",
+      "question": "A geologist examines a rock and finds it is made of rounded pebbles cemented together. This rock is most likely:",
+      "choices": ["A) granite", "B) conglomerate", "C) obsidian", "D) slate"],
+      "correctAnswer": "B",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_094",
+      "category": "arc",
+      "subcategory": "geology",
+      "question": "Volcanoes are most commonly found along:",
+      "choices": ["A) the centers of tectonic plates", "B) the edges of large lakes", "C) regions far from any tectonic activity", "D) plate boundaries where plates converge or diverge"],
+      "correctAnswer": "D",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_095",
+      "category": "arc",
+      "subcategory": "geology",
+      "question": "Which process is primarily responsible for the formation of a river delta?",
+      "choices": ["A) Deposition of sediment at the mouth of a river", "B) Erosion of bedrock by wind", "C) Tectonic uplift of the ocean floor", "D) Evaporation of river water"],
+      "correctAnswer": "A",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_096",
+      "category": "arc",
+      "subcategory": "geology",
+      "question": "The Grand Canyon was primarily formed by:",
+      "choices": ["A) a single massive earthquake", "B) volcanic eruptions over millions of years", "C) glaciers carving through the rock", "D) the erosive action of the Colorado River over millions of years"],
+      "correctAnswer": "D",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_097",
+      "category": "arc",
+      "subcategory": "geology",
+      "question": "A mineral breaks along smooth, flat surfaces. This property is called:",
+      "choices": ["A) fracture", "B) cleavage", "C) luster", "D) streak"],
+      "correctAnswer": "B",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arc_098",
+      "category": "arc",
+      "subcategory": "geology",
+      "question": "Fossils are most commonly found in which type of rock?",
+      "choices": ["A) Igneous", "B) Metamorphic", "C) Sedimentary", "D) Volcanic glass"],
+      "correctAnswer": "C",
+      "difficulty": "easy"
+    },
+    {
+      "id": "arc_099",
+      "category": "arc",
+      "subcategory": "geology",
+      "question": "An unconformity in rock layers indicates that:",
+      "choices": ["A) the rocks were formed at the same time", "B) there is a gap in the geological record, often due to erosion", "C) volcanic activity deposited new layers", "D) the rocks have never been disturbed"],
+      "correctAnswer": "B",
+      "difficulty": "hard"
+    },
+    {
+      "id": "arc_100",
+      "category": "arc",
+      "subcategory": "geology",
+      "question": "Stalactites and stalagmites in caves form primarily through the process of:",
+      "choices": ["A) erosion by underground rivers", "B) volcanic activity heating underground rock", "C) freezing and thawing of water in rock cracks", "D) deposition of calcium carbonate from dripping mineral-rich water"],
+      "correctAnswer": "D",
+      "difficulty": "hard"
+    }
+  ]
+}

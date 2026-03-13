@@ -6,6 +6,7 @@ import { loadModelInfo } from '@/services/model-service'
 import { formatBytes } from '@/utils/format'
 import ModelArchitectureDiagram from '@/components/introspection/ModelArchitectureDiagram.vue'
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue'
+import ModelCapabilityIcons from '@/components/common/ModelCapabilityIcons.vue'
 
 const modelStore = useModelStore()
 const introspectionStore = useIntrospectionStore()
@@ -56,7 +57,10 @@ onMounted(async () => {
           "
           @click="selectModel(model.name)"
         >
-          <div class="text-sm font-medium text-text-primary">{{ model.name }}</div>
+          <div class="flex items-center gap-2">
+            <span class="text-sm font-medium text-text-primary">{{ model.name }}</span>
+            <ModelCapabilityIcons :model-name="model.name" />
+          </div>
           <div class="mt-1 flex gap-3 text-xs text-text-muted">
             <span>{{ model.details.parameter_size }}</span>
             <span>{{ model.details.quantization_level }}</span>
@@ -73,7 +77,7 @@ onMounted(async () => {
       <!-- Model details -->
       <div class="lg:col-span-2">
         <div v-if="selectedArchitecture">
-          <ModelArchitectureDiagram :architecture="selectedArchitecture" />
+          <ModelArchitectureDiagram :architecture="selectedArchitecture" :model-name="selectedModel!" />
         </div>
         <div v-else-if="selectedModel" class="flex items-center gap-2 text-text-secondary p-4">
           <LoadingSpinner />

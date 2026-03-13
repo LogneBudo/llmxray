@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useModelStore } from '@/stores/model-store'
 import { onMounted } from 'vue'
+import ModelCapabilityIcons from '@/components/common/ModelCapabilityIcons.vue'
 
 const modelStore = useModelStore()
 
@@ -43,6 +44,7 @@ onMounted(async () => {
         @click="toggleModel(model.name)"
       >
         {{ model.name }}
+        <ModelCapabilityIcons :model-name="model.name" />
       </button>
     </div>
   </div>

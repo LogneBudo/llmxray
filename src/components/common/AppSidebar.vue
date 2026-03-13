@@ -10,6 +10,7 @@ const navItems = [
   { path: '/rag', label: 'Knowledge Base', icon: '📚' },
   { path: '/tools', label: 'Tool Workshop', icon: '⚒' },
   { path: '/models', label: 'Models', icon: '◎' },
+  { path: '/benchmark', label: 'Benchmark', icon: '⏱' },
   { path: '/system', label: 'My System', icon: '🖥' },
   { path: '/settings', label: 'Settings', icon: '⚙' },
 ]

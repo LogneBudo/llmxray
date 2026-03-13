@@ -50,7 +50,7 @@ onMounted(async () => {
   <div class="space-y-6">
     <div v-if="architecture">
       <h3 class="mb-3 text-sm font-medium text-text-secondary">Model Architecture</h3>
-      <ModelArchitectureDiagram :architecture="architecture" />
+      <ModelArchitectureDiagram :architecture="architecture" :model-name="modelName" />
     </div>
 
     <div v-if="attentionPatterns.length > 0">

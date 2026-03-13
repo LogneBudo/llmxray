@@ -40,6 +40,11 @@ export const router = createRouter({
           component: () => import('@/pages/ModelsPage.vue'),
         },
         {
+          path: 'benchmark',
+          name: 'benchmark',
+          component: () => import('@/pages/BenchmarkPage.vue'),
+        },
+        {
           path: 'tools',
           name: 'tools',
           component: () => import('@/pages/ToolWorkshopPage.vue'),

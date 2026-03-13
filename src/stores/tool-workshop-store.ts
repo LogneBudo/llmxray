@@ -105,7 +105,7 @@ export const useToolWorkshopStore = defineStore('tool-workshop', () => {
       id,
       definition: partial.definition,
       implementation: partial.implementation ?? createEmptyImplementation(),
-      enabled: partial.enabled ?? true,
+      enabled: partial.enabled ?? false,
       category: partial.category ?? 'custom',
       createdAt: now,
       updatedAt: now,
@@ -127,6 +127,12 @@ export const useToolWorkshopStore = defineStore('tool-workshop', () => {
   function removeTool(id: string) {
     delete tools.value[id]
     if (selectedToolId.value === id) selectedToolId.value = null
+    persist()
+  }
+
+  function clearAll() {
+    tools.value = {}
+    selectedToolId.value = null
     persist()
   }
 
@@ -172,6 +178,7 @@ export const useToolWorkshopStore = defineStore('tool-workshop', () => {
     addTool,
     updateTool,
     removeTool,
+    clearAll,
     duplicateTool,
     toggleEnabled,
     selectTool,

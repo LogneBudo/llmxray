@@ -31,7 +31,7 @@ const sessionStore = useSessionStore()
             @click="$router.push({ name: 'session', params: { id: session.id } })"
           >
             <td class="px-4 py-2 font-medium text-text-primary">{{ session.model }}</td>
-            <td class="px-4 py-2"><StatusBadge :status="session.status" /></td>
+            <td class="px-4 py-2"><StatusBadge :status="session.status" :detail="session.error" /></td>
             <td class="px-4 py-2 text-text-secondary">
               {{ session.metrics ? session.metrics.totalTokenCount : '—' }}
             </td>

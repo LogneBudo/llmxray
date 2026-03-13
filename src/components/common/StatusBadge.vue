@@ -3,6 +3,7 @@ import { computed } from 'vue'
 
 const props = defineProps<{
   status: string
+  detail?: string
 }>()
 
 const badgeClass = computed(() => {
@@ -26,6 +27,7 @@ const badgeClass = computed(() => {
   <span
     class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium"
     :class="badgeClass"
+    :title="detail"
   >
     {{ status }}
   </span>

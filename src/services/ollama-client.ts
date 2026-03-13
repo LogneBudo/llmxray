@@ -50,7 +50,10 @@ class OllamaClient {
       body: JSON.stringify({ ...req, stream: true }),
       signal,
     })
-    if (!res.ok) throw new Error(`Generate failed: ${res.statusText}`)
+    if (!res.ok) {
+      const detail = await res.text().catch(() => '')
+      throw new Error(detail || `Generate failed: ${res.statusText}`)
+    }
     if (!res.body) throw new Error('No response body for streaming')
     return res.body
   }
@@ -65,7 +68,40 @@ class OllamaClient {
       body: JSON.stringify({ ...req, stream: true }),
       signal,
     })
-    if (!res.ok) throw new Error(`Chat failed: ${res.statusText}`)
+    if (!res.ok) {
+      const detail = await res.text().catch(() => '')
+      throw new Error(detail || `Chat failed: ${res.statusText}`)
+    }
+    if (!res.body) throw new Error('No response body for streaming')
+    return res.body
+  }
+
+  /**
+   * Stream chat via the OpenAI-compatible endpoint (/v1/chat/completions).
+   * Returns real token logprobs — used by the benchmark runner.
+   */
+  async streamChatOpenAI(
+    params: {
+      model: string
+      messages: Array<{ role: string; content: string }>
+      max_tokens?: number
+      temperature?: number
+      logprobs?: boolean
+      top_logprobs?: number
+      num_ctx?: number
+    },
+    signal?: AbortSignal,
+  ): Promise<ReadableStream<Uint8Array>> {
+    const res = await fetch('/v1/chat/completions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ...params, stream: true }),
+      signal,
+    })
+    if (!res.ok) {
+      const detail = await res.text().catch(() => '')
+      throw new Error(detail || `OpenAI chat failed: ${res.statusText}`)
+    }
     if (!res.body) throw new Error('No response body for streaming')
     return res.body
   }
@@ -76,7 +112,10 @@ class OllamaClient {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ ...req, stream: false }),
     })
-    if (!res.ok) throw new Error(`Generate failed: ${res.statusText}`)
+    if (!res.ok) {
+      const detail = await res.text().catch(() => '')
+      throw new Error(detail || `Generate failed: ${res.statusText}`)
+    }
     return res.json() as Promise<OllamaGenerateChunk>
   }
 
@@ -86,7 +125,10 @@ class OllamaClient {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ ...req, stream: false }),
     })
-    if (!res.ok) throw new Error(`Chat failed: ${res.statusText}`)
+    if (!res.ok) {
+      const detail = await res.text().catch(() => '')
+      throw new Error(detail || `Chat failed: ${res.statusText}`)
+    }
     return res.json() as Promise<OllamaChatChunk>
   }
 

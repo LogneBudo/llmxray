@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { Handle, Position } from '@vue-flow/core'
 import { probeApiAdvanced, discoverOpenApiSpec } from '@/services/probe'
 import type { ProbeAdvancedResult, DiscoveryResult } from '@/services/probe'
@@ -7,8 +7,20 @@ import { generateProbeBody, generateMappings, generateReturnSchema } from '@/ser
 import { parseOpenApiSpec } from '@/services/openapi-parser'
 import type { ParsedSpec, Endpoint } from '@/services/openapi-parser'
 import type { ToolMapping, ProbeConfig } from '@/types/tool-canvas'
+import { useCanvasAiStore } from '@/stores/canvas-ai-store'
+import { canvasAiDB } from '@/services/canvas-ai-db'
+import {
+  generateDraft,
+  analyzeToolCode,
+  suggestMappings as suggestMappingsAi,
+  generateFix,
+} from '@/services/canvas-ai'
+import type { AiInsight } from '@/types/canvas-ai'
 import JsonTreeNode from '@/components/tool-optimizer/JsonTreeNode.vue'
 import CodeEditor from './CodeEditor.vue'
+import AiDiffView from './AiDiffView.vue'
+
+const aiStore = useCanvasAiStore()
 
 const props = defineProps<{
   data: {
@@ -22,11 +34,13 @@ const props = defineProps<{
     executionStatus?: 'idle' | 'executing' | 'completed' | 'failed'
     lastResult?: unknown
     lastDurationMs?: number
+    lastCallArguments?: Record<string, unknown>
+    lastCallError?: string
     onUpdate?: (field: string, value: unknown) => void
   }
 }>()
 
-function emit(field: string, value: unknown) {
+function emitField(field: string, value: unknown) {
   props.data.onUpdate?.(field, value)
 }
 
@@ -36,15 +50,15 @@ function updateParam(index: number, key: 'name' | 'type', value: string) {
   const updated = props.data.parameters.map((p, i) =>
     i === index ? { ...p, [key]: value } : { ...p },
   )
-  emit('parameters', updated)
+  emitField('parameters', updated)
 }
 
 function addParam() {
-  emit('parameters', [...props.data.parameters, { name: 'arg', type: 'string' }])
+  emitField('parameters', [...props.data.parameters, { name: 'arg', type: 'string' }])
 }
 
 function removeParam(index: number) {
-  emit('parameters', props.data.parameters.filter((_, i) => i !== index))
+  emitField('parameters', props.data.parameters.filter((_, i) => i !== index))
 }
 
 // --- Stale mapping detection ---
@@ -61,6 +75,178 @@ const hasStaleMappings = computed(() => staleMappings.value.length > 0)
 // --- Execution overlay ---
 
 const showResult = ref(false)
+
+// --- AI Draft ---
+
+const intentOpen = ref(false)
+const intentText = ref(aiStore.getIntent(props.data.uid) ?? '')
+
+const draft = computed(() => aiStore.drafts.get(props.data.uid))
+const isDraftLoading = computed(() => draft.value?.loading ?? false)
+
+async function handleDraftGenerate() {
+  if (!intentText.value.trim() || !aiStore.effectiveModel) return
+
+  aiStore.setIntent(props.data.uid, intentText.value)
+
+  aiStore.setDraft(props.data.uid, {
+    toolId: props.data.uid,
+    phase: 'draft',
+    code: '',
+    explanation: '',
+    loading: true,
+    intentText: intentText.value,
+  })
+
+  const result = await generateDraft({
+    model: aiStore.effectiveModel,
+    toolName: props.data.name,
+    description: props.data.description,
+    parameters: props.data.parameters,
+    probeResponseSample: probeData.value ?? undefined,
+    intent: intentText.value,
+  })
+
+  if (result.error) {
+    aiStore.setDraft(props.data.uid, {
+      toolId: props.data.uid,
+      phase: 'draft',
+      code: '',
+      explanation: '',
+      loading: false,
+      error: result.error,
+      intentText: intentText.value,
+    })
+  } else {
+    aiStore.setDraft(props.data.uid, {
+      toolId: props.data.uid,
+      phase: 'draft',
+      code: result.code,
+      explanation: result.explanation,
+      loading: false,
+      trainingPairId: result.trainingPairId,
+      intentText: intentText.value,
+    })
+  }
+}
+
+function acceptDraft() {
+  const d = draft.value
+  if (!d || !d.code) return
+  emitField('body', d.code)
+  if (d.trainingPairId) {
+    canvasAiDB.updateAccepted(d.trainingPairId)
+  }
+  aiStore.clearDraft(props.data.uid)
+}
+
+function dismissDraft() {
+  aiStore.clearDraft(props.data.uid)
+}
+
+// --- AI Insights ---
+
+const toolInsights = computed(() => aiStore.insights.get(props.data.uid))
+const expandedInsight = ref<AiInsight | null>(null)
+const insightsLoading = ref(false)
+
+// Clear insights when code changes (stale detection)
+watch(
+  () => props.data.body,
+  () => {
+    const existing = aiStore.insights.get(props.data.uid)
+    if (existing) {
+      aiStore.clearInsights(props.data.uid)
+      expandedInsight.value = null
+    }
+  },
+)
+
+async function handleAnalyze() {
+  if (!aiStore.effectiveModel) return
+
+  insightsLoading.value = true
+  expandedInsight.value = null
+
+  const result = await analyzeToolCode({
+    model: aiStore.effectiveModel,
+    toolName: props.data.name,
+    code: props.data.body,
+    parameters: props.data.parameters,
+  })
+
+  insightsLoading.value = false
+
+  if (!result.error) {
+    aiStore.setInsights(props.data.uid, {
+      toolId: props.data.uid,
+      insights: result.insights,
+      codeHash: props.data.body,
+    })
+  }
+}
+
+// --- AI Auto-Map ---
+
+const autoMapLoading = ref(false)
+const autoMapReasoning = ref('')
+
+async function handleAutoMap() {
+  if (!aiStore.effectiveModel || !probeData.value) return
+
+  autoMapLoading.value = true
+  autoMapReasoning.value = ''
+
+  const result = await suggestMappingsAi({
+    model: aiStore.effectiveModel,
+    toolName: props.data.name,
+    description: props.data.description,
+    probeResponseSample: probeData.value,
+  })
+
+  autoMapLoading.value = false
+
+  if (!result.error && result.paths.length > 0) {
+    autoMapReasoning.value = result.reasoning
+    // Pre-populate selected paths
+    selectedPaths.value = new Set(result.paths)
+  }
+}
+
+// --- AI Fix ---
+
+const fixLoading = ref(false)
+
+async function handleAiFix() {
+  if (!aiStore.effectiveModel) return
+
+  fixLoading.value = true
+
+  const originalIntent = aiStore.getIntent(props.data.uid)
+
+  const result = await generateFix({
+    model: aiStore.effectiveModel,
+    toolName: props.data.name,
+    code: props.data.body,
+    parameters: props.data.parameters,
+    error: props.data.lastCallError ?? 'Unknown error',
+    arguments: props.data.lastCallArguments ?? {},
+    originalIntent,
+  })
+
+  fixLoading.value = false
+
+  if (!result.error && result.fixedCode) {
+    aiStore.setDraft(props.data.uid, {
+      toolId: props.data.uid,
+      phase: 'fix',
+      code: result.fixedCode,
+      explanation: result.explanation,
+      loading: false,
+      trainingPairId: result.trainingPairId,
+    })
+  }
+}
 
 // --- Probe State ---
 
@@ -194,16 +380,16 @@ function selectEndpoint(ep: Endpoint) {
 
   const fnName =
     ep.operationId ?? ep.path.replace(/[^a-zA-Z0-9]+/g, '_').replace(/^_|_$/g, '')
-  emit('name', fnName)
+  emitField('name', fnName)
   if (ep.summary || ep.description) {
-    emit('description', ep.summary ?? ep.description ?? '')
+    emitField('description', ep.summary ?? ep.description ?? '')
   }
 
   const toolParams = ep.parameters
     .filter((p) => p.in === 'query' || p.in === 'path')
     .map((p) => ({ name: p.name, type: p.type }))
   if (toolParams.length > 0) {
-    emit('parameters', toolParams)
+    emitField('parameters', toolParams)
   }
 }
 
@@ -243,14 +429,14 @@ function applySelection() {
     secretHeaders: secrets.length > 0 ? secrets : undefined,
   })
 
-  emit('body', body)
+  emitField('body', body)
 
   const mappings = generateMappings(paths)
-  emit('mappings', mappings)
+  emitField('mappings', mappings)
 
   if (probeData.value) {
     const returnSchema = generateReturnSchema(mappings, probeData.value)
-    emit('returnSchema', returnSchema)
+    emitField('returnSchema', returnSchema)
   }
 
   const probeConfig: ProbeConfig = {
@@ -259,13 +445,13 @@ function applySelection() {
     headers,
     ...(secrets.length > 0 ? { secretHeaders: secrets } : {}),
   }
-  emit('probeConfig', probeConfig)
+  emitField('probeConfig', probeConfig)
 
   if (addedParams.length > 0) {
     const existing = props.data.parameters.map((p) => p.name)
     const newParams = addedParams.filter((p) => !existing.includes(p.name))
     if (newParams.length > 0) {
-      emit('parameters', [...props.data.parameters, ...newParams])
+      emitField('parameters', [...props.data.parameters, ...newParams])
     }
   }
 
@@ -290,9 +476,52 @@ function applySelection() {
       <input
         class="block-name-input"
         :value="data.name"
-        @change="(e: Event) => emit('name', (e.target as HTMLInputElement).value)"
+        @change="(e: Event) => emitField('name', (e.target as HTMLInputElement).value)"
         placeholder="function_name"
       />
+      <button
+        class="ai-header-btn"
+        :class="{ active: intentOpen }"
+        :disabled="isDraftLoading"
+        title="Draft with AI"
+        @click.stop="intentOpen = !intentOpen"
+      >
+        {{ isDraftLoading ? '...' : '&#10024;' }}
+      </button>
+      <button
+        class="ai-header-btn ai-analyze"
+        :disabled="insightsLoading || !data.body.trim()"
+        title="AI Insights"
+        @click.stop="handleAnalyze"
+      >
+        {{ insightsLoading ? '...' : '&#128269;' }}
+      </button>
+    </div>
+
+    <!-- AI Insight badges -->
+    <div v-if="toolInsights?.insights.length" class="insights-row">
+      <span
+        v-for="(insight, idx) in toolInsights.insights"
+        :key="idx"
+        class="insight-badge"
+        :class="insight.severity"
+        @click.stop="expandedInsight = expandedInsight === insight ? null : insight"
+      >
+        {{ insight.title }}
+      </span>
+    </div>
+
+    <!-- Expanded insight -->
+    <div v-if="expandedInsight" class="insight-detail nodrag nowheel">
+      <p class="insight-desc">{{ expandedInsight.description }}</p>
+      <CodeEditor
+        v-if="expandedInsight.suggestedCode"
+        :model-value="expandedInsight.suggestedCode"
+        language="typescript"
+        :readonly="true"
+        min-height="60px"
+      />
+      <button class="insight-close" @click="expandedInsight = null">&times; Close</button>
     </div>
 
     <!-- Execution badge -->
@@ -319,6 +548,14 @@ function applySelection() {
       >
         &#10007; Failed
       </span>
+      <button
+        v-if="data.executionStatus === 'failed'"
+        class="ai-fix-btn"
+        :disabled="fixLoading"
+        @click.stop="handleAiFix"
+      >
+        {{ fixLoading ? '...' : 'AI Fix' }}
+      </button>
     </div>
 
     <!-- Execution result panel -->
@@ -339,9 +576,30 @@ function applySelection() {
       <input
         class="block-input"
         :value="data.description"
-        @change="(e: Event) => emit('description', (e.target as HTMLInputElement).value)"
+        @change="(e: Event) => emitField('description', (e.target as HTMLInputElement).value)"
         placeholder="What does this tool do?"
       />
+    </div>
+
+    <!-- AI Intent input -->
+    <div v-if="intentOpen" class="block-section nodrag nowheel">
+      <label>Intent</label>
+      <textarea
+        v-model="intentText"
+        class="intent-textarea"
+        placeholder="Describe what this tool should do..."
+        rows="2"
+      />
+      <div class="intent-actions">
+        <button
+          class="intent-generate-btn"
+          :disabled="isDraftLoading || !intentText.trim()"
+          @click="handleDraftGenerate"
+        >
+          {{ isDraftLoading ? 'Generating...' : 'Generate' }}
+        </button>
+      </div>
+      <div v-if="draft?.error" class="intent-error">{{ draft.error }}</div>
     </div>
 
     <!-- Parameters -->
@@ -492,6 +750,22 @@ function applySelection() {
 
         <!-- JSON Tree -->
         <template v-if="probeData && probeResult && probeResult.ok">
+          <!-- AI Suggest -->
+          <div class="probe-ai-row">
+            <button
+              class="ai-suggest-btn"
+              :disabled="autoMapLoading"
+              @click="handleAutoMap"
+            >
+              {{ autoMapLoading ? 'Thinking...' : 'AI Suggest' }}
+            </button>
+          </div>
+
+          <!-- AI reasoning banner -->
+          <div v-if="autoMapReasoning" class="auto-map-reasoning">
+            {{ autoMapReasoning }}
+          </div>
+
           <div class="probe-tree">
             <JsonTreeNode
               label="response"
@@ -551,13 +825,26 @@ function applySelection() {
     <!-- Body -->
     <div class="block-section nodrag nowheel">
       <label>Body (TypeScript)</label>
-      <CodeEditor
-        :model-value="data.body"
-        language="typescript"
-        min-height="100px"
-        placeholder="// Tool implementation..."
-        @update:model-value="(v: string) => emit('body', v)"
-      />
+      <!-- Draft overlay -->
+      <template v-if="draft && !draft.loading && draft.code">
+        <AiDiffView
+          :old-code="data.body"
+          :new-code="draft.code"
+          :explanation="draft.explanation"
+          @accept="acceptDraft"
+          @dismiss="dismissDraft"
+        />
+      </template>
+      <!-- Normal editor -->
+      <template v-else>
+        <CodeEditor
+          :model-value="data.body"
+          language="typescript"
+          min-height="100px"
+          placeholder="// Tool implementation..."
+          @update:model-value="(v: string) => emitField('body', v)"
+        />
+      </template>
     </div>
 
     <Handle type="source" :position="Position.Bottom" />
@@ -1113,5 +1400,186 @@ function applySelection() {
 }
 .block-body:focus {
   border-color: var(--color-accent);
+}
+
+/* AI Header buttons */
+.ai-header-btn {
+  background: none;
+  border: 1px solid var(--color-border-default);
+  color: var(--color-text-muted);
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.ai-header-btn:hover {
+  background: var(--color-surface-overlay);
+  color: var(--color-text-primary);
+}
+.ai-header-btn.active {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+.ai-header-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.ai-header-btn.ai-analyze {
+  font-size: 11px;
+}
+
+/* AI Fix button */
+.ai-fix-btn {
+  background: color-mix(in srgb, var(--color-accent) 15%, transparent);
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent);
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-left: auto;
+}
+.ai-fix-btn:hover {
+  background: color-mix(in srgb, var(--color-accent) 25%, transparent);
+}
+.ai-fix-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* Insights badges */
+.insights-row {
+  padding: 4px 12px;
+  border-bottom: 1px solid var(--color-border-default);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.insight-badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.insight-badge:hover {
+  opacity: 0.8;
+}
+.insight-badge.info {
+  background: color-mix(in srgb, var(--color-accent) 15%, transparent);
+  color: var(--color-accent);
+}
+.insight-badge.warning {
+  background: color-mix(in srgb, var(--color-warning, #f9e2af) 15%, transparent);
+  color: var(--color-warning, #f9e2af);
+}
+.insight-badge.error {
+  background: color-mix(in srgb, var(--color-error) 15%, transparent);
+  color: var(--color-error);
+}
+
+/* Expanded insight */
+.insight-detail {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--color-border-default);
+  background: var(--color-surface-base, #0f172a);
+}
+.insight-desc {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+  margin: 0 0 6px;
+}
+.insight-close {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  font-size: 10px;
+  cursor: pointer;
+  padding: 2px 0;
+  margin-top: 4px;
+}
+.insight-close:hover {
+  color: var(--color-text-primary);
+}
+
+/* Intent input */
+.intent-textarea {
+  width: 100%;
+  background: var(--color-surface-base, #0f172a);
+  border: 1px solid var(--color-border-default);
+  color: var(--color-text-primary);
+  padding: 6px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-family: inherit;
+  resize: vertical;
+  outline: none;
+  box-sizing: border-box;
+}
+.intent-textarea:focus {
+  border-color: var(--color-accent);
+}
+.intent-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+.intent-generate-btn {
+  background: var(--color-accent);
+  color: var(--color-surface-base, #0f172a);
+  border: none;
+  border-radius: 4px;
+  padding: 3px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.intent-generate-btn:hover {
+  opacity: 0.9;
+}
+.intent-generate-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.intent-error {
+  font-size: 11px;
+  color: var(--color-error);
+  margin-top: 4px;
+}
+
+/* AI Suggest in probe */
+.probe-ai-row {
+  display: flex;
+  justify-content: flex-end;
+}
+.ai-suggest-btn {
+  background: color-mix(in srgb, var(--color-accent) 15%, transparent);
+  color: var(--color-accent);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 30%, transparent);
+  border-radius: 4px;
+  padding: 2px 10px;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.ai-suggest-btn:hover {
+  background: color-mix(in srgb, var(--color-accent) 25%, transparent);
+}
+.ai-suggest-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.auto-map-reasoning {
+  font-size: 10px;
+  color: var(--color-text-secondary);
+  background: color-mix(in srgb, var(--color-accent) 8%, transparent);
+  padding: 4px 8px;
+  border-radius: 4px;
+  line-height: 1.3;
 }
 </style>

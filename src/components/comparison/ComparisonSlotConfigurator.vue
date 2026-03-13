@@ -163,7 +163,7 @@ onMounted(async () => {
           @change="updateSlot(slot.slotId, { model: ($event.target as HTMLSelectElement).value })"
         >
           <option v-for="name in modelStore.chatModelNames" :key="name" :value="name">
-            {{ name }}
+            {{ name }} {{ modelStore.capabilityIcons(name) }}
           </option>
         </select>
         <button

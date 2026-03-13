@@ -331,17 +331,31 @@ async function pullEmbeddingModel(name: string) {
       </button>
 
       <div v-if="showTools" class="pl-1 space-y-2">
-        <div v-if="toolStore.enabledTools.length > 0" class="space-y-1">
+        <div v-if="toolStore.allTools.length > 0" class="space-y-1">
           <div
-            v-for="tool in toolStore.enabledTools"
+            v-for="tool in toolStore.allTools"
             :key="tool.id"
             class="flex items-center gap-2 rounded-md bg-surface px-2 py-1.5 text-[11px]"
           >
-            <span class="h-1.5 w-1.5 rounded-full bg-success shrink-0" />
-            <span class="font-mono text-text-primary">{{ tool.definition.function.name }}</span>
+            <button
+              class="h-4 w-7 shrink-0 rounded-full transition-colors"
+              :class="tool.enabled ? 'bg-accent' : 'bg-surface-overlay'"
+              @click="toolStore.toggleEnabled(tool.id)"
+            >
+              <span
+                class="block h-3 w-3 rounded-full bg-white transition-transform"
+                :class="tool.enabled ? 'translate-x-3.5' : 'translate-x-0.5'"
+              />
+            </button>
+            <span
+              class="font-mono"
+              :class="tool.enabled ? 'text-text-primary' : 'text-text-muted'"
+            >
+              {{ tool.definition.function.name }}
+            </span>
           </div>
         </div>
-        <p v-else class="text-[10px] text-text-muted px-2">No tools enabled</p>
+        <p v-else class="text-[10px] text-text-muted px-2">No tools defined yet</p>
         <button
           class="w-full rounded-lg border border-dashed border-border-default px-3 py-1.5 text-[11px] text-text-muted hover:border-accent hover:text-text-primary transition-colors"
           @click="chatRouter.push('/tools')"
@@ -492,7 +506,7 @@ async function pullEmbeddingModel(name: string) {
             >
               <option value="" disabled>Select embedding model...</option>
               <option v-for="name in modelStore.embeddingModelNames" :key="name" :value="name">
-                {{ name }}
+                {{ name }} {{ modelStore.capabilityIcons(name) }}
               </option>
             </select>
           </div>

@@ -4,8 +4,12 @@ import { VueFlow, useVueFlow } from '@vue-flow/core'
 import { Background } from '@vue-flow/background'
 import { Controls } from '@vue-flow/controls'
 import { MiniMap } from '@vue-flow/minimap'
-import type { NodeDragEvent } from '@vue-flow/core'
+import type { Node, NodeDragEvent, NodeChange } from '@vue-flow/core'
 import { useToolCanvas } from '@/composables/useToolCanvas'
+import { useToolWorkshopStore } from '@/stores/tool-workshop-store'
+import { useCanvasAiStore } from '@/stores/canvas-ai-store'
+import { useModelStore } from '@/stores/model-store'
+import { exportTrainingData } from '@/services/canvas-ai'
 
 // Vue Flow required CSS
 import '@vue-flow/core/dist/style.css'
@@ -22,6 +26,10 @@ const emit = defineEmits<{
 
 const nodeTypes = { 'tool-function': markRaw(ToolFunctionNode) } as any
 
+const workshopStore = useToolWorkshopStore()
+const aiStore = useCanvasAiStore()
+const modelStore = useModelStore()
+
 const {
   flowNodes,
   flowEdges,
@@ -30,6 +38,7 @@ const {
   codeSyncStatus,
   schemas,
   onNodeDragStop,
+  onNodesDelete,
   onCodeEdit,
   addNewTool,
 } = useToolCanvas()
@@ -50,10 +59,41 @@ watch(codePanelOpen, () => {
   }
 })
 
+// --- Tool Library panel ---
+const libraryPanelOpen = ref(false)
+
+watch(libraryPanelOpen, () => {
+  if (flowNodes.value.length > 0) {
+    setTimeout(() => {
+      fitView({ padding: 0.3, duration: 300 })
+    }, 50)
+  }
+})
+
+function handleRemoveTool(id: string) {
+  workshopStore.removeTool(id)
+}
+
+// --- Clear All ---
+const showClearConfirm = ref(false)
+
+function confirmClearAll() {
+  workshopStore.clearAll()
+  showClearConfirm.value = false
+}
+
 const schemaJson = computed(() => JSON.stringify(schemas.value, null, 2))
 
 function handleDragStop(event: NodeDragEvent) {
   onNodeDragStop({ node: event.node })
+}
+
+function handleNodesChange(changes: NodeChange[]) {
+  for (const change of changes) {
+    if (change.type === 'remove') {
+      onNodesDelete([{ id: change.id } as Node])
+    }
+  }
 }
 
 function handleAddTool() {
@@ -179,6 +219,7 @@ async function copySchema() {
         :fit-view-on-init-options="{ padding: 0.3, minZoom: 0.6, maxZoom: 1.2 }"
         class="canvas-flow"
         @node-drag-stop="handleDragStop"
+        @nodes-change="handleNodesChange"
       >
         <Background :gap="24" :size="1" pattern-color="var(--color-border-default)" />
         <Controls />
@@ -213,12 +254,47 @@ async function copySchema() {
 
       <!-- Toolbar -->
       <div class="absolute top-3 right-3 z-10 flex items-center gap-2">
+        <!-- Canvas AI Model selector -->
+        <select
+          v-if="modelStore.chatModelNames.length > 0"
+          :value="aiStore.canvasAiModel ?? ''"
+          @change="(e: Event) => aiStore.setCanvasAiModel((e.target as HTMLSelectElement).value || null)"
+          class="canvas-ai-model-select px-2 py-1.5 rounded-lg bg-surface-overlay/90 text-text-secondary text-xs border border-border-default shadow-lg cursor-pointer"
+        >
+          <option value="">AI: {{ modelStore.chatModelNames[0] ?? 'none' }}</option>
+          <option v-for="m in modelStore.chatModelNames" :key="m" :value="m">
+            AI: {{ m }} {{ modelStore.capabilityIcons(m) }}
+          </option>
+        </select>
+
+        <button
+          @click="exportTrainingData()"
+          class="px-3 py-1.5 rounded-lg bg-surface-overlay/90 text-text-secondary text-xs font-medium hover:bg-surface-overlay transition-colors cursor-pointer border border-border-default shadow-lg"
+          title="Export training data (JSONL)"
+        >
+          Export
+        </button>
         <button
           v-if="!codePanelOpen"
           @click="codePanelOpen = true"
           class="px-3 py-1.5 rounded-lg bg-surface-overlay/90 text-text-secondary text-xs font-medium hover:bg-surface-overlay transition-colors cursor-pointer border border-border-default shadow-lg"
         >
           Code Panel
+        </button>
+        <button
+          @click="libraryPanelOpen = !libraryPanelOpen"
+          class="px-3 py-1.5 rounded-lg bg-surface-overlay/90 text-xs font-medium hover:bg-surface-overlay transition-colors cursor-pointer border border-border-default shadow-lg"
+          :class="libraryPanelOpen ? 'text-accent' : 'text-text-secondary'"
+        >
+          Tool Library
+        </button>
+        <button
+          v-if="flowNodes.length > 0"
+          @click="showClearConfirm = true"
+          class="px-3 py-1.5 rounded-lg bg-surface-overlay/90 text-text-secondary text-xs font-medium hover:bg-surface-overlay hover:text-error transition-colors cursor-pointer border border-border-default shadow-lg"
+          title="Remove all tools from canvas"
+        >
+          Clear All
         </button>
         <button
           @click="emit('add-template')"
@@ -233,6 +309,106 @@ async function copySchema() {
         >
           + New Tool
         </button>
+      </div>
+
+      <!-- Clear All confirmation -->
+      <div
+        v-if="showClearConfirm"
+        class="absolute inset-0 z-50 flex items-center justify-center bg-black/40"
+      >
+        <div class="rounded-xl bg-surface-raised border border-border-default p-6 shadow-2xl max-w-xs text-center">
+          <p class="text-sm text-text-primary mb-1 font-semibold">Clear all tools?</p>
+          <p class="text-xs text-text-muted mb-4">
+            This will remove all {{ flowNodes.length }} tool(s) from the canvas. This cannot be undone.
+          </p>
+          <div class="flex items-center justify-center gap-3">
+            <button
+              @click="showClearConfirm = false"
+              class="px-4 py-1.5 rounded-lg text-xs text-text-secondary bg-surface-overlay hover:bg-surface-raised transition-colors cursor-pointer border border-border-default"
+            >
+              Cancel
+            </button>
+            <button
+              @click="confirmClearAll"
+              class="px-4 py-1.5 rounded-lg text-xs text-white bg-error hover:opacity-90 transition-opacity cursor-pointer border-none"
+            >
+              Delete All
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tool Library panel (collapsible, right side) -->
+    <div
+      v-if="libraryPanelOpen"
+      class="w-[280px] flex flex-col border-l border-border-default bg-surface-base shrink-0"
+    >
+      <!-- Header -->
+      <div class="p-3 border-b border-border-default flex items-center justify-between">
+        <span class="text-sm font-semibold text-text-primary">Tool Library</span>
+        <button
+          class="text-xs text-text-muted hover:text-text-primary transition-colors bg-transparent border-none cursor-pointer"
+          @click="libraryPanelOpen = false"
+        >
+          Close
+        </button>
+      </div>
+
+      <!-- Tool list -->
+      <div class="flex-1 overflow-y-auto p-2 space-y-1">
+        <div
+          v-for="tool in workshopStore.allTools"
+          :key="tool.id"
+          class="flex items-center gap-2 rounded-lg px-3 py-2 text-xs hover:bg-surface-overlay transition-colors"
+        >
+          <!-- Enable/disable toggle -->
+          <button
+            class="h-4 w-7 shrink-0 rounded-full transition-colors"
+            :class="tool.enabled ? 'bg-accent' : 'bg-surface-overlay'"
+            :title="tool.enabled ? 'Disable for chat' : 'Enable for chat'"
+            @click="workshopStore.toggleEnabled(tool.id)"
+          >
+            <span
+              class="block h-3 w-3 rounded-full bg-white transition-transform"
+              :class="tool.enabled ? 'translate-x-3.5' : 'translate-x-0.5'"
+            />
+          </button>
+
+          <!-- Name + description -->
+          <div class="min-w-0 flex-1">
+            <span
+              class="font-mono block"
+              :class="tool.enabled ? 'text-text-primary' : 'text-text-muted'"
+            >
+              {{ tool.definition.function.name }}
+            </span>
+            <p class="truncate text-[10px] text-text-muted">
+              {{ tool.definition.function.description }}
+            </p>
+          </div>
+
+          <!-- Delete button -->
+          <button
+            class="shrink-0 text-text-muted hover:text-error transition-colors bg-transparent border-none cursor-pointer"
+            title="Delete tool"
+            @click="handleRemoveTool(tool.id)"
+          >
+            <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="3 6 5 6 21 6" />
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+            </svg>
+          </button>
+        </div>
+
+        <p v-if="workshopStore.allTools.length === 0" class="px-3 py-4 text-xs text-text-muted text-center">
+          No tools yet
+        </p>
+      </div>
+
+      <!-- Footer stats -->
+      <div class="p-3 border-t border-border-default text-xs text-text-muted">
+        {{ workshopStore.enabledTools.length }}/{{ workshopStore.allTools.length }} enabled for chat
       </div>
     </div>
   </div>
@@ -294,5 +470,16 @@ async function copySchema() {
 
 .canvas-flow .vue-flow__controls-button:hover {
   background: var(--color-surface-overlay) !important;
+}
+
+/* Canvas AI model selector */
+.canvas-ai-model-select {
+  outline: none;
+  font-family: ui-monospace, Consolas, monospace;
+  max-width: 180px;
+}
+.canvas-ai-model-select option {
+  background: var(--color-surface-raised, #1e293b);
+  color: var(--color-text-primary);
 }
 </style>

@@ -92,7 +92,7 @@ onMounted(async () => {
       >
         <option v-if="availableModels.length === 0" value="" disabled>No models available</option>
         <option v-for="m in availableModels" :key="m.name" :value="m.name">
-          {{ m.name }}
+          {{ m.name }} {{ modelStore.capabilityIcons(m.name) }}
         </option>
       </select>
       <span v-if="embeddingModels.length === 0 && modelStore.models.length > 0" class="text-xs text-warning">

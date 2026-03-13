@@ -84,6 +84,15 @@ export interface OllamaOptions {
   mirostat?: number
   mirostat_eta?: number
   mirostat_tau?: number
+  logprobs?: boolean
+  top_logprobs?: number
+}
+
+export interface OllamaLogprob {
+  token: string
+  logprob: number
+  bytes?: number[]
+  top_logprobs?: Array<{ token: string; logprob: number; bytes?: number[] }>
 }
 
 export interface OllamaGenerateChunk {
@@ -99,6 +108,7 @@ export interface OllamaGenerateChunk {
   prompt_eval_duration?: number
   eval_count?: number
   eval_duration?: number
+  logprobs?: OllamaLogprob[]
 }
 
 export interface OllamaChatChunk {
@@ -118,6 +128,32 @@ export interface OllamaChatChunk {
   prompt_eval_duration?: number
   eval_count?: number
   eval_duration?: number
+  logprobs?: OllamaLogprob[]
+}
+
+// OpenAI-compatible types (for /v1/chat/completions — supports logprobs)
+export interface OpenAIChatChunk {
+  id: string
+  object: string
+  created: number
+  model: string
+  choices: Array<{
+    index: number
+    delta: {
+      role?: string
+      content?: string
+      reasoning?: string  // Ollama extension for thinking models
+    }
+    finish_reason: string | null
+    logprobs?: {
+      content: OllamaLogprob[]
+    } | null
+  }>
+  usage?: {
+    prompt_tokens: number
+    completion_tokens: number
+    total_tokens: number
+  }
 }
 
 export interface OllamaRunningModel {
