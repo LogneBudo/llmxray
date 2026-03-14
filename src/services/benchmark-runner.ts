@@ -67,6 +67,7 @@ async function runQuestion(
 
   const prompt = buildPrompt(question)
   const startTime = Date.now()
+  let firstTokenAt: number | null = null
   let cumulative = ''
   let thinkingCumulative = ''
   const contentLogprobs: number[] = []
@@ -94,6 +95,11 @@ async function runQuestion(
     (chunk) => {
       const choice = chunk.choices[0]
       if (!choice) return
+
+      // Capture TTFT on first arriving token (thinking or content)
+      if (!firstTokenAt && (choice.delta.reasoning || choice.delta.content)) {
+        firstTokenAt = Date.now()
+      }
 
       // Thinking tokens (DeepSeek R1, QwQ — Ollama extension)
       if (choice.delta.reasoning) {
@@ -126,6 +132,16 @@ async function runQuestion(
   )
 
   const latencyMs = Date.now() - startTime
+  const ttftMs = firstTokenAt ? firstTokenAt - startTime : latencyMs
+
+  // If Ollama sent reasoning via <think> blocks in content (older versions)
+  // rather than via the delta.reasoning extension, extract it now.
+  if (!thinkingCumulative && cumulative) {
+    const thinkMatch = cumulative.match(/<think>([\s\S]*?)<\/think>/)
+    if (thinkMatch) {
+      thinkingCumulative = thinkMatch[1]!.trim()
+    }
+  }
 
   // Try extracting from content first. If empty/UNPARSED, fall back to the
   // thinking text — thinking models often state "The answer is B" in their
@@ -156,6 +172,7 @@ async function runQuestion(
     modelAnswer,
     expectedAnswer: question.correctAnswer,
     latencyMs,
+    ttftMs,
     avgTokenConfidence,
     answerLogprob,
     tokensPerSecond,
@@ -168,7 +185,7 @@ async function runQuestion(
   return result
 }
 
-function aggregateCategories(results: QuestionResult[]): CategoryResult[] {
+export function aggregateCategories(results: QuestionResult[]): CategoryResult[] {
   const groups = new Map<string, QuestionResult[]>()
   for (const r of results) {
     const arr = groups.get(r.category) ?? []
@@ -182,6 +199,7 @@ function aggregateCategories(results: QuestionResult[]): CategoryResult[] {
       category,
       accuracy: items.length > 0 ? correctCount / items.length : 0,
       avgLatencyMs: items.reduce((s, r) => s + r.latencyMs, 0) / items.length,
+      avgTtftMs: items.reduce((s, r) => s + (r.ttftMs ?? r.latencyMs), 0) / items.length,
       avgConfidence: items.reduce((s, r) => s + r.avgTokenConfidence, 0) / items.length,
       questionCount: items.length,
       correctCount,

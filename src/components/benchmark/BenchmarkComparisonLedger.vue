@@ -10,10 +10,43 @@ const benchmarkStore = useBenchmarkStore()
 
 const emit = defineEmits<{
   viewDetails: [result: BenchmarkResult]
+  resume: [result: BenchmarkResult]
 }>()
 
 const results = computed(() => benchmarkStore.savedResults)
 const activeResults = computed(() => benchmarkStore.activeResults)
+
+// Merge active results by model name for radar/heatmap visualization.
+// When the same model has results from different suites (e.g. MMLU + ARC + HellaSwag),
+// combine their categories into one entry so the radar draws a single shape per model.
+const mergedActiveResults = computed(() => {
+  const byModel = new Map<string, BenchmarkResult>()
+  for (const r of activeResults.value) {
+    const existing = byModel.get(r.modelName)
+    if (!existing) {
+      byModel.set(r.modelName, {
+        ...r,
+        categories: [...r.categories],
+        benchmarkIds: [...r.benchmarkIds],
+      })
+    } else {
+      for (const cat of r.categories) {
+        const idx = existing.categories.findIndex((c) => c.category === cat.category)
+        if (idx >= 0) existing.categories[idx] = cat
+        else existing.categories.push(cat)
+      }
+      for (const id of r.benchmarkIds) {
+        if (!existing.benchmarkIds.includes(id)) existing.benchmarkIds.push(id)
+      }
+      const totalCorrect = existing.categories.reduce((s, c) => s + c.correctCount, 0)
+      const totalQ = existing.categories.reduce((s, c) => s + c.questionCount, 0)
+      existing.accuracy = totalQ > 0 ? totalCorrect / totalQ : 0
+      existing.correctCount = totalCorrect
+      existing.totalQuestions = totalQ
+    }
+  }
+  return [...byModel.values()]
+})
 
 const SUITE_COLORS: Record<string, string> = {
   mmlu_pro: 'bg-blue-500/15 text-blue-400 border-blue-500/30',
@@ -45,6 +78,10 @@ function formatDate(ts: number): string {
     hour: '2-digit',
     minute: '2-digit',
   })
+}
+
+function isIncomplete(r: BenchmarkResult): boolean {
+  return r.questionResults.length < r.totalQuestions
 }
 
 function formatDuration(r: BenchmarkResult): string {
@@ -89,6 +126,9 @@ function formatDuration(r: BenchmarkResult): string {
               <div class="mt-0.5 text-[10px] text-text-muted">
                 {{ formatDate(r.completedAt) }} · ctx {{ r.contextSize }} · {{ formatDuration(r) }}
               </div>
+              <div v-if="isIncomplete(r)" class="mt-0.5 text-[10px] text-warning">
+                Incomplete ({{ r.questionResults.length }}/{{ r.totalQuestions }})
+              </div>
             </div>
             <div class="text-right shrink-0">
               <div class="font-bold" :class="r.accuracy >= 0.5 ? 'text-success' : 'text-error'">
@@ -96,6 +136,14 @@ function formatDuration(r: BenchmarkResult): string {
               </div>
               <div class="text-[10px] text-text-muted">{{ r.correctCount }}/{{ r.totalQuestions }}</div>
             </div>
+            <button
+              v-if="isIncomplete(r)"
+              class="ml-1 shrink-0 text-text-muted hover:text-accent transition-colors"
+              title="Resume incomplete benchmark"
+              @click.stop="emit('resume', r)"
+            >
+              &#x25B6;
+            </button>
             <button
               class="ml-1 shrink-0 text-text-muted hover:text-accent transition-colors"
               title="View full details"
@@ -116,14 +164,14 @@ function formatDuration(r: BenchmarkResult): string {
           No saved results yet
         </div>
         <div v-if="results.length > 0" class="mt-2 text-[10px] text-text-muted text-center">
-          Click to select (max 4) for comparison
+          Click to select for comparison
         </div>
       </div>
 
       <!-- Radar + Heatmap -->
       <div class="lg:col-span-2 space-y-4">
-        <BenchmarkRadarChart :results="activeResults" />
-        <BenchmarkCategoryHeatmap :results="activeResults" />
+        <BenchmarkRadarChart :results="mergedActiveResults" />
+        <BenchmarkCategoryHeatmap :results="mergedActiveResults" />
       </div>
     </div>
   </div>

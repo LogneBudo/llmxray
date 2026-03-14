@@ -7,6 +7,7 @@ import BenchmarkLiveView from '@/components/benchmark/BenchmarkLiveView.vue'
 import BenchmarkResultsPanel from '@/components/benchmark/BenchmarkResultsPanel.vue'
 import BenchmarkComparisonLedger from '@/components/benchmark/BenchmarkComparisonLedger.vue'
 import BenchmarkImportDialog from '@/components/benchmark/BenchmarkImportDialog.vue'
+import { BUILTIN_SUITES } from '@/data/benchmarks/index'
 
 const benchmarkStore = useBenchmarkStore()
 
@@ -38,6 +39,10 @@ const contextPressureResult = computed(() => {
 
 function onViewDetails(result: BenchmarkResult) {
   detailResult.value = result
+}
+
+function onResume(result: BenchmarkResult) {
+  benchmarkStore.resumeRun(result.id, BUILTIN_SUITES)
 }
 
 function closeDetailView() {
@@ -93,7 +98,7 @@ onMounted(() => {
     <!-- Comparison Ledger -->
     <section v-if="hasSavedResults">
       <h2 class="mb-3 text-sm font-medium text-text-primary">Comparison Ledger</h2>
-      <BenchmarkComparisonLedger @view-details="onViewDetails" />
+      <BenchmarkComparisonLedger @view-details="onViewDetails" @resume="onResume" />
     </section>
 
     <!-- Import Dialog -->

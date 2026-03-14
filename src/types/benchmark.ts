@@ -23,6 +23,7 @@ export interface QuestionResult {
   modelAnswer: string
   expectedAnswer: string
   latencyMs: number
+  ttftMs: number
   avgTokenConfidence: number
   answerLogprob: number
   tokensPerSecond: number
@@ -35,6 +36,7 @@ export interface CategoryResult {
   category: string
   accuracy: number
   avgLatencyMs: number
+  avgTtftMs: number
   avgConfidence: number
   questionCount: number
   correctCount: number
@@ -62,9 +64,10 @@ export interface BenchmarkRunState {
   currentQuestion: BenchmarkQuestion | null
   currentTokens: string
   currentThinkingTokens: string
-  lastAnswer: { modelAnswer: string; expectedAnswer: string; correct: boolean; latencyMs: number } | null
+  lastAnswer: { modelAnswer: string; expectedAnswer: string; correct: boolean; latencyMs: number; ttftMs: number } | null
   liveAccuracy: number
   liveAvgLatencyMs: number
+  liveAvgTtftMs: number
   categoryProgress: Record<string, { correct: number; total: number }>
   error?: string
 }

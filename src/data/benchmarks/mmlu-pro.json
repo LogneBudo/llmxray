@@ -9,8 +9,13 @@
       "category": "mmlu_pro",
       "subcategory": "high_school_physics",
       "question": "A 2 kg block slides down a frictionless incline that makes a 30-degree angle with the horizontal. What is the acceleration of the block?",
-      "choices": ["A) 2.5 m/s^2", "B) 4.9 m/s^2", "C) 9.8 m/s^2", "D) 7.1 m/s^2"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) 4.9 m/s^2",
+        "B) 2.5 m/s^2",
+        "C) 9.8 m/s^2",
+        "D) 7.1 m/s^2"
+      ],
+      "correctAnswer": "A",
       "difficulty": "medium"
     },
     {
@@ -18,8 +23,13 @@
       "category": "mmlu_pro",
       "subcategory": "high_school_physics",
       "question": "A car traveling at 20 m/s applies its brakes and decelerates uniformly at 4 m/s^2. How far does the car travel before coming to rest?",
-      "choices": ["A) 25 m", "B) 50 m", "C) 100 m", "D) 80 m"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) 100 m",
+        "B) 80 m",
+        "C) 25 m",
+        "D) 50 m"
+      ],
+      "correctAnswer": "D",
       "difficulty": "medium"
     },
     {
@@ -27,8 +37,13 @@
       "category": "mmlu_pro",
       "subcategory": "high_school_physics",
       "question": "Two objects of masses 3 kg and 5 kg are connected by a light string over a frictionless pulley. What is the acceleration of the system?",
-      "choices": ["A) 1.2 m/s^2", "B) 2.5 m/s^2", "C) 4.9 m/s^2", "D) 3.7 m/s^2"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) 2.5 m/s^2",
+        "B) 3.7 m/s^2",
+        "C) 4.9 m/s^2",
+        "D) 1.2 m/s^2"
+      ],
+      "correctAnswer": "A",
       "difficulty": "medium"
     },
     {
@@ -36,8 +51,13 @@
       "category": "mmlu_pro",
       "subcategory": "high_school_physics",
       "question": "A projectile is launched at 45 degrees with an initial speed of 40 m/s. Ignoring air resistance, what is the maximum height reached?",
-      "choices": ["A) 20.4 m", "B) 40.8 m", "C) 81.6 m", "D) 10.2 m"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) 40.8 m",
+        "B) 81.6 m",
+        "C) 20.4 m",
+        "D) 10.2 m"
+      ],
+      "correctAnswer": "A",
       "difficulty": "medium"
     },
     {
@@ -45,8 +65,13 @@
       "category": "mmlu_pro",
       "subcategory": "high_school_physics",
       "question": "An electron moves with a velocity of 3 x 10^6 m/s perpendicular to a magnetic field of 0.5 T. What is the magnitude of the magnetic force on the electron?",
-      "choices": ["A) 2.4 x 10^-13 N", "B) 1.5 x 10^-13 N", "C) 4.8 x 10^-13 N", "D) 7.2 x 10^-13 N"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) 4.8 x 10^-13 N",
+        "B) 1.5 x 10^-13 N",
+        "C) 2.4 x 10^-13 N",
+        "D) 7.2 x 10^-13 N"
+      ],
+      "correctAnswer": "C",
       "difficulty": "hard"
     },
     {
@@ -54,7 +79,12 @@
       "category": "mmlu_pro",
       "subcategory": "high_school_physics",
       "question": "A parallel plate capacitor has plates of area 0.02 m^2 separated by 0.001 m. If the dielectric constant is 1 and the voltage across the plates is 100 V, what is the capacitance?",
-      "choices": ["A) 1.77 x 10^-10 F", "B) 8.85 x 10^-10 F", "C) 1.77 x 10^-9 F", "D) 8.85 x 10^-11 F"],
+      "choices": [
+        "A) 1.77 x 10^-10 F",
+        "B) 1.77 x 10^-9 F",
+        "C) 8.85 x 10^-11 F",
+        "D) 8.85 x 10^-10 F"
+      ],
       "correctAnswer": "A",
       "difficulty": "hard"
     },
@@ -63,8 +93,13 @@
       "category": "mmlu_pro",
       "subcategory": "high_school_physics",
       "question": "A spring with a spring constant of 200 N/m is compressed by 0.1 m. How much potential energy is stored in the spring?",
-      "choices": ["A) 0.5 J", "B) 1.0 J", "C) 2.0 J", "D) 10.0 J"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) 1.0 J",
+        "B) 0.5 J",
+        "C) 2.0 J",
+        "D) 10.0 J"
+      ],
+      "correctAnswer": "A",
       "difficulty": "easy"
     },
     {
@@ -72,7 +107,12 @@
       "category": "mmlu_pro",
       "subcategory": "high_school_physics",
       "question": "A sound wave in air has a frequency of 440 Hz. If the speed of sound in air is 343 m/s, what is the wavelength of the wave?",
-      "choices": ["A) 0.56 m", "B) 0.78 m", "C) 1.28 m", "D) 1.56 m"],
+      "choices": [
+        "A) 1.56 m",
+        "B) 0.78 m",
+        "C) 1.28 m",
+        "D) 0.56 m"
+      ],
       "correctAnswer": "B",
       "difficulty": "easy"
     },
@@ -81,8 +121,13 @@
       "category": "mmlu_pro",
       "subcategory": "high_school_physics",
       "question": "In a perfectly inelastic collision, a 4 kg object moving at 6 m/s collides with a 2 kg object at rest. What is the velocity of the combined object after the collision?",
-      "choices": ["A) 2 m/s", "B) 3 m/s", "C) 4 m/s", "D) 6 m/s"],
-      "correctAnswer": "C",
+      "choices": [
+        "A) 6 m/s",
+        "B) 4 m/s",
+        "C) 2 m/s",
+        "D) 3 m/s"
+      ],
+      "correctAnswer": "B",
       "difficulty": "medium"
     },
     {
@@ -90,8 +135,13 @@
       "category": "mmlu_pro",
       "subcategory": "high_school_chemistry",
       "question": "What is the pH of a 0.001 M HCl solution at 25 degrees C?",
-      "choices": ["A) 1", "B) 2", "C) 3", "D) 4"],
-      "correctAnswer": "C",
+      "choices": [
+        "A) 1",
+        "B) 2",
+        "C) 4",
+        "D) 3"
+      ],
+      "correctAnswer": "D",
       "difficulty": "easy"
     },
     {
@@ -99,7 +149,12 @@
       "category": "mmlu_pro",
       "subcategory": "high_school_chemistry",
       "question": "Which of the following molecules has a trigonal planar geometry?",
-      "choices": ["A) NH3", "B) BF3", "C) H2O", "D) CH4"],
+      "choices": [
+        "A) NH3",
+        "B) BF3",
+        "C) H2O",
+        "D) CH4"
+      ],
       "correctAnswer": "B",
       "difficulty": "medium"
     },
@@ -108,8 +163,13 @@
       "category": "mmlu_pro",
       "subcategory": "high_school_chemistry",
       "question": "In an electrochemical cell, the standard reduction potential of Cu2+/Cu is +0.34 V and Zn2+/Zn is -0.76 V. What is the standard cell potential for a Zn-Cu galvanic cell?",
-      "choices": ["A) 0.42 V", "B) 1.10 V", "C) -1.10 V", "D) -0.42 V"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) -0.42 V",
+        "B) -1.10 V",
+        "C) 1.10 V",
+        "D) 0.42 V"
+      ],
+      "correctAnswer": "C",
       "difficulty": "medium"
     },
     {
@@ -117,8 +177,13 @@
       "category": "mmlu_pro",
       "subcategory": "high_school_chemistry",
       "question": "How many moles of NaOH are required to completely neutralize 2 moles of H2SO4?",
-      "choices": ["A) 1 mole", "B) 2 moles", "C) 3 moles", "D) 4 moles"],
-      "correctAnswer": "D",
+      "choices": [
+        "A) 3 moles",
+        "B) 4 moles",
+        "C) 2 moles",
+        "D) 1 mole"
+      ],
+      "correctAnswer": "B",
       "difficulty": "medium"
     },
     {
@@ -126,8 +191,13 @@
       "category": "mmlu_pro",
       "subcategory": "high_school_chemistry",
       "question": "Which of the following represents the correct electron configuration for a ground-state iron atom (Fe, Z=26)?",
-      "choices": ["A) [Ar] 3d6 4s2", "B) [Ar] 3d8", "C) [Ar] 3d5 4s2 4p1", "D) [Ar] 3d7 4s1"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) [Ar] 3d7 4s1",
+        "B) [Ar] 3d5 4s2 4p1",
+        "C) [Ar] 3d6 4s2",
+        "D) [Ar] 3d8"
+      ],
+      "correctAnswer": "C",
       "difficulty": "medium"
     },
     {
@@ -135,7 +205,12 @@
       "category": "mmlu_pro",
       "subcategory": "high_school_chemistry",
       "question": "A reaction has an activation energy of 75 kJ/mol. If the temperature is increased from 300 K to 310 K, the rate constant approximately:",
-      "choices": ["A) Doubles", "B) Triples", "C) Quadruples", "D) Remains unchanged"],
+      "choices": [
+        "A) Doubles",
+        "B) Triples",
+        "C) Remains unchanged",
+        "D) Quadruples"
+      ],
       "correctAnswer": "A",
       "difficulty": "hard"
     },
@@ -144,8 +219,13 @@
       "category": "mmlu_pro",
       "subcategory": "high_school_chemistry",
       "question": "Which of the following is the strongest acid?",
-      "choices": ["A) HF (Ka = 6.8 x 10^-4)", "B) CH3COOH (Ka = 1.8 x 10^-5)", "C) HCN (Ka = 6.2 x 10^-10)", "D) HNO2 (Ka = 4.5 x 10^-4)"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) HCN (Ka = 6.2 x 10^-10)",
+        "B) HF (Ka = 6.8 x 10^-4)",
+        "C) CH3COOH (Ka = 1.8 x 10^-5)",
+        "D) HNO2 (Ka = 4.5 x 10^-4)"
+      ],
+      "correctAnswer": "B",
       "difficulty": "medium"
     },
     {
@@ -153,7 +233,12 @@
       "category": "mmlu_pro",
       "subcategory": "high_school_chemistry",
       "question": "According to Le Chatelier's principle, what happens to the equilibrium position of an exothermic reaction when the temperature is increased?",
-      "choices": ["A) Shifts to the right", "B) Shifts to the left", "C) No change", "D) The reaction stops"],
+      "choices": [
+        "A) The reaction stops",
+        "B) Shifts to the left",
+        "C) No change",
+        "D) Shifts to the right"
+      ],
       "correctAnswer": "B",
       "difficulty": "medium"
     },
@@ -162,8 +247,13 @@
       "category": "mmlu_pro",
       "subcategory": "high_school_chemistry",
       "question": "What is the oxidation state of chromium in K2Cr2O7?",
-      "choices": ["A) +3", "B) +4", "C) +6", "D) +7"],
-      "correctAnswer": "C",
+      "choices": [
+        "A) +6",
+        "B) +3",
+        "C) +7",
+        "D) +4"
+      ],
+      "correctAnswer": "A",
       "difficulty": "medium"
     },
     {
@@ -171,7 +261,12 @@
       "category": "mmlu_pro",
       "subcategory": "high_school_biology",
       "question": "During which phase of mitosis do the chromosomes align along the metaphase plate?",
-      "choices": ["A) Prophase", "B) Metaphase", "C) Anaphase", "D) Telophase"],
+      "choices": [
+        "A) Anaphase",
+        "B) Metaphase",
+        "C) Telophase",
+        "D) Prophase"
+      ],
       "correctAnswer": "B",
       "difficulty": "easy"
     },
@@ -180,8 +275,13 @@
       "category": "mmlu_pro",
       "subcategory": "high_school_biology",
       "question": "In the Calvin cycle, how many molecules of CO2 must be fixed to produce one molecule of glucose?",
-      "choices": ["A) 3", "B) 6", "C) 12", "D) 18"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) 3",
+        "B) 18",
+        "C) 6",
+        "D) 12"
+      ],
+      "correctAnswer": "C",
       "difficulty": "medium"
     },
     {
@@ -189,8 +289,13 @@
       "category": "mmlu_pro",
       "subcategory": "high_school_biology",
       "question": "Which of the following correctly describes the Hardy-Weinberg equilibrium condition?",
-      "choices": ["A) Allele frequencies change over generations", "B) Natural selection is actively occurring", "C) No mutation, migration, genetic drift, or selection occurs", "D) The population size is very small"],
-      "correctAnswer": "C",
+      "choices": [
+        "A) Natural selection is actively occurring",
+        "B) Allele frequencies change over generations",
+        "C) The population size is very small",
+        "D) No mutation, migration, genetic drift, or selection occurs"
+      ],
+      "correctAnswer": "D",
       "difficulty": "medium"
     },
     {
@@ -198,8 +303,13 @@
       "category": "mmlu_pro",
       "subcategory": "high_school_biology",
       "question": "The fluid mosaic model of cell membranes describes a structure in which:",
-      "choices": ["A) Proteins are fixed in a rigid lipid layer", "B) Phospholipids and proteins move laterally within the membrane", "C) Carbohydrates form the main structural component", "D) Cholesterol is absent from the membrane"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) Carbohydrates form the main structural component",
+        "B) Proteins are fixed in a rigid lipid layer",
+        "C) Cholesterol is absent from the membrane",
+        "D) Phospholipids and proteins move laterally within the membrane"
+      ],
+      "correctAnswer": "D",
       "difficulty": "medium"
     },
     {
@@ -207,7 +317,12 @@
       "category": "mmlu_pro",
       "subcategory": "high_school_biology",
       "question": "In humans, blood type is determined by the ABO gene. A person with genotype I^A I^B has blood type AB. This is an example of:",
-      "choices": ["A) Complete dominance", "B) Incomplete dominance", "C) Codominance", "D) Epistasis"],
+      "choices": [
+        "A) Epistasis",
+        "B) Incomplete dominance",
+        "C) Codominance",
+        "D) Complete dominance"
+      ],
       "correctAnswer": "C",
       "difficulty": "medium"
     },
@@ -216,8 +331,13 @@
       "category": "mmlu_pro",
       "subcategory": "high_school_biology",
       "question": "The net ATP yield from one molecule of glucose undergoing aerobic cellular respiration is approximately:",
-      "choices": ["A) 2 ATP", "B) 4 ATP", "C) 30-32 ATP", "D) 38-40 ATP"],
-      "correctAnswer": "C",
+      "choices": [
+        "A) 4 ATP",
+        "B) 30-32 ATP",
+        "C) 2 ATP",
+        "D) 38-40 ATP"
+      ],
+      "correctAnswer": "B",
       "difficulty": "medium"
     },
     {
@@ -225,8 +345,13 @@
       "category": "mmlu_pro",
       "subcategory": "high_school_biology",
       "question": "Which of the following is NOT a function of the liver?",
-      "choices": ["A) Detoxification of blood", "B) Production of bile", "C) Storage of glycogen", "D) Production of insulin"],
-      "correctAnswer": "D",
+      "choices": [
+        "A) Production of insulin",
+        "B) Production of bile",
+        "C) Detoxification of blood",
+        "D) Storage of glycogen"
+      ],
+      "correctAnswer": "A",
       "difficulty": "medium"
     },
     {
@@ -234,8 +359,13 @@
       "category": "mmlu_pro",
       "subcategory": "high_school_biology",
       "question": "During DNA replication, the enzyme that unwinds the double helix is:",
-      "choices": ["A) DNA polymerase", "B) RNA primase", "C) Helicase", "D) Ligase"],
-      "correctAnswer": "C",
+      "choices": [
+        "A) DNA polymerase",
+        "B) Helicase",
+        "C) RNA primase",
+        "D) Ligase"
+      ],
+      "correctAnswer": "B",
       "difficulty": "easy"
     },
     {
@@ -243,8 +373,13 @@
       "category": "mmlu_pro",
       "subcategory": "high_school_biology",
       "question": "A frameshift mutation is most likely caused by:",
-      "choices": ["A) A substitution of one base for another", "B) An insertion or deletion of one or two nucleotides", "C) A silent mutation in the third codon position", "D) A chromosomal translocation"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) A silent mutation in the third codon position",
+        "B) A substitution of one base for another",
+        "C) An insertion or deletion of one or two nucleotides",
+        "D) A chromosomal translocation"
+      ],
+      "correctAnswer": "C",
       "difficulty": "medium"
     },
     {
@@ -252,7 +387,12 @@
       "category": "mmlu_pro",
       "subcategory": "abstract_algebra",
       "question": "What is the order of the element 5 in the group (Z/12Z, +)?",
-      "choices": ["A) 5", "B) 12", "C) 12/gcd(5,12) = 12", "D) 6"],
+      "choices": [
+        "A) 5",
+        "B) 6",
+        "C) 12/gcd(5,12) = 12",
+        "D) 12"
+      ],
       "correctAnswer": "C",
       "difficulty": "hard"
     },
@@ -261,8 +401,13 @@
       "category": "mmlu_pro",
       "subcategory": "abstract_algebra",
       "question": "Which of the following groups is cyclic?",
-      "choices": ["A) Z/6Z", "B) S3", "C) The Klein four-group V4", "D) The dihedral group D4"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) S3",
+        "B) The dihedral group D4",
+        "C) Z/6Z",
+        "D) The Klein four-group V4"
+      ],
+      "correctAnswer": "C",
       "difficulty": "medium"
     },
     {
@@ -270,8 +415,13 @@
       "category": "mmlu_pro",
       "subcategory": "abstract_algebra",
       "question": "If G is a group of order 15, then G is:",
-      "choices": ["A) Necessarily non-abelian", "B) Necessarily cyclic", "C) Isomorphic to S3 x Z5", "D) Isomorphic to A5"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) Isomorphic to A5",
+        "B) Isomorphic to S3 x Z5",
+        "C) Necessarily cyclic",
+        "D) Necessarily non-abelian"
+      ],
+      "correctAnswer": "C",
       "difficulty": "hard"
     },
     {
@@ -279,8 +429,13 @@
       "category": "mmlu_pro",
       "subcategory": "abstract_algebra",
       "question": "The number of elements of order 2 in the symmetric group S3 is:",
-      "choices": ["A) 1", "B) 2", "C) 3", "D) 4"],
-      "correctAnswer": "C",
+      "choices": [
+        "A) 3",
+        "B) 4",
+        "C) 2",
+        "D) 1"
+      ],
+      "correctAnswer": "A",
       "difficulty": "medium"
     },
     {
@@ -288,7 +443,12 @@
       "category": "mmlu_pro",
       "subcategory": "abstract_algebra",
       "question": "Let R be a commutative ring with unity. An ideal I of R is maximal if and only if:",
-      "choices": ["A) R/I is an integral domain", "B) R/I is a field", "C) I contains a unit", "D) I is a principal ideal"],
+      "choices": [
+        "A) R/I is an integral domain",
+        "B) R/I is a field",
+        "C) I is a principal ideal",
+        "D) I contains a unit"
+      ],
       "correctAnswer": "B",
       "difficulty": "hard"
     },
@@ -297,8 +457,13 @@
       "category": "mmlu_pro",
       "subcategory": "abstract_algebra",
       "question": "How many homomorphisms are there from Z/6Z to Z/3Z?",
-      "choices": ["A) 1", "B) 2", "C) 3", "D) 6"],
-      "correctAnswer": "C",
+      "choices": [
+        "A) 2",
+        "B) 6",
+        "C) 1",
+        "D) 3"
+      ],
+      "correctAnswer": "D",
       "difficulty": "hard"
     },
     {
@@ -306,8 +471,13 @@
       "category": "mmlu_pro",
       "subcategory": "abstract_algebra",
       "question": "Which of the following is a normal subgroup of S3?",
-      "choices": ["A) {e, (12)}", "B) {e, (13)}", "C) {e, (123), (132)}", "D) {e, (23)}"],
-      "correctAnswer": "C",
+      "choices": [
+        "A) {e, (123), (132)}",
+        "B) {e, (12)}",
+        "C) {e, (23)}",
+        "D) {e, (13)}"
+      ],
+      "correctAnswer": "A",
       "difficulty": "medium"
     },
     {
@@ -315,8 +485,13 @@
       "category": "mmlu_pro",
       "subcategory": "abstract_algebra",
       "question": "The center of the dihedral group D4 (symmetries of a square) has order:",
-      "choices": ["A) 1", "B) 2", "C) 4", "D) 8"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) 4",
+        "B) 8",
+        "C) 1",
+        "D) 2"
+      ],
+      "correctAnswer": "D",
       "difficulty": "hard"
     },
     {
@@ -324,7 +499,12 @@
       "category": "mmlu_pro",
       "subcategory": "college_mathematics",
       "question": "The series sum from n=1 to infinity of (-1)^(n+1) / n converges to:",
-      "choices": ["A) 0", "B) 1/2", "C) ln(2)", "D) 1"],
+      "choices": [
+        "A) 1",
+        "B) 1/2",
+        "C) ln(2)",
+        "D) 0"
+      ],
       "correctAnswer": "C",
       "difficulty": "medium"
     },
@@ -333,7 +513,12 @@
       "category": "mmlu_pro",
       "subcategory": "college_mathematics",
       "question": "What is the rank of the matrix [[1, 2, 3], [2, 4, 6], [1, 1, 1]]?",
-      "choices": ["A) 1", "B) 2", "C) 3", "D) 0"],
+      "choices": [
+        "A) 3",
+        "B) 2",
+        "C) 1",
+        "D) 0"
+      ],
       "correctAnswer": "B",
       "difficulty": "medium"
     },
@@ -342,7 +527,12 @@
       "category": "mmlu_pro",
       "subcategory": "college_mathematics",
       "question": "The function f(x) = x^3 - 3x has a local maximum at:",
-      "choices": ["A) x = 0", "B) x = -1", "C) x = 1", "D) x = 3"],
+      "choices": [
+        "A) x = 3",
+        "B) x = -1",
+        "C) x = 0",
+        "D) x = 1"
+      ],
       "correctAnswer": "B",
       "difficulty": "medium"
     },
@@ -351,8 +541,13 @@
       "category": "mmlu_pro",
       "subcategory": "college_mathematics",
       "question": "Which of the following sets is uncountable?",
-      "choices": ["A) The set of rational numbers", "B) The set of integers", "C) The set of algebraic numbers", "D) The set of real numbers in [0, 1]"],
-      "correctAnswer": "D",
+      "choices": [
+        "A) The set of rational numbers",
+        "B) The set of real numbers in [0, 1]",
+        "C) The set of integers",
+        "D) The set of algebraic numbers"
+      ],
+      "correctAnswer": "B",
       "difficulty": "medium"
     },
     {
@@ -360,8 +555,13 @@
       "category": "mmlu_pro",
       "subcategory": "college_mathematics",
       "question": "Let f: R -> R be defined by f(x) = x^2. The function f is:",
-      "choices": ["A) Injective but not surjective", "B) Surjective but not injective", "C) Bijective", "D) Neither injective nor surjective"],
-      "correctAnswer": "D",
+      "choices": [
+        "A) Bijective",
+        "B) Neither injective nor surjective",
+        "C) Injective but not surjective",
+        "D) Surjective but not injective"
+      ],
+      "correctAnswer": "B",
       "difficulty": "medium"
     },
     {
@@ -369,7 +569,12 @@
       "category": "mmlu_pro",
       "subcategory": "college_mathematics",
       "question": "The eigenvalues of the matrix [[3, 1], [0, 2]] are:",
-      "choices": ["A) 3 and 2", "B) 1 and 6", "C) 5 and 0", "D) 3 and -2"],
+      "choices": [
+        "A) 3 and 2",
+        "B) 5 and 0",
+        "C) 3 and -2",
+        "D) 1 and 6"
+      ],
       "correctAnswer": "A",
       "difficulty": "medium"
     },
@@ -378,7 +583,12 @@
       "category": "mmlu_pro",
       "subcategory": "college_mathematics",
       "question": "The integral of 1/(x^2 + 1) dx from 0 to infinity equals:",
-      "choices": ["A) pi/4", "B) pi/2", "C) pi", "D) 2*pi"],
+      "choices": [
+        "A) pi",
+        "B) pi/2",
+        "C) pi/4",
+        "D) 2*pi"
+      ],
       "correctAnswer": "B",
       "difficulty": "medium"
     },
@@ -387,8 +597,13 @@
       "category": "mmlu_pro",
       "subcategory": "college_mathematics",
       "question": "A continuous function f on [0,1] with f(0) = -1 and f(1) = 1 must have a zero in (0,1) by which theorem?",
-      "choices": ["A) Mean Value Theorem", "B) Intermediate Value Theorem", "C) Rolle's Theorem", "D) Extreme Value Theorem"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) Mean Value Theorem",
+        "B) Extreme Value Theorem",
+        "C) Rolle's Theorem",
+        "D) Intermediate Value Theorem"
+      ],
+      "correctAnswer": "D",
       "difficulty": "easy"
     },
     {
@@ -396,8 +611,13 @@
       "category": "mmlu_pro",
       "subcategory": "college_mathematics",
       "question": "The dimension of the solution space of a homogeneous system Ax = 0, where A is a 5x7 matrix of rank 3, is:",
-      "choices": ["A) 2", "B) 3", "C) 4", "D) 5"],
-      "correctAnswer": "C",
+      "choices": [
+        "A) 2",
+        "B) 3",
+        "C) 5",
+        "D) 4"
+      ],
+      "correctAnswer": "D",
       "difficulty": "medium"
     },
     {
@@ -405,7 +625,12 @@
       "category": "mmlu_pro",
       "subcategory": "clinical_knowledge",
       "question": "Which of the following is the most common cause of community-acquired pneumonia in adults?",
-      "choices": ["A) Staphylococcus aureus", "B) Streptococcus pneumoniae", "C) Klebsiella pneumoniae", "D) Pseudomonas aeruginosa"],
+      "choices": [
+        "A) Staphylococcus aureus",
+        "B) Streptococcus pneumoniae",
+        "C) Klebsiella pneumoniae",
+        "D) Pseudomonas aeruginosa"
+      ],
       "correctAnswer": "B",
       "difficulty": "medium"
     },
@@ -414,8 +639,13 @@
       "category": "mmlu_pro",
       "subcategory": "clinical_knowledge",
       "question": "A patient presents with polyuria, polydipsia, and unexplained weight loss. Fasting blood glucose is 180 mg/dL. The most likely diagnosis is:",
-      "choices": ["A) Diabetes insipidus", "B) Type 2 diabetes mellitus", "C) Cushing's syndrome", "D) Addison's disease"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) Type 2 diabetes mellitus",
+        "B) Cushing's syndrome",
+        "C) Addison's disease",
+        "D) Diabetes insipidus"
+      ],
+      "correctAnswer": "A",
       "difficulty": "medium"
     },
     {
@@ -423,8 +653,13 @@
       "category": "mmlu_pro",
       "subcategory": "clinical_knowledge",
       "question": "The Glasgow Coma Scale assesses three components. Which of the following is NOT one of them?",
-      "choices": ["A) Eye opening", "B) Verbal response", "C) Motor response", "D) Pupillary reflex"],
-      "correctAnswer": "D",
+      "choices": [
+        "A) Pupillary reflex",
+        "B) Verbal response",
+        "C) Motor response",
+        "D) Eye opening"
+      ],
+      "correctAnswer": "A",
       "difficulty": "medium"
     },
     {
@@ -432,8 +667,13 @@
       "category": "mmlu_pro",
       "subcategory": "clinical_knowledge",
       "question": "An elevated serum troponin level is most specifically indicative of:",
-      "choices": ["A) Pulmonary embolism", "B) Myocardial infarction", "C) Congestive heart failure", "D) Pericarditis"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) Congestive heart failure",
+        "B) Pulmonary embolism",
+        "C) Pericarditis",
+        "D) Myocardial infarction"
+      ],
+      "correctAnswer": "D",
       "difficulty": "medium"
     },
     {
@@ -441,8 +681,13 @@
       "category": "mmlu_pro",
       "subcategory": "clinical_knowledge",
       "question": "Which of the following drug classes is first-line treatment for essential hypertension?",
-      "choices": ["A) Alpha-blockers", "B) Loop diuretics", "C) ACE inhibitors", "D) Centrally acting alpha-2 agonists"],
-      "correctAnswer": "C",
+      "choices": [
+        "A) Alpha-blockers",
+        "B) Centrally acting alpha-2 agonists",
+        "C) Loop diuretics",
+        "D) ACE inhibitors"
+      ],
+      "correctAnswer": "D",
       "difficulty": "medium"
     },
     {
@@ -450,8 +695,13 @@
       "category": "mmlu_pro",
       "subcategory": "clinical_knowledge",
       "question": "A patient on warfarin therapy should be monitored using which laboratory test?",
-      "choices": ["A) Activated partial thromboplastin time (aPTT)", "B) Prothrombin time / INR", "C) Bleeding time", "D) Platelet count"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) Platelet count",
+        "B) Bleeding time",
+        "C) Prothrombin time / INR",
+        "D) Activated partial thromboplastin time (aPTT)"
+      ],
+      "correctAnswer": "C",
       "difficulty": "medium"
     },
     {
@@ -459,8 +709,13 @@
       "category": "mmlu_pro",
       "subcategory": "clinical_knowledge",
       "question": "Hemoglobin A1c reflects average blood glucose control over the past:",
-      "choices": ["A) 1-2 weeks", "B) 2-3 months", "C) 6-12 months", "D) 24 hours"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) 24 hours",
+        "B) 1-2 weeks",
+        "C) 2-3 months",
+        "D) 6-12 months"
+      ],
+      "correctAnswer": "C",
       "difficulty": "easy"
     },
     {
@@ -468,8 +723,13 @@
       "category": "mmlu_pro",
       "subcategory": "clinical_knowledge",
       "question": "Which vitamin deficiency causes scurvy?",
-      "choices": ["A) Vitamin A", "B) Vitamin B12", "C) Vitamin C", "D) Vitamin D"],
-      "correctAnswer": "C",
+      "choices": [
+        "A) Vitamin C",
+        "B) Vitamin A",
+        "C) Vitamin B12",
+        "D) Vitamin D"
+      ],
+      "correctAnswer": "A",
       "difficulty": "easy"
     },
     {
@@ -477,8 +737,13 @@
       "category": "mmlu_pro",
       "subcategory": "anatomy",
       "question": "The brachial plexus is formed by the ventral rami of which spinal nerves?",
-      "choices": ["A) C1-C4", "B) C5-T1", "C) T1-T5", "D) C3-C7"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) T1-T5",
+        "B) C3-C7",
+        "C) C5-T1",
+        "D) C1-C4"
+      ],
+      "correctAnswer": "C",
       "difficulty": "medium"
     },
     {
@@ -486,8 +751,13 @@
       "category": "mmlu_pro",
       "subcategory": "anatomy",
       "question": "The thoracic duct drains lymph into the venous system at the junction of the:",
-      "choices": ["A) Right internal jugular and right subclavian veins", "B) Left internal jugular and left subclavian veins", "C) Superior vena cava directly", "D) Inferior vena cava directly"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) Right internal jugular and right subclavian veins",
+        "B) Superior vena cava directly",
+        "C) Inferior vena cava directly",
+        "D) Left internal jugular and left subclavian veins"
+      ],
+      "correctAnswer": "D",
       "difficulty": "medium"
     },
     {
@@ -495,8 +765,13 @@
       "category": "mmlu_pro",
       "subcategory": "anatomy",
       "question": "Which cranial nerve is responsible for the gag reflex (sensory limb)?",
-      "choices": ["A) CN VII (Facial)", "B) CN IX (Glossopharyngeal)", "C) CN X (Vagus)", "D) CN XII (Hypoglossal)"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) CN VII (Facial)",
+        "B) CN XII (Hypoglossal)",
+        "C) CN IX (Glossopharyngeal)",
+        "D) CN X (Vagus)"
+      ],
+      "correctAnswer": "C",
       "difficulty": "medium"
     },
     {
@@ -504,7 +779,12 @@
       "category": "mmlu_pro",
       "subcategory": "anatomy",
       "question": "The primary blood supply to the heart is provided by the coronary arteries, which originate from the:",
-      "choices": ["A) Aortic arch", "B) Ascending aorta (aortic sinuses)", "C) Pulmonary trunk", "D) Brachiocephalic artery"],
+      "choices": [
+        "A) Pulmonary trunk",
+        "B) Ascending aorta (aortic sinuses)",
+        "C) Aortic arch",
+        "D) Brachiocephalic artery"
+      ],
       "correctAnswer": "B",
       "difficulty": "medium"
     },
@@ -513,8 +793,13 @@
       "category": "mmlu_pro",
       "subcategory": "anatomy",
       "question": "The sciatic nerve exits the pelvis through which foramen?",
-      "choices": ["A) Obturator foramen", "B) Greater sciatic foramen", "C) Lesser sciatic foramen", "D) Sacral hiatus"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) Greater sciatic foramen",
+        "B) Obturator foramen",
+        "C) Lesser sciatic foramen",
+        "D) Sacral hiatus"
+      ],
+      "correctAnswer": "A",
       "difficulty": "medium"
     },
     {
@@ -522,8 +807,13 @@
       "category": "mmlu_pro",
       "subcategory": "anatomy",
       "question": "Which structure passes through the foramen magnum?",
-      "choices": ["A) Internal carotid artery", "B) Spinal cord (medulla-spinal cord junction)", "C) Optic nerve", "D) Middle meningeal artery"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) Optic nerve",
+        "B) Middle meningeal artery",
+        "C) Spinal cord (medulla-spinal cord junction)",
+        "D) Internal carotid artery"
+      ],
+      "correctAnswer": "C",
       "difficulty": "medium"
     },
     {
@@ -531,7 +821,12 @@
       "category": "mmlu_pro",
       "subcategory": "anatomy",
       "question": "The rotator cuff muscles include all of the following EXCEPT:",
-      "choices": ["A) Supraspinatus", "B) Infraspinatus", "C) Deltoid", "D) Teres minor"],
+      "choices": [
+        "A) Infraspinatus",
+        "B) Supraspinatus",
+        "C) Deltoid",
+        "D) Teres minor"
+      ],
       "correctAnswer": "C",
       "difficulty": "medium"
     },
@@ -540,7 +835,12 @@
       "category": "mmlu_pro",
       "subcategory": "anatomy",
       "question": "The circle of Willis is an arterial anastomosis located at the base of the brain. Which of the following arteries is NOT part of it?",
-      "choices": ["A) Anterior cerebral artery", "B) Middle cerebral artery", "C) Posterior communicating artery", "D) Anterior communicating artery"],
+      "choices": [
+        "A) Anterior communicating artery",
+        "B) Middle cerebral artery",
+        "C) Anterior cerebral artery",
+        "D) Posterior communicating artery"
+      ],
       "correctAnswer": "B",
       "difficulty": "hard"
     },
@@ -549,8 +849,13 @@
       "category": "mmlu_pro",
       "subcategory": "computer_science",
       "question": "What is the time complexity of binary search on a sorted array of n elements?",
-      "choices": ["A) O(1)", "B) O(log n)", "C) O(n)", "D) O(n log n)"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) O(n log n)",
+        "B) O(1)",
+        "C) O(n)",
+        "D) O(log n)"
+      ],
+      "correctAnswer": "D",
       "difficulty": "easy"
     },
     {
@@ -558,8 +863,13 @@
       "category": "mmlu_pro",
       "subcategory": "computer_science",
       "question": "In a hash table with n elements and m buckets using chaining, the expected time for a successful search is:",
-      "choices": ["A) O(1)", "B) O(1 + n/m)", "C) O(n)", "D) O(log n)"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) O(log n)",
+        "B) O(n)",
+        "C) O(1)",
+        "D) O(1 + n/m)"
+      ],
+      "correctAnswer": "D",
       "difficulty": "medium"
     },
     {
@@ -567,8 +877,13 @@
       "category": "mmlu_pro",
       "subcategory": "computer_science",
       "question": "Which of the following problems is known to be NP-complete?",
-      "choices": ["A) Sorting an array", "B) Finding the shortest path in a weighted graph", "C) The traveling salesman problem (decision version)", "D) Binary search"],
-      "correctAnswer": "C",
+      "choices": [
+        "A) Binary search",
+        "B) The traveling salesman problem (decision version)",
+        "C) Finding the shortest path in a weighted graph",
+        "D) Sorting an array"
+      ],
+      "correctAnswer": "B",
       "difficulty": "medium"
     },
     {
@@ -576,8 +891,13 @@
       "category": "mmlu_pro",
       "subcategory": "computer_science",
       "question": "In a relational database, the operation that combines rows from two tables based on a related column is called:",
-      "choices": ["A) Union", "B) Projection", "C) Join", "D) Selection"],
-      "correctAnswer": "C",
+      "choices": [
+        "A) Selection",
+        "B) Union",
+        "C) Projection",
+        "D) Join"
+      ],
+      "correctAnswer": "D",
       "difficulty": "easy"
     },
     {
@@ -585,8 +905,13 @@
       "category": "mmlu_pro",
       "subcategory": "computer_science",
       "question": "A process in an operating system that is waiting for I/O completion is in which state?",
-      "choices": ["A) Running", "B) Ready", "C) Blocked (Waiting)", "D) Terminated"],
-      "correctAnswer": "C",
+      "choices": [
+        "A) Terminated",
+        "B) Running",
+        "C) Ready",
+        "D) Blocked (Waiting)"
+      ],
+      "correctAnswer": "D",
       "difficulty": "easy"
     },
     {
@@ -594,8 +919,13 @@
       "category": "mmlu_pro",
       "subcategory": "computer_science",
       "question": "What is the worst-case time complexity of quicksort?",
-      "choices": ["A) O(n)", "B) O(n log n)", "C) O(n^2)", "D) O(2^n)"],
-      "correctAnswer": "C",
+      "choices": [
+        "A) O(n)",
+        "B) O(n^2)",
+        "C) O(n log n)",
+        "D) O(2^n)"
+      ],
+      "correctAnswer": "B",
       "difficulty": "medium"
     },
     {
@@ -603,8 +933,13 @@
       "category": "mmlu_pro",
       "subcategory": "computer_science",
       "question": "In the context of machine learning, overfitting occurs when:",
-      "choices": ["A) The model performs well on training data but poorly on unseen data", "B) The model performs poorly on both training and test data", "C) The model is too simple to capture patterns in the data", "D) The training dataset is too large"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) The model is too simple to capture patterns in the data",
+        "B) The model performs well on training data but poorly on unseen data",
+        "C) The training dataset is too large",
+        "D) The model performs poorly on both training and test data"
+      ],
+      "correctAnswer": "B",
       "difficulty": "medium"
     },
     {
@@ -612,8 +947,13 @@
       "category": "mmlu_pro",
       "subcategory": "computer_science",
       "question": "Which of the following is true about a B-tree of order m?",
-      "choices": ["A) Every node has exactly m children", "B) Every non-root internal node has at least ceil(m/2) children", "C) All leaves are at different levels", "D) The root must have at least m/2 keys"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) All leaves are at different levels",
+        "B) Every node has exactly m children",
+        "C) Every non-root internal node has at least ceil(m/2) children",
+        "D) The root must have at least m/2 keys"
+      ],
+      "correctAnswer": "C",
       "difficulty": "hard"
     },
     {
@@ -621,8 +961,13 @@
       "category": "mmlu_pro",
       "subcategory": "computer_science",
       "question": "The Chomsky hierarchy classifies formal grammars into types. Context-free grammars are classified as:",
-      "choices": ["A) Type 0", "B) Type 1", "C) Type 2", "D) Type 3"],
-      "correctAnswer": "C",
+      "choices": [
+        "A) Type 3",
+        "B) Type 1",
+        "C) Type 0",
+        "D) Type 2"
+      ],
+      "correctAnswer": "D",
       "difficulty": "medium"
     },
     {
@@ -630,8 +975,13 @@
       "category": "mmlu_pro",
       "subcategory": "electrical_engineering",
       "question": "In an RLC series circuit at resonance, the impedance is:",
-      "choices": ["A) Maximum", "B) Equal to the resistance R", "C) Equal to the inductive reactance", "D) Zero"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) Equal to the inductive reactance",
+        "B) Zero",
+        "C) Equal to the resistance R",
+        "D) Maximum"
+      ],
+      "correctAnswer": "C",
       "difficulty": "medium"
     },
     {
@@ -639,8 +989,13 @@
       "category": "mmlu_pro",
       "subcategory": "electrical_engineering",
       "question": "The Thevenin equivalent of a linear circuit consists of:",
-      "choices": ["A) A current source in parallel with a resistance", "B) A voltage source in series with a resistance", "C) A voltage source in parallel with a resistance", "D) A current source in series with a resistance"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) A current source in series with a resistance",
+        "B) A current source in parallel with a resistance",
+        "C) A voltage source in series with a resistance",
+        "D) A voltage source in parallel with a resistance"
+      ],
+      "correctAnswer": "C",
       "difficulty": "medium"
     },
     {
@@ -648,8 +1003,13 @@
       "category": "mmlu_pro",
       "subcategory": "electrical_engineering",
       "question": "A full-wave rectifier produces an output with a fundamental ripple frequency that is:",
-      "choices": ["A) Equal to the input frequency", "B) Twice the input frequency", "C) Half the input frequency", "D) Four times the input frequency"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) Twice the input frequency",
+        "B) Half the input frequency",
+        "C) Equal to the input frequency",
+        "D) Four times the input frequency"
+      ],
+      "correctAnswer": "A",
       "difficulty": "medium"
     },
     {
@@ -657,8 +1017,13 @@
       "category": "mmlu_pro",
       "subcategory": "electrical_engineering",
       "question": "In a common-emitter BJT amplifier, the voltage gain is typically:",
-      "choices": ["A) Less than 1", "B) Exactly 1", "C) Greater than 1 and inverting", "D) Greater than 1 and non-inverting"],
-      "correctAnswer": "C",
+      "choices": [
+        "A) Exactly 1",
+        "B) Less than 1",
+        "C) Greater than 1 and non-inverting",
+        "D) Greater than 1 and inverting"
+      ],
+      "correctAnswer": "D",
       "difficulty": "medium"
     },
     {
@@ -666,8 +1031,13 @@
       "category": "mmlu_pro",
       "subcategory": "electrical_engineering",
       "question": "The Nyquist sampling theorem states that to perfectly reconstruct a signal, the sampling frequency must be at least:",
-      "choices": ["A) Equal to the highest frequency in the signal", "B) Twice the highest frequency in the signal", "C) Three times the highest frequency in the signal", "D) The square of the highest frequency in the signal"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) Three times the highest frequency in the signal",
+        "B) The square of the highest frequency in the signal",
+        "C) Equal to the highest frequency in the signal",
+        "D) Twice the highest frequency in the signal"
+      ],
+      "correctAnswer": "D",
       "difficulty": "medium"
     },
     {
@@ -675,8 +1045,13 @@
       "category": "mmlu_pro",
       "subcategory": "electrical_engineering",
       "question": "The transfer function of an ideal integrator in the Laplace domain is:",
-      "choices": ["A) s", "B) 1/s", "C) s^2", "D) 1/s^2"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) s^2",
+        "B) s",
+        "C) 1/s^2",
+        "D) 1/s"
+      ],
+      "correctAnswer": "D",
       "difficulty": "medium"
     },
     {
@@ -684,8 +1059,13 @@
       "category": "mmlu_pro",
       "subcategory": "electrical_engineering",
       "question": "In a three-phase balanced system, the line voltage is related to the phase voltage by a factor of:",
-      "choices": ["A) 1", "B) sqrt(2)", "C) sqrt(3)", "D) 2"],
-      "correctAnswer": "C",
+      "choices": [
+        "A) 1",
+        "B) 2",
+        "C) sqrt(2)",
+        "D) sqrt(3)"
+      ],
+      "correctAnswer": "D",
       "difficulty": "medium"
     },
     {
@@ -693,8 +1073,13 @@
       "category": "mmlu_pro",
       "subcategory": "electrical_engineering",
       "question": "An operational amplifier in negative feedback configuration with Rf = 100 kOhm and Rin = 10 kOhm has a closed-loop voltage gain of:",
-      "choices": ["A) -10", "B) -100", "C) 10", "D) 0.1"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) -100",
+        "B) 10",
+        "C) -10",
+        "D) 0.1"
+      ],
+      "correctAnswer": "C",
       "difficulty": "medium"
     },
     {
@@ -702,8 +1087,13 @@
       "category": "mmlu_pro",
       "subcategory": "electrical_engineering",
       "question": "Which Boolean algebra identity is correct?",
-      "choices": ["A) A + A'B = A + B", "B) A + AB = AB", "C) A(A + B) = AB", "D) A + A' = 0"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) A + A' = 0",
+        "B) A + AB = AB",
+        "C) A(A + B) = AB",
+        "D) A + A'B = A + B"
+      ],
+      "correctAnswer": "D",
       "difficulty": "medium"
     },
     {
@@ -711,7 +1101,12 @@
       "category": "mmlu_pro",
       "subcategory": "philosophy",
       "question": "According to Kant, a moral action is one that is performed:",
-      "choices": ["A) Out of inclination", "B) To maximize happiness", "C) From duty alone", "D) Based on consequences"],
+      "choices": [
+        "A) Out of inclination",
+        "B) Based on consequences",
+        "C) From duty alone",
+        "D) To maximize happiness"
+      ],
       "correctAnswer": "C",
       "difficulty": "medium"
     },
@@ -720,7 +1115,12 @@
       "category": "mmlu_pro",
       "subcategory": "philosophy",
       "question": "Descartes' famous statement 'Cogito, ergo sum' ('I think, therefore I am') was intended to establish:",
-      "choices": ["A) The existence of God", "B) The reliability of the senses", "C) An indubitable foundation for knowledge", "D) The superiority of rationalism over empiricism"],
+      "choices": [
+        "A) The reliability of the senses",
+        "B) The existence of God",
+        "C) An indubitable foundation for knowledge",
+        "D) The superiority of rationalism over empiricism"
+      ],
       "correctAnswer": "C",
       "difficulty": "medium"
     },
@@ -729,7 +1129,12 @@
       "category": "mmlu_pro",
       "subcategory": "philosophy",
       "question": "The 'veil of ignorance' is a thought experiment proposed by:",
-      "choices": ["A) John Stuart Mill", "B) John Rawls", "C) Thomas Hobbes", "D) Jean-Jacques Rousseau"],
+      "choices": [
+        "A) Thomas Hobbes",
+        "B) John Rawls",
+        "C) John Stuart Mill",
+        "D) Jean-Jacques Rousseau"
+      ],
       "correctAnswer": "B",
       "difficulty": "medium"
     },
@@ -738,8 +1143,13 @@
       "category": "mmlu_pro",
       "subcategory": "philosophy",
       "question": "David Hume argued that we cannot derive an 'ought' from an 'is.' This is known as:",
-      "choices": ["A) The categorical imperative", "B) The naturalistic fallacy", "C) Hume's guillotine (the is-ought problem)", "D) The principle of utility"],
-      "correctAnswer": "C",
+      "choices": [
+        "A) The categorical imperative",
+        "B) Hume's guillotine (the is-ought problem)",
+        "C) The naturalistic fallacy",
+        "D) The principle of utility"
+      ],
+      "correctAnswer": "B",
       "difficulty": "medium"
     },
     {
@@ -747,7 +1157,12 @@
       "category": "mmlu_pro",
       "subcategory": "philosophy",
       "question": "Which philosopher argued that the mind is a 'blank slate' (tabula rasa) at birth?",
-      "choices": ["A) Plato", "B) Descartes", "C) John Locke", "D) Leibniz"],
+      "choices": [
+        "A) Plato",
+        "B) Leibniz",
+        "C) John Locke",
+        "D) Descartes"
+      ],
       "correctAnswer": "C",
       "difficulty": "easy"
     },
@@ -756,8 +1171,13 @@
       "category": "mmlu_pro",
       "subcategory": "philosophy",
       "question": "Nietzsche's concept of the 'Ubermensch' refers to:",
-      "choices": ["A) A person who follows all social conventions perfectly", "B) An individual who creates their own values and meaning", "C) A being with supernatural powers", "D) The ideal citizen of a democratic state"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) A person who follows all social conventions perfectly",
+        "B) The ideal citizen of a democratic state",
+        "C) An individual who creates their own values and meaning",
+        "D) A being with supernatural powers"
+      ],
+      "correctAnswer": "C",
       "difficulty": "medium"
     },
     {
@@ -765,8 +1185,13 @@
       "category": "mmlu_pro",
       "subcategory": "philosophy",
       "question": "The 'trolley problem' is most directly relevant to debates between:",
-      "choices": ["A) Rationalism and empiricism", "B) Deontological and consequentialist ethics", "C) Idealism and materialism", "D) Existentialism and structuralism"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) Idealism and materialism",
+        "B) Rationalism and empiricism",
+        "C) Existentialism and structuralism",
+        "D) Deontological and consequentialist ethics"
+      ],
+      "correctAnswer": "D",
       "difficulty": "medium"
     },
     {
@@ -774,8 +1199,13 @@
       "category": "mmlu_pro",
       "subcategory": "philosophy",
       "question": "According to Aristotle, eudaimonia (human flourishing) is achieved through:",
-      "choices": ["A) Maximizing pleasure", "B) Following divine commands", "C) The practice of virtue in accordance with reason", "D) Withdrawing from public life"],
-      "correctAnswer": "C",
+      "choices": [
+        "A) The practice of virtue in accordance with reason",
+        "B) Maximizing pleasure",
+        "C) Withdrawing from public life",
+        "D) Following divine commands"
+      ],
+      "correctAnswer": "A",
       "difficulty": "medium"
     },
     {
@@ -783,8 +1213,13 @@
       "category": "mmlu_pro",
       "subcategory": "us_history",
       "question": "The Emancipation Proclamation, issued in 1863, declared the freedom of enslaved people in:",
-      "choices": ["A) All states of the Union", "B) The border states only", "C) States that had seceded from the Union", "D) Washington D.C. only"],
-      "correctAnswer": "C",
+      "choices": [
+        "A) Washington D.C. only",
+        "B) States that had seceded from the Union",
+        "C) All states of the Union",
+        "D) The border states only"
+      ],
+      "correctAnswer": "B",
       "difficulty": "medium"
     },
     {
@@ -792,8 +1227,13 @@
       "category": "mmlu_pro",
       "subcategory": "us_history",
       "question": "The Louisiana Purchase of 1803 was acquired from which country?",
-      "choices": ["A) Spain", "B) Great Britain", "C) France", "D) Mexico"],
-      "correctAnswer": "C",
+      "choices": [
+        "A) France",
+        "B) Spain",
+        "C) Mexico",
+        "D) Great Britain"
+      ],
+      "correctAnswer": "A",
       "difficulty": "easy"
     },
     {
@@ -801,8 +1241,13 @@
       "category": "mmlu_pro",
       "subcategory": "us_history",
       "question": "The Federalist Papers were primarily written to argue for:",
-      "choices": ["A) Abolition of slavery", "B) Ratification of the U.S. Constitution", "C) Independence from Britain", "D) Westward expansion"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) Westward expansion",
+        "B) Abolition of slavery",
+        "C) Independence from Britain",
+        "D) Ratification of the U.S. Constitution"
+      ],
+      "correctAnswer": "D",
       "difficulty": "medium"
     },
     {
@@ -810,8 +1255,13 @@
       "category": "mmlu_pro",
       "subcategory": "us_history",
       "question": "The New Deal programs of the 1930s were introduced under which president?",
-      "choices": ["A) Herbert Hoover", "B) Franklin D. Roosevelt", "C) Harry S. Truman", "D) Calvin Coolidge"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) Franklin D. Roosevelt",
+        "B) Herbert Hoover",
+        "C) Calvin Coolidge",
+        "D) Harry S. Truman"
+      ],
+      "correctAnswer": "A",
       "difficulty": "easy"
     },
     {
@@ -819,8 +1269,13 @@
       "category": "mmlu_pro",
       "subcategory": "us_history",
       "question": "The Supreme Court case Brown v. Board of Education (1954) ruled that:",
-      "choices": ["A) School prayer was unconstitutional", "B) Racial segregation in public schools was unconstitutional", "C) Affirmative action was constitutional", "D) States could set their own voting age"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) States could set their own voting age",
+        "B) Affirmative action was constitutional",
+        "C) Racial segregation in public schools was unconstitutional",
+        "D) School prayer was unconstitutional"
+      ],
+      "correctAnswer": "C",
       "difficulty": "medium"
     },
     {
@@ -828,8 +1283,13 @@
       "category": "mmlu_pro",
       "subcategory": "us_history",
       "question": "The Gulf of Tonkin Resolution (1964) gave the president authorization to:",
-      "choices": ["A) Invade Cuba", "B) Escalate U.S. military involvement in Vietnam", "C) Impose trade sanctions on the Soviet Union", "D) Deploy troops to Korea"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) Escalate U.S. military involvement in Vietnam",
+        "B) Impose trade sanctions on the Soviet Union",
+        "C) Invade Cuba",
+        "D) Deploy troops to Korea"
+      ],
+      "correctAnswer": "A",
       "difficulty": "medium"
     },
     {
@@ -837,8 +1297,13 @@
       "category": "mmlu_pro",
       "subcategory": "us_history",
       "question": "Manifest Destiny, a term coined in the 1840s, referred to the belief that:",
-      "choices": ["A) Slavery should be abolished immediately", "B) The United States was destined to expand across the North American continent", "C) The federal government should control all territories", "D) Native Americans should be granted full citizenship"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) The United States was destined to expand across the North American continent",
+        "B) Slavery should be abolished immediately",
+        "C) The federal government should control all territories",
+        "D) Native Americans should be granted full citizenship"
+      ],
+      "correctAnswer": "A",
       "difficulty": "medium"
     },
     {
@@ -846,8 +1311,13 @@
       "category": "mmlu_pro",
       "subcategory": "world_history",
       "question": "The Treaty of Westphalia (1648) is significant because it:",
-      "choices": ["A) Ended World War I", "B) Established the concept of sovereign nation-states in Europe", "C) Created the United Nations", "D) Divided Africa among European powers"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) Divided Africa among European powers",
+        "B) Ended World War I",
+        "C) Created the United Nations",
+        "D) Established the concept of sovereign nation-states in Europe"
+      ],
+      "correctAnswer": "D",
       "difficulty": "medium"
     },
     {
@@ -855,8 +1325,13 @@
       "category": "mmlu_pro",
       "subcategory": "world_history",
       "question": "The Meiji Restoration in Japan (1868) primarily resulted in:",
-      "choices": ["A) The establishment of a communist government", "B) The restoration of feudal power to regional lords", "C) Rapid modernization and industrialization", "D) Japan's withdrawal from international trade"],
-      "correctAnswer": "C",
+      "choices": [
+        "A) Rapid modernization and industrialization",
+        "B) The establishment of a communist government",
+        "C) Japan's withdrawal from international trade",
+        "D) The restoration of feudal power to regional lords"
+      ],
+      "correctAnswer": "A",
       "difficulty": "medium"
     },
     {
@@ -864,7 +1339,12 @@
       "category": "mmlu_pro",
       "subcategory": "world_history",
       "question": "The Columbian Exchange refers to the widespread transfer of plants, animals, culture, and ideas between:",
-      "choices": ["A) Europe and Asia after the Silk Road", "B) The Americas and the Old World after 1492", "C) Africa and the Middle East during the medieval period", "D) Australia and Southeast Asia"],
+      "choices": [
+        "A) Australia and Southeast Asia",
+        "B) The Americas and the Old World after 1492",
+        "C) Europe and Asia after the Silk Road",
+        "D) Africa and the Middle East during the medieval period"
+      ],
       "correctAnswer": "B",
       "difficulty": "medium"
     },
@@ -873,8 +1353,13 @@
       "category": "mmlu_pro",
       "subcategory": "world_history",
       "question": "The Congress of Vienna (1814-1815) aimed primarily to:",
-      "choices": ["A) Spread democratic ideals across Europe", "B) Restore the balance of power in Europe after the Napoleonic Wars", "C) Establish European colonies in Africa", "D) Create a unified European currency"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) Create a unified European currency",
+        "B) Spread democratic ideals across Europe",
+        "C) Restore the balance of power in Europe after the Napoleonic Wars",
+        "D) Establish European colonies in Africa"
+      ],
+      "correctAnswer": "C",
       "difficulty": "medium"
     },
     {
@@ -882,7 +1367,12 @@
       "category": "mmlu_pro",
       "subcategory": "world_history",
       "question": "The Mandate of Heaven in Chinese political philosophy justified:",
-      "choices": ["A) The emperor's divine right regardless of conduct", "B) The overthrow of a ruler who lost moral legitimacy", "C) The separation of church and state", "D) Democratic elections of government officials"],
+      "choices": [
+        "A) Democratic elections of government officials",
+        "B) The overthrow of a ruler who lost moral legitimacy",
+        "C) The separation of church and state",
+        "D) The emperor's divine right regardless of conduct"
+      ],
       "correctAnswer": "B",
       "difficulty": "medium"
     },
@@ -891,7 +1381,12 @@
       "category": "mmlu_pro",
       "subcategory": "world_history",
       "question": "The Rwandan Genocide of 1994 primarily involved conflict between which two groups?",
-      "choices": ["A) Sunni and Shia Muslims", "B) Hutu and Tutsi", "C) Serbs and Croats", "D) Catholics and Protestants"],
+      "choices": [
+        "A) Sunni and Shia Muslims",
+        "B) Hutu and Tutsi",
+        "C) Serbs and Croats",
+        "D) Catholics and Protestants"
+      ],
       "correctAnswer": "B",
       "difficulty": "medium"
     },
@@ -900,8 +1395,13 @@
       "category": "mmlu_pro",
       "subcategory": "world_history",
       "question": "The Silk Road was a network of trade routes that primarily connected:",
-      "choices": ["A) North and South America", "B) Europe and Sub-Saharan Africa", "C) China and the Mediterranean world", "D) Australia and Southeast Asia"],
-      "correctAnswer": "C",
+      "choices": [
+        "A) China and the Mediterranean world",
+        "B) North and South America",
+        "C) Australia and Southeast Asia",
+        "D) Europe and Sub-Saharan Africa"
+      ],
+      "correctAnswer": "A",
       "difficulty": "easy"
     }
   ]

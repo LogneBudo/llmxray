@@ -24,6 +24,10 @@ const DATASET_COLORS = [
   { border: '#4ade80', bg: 'rgba(74, 222, 128, 0.15)' },
   { border: '#fbbf24', bg: 'rgba(251, 191, 36, 0.15)' },
   { border: '#f87171', bg: 'rgba(248, 113, 113, 0.15)' },
+  { border: '#a78bfa', bg: 'rgba(167, 139, 250, 0.15)' },
+  { border: '#fb923c', bg: 'rgba(251, 146, 60, 0.15)' },
+  { border: '#2dd4bf', bg: 'rgba(45, 212, 191, 0.15)' },
+  { border: '#f472b6', bg: 'rgba(244, 114, 182, 0.15)' },
 ]
 
 const benchmarkIds = computed(() => getBaselineBenchmarkIds())

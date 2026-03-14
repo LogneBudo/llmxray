@@ -9,7 +9,12 @@
       "category": "hellaswag",
       "subcategory": "cooking",
       "question": "A person places a pot of water on the stove and turns on the heat. After several minutes, they add pasta to the pot. What happens next?",
-      "choices": ["A) The pasta immediately freezes solid", "B) The person stirs the pasta and sets a timer", "C) The pot flies off the stove", "D) The water turns into orange juice"],
+      "choices": [
+        "A) The pasta immediately freezes solid",
+        "B) The person stirs the pasta and sets a timer",
+        "C) The water turns into orange juice",
+        "D) The pot flies off the stove"
+      ],
       "correctAnswer": "B",
       "difficulty": "easy"
     },
@@ -18,8 +23,13 @@
       "category": "hellaswag",
       "subcategory": "cooking",
       "question": "A chef cracks an egg on the edge of a bowl and separates the shell. They then whisk the egg with a fork. What happens next?",
-      "choices": ["A) The egg reassembles itself into the shell", "B) The yolk and white blend into a uniform mixture", "C) The fork melts from the heat of the egg", "D) The bowl shatters from the whisking"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) The yolk and white blend into a uniform mixture",
+        "B) The fork melts from the heat of the egg",
+        "C) The egg reassembles itself into the shell",
+        "D) The bowl shatters from the whisking"
+      ],
+      "correctAnswer": "A",
       "difficulty": "easy"
     },
     {
@@ -27,8 +37,13 @@
       "category": "hellaswag",
       "subcategory": "cooking",
       "question": "A person preheats the oven to 180 degrees Celsius and places cookie dough on a baking sheet. They put the sheet in the oven. What happens next?",
-      "choices": ["A) The cookies begin to spread and bake, filling the kitchen with a sweet smell", "B) The dough immediately turns into bread", "C) The oven becomes a refrigerator", "D) The baking sheet dissolves"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) The oven becomes a refrigerator",
+        "B) The cookies begin to spread and bake, filling the kitchen with a sweet smell",
+        "C) The baking sheet dissolves",
+        "D) The dough immediately turns into bread"
+      ],
+      "correctAnswer": "B",
       "difficulty": "easy"
     },
     {
@@ -36,8 +51,13 @@
       "category": "hellaswag",
       "subcategory": "cooking",
       "question": "Someone chops onions on a cutting board. Their eyes start to water. What do they most likely do next?",
-      "choices": ["A) They call an ambulance", "B) They wipe their eyes and continue chopping or step away briefly", "C) They throw the onions in the trash and order pizza", "D) They put sunglasses on the onion"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) They put sunglasses on the onion",
+        "B) They call an ambulance",
+        "C) They wipe their eyes and continue chopping or step away briefly",
+        "D) They throw the onions in the trash and order pizza"
+      ],
+      "correctAnswer": "C",
       "difficulty": "easy"
     },
     {
@@ -45,8 +65,13 @@
       "category": "hellaswag",
       "subcategory": "cooking",
       "question": "A person is making a salad. They wash lettuce leaves, then tear them into pieces and place them in a large bowl. What happens next?",
-      "choices": ["A) They add other ingredients like tomatoes and cucumbers", "B) They put the lettuce back in the refrigerator untouched", "C) The lettuce leaves reassemble themselves", "D) They pour motor oil on the salad"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They put the lettuce back in the refrigerator untouched",
+        "B) The lettuce leaves reassemble themselves",
+        "C) They pour motor oil on the salad",
+        "D) They add other ingredients like tomatoes and cucumbers"
+      ],
+      "correctAnswer": "D",
       "difficulty": "easy"
     },
     {
@@ -54,7 +79,12 @@
       "category": "hellaswag",
       "subcategory": "cooking",
       "question": "A person heats oil in a frying pan and carefully places battered fish fillets into the pan. What happens next?",
-      "choices": ["A) The fish swims away", "B) The oil turns into water", "C) The fish begins to sizzle and the batter turns golden brown", "D) The pan starts floating in the air"],
+      "choices": [
+        "A) The oil turns into water",
+        "B) The fish swims away",
+        "C) The fish begins to sizzle and the batter turns golden brown",
+        "D) The pan starts floating in the air"
+      ],
       "correctAnswer": "C",
       "difficulty": "easy"
     },
@@ -63,8 +93,13 @@
       "category": "hellaswag",
       "subcategory": "cooking",
       "question": "A person is kneading bread dough on a floured surface. They shape it into a loaf and place it in a greased pan. What happens next?",
-      "choices": ["A) They cover the dough and let it rise in a warm place", "B) The dough immediately becomes a fully baked loaf", "C) They flush the dough down the sink", "D) The dough crawls out of the pan"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) The dough immediately becomes a fully baked loaf",
+        "B) The dough crawls out of the pan",
+        "C) They flush the dough down the sink",
+        "D) They cover the dough and let it rise in a warm place"
+      ],
+      "correctAnswer": "D",
       "difficulty": "medium"
     },
     {
@@ -72,8 +107,13 @@
       "category": "hellaswag",
       "subcategory": "cooking",
       "question": "Someone is grilling burgers at a barbecue. They notice the patties are browned on the bottom side. What do they do next?",
-      "choices": ["A) They flip the burgers to cook the other side", "B) They put the raw side directly on a plate and serve them", "C) They pour water over the grill to speed up cooking", "D) They stack all the burgers into a single tower"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They put the raw side directly on a plate and serve them",
+        "B) They flip the burgers to cook the other side",
+        "C) They pour water over the grill to speed up cooking",
+        "D) They stack all the burgers into a single tower"
+      ],
+      "correctAnswer": "B",
       "difficulty": "easy"
     },
     {
@@ -81,7 +121,12 @@
       "category": "hellaswag",
       "subcategory": "cooking",
       "question": "A person is making a stir-fry. They heat a wok until it is very hot, then add oil. They toss in sliced vegetables. What happens next?",
-      "choices": ["A) The vegetables freeze instantly", "B) The vegetables sizzle loudly and they stir them constantly with a spatula", "C) The wok turns into a pot", "D) The vegetables jump out of the wok and arrange themselves on a plate"],
+      "choices": [
+        "A) The wok turns into a pot",
+        "B) The vegetables sizzle loudly and they stir them constantly with a spatula",
+        "C) The vegetables jump out of the wok and arrange themselves on a plate",
+        "D) The vegetables freeze instantly"
+      ],
       "correctAnswer": "B",
       "difficulty": "easy"
     },
@@ -90,7 +135,12 @@
       "category": "hellaswag",
       "subcategory": "cooking",
       "question": "A person carefully measures flour, sugar, and butter to make pie crust. They mix the ingredients until the dough is crumbly. What happens next?",
-      "choices": ["A) They add a small amount of cold water and press the dough together", "B) They heat the crumbly mixture in a microwave for an hour", "C) They sprinkle the crumbs on the floor", "D) The crumbs spontaneously form a perfect crust"],
+      "choices": [
+        "A) They add a small amount of cold water and press the dough together",
+        "B) The crumbs spontaneously form a perfect crust",
+        "C) They heat the crumbly mixture in a microwave for an hour",
+        "D) They sprinkle the crumbs on the floor"
+      ],
       "correctAnswer": "A",
       "difficulty": "medium"
     },
@@ -99,7 +149,12 @@
       "category": "hellaswag",
       "subcategory": "cooking",
       "question": "A person removes a roast chicken from the oven and places it on a cutting board. Steam rises from the bird. What do they do next?",
-      "choices": ["A) They immediately cut into it and serve", "B) They put it back in the oven because it is clearly raw", "C) They let it rest for several minutes before carving", "D) They throw it in the freezer to cool it instantly"],
+      "choices": [
+        "A) They throw it in the freezer to cool it instantly",
+        "B) They put it back in the oven because it is clearly raw",
+        "C) They let it rest for several minutes before carving",
+        "D) They immediately cut into it and serve"
+      ],
       "correctAnswer": "C",
       "difficulty": "medium"
     },
@@ -108,8 +163,13 @@
       "category": "hellaswag",
       "subcategory": "cooking",
       "question": "Someone is making fresh pasta. They roll out the dough until it is thin and flat. They then feed the sheet through a pasta cutter. What happens next?",
-      "choices": ["A) The machine produces long, even strands of pasta", "B) The dough turns into rice", "C) The pasta cutter eats the dough", "D) The sheet folds itself into origami"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) The dough turns into rice",
+        "B) The pasta cutter eats the dough",
+        "C) The sheet folds itself into origami",
+        "D) The machine produces long, even strands of pasta"
+      ],
+      "correctAnswer": "D",
       "difficulty": "easy"
     },
     {
@@ -117,8 +177,13 @@
       "category": "hellaswag",
       "subcategory": "cooking",
       "question": "A person is making caramel. They heat sugar in a saucepan and it begins to melt and turn amber. What do they need to be most careful about next?",
-      "choices": ["A) That the sugar does not burn, so they remove it from heat and add cream while stirring", "B) That the sugar does not escape the pan", "C) That the spoon does not dissolve in the sugar", "D) Nothing, because melted sugar cannot get any hotter"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) Nothing, because melted sugar cannot get any hotter",
+        "B) That the sugar does not escape the pan",
+        "C) That the spoon does not dissolve in the sugar",
+        "D) That the sugar does not burn, so they remove it from heat and add cream while stirring"
+      ],
+      "correctAnswer": "D",
       "difficulty": "medium"
     },
     {
@@ -126,8 +191,13 @@
       "category": "hellaswag",
       "subcategory": "cooking",
       "question": "A person peels and slices potatoes, then places them in a pot of cold salted water. They put the pot on the stove and turn on the heat. What happens next?",
-      "choices": ["A) The potatoes dissolve immediately", "B) The water gradually heats up and eventually boils, cooking the potatoes", "C) The salt causes the water to freeze", "D) The potatoes jump out of the water"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) The water gradually heats up and eventually boils, cooking the potatoes",
+        "B) The salt causes the water to freeze",
+        "C) The potatoes jump out of the water",
+        "D) The potatoes dissolve immediately"
+      ],
+      "correctAnswer": "A",
       "difficulty": "easy"
     },
     {
@@ -135,7 +205,12 @@
       "category": "hellaswag",
       "subcategory": "cooking",
       "question": "A person is decorating a cake. They fill a piping bag with frosting and twist the top. They hold the bag over the cake and squeeze. What happens next?",
-      "choices": ["A) Frosting comes out of the tip in a decorative pattern", "B) The cake deflates like a balloon", "C) The piping bag explodes violently", "D) The frosting turns into whipped cream inside the bag"],
+      "choices": [
+        "A) Frosting comes out of the tip in a decorative pattern",
+        "B) The piping bag explodes violently",
+        "C) The frosting turns into whipped cream inside the bag",
+        "D) The cake deflates like a balloon"
+      ],
       "correctAnswer": "A",
       "difficulty": "easy"
     },
@@ -144,8 +219,13 @@
       "category": "hellaswag",
       "subcategory": "sports",
       "question": "A soccer player receives a pass near the opponent's goal. They see the goalkeeper slightly off-position. What do they most likely do next?",
-      "choices": ["A) They take a shot aimed at the open side of the goal", "B) They pick up the ball with their hands and run", "C) They sit down on the field to rest", "D) They pass the ball to the opposing goalkeeper"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They pick up the ball with their hands and run",
+        "B) They pass the ball to the opposing goalkeeper",
+        "C) They take a shot aimed at the open side of the goal",
+        "D) They sit down on the field to rest"
+      ],
+      "correctAnswer": "C",
       "difficulty": "easy"
     },
     {
@@ -153,7 +233,12 @@
       "category": "hellaswag",
       "subcategory": "sports",
       "question": "A basketball player dribbles down the court on a fast break with no defenders ahead. They approach the basket. What happens next?",
-      "choices": ["A) They stop and dribble back to their own basket", "B) They attempt a layup or dunk", "C) They throw the ball into the stands", "D) They hand the ball to the referee"],
+      "choices": [
+        "A) They hand the ball to the referee",
+        "B) They attempt a layup or dunk",
+        "C) They throw the ball into the stands",
+        "D) They stop and dribble back to their own basket"
+      ],
       "correctAnswer": "B",
       "difficulty": "easy"
     },
@@ -162,8 +247,13 @@
       "category": "hellaswag",
       "subcategory": "sports",
       "question": "A tennis player tosses the ball high into the air to serve. They swing the racket upward. What happens next?",
-      "choices": ["A) The racket connects with the ball, sending it over the net at high speed", "B) The ball hovers in the air indefinitely", "C) The player catches the ball with their free hand instead", "D) The racket transforms into a cricket bat"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) The ball hovers in the air indefinitely",
+        "B) The player catches the ball with their free hand instead",
+        "C) The racket connects with the ball, sending it over the net at high speed",
+        "D) The racket transforms into a cricket bat"
+      ],
+      "correctAnswer": "C",
       "difficulty": "easy"
     },
     {
@@ -171,8 +261,13 @@
       "category": "hellaswag",
       "subcategory": "sports",
       "question": "A runner crosses the finish line of a marathon in first place. The crowd is cheering. What does the runner most likely do next?",
-      "choices": ["A) They immediately start running the marathon again from the beginning", "B) They slow down, catch their breath, and celebrate", "C) They sprint faster than during the race", "D) They fall asleep standing up"],
-      "correctAnswer": "B",
+      "choices": [
+        "A) They slow down, catch their breath, and celebrate",
+        "B) They sprint faster than during the race",
+        "C) They immediately start running the marathon again from the beginning",
+        "D) They fall asleep standing up"
+      ],
+      "correctAnswer": "A",
       "difficulty": "easy"
     },
     {
@@ -180,8 +275,13 @@
       "category": "hellaswag",
       "subcategory": "sports",
       "question": "A baseball batter watches the pitcher wind up and throw the ball. The batter sees the pitch coming straight toward the strike zone. What happens next?",
-      "choices": ["A) The batter swings the bat trying to hit the ball", "B) The batter drops the bat and runs to third base", "C) The ball stops mid-air", "D) The batter throws the bat at the ball like a javelin"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) The ball stops mid-air",
+        "B) The batter throws the bat at the ball like a javelin",
+        "C) The batter swings the bat trying to hit the ball",
+        "D) The batter drops the bat and runs to third base"
+      ],
+      "correctAnswer": "C",
       "difficulty": "easy"
     },
     {
@@ -189,8 +289,13 @@
       "category": "hellaswag",
       "subcategory": "sports",
       "question": "A swimmer dives into the pool at the start of a race. They surface after a few meters. What do they do next?",
-      "choices": ["A) They begin swimming with powerful strokes toward the other end of the pool", "B) They climb out and sit on the diving block", "C) They float on their back and take a nap", "D) They swim to the bottom and stay there"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They float on their back and take a nap",
+        "B) They climb out and sit on the diving block",
+        "C) They begin swimming with powerful strokes toward the other end of the pool",
+        "D) They swim to the bottom and stay there"
+      ],
+      "correctAnswer": "C",
       "difficulty": "easy"
     },
     {
@@ -198,8 +303,13 @@
       "category": "hellaswag",
       "subcategory": "sports",
       "question": "A hockey player receives a pass and skates toward the opposing goal. A defender is closing in. What does the player most likely do?",
-      "choices": ["A) They try to deke around the defender or take a quick shot", "B) They remove their skates and walk", "C) They pass the puck to the referee", "D) They skate back to their own goal"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They pass the puck to the referee",
+        "B) They try to deke around the defender or take a quick shot",
+        "C) They skate back to their own goal",
+        "D) They remove their skates and walk"
+      ],
+      "correctAnswer": "B",
       "difficulty": "medium"
     },
     {
@@ -207,8 +317,13 @@
       "category": "hellaswag",
       "subcategory": "sports",
       "question": "A gymnast runs toward the vault, hits the springboard, and launches into the air. What happens next?",
-      "choices": ["A) They perform a twisting flip and attempt to land on their feet on the mat", "B) They fly out of the gymnasium", "C) They hover in the air for several minutes", "D) They land on the springboard again and bounce higher each time"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They fly out of the gymnasium",
+        "B) They perform a twisting flip and attempt to land on their feet on the mat",
+        "C) They land on the springboard again and bounce higher each time",
+        "D) They hover in the air for several minutes"
+      ],
+      "correctAnswer": "B",
       "difficulty": "easy"
     },
     {
@@ -216,7 +331,12 @@
       "category": "hellaswag",
       "subcategory": "sports",
       "question": "Two boxers are in the ring. One boxer throws a jab. The other boxer sees it coming. What does the second boxer most likely do?",
-      "choices": ["A) They try to slip the punch or block it with their glove", "B) They shake hands with the first boxer", "C) They lie down on the canvas voluntarily", "D) They close their eyes and hope for the best"],
+      "choices": [
+        "A) They try to slip the punch or block it with their glove",
+        "B) They lie down on the canvas voluntarily",
+        "C) They shake hands with the first boxer",
+        "D) They close their eyes and hope for the best"
+      ],
       "correctAnswer": "A",
       "difficulty": "easy"
     },
@@ -225,8 +345,13 @@
       "category": "hellaswag",
       "subcategory": "sports",
       "question": "A golfer studies the green, noting the slope and distance to the hole. They line up their putter behind the ball. What happens next?",
-      "choices": ["A) They make a smooth putting stroke, sending the ball rolling toward the hole", "B) They pick up the ball and throw it at the flag", "C) They use a driver instead of a putter on the green", "D) The ball rolls uphill against gravity toward the hole"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) The ball rolls uphill against gravity toward the hole",
+        "B) They pick up the ball and throw it at the flag",
+        "C) They make a smooth putting stroke, sending the ball rolling toward the hole",
+        "D) They use a driver instead of a putter on the green"
+      ],
+      "correctAnswer": "C",
       "difficulty": "easy"
     },
     {
@@ -234,7 +359,12 @@
       "category": "hellaswag",
       "subcategory": "sports",
       "question": "A cyclist is racing downhill at high speed. They see a sharp turn ahead. What do they most likely do?",
-      "choices": ["A) They brake gradually and lean into the turn", "B) They pedal as hard as possible and close their eyes", "C) They jump off the bicycle before the turn", "D) They stop pedaling and the bicycle hovers in the air"],
+      "choices": [
+        "A) They brake gradually and lean into the turn",
+        "B) They stop pedaling and the bicycle hovers in the air",
+        "C) They pedal as hard as possible and close their eyes",
+        "D) They jump off the bicycle before the turn"
+      ],
       "correctAnswer": "A",
       "difficulty": "medium"
     },
@@ -243,8 +373,13 @@
       "category": "hellaswag",
       "subcategory": "sports",
       "question": "A volleyball team is receiving a serve. The ball flies over the net toward the back of the court. A player moves under it. What happens next?",
-      "choices": ["A) The player bumps the ball upward to a teammate near the net", "B) The player catches the ball and throws it back", "C) The ball passes through the player like a ghost", "D) The player heads the ball like in soccer"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) The player catches the ball and throws it back",
+        "B) The player heads the ball like in soccer",
+        "C) The ball passes through the player like a ghost",
+        "D) The player bumps the ball upward to a teammate near the net"
+      ],
+      "correctAnswer": "D",
       "difficulty": "medium"
     },
     {
@@ -252,8 +387,13 @@
       "category": "hellaswag",
       "subcategory": "sports",
       "question": "A rock climber reaches for the next handhold on a difficult route. Their foot slips briefly. What do they most likely do?",
-      "choices": ["A) They grip tighter with their hands and find a new foothold to stabilize", "B) They let go and enjoy the fall", "C) They start climbing downward head-first", "D) They remain suspended in air with no support"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They remain suspended in air with no support",
+        "B) They grip tighter with their hands and find a new foothold to stabilize",
+        "C) They start climbing downward head-first",
+        "D) They let go and enjoy the fall"
+      ],
+      "correctAnswer": "B",
       "difficulty": "medium"
     },
     {
@@ -261,7 +401,12 @@
       "category": "hellaswag",
       "subcategory": "sports",
       "question": "A football quarterback drops back to pass. He scans the field and sees a wide receiver running open downfield. What happens next?",
-      "choices": ["A) He throws the ball ahead of the receiver so they can catch it in stride", "B) He hands the ball to the referee", "C) He kicks the ball like a soccer player", "D) He throws the ball to the opposing team's bench"],
+      "choices": [
+        "A) He throws the ball ahead of the receiver so they can catch it in stride",
+        "B) He hands the ball to the referee",
+        "C) He kicks the ball like a soccer player",
+        "D) He throws the ball to the opposing team's bench"
+      ],
       "correctAnswer": "A",
       "difficulty": "easy"
     },
@@ -270,8 +415,13 @@
       "category": "hellaswag",
       "subcategory": "sports",
       "question": "A figure skater is performing a routine and builds up speed skating backward. They dig their toe pick into the ice. What happens next?",
-      "choices": ["A) They launch into a spinning jump and attempt to land on one foot", "B) The ice cracks open beneath them", "C) They begin hovering above the ice", "D) They come to an immediate stop and walk off the rink"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) The ice cracks open beneath them",
+        "B) They begin hovering above the ice",
+        "C) They come to an immediate stop and walk off the rink",
+        "D) They launch into a spinning jump and attempt to land on one foot"
+      ],
+      "correctAnswer": "D",
       "difficulty": "medium"
     },
     {
@@ -279,7 +429,12 @@
       "category": "hellaswag",
       "subcategory": "daily_activities",
       "question": "A person's alarm goes off at 7 AM on a workday. They reach over and turn it off. What do they most likely do next?",
-      "choices": ["A) They get out of bed and start getting ready for work", "B) They disassemble the alarm clock", "C) They set the alarm for 7 PM instead", "D) They go outside in their pajamas and start mowing the lawn"],
+      "choices": [
+        "A) They get out of bed and start getting ready for work",
+        "B) They set the alarm for 7 PM instead",
+        "C) They go outside in their pajamas and start mowing the lawn",
+        "D) They disassemble the alarm clock"
+      ],
       "correctAnswer": "A",
       "difficulty": "easy"
     },
@@ -288,8 +443,13 @@
       "category": "hellaswag",
       "subcategory": "daily_activities",
       "question": "Someone finishes brushing their teeth at the bathroom sink. They rinse their mouth with water. What do they do next?",
-      "choices": ["A) They spit out the water, rinse the toothbrush, and put it away", "B) They swallow the toothpaste water", "C) They brush their teeth again immediately", "D) They put the toothbrush in the refrigerator"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They swallow the toothpaste water",
+        "B) They put the toothbrush in the refrigerator",
+        "C) They spit out the water, rinse the toothbrush, and put it away",
+        "D) They brush their teeth again immediately"
+      ],
+      "correctAnswer": "C",
       "difficulty": "easy"
     },
     {
@@ -297,8 +457,13 @@
       "category": "hellaswag",
       "subcategory": "daily_activities",
       "question": "A person puts their dirty clothes into a washing machine, adds detergent, and selects a cycle. They press the start button. What happens next?",
-      "choices": ["A) The machine fills with water and begins agitating the clothes", "B) The clothes come out already dry and folded", "C) The washing machine walks across the room", "D) The detergent evaporates instantly"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) The detergent evaporates instantly",
+        "B) The machine fills with water and begins agitating the clothes",
+        "C) The washing machine walks across the room",
+        "D) The clothes come out already dry and folded"
+      ],
+      "correctAnswer": "B",
       "difficulty": "easy"
     },
     {
@@ -306,8 +471,13 @@
       "category": "hellaswag",
       "subcategory": "daily_activities",
       "question": "A person notices their phone battery is at 5%. They find a charger and plug the phone in. What happens next?",
-      "choices": ["A) The phone begins charging and the battery icon shows it is connected to power", "B) The phone battery drains faster", "C) The phone explodes", "D) The charger charges itself instead of the phone"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) The phone explodes",
+        "B) The charger charges itself instead of the phone",
+        "C) The phone battery drains faster",
+        "D) The phone begins charging and the battery icon shows it is connected to power"
+      ],
+      "correctAnswer": "D",
       "difficulty": "easy"
     },
     {
@@ -315,7 +485,12 @@
       "category": "hellaswag",
       "subcategory": "daily_activities",
       "question": "A person is taking a shower. They realize the water has turned cold. What do they most likely do?",
-      "choices": ["A) They adjust the temperature knob toward hot or finish up quickly", "B) They enjoy the cold water and stay in for another hour", "C) They add ice cubes to make it colder", "D) They call a plumber while still in the shower"],
+      "choices": [
+        "A) They adjust the temperature knob toward hot or finish up quickly",
+        "B) They call a plumber while still in the shower",
+        "C) They add ice cubes to make it colder",
+        "D) They enjoy the cold water and stay in for another hour"
+      ],
       "correctAnswer": "A",
       "difficulty": "easy"
     },
@@ -324,8 +499,13 @@
       "category": "hellaswag",
       "subcategory": "daily_activities",
       "question": "A person finishes eating dinner. They look at the dirty plates and utensils on the table. What do they do next?",
-      "choices": ["A) They clear the table and wash the dishes or load the dishwasher", "B) They leave the house and never return", "C) They stack more clean plates on top of the dirty ones", "D) The dishes clean themselves"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They stack more clean plates on top of the dirty ones",
+        "B) They leave the house and never return",
+        "C) They clear the table and wash the dishes or load the dishwasher",
+        "D) The dishes clean themselves"
+      ],
+      "correctAnswer": "C",
       "difficulty": "easy"
     },
     {
@@ -333,8 +513,13 @@
       "category": "hellaswag",
       "subcategory": "daily_activities",
       "question": "Someone is driving home from work and notices the fuel gauge is nearly on empty. What do they most likely do?",
-      "choices": ["A) They stop at a gas station to fill up the tank", "B) They drive faster to get home before the fuel runs out", "C) They ignore it because cars do not actually need fuel", "D) They turn the car off and push it home"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They drive faster to get home before the fuel runs out",
+        "B) They ignore it because cars do not actually need fuel",
+        "C) They stop at a gas station to fill up the tank",
+        "D) They turn the car off and push it home"
+      ],
+      "correctAnswer": "C",
       "difficulty": "easy"
     },
     {
@@ -342,8 +527,13 @@
       "category": "hellaswag",
       "subcategory": "daily_activities",
       "question": "A person is watching TV in the evening and starts yawning repeatedly. Their eyes feel heavy. What do they most likely do next?",
-      "choices": ["A) They turn off the TV and go to bed", "B) They start doing jumping jacks", "C) They open more windows to yawn at the neighbors", "D) They yawn so much that they pass out on the ceiling"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They open more windows to yawn at the neighbors",
+        "B) They yawn so much that they pass out on the ceiling",
+        "C) They turn off the TV and go to bed",
+        "D) They start doing jumping jacks"
+      ],
+      "correctAnswer": "C",
       "difficulty": "easy"
     },
     {
@@ -351,7 +541,12 @@
       "category": "hellaswag",
       "subcategory": "daily_activities",
       "question": "A person hears the doorbell ring while they are sitting on the couch. What do they most likely do?",
-      "choices": ["A) They get up and walk to the door to see who is there", "B) They ring their own doorbell from inside", "C) They climb out a window to avoid the visitor", "D) They pretend the doorbell does not exist and stare at the wall"],
+      "choices": [
+        "A) They get up and walk to the door to see who is there",
+        "B) They climb out a window to avoid the visitor",
+        "C) They pretend the doorbell does not exist and stare at the wall",
+        "D) They ring their own doorbell from inside"
+      ],
       "correctAnswer": "A",
       "difficulty": "easy"
     },
@@ -360,8 +555,13 @@
       "category": "hellaswag",
       "subcategory": "daily_activities",
       "question": "Someone notices it is raining outside and they need to walk to the bus stop. They grab an umbrella from the stand near the door. What do they do next?",
-      "choices": ["A) They open the umbrella as they step outside and walk to the bus stop", "B) They open the umbrella inside the house and walk around the living room", "C) They leave the umbrella at home and use a frying pan instead", "D) They decide to swim to work"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They leave the umbrella at home and use a frying pan instead",
+        "B) They open the umbrella inside the house and walk around the living room",
+        "C) They decide to swim to work",
+        "D) They open the umbrella as they step outside and walk to the bus stop"
+      ],
+      "correctAnswer": "D",
       "difficulty": "easy"
     },
     {
@@ -369,8 +569,13 @@
       "category": "hellaswag",
       "subcategory": "daily_activities",
       "question": "A person is ironing a wrinkled dress shirt. They press the hot iron across the fabric in smooth strokes. What happens next?",
-      "choices": ["A) The wrinkles smooth out and the shirt looks crisp", "B) The shirt shrinks to doll size", "C) The iron freezes the shirt solid", "D) The wrinkles multiply"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) The iron freezes the shirt solid",
+        "B) The wrinkles multiply",
+        "C) The shirt shrinks to doll size",
+        "D) The wrinkles smooth out and the shirt looks crisp"
+      ],
+      "correctAnswer": "D",
       "difficulty": "easy"
     },
     {
@@ -378,8 +583,13 @@
       "category": "hellaswag",
       "subcategory": "daily_activities",
       "question": "A person puts bread in the toaster and pushes the lever down. After a minute, the toaster pops the bread up. What do they do next?",
-      "choices": ["A) They take the toast out and spread butter or jam on it", "B) They push the toast back down for another hour", "C) They throw the toast out the window", "D) They wait for the toast to butter itself"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They wait for the toast to butter itself",
+        "B) They push the toast back down for another hour",
+        "C) They take the toast out and spread butter or jam on it",
+        "D) They throw the toast out the window"
+      ],
+      "correctAnswer": "C",
       "difficulty": "easy"
     },
     {
@@ -387,8 +597,13 @@
       "category": "hellaswag",
       "subcategory": "daily_activities",
       "question": "A person is vacuuming the living room carpet. They notice a large piece of paper on the floor that the vacuum cannot pick up. What do they do?",
-      "choices": ["A) They pick up the paper by hand and then continue vacuuming", "B) They vacuum harder until the vacuum breaks", "C) They leave the paper and vacuum everything else around it", "D) They call a professional cleaner for the one piece of paper"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They call a professional cleaner for the one piece of paper",
+        "B) They pick up the paper by hand and then continue vacuuming",
+        "C) They leave the paper and vacuum everything else around it",
+        "D) They vacuum harder until the vacuum breaks"
+      ],
+      "correctAnswer": "B",
       "difficulty": "medium"
     },
     {
@@ -396,8 +611,13 @@
       "category": "hellaswag",
       "subcategory": "daily_activities",
       "question": "Someone is waiting in line at the supermarket checkout. The cashier scans all their items and tells them the total. What happens next?",
-      "choices": ["A) The person pays with cash or card and bags their groceries", "B) The person asks the cashier to put everything back on the shelves", "C) The items scan themselves", "D) The person haggles the price of each individual item"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) The person haggles the price of each individual item",
+        "B) The person pays with cash or card and bags their groceries",
+        "C) The items scan themselves",
+        "D) The person asks the cashier to put everything back on the shelves"
+      ],
+      "correctAnswer": "B",
       "difficulty": "easy"
     },
     {
@@ -405,8 +625,13 @@
       "category": "hellaswag",
       "subcategory": "daily_activities",
       "question": "A person steps into an elevator and wants to go to the 5th floor. They press the button labeled 5. What happens next?",
-      "choices": ["A) The doors close and the elevator moves up to the 5th floor", "B) The elevator goes to every floor except the 5th", "C) The elevator goes sideways", "D) The button labeled 5 takes them to the basement"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) The elevator goes to every floor except the 5th",
+        "B) The button labeled 5 takes them to the basement",
+        "C) The elevator goes sideways",
+        "D) The doors close and the elevator moves up to the 5th floor"
+      ],
+      "correctAnswer": "D",
       "difficulty": "easy"
     },
     {
@@ -414,8 +639,13 @@
       "category": "hellaswag",
       "subcategory": "work",
       "question": "An employee arrives at the office and sits down at their desk. They turn on their computer. What do they most likely do next?",
-      "choices": ["A) They log in and check their email or calendar for the day", "B) They immediately turn the computer off and go home", "C) They stare at the login screen for eight hours", "D) They disassemble the computer to see how it works"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They disassemble the computer to see how it works",
+        "B) They stare at the login screen for eight hours",
+        "C) They log in and check their email or calendar for the day",
+        "D) They immediately turn the computer off and go home"
+      ],
+      "correctAnswer": "C",
       "difficulty": "easy"
     },
     {
@@ -423,8 +653,13 @@
       "category": "hellaswag",
       "subcategory": "work",
       "question": "A team gathers in a conference room for a meeting. The manager stands up and opens a presentation on the screen. What happens next?",
-      "choices": ["A) The manager begins explaining the slides and discussing the agenda", "B) Everyone leaves the room immediately", "C) The presentation plays itself and everyone takes a nap", "D) The screen falls off the wall"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) The screen falls off the wall",
+        "B) The manager begins explaining the slides and discussing the agenda",
+        "C) Everyone leaves the room immediately",
+        "D) The presentation plays itself and everyone takes a nap"
+      ],
+      "correctAnswer": "B",
       "difficulty": "easy"
     },
     {
@@ -432,8 +667,13 @@
       "category": "hellaswag",
       "subcategory": "work",
       "question": "A software developer encounters a bug in their code. The program crashes when a certain button is clicked. What do they most likely do first?",
-      "choices": ["A) They read the error message and check the relevant code to find the issue", "B) They delete the entire project and start over", "C) They click the button repeatedly hoping the bug fixes itself", "D) They blame the computer hardware and order a new machine"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They delete the entire project and start over",
+        "B) They blame the computer hardware and order a new machine",
+        "C) They click the button repeatedly hoping the bug fixes itself",
+        "D) They read the error message and check the relevant code to find the issue"
+      ],
+      "correctAnswer": "D",
       "difficulty": "medium"
     },
     {
@@ -441,8 +681,13 @@
       "category": "hellaswag",
       "subcategory": "work",
       "question": "A teacher writes a math problem on the whiteboard and asks the class to solve it. Several students raise their hands. What happens next?",
-      "choices": ["A) The teacher calls on one student to share their answer", "B) The teacher erases the problem before anyone can answer", "C) All students lower their hands simultaneously and refuse to answer", "D) The whiteboard solves the problem itself"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) The teacher erases the problem before anyone can answer",
+        "B) All students lower their hands simultaneously and refuse to answer",
+        "C) The whiteboard solves the problem itself",
+        "D) The teacher calls on one student to share their answer"
+      ],
+      "correctAnswer": "D",
       "difficulty": "easy"
     },
     {
@@ -450,8 +695,13 @@
       "category": "hellaswag",
       "subcategory": "work",
       "question": "A nurse takes a patient's blood pressure reading and sees the numbers are higher than normal. What do they most likely do next?",
-      "choices": ["A) They document the reading and inform the doctor", "B) They ignore it because high blood pressure is not important", "C) They take their own blood pressure instead", "D) They congratulate the patient on the high score"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They take their own blood pressure instead",
+        "B) They ignore it because high blood pressure is not important",
+        "C) They document the reading and inform the doctor",
+        "D) They congratulate the patient on the high score"
+      ],
+      "correctAnswer": "C",
       "difficulty": "medium"
     },
     {
@@ -459,7 +709,12 @@
       "category": "hellaswag",
       "subcategory": "work",
       "question": "A delivery driver arrives at a house with a package. They ring the doorbell but no one answers. What do they most likely do?",
-      "choices": ["A) They leave the package at the door or leave a notice for redelivery", "B) They open the package and keep the contents", "C) They move into the house", "D) They ring the doorbell 500 more times"],
+      "choices": [
+        "A) They leave the package at the door or leave a notice for redelivery",
+        "B) They open the package and keep the contents",
+        "C) They move into the house",
+        "D) They ring the doorbell 500 more times"
+      ],
       "correctAnswer": "A",
       "difficulty": "easy"
     },
@@ -468,8 +723,13 @@
       "category": "hellaswag",
       "subcategory": "work",
       "question": "An architect presents building plans to a client. The client asks if the kitchen could be larger. What does the architect most likely do?",
-      "choices": ["A) They discuss options for expanding the kitchen and note the change for a revised design", "B) They refuse and walk out of the meeting", "C) They make the kitchen smaller out of spite", "D) They suggest removing the kitchen entirely"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They suggest removing the kitchen entirely",
+        "B) They discuss options for expanding the kitchen and note the change for a revised design",
+        "C) They make the kitchen smaller out of spite",
+        "D) They refuse and walk out of the meeting"
+      ],
+      "correctAnswer": "B",
       "difficulty": "medium"
     },
     {
@@ -477,8 +737,13 @@
       "category": "hellaswag",
       "subcategory": "work",
       "question": "A barista receives an order for a cappuccino. They grind espresso beans and tamp the grounds into the portafilter. What do they do next?",
-      "choices": ["A) They lock the portafilter into the machine and pull a shot of espresso", "B) They throw the grounds in the trash and start over with tea", "C) They serve the dry grounds in a cup", "D) They add milk first before making the espresso"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They serve the dry grounds in a cup",
+        "B) They lock the portafilter into the machine and pull a shot of espresso",
+        "C) They throw the grounds in the trash and start over with tea",
+        "D) They add milk first before making the espresso"
+      ],
+      "correctAnswer": "B",
       "difficulty": "medium"
     },
     {
@@ -486,8 +751,13 @@
       "category": "hellaswag",
       "subcategory": "work",
       "question": "A librarian notices several returned books on the cart. They pick up the first book and check its call number. What do they do next?",
-      "choices": ["A) They walk to the correct shelf and place the book back in its proper location", "B) They throw the book in the recycling bin", "C) They read the entire book before shelving it", "D) They hide the book behind other books so no one can find it"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They hide the book behind other books so no one can find it",
+        "B) They read the entire book before shelving it",
+        "C) They walk to the correct shelf and place the book back in its proper location",
+        "D) They throw the book in the recycling bin"
+      ],
+      "correctAnswer": "C",
       "difficulty": "easy"
     },
     {
@@ -495,7 +765,12 @@
       "category": "hellaswag",
       "subcategory": "work",
       "question": "A mechanic raises a car on a lift and inspects underneath it. They notice oil dripping from the engine area. What do they most likely do?",
-      "choices": ["A) They locate the source of the leak and recommend a repair to the customer", "B) They add more oil on top of the leak to counteract it", "C) They lower the car and tell the customer everything is fine", "D) They taste the oil to determine the problem"],
+      "choices": [
+        "A) They locate the source of the leak and recommend a repair to the customer",
+        "B) They taste the oil to determine the problem",
+        "C) They add more oil on top of the leak to counteract it",
+        "D) They lower the car and tell the customer everything is fine"
+      ],
       "correctAnswer": "A",
       "difficulty": "medium"
     },
@@ -504,8 +779,13 @@
       "category": "hellaswag",
       "subcategory": "work",
       "question": "A job candidate arrives at an office for an interview. The receptionist asks them to take a seat. What do they most likely do next?",
-      "choices": ["A) They sit down in the waiting area and wait to be called in", "B) They sit on the receptionist's desk", "C) They walk straight into the CEO's office uninvited", "D) They leave immediately and send a text saying they changed their mind"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They leave immediately and send a text saying they changed their mind",
+        "B) They sit down in the waiting area and wait to be called in",
+        "C) They sit on the receptionist's desk",
+        "D) They walk straight into the CEO's office uninvited"
+      ],
+      "correctAnswer": "B",
       "difficulty": "easy"
     },
     {
@@ -513,8 +793,13 @@
       "category": "hellaswag",
       "subcategory": "work",
       "question": "A firefighter arrives at a building where smoke is coming from a second-floor window. The team connects hoses to the hydrant. What happens next?",
-      "choices": ["A) They enter the building to search for occupants and attack the fire with water", "B) They sit down and watch the fire", "C) They spray water at a different building", "D) They disconnect the hoses and drive away"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They disconnect the hoses and drive away",
+        "B) They sit down and watch the fire",
+        "C) They enter the building to search for occupants and attack the fire with water",
+        "D) They spray water at a different building"
+      ],
+      "correctAnswer": "C",
       "difficulty": "easy"
     },
     {
@@ -522,8 +807,13 @@
       "category": "hellaswag",
       "subcategory": "work",
       "question": "A data analyst runs a query and the results show a significant drop in website traffic last month. Their manager asks what happened. What do they do?",
-      "choices": ["A) They investigate potential causes by examining traffic sources, recent changes, and external factors", "B) They change the numbers so the drop disappears", "C) They tell the manager it is not their problem", "D) They shut down the website to prevent further traffic drops"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They shut down the website to prevent further traffic drops",
+        "B) They investigate potential causes by examining traffic sources, recent changes, and external factors",
+        "C) They change the numbers so the drop disappears",
+        "D) They tell the manager it is not their problem"
+      ],
+      "correctAnswer": "B",
       "difficulty": "medium"
     },
     {
@@ -531,7 +821,12 @@
       "category": "hellaswag",
       "subcategory": "work",
       "question": "A cashier at a store scans an item and it does not register in the system. The customer is waiting. What does the cashier most likely do?",
-      "choices": ["A) They try scanning again or manually enter the item code", "B) They give the item to the customer for free", "C) They throw the item away", "D) They close the register and go on break"],
+      "choices": [
+        "A) They try scanning again or manually enter the item code",
+        "B) They throw the item away",
+        "C) They give the item to the customer for free",
+        "D) They close the register and go on break"
+      ],
       "correctAnswer": "A",
       "difficulty": "easy"
     },
@@ -540,8 +835,13 @@
       "category": "hellaswag",
       "subcategory": "work",
       "question": "A pilot announces over the intercom that the plane is beginning its descent. Passengers hear the engines change pitch. What do the flight attendants do next?",
-      "choices": ["A) They walk through the cabin asking passengers to fasten seatbelts and stow tray tables", "B) They start serving a full-course meal", "C) They open the emergency exits", "D) They begin a dance routine in the aisle"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They start serving a full-course meal",
+        "B) They begin a dance routine in the aisle",
+        "C) They walk through the cabin asking passengers to fasten seatbelts and stow tray tables",
+        "D) They open the emergency exits"
+      ],
+      "correctAnswer": "C",
       "difficulty": "easy"
     },
     {
@@ -549,8 +849,13 @@
       "category": "hellaswag",
       "subcategory": "social",
       "question": "A friend calls and says they are feeling upset after a bad day at work. They ask if they can come over. What does the person most likely say?",
-      "choices": ["A) They say yes and offer to listen or suggest doing something to cheer them up", "B) They hang up the phone immediately", "C) They say yes but only if their friend brings a written essay about why they are upset", "D) They pretend to be a different person"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They hang up the phone immediately",
+        "B) They say yes and offer to listen or suggest doing something to cheer them up",
+        "C) They pretend to be a different person",
+        "D) They say yes but only if their friend brings a written essay about why they are upset"
+      ],
+      "correctAnswer": "B",
       "difficulty": "easy"
     },
     {
@@ -558,7 +863,12 @@
       "category": "hellaswag",
       "subcategory": "social",
       "question": "At a birthday party, the host brings out a cake with lit candles. Everyone starts singing 'Happy Birthday.' What happens next?",
-      "choices": ["A) The birthday person blows out the candles and everyone claps", "B) Everyone stops singing mid-song and leaves", "C) The candles blow themselves out", "D) The birthday person throws the cake on the floor"],
+      "choices": [
+        "A) The birthday person blows out the candles and everyone claps",
+        "B) Everyone stops singing mid-song and leaves",
+        "C) The candles blow themselves out",
+        "D) The birthday person throws the cake on the floor"
+      ],
       "correctAnswer": "A",
       "difficulty": "easy"
     },
@@ -567,8 +877,13 @@
       "category": "hellaswag",
       "subcategory": "social",
       "question": "Two people meet at a networking event. One person extends their hand for a handshake. What does the other person do?",
-      "choices": ["A) They shake the offered hand and introduce themselves", "B) They high-five the hand instead", "C) They ignore the hand and walk away", "D) They grab the hand and do not let go for the entire event"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They grab the hand and do not let go for the entire event",
+        "B) They shake the offered hand and introduce themselves",
+        "C) They high-five the hand instead",
+        "D) They ignore the hand and walk away"
+      ],
+      "correctAnswer": "B",
       "difficulty": "easy"
     },
     {
@@ -576,8 +891,13 @@
       "category": "hellaswag",
       "subcategory": "social",
       "question": "A couple is at a restaurant and the waiter brings the check. They look at the total. What do they most likely do next?",
-      "choices": ["A) One of them pays or they split the bill, and they leave a tip", "B) They eat the check", "C) They tell the waiter they thought the meal was free", "D) They ask the waiter to pay for their meal"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They ask the waiter to pay for their meal",
+        "B) They tell the waiter they thought the meal was free",
+        "C) They eat the check",
+        "D) One of them pays or they split the bill, and they leave a tip"
+      ],
+      "correctAnswer": "D",
       "difficulty": "easy"
     },
     {
@@ -585,8 +905,13 @@
       "category": "hellaswag",
       "subcategory": "social",
       "question": "A guest arrives at a dinner party and the host opens the door. What does the guest most likely do?",
-      "choices": ["A) They greet the host, perhaps with a handshake or hug, and may offer a gift like wine or dessert", "B) They walk past the host without saying anything and sit down", "C) They hand the host a list of complaints", "D) They inspect the house for cleanliness before entering"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They inspect the house for cleanliness before entering",
+        "B) They walk past the host without saying anything and sit down",
+        "C) They greet the host, perhaps with a handshake or hug, and may offer a gift like wine or dessert",
+        "D) They hand the host a list of complaints"
+      ],
+      "correctAnswer": "C",
       "difficulty": "easy"
     },
     {
@@ -594,7 +919,12 @@
       "category": "hellaswag",
       "subcategory": "social",
       "question": "A group of friends is playing a board game. One player rolls the dice and gets a six. What happens next?",
-      "choices": ["A) They move their piece six spaces and follow any instructions on that square", "B) They swallow the dice", "C) They declare themselves the winner regardless of the rules", "D) Everyone else forfeits because six is the highest number"],
+      "choices": [
+        "A) They move their piece six spaces and follow any instructions on that square",
+        "B) They declare themselves the winner regardless of the rules",
+        "C) They swallow the dice",
+        "D) Everyone else forfeits because six is the highest number"
+      ],
       "correctAnswer": "A",
       "difficulty": "easy"
     },
@@ -603,8 +933,13 @@
       "category": "hellaswag",
       "subcategory": "social",
       "question": "Someone receives a wedding invitation in the mail. They check their calendar and see they are free on that date. What do they most likely do?",
-      "choices": ["A) They RSVP to confirm their attendance", "B) They throw the invitation away and never respond", "C) They show up to the wedding a week early", "D) They send the couple a bill for their time"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They throw the invitation away and never respond",
+        "B) They show up to the wedding a week early",
+        "C) They RSVP to confirm their attendance",
+        "D) They send the couple a bill for their time"
+      ],
+      "correctAnswer": "C",
       "difficulty": "easy"
     },
     {
@@ -612,8 +947,13 @@
       "category": "hellaswag",
       "subcategory": "social",
       "question": "A person bumps into someone accidentally on the sidewalk, causing them to drop their bag. What does the person who bumped into them most likely do?",
-      "choices": ["A) They apologize and help pick up the dropped bag", "B) They blame the other person for being in the way", "C) They keep walking faster to escape", "D) They pick up the bag and run away with it"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They pick up the bag and run away with it",
+        "B) They keep walking faster to escape",
+        "C) They blame the other person for being in the way",
+        "D) They apologize and help pick up the dropped bag"
+      ],
+      "correctAnswer": "D",
       "difficulty": "easy"
     },
     {
@@ -621,8 +961,13 @@
       "category": "hellaswag",
       "subcategory": "social",
       "question": "A parent is watching their child's school play from the audience. The child appears on stage for their scene. What does the parent do?",
-      "choices": ["A) They smile, watch attentively, and perhaps record a video or take photos", "B) They stand up and yell directions at the child", "C) They leave the auditorium because they have seen enough", "D) They start performing along with the child from the audience"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They stand up and yell directions at the child",
+        "B) They smile, watch attentively, and perhaps record a video or take photos",
+        "C) They start performing along with the child from the audience",
+        "D) They leave the auditorium because they have seen enough"
+      ],
+      "correctAnswer": "B",
       "difficulty": "easy"
     },
     {
@@ -630,8 +975,13 @@
       "category": "hellaswag",
       "subcategory": "social",
       "question": "A person is at a movie theater and notices the person next to them talking loudly on their phone during the film. What do they most likely do?",
-      "choices": ["A) They politely ask the person to be quiet or end the call", "B) They start their own phone call to compete", "C) They move to a different movie theater", "D) They throw popcorn at the person"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They start their own phone call to compete",
+        "B) They throw popcorn at the person",
+        "C) They politely ask the person to be quiet or end the call",
+        "D) They move to a different movie theater"
+      ],
+      "correctAnswer": "C",
       "difficulty": "medium"
     },
     {
@@ -639,7 +989,12 @@
       "category": "hellaswag",
       "subcategory": "social",
       "question": "Friends are at a cafe and one person realizes they forgot their wallet. They tell the group. What most likely happens?",
-      "choices": ["A) Another friend offers to cover their bill for now", "B) The group calls the police", "C) Everyone leaves without paying in solidarity", "D) The cafe gives them a job to work off the cost immediately"],
+      "choices": [
+        "A) Another friend offers to cover their bill for now",
+        "B) Everyone leaves without paying in solidarity",
+        "C) The group calls the police",
+        "D) The cafe gives them a job to work off the cost immediately"
+      ],
       "correctAnswer": "A",
       "difficulty": "easy"
     },
@@ -648,8 +1003,13 @@
       "category": "hellaswag",
       "subcategory": "social",
       "question": "Two neighbors run into each other in the hallway of their apartment building. One is carrying heavy grocery bags. What does the other neighbor most likely do?",
-      "choices": ["A) They offer to help carry some of the bags or hold the door open", "B) They ask to see the receipt for the groceries", "C) They block the hallway and refuse to move", "D) They take the groceries and bring them to their own apartment"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They ask to see the receipt for the groceries",
+        "B) They take the groceries and bring them to their own apartment",
+        "C) They block the hallway and refuse to move",
+        "D) They offer to help carry some of the bags or hold the door open"
+      ],
+      "correctAnswer": "D",
       "difficulty": "easy"
     },
     {
@@ -657,8 +1017,13 @@
       "category": "hellaswag",
       "subcategory": "social",
       "question": "A person is giving a best man speech at a wedding. They tell a funny story about the groom and everyone laughs. What do they do to finish?",
-      "choices": ["A) They raise their glass and propose a toast to the couple", "B) They continue telling embarrassing stories for another two hours", "C) They sit down mid-sentence without ending the speech", "D) They hand the microphone to a stranger"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They sit down mid-sentence without ending the speech",
+        "B) They continue telling embarrassing stories for another two hours",
+        "C) They hand the microphone to a stranger",
+        "D) They raise their glass and propose a toast to the couple"
+      ],
+      "correctAnswer": "D",
       "difficulty": "medium"
     },
     {
@@ -666,8 +1031,13 @@
       "category": "hellaswag",
       "subcategory": "social",
       "question": "A child falls and scrapes their knee at a playground. They start crying. A parent nearby rushes over. What does the parent do?",
-      "choices": ["A) They comfort the child, check the scrape, and clean it up", "B) They tell the child to stop crying and walk away", "C) They call an ambulance for the scraped knee", "D) They put the child back on the equipment to try again immediately"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They put the child back on the equipment to try again immediately",
+        "B) They tell the child to stop crying and walk away",
+        "C) They comfort the child, check the scrape, and clean it up",
+        "D) They call an ambulance for the scraped knee"
+      ],
+      "correctAnswer": "C",
       "difficulty": "easy"
     },
     {
@@ -675,7 +1045,12 @@
       "category": "hellaswag",
       "subcategory": "social",
       "question": "A person receives a message from a friend sharing good news about a promotion. What do they most likely reply?",
-      "choices": ["A) They congratulate their friend and express excitement for them", "B) They respond with a detailed complaint about their own job", "C) They do not reply for six months", "D) They ask for proof of the promotion"],
+      "choices": [
+        "A) They congratulate their friend and express excitement for them",
+        "B) They ask for proof of the promotion",
+        "C) They respond with a detailed complaint about their own job",
+        "D) They do not reply for six months"
+      ],
       "correctAnswer": "A",
       "difficulty": "easy"
     },
@@ -684,7 +1059,12 @@
       "category": "hellaswag",
       "subcategory": "outdoors",
       "question": "A person is hiking on a trail and arrives at a fork with two paths. One path has a sign pointing toward a scenic overlook. What do they most likely do?",
-      "choices": ["A) They take the path toward the scenic overlook to enjoy the view", "B) They sit at the fork forever unable to decide", "C) They leave the trail and walk through the dense forest", "D) They turn around and go home"],
+      "choices": [
+        "A) They take the path toward the scenic overlook to enjoy the view",
+        "B) They leave the trail and walk through the dense forest",
+        "C) They sit at the fork forever unable to decide",
+        "D) They turn around and go home"
+      ],
       "correctAnswer": "A",
       "difficulty": "easy"
     },
@@ -693,8 +1073,13 @@
       "category": "hellaswag",
       "subcategory": "outdoors",
       "question": "A person is walking their dog in the park. The dog suddenly pulls hard on the leash toward another dog. What does the owner do?",
-      "choices": ["A) They hold the leash firmly and try to calm their dog or redirect its attention", "B) They let go of the leash and walk away", "C) They pick up their dog and carry it for the rest of the walk", "D) They start barking at the other dog themselves"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They pick up their dog and carry it for the rest of the walk",
+        "B) They start barking at the other dog themselves",
+        "C) They let go of the leash and walk away",
+        "D) They hold the leash firmly and try to calm their dog or redirect its attention"
+      ],
+      "correctAnswer": "D",
       "difficulty": "easy"
     },
     {
@@ -702,8 +1087,13 @@
       "category": "hellaswag",
       "subcategory": "outdoors",
       "question": "A family is at the beach building a sandcastle. A wave comes and washes part of it away. What do the children do?",
-      "choices": ["A) They rebuild the damaged part or move their sandcastle further from the water", "B) They try to sue the ocean", "C) They build the next sandcastle in the water", "D) They declare the sandcastle permanently ruined and leave the beach"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They try to sue the ocean",
+        "B) They declare the sandcastle permanently ruined and leave the beach",
+        "C) They build the next sandcastle in the water",
+        "D) They rebuild the damaged part or move their sandcastle further from the water"
+      ],
+      "correctAnswer": "D",
       "difficulty": "easy"
     },
     {
@@ -711,8 +1101,13 @@
       "category": "hellaswag",
       "subcategory": "outdoors",
       "question": "A person is gardening and notices several weeds growing among their flowers. What do they most likely do?",
-      "choices": ["A) They pull the weeds out by the roots to keep the garden tidy", "B) They water the weeds to help them grow", "C) They plant more weeds for consistency", "D) They pave over the entire garden"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They plant more weeds for consistency",
+        "B) They pave over the entire garden",
+        "C) They pull the weeds out by the roots to keep the garden tidy",
+        "D) They water the weeds to help them grow"
+      ],
+      "correctAnswer": "C",
       "difficulty": "easy"
     },
     {
@@ -720,8 +1115,13 @@
       "category": "hellaswag",
       "subcategory": "outdoors",
       "question": "A person is fishing by a lake. They feel a strong tug on their fishing line. What do they do next?",
-      "choices": ["A) They reel in the line steadily, trying to land the fish", "B) They cut the line to let the fish keep the hook", "C) They jump into the lake to catch the fish by hand", "D) They throw the fishing rod into the water"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They throw the fishing rod into the water",
+        "B) They cut the line to let the fish keep the hook",
+        "C) They reel in the line steadily, trying to land the fish",
+        "D) They jump into the lake to catch the fish by hand"
+      ],
+      "correctAnswer": "C",
       "difficulty": "easy"
     },
     {
@@ -729,8 +1129,13 @@
       "category": "hellaswag",
       "subcategory": "outdoors",
       "question": "Campers are sitting around a campfire as the sun sets. The temperature begins to drop. What do they most likely do?",
-      "choices": ["A) They add more wood to the fire and put on warmer layers", "B) They pour water on the fire to cool down", "C) They take off their jackets because fire makes it summer", "D) They move their tents further from the campfire"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They take off their jackets because fire makes it summer",
+        "B) They move their tents further from the campfire",
+        "C) They pour water on the fire to cool down",
+        "D) They add more wood to the fire and put on warmer layers"
+      ],
+      "correctAnswer": "D",
       "difficulty": "easy"
     },
     {
@@ -738,8 +1143,13 @@
       "category": "hellaswag",
       "subcategory": "outdoors",
       "question": "A person is riding a bicycle on a paved trail and approaches a steep downhill section. What do they do?",
-      "choices": ["A) They gently apply their brakes to control their speed on the descent", "B) They pedal as hard as possible to go even faster", "C) They close their eyes and let go of the handlebars", "D) They get off the bicycle and throw it down the hill"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They pedal as hard as possible to go even faster",
+        "B) They close their eyes and let go of the handlebars",
+        "C) They gently apply their brakes to control their speed on the descent",
+        "D) They get off the bicycle and throw it down the hill"
+      ],
+      "correctAnswer": "C",
       "difficulty": "easy"
     },
     {
@@ -747,8 +1157,13 @@
       "category": "hellaswag",
       "subcategory": "outdoors",
       "question": "A bird watcher spots a rare bird through their binoculars in a tree. They want to identify the species. What do they do?",
-      "choices": ["A) They note the bird's markings and behavior and check their field guide", "B) They climb the tree to get a closer look and scare the bird away", "C) They throw the binoculars at the tree", "D) They call the bird by a random name and write it in their journal"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They call the bird by a random name and write it in their journal",
+        "B) They throw the binoculars at the tree",
+        "C) They climb the tree to get a closer look and scare the bird away",
+        "D) They note the bird's markings and behavior and check their field guide"
+      ],
+      "correctAnswer": "D",
       "difficulty": "medium"
     },
     {
@@ -756,8 +1171,13 @@
       "category": "hellaswag",
       "subcategory": "outdoors",
       "question": "A person is kayaking on a calm river and sees rapids ahead. They are inexperienced. What do they most likely do?",
-      "choices": ["A) They paddle to the shore to scout the rapids or portage around them", "B) They stand up in the kayak for a better view", "C) They paddle backward hoping the current reverses", "D) They close their eyes and paddle straight through"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They close their eyes and paddle straight through",
+        "B) They paddle to the shore to scout the rapids or portage around them",
+        "C) They stand up in the kayak for a better view",
+        "D) They paddle backward hoping the current reverses"
+      ],
+      "correctAnswer": "B",
       "difficulty": "medium"
     },
     {
@@ -765,8 +1185,13 @@
       "category": "hellaswag",
       "subcategory": "outdoors",
       "question": "A person is having a picnic when they notice dark storm clouds approaching quickly. What do they do?",
-      "choices": ["A) They pack up their things and head to shelter before the rain starts", "B) They spread out more food to enjoy the dramatic sky", "C) They open an umbrella and continue the picnic in a lightning storm", "D) They lie on the ground to be closer to the earth"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They lie on the ground to be closer to the earth",
+        "B) They pack up their things and head to shelter before the rain starts",
+        "C) They open an umbrella and continue the picnic in a lightning storm",
+        "D) They spread out more food to enjoy the dramatic sky"
+      ],
+      "correctAnswer": "B",
       "difficulty": "easy"
     },
     {
@@ -774,8 +1199,13 @@
       "category": "hellaswag",
       "subcategory": "outdoors",
       "question": "A person is mowing their lawn and the mower suddenly stops. They check and see the grass catcher is completely full. What do they do?",
-      "choices": ["A) They empty the grass catcher into a compost bin or bag and resume mowing", "B) They buy a new lawn mower", "C) They leave the full catcher and mow without it, scattering clippings everywhere", "D) They give up and let the lawn grow wild"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They buy a new lawn mower",
+        "B) They empty the grass catcher into a compost bin or bag and resume mowing",
+        "C) They leave the full catcher and mow without it, scattering clippings everywhere",
+        "D) They give up and let the lawn grow wild"
+      ],
+      "correctAnswer": "B",
       "difficulty": "easy"
     },
     {
@@ -783,8 +1213,13 @@
       "category": "hellaswag",
       "subcategory": "outdoors",
       "question": "A hiker realizes they have been walking for two hours and drank most of their water. They see a sign saying the next water source is 5 km away. What do they do?",
-      "choices": ["A) They ration their remaining water and continue at a steady pace toward the water source", "B) They pour out the remaining water to lighten their pack", "C) They run as fast as possible to reach the water source sooner", "D) They sit down and wait for rain"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They sit down and wait for rain",
+        "B) They ration their remaining water and continue at a steady pace toward the water source",
+        "C) They pour out the remaining water to lighten their pack",
+        "D) They run as fast as possible to reach the water source sooner"
+      ],
+      "correctAnswer": "B",
       "difficulty": "medium"
     },
     {
@@ -792,8 +1227,13 @@
       "category": "hellaswag",
       "subcategory": "outdoors",
       "question": "A family is setting up a tent at a campsite. They lay out the tent flat on the ground and begin inserting the poles. What happens next?",
-      "choices": ["A) They thread the poles through the sleeves and the tent rises into its dome shape", "B) The tent inflates itself like a balloon", "C) The poles dissolve in the rain", "D) They realize a tent has no poles and use tree branches instead"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They realize a tent has no poles and use tree branches instead",
+        "B) The poles dissolve in the rain",
+        "C) The tent inflates itself like a balloon",
+        "D) They thread the poles through the sleeves and the tent rises into its dome shape"
+      ],
+      "correctAnswer": "D",
       "difficulty": "easy"
     },
     {
@@ -801,7 +1241,12 @@
       "category": "hellaswag",
       "subcategory": "outdoors",
       "question": "A person is skiing down a mountain slope and sees another skier has fallen ahead on the trail. What do they do?",
-      "choices": ["A) They slow down, carefully navigate around the fallen skier, and ask if they need help", "B) They speed up and jump over the fallen skier", "C) They take off their skis and walk the rest of the way", "D) They pretend they did not see the fallen skier"],
+      "choices": [
+        "A) They slow down, carefully navigate around the fallen skier, and ask if they need help",
+        "B) They speed up and jump over the fallen skier",
+        "C) They take off their skis and walk the rest of the way",
+        "D) They pretend they did not see the fallen skier"
+      ],
       "correctAnswer": "A",
       "difficulty": "medium"
     },
@@ -810,8 +1255,13 @@
       "category": "hellaswag",
       "subcategory": "outdoors",
       "question": "A person photographs a sunset at the beach. The sun dips below the horizon and the light fades. What do they do next?",
-      "choices": ["A) They review their photos and start heading back before it gets dark", "B) They wait for the sun to rise again from the same spot", "C) They flash their camera to replace the sunlight", "D) They set up camp on the beach for the night without any supplies"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) They set up camp on the beach for the night without any supplies",
+        "B) They flash their camera to replace the sunlight",
+        "C) They wait for the sun to rise again from the same spot",
+        "D) They review their photos and start heading back before it gets dark"
+      ],
+      "correctAnswer": "D",
       "difficulty": "easy"
     },
     {
@@ -819,7 +1269,12 @@
       "category": "hellaswag",
       "subcategory": "science",
       "question": "A student places a glass of water in the freezer and checks on it the next morning. What do they find?",
-      "choices": ["A) The water has turned into ice", "B) The water has evaporated completely", "C) The water is boiling", "D) The glass is empty because the water teleported"],
+      "choices": [
+        "A) The water has turned into ice",
+        "B) The water has evaporated completely",
+        "C) The water is boiling",
+        "D) The glass is empty because the water teleported"
+      ],
       "correctAnswer": "A",
       "difficulty": "easy"
     },
@@ -828,8 +1283,13 @@
       "category": "hellaswag",
       "subcategory": "science",
       "question": "A person inflates a balloon and then releases it without tying the end. What happens?",
-      "choices": ["A) The balloon flies around erratically as air rushes out", "B) The balloon floats gently upward like a helium balloon", "C) The balloon stays perfectly still in mid-air", "D) The balloon inflates further on its own"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) The balloon inflates further on its own",
+        "B) The balloon flies around erratically as air rushes out",
+        "C) The balloon floats gently upward like a helium balloon",
+        "D) The balloon stays perfectly still in mid-air"
+      ],
+      "correctAnswer": "B",
       "difficulty": "easy"
     },
     {
@@ -837,8 +1297,13 @@
       "category": "hellaswag",
       "subcategory": "science",
       "question": "A child drops a ball from the top of a staircase. What happens to the ball?",
-      "choices": ["A) It bounces down the stairs, losing energy with each bounce", "B) It floats in the air where it was released", "C) It falls upward to the ceiling", "D) It rolls back up to the child's hand"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) It rolls back up to the child's hand",
+        "B) It falls upward to the ceiling",
+        "C) It floats in the air where it was released",
+        "D) It bounces down the stairs, losing energy with each bounce"
+      ],
+      "correctAnswer": "D",
       "difficulty": "easy"
     },
     {
@@ -846,8 +1311,13 @@
       "category": "hellaswag",
       "subcategory": "science",
       "question": "A student mixes baking soda and vinegar together in a container. What happens?",
-      "choices": ["A) The mixture fizzes and produces bubbles of carbon dioxide gas", "B) Nothing happens because they are both household items", "C) The container freezes solid", "D) The mixture turns into gold"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) The mixture turns into gold",
+        "B) The container freezes solid",
+        "C) Nothing happens because they are both household items",
+        "D) The mixture fizzes and produces bubbles of carbon dioxide gas"
+      ],
+      "correctAnswer": "D",
       "difficulty": "easy"
     },
     {
@@ -855,7 +1325,12 @@
       "category": "hellaswag",
       "subcategory": "science",
       "question": "A person leaves a metal spoon in a pot of boiling soup. After a few minutes, they grab the spoon handle. What happens?",
-      "choices": ["A) The handle is very hot and they quickly let go or use an oven mitt", "B) The handle is ice cold", "C) The spoon has dissolved into the soup", "D) The handle is the same temperature as their hand"],
+      "choices": [
+        "A) The handle is very hot and they quickly let go or use an oven mitt",
+        "B) The spoon has dissolved into the soup",
+        "C) The handle is ice cold",
+        "D) The handle is the same temperature as their hand"
+      ],
       "correctAnswer": "A",
       "difficulty": "easy"
     },
@@ -864,8 +1339,13 @@
       "category": "hellaswag",
       "subcategory": "science",
       "question": "A person shines a flashlight at a mirror in a dark room. What happens to the light?",
-      "choices": ["A) The light reflects off the mirror and illuminates the opposite wall", "B) The light is absorbed by the mirror and the room stays dark", "C) The mirror shatters from the light", "D) The light bends around the mirror and hits the floor"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) The mirror shatters from the light",
+        "B) The light is absorbed by the mirror and the room stays dark",
+        "C) The light reflects off the mirror and illuminates the opposite wall",
+        "D) The light bends around the mirror and hits the floor"
+      ],
+      "correctAnswer": "C",
       "difficulty": "easy"
     },
     {
@@ -873,8 +1353,13 @@
       "category": "hellaswag",
       "subcategory": "science",
       "question": "A student places a magnet near a pile of iron filings on a table. What happens?",
-      "choices": ["A) The iron filings are attracted to the magnet and cling to it", "B) The iron filings are repelled and fly across the room", "C) Nothing happens because magnets only work on other magnets", "D) The magnet turns into iron"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) The iron filings are repelled and fly across the room",
+        "B) Nothing happens because magnets only work on other magnets",
+        "C) The magnet turns into iron",
+        "D) The iron filings are attracted to the magnet and cling to it"
+      ],
+      "correctAnswer": "D",
       "difficulty": "easy"
     },
     {
@@ -882,8 +1367,13 @@
       "category": "hellaswag",
       "subcategory": "science",
       "question": "A person fills a glass to the very brim with water and then carefully adds a drop of food coloring. What happens?",
-      "choices": ["A) The color slowly diffuses through the water, spreading from the point of entry", "B) The color sinks to the bottom instantly and stays there", "C) The water changes to the color instantly and uniformly", "D) The food coloring floats on top and never mixes"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) The water changes to the color instantly and uniformly",
+        "B) The color sinks to the bottom instantly and stays there",
+        "C) The food coloring floats on top and never mixes",
+        "D) The color slowly diffuses through the water, spreading from the point of entry"
+      ],
+      "correctAnswer": "D",
       "difficulty": "medium"
     },
     {
@@ -891,8 +1381,13 @@
       "category": "hellaswag",
       "subcategory": "science",
       "question": "A student holds a prism up to a beam of white sunlight coming through a window. What do they see?",
-      "choices": ["A) The light splits into a rainbow spectrum of colors on the wall", "B) The light turns black", "C) The prism glows like a lightbulb", "D) The sunlight bounces straight back out the window"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) The sunlight bounces straight back out the window",
+        "B) The light turns black",
+        "C) The prism glows like a lightbulb",
+        "D) The light splits into a rainbow spectrum of colors on the wall"
+      ],
+      "correctAnswer": "D",
       "difficulty": "medium"
     },
     {
@@ -900,8 +1395,13 @@
       "category": "hellaswag",
       "subcategory": "science",
       "question": "An ice cube is placed on a warm kitchen counter on a summer day. What happens over the next 30 minutes?",
-      "choices": ["A) The ice cube gradually melts into a puddle of water", "B) The ice cube stays frozen because it is already solid", "C) The ice cube grows larger as it absorbs heat", "D) The counter freezes around the ice cube"],
-      "correctAnswer": "A",
+      "choices": [
+        "A) The ice cube stays frozen because it is already solid",
+        "B) The ice cube grows larger as it absorbs heat",
+        "C) The ice cube gradually melts into a puddle of water",
+        "D) The counter freezes around the ice cube"
+      ],
+      "correctAnswer": "C",
       "difficulty": "easy"
     }
   ]

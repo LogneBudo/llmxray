@@ -17,7 +17,8 @@ const progressPercent = computed(() => {
 
 const accuracyPercent = computed(() => Math.round(state.value.liveAccuracy * 100))
 
-const avgLatency = computed(() => Math.round(state.value.liveAvgLatencyMs))
+const avgTtft = computed(() => Math.round(state.value.liveAvgTtftMs))
+const avgTotal = computed(() => Math.round(state.value.liveAvgLatencyMs))
 
 const categoryEntries = computed(() =>
   Object.entries(state.value.categoryProgress).map(([cat, p]) => ({
@@ -138,7 +139,7 @@ watch(
                   Expected: {{ state.lastAnswer.expectedAnswer }}
                 </div>
                 <div class="text-[10px] text-text-muted">
-                  {{ Math.round(state.lastAnswer.latencyMs) }}ms
+                  TTFT {{ Math.round(state.lastAnswer.ttftMs ?? state.lastAnswer.latencyMs) }}ms · Total {{ Math.round(state.lastAnswer.latencyMs) }}ms
                 </div>
               </div>
             </div>
@@ -171,7 +172,7 @@ watch(
     </div>
 
     <!-- Live stats -->
-    <div class="grid grid-cols-2 gap-3 lg:grid-cols-4">
+    <div class="grid grid-cols-2 gap-3 lg:grid-cols-5">
       <div class="rounded-lg border border-border-default bg-surface-raised p-3 text-center">
         <div class="text-xs text-text-muted">Accuracy</div>
         <div class="mt-1 text-lg font-bold" :class="accuracyPercent >= 50 ? 'text-success' : 'text-error'">
@@ -179,15 +180,19 @@ watch(
         </div>
       </div>
       <div class="rounded-lg border border-border-default bg-surface-raised p-3 text-center">
-        <div class="text-xs text-text-muted">Avg Latency</div>
-        <div class="mt-1 text-lg font-bold text-text-primary">{{ avgLatency }}ms</div>
+        <div class="text-xs text-text-muted">Avg TTFT</div>
+        <div class="mt-1 text-lg font-bold text-text-primary">{{ avgTtft }}ms</div>
+      </div>
+      <div class="rounded-lg border border-border-default bg-surface-raised p-3 text-center">
+        <div class="text-xs text-text-muted">Avg Total</div>
+        <div class="mt-1 text-lg font-bold text-text-primary">{{ avgTotal }}ms</div>
       </div>
       <div class="rounded-lg border border-border-default bg-surface-raised p-3 text-center">
         <div class="text-xs text-text-muted">Progress</div>
         <div class="mt-1 text-lg font-bold text-accent">{{ progressPercent }}%</div>
       </div>
       <div class="rounded-lg border border-border-default bg-surface-raised p-3 text-center">
-        <div class="text-xs text-text-muted">Categories</div>
+        <div class="text-xs text-text-muted">Suites</div>
         <div class="mt-1 text-lg font-bold text-text-primary">{{ categoryEntries.length }}</div>
       </div>
     </div>
@@ -195,7 +200,7 @@ watch(
     <!-- Category progress -->
     <div v-if="categoryEntries.length > 0" class="rounded-lg border border-border-default bg-surface-raised p-4">
       <h4 class="mb-3 text-xs font-medium uppercase tracking-wide text-text-muted">
-        Category Progress
+        Benchmark Progress
       </h4>
       <div class="space-y-2">
         <div v-for="cat in categoryEntries" :key="cat.category" class="flex items-center gap-3">

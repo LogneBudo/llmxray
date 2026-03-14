@@ -36,6 +36,7 @@ const categories = computed(() =>
     label: getBenchmarkLabel(c.category),
     accuracyPct: Math.round(c.accuracy * 100),
     avgLatencyRound: Math.round(c.avgLatencyMs),
+    avgTtftRound: Math.round(c.avgTtftMs ?? c.avgLatencyMs),
     confidencePct: Math.round(c.avgConfidence * 100),
   })),
 )
@@ -151,7 +152,7 @@ const pressureCategories = computed(() => {
     <!-- Per-Category Latency Bars -->
     <div class="rounded-lg border border-border-default bg-surface-raised p-4">
       <h4 class="mb-3 text-xs font-medium uppercase tracking-wide text-text-muted">
-        Per-Category Latency Strain
+        Per-Category Total Time
       </h4>
       <div class="space-y-2">
         <div v-for="cat in categories" :key="cat.category" class="flex items-center gap-3">
@@ -198,7 +199,8 @@ const pressureCategories = computed(() => {
               <th class="pb-2 pr-4">Category</th>
               <th class="pb-2 pr-4">Accuracy</th>
               <th class="pb-2 pr-4">Correct</th>
-              <th class="pb-2 pr-4">Avg Latency</th>
+              <th class="pb-2 pr-4">Avg TTFT</th>
+              <th class="pb-2 pr-4">Avg Total</th>
               <th class="pb-2">Avg Confidence</th>
             </tr>
           </thead>
@@ -209,6 +211,7 @@ const pressureCategories = computed(() => {
                 {{ cat.accuracyPct }}%
               </td>
               <td class="py-2 pr-4 text-text-secondary">{{ cat.correctCount }}/{{ cat.questionCount }}</td>
+              <td class="py-2 pr-4 text-text-secondary">{{ cat.avgTtftRound }}ms</td>
               <td class="py-2 pr-4 text-text-secondary">{{ cat.avgLatencyRound }}ms</td>
               <td class="py-2 text-text-secondary">{{ cat.confidencePct }}%</td>
             </tr>
@@ -294,7 +297,9 @@ const pressureCategories = computed(() => {
               <span class="flex-1 truncate text-text-secondary" :title="qr.fullResponse">
                 {{ qr.modelAnswer }} (expected {{ qr.expectedAnswer }})
               </span>
-              <span class="w-16 shrink-0 text-right text-text-muted">{{ Math.round(qr.latencyMs) }}ms</span>
+              <span class="w-28 shrink-0 text-right text-text-muted" :title="`TTFT ${Math.round(qr.ttftMs ?? qr.latencyMs)}ms · Total ${Math.round(qr.latencyMs)}ms`">
+                {{ Math.round(qr.ttftMs ?? qr.latencyMs) }}ms / {{ Math.round(qr.latencyMs) }}ms
+              </span>
               <span class="w-14 shrink-0 text-right text-text-muted">{{ Math.round(qr.avgTokenConfidence * 100) }}%</span>
               <span v-if="qr.thinkingResponse" class="w-4 shrink-0 text-center text-text-muted">
                 {{ expandedThinking === qr.questionId ? '▲' : '▼' }}
