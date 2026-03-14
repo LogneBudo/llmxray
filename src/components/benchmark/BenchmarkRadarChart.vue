@@ -20,7 +20,7 @@ const props = defineProps<{
 }>()
 
 const DATASET_COLORS = [
-  { border: '#38bdf8', bg: 'rgba(56, 189, 248, 0.15)' },
+  { border: '#a855f7', bg: 'rgba(168, 85, 247, 0.15)' },
   { border: '#4ade80', bg: 'rgba(74, 222, 128, 0.15)' },
   { border: '#fbbf24', bg: 'rgba(251, 191, 36, 0.15)' },
   { border: '#f87171', bg: 'rgba(248, 113, 113, 0.15)' },

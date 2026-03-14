@@ -3,6 +3,8 @@ import { ref, computed } from 'vue'
 import type { OllamaModel, OllamaModelInfo } from '@/types/ollama'
 import { ollamaClient } from '@/services/ollama-client'
 import { capabilityUnicodeIcons } from '@/utils/capability-defs'
+import { parseModelParameters } from '@/utils/parse-model-params'
+import type { OllamaOptions } from '@/types/ollama'
 
 export const useModelStore = defineStore('models', () => {
   const models = ref<OllamaModel[]>([])
@@ -78,6 +80,26 @@ export const useModelStore = defineStore('models', () => {
     return VISION_NAME_PATTERNS.some((p) => p.test(name))
   }
 
+  /** Parse model's default parameters from /api/show into OllamaOptions */
+  function getModelDefaults(name: string): Partial<OllamaOptions> {
+    const info = modelInfoCache.value.get(name)
+    if (!info?.parameters) return {}
+    const raw = parseModelParameters(info.parameters)
+    const opts: Partial<OllamaOptions> = {}
+    if (raw.temperature) opts.temperature = parseFloat(raw.temperature)
+    if (raw.num_ctx) opts.num_ctx = parseInt(raw.num_ctx, 10)
+    if (raw.top_p) opts.top_p = parseFloat(raw.top_p)
+    if (raw.top_k) opts.top_k = parseInt(raw.top_k, 10)
+    if (raw.repeat_penalty) opts.repeat_penalty = parseFloat(raw.repeat_penalty)
+    if (raw.num_predict) opts.num_predict = parseInt(raw.num_predict, 10)
+    if (raw.mirostat) opts.mirostat = parseInt(raw.mirostat, 10)
+    if (raw.seed) opts.seed = parseInt(raw.seed, 10)
+    // Stop sequences can appear as multiple "stop" lines
+    const stops = Object.entries(raw).filter(([k]) => k === 'stop').map(([, v]) => v)
+    if (stops.length > 0) opts.stop = stops
+    return opts
+  }
+
   /** Unicode symbols for embedding in <option> text — delegates to shared capability-defs */
   function capabilityIcons(name: string): string {
     return capabilityUnicodeIcons(getCapabilities(name))
@@ -121,6 +143,7 @@ export const useModelStore = defineStore('models', () => {
     embeddingModelNames,
     getModelDetails,
     getCapabilities,
+    getModelDefaults,
     isThinkingModel,
     isVisionModel,
     capabilityIcons,

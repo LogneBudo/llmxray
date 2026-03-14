@@ -27,7 +27,7 @@ const label = computed(() => {
     <div class="relative h-32 w-32">
       <svg viewBox="0 0 100 100" class="h-full w-full -rotate-90">
         <!-- Background circle -->
-        <circle cx="50" cy="50" r="42" fill="none" stroke="#334155" stroke-width="8" />
+        <circle cx="50" cy="50" r="42" fill="none" class="stroke-surface-overlay" stroke-width="8" />
         <!-- Score arc -->
         <circle
           cx="50"

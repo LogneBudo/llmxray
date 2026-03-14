@@ -45,7 +45,7 @@ export function confidenceToOpacity(confidence: number): number {
  */
 export const sectionColors: Record<string, string> = {
   system: '#818cf8',
-  user: '#38bdf8',
+  user: '#a855f7',
   context: '#a78bfa',
   tools: '#fb923c',
   memory: '#4ade80',
@@ -59,7 +59,7 @@ export const sectionColors: Record<string, string> = {
  */
 export const nodeTypeColors: Record<string, string> = {
   start: '#4ade80',
-  llm_call: '#38bdf8',
+  llm_call: '#a855f7',
   tool_call: '#fb923c',
   decision: '#a78bfa',
   output: '#4ade80',

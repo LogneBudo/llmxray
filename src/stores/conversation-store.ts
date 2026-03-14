@@ -77,6 +77,13 @@ export const useConversationStore = defineStore('conversations', () => {
       }))
   }
 
+  function setMessageFeedback(conversationId: string, messageId: string, feedback: 'positive' | 'negative' | undefined) {
+    const conv = conversations.value.get(conversationId)
+    if (!conv) return
+    const msg = conv.messages.find((m) => m.id === messageId)
+    if (msg) msg.feedback = feedback
+  }
+
   function deleteConversation(id: string) {
     conversations.value.delete(id)
     if (activeConversationId.value === id) {
@@ -95,6 +102,7 @@ export const useConversationStore = defineStore('conversations', () => {
     finalizeMessage,
     setActiveConversation,
     getMessagesAsOllamaFormat,
+    setMessageFeedback,
     deleteConversation,
   }
 })

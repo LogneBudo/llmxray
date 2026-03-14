@@ -26,8 +26,7 @@ const style = computed(() => ({
 <template>
   <span
     class="inline cursor-pointer rounded-sm px-px text-text-primary transition-all hover:bg-surface-overlay"
-    :class="{ 'animate-pulse': isLatest }"
-    :style="style"
+    :style="[style, isLatest ? { animation: 'glow-in 1.5s ease-in-out infinite', borderRadius: '2px' } : {}]"
     :title="`Token #${token.index} | Confidence: ${(token.confidence * 100).toFixed(0)}% | Latency: ${token.interTokenLatencyMs}ms`"
     @mouseenter="$emit('hover', token)"
     @click="$emit('click', token)"

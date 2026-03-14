@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import type { ChatMessage } from '@/types/conversation'
 import { useSessionStore } from '@/stores/session-store'
 import { useReasoningStore } from '@/stores/reasoning-store'
+import { useMetricsStore } from '@/stores/metrics-store'
 import { renderMarkdown } from '@/composables/useMarkdown'
 import InlineThinkingBlock from './InlineThinkingBlock.vue'
 import AssistantTokenStream from './AssistantTokenStream.vue'
@@ -14,6 +15,12 @@ const props = defineProps<{
 
 const sessionStore = useSessionStore()
 const reasoningStore = useReasoningStore()
+const metricsStore = useMetricsStore()
+
+const sessionMetrics = computed(() => {
+  if (!props.message.sessionId) return null
+  return metricsStore.getMetrics(props.message.sessionId)
+})
 
 const wasTruncated = computed(() => {
   if (!props.message.sessionId) return false
@@ -94,10 +101,11 @@ const formattedTime = computed(() => {
         />
 
         <!-- Streaming cursor when no tokens yet -->
-        <span
-          v-if="message.isStreaming && !displayContent"
-          class="inline-block h-4 w-1.5 bg-text-muted animate-pulse"
-        />
+        <span v-if="message.isStreaming && !displayContent" class="inline-flex items-center gap-1 py-1">
+          <span class="h-1.5 w-1.5 rounded-full bg-accent" style="animation: typing-bounce 1.2s ease-in-out infinite" />
+          <span class="h-1.5 w-1.5 rounded-full bg-accent" style="animation: typing-bounce 1.2s ease-in-out 0.2s infinite" />
+          <span class="h-1.5 w-1.5 rounded-full bg-accent" style="animation: typing-bounce 1.2s ease-in-out 0.4s infinite" />
+        </span>
 
         <!-- Truncation warning -->
         <div v-if="wasTruncated && !message.isStreaming" class="mt-1 text-[10px] text-warning">
@@ -105,8 +113,20 @@ const formattedTime = computed(() => {
         </div>
       </template>
 
-      <div class="mt-1 text-[10px] opacity-50" :class="isUser ? 'text-right' : ''">
-        {{ formattedTime }}
+      <!-- Inline response metrics -->
+      <div
+        v-if="!isUser && !message.isStreaming && sessionMetrics"
+        class="mt-1.5 flex items-center gap-2 text-[10px] text-text-muted"
+      >
+        <span>{{ sessionMetrics.completionTokenCount }} tokens</span>
+        <span class="opacity-40">·</span>
+        <span>{{ sessionMetrics.tokensPerSecond.toFixed(1) }} tok/s</span>
+        <span class="opacity-40">·</span>
+        <span>{{ sessionMetrics.ttftMs < 1000 ? sessionMetrics.ttftMs.toFixed(0) + 'ms' : (sessionMetrics.ttftMs / 1000).toFixed(1) + 's' }} TTFT</span>
+      </div>
+
+      <div class="mt-1" :class="isUser ? 'text-right' : ''">
+        <span class="text-[10px] opacity-50">{{ formattedTime }}</span>
       </div>
     </div>
   </div>

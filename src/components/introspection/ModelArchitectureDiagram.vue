@@ -36,7 +36,7 @@ const capabilities = computed(() => {
 
 const layerTypeColors: Record<string, string> = {
   embedding: '#818cf8',
-  attention: '#38bdf8',
+  attention: '#a855f7',
   feed_forward: '#fb923c',
   norm: '#94a3b8',
   output: '#4ade80',

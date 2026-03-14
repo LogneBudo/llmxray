@@ -26,8 +26,8 @@ const chartData = computed(() => ({
     {
       label: 'Token Latency (ms)',
       data: props.tokenLatencies,
-      borderColor: '#38bdf8',
-      backgroundColor: 'rgba(56, 189, 248, 0.1)',
+      borderColor: '#a855f7',
+      backgroundColor: 'rgba(168, 85, 247, 0.1)',
       borderWidth: 1.5,
       pointRadius: 0,
       fill: true,

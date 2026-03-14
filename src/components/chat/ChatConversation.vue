@@ -18,6 +18,7 @@ import ChatInput from './ChatInput.vue'
 import type { ChatSettings } from '@/types/conversation'
 import type { ChatAttachment } from '@/types/attachment'
 import ChatSettingsPanel from './ChatSettingsPanel.vue'
+import ModelCapabilityIcons from '@/components/common/ModelCapabilityIcons.vue'
 
 const router = useRouter()
 const conversationStore = useConversationStore()
@@ -30,6 +31,10 @@ const memoryStore = useMemoryStore()
 const { isStreaming, currentSessionId, startChatStream, cancel } = useOllamaStream()
 
 const selectedModel = ref('')
+const modelDropdownOpen = ref(false)
+function closeDropdownDelayed() {
+  setTimeout(() => { modelDropdownOpen.value = false }, 150)
+}
 const ragEnabled = ref(true)
 const showSettings = ref(false)
 const chatSettings = ref<ChatSettings>({
@@ -67,6 +72,18 @@ onMounted(async () => {
     selectedModel.value = modelStore.chatModelNames[0]!
   }
   await ragStore.loadDocuments()
+})
+
+// Apply model-specific defaults when model changes
+watch(selectedModel, (name) => {
+  if (!name) return
+  const defaults = modelStore.getModelDefaults(name)
+  if (Object.keys(defaults).length > 0) {
+    chatSettings.value = {
+      systemPrompt: chatSettings.value.systemPrompt,
+      options: { ...defaults },
+    }
+  }
 })
 
 async function handleSend(text: string, attachments: ChatAttachment[] = []) {
@@ -417,15 +434,35 @@ async function handleCommand(name: string, args: string) {
     <!-- Top bar with model selector + new chat -->
     <div class="flex items-center justify-between border-b border-border-default bg-surface-raised px-4 py-2">
       <div class="flex items-center gap-3">
-        <select
-          v-model="selectedModel"
-          class="rounded-lg border border-border-default bg-surface px-3 py-1.5 text-sm text-text-primary outline-none focus:border-accent"
-        >
-          <option v-if="modelStore.chatModelNames.length === 0" value="" disabled>No models</option>
-          <option v-for="name in modelStore.chatModelNames" :key="name" :value="name">
-            {{ name }} {{ modelStore.capabilityIcons(name) }}
-          </option>
-        </select>
+        <div class="relative">
+          <button
+            class="flex items-center gap-2 rounded-lg border border-border-default bg-surface px-3 py-1.5 text-sm text-text-primary outline-none hover:border-accent/50 focus:border-accent"
+            @click="modelDropdownOpen = !modelDropdownOpen"
+            @blur="closeDropdownDelayed"
+          >
+            <span v-if="!selectedModel" class="text-text-muted">No models</span>
+            <template v-else>
+              <span>{{ selectedModel }}</span>
+              <ModelCapabilityIcons :model-name="selectedModel" />
+            </template>
+            <svg class="h-3 w-3 text-text-muted transition-transform" :class="modelDropdownOpen ? 'rotate-180' : ''" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div
+            v-if="modelDropdownOpen"
+            class="absolute left-0 top-full z-50 mt-1 max-h-64 w-max min-w-full overflow-y-auto rounded-lg border border-border-default bg-surface-raised shadow-lg"
+          >
+            <button
+              v-for="name in modelStore.chatModelNames"
+              :key="name"
+              class="flex w-full items-center gap-2 px-3 py-1.5 text-left text-sm transition-colors"
+              :class="name === selectedModel ? 'bg-accent/10 text-accent' : 'text-text-primary hover:bg-surface-overlay'"
+              @mousedown.prevent="selectedModel = name; modelDropdownOpen = false"
+            >
+              <span>{{ name }}</span>
+              <ModelCapabilityIcons :model-name="name" />
+            </button>
+          </div>
+        </div>
         <span v-if="conversation" class="text-xs text-text-muted truncate max-w-[200px]">
           {{ conversation.title }}
         </span>

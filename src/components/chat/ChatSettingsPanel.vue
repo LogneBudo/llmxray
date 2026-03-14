@@ -26,6 +26,19 @@ const seed = ref(props.modelValue.options.seed ?? -1)
 const stopSequences = ref(props.modelValue.options.stop?.join(', ') ?? '')
 const mirostat = ref(props.modelValue.options.mirostat ?? 0)
 
+// Sync from parent when model defaults change
+watch(() => props.modelValue.options, (opts) => {
+  temperature.value = opts.temperature ?? 0.7
+  numPredict.value = opts.num_predict ?? -1
+  numCtx.value = opts.num_ctx ?? 4096
+  topP.value = opts.top_p ?? 0.9
+  topK.value = opts.top_k ?? 40
+  repeatPenalty.value = opts.repeat_penalty ?? 1.1
+  seed.value = opts.seed ?? -1
+  stopSequences.value = opts.stop?.join(', ') ?? ''
+  mirostat.value = opts.mirostat ?? 0
+}, { deep: true })
+
 // Emit on any change
 watch(
   [systemPrompt, temperature, numPredict, numCtx, topP, topK, repeatPenalty, seed, stopSequences, mirostat],

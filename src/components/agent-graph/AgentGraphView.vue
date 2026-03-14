@@ -37,7 +37,7 @@ const selectedNode = computed(() => {
             :y1="edge.y1"
             :x2="edge.x2"
             :y2="edge.y2"
-            stroke="#475569"
+            class="stroke-border-default"
             stroke-width="2"
             marker-end="url(#arrowhead)"
           />
@@ -52,7 +52,7 @@ const selectedNode = computed(() => {
               refY="3.5"
               orient="auto"
             >
-              <polygon points="0 0, 10 3.5, 0 7" fill="#475569" />
+              <polygon points="0 0, 10 3.5, 0 7" class="fill-border-default" />
             </marker>
           </defs>
 

@@ -2,6 +2,12 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import { router } from './router'
 import App from './App.vue'
+import '@fontsource/inter/400.css'
+import '@fontsource/inter/500.css'
+import '@fontsource/inter/600.css'
+import '@fontsource/inter/700.css'
+import '@fontsource/fira-code/400.css'
+import '@fontsource/fira-code/500.css'
 import './style.css'
 
 const app = createApp(App)

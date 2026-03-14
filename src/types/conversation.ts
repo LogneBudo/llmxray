@@ -10,6 +10,7 @@ export interface ChatMessage {
   timestamp: number
   isStreaming: boolean
   attachments?: ChatAttachment[]
+  feedback?: 'positive' | 'negative'
 }
 
 export interface Conversation {

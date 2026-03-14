@@ -8,8 +8,8 @@
   --color-text-primary: #f1f5f9;
   --color-text-secondary: #94a3b8;
   --color-text-muted: #64748b;
-  --color-accent: #38bdf8;
-  --color-accent-hover: #7dd3fc;
+  --color-accent: #a855f7;
+  --color-accent-hover: #c084fc;
   --color-success: #4ade80;
   --color-warning: #fbbf24;
   --color-error: #f87171;
@@ -20,6 +20,47 @@
 
 html {
   color-scheme: dark;
+}
+
+html.light {
+  color-scheme: light;
+  --color-surface: #f8fafc;
+  --color-surface-raised: #ffffff;
+  --color-surface-overlay: #e2e8f0;
+  --color-border-default: #cbd5e1;
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-muted: #94a3b8;
+  --color-accent: #9333ea;
+  --color-accent-hover: #7e22ce;
+  --color-success: #16a34a;
+  --color-warning: #d97706;
+  --color-error: #dc2626;
+  --color-confidence-high: #16a34a;
+  --color-confidence-mid: #d97706;
+  --color-confidence-low: #dc2626;
+}
+
+/* Streaming & activity animations */
+@keyframes typing-bounce {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+  40% { transform: translateY(-6px); opacity: 1; }
+}
+
+@keyframes ripple {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+@keyframes glow-in {
+  0% { box-shadow: 0 0 0 0 rgba(168, 85, 247, 0.4); }
+  50% { box-shadow: 0 0 8px 2px rgba(168, 85, 247, 0.2); }
+  100% { box-shadow: 0 0 0 0 rgba(168, 85, 247, 0); }
+}
+
+@keyframes thinking-orbit {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 body {

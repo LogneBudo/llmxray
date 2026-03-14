@@ -44,7 +44,7 @@ function draw() {
 
     // Positive = blue/cyan, Negative = orange/red
     if (val >= 0) {
-      ctx.fillStyle = `rgba(56, 189, 248, ${0.3 + Math.abs(normalized) * 0.7})`
+      ctx.fillStyle = `rgba(168, 85, 247, ${0.3 + Math.abs(normalized) * 0.7})`
       ctx.fillRect(i * barWidth, mid - barHeight, barWidth, barHeight)
     } else {
       ctx.fillStyle = `rgba(251, 146, 60, ${0.3 + Math.abs(normalized) * 0.7})`
@@ -53,7 +53,7 @@ function draw() {
   }
 
   // Zero line
-  ctx.strokeStyle = '#475569'
+  ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--color-border-default').trim() || '#475569'
   ctx.lineWidth = 1
   ctx.beginPath()
   ctx.moveTo(0, mid)

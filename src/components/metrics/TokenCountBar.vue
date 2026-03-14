@@ -29,7 +29,7 @@ const chartData = computed(() => ({
     {
       label: 'Completion',
       data: [props.completionTokens],
-      backgroundColor: '#38bdf8',
+      backgroundColor: '#a855f7',
     },
   ],
 }))

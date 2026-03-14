@@ -53,7 +53,10 @@ watch(
     <div class="rounded-lg border border-border-default bg-surface-raised p-4">
       <div class="mb-2 flex items-center justify-between">
         <div class="flex items-center gap-2">
-          <span class="inline-block h-2 w-2 animate-pulse rounded-full bg-accent" />
+          <span class="relative inline-flex h-2 w-2">
+            <span class="absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" style="animation: ripple 1.5s ease-out infinite" />
+            <span class="relative inline-flex h-2 w-2 rounded-full bg-accent" />
+          </span>
           <span class="text-sm font-medium text-text-primary">{{ state.modelName }}</span>
           <span
             class="rounded border px-1 py-px text-[9px] font-medium leading-tight"
@@ -152,7 +155,11 @@ watch(
         <!-- Thinking stream — only shown while model is reasoning -->
         <div v-if="isThinking" class="rounded-lg border border-warning/20 bg-surface-raised p-4">
           <div class="mb-2 flex items-center gap-1">
-            <span class="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-warning" />
+            <span class="relative inline-flex h-3 w-3 items-center justify-center">
+              <span class="absolute h-full w-full rounded-full border border-warning/30" />
+              <span class="absolute h-full w-full rounded-full border border-transparent border-t-warning" style="animation: thinking-orbit 1s linear infinite" />
+              <span class="h-1 w-1 rounded-full bg-warning" />
+            </span>
             <h4 class="text-xs font-medium uppercase tracking-wide text-warning">Reasoning</h4>
           </div>
           <div
@@ -165,7 +172,11 @@ watch(
 
         <!-- Processing indicator when not thinking -->
         <div v-else-if="!state.currentTokens && state.lastAnswer" class="flex items-center gap-2 rounded-lg border border-border-default bg-surface-raised px-4 py-3">
-          <span class="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-accent" />
+          <span class="inline-flex items-center gap-0.5">
+            <span class="h-1 w-1 rounded-full bg-accent" style="animation: typing-bounce 1.2s ease-in-out infinite" />
+            <span class="h-1 w-1 rounded-full bg-accent" style="animation: typing-bounce 1.2s ease-in-out 0.2s infinite" />
+            <span class="h-1 w-1 rounded-full bg-accent" style="animation: typing-bounce 1.2s ease-in-out 0.4s infinite" />
+          </span>
           <span class="text-xs text-text-muted">Processing question...</span>
         </div>
       </div>

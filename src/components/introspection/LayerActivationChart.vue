@@ -22,7 +22,7 @@ const chartData = computed(() => ({
     {
       label: 'Norm',
       data: props.activations.map((a) => a.norm),
-      backgroundColor: '#38bdf8',
+      backgroundColor: '#a855f7',
     },
   ],
 }))
