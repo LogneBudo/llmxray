@@ -62,9 +62,10 @@ watch([currentPattern], drawHeatmap)
       <canvas ref="canvasRef" class="max-w-full" />
     </div>
 
-    <p class="text-xs text-text-muted">
-      Synthetic attention pattern based on causal masking and positional decay.
-      Not derived from actual model internals.
+    <p class="text-xs text-text-muted leading-relaxed">
+      This is a <strong class="text-warning">synthetic illustration</strong> of how attention patterns work in transformer models &mdash;
+      it shows causal masking (tokens can only attend to previous tokens) and positional decay (nearby tokens get more attention).
+      Real attention weights are not available through the Ollama API, so this visualization demonstrates the concept rather than reflecting actual model behavior.
     </p>
   </div>
 </template>

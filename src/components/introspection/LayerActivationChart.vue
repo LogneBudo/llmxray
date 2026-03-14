@@ -54,8 +54,11 @@ const chartOptions = {
     <div class="h-48 rounded-lg border border-border-default bg-surface-raised p-4">
       <Bar :data="chartData" :options="chartOptions" />
     </div>
-    <p class="text-xs text-text-muted">
-      Simulated activation norms per layer. Not based on actual inference data.
+    <p class="text-xs text-text-muted leading-relaxed">
+      This is a <strong class="text-warning">simulated visualization</strong> of activation norms across the model's layers.
+      In a real model, these norms reveal how much each layer contributes to the output &mdash; unusually high norms can indicate
+      exploding gradients or bottleneck layers, while low norms may suggest underutilized capacity.
+      Actual activation data requires hooking into the inference engine, which the Ollama API does not expose.
     </p>
   </div>
 </template>
