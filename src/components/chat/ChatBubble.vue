@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import type { ChatMessage } from '@/types/conversation'
+import { useSessionStore } from '@/stores/session-store'
 import { useReasoningStore } from '@/stores/reasoning-store'
 import { renderMarkdown } from '@/composables/useMarkdown'
 import InlineThinkingBlock from './InlineThinkingBlock.vue'
@@ -11,7 +12,14 @@ const props = defineProps<{
   message: ChatMessage
 }>()
 
+const sessionStore = useSessionStore()
 const reasoningStore = useReasoningStore()
+
+const wasTruncated = computed(() => {
+  if (!props.message.sessionId) return false
+  const session = sessionStore.sessionById(props.message.sessionId)
+  return session?.doneReason === 'length'
+})
 
 const thinkingState = computed(() => {
   if (!props.message.sessionId) return { isThinking: false, content: '' }
@@ -90,6 +98,11 @@ const formattedTime = computed(() => {
           v-if="message.isStreaming && !displayContent"
           class="inline-block h-4 w-1.5 bg-text-muted animate-pulse"
         />
+
+        <!-- Truncation warning -->
+        <div v-if="wasTruncated && !message.isStreaming" class="mt-1 text-[10px] text-warning">
+          Response was truncated — increase num_predict in settings for longer responses
+        </div>
       </template>
 
       <div class="mt-1 text-[10px] opacity-50" :class="isUser ? 'text-right' : ''">

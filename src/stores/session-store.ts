@@ -77,6 +77,11 @@ export const useSessionStore = defineStore('sessions', () => {
     if (session) session.status = 'cancelled'
   }
 
+  function setDoneReason(id: string, reason: string) {
+    const session = sessions.value.get(id)
+    if (session) session.doneReason = reason
+  }
+
   function setActiveSession(id: string | null) {
     activeSessionId.value = id
   }
@@ -93,6 +98,7 @@ export const useSessionStore = defineStore('sessions', () => {
     finalizeSession,
     setSessionError,
     cancelSession,
+    setDoneReason,
     setActiveSession,
   }
 })

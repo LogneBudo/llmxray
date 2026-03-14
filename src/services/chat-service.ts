@@ -80,7 +80,7 @@ async function runChatWithToolLoop(
     if (signal.aborted) return
 
     const stream = await ollamaClient.streamChat(
-      { model, messages, tools, options },
+      { model, messages, tools, options, logprobs: true },
       signal,
     )
 

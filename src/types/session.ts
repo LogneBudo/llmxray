@@ -16,4 +16,5 @@ export interface Session {
   outputText: string
   metrics: SessionMetrics | null
   error?: string
+  doneReason?: string
 }

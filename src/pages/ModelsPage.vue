@@ -60,13 +60,22 @@ onMounted(async () => {
           <div class="flex items-center gap-2">
             <span class="text-sm font-medium text-text-primary">{{ model.name }}</span>
             <ModelCapabilityIcons :model-name="model.name" />
+            <span v-if="model.details.format" class="rounded bg-surface px-1.5 py-0.5 text-[10px] text-text-muted uppercase">{{ model.details.format }}</span>
           </div>
           <div class="mt-1 flex gap-3 text-xs text-text-muted">
             <span>{{ model.details.parameter_size }}</span>
             <span>{{ model.details.quantization_level }}</span>
             <span>{{ formatBytes(model.size) }}</span>
           </div>
-          <div class="mt-1 text-xs text-text-muted">{{ model.details.family }}</div>
+          <div class="mt-1 flex items-center gap-2 text-xs text-text-muted">
+            <span>{{ model.details.family }}</span>
+            <span v-if="model.details.parent_model" class="text-text-muted">&larr; {{ model.details.parent_model }}</span>
+          </div>
+          <div v-if="modelStore.getModelDetails(model.name)?.license" class="mt-1">
+            <span class="rounded-full bg-accent/10 px-2 py-0.5 text-[10px] text-accent">
+              {{ modelStore.getModelDetails(model.name)?.license.split('\n')[0]?.slice(0, 40) }}
+            </span>
+          </div>
         </div>
 
         <div v-if="modelStore.models.length === 0" class="p-4 text-sm text-text-muted text-center">

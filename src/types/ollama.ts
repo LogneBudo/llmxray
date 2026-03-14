@@ -47,6 +47,7 @@ export interface OllamaChatRequest {
   format?: 'json'
   options?: OllamaOptions
   tools?: OllamaToolDefinition[]
+  logprobs?: boolean
 }
 
 export interface OllamaChatMessage {

@@ -4,6 +4,7 @@ import type { ModelArchitecture } from '@/types/introspection'
 import { useModelStore } from '@/stores/model-store'
 import { resolveCapabilities } from '@/utils/capability-defs'
 import { formatParamCount } from '@/utils/format'
+import { parseModelParameters } from '@/utils/parse-model-params'
 
 const props = defineProps<{
   architecture: ModelArchitecture
@@ -11,6 +12,22 @@ const props = defineProps<{
 }>()
 
 const modelStore = useModelStore()
+
+const modelInfo = computed(() => {
+  if (!props.modelName) return null
+  return modelStore.getModelDetails(props.modelName) ?? null
+})
+
+const modelDefaults = computed(() => {
+  if (!modelInfo.value?.parameters) return null
+  const parsed = parseModelParameters(modelInfo.value.parameters)
+  return Object.keys(parsed).length > 0 ? parsed : null
+})
+
+const chatTemplate = computed(() => modelInfo.value?.template ?? null)
+
+const showDefaults = ref(false)
+const showTemplate = ref(false)
 
 const capabilities = computed(() => {
   if (!props.modelName) return []
@@ -221,6 +238,51 @@ function hideTip() {
           Width of the feed-forward network's hidden layer. Typically 2-4x the embedding dimension. This is where much of the model's "knowledge" is stored as learned patterns.
           <div class="absolute bottom-full left-1/2 -translate-x-1/2 -mb-px border-4 border-transparent border-b-surface-overlay" />
         </div>
+      </div>
+    </div>
+
+    <!-- Model Defaults -->
+    <div v-if="modelDefaults" class="rounded-lg bg-surface">
+      <button
+        class="flex w-full items-center justify-between p-4 text-left"
+        @click="showDefaults = !showDefaults"
+      >
+        <h4 class="text-xs font-medium text-text-muted uppercase tracking-wide">Model Defaults</h4>
+        <svg
+          class="h-4 w-4 text-text-muted transition-transform"
+          :class="showDefaults ? 'rotate-180' : ''"
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        >
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </button>
+      <div v-if="showDefaults" class="border-t border-border-default px-4 pb-4 pt-2">
+        <table class="w-full text-xs">
+          <tr v-for="(value, key) in modelDefaults" :key="key" class="border-b border-border-default/50 last:border-0">
+            <td class="py-1.5 pr-4 text-text-muted font-mono">{{ key }}</td>
+            <td class="py-1.5 text-text-primary font-mono">{{ value }}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Chat Template -->
+    <div v-if="chatTemplate" class="rounded-lg bg-surface">
+      <button
+        class="flex w-full items-center justify-between p-4 text-left"
+        @click="showTemplate = !showTemplate"
+      >
+        <h4 class="text-xs font-medium text-text-muted uppercase tracking-wide">Chat Template</h4>
+        <svg
+          class="h-4 w-4 text-text-muted transition-transform"
+          :class="showTemplate ? 'rotate-180' : ''"
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        >
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </button>
+      <div v-if="showTemplate" class="border-t border-border-default px-4 pb-4 pt-2">
+        <pre class="overflow-auto rounded-lg bg-surface-raised p-3 text-xs text-text-secondary font-mono leading-relaxed">{{ chatTemplate }}</pre>
       </div>
     </div>
   </div>

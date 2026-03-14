@@ -175,6 +175,10 @@ export async function executeGenerateStream(
         reasoningParser.finalize()
         reasoningStore.setThinking(sessionId, false, '')
 
+        if (chunk.done_reason) {
+          sessionStore.setDoneReason(sessionId, chunk.done_reason)
+        }
+
         const session = sessionStore.sessionById(sessionId)
         if (session) {
           const metrics = calculateMetrics(
@@ -280,7 +284,14 @@ export async function executeChatStream(
       const tokenText = chunk.message.content
       cumulativeText += tokenText
 
-      const confidence = computeConfidenceFromLatency(interTokenLatency, tokenLatencies)
+      let confidence: number
+      let logprobValue: number | undefined
+      if (chunk.logprobs && chunk.logprobs.length > 0) {
+        logprobValue = chunk.logprobs[0]!.logprob
+        confidence = Math.exp(logprobValue)
+      } else {
+        confidence = computeConfidenceFromLatency(interTokenLatency, tokenLatencies)
+      }
 
       const token: StreamToken = {
         id: nanoid(),
@@ -288,6 +299,7 @@ export async function executeChatStream(
         text: tokenText,
         timestamp: now,
         confidence,
+        logprob: logprobValue,
         cumulativeText,
         interTokenLatencyMs: interTokenLatency,
       }
@@ -353,6 +365,10 @@ export async function executeChatStream(
         reasoningParser.finalize()
         // Preserve thinking content on completion so the UI shows "Thought process"
         reasoningStore.setThinking(sessionId, false, usesThinkingField ? completedThinkingText : '')
+
+        if (chunk.done_reason) {
+          sessionStore.setDoneReason(sessionId, chunk.done_reason)
+        }
 
         // Only finalize metrics if no tool calls pending (the tool loop handles finalization)
         if (collectedToolCalls.length === 0) {
