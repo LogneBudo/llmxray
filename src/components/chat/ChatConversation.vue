@@ -42,6 +42,8 @@ let notificationTimer: ReturnType<typeof setTimeout> | null = null
 const conversation = computed(() => conversationStore.activeConversation)
 const messages = computed(() => conversation.value?.messages ?? [])
 
+const isVision = computed(() => modelStore.isVisionModel(selectedModel.value))
+
 const sessionError = computed(() => {
   const sid = latestSessionId.value ?? currentSessionId.value
   if (!sid) return null
@@ -482,6 +484,7 @@ async function handleCommand(name: string, args: string) {
         <ChatInput
           :is-streaming="isStreaming"
           :selected-model="selectedModel"
+          :is-vision-model="isVision"
           @send="handleSend"
           @command="handleCommand"
           @cancel="handleCancel"

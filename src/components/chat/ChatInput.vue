@@ -14,9 +14,10 @@ const emit = defineEmits<{
   cancel: []
 }>()
 
-defineProps<{
+const props = defineProps<{
   isStreaming: boolean
   selectedModel: string
+  isVisionModel: boolean
 }>()
 
 defineExpose({ focus })
@@ -136,6 +137,22 @@ function handleDrop(e: DragEvent) {
     addFiles(e.dataTransfer.files)
   }
 }
+
+function handlePaste(e: ClipboardEvent) {
+  const items = e.clipboardData?.items
+  if (!items) return
+  const imageFiles: File[] = []
+  for (const item of items) {
+    if (item.type.startsWith('image/')) {
+      const file = item.getAsFile()
+      if (file) imageFiles.push(file)
+    }
+  }
+  if (imageFiles.length > 0) {
+    e.preventDefault()
+    addFiles(imageFiles)
+  }
+}
 </script>
 
 <template>
@@ -187,13 +204,24 @@ function handleDrop(e: DragEvent) {
         <!-- Paperclip button -->
         <button
           :disabled="isStreaming"
-          class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-text-muted transition-colors hover:bg-surface-overlay hover:text-text-primary disabled:opacity-30"
-          title="Attach files"
+          class="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-text-muted transition-colors hover:bg-surface-overlay hover:text-text-primary disabled:opacity-30"
+          :title="isVisionModel ? 'Attach files or images' : 'Attach files'"
           @click="triggerFileInput"
         >
           <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
           </svg>
+          <!-- Vision badge -->
+          <span
+            v-if="isVisionModel"
+            class="absolute -right-0.5 -top-0.5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-success text-[8px] text-white"
+            title="Vision model — can process images"
+          >
+            <svg class="h-2.5 w-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+          </span>
         </button>
 
         <!-- Slash commands button -->
@@ -214,9 +242,10 @@ function handleDrop(e: DragEvent) {
           :disabled="isStreaming"
           rows="1"
           class="flex-1 resize-none bg-transparent px-1 py-1 text-sm text-text-primary placeholder-text-muted outline-none disabled:opacity-50"
-          placeholder="Send a message... (Shift+Enter for new line)"
+          :placeholder="isVisionModel ? 'Send a message or paste/drop an image...' : 'Send a message... (Shift+Enter for new line)'"
           @keydown="handleKeydown"
           @input="autoResize"
+          @paste="handlePaste"
         />
 
         <button

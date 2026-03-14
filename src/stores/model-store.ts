@@ -22,6 +22,9 @@ export const useModelStore = defineStore('models', () => {
     /thinking/i,
   ]
 
+  // Vision model name patterns (fallback when Ollama doesn't report capabilities)
+  const VISION_NAME_PATTERNS = [/llava/i, /\bvl\b/i, /vision/i, /minicpm-v/i]
+
   // Embedding-only model families and name patterns
   const EMBEDDING_FAMILIES = new Set(['bert', 'nomic-bert'])
   const EMBEDDING_NAME_PATTERNS = [/embed/i, /^nomic-/i, /^mxbai-/i, /^all-minilm/i, /^bge-/i, /^gte-/i, /^e5-/i, /^snowflake-arctic-embed/i]
@@ -68,6 +71,13 @@ export const useModelStore = defineStore('models', () => {
     return THINKING_NAME_PATTERNS.some((p) => p.test(name))
   }
 
+  /** Detect vision-capable models via Ollama capabilities or name pattern fallback */
+  function isVisionModel(name: string): boolean {
+    const caps = modelInfoCache.value.get(name)?.capabilities ?? []
+    if (caps.includes('vision')) return true
+    return VISION_NAME_PATTERNS.some((p) => p.test(name))
+  }
+
   /** Unicode symbols for embedding in <option> text — delegates to shared capability-defs */
   function capabilityIcons(name: string): string {
     return capabilityUnicodeIcons(getCapabilities(name))
@@ -112,6 +122,7 @@ export const useModelStore = defineStore('models', () => {
     getModelDetails,
     getCapabilities,
     isThinkingModel,
+    isVisionModel,
     capabilityIcons,
     fetchModels,
     fetchModelInfo,
