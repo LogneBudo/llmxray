@@ -15,6 +15,8 @@ export class ReasoningParser {
   private inThinkBlock = false
   private completedSteps: ReasoningStep[] = []
   private lastProcessedLineIndex = -1
+  private thinkBlockProcessed = false
+  private enablePatternDetection: boolean
 
   get isThinking(): boolean {
     return this.inThinkBlock
@@ -24,15 +26,14 @@ export class ReasoningParser {
     return this.inThinkBlock && this.activeStep ? this.activeStep.content : ''
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  constructor(_sessionId?: string) {
-    // sessionId accepted for caller convenience but not stored
+  constructor(options?: { patternDetection?: boolean }) {
+    this.enablePatternDetection = options?.patternDetection ?? true
   }
 
   processToken(token: StreamToken, fullText: string): ReasoningStep | null {
-    // Detect <think> block opening — check if fullText contains the tag,
-    // not just endsWith (tokens may arrive in pieces)
-    if (!this.inThinkBlock && fullText.includes('<think>')) {
+    // Detect <think> block opening — only if we haven't already processed one
+    // Using token.text avoids re-matching old tags in cumulative fullText
+    if (!this.inThinkBlock && !this.thinkBlockProcessed && fullText.includes('<think>')) {
       this.inThinkBlock = true
       // Strip everything up to and including <think> from what we'll accumulate
       const afterTag = fullText.split('<think>').pop() ?? ''
@@ -48,6 +49,7 @@ export class ReasoningParser {
     // Detect </think> block closing
     if (this.inThinkBlock && fullText.includes('</think>')) {
       this.inThinkBlock = false
+      this.thinkBlockProcessed = true
       if (this.activeStep) {
         // Extract content between <think> and </think>
         const thinkMatch = fullText.match(/<think>([\s\S]*?)<\/think>/)
@@ -74,6 +76,9 @@ export class ReasoningParser {
     }
 
     // Outside think blocks, detect pattern-based reasoning markers
+    // Only for thinking models — standard models produce false positives
+    if (!this.enablePatternDetection) return null
+
     // But only process each complete line ONCE
     const lines = fullText.split('\n')
     if (lines.length < 2) return null

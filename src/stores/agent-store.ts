@@ -11,11 +11,14 @@ export const useAgentStore = defineStore('agent', () => {
   }
 
   function initGraph(sessionId: string) {
-    graphsBySession.value.set(sessionId, {
-      sessionId,
-      nodes: [],
-      edges: [],
-    })
+    // Only initialize if no graph exists yet — prevents wiping on tool loop rounds
+    if (!graphsBySession.value.has(sessionId)) {
+      graphsBySession.value.set(sessionId, {
+        sessionId,
+        nodes: [],
+        edges: [],
+      })
+    }
   }
 
   function addNode(sessionId: string, node: AgentNode) {

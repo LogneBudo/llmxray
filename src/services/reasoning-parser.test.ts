@@ -157,8 +157,8 @@ describe('ReasoningParser', () => {
   })
 
   describe('constructor', () => {
-    it('accepts optional sessionId without error', () => {
-      const parser = new ReasoningParser('test-session')
+    it('accepts optional options without error', () => {
+      const parser = new ReasoningParser({ patternDetection: true })
       expect(parser).toBeDefined()
       expect(parser.isThinking).toBe(false)
     })

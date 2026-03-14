@@ -5,6 +5,7 @@ import { useSessionStore } from '@/stores/session-store'
 import { useTokenStore } from '@/stores/token-store'
 import { useMetricsStore } from '@/stores/metrics-store'
 import { useReasoningStore } from '@/stores/reasoning-store'
+import { useModelStore } from '@/stores/model-store'
 import { useToolCallStore } from '@/stores/toolcall-store'
 import { useAgentStore } from '@/stores/agent-store'
 import { calculateMetrics } from './metrics-calculator'
@@ -113,7 +114,10 @@ export async function executeGenerateStream(
   let cumulativeText = ''
   const tokenLatencies: number[] = []
 
-  const reasoningParser = new ReasoningParser(sessionId)
+  const modelStore = useModelStore()
+  const genSession = sessionStore.sessionById(sessionId)
+  const genIsThinking = genSession ? modelStore.isThinkingModel(genSession.model) : false
+  const reasoningParser = new ReasoningParser({ patternDetection: genIsThinking })
 
   // Add start node to agent graph
   agentStore.initGraph(sessionId)
@@ -230,18 +234,25 @@ export async function executeChatStream(
   const tokenLatencies: number[] = []
   const collectedToolCalls: OllamaToolCall[] = []
 
-  const reasoningParser = new ReasoningParser(sessionId)
+  const modelStore = useModelStore()
+  const session = sessionStore.sessionById(sessionId)
+  const isThinking = session ? modelStore.isThinkingModel(session.model) : false
+  const reasoningParser = new ReasoningParser({ patternDetection: isThinking })
 
   agentStore.initGraph(sessionId)
-  agentStore.addNode(sessionId, {
-    id: nanoid(),
-    type: 'start',
-    label: 'Chat Start',
-    sessionId,
-    stepIndex: 0,
-    state: {},
-    timestamp: startedAt,
-  })
+  // Only add start node on first round — initGraph is idempotent so check node count
+  const existingGraph = agentStore.getGraph(sessionId)
+  if (!existingGraph || existingGraph.nodes.length === 0) {
+    agentStore.addNode(sessionId, {
+      id: nanoid(),
+      type: 'start',
+      label: 'Chat Start',
+      sessionId,
+      stepIndex: 0,
+      state: {},
+      timestamp: startedAt,
+    })
+  }
 
   sessionStore.updateSessionStatus(sessionId, 'streaming')
 
