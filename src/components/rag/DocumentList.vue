@@ -26,6 +26,12 @@ function formatDate(ts: number): string {
   })
 }
 
+const DEFAULT_EMBEDDING_DIMS = 768
+
+function estimateDocStorage(doc: RagDocument): number {
+  return doc.sizeBytes + doc.chunkCount * DEFAULT_EMBEDDING_DIMS * 8
+}
+
 const formatIcons: Record<string, string> = {
   pdf: '📕',
   docx: '📘',
@@ -69,7 +75,7 @@ const formatIcons: Record<string, string> = {
       <div class="flex-1 min-w-0">
         <p class="text-sm font-medium text-text-primary truncate">{{ doc.name }}</p>
         <p class="text-xs text-text-muted">
-          {{ formatSize(doc.sizeBytes) }} · {{ doc.chunkCount }} chunks · {{ doc.embeddingModel }}
+          {{ formatSize(doc.sizeBytes) }} · {{ doc.chunkCount }} chunks · ~{{ formatSize(estimateDocStorage(doc)) }} stored · {{ doc.embeddingModel }}
           <span v-if="doc.status !== 'ready'" class="ml-1">
             · <span
               :class="doc.status === 'error' ? 'text-error' : 'text-accent'"

@@ -80,6 +80,12 @@ export const useModelStore = defineStore('models', () => {
     return VISION_NAME_PATTERNS.some((p) => p.test(name))
   }
 
+  /** Detect tool-calling support via Ollama capabilities */
+  function supportsTools(name: string): boolean {
+    const caps = modelInfoCache.value.get(name)?.capabilities ?? []
+    return caps.includes('tools')
+  }
+
   /** Parse model's default parameters from /api/show into OllamaOptions */
   function getModelDefaults(name: string): Partial<OllamaOptions> {
     const info = modelInfoCache.value.get(name)
@@ -146,6 +152,7 @@ export const useModelStore = defineStore('models', () => {
     getModelDefaults,
     isThinkingModel,
     isVisionModel,
+    supportsTools,
     capabilityIcons,
     fetchModels,
     fetchModelInfo,

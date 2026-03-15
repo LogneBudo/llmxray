@@ -4,10 +4,14 @@ import { nanoid } from 'nanoid'
 import type { Session, SessionStatus, SessionMode } from '@/types/session'
 import type { OllamaChatMessage, OllamaOptions } from '@/types/ollama'
 import type { SessionMetrics } from '@/types/metrics'
+import { conversationDB } from '@/services/conversation-db'
 
 export const useSessionStore = defineStore('sessions', () => {
   const sessions = ref<Map<string, Session>>(new Map())
   const activeSessionId = ref<string | null>(null)
+
+  /** Maps sessionId → conversationId for IDB persistence */
+  const sessionConversationMap = ref<Map<string, string>>(new Map())
 
   const activeSession = computed<Session | null>(() => {
     if (!activeSessionId.value) return null
@@ -46,6 +50,10 @@ export const useSessionStore = defineStore('sessions', () => {
     return id
   }
 
+  function linkSessionToConversation(sessionId: string, conversationId: string) {
+    sessionConversationMap.value.set(sessionId, conversationId)
+  }
+
   function updateSessionStatus(id: string, status: SessionStatus) {
     const session = sessions.value.get(id)
     if (session) session.status = status
@@ -61,6 +69,11 @@ export const useSessionStore = defineStore('sessions', () => {
     if (session) {
       session.status = 'completed'
       session.metrics = metrics
+      // Persist to IDB
+      const convId = sessionConversationMap.value.get(id)
+      if (convId) {
+        conversationDB.saveSession(session, convId).catch(console.error)
+      }
     }
   }
 
@@ -91,8 +104,10 @@ export const useSessionStore = defineStore('sessions', () => {
     activeSessionId,
     activeSession,
     recentSessions,
+    sessionConversationMap,
     sessionById,
     createSession,
+    linkSessionToConversation,
     updateSessionStatus,
     appendOutput,
     finalizeSession,

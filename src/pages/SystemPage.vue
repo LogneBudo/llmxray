@@ -6,9 +6,40 @@ import { useModelStore } from '@/stores/model-store'
 import type { OllamaRunningModel } from '@/types/ollama'
 import { formatBytes } from '@/utils/format'
 import { fetchSystemInfo, type SystemHardwareInfo } from '@/services/system-info-client'
+import { useStorageStore } from '@/stores/storage-store'
+import StorageGauge from '@/components/storage/StorageGauge.vue'
+import StorageBreakdownCard from '@/components/storage/StorageBreakdownCard.vue'
 
 const metricsStore = useMetricsStore()
 const modelStore = useModelStore()
+const storageStore = useStorageStore()
+
+const confirmClearId = ref<string | null>(null)
+
+async function handleClearDatabase(id: string) {
+  if (confirmClearId.value === id) {
+    // Confirmed — clear the database
+    const clearFns: Record<string, () => Promise<void>> = {
+      'rag': () => import('@/services/vector-db').then((m) => m.vectorDB.clear()),
+      'conversations': () => import('@/services/conversation-db').then((m) => m.conversationDB.clear()),
+      'benchmarks': () => import('@/services/benchmark-db').then((m) => m.benchmarkDB.clear()),
+      'message-memory': () => import('@/services/message-memory-db').then((m) => m.messageMemoryDB.clear()),
+      'canvas-ai': () => import('@/services/canvas-ai-db').then((m) => m.canvasAiDB.clear()),
+    }
+    try {
+      await clearFns[id]?.()
+      await storageStore.refresh()
+    } catch (e) {
+      console.error(`Failed to clear database ${id}:`, e)
+    }
+    confirmClearId.value = null
+  } else {
+    confirmClearId.value = id
+    setTimeout(() => {
+      if (confirmClearId.value === id) confirmClearId.value = null
+    }, 3000)
+  }
+}
 
 // Ollama info
 const ollamaVersion = ref<string | null>(null)
@@ -70,6 +101,7 @@ async function refreshAll() {
     fetchSystemInfo().then((info) => {
       if (info) hwInfo.value = info
     }),
+    storageStore.refreshIfStale(30_000),
   ])
 }
 
@@ -265,6 +297,52 @@ onUnmounted(() => {
         </div>
       </div>
     </template>
+
+    <!-- Browser Storage -->
+    <div class="rounded-lg border border-border-default bg-surface-raised p-4 space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="text-sm font-medium text-text-primary flex items-center gap-2">
+          <span class="text-base">&#x1F4C0;</span> Browser Storage
+        </h3>
+        <div class="flex items-center gap-2">
+          <span
+            v-if="storageStore.origin"
+            class="rounded-full px-2 py-0.5 text-[9px]"
+            :class="storageStore.origin.persisted ? 'bg-success/10 text-success' : 'bg-warning/10 text-warning'"
+          >
+            {{ storageStore.origin.persisted ? 'Persistent' : 'Best-effort' }}
+          </span>
+          <button
+            v-if="!storageStore.loading"
+            class="text-[10px] text-text-muted hover:text-text-primary transition-colors"
+            @click="storageStore.refresh()"
+          >
+            Refresh
+          </button>
+          <span v-else class="text-[10px] text-text-muted">Scanning...</span>
+        </div>
+      </div>
+
+      <StorageGauge
+        v-if="storageStore.origin"
+        :used="storageStore.origin.usage"
+        :total="storageStore.origin.quota"
+        label="IndexedDB Quota"
+      />
+
+      <div v-if="storageStore.databases.length > 0" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <StorageBreakdownCard
+          v-for="db in storageStore.databases"
+          :key="db.id"
+          :database="db"
+          @clear="handleClearDatabase"
+        />
+      </div>
+
+      <p v-if="storageStore.databases.length > 0" class="text-[9px] text-text-muted">
+        {{ storageStore.totalRecordCount.toLocaleString() }} total records across {{ storageStore.databases.length }} databases
+      </p>
+    </div>
 
     <!-- Ollama Runtime -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">

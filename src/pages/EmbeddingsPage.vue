@@ -4,13 +4,19 @@ import { useModelStore } from '@/stores/model-store'
 import { useEmbeddingStore } from '@/stores/embedding-store'
 import type { EmbeddingResult } from '@/types/embedding'
 import { formatDuration } from '@/utils/format'
+import { useStorageStore } from '@/stores/storage-store'
+import StorageGauge from '@/components/storage/StorageGauge.vue'
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue'
 import EmbeddingVectorViz from '@/components/embeddings/EmbeddingVectorViz.vue'
 import EmbeddingStats from '@/components/embeddings/EmbeddingStats.vue'
+import EmbeddingTransformViz from '@/components/embeddings/EmbeddingTransformViz.vue'
 import SimilarityMeter from '@/components/embeddings/SimilarityMeter.vue'
 
 const modelStore = useModelStore()
 const embeddingStore = useEmbeddingStore()
+const storageStore = useStorageStore()
+
+const memoryDb = computed(() => storageStore.getDatabaseById('message-memory'))
 
 const selectedModel = ref('')
 const inputText = ref('')
@@ -79,6 +85,7 @@ onMounted(async () => {
   if (availableModels.value.length > 0 && !selectedModel.value) {
     selectedModel.value = availableModels.value[0]!.name
   }
+  await storageStore.refreshIfStale()
 })
 </script>
 
@@ -99,6 +106,15 @@ onMounted(async () => {
         No embedding models found. Pull one: ollama pull nomic-embed-text
       </span>
     </div>
+
+    <!-- Embedding Memory gauge -->
+    <StorageGauge
+      v-if="storageStore.origin && memoryDb"
+      :used="memoryDb.totalBytes"
+      :total="storageStore.origin.quota"
+      compact
+      :label="`Embedding Memory \u00B7 ${memoryDb.recordCount.toLocaleString()} records`"
+    />
 
     <!-- Embed Playground -->
     <section class="rounded-lg border border-border-default bg-surface-raised p-5 space-y-4">
@@ -128,10 +144,16 @@ onMounted(async () => {
         <span v-if="embeddingStore.error" class="text-sm text-error">{{ embeddingStore.error }}</span>
       </div>
 
+      <!-- Embedding transformation visual -->
+      <EmbeddingTransformViz
+        :input-text="inputText"
+        :is-embedding="embeddingStore.loading"
+        :vector="activeResult?.vector ?? null"
+      />
+
       <!-- Active result -->
       <template v-if="activeResult">
         <EmbeddingStats :result="activeResult" />
-        <EmbeddingVectorViz :vector="activeResult.vector" label="Embedding Vector" />
 
         <!-- Raw values (first 50) -->
         <details class="text-xs">

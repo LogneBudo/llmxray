@@ -1,26 +1,42 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useRagStore } from '@/stores/rag-store'
 import { useModelStore } from '@/stores/model-store'
+import { useStorageStore } from '@/stores/storage-store'
 import DocumentUploadZone from '@/components/rag/DocumentUploadZone.vue'
 import DocumentList from '@/components/rag/DocumentList.vue'
 import RAGSearchPanel from '@/components/rag/RAGSearchPanel.vue'
 import IngestProgress from '@/components/rag/IngestProgress.vue'
+import StorageGauge from '@/components/storage/StorageGauge.vue'
+import { formatBytes } from '@/utils/format'
 
 const ragStore = useRagStore()
 const modelStore = useModelStore()
+const storageStore = useStorageStore()
 
 const embeddingModel = ref('')
 
+const ragDb = computed(() => storageStore.getDatabaseById('rag'))
+const totalChunks = computed(() =>
+  ragStore.readyDocuments.reduce((sum, d) => sum + d.chunkCount, 0),
+)
+
 onMounted(async () => {
   await modelStore.fetchModels()
-  // Default to an embedding model if available, otherwise first model
-  const embModel = modelStore.modelNames.find((n) =>
-    n.includes('embed') || n.includes('nomic') || n.includes('mxbai'),
-  )
-  embeddingModel.value = embModel ?? modelStore.modelNames[0] ?? ''
+  embeddingModel.value = modelStore.embeddingModelNames[0] ?? ''
   await ragStore.loadDocuments()
+  await storageStore.refreshIfStale()
 })
+
+// Refresh storage after ingestion completes
+watch(
+  () => ragStore.isIngesting,
+  (ingesting, wasIngesting) => {
+    if (!ingesting && wasIngesting) {
+      storageStore.refresh()
+    }
+  },
+)
 
 async function handleUpload(files: File[]) {
   if (!embeddingModel.value) return
@@ -35,6 +51,7 @@ async function handleUpload(files: File[]) {
 
 async function handleRemove(documentId: string) {
   await ragStore.removeDocument(documentId)
+  await storageStore.refresh()
 }
 
 async function handleSearch(query: string) {
@@ -54,11 +71,32 @@ async function handleSearch(query: string) {
         v-model="embeddingModel"
         class="rounded-lg border border-border-default bg-surface px-3 py-1.5 text-sm text-text-primary outline-none focus:border-accent"
       >
-        <option v-if="modelStore.modelNames.length === 0" value="" disabled>No models</option>
-        <option v-for="name in modelStore.modelNames" :key="name" :value="name">
+        <option v-if="modelStore.embeddingModelNames.length === 0" value="" disabled>No embedding models</option>
+        <option v-for="name in modelStore.embeddingModelNames" :key="name" :value="name">
           {{ name }} {{ modelStore.capabilityIcons(name) }}
         </option>
       </select>
+    </div>
+
+    <!-- Storage overview strip -->
+    <div
+      v-if="storageStore.origin"
+      class="rounded-lg border border-border-default bg-surface-raised p-3 space-y-2"
+    >
+      <div class="flex items-center justify-between text-xs">
+        <span class="text-text-secondary font-medium">Knowledge Base Storage</span>
+        <span class="text-text-muted">
+          {{ ragStore.readyDocuments.length }} documents · {{ totalChunks.toLocaleString() }} chunks
+          <template v-if="ragDb">· {{ formatBytes(ragDb.totalBytes) }} stored</template>
+        </span>
+      </div>
+      <StorageGauge
+        :used="ragDb?.totalBytes ?? 0"
+        :total="storageStore.origin.quota"
+        label="RAG Storage"
+        :animating="ragStore.isIngesting"
+        compact
+      />
     </div>
 
     <!-- Upload -->

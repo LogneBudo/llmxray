@@ -98,4 +98,12 @@ export const canvasAiDB = {
     a.click()
     URL.revokeObjectURL(url)
   },
+
+  async clear(): Promise<void> {
+    const db = await openDB()
+    const tx = db.transaction(STORE_NAME, 'readwrite')
+    tx.objectStore(STORE_NAME).clear()
+    await txPromise(tx)
+    db.close()
+  },
 }

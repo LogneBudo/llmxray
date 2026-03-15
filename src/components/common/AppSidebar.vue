@@ -1,7 +1,10 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { useRoute } from 'vue-router'
+import FeedbackOverlay from './FeedbackOverlay.vue'
 
 const route = useRoute()
+const showFeedback = ref(false)
 
 const navItems = [
   { path: '/', label: 'Chat Diagnostics', icon: '' },
@@ -46,9 +49,20 @@ const navItems = [
       </RouterLink>
     </nav>
     <div class="mt-auto flex items-center border-t border-border-default px-3 py-[17px]">
-      <div class="rounded-lg bg-surface px-3 py-2.5 text-xs text-text-muted">
-        Local LLM Observatory
+      <div class="flex flex-1 items-center gap-1.5 rounded-lg bg-surface px-3 py-2.5">
+        <span class="flex-1 text-xs text-text-muted truncate">Local LLM Observatory</span>
+        <button
+          class="shrink-0 rounded p-0.5 text-text-muted hover:text-accent transition-colors"
+          title="Send feedback"
+          @click.stop="showFeedback = true"
+        >
+          <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+          </svg>
+        </button>
       </div>
     </div>
   </aside>
+
+  <FeedbackOverlay v-if="showFeedback" @close="showFeedback = false" />
 </template>

@@ -1,18 +1,22 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, computed, watch } from 'vue'
 import type { ChatSettings } from '@/types/conversation'
 import { useToolWorkshopStore } from '@/stores/tool-workshop-store'
 import { useMemoryStore } from '@/stores/memory-store'
 import { useModelStore } from '@/stores/model-store'
+import { useRagStore } from '@/stores/rag-store'
 import { ollamaClient } from '@/services/ollama-client'
 import { useRouter } from 'vue-router'
 
 const props = defineProps<{
   modelValue: ChatSettings
+  selectedModel: string
+  ragEnabled: boolean
 }>()
 
 const emit = defineEmits<{
   'update:modelValue': [value: ChatSettings]
+  'update:ragEnabled': [value: boolean]
 }>()
 
 const systemPrompt = ref(props.modelValue.systemPrompt)
@@ -86,6 +90,16 @@ const toolStore = useToolWorkshopStore()
 const chatRouter = useRouter()
 const memoryStore = useMemoryStore()
 const modelStore = useModelStore()
+const ragStore = useRagStore()
+
+const modelSupportsTools = computed(() => modelStore.supportsTools(props.selectedModel))
+
+// Auto-disable all tools when switching to a model that doesn't support them
+watch(() => props.selectedModel, (name) => {
+  if (name && !modelStore.supportsTools(name) && toolStore.enabledTools.length > 0) {
+    toolStore.disableAll()
+  }
+})
 const showAdvanced = ref(false)
 const showTools = ref(false)
 const showMemory = ref(false)
@@ -133,7 +147,7 @@ async function pullEmbeddingModel(name: string) {
 
 <template>
   <div class="flex h-full flex-col overflow-y-auto">
-    <div class="space-y-5 p-4">
+    <div class="space-y-5 p-4 pb-12">
       <!-- System Prompt -->
       <div>
         <label class="mb-1.5 block text-xs font-medium text-text-secondary">System Prompt</label>
@@ -147,6 +161,40 @@ async function pullEmbeddingModel(name: string) {
           Instructions sent before the conversation. Sets the model's behavior and persona.
         </p>
       </div>
+
+      <!-- Knowledge Base toggle -->
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-medium text-text-secondary">Knowledge Base</span>
+          <span
+            class="rounded-full px-1.5 py-0.5 text-[9px] font-medium"
+            :class="ragEnabled && ragStore.readyDocuments.length > 0
+              ? 'bg-accent/10 text-accent'
+              : 'bg-surface-overlay text-text-muted'"
+          >
+            {{ ragEnabled && ragStore.readyDocuments.length > 0 ? 'KB Enabled' : 'KB Disabled' }}
+          </span>
+        </div>
+        <button
+          class="h-4 w-7 shrink-0 rounded-full transition-colors"
+          :class="ragEnabled && ragStore.readyDocuments.length > 0 ? 'bg-accent' : 'bg-surface-overlay'"
+          :disabled="ragStore.readyDocuments.length === 0"
+          @click="emit('update:ragEnabled', !ragEnabled)"
+        >
+          <span
+            class="block h-3 w-3 rounded-full bg-white transition-transform"
+            :class="ragEnabled && ragStore.readyDocuments.length > 0 ? 'translate-x-3.5' : 'translate-x-0.5'"
+          />
+        </button>
+      </div>
+      <p v-if="ragStore.readyDocuments.length > 0" class="text-[10px] text-text-muted -mt-3">
+        {{ ragStore.enabledDocuments.length }}/{{ ragStore.readyDocuments.length }} documents &middot;
+        <button class="text-accent hover:underline" @click="chatRouter.push('/rag')">Manage</button>
+      </p>
+      <p v-else class="text-[10px] text-text-muted -mt-3">
+        No documents ingested &middot;
+        <button class="text-accent hover:underline" @click="chatRouter.push('/rag')">Add documents</button>
+      </p>
 
       <!-- Temperature -->
       <div>
@@ -329,21 +377,22 @@ async function pullEmbeddingModel(name: string) {
         </div>
       </div>
 
-      <!-- Tools toggle -->
-      <button
-        class="flex w-full items-center justify-between rounded-lg px-3 py-2 text-xs text-text-secondary hover:bg-surface-overlay transition-colors"
-        @click="showTools = !showTools"
-      >
-        <span>
-          Tools
-          <span v-if="toolStore.enabledDefinitions.length > 0" class="ml-1 text-accent">
-            ({{ toolStore.enabledDefinitions.length }} active)
+      <!-- Tools toggle (hidden when model doesn't support tools) -->
+      <template v-if="modelSupportsTools">
+        <button
+          class="flex w-full items-center justify-between rounded-lg px-3 py-2 text-xs text-text-secondary hover:bg-surface-overlay transition-colors"
+          @click="showTools = !showTools"
+        >
+          <span>
+            Tools
+            <span v-if="toolStore.enabledDefinitions.length > 0" class="ml-1 text-accent">
+              ({{ toolStore.enabledDefinitions.length }} active)
+            </span>
           </span>
-        </span>
-        <span class="transition-transform" :class="{ 'rotate-180': showTools }">▾</span>
-      </button>
+          <span class="transition-transform" :class="{ 'rotate-180': showTools }">▾</span>
+        </button>
 
-      <div v-if="showTools" class="pl-1 space-y-2">
+        <div v-if="showTools" class="pl-1 space-y-2">
         <div v-if="toolStore.allTools.length > 0" class="space-y-1">
           <div
             v-for="tool in toolStore.allTools"
@@ -376,6 +425,7 @@ async function pullEmbeddingModel(name: string) {
           Manage in Tool Workshop...
         </button>
       </div>
+      </template>
 
       <!-- Memory toggle -->
       <button

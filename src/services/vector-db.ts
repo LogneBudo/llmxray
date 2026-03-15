@@ -154,6 +154,15 @@ export const vectorDB = {
       documentName: '',
     }))
   },
+
+  async clear(): Promise<void> {
+    const db = await openDB()
+    const tx = db.transaction([CHUNKS_STORE, DOCUMENTS_STORE], 'readwrite')
+    tx.objectStore(CHUNKS_STORE).clear()
+    tx.objectStore(DOCUMENTS_STORE).clear()
+    await txPromise(tx)
+    db.close()
+  },
 }
 
 function cosineSimilarity(a: number[], b: number[]): number {

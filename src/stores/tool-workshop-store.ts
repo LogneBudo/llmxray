@@ -155,6 +155,13 @@ export const useToolWorkshopStore = defineStore('tool-workshop', () => {
     persist()
   }
 
+  function disableAll() {
+    for (const id of Object.keys(tools.value)) {
+      tools.value[id] = { ...tools.value[id]!, enabled: false }
+    }
+    persist()
+  }
+
   function selectTool(id: string | null) {
     selectedToolId.value = id
   }
@@ -181,6 +188,7 @@ export const useToolWorkshopStore = defineStore('tool-workshop', () => {
     clearAll,
     duplicateTool,
     toggleEnabled,
+    disableAll,
     selectTool,
     getById,
     findByFunctionName,

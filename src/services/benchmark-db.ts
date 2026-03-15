@@ -85,4 +85,12 @@ export const benchmarkDB = {
     tx.objectStore(CUSTOM_SUITES_STORE).delete(id)
     await txPromise(tx)
   },
+
+  async clear(): Promise<void> {
+    const db = await openDB()
+    const tx = db.transaction([RESULTS_STORE, CUSTOM_SUITES_STORE], 'readwrite')
+    tx.objectStore(RESULTS_STORE).clear()
+    tx.objectStore(CUSTOM_SUITES_STORE).clear()
+    await txPromise(tx)
+  },
 }

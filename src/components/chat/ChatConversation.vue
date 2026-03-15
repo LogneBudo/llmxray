@@ -11,7 +11,9 @@ import { useRagStore } from '@/stores/rag-store'
 import { findCommand } from '@/services/slash-command-registry'
 import { useToolWorkshopStore } from '@/stores/tool-workshop-store'
 import { useMemoryStore } from '@/stores/memory-store'
+import { useTokenStore } from '@/stores/token-store'
 import { prepareContext, embedNewMessages } from '@/services/context-manager'
+import { conversationDB } from '@/services/conversation-db'
 import type { SlashCommandContext } from '@/types/slash-command'
 import ChatMessageList from './ChatMessageList.vue'
 import ChatInput from './ChatInput.vue'
@@ -28,6 +30,7 @@ const ragStore = useRagStore()
 const metricsStore = useMetricsStore()
 const toolWorkshopStore = useToolWorkshopStore()
 const memoryStore = useMemoryStore()
+const tokenStore = useTokenStore()
 const { isStreaming, currentSessionId, startChatStream, cancel } = useOllamaStream()
 
 const selectedModel = ref('')
@@ -37,6 +40,50 @@ function closeDropdownDelayed() {
 }
 const ragEnabled = ref(true)
 const showSettings = ref(false)
+const showHistory = ref(false)
+
+// History panel state
+const historyEditingId = ref<string | null>(null)
+const historyEditName = ref('')
+
+function selectConversation(id: string) {
+  conversationStore.setActiveConversation(id)
+}
+
+function startHistoryRename(id: string, currentName: string) {
+  historyEditingId.value = id
+  historyEditName.value = currentName
+}
+
+function commitHistoryRename(id: string) {
+  const trimmed = historyEditName.value.trim()
+  if (trimmed) {
+    conversationStore.renameConversation(id, trimmed)
+  }
+  historyEditingId.value = null
+}
+
+function cancelHistoryRename() {
+  historyEditingId.value = null
+}
+
+function handleHistoryRenameKeydown(e: KeyboardEvent, id: string) {
+  if (e.key === 'Enter') commitHistoryRename(id)
+  else if (e.key === 'Escape') cancelHistoryRename()
+}
+
+function formatRelativeDate(timestamp: number): string {
+  const now = Date.now()
+  const diff = now - timestamp
+  const minutes = Math.floor(diff / 60_000)
+  if (minutes < 1) return 'Just now'
+  if (minutes < 60) return `${minutes}m ago`
+  const hours = Math.floor(minutes / 60)
+  if (hours < 24) return `${hours}h ago`
+  const days = Math.floor(hours / 24)
+  if (days < 7) return `${days}d ago`
+  return new Date(timestamp).toLocaleDateString()
+}
 const chatSettings = ref<ChatSettings>({
   systemPrompt: '',
   options: {},
@@ -66,6 +113,42 @@ const latestSessionId = computed(() => {
   return null
 })
 
+// Pending name for conversations not yet created (pre-chat naming)
+const pendingName = ref('Untitled')
+const editingName = ref(false)
+const editNameValue = ref('')
+
+/** The display name — from the active conversation, or the pending name if none exists yet */
+const displayName = computed(() => conversation.value?.name ?? pendingName.value)
+
+function startEditName() {
+  editNameValue.value = displayName.value
+  editingName.value = true
+}
+
+function commitEditName() {
+  const trimmed = editNameValue.value.trim()
+  if (!trimmed) {
+    editingName.value = false
+    return
+  }
+  if (conversation.value) {
+    conversationStore.renameConversation(conversation.value.id, trimmed)
+  } else {
+    pendingName.value = trimmed
+  }
+  editingName.value = false
+}
+
+function cancelEditName() {
+  editingName.value = false
+}
+
+function handleNameKeydown(e: KeyboardEvent) {
+  if (e.key === 'Enter') commitEditName()
+  else if (e.key === 'Escape') cancelEditName()
+}
+
 onMounted(async () => {
   await modelStore.fetchModels()
   if (modelStore.chatModelNames.length > 0 && !selectedModel.value) {
@@ -86,13 +169,66 @@ watch(selectedModel, (name) => {
   }
 })
 
+// Restore sessions and tokens from IDB when switching to a persisted conversation
+watch(
+  () => conversationStore.activeConversationId,
+  async (convId) => {
+    if (!convId) return
+    const conv = conversationStore.conversations.get(convId)
+    if (!conv) return
+
+    // Update model selector to match conversation's model
+    if (conv.model && modelStore.chatModelNames.includes(conv.model)) {
+      selectedModel.value = conv.model
+    }
+
+    // Restore sessions from IDB into session store
+    try {
+      const storedSessions = await conversationDB.getSessionsByConversation(convId)
+      for (const stored of storedSessions) {
+        if (!sessionStore.sessionById(stored.id)) {
+          sessionStore.sessions.set(stored.id, {
+            id: stored.id,
+            mode: stored.mode,
+            model: stored.model,
+            status: stored.status,
+            createdAt: stored.createdAt,
+            prompt: stored.prompt,
+            messages: stored.messages,
+            options: stored.options,
+            outputText: stored.outputText,
+            metrics: stored.metrics,
+            error: stored.error,
+            doneReason: stored.doneReason,
+          })
+          sessionStore.linkSessionToConversation(stored.id, convId)
+        }
+        // Restore tokens from IDB
+        await tokenStore.loadTokens(stored.id)
+      }
+    } catch (e) {
+      console.error('Failed to restore sessions for conversation:', e)
+    }
+  },
+)
+
 async function handleSend(text: string, attachments: ChatAttachment[] = []) {
   if (!selectedModel.value) return
 
-  // Create conversation if none active
+  // Create conversation on first message (not eagerly)
   let convId = conversationStore.activeConversationId
   if (!convId) {
     convId = conversationStore.createConversation(selectedModel.value)
+    // Apply pending name if user set one before chatting
+    if (pendingName.value !== 'Untitled') {
+      conversationStore.renameConversation(convId, pendingName.value)
+    }
+    pendingName.value = 'Untitled'
+  }
+  // Update the conversation's model if user changed it
+  const conv0 = conversationStore.conversations.get(convId)
+  if (conv0 && conv0.model !== selectedModel.value) {
+    conv0.model = selectedModel.value
   }
 
   // Build content with document attachments prepended
@@ -212,6 +348,9 @@ async function handleSend(text: string, attachments: ChatAttachment[] = []) {
     const msg = conv?.messages.find((m) => m.id === assistantMsgId)
     if (msg) msg.sessionId = sessionId
 
+    // Link session to conversation for IDB persistence
+    sessionStore.linkSessionToConversation(sessionId, convId)
+
     // Watch for session output updates
     const stopWatch = watch(
       () => sessionStore.sessionById(sessionId)?.outputText,
@@ -233,6 +372,9 @@ async function handleSend(text: string, attachments: ChatAttachment[] = []) {
           isStreaming.value = false
           stopWatch()
           stopStatusWatch()
+
+          // Persist token array to IndexedDB for diagnostic replay
+          tokenStore.persistTokens(sessionId)
 
           // Embed user + assistant messages for RAG-based message memory (fire and forget)
           if (
@@ -266,6 +408,7 @@ function handleCancel() {
 
 function startNewChat() {
   conversationStore.setActiveConversation(null)
+  pendingName.value = 'Untitled'
 }
 
 function openSession(sessionId: string) {
@@ -463,28 +606,44 @@ async function handleCommand(name: string, args: string) {
             </button>
           </div>
         </div>
-        <span v-if="conversation" class="text-xs text-text-muted truncate max-w-[200px]">
-          {{ conversation.title }}
-        </span>
+        <div v-if="editingName" class="flex items-center">
+          <input
+            v-model="editNameValue"
+            class="w-48 rounded border border-accent bg-surface px-2 py-0.5 text-xs text-text-primary outline-none"
+            @blur="commitEditName"
+            @keydown="handleNameKeydown"
+            @vue:mounted="($event: any) => { $event.el.focus(); $event.el.select() }"
+          />
+        </div>
+        <button
+          v-else
+          class="flex items-center gap-1 rounded px-1.5 py-0.5 text-xs text-text-muted hover:text-text-primary hover:bg-surface-overlay transition-colors truncate max-w-[200px]"
+          title="Click to rename"
+          @click="startEditName"
+        >
+          <span class="truncate">{{ displayName }}</span>
+          <svg class="h-2.5 w-2.5 shrink-0 opacity-0 group-hover:opacity-100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
+          </svg>
+        </button>
       </div>
       <div class="flex items-center gap-2">
-        <!-- RAG toggle -->
-        <button
-          v-if="ragStore.readyDocuments.length > 0"
-          class="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs transition-colors"
-          :class="ragEnabled ? 'bg-accent/10 text-accent' : 'text-text-muted hover:text-text-secondary'"
-          :title="ragEnabled ? `RAG active (${ragStore.enabledDocuments.length} docs)` : 'RAG disabled'"
-          @click="ragEnabled = !ragEnabled"
-        >
-          <span>📚</span>
-          <span>{{ ragEnabled ? ragStore.enabledDocuments.length : 'Off' }}</span>
-        </button>
         <button
           v-if="latestSessionId"
           class="rounded-lg px-3 py-1.5 text-xs text-accent hover:bg-surface-overlay transition-colors"
           @click="openSession(latestSessionId!)"
         >
           View session details
+        </button>
+        <button
+          class="flex items-center gap-1 rounded-lg px-3 py-1.5 text-xs transition-colors"
+          :class="showHistory ? 'bg-accent/10 text-accent' : 'text-text-secondary hover:bg-surface-overlay hover:text-text-primary'"
+          @click="showHistory = !showHistory"
+        >
+          <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 8v4l3 3" /><circle cx="12" cy="12" r="10" />
+          </svg>
+          <span>History</span>
         </button>
         <button
           class="rounded-lg px-3 py-1.5 text-xs text-text-secondary hover:bg-surface-overlay hover:text-text-primary transition-colors"
@@ -506,8 +665,83 @@ async function handleCommand(name: string, args: string) {
       </div>
     </div>
 
-    <!-- Main content area: messages + optional settings panel -->
+    <!-- Main content area: history + messages + settings -->
     <div class="flex flex-1 min-h-0">
+      <!-- History side panel -->
+      <div
+        v-if="showHistory"
+        class="w-64 shrink-0 border-r border-border-default bg-surface-raised flex flex-col"
+      >
+        <div class="flex items-center justify-between border-b border-border-default px-4 py-2">
+          <span class="text-xs font-medium text-text-secondary">Chat History</span>
+          <button
+            class="text-text-muted hover:text-text-primary transition-colors text-xs"
+            @click="showHistory = false"
+          >
+            ✕
+          </button>
+        </div>
+        <div class="flex-1 overflow-y-auto p-2">
+          <p
+            v-if="conversationStore.recentConversations.length === 0"
+            class="px-2 py-4 text-[10px] text-text-muted italic text-center"
+          >
+            No conversations yet.
+          </p>
+          <div v-else class="space-y-0.5">
+            <div
+              v-for="conv in conversationStore.recentConversations"
+              :key="conv.id"
+              class="group flex items-center gap-1 rounded-lg px-2.5 py-2 text-xs transition-colors cursor-pointer"
+              :class="
+                conv.id === conversationStore.activeConversationId
+                  ? 'bg-surface-overlay text-accent'
+                  : 'text-text-secondary hover:bg-surface-overlay hover:text-text-primary'
+              "
+              @click="selectConversation(conv.id)"
+            >
+              <div v-if="historyEditingId === conv.id" class="flex-1 min-w-0">
+                <input
+                  v-model="historyEditName"
+                  class="w-full rounded bg-surface px-1.5 py-0.5 text-xs text-text-primary outline-none border border-accent"
+                  @blur="commitHistoryRename(conv.id)"
+                  @keydown="handleHistoryRenameKeydown($event, conv.id)"
+                  @vue:mounted="($event: any) => { $event.el.focus(); $event.el.select() }"
+                />
+              </div>
+              <template v-else>
+                <div class="flex-1 min-w-0">
+                  <p class="truncate text-[11px]">{{ conv.name }}</p>
+                  <p class="truncate text-[9px] text-text-muted">
+                    {{ conv.model }} · {{ formatRelativeDate(conv.updatedAt) }}
+                  </p>
+                </div>
+                <div class="hidden shrink-0 items-center gap-0.5 group-hover:flex">
+                  <button
+                    class="rounded p-0.5 text-text-muted hover:text-text-primary transition-colors"
+                    title="Rename"
+                    @click.stop="startHistoryRename(conv.id, conv.name)"
+                  >
+                    <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
+                    </svg>
+                  </button>
+                  <button
+                    class="rounded p-0.5 text-text-muted hover:text-error transition-colors"
+                    title="Delete"
+                    @click.stop="conversationStore.deleteConversation(conv.id)"
+                  >
+                    <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                  </button>
+                </div>
+              </template>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Chat column -->
       <div class="flex flex-1 flex-col min-w-0">
         <!-- Error banner -->
@@ -542,7 +776,7 @@ async function handleCommand(name: string, args: string) {
             ✕
           </button>
         </div>
-        <ChatSettingsPanel v-model="chatSettings" />
+        <ChatSettingsPanel v-model="chatSettings" :selected-model="selectedModel" v-model:rag-enabled="ragEnabled" />
       </div>
     </div>
   </div>

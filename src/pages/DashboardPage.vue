@@ -66,7 +66,7 @@ const recentConversations = computed(() => conversationStore.recentConversations
           "
           @click="conversationStore.setActiveConversation(conv.id)"
         >
-          {{ conv.title }}
+          {{ conv.name }}
         </button>
       </div>
     </div>

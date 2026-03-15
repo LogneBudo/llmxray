@@ -15,6 +15,7 @@ export interface ChatMessage {
 
 export interface Conversation {
   id: string
+  name: string
   title: string
   model: string
   messages: ChatMessage[]

@@ -12,10 +12,24 @@ const emit = defineEmits<{
 }>()
 
 const query = ref('')
+const expandedIds = ref<Set<number>>(new Set())
 
 function handleSearch() {
   const q = query.value.trim()
-  if (q) emit('search', q)
+  if (q) {
+    expandedIds.value = new Set()
+    emit('search', q)
+  }
+}
+
+function toggleExpand(index: number) {
+  const next = new Set(expandedIds.value)
+  if (next.has(index)) {
+    next.delete(index)
+  } else {
+    next.add(index)
+  }
+  expandedIds.value = next
 }
 </script>
 
@@ -65,9 +79,17 @@ function handleSearch() {
             {{ (result.score * 100).toFixed(1) }}%
           </span>
         </div>
-        <p class="text-sm text-text-primary leading-relaxed line-clamp-4">
-          {{ result.chunk.content }}
-        </p>
+        <p
+          class="text-sm text-text-primary leading-relaxed whitespace-pre-wrap cursor-pointer"
+          :class="expandedIds.has(i) ? '' : 'line-clamp-4'"
+          @click="toggleExpand(i)"
+        >{{ result.chunk.content }}</p>
+        <button
+          class="mt-1.5 text-[10px] text-accent hover:underline"
+          @click="toggleExpand(i)"
+        >
+          {{ expandedIds.has(i) ? 'Show less' : 'Show full chunk' }}
+        </button>
       </div>
     </div>
   </div>
