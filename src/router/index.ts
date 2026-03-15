@@ -36,8 +36,7 @@ export const router = createRouter({
         },
         {
           path: 'models',
-          name: 'models',
-          component: () => import('@/pages/ModelsPage.vue'),
+          redirect: { path: '/settings', query: { tab: 'models' } },
         },
         {
           path: 'benchmark',

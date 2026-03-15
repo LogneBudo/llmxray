@@ -12,7 +12,7 @@ const navItems = [
   { path: '/embeddings', label: 'Embeddings', icon: '◈' },
   { path: '/rag', label: 'Knowledge Base', icon: '📚' },
   { path: '/tools', label: 'Tool Workshop', icon: '⚒' },
-  { path: '/models', label: 'Models', icon: '◎' },
+  { path: '/settings?tab=models', label: 'Models', icon: '◎' },
   { path: '/benchmark', label: 'Benchmark', icon: '⏱' },
   { path: '/system', label: 'My System', icon: '🖥' },
   { path: '/settings', label: 'Settings', icon: '⚙' },
@@ -32,7 +32,9 @@ const navItems = [
         :to="item.path"
         class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors"
         :class="
-          route.path === item.path
+          (item.path.includes('?')
+            ? route.fullPath === item.path
+            : route.path === item.path)
             ? 'bg-surface-overlay text-accent'
             : 'text-text-secondary hover:bg-surface-overlay hover:text-text-primary'
         "
@@ -48,7 +50,7 @@ const navItems = [
         <span>{{ item.label }}</span>
       </RouterLink>
     </nav>
-    <div class="mt-auto flex items-center border-t border-border-default px-3 py-[17px]">
+    <div class="mt-auto flex items-center border-t border-border-default px-3 py-[16px]">
       <div class="flex flex-1 items-center gap-1.5 rounded-lg bg-surface px-3 py-2.5">
         <span class="flex-1 text-xs text-text-muted truncate">Local LLM Observatory</span>
         <button

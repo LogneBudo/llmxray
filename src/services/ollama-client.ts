@@ -180,6 +180,15 @@ class OllamaClient {
     return data.models ?? []
   }
 
+  async deleteModel(name: string): Promise<void> {
+    const res = await fetch(`${this.baseUrl}/delete`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name }),
+    })
+    if (!res.ok) throw new Error(`Delete failed: ${res.statusText}`)
+  }
+
   async embed(req: OllamaEmbedRequest): Promise<OllamaEmbedResponse> {
     const res = await fetch(`${this.baseUrl}/embed`, {
       method: 'POST',

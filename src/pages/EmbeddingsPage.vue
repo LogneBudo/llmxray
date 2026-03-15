@@ -30,6 +30,42 @@ const compareResultB = ref<EmbeddingResult | null>(null)
 const similarityScore = ref<number | null>(null)
 const comparing = ref(false)
 
+// Model comparison
+const modelCompareA = ref('')
+const modelCompareB = ref('')
+const modelCompareText = ref('')
+const modelCompareResultA = ref<EmbeddingResult | null>(null)
+const modelCompareResultB = ref<EmbeddingResult | null>(null)
+const modelCompareScore = ref<number | null>(null)
+const modelComparing = ref(false)
+
+async function compareModels() {
+  if (!modelCompareA.value || !modelCompareB.value || !modelCompareText.value.trim()) return
+  modelComparing.value = true
+  modelCompareScore.value = null
+  modelCompareResultA.value = null
+  modelCompareResultB.value = null
+
+  try {
+    const [resultA, resultB] = await Promise.all([
+      embeddingStore.embed(modelCompareA.value, modelCompareText.value.trim()),
+      embeddingStore.embed(modelCompareB.value, modelCompareText.value.trim()),
+    ])
+
+    modelCompareResultA.value = resultA
+    modelCompareResultB.value = resultB
+
+    // Cross-model similarity only if dimensions match
+    if (resultA.dimensions === resultB.dimensions) {
+      modelCompareScore.value = embeddingStore.cosineSimilarity(resultA.vector, resultB.vector)
+    }
+  } catch {
+    // Error is set in store
+  } finally {
+    modelComparing.value = false
+  }
+}
+
 // Filter to embedding-capable models
 const embeddingModels = computed(() =>
   modelStore.models.filter(
@@ -84,6 +120,14 @@ onMounted(async () => {
   }
   if (availableModels.value.length > 0 && !selectedModel.value) {
     selectedModel.value = availableModels.value[0]!.name
+  }
+  // Default model comparison dropdowns
+  if (availableModels.value.length >= 2) {
+    modelCompareA.value = availableModels.value[0]!.name
+    modelCompareB.value = availableModels.value[1]!.name
+  } else if (availableModels.value.length === 1) {
+    modelCompareA.value = availableModels.value[0]!.name
+    modelCompareB.value = availableModels.value[0]!.name
   }
   await storageStore.refreshIfStale()
 })
@@ -233,6 +277,138 @@ onMounted(async () => {
             </div>
             <EmbeddingVectorViz :vector="compareResultB.vector" :height="80" />
           </div>
+        </div>
+      </template>
+    </section>
+
+    <!-- Model Comparison -->
+    <section class="rounded-lg border border-border-default bg-surface-raised p-5 space-y-4">
+      <h2 class="text-base font-semibold text-text-primary">Model Comparison</h2>
+      <p class="text-sm text-text-muted">Embed the same text with two models to compare how they represent meaning.</p>
+
+      <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+        <div>
+          <label class="block text-xs font-medium text-text-muted mb-1">Model A</label>
+          <select
+            v-model="modelCompareA"
+            class="w-full rounded-lg border border-border-default bg-surface px-3 py-2 text-sm text-text-primary outline-none focus:border-accent"
+            :disabled="modelComparing"
+          >
+            <option v-for="m in availableModels" :key="m.name" :value="m.name">
+              {{ m.name }} {{ modelStore.capabilityIcons(m.name) }}
+            </option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-text-muted mb-1">Model B</label>
+          <select
+            v-model="modelCompareB"
+            class="w-full rounded-lg border border-border-default bg-surface px-3 py-2 text-sm text-text-primary outline-none focus:border-accent"
+            :disabled="modelComparing"
+          >
+            <option v-for="m in availableModels" :key="m.name" :value="m.name">
+              {{ m.name }} {{ modelStore.capabilityIcons(m.name) }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <textarea
+        v-model="modelCompareText"
+        class="w-full rounded-lg border border-border-default bg-surface px-4 py-3 text-sm text-text-primary placeholder-text-muted focus:border-accent focus:outline-none resize-none"
+        rows="2"
+        placeholder="Enter text to embed with both models..."
+        :disabled="modelComparing"
+      />
+
+      <button
+        class="rounded-lg bg-accent px-4 py-2 text-sm font-medium text-surface hover:bg-accent-hover transition-colors disabled:opacity-50"
+        :disabled="modelComparing || !modelCompareA || !modelCompareB || !modelCompareText.trim()"
+        @click="compareModels"
+      >
+        <span v-if="modelComparing" class="flex items-center gap-2">
+          <LoadingSpinner size="sm" /> Comparing models...
+        </span>
+        <span v-else>Compare Models</span>
+      </button>
+
+      <!-- Comparison results -->
+      <template v-if="modelCompareResultA && modelCompareResultB">
+        <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+          <!-- Model A results -->
+          <div class="space-y-3 rounded-lg border border-border-default bg-surface p-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-medium text-accent">{{ modelCompareResultA.model }}</span>
+              <span class="text-[10px] text-text-muted">{{ modelCompareResultA.dimensions }}d · {{ formatDuration(modelCompareResultA.durationMs) }}</span>
+            </div>
+            <EmbeddingVectorViz :vector="modelCompareResultA.vector" :height="80" />
+            <div class="grid grid-cols-4 gap-1.5 text-[10px]">
+              <div class="rounded bg-surface-overlay p-1.5">
+                <div class="text-text-muted">Dims</div>
+                <div class="font-medium text-text-primary">{{ modelCompareResultA.dimensions }}</div>
+              </div>
+              <div class="rounded bg-surface-overlay p-1.5">
+                <div class="text-text-muted">L2 Norm</div>
+                <div class="font-medium text-text-primary">{{ Math.sqrt(modelCompareResultA.vector.reduce((s, v) => s + v * v, 0)).toFixed(2) }}</div>
+              </div>
+              <div class="rounded bg-surface-overlay p-1.5">
+                <div class="text-text-muted">Sparsity</div>
+                <div class="font-medium text-text-primary">{{ (modelCompareResultA.vector.filter(v => Math.abs(v) < 0.001).length / modelCompareResultA.dimensions * 100).toFixed(1) }}%</div>
+              </div>
+              <div class="rounded bg-surface-overlay p-1.5">
+                <div class="text-text-muted">Time</div>
+                <div class="font-medium text-text-primary">{{ formatDuration(modelCompareResultA.durationMs) }}</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Model B results -->
+          <div class="space-y-3 rounded-lg border border-border-default bg-surface p-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-medium text-accent">{{ modelCompareResultB.model }}</span>
+              <span class="text-[10px] text-text-muted">{{ modelCompareResultB.dimensions }}d · {{ formatDuration(modelCompareResultB.durationMs) }}</span>
+            </div>
+            <EmbeddingVectorViz :vector="modelCompareResultB.vector" :height="80" />
+            <div class="grid grid-cols-4 gap-1.5 text-[10px]">
+              <div class="rounded bg-surface-overlay p-1.5">
+                <div class="text-text-muted">Dims</div>
+                <div class="font-medium text-text-primary">{{ modelCompareResultB.dimensions }}</div>
+              </div>
+              <div class="rounded bg-surface-overlay p-1.5">
+                <div class="text-text-muted">L2 Norm</div>
+                <div class="font-medium text-text-primary">{{ Math.sqrt(modelCompareResultB.vector.reduce((s, v) => s + v * v, 0)).toFixed(2) }}</div>
+              </div>
+              <div class="rounded bg-surface-overlay p-1.5">
+                <div class="text-text-muted">Sparsity</div>
+                <div class="font-medium text-text-primary">{{ (modelCompareResultB.vector.filter(v => Math.abs(v) < 0.001).length / modelCompareResultB.dimensions * 100).toFixed(1) }}%</div>
+              </div>
+              <div class="rounded bg-surface-overlay p-1.5">
+                <div class="text-text-muted">Time</div>
+                <div class="font-medium text-text-primary">{{ formatDuration(modelCompareResultB.durationMs) }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cross-model verdict -->
+        <div class="rounded-lg border border-border-default bg-surface p-4 text-center">
+          <template v-if="modelCompareScore !== null">
+            <SimilarityMeter :score="modelCompareScore" />
+            <p class="mt-2 text-xs text-text-muted">
+              Cross-model similarity — how similarly these models represent the same text.
+              <template v-if="modelCompareScore < 0.5"> These models encode meaning very differently.</template>
+              <template v-else-if="modelCompareScore < 0.8"> Moderate agreement — the models share some semantic structure.</template>
+              <template v-else> High agreement — these models represent this text similarly.</template>
+            </p>
+          </template>
+          <template v-else>
+            <p class="text-sm text-text-muted py-2">
+              Dimensions differ ({{ modelCompareResultA.dimensions }} vs {{ modelCompareResultB.dimensions }}) — direct cosine similarity not possible.
+            </p>
+            <p class="text-xs text-text-muted">
+              Compare stats above to evaluate each model's representation quality.
+            </p>
+          </template>
         </div>
       </template>
     </section>

@@ -139,6 +139,12 @@ export const useModelStore = defineStore('models', () => {
     }
   }
 
+  async function deleteModel(name: string) {
+    await ollamaClient.deleteModel(name)
+    models.value = models.value.filter((m) => m.name !== name)
+    modelInfoCache.value.delete(name)
+  }
+
   return {
     models,
     modelInfoCache,
@@ -156,5 +162,6 @@ export const useModelStore = defineStore('models', () => {
     capabilityIcons,
     fetchModels,
     fetchModelInfo,
+    deleteModel,
   }
 })
