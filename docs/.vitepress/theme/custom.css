@@ -33,9 +33,9 @@
   inset: -50%;
   z-index: -1;
   background:
-    radial-gradient(ellipse 80% 50% at 20% 40%, rgba(168, 85, 247, 0.15), transparent),
-    radial-gradient(ellipse 60% 60% at 80% 20%, rgba(124, 58, 237, 0.12), transparent),
-    radial-gradient(ellipse 50% 70% at 50% 80%, rgba(139, 92, 246, 0.10), transparent);
+    radial-gradient(ellipse 80% 50% at 20% 40%, rgba(147, 51, 234, 0.35), transparent),
+    radial-gradient(ellipse 60% 60% at 80% 20%, rgba(124, 58, 237, 0.28), transparent),
+    radial-gradient(ellipse 50% 70% at 50% 80%, rgba(139, 92, 246, 0.22), transparent);
   animation: hero-drift 12s ease-in-out infinite alternate;
 }
 
@@ -62,11 +62,11 @@
   inset: 0;
   z-index: -2;
   background-image:
-    linear-gradient(rgba(168, 85, 247, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(168, 85, 247, 0.05) 1px, transparent 1px);
+    linear-gradient(rgba(147, 51, 234, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(147, 51, 234, 0.12) 1px, transparent 1px);
   background-size: 60px 60px;
-  mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, black 20%, transparent 70%);
-  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, black 20%, transparent 70%);
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, black 30%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, black 30%, transparent 70%);
 }
 
 .dark .VPHome::before {
@@ -88,13 +88,13 @@
   transform: translateX(-50%);
   width: 600px;
   height: 300px;
-  background: radial-gradient(ellipse, rgba(168, 85, 247, 0.10), transparent 70%);
+  background: radial-gradient(ellipse, rgba(147, 51, 234, 0.22), transparent 70%);
   z-index: -1;
   pointer-events: none;
 }
 
 .dark .VPFeatures::before {
-  background: radial-gradient(ellipse, rgba(168, 85, 247, 0.18), transparent 70%);
+  background: radial-gradient(ellipse, rgba(168, 85, 247, 0.20), transparent 70%);
 }
 
 /* ── Feature card hover lift ── */
@@ -104,7 +104,7 @@
 
 .VPFeature:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 30px rgba(168, 85, 247, 0.15);
+  box-shadow: 0 8px 30px rgba(147, 51, 234, 0.25);
 }
 
 .dark .VPFeature:hover {
