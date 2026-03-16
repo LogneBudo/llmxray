@@ -21,6 +21,25 @@
   --vp-home-hero-image-filter: blur(44px);
 }
 
+/* ── Lakeside landscape background on home page ── */
+.is-home .VPHome::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: url('/lakeside-day.png');
+  background-size: cover;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  opacity: 0.3;
+}
+
+.dark .is-home .VPHome::before {
+  background-image: url('/lakeside-night.png');
+  opacity: 0.4;
+}
+
 /* ── Feature card hover lift ── */
 .VPFeature {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
