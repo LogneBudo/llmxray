@@ -157,6 +157,7 @@ export const canvasAiDB = {
         model: p.model,
         tool: p.toolName,
         tags: p.tags ?? [],
+        reasoning: p.reasoning ?? '',
       }),
     )
 

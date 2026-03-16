@@ -164,11 +164,40 @@ watch(
 
 const insightsError = ref<string | null>(null)
 
+// Animated thinking words
+const THINKING_WORDS = [
+  'Thinking', 'Cogitating', 'Analyzing', 'Flexing', 'Scrutinizing',
+  'Neuroticizing', 'Polarizing', 'Rasterizing', 'Criticizing',
+  'Parameterizing', 'Inspecting', 'Evaluating', 'Dissecting',
+  'Probing', 'Examining', 'Parsing', 'Reviewing', 'Synthesizing',
+]
+const thinkingWordIndex = ref(0)
+let thinkingInterval: ReturnType<typeof setInterval> | null = null
+const thinkingWord = computed(() => THINKING_WORDS[thinkingWordIndex.value % THINKING_WORDS.length])
+
+function startThinkingAnimation() {
+  thinkingWordIndex.value = 0
+  thinkingInterval = setInterval(() => {
+    thinkingWordIndex.value++
+  }, 1500)
+}
+
+function stopThinkingAnimation() {
+  if (thinkingInterval) {
+    clearInterval(thinkingInterval)
+    thinkingInterval = null
+  }
+}
+
 function applyInsightFix() {
-  if (!expandedInsight.value?.suggestedCode) return
+  if (!expandedInsight.value?.suggestedCode) {
+    console.warn('[Insight] No suggestedCode to apply')
+    return
+  }
   const code = expandedInsight.value.suggestedCode
-  expandedInsight.value = null
+  console.log('[Insight] Applying fix, code length:', code.length)
   emitField('body', code)
+  expandedInsight.value = null
 }
 
 async function handleAnalyze() {
@@ -180,6 +209,7 @@ async function handleAnalyze() {
   insightsLoading.value = true
   insightsError.value = null
   expandedInsight.value = null
+  startThinkingAnimation()
 
   const result = await analyzeToolCode({
     model: aiStore.effectiveModel,
@@ -189,6 +219,7 @@ async function handleAnalyze() {
   })
 
   insightsLoading.value = false
+  stopThinkingAnimation()
 
   if (result.error) {
     insightsError.value = result.error
@@ -513,6 +544,12 @@ function applySelection() {
       </button>
     </div>
 
+    <!-- AI Thinking indicator -->
+    <div v-if="insightsLoading" class="thinking-bar nodrag">
+      <span class="thinking-dot" />
+      <span class="thinking-text">{{ thinkingWord }}...</span>
+    </div>
+
     <!-- AI Insight error -->
     <div v-if="insightsError" class="insights-row">
       <span class="insight-badge error" @click.stop="insightsError = null">{{ insightsError }}</span>
@@ -543,15 +580,15 @@ function applySelection() {
           min-height="60px"
         />
       </template>
-      <div class="insight-actions">
+      <div class="insight-actions" @mousedown.stop>
         <button
           v-if="expandedInsight.suggestedCode"
           class="insight-apply"
-          @click.stop="applyInsightFix"
+          @click.stop.prevent="applyInsightFix"
         >
           Apply fix
         </button>
-        <button class="insight-close" @click="expandedInsight = null">&times; Close</button>
+        <button class="insight-close" @click.stop="expandedInsight = null">&times; Close</button>
       </div>
     </div>
 
@@ -1525,6 +1562,39 @@ function applySelection() {
   line-height: 1.4;
   margin: 0 0 6px;
 }
+/* Thinking animation */
+.thinking-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-bottom: 1px solid var(--color-border-default);
+  background: linear-gradient(90deg, rgba(139, 92, 246, 0.05), rgba(139, 92, 246, 0.1), rgba(139, 92, 246, 0.05));
+  background-size: 200% 100%;
+  animation: thinking-shimmer 2s ease-in-out infinite;
+}
+@keyframes thinking-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+.thinking-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  animation: thinking-pulse 1s ease-in-out infinite;
+}
+@keyframes thinking-pulse {
+  0%, 100% { opacity: 0.4; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+.thinking-text {
+  font-size: 10px;
+  color: var(--color-accent);
+  font-style: italic;
+  transition: opacity 0.3s;
+}
+
 .insight-suggestion-label {
   font-size: 9px;
   color: var(--color-text-muted);

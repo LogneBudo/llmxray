@@ -41,4 +41,5 @@ export interface AiTrainingPair {
   accepted: boolean
   toolName: string
   tags?: string[]
+  reasoning?: string
 }

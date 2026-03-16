@@ -138,6 +138,18 @@ function stripImports(code: string): string {
     .join('\n')
 }
 
+/** Extract <think> blocks from a response, returning reasoning and clean response */
+function extractReasoning(rawResponse: string): { reasoning: string; cleanResponse: string } {
+  const thinkMatch = rawResponse.match(/<think>([\s\S]*?)<\/think>/)
+  if (thinkMatch) {
+    return {
+      reasoning: thinkMatch[1]!.trim(),
+      cleanResponse: rawResponse.replace(/<think>[\s\S]*?<\/think>/g, '').trim(),
+    }
+  }
+  return { reasoning: '', cleanResponse: rawResponse }
+}
+
 async function saveTrainingPair(
   phase: AiPhase,
   model: string,
@@ -146,6 +158,7 @@ async function saveTrainingPair(
   response: string,
   toolName: string,
 ): Promise<string> {
+  const { reasoning, cleanResponse } = extractReasoning(response)
   const pair: AiTrainingPair = {
     id: nanoid(),
     timestamp: Date.now(),
@@ -153,9 +166,10 @@ async function saveTrainingPair(
     model,
     systemPrompt,
     userPrompt,
-    response,
+    response: cleanResponse,
     accepted: false,
     toolName,
+    reasoning: reasoning || undefined,
   }
   await canvasAiDB.savePair(pair)
   return pair.id

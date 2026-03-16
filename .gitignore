@@ -4,3 +4,6 @@ dist
 .DS_Store
 .claude/
 test-results/
+docs/.vitepress/cache
+docs/.vitepress/dist
+tsconfig.tsbuildinfo

@@ -95,6 +95,12 @@ const phaseColors: Record<string, string> = {
       <pre class="max-h-32 overflow-auto rounded-lg bg-surface p-3 text-xs text-text-secondary whitespace-pre-wrap font-mono">{{ pair.userPrompt }}</pre>
     </div>
 
+    <!-- Reasoning (if captured from thinking models) -->
+    <div v-if="pair.reasoning">
+      <p class="mb-1 text-[10px] font-medium uppercase tracking-wider text-accent">Reasoning</p>
+      <pre class="max-h-40 overflow-auto rounded-lg bg-accent/5 border border-accent/20 p-3 text-xs text-text-secondary whitespace-pre-wrap font-mono italic">{{ pair.reasoning }}</pre>
+    </div>
+
     <!-- AI Response -->
     <div>
       <div class="mb-1 flex items-center justify-between">
