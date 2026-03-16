@@ -1,0 +1,8 @@
+node_modules
+.git
+.claude
+docs
+e2e
+test-results
+site-dist
+*.tsbuildinfo

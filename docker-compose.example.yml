@@ -1,0 +1,28 @@
+# Example: run LLMxRay alongside Ollama
+# This is optional — you can also point LLMxRay at an existing Ollama instance.
+#
+# Usage:
+#   docker compose -f docker-compose.example.yml up
+#
+# On Linux, if host.docker.internal doesn't resolve, use this file instead
+# of docker-compose.yml to run Ollama as a sibling container.
+
+services:
+  ollama:
+    image: ollama/ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+
+  llmxray:
+    image: lognebudo/llmxray
+    ports:
+      - "5174:5174"
+    environment:
+      - OLLAMA_URL=http://ollama:11434
+    depends_on:
+      - ollama
+
+volumes:
+  ollama-data:

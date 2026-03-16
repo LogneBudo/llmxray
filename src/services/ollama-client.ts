@@ -14,13 +14,21 @@ const DEFAULT_BASE_URL = '/api'
 
 class OllamaClient {
   private baseUrl: string
+  private openaiBaseUrl: string
 
   constructor(baseUrl?: string) {
     this.baseUrl = baseUrl ?? DEFAULT_BASE_URL
+    this.openaiBaseUrl = this.deriveOpenaiBaseUrl(this.baseUrl)
   }
 
   setBaseUrl(url: string) {
     this.baseUrl = url
+    this.openaiBaseUrl = this.deriveOpenaiBaseUrl(url)
+  }
+
+  private deriveOpenaiBaseUrl(baseUrl: string): string {
+    if (baseUrl === '/api') return '/v1'
+    return baseUrl.replace(/\/api\/?$/, '/v1')
   }
 
   async listModels(): Promise<OllamaModel[]> {
@@ -92,7 +100,7 @@ class OllamaClient {
     },
     signal?: AbortSignal,
   ): Promise<ReadableStream<Uint8Array>> {
-    const res = await fetch('/v1/chat/completions', {
+    const res = await fetch(`${this.openaiBaseUrl}/chat/completions`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ ...params, stream: true }),

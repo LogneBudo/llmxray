@@ -5,6 +5,23 @@ All notable changes to LLMxRay are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0] — 2026-03-17
+
+### Added
+
+- npm package: run `npx llmxray` to serve LLMxRay with built-in Ollama proxy
+- CLI flags: `--port` and `--ollama-url` for configuration
+- Environment variable support: `PORT` and `OLLAMA_URL`
+- Docker support: `docker run -p 5174:5174 lognebudo/llmxray`
+- docker-compose.example.yml showing LLMxRay alongside Ollama
+- Production Express server for static file serving and API proxying
+- System info and API probe endpoints now work in production (not just dev)
+
+### Fixed
+
+- Settings page Ollama URL now actually applies to the HTTP client
+- Benchmark streaming no longer hardcodes `/v1` path
+
 ## [0.1.2] — 2026-03-16
 
 ### Added

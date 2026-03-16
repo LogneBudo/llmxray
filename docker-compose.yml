@@ -1,0 +1,7 @@
+services:
+  llmxray:
+    build: .
+    ports:
+      - "5174:5174"
+    environment:
+      - OLLAMA_URL=http://host.docker.internal:11434

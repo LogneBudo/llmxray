@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
+import { ollamaClient } from '@/services/ollama-client'
 
 const ollamaUrl = ref('http://localhost:11434')
 const defaultTemperature = ref(0.7)
@@ -11,7 +12,10 @@ function loadSettings() {
   if (saved) {
     try {
       const parsed = JSON.parse(saved) as Record<string, unknown>
-      if (typeof parsed.ollamaUrl === 'string') ollamaUrl.value = parsed.ollamaUrl
+      if (typeof parsed.ollamaUrl === 'string') {
+        ollamaUrl.value = parsed.ollamaUrl
+        ollamaClient.setBaseUrl(parsed.ollamaUrl + '/api')
+      }
       if (typeof parsed.defaultTemperature === 'number') defaultTemperature.value = parsed.defaultTemperature
       if (typeof parsed.defaultContextLength === 'number') defaultContextLength.value = parsed.defaultContextLength
     } catch {
@@ -43,6 +47,7 @@ async function testConnection() {
 
 function applyUrl() {
   saveSettings()
+  ollamaClient.setBaseUrl(ollamaUrl.value + '/api')
 }
 
 const temperatureLabel = computed(() => {
