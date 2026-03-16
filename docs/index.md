@@ -4,8 +4,8 @@ layout: home
 
 <script setup>
 if (typeof window !== 'undefined') {
-  window.location.href = '/en/'
+  window.location.href = '/llmxray/docs/en/'
 }
 </script>
 
-<meta http-equiv="refresh" content="0;url=/en/">
+<meta http-equiv="refresh" content="0;url=/llmxray/docs/en/">

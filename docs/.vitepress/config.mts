@@ -51,8 +51,10 @@ export default defineConfig({
   title: 'LLMxRay',
   description: 'Local LLM Observatory — Documentation',
 
+  base: '/llmxray/docs/',
+
   head: [
-    ['link', { rel: 'icon', href: '/favicon.svg' }],
+    ['link', { rel: 'icon', href: '/llmxray/docs/favicon.svg' }],
   ],
 
   markdown: {
