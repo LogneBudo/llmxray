@@ -1,0 +1,111 @@
+name: Benchmark Result Submission
+description: Submit your model benchmark results to the community
+title: "[Benchmark] "
+labels: ["benchmark-result"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Share your benchmark results with the community. Your data helps everyone understand model performance across different hardware and configurations.
+
+  - type: input
+    id: model
+    attributes:
+      label: Model Name
+      placeholder: "e.g., llama3.2:latest"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: size
+    attributes:
+      label: Model Size
+      options:
+        - 1B
+        - 3B
+        - 7B
+        - 8B
+        - 13B
+        - 14B
+        - 32B
+        - 70B
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: quantization
+    attributes:
+      label: Quantization
+      options:
+        - Q4_0
+        - Q4_K_M
+        - Q5_K_M
+        - Q6_K
+        - Q8_0
+        - F16
+        - Other
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: suites
+    attributes:
+      label: Test Suites Run
+      options:
+        - label: ARC-Challenge
+        - label: GSM8K
+        - label: HellaSwag
+        - label: MMLU-Pro
+        - label: TruthfulQA
+
+  - type: input
+    id: accuracy
+    attributes:
+      label: Overall Accuracy
+      placeholder: "e.g., 72.5%"
+    validations:
+      required: true
+
+  - type: textarea
+    id: hardware
+    attributes:
+      label: Hardware
+      description: GPU, CPU, and RAM used.
+      placeholder: |
+        GPU: NVIDIA RTX 4070 (12GB)
+        CPU: AMD Ryzen 7 7800X3D
+        RAM: 32GB DDR5
+    validations:
+      required: true
+
+  - type: input
+    id: ollama-version
+    attributes:
+      label: Ollama Version
+      placeholder: "e.g., 0.6.2"
+
+  - type: input
+    id: context-size
+    attributes:
+      label: Context Size
+      placeholder: "e.g., 4096"
+
+  - type: textarea
+    id: results
+    attributes:
+      label: Results JSON
+      description: Paste the benchmark results JSON if available.
+      render: json
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: Screenshots of the benchmark results page.
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Any observations about the model's performance.

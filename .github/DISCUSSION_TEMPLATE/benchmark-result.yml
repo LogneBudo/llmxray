@@ -1,0 +1,48 @@
+title: "[Results] "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Post your benchmark results here so others can compare. Include as much detail as possible about your setup.
+
+  - type: input
+    id: model
+    attributes:
+      label: Model Name
+      placeholder: "e.g., mistral:7b-q4_K_M"
+    validations:
+      required: true
+
+  - type: input
+    id: suites
+    attributes:
+      label: Test Suites
+      placeholder: "e.g., ARC, MMLU-Pro, TruthfulQA"
+    validations:
+      required: true
+
+  - type: textarea
+    id: hardware
+    attributes:
+      label: Hardware
+      placeholder: |
+        GPU: NVIDIA RTX 3060 (12GB)
+        CPU: Intel i7-12700K
+        RAM: 32GB DDR4
+    validations:
+      required: true
+
+  - type: textarea
+    id: results
+    attributes:
+      label: Results Summary
+      description: Accuracy scores, notable findings, per-category breakdown.
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: Screenshots of the benchmark results page in LLMxRay.

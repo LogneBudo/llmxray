@@ -1,0 +1,31 @@
+{
+  "name": "convert_temperature",
+  "description": "Convert a temperature value between Celsius, Fahrenheit, and Kelvin",
+  "category": "utility",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "number",
+        "description": "The temperature value to convert"
+      },
+      "from": {
+        "type": "string",
+        "enum": ["celsius", "fahrenheit", "kelvin"],
+        "description": "The unit to convert from"
+      },
+      "to": {
+        "type": "string",
+        "enum": ["celsius", "fahrenheit", "kelvin"],
+        "description": "The unit to convert to"
+      }
+    },
+    "required": ["value", "from", "to"]
+  },
+  "implementation": "function convert_temperature({ value, from, to }) {\n  let celsius;\n  if (from === 'celsius') celsius = value;\n  else if (from === 'fahrenheit') celsius = (value - 32) * 5 / 9;\n  else celsius = value - 273.15;\n\n  if (to === 'celsius') return celsius;\n  if (to === 'fahrenheit') return celsius * 9 / 5 + 32;\n  return celsius + 273.15;\n}",
+  "testInput": {
+    "value": 100,
+    "from": "celsius",
+    "to": "fahrenheit"
+  }
+}

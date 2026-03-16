@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Help & Troubleshooting
+    url: https://github.com/LogneBudo/llmxray/discussions/categories/help
+    about: Ask questions about installation, setup, or usage in GitHub Discussions.
+  - name: Feature Ideas
+    url: https://github.com/LogneBudo/llmxray/discussions/categories/feature-ideas
+    about: Discuss and refine feature ideas before filing a formal request.
+  - name: Documentation
+    url: https://lognebudo.github.io/llmxray/docs/en/
+    about: Check the documentation for guides, tutorials, and reference material.

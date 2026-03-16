@@ -1,0 +1,61 @@
+name: Showcase Submission
+description: Share an interesting finding you discovered with LLMxRay
+title: "[Showcase] "
+labels: ["showcase"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Found something interesting while using LLMxRay? Share it with the community! Your finding may be featured in our "Discovered with LLMxRay" showcase.
+
+  - type: input
+    id: title
+    attributes:
+      label: Finding Title
+      placeholder: "e.g., Temperature 0.3 produces more accurate code than 0.7 on Mistral"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - Model Behavior
+        - Model Comparison
+        - Benchmark Insight
+        - Tool Discovery
+        - RAG / Knowledge Base
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Describe your finding in detail. What did you observe? Why is it interesting?
+    validations:
+      required: true
+
+  - type: input
+    id: models
+    attributes:
+      label: Models Involved
+      placeholder: "e.g., deepseek-r1:7b, llama3.2:3b"
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: How to Reproduce
+      description: Steps someone else can follow to verify your finding.
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: Screenshots from LLMxRay showing the finding.

@@ -108,12 +108,32 @@ npm run dev               # Preview docs locally
 
 ## Reporting Issues
 
-Open an issue on [GitHub](https://github.com/LogneBudo/llmxray/issues) with:
+Use our structured issue templates:
 
-- Steps to reproduce
-- Expected vs. actual behavior
-- Browser and OS information
-- Ollama version and model used (if relevant)
+- **[Bug Report](https://github.com/LogneBudo/llmxray/issues/new?template=bug-report.yml)** — Something isn't working as expected
+- **[Feature Request](https://github.com/LogneBudo/llmxray/issues/new?template=feature-request.yml)** — Suggest a new feature or improvement
+- **[Benchmark Submission](https://github.com/LogneBudo/llmxray/issues/new?template=benchmark-submission.yml)** — Share your benchmark results
+- **[Showcase Submission](https://github.com/LogneBudo/llmxray/issues/new?template=showcase-submission.yml)** — Share an interesting finding
+
+For general questions, use [GitHub Discussions](https://github.com/LogneBudo/llmxray/discussions).
+
+## Community Contributions
+
+Beyond code, you can contribute:
+
+- **Benchmark suites** — Add custom test suites in `community-benchmarks/`. See [SCHEMA.md](community-benchmarks/SCHEMA.md) for the format.
+- **Tool templates** — Add Tool Workshop templates in `community-tools/`. See [SCHEMA.md](community-tools/SCHEMA.md) for the format.
+- **Showcase findings** — Submit interesting discoveries via the [Showcase issue template](https://github.com/LogneBudo/llmxray/issues/new?template=showcase-submission.yml).
+
+## Discussions
+
+Join the conversation on [GitHub Discussions](https://github.com/LogneBudo/llmxray/discussions):
+
+- **Model Insights** — Share interesting model behaviors
+- **Benchmark Results** — Post and compare benchmark runs
+- **Tool Recipes** — Share Tool Workshop configurations
+- **Help** — Get help with installation and usage
+- **Feature Ideas** — Discuss ideas before filing issues
 
 ## License
 

@@ -47,6 +47,23 @@ function referenceNav(prefix: string) {
   ]
 }
 
+function communityNav(prefix: string) {
+  const fr = prefix === '/fr'
+  return [
+    {
+      text: fr ? 'Communaute' : 'Community',
+      items: [
+        { text: fr ? "Vue d'ensemble" : 'Overview', link: `${prefix}/community/` },
+        { text: fr ? 'Vitrine' : 'Showcase', link: `${prefix}/community/showcase` },
+        { text: fr ? 'Benchmarks Communautaires' : 'Community Benchmarks', link: `${prefix}/community/benchmarks` },
+        { text: fr ? 'Outils Communautaires' : 'Community Tools', link: `${prefix}/community/tools` },
+        { text: 'Badge', link: `${prefix}/community/badge` },
+        { text: fr ? 'Kit Enseignants' : 'Educators Kit', link: `${prefix}/community/educators` },
+      ],
+    },
+  ]
+}
+
 export default defineConfig({
   title: 'LLMxRay',
   description: 'Local LLM Observatory — Documentation',
@@ -74,11 +91,13 @@ export default defineConfig({
         nav: [
           { text: 'Guide', link: '/en/guide/' },
           { text: 'Reference', link: '/en/reference/' },
+          { text: 'Community', link: '/en/community/' },
           { text: 'Website', link: 'https://lognebudo.github.io/llmxray/' },
         ],
         sidebar: {
           '/en/guide/': guideNav('/en'),
           '/en/reference/': referenceNav('/en'),
+          '/en/community/': communityNav('/en'),
         },
       },
     },
@@ -90,11 +109,13 @@ export default defineConfig({
         nav: [
           { text: 'Guide', link: '/fr/guide/' },
           { text: 'Reference', link: '/fr/reference/' },
+          { text: 'Communaute', link: '/fr/community/' },
           { text: 'Site Web', link: 'https://lognebudo.github.io/llmxray/' },
         ],
         sidebar: {
           '/fr/guide/': guideNav('/fr'),
           '/fr/reference/': referenceNav('/fr'),
+          '/fr/community/': communityNav('/fr'),
         },
       },
     },

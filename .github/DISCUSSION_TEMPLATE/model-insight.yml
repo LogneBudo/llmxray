@@ -1,0 +1,41 @@
+title: "[Insight] "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Share an interesting model behavior you observed using LLMxRay. This helps the community understand how different models work.
+
+  - type: input
+    id: model
+    attributes:
+      label: Model Name
+      placeholder: "e.g., deepseek-r1:7b"
+    validations:
+      required: true
+
+  - type: input
+    id: ollama-version
+    attributes:
+      label: Ollama Version
+      placeholder: "e.g., 0.6.2"
+
+  - type: textarea
+    id: finding
+    attributes:
+      label: What did you find?
+      description: Describe the behavior you observed.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: How can others see the same behavior?
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: Screenshots from LLMxRay showing the behavior.

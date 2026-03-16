@@ -1,0 +1,53 @@
+{
+  "id": "general-knowledge-example",
+  "name": "General Knowledge (Example)",
+  "description": "A small example suite demonstrating the community benchmark format. Not intended for real evaluation.",
+  "builtIn": false,
+  "questions": [
+    {
+      "id": "gk_001",
+      "category": "general-knowledge-example",
+      "subcategory": "geography",
+      "question": "Which river is the longest in the world?",
+      "choices": ["A) Amazon", "B) Nile", "C) Yangtze", "D) Mississippi"],
+      "correctAnswer": "B",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gk_002",
+      "category": "general-knowledge-example",
+      "subcategory": "science",
+      "question": "What is the chemical symbol for gold?",
+      "choices": ["A) Go", "B) Gd", "C) Au", "D) Ag"],
+      "correctAnswer": "C",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gk_003",
+      "category": "general-knowledge-example",
+      "subcategory": "history",
+      "question": "In which year did the Berlin Wall fall?",
+      "choices": ["A) 1987", "B) 1989", "C) 1991", "D) 1993"],
+      "correctAnswer": "B",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gk_004",
+      "category": "general-knowledge-example",
+      "subcategory": "science",
+      "question": "What is the most abundant gas in Earth's atmosphere?",
+      "choices": ["A) Oxygen", "B) Carbon dioxide", "C) Nitrogen", "D) Argon"],
+      "correctAnswer": "C",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gk_005",
+      "category": "general-knowledge-example",
+      "subcategory": "geography",
+      "question": "Which country has the most time zones?",
+      "choices": ["A) Russia", "B) United States", "C) France", "D) China"],
+      "correctAnswer": "C",
+      "difficulty": "hard"
+    }
+  ]
+}
