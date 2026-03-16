@@ -74,6 +74,7 @@ export default defineConfig({
         nav: [
           { text: 'Guide', link: '/en/guide/' },
           { text: 'Reference', link: '/en/reference/' },
+          { text: 'Website', link: 'https://lognebudo.github.io/llmxray/' },
         ],
         sidebar: {
           '/en/guide/': guideNav('/en'),
@@ -89,6 +90,7 @@ export default defineConfig({
         nav: [
           { text: 'Guide', link: '/fr/guide/' },
           { text: 'Reference', link: '/fr/reference/' },
+          { text: 'Site Web', link: 'https://lognebudo.github.io/llmxray/' },
         ],
         sidebar: {
           '/fr/guide/': guideNav('/fr'),
