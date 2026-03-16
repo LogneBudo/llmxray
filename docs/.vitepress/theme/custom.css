@@ -1,3 +1,4 @@
+/* Brand colors */
 :root {
   --vp-c-brand-1: #a855f7;
   --vp-c-brand-2: #9333ea;
@@ -12,9 +13,100 @@
   --vp-c-brand-soft: rgba(168, 85, 247, 0.16);
 }
 
+/* Hero gradient title */
 :root {
   --vp-home-hero-name-color: transparent;
   --vp-home-hero-name-background: linear-gradient(135deg, #a855f7, #7c3aed);
   --vp-home-hero-image-background-image: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(124, 58, 237, 0.2));
   --vp-home-hero-image-filter: blur(44px);
+}
+
+/* ── Animated hero background ── */
+.VPHero {
+  position: relative;
+  overflow: hidden;
+}
+
+.VPHero::before {
+  content: '';
+  position: absolute;
+  inset: -50%;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 40%, rgba(168, 85, 247, 0.15), transparent),
+    radial-gradient(ellipse 60% 60% at 80% 20%, rgba(124, 58, 237, 0.12), transparent),
+    radial-gradient(ellipse 50% 70% at 50% 80%, rgba(139, 92, 246, 0.10), transparent);
+  animation: hero-drift 12s ease-in-out infinite alternate;
+}
+
+.dark .VPHero::before {
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 40%, rgba(168, 85, 247, 0.25), transparent),
+    radial-gradient(ellipse 60% 60% at 80% 20%, rgba(124, 58, 237, 0.20), transparent),
+    radial-gradient(ellipse 50% 70% at 50% 80%, rgba(139, 92, 246, 0.18), transparent);
+}
+
+@keyframes hero-drift {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(5%, -3%) scale(1.1); }
+}
+
+/* ── Grid pattern overlay on home page ── */
+.VPHome {
+  position: relative;
+}
+
+.VPHome::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background-image:
+    linear-gradient(rgba(168, 85, 247, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(168, 85, 247, 0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, black 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, black 20%, transparent 70%);
+}
+
+.dark .VPHome::before {
+  background-image:
+    linear-gradient(rgba(168, 85, 247, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(168, 85, 247, 0.08) 1px, transparent 1px);
+}
+
+/* ── Glow accent behind feature cards ── */
+.VPFeatures {
+  position: relative;
+}
+
+.VPFeatures::before {
+  content: '';
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 300px;
+  background: radial-gradient(ellipse, rgba(168, 85, 247, 0.10), transparent 70%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.dark .VPFeatures::before {
+  background: radial-gradient(ellipse, rgba(168, 85, 247, 0.18), transparent 70%);
+}
+
+/* ── Feature card hover lift ── */
+.VPFeature {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.VPFeature:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(168, 85, 247, 0.15);
+}
+
+.dark .VPFeature:hover {
+  box-shadow: 0 8px 30px rgba(168, 85, 247, 0.25);
 }
