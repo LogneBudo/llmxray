@@ -15,7 +15,10 @@
     "test:e2e:ui": "playwright test --project=chromium --ui",
     "test:e2e:live": "playwright test --project=live-ollama",
     "test:e2e:live:headed": "playwright test --project=live-ollama --headed",
-    "test:e2e:all": "playwright test"
+    "test:e2e:all": "playwright test",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "dependencies": {
     "@babel/parser": "^7.29.0",
@@ -55,6 +58,7 @@
     "tailwindcss": "^4.2.1",
     "typescript": "~5.9.3",
     "vite": "^7.3.1",
+    "vitepress": "^1.6.4",
     "vitest": "^4.0.18",
     "vue-tsc": "^3.2.5"
   }
