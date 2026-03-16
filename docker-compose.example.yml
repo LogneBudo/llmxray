@@ -16,7 +16,7 @@ services:
       - ollama-data:/root/.ollama
 
   llmxray:
-    image: lognebudo/llmxray
+    image: djovaneli/llmxray
     ports:
       - "5174:5174"
     environment:
