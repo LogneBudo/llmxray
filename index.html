@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/llmxray/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LLMxRay — Local LLM Observatory</title>
+    <meta name="description" content="Explore, benchmark, and understand your local LLMs. A free, privacy-first observatory for Ollama models." />
+    <meta property="og:title" content="LLMxRay — Local LLM Observatory" />
+    <meta property="og:description" content="Explore, benchmark, and understand your local LLMs." />
+    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="LLMxRay — Local LLM Observatory" />
+    <meta name="twitter:description" content="Explore, benchmark, and understand your local LLMs." />
+    <meta name="twitter:image" content="/og-image.png" />
+    <script type="module" crossorigin src="/llmxray/assets/index-cICH5KiC.js"></script>
+    <link rel="stylesheet" crossorigin href="/llmxray/assets/index-DrqaAwU9.css">
+  </head>
+  <body>
+    <script>
+      (function() {
+        var theme = localStorage.getItem('llmxray-theme') || 'system';
+        var isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.className = isDark ? 'dark' : 'light';
+        document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
+      })();
+    </script>
+    <div id="app"></div>
+  </body>
+</html>
