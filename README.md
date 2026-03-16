@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="public/favicon.svg" alt="LLMxRay" width="80" />
+  <img src="https://raw.githubusercontent.com/LogneBudo/llmxray/master/public/favicon.svg" alt="LLMxRay" width="80" />
 </p>
 
 <h1 align="center">LLMxRay</h1>
