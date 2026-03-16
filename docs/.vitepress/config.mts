@@ -72,8 +72,8 @@ export default defineConfig({
 
   head: [
     ['link', { rel: 'icon', href: '/llmxray/docs/favicon.svg' }],
-    ['meta', { property: 'og:title', content: 'LLMxRay — Local LLM Observatory' }],
-    ['meta', { property: 'og:description', content: 'See what your AI is actually doing — token by token, layer by layer.' }],
+    ['meta', { property: 'og:title', content: 'LLMxRay — Local LLM Observatory | Free AI Model Analysis' }],
+    ['meta', { property: 'og:description', content: 'See what your AI is actually doing — token by token, layer by layer. Stream, compare, benchmark, and inspect local LLMs with zero cloud, zero cost. Run with npx llmxray.' }],
     ['meta', { property: 'og:image', content: 'https://lognebudo.github.io/llmxray/docs/og-image.png' }],
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
