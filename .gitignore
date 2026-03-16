@@ -7,3 +7,4 @@ test-results/
 docs/.vitepress/cache
 docs/.vitepress/dist
 tsconfig.tsbuildinfo
+site-dist
