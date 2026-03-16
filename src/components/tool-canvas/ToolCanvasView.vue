@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, markRaw, nextTick, watch } from 'vue'
+import { ref, computed, markRaw, nextTick, watch, onMounted } from 'vue'
 import { VueFlow, useVueFlow } from '@vue-flow/core'
 import { Background } from '@vue-flow/background'
 import { Controls } from '@vue-flow/controls'
@@ -44,6 +44,12 @@ const {
 } = useToolCanvas()
 
 const { fitView } = useVueFlow()
+
+onMounted(() => {
+  if (modelStore.models.length === 0) {
+    modelStore.fetchModels()
+  }
+})
 
 // --- Code panel ---
 const codePanelOpen = ref(false)

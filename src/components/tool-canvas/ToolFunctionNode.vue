@@ -162,10 +162,23 @@ watch(
   },
 )
 
+const insightsError = ref<string | null>(null)
+
+function applyInsightFix() {
+  if (!expandedInsight.value?.suggestedCode) return
+  const code = expandedInsight.value.suggestedCode
+  expandedInsight.value = null
+  emitField('body', code)
+}
+
 async function handleAnalyze() {
-  if (!aiStore.effectiveModel) return
+  if (!aiStore.effectiveModel) {
+    insightsError.value = 'No AI model selected. Choose one in the Canvas AI model selector.'
+    return
+  }
 
   insightsLoading.value = true
+  insightsError.value = null
   expandedInsight.value = null
 
   const result = await analyzeToolCode({
@@ -177,7 +190,9 @@ async function handleAnalyze() {
 
   insightsLoading.value = false
 
-  if (!result.error) {
+  if (result.error) {
+    insightsError.value = result.error
+  } else {
     aiStore.setInsights(props.data.uid, {
       toolId: props.data.uid,
       insights: result.insights,
@@ -498,6 +513,11 @@ function applySelection() {
       </button>
     </div>
 
+    <!-- AI Insight error -->
+    <div v-if="insightsError" class="insights-row">
+      <span class="insight-badge error" @click.stop="insightsError = null">{{ insightsError }}</span>
+    </div>
+
     <!-- AI Insight badges -->
     <div v-if="toolInsights?.insights.length" class="insights-row">
       <span
@@ -514,14 +534,25 @@ function applySelection() {
     <!-- Expanded insight -->
     <div v-if="expandedInsight" class="insight-detail nodrag nowheel">
       <p class="insight-desc">{{ expandedInsight.description }}</p>
-      <CodeEditor
-        v-if="expandedInsight.suggestedCode"
-        :model-value="expandedInsight.suggestedCode"
-        language="typescript"
-        :readonly="true"
-        min-height="60px"
-      />
-      <button class="insight-close" @click="expandedInsight = null">&times; Close</button>
+      <template v-if="expandedInsight.suggestedCode">
+        <p class="insight-suggestion-label">AI-suggested fix (review before applying):</p>
+        <CodeEditor
+          :model-value="expandedInsight.suggestedCode"
+          language="typescript"
+          :readonly="true"
+          min-height="60px"
+        />
+      </template>
+      <div class="insight-actions">
+        <button
+          v-if="expandedInsight.suggestedCode"
+          class="insight-apply"
+          @click.stop="applyInsightFix"
+        >
+          Apply fix
+        </button>
+        <button class="insight-close" @click="expandedInsight = null">&times; Close</button>
+      </div>
     </div>
 
     <!-- Execution badge -->
@@ -1494,6 +1525,31 @@ function applySelection() {
   line-height: 1.4;
   margin: 0 0 6px;
 }
+.insight-suggestion-label {
+  font-size: 9px;
+  color: var(--color-text-muted);
+  margin: 4px 0 2px;
+  font-style: italic;
+}
+.insight-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+.insight-apply {
+  background: var(--color-accent);
+  border: none;
+  color: white;
+  font-size: 10px;
+  cursor: pointer;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-weight: 500;
+}
+.insight-apply:hover {
+  opacity: 0.85;
+}
 .insight-close {
   background: none;
   border: none;
@@ -1501,7 +1557,6 @@ function applySelection() {
   font-size: 10px;
   cursor: pointer;
   padding: 2px 0;
-  margin-top: 4px;
 }
 .insight-close:hover {
   color: var(--color-text-primary);

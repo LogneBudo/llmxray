@@ -106,6 +106,31 @@ function extractJsonFromResponse(text: string): unknown {
   return null
 }
 
+/** Clean up AI-suggested code: unescape literals, strip function wrappers, normalize whitespace */
+function cleanSuggestedCode(raw: string): string {
+  let code = raw
+
+  // Unescape literal \n \t sequences that the model returned as strings
+  code = code.replace(/\\n/g, '\n').replace(/\\t/g, '\t')
+
+  // Strip markdown code fences
+  code = code.replace(/^```(?:typescript|javascript|ts|js)?\s*\n?/gm, '').replace(/```\s*$/gm, '')
+
+  // Strip function wrapper (async function name(...) { ... })
+  const fnMatch = code.match(/^(?:async\s+)?function\s+\w+\s*\([^)]*\)\s*\{\n?([\s\S]*)\}\s*$/)
+  if (fnMatch) {
+    code = fnMatch[1]!
+    // Remove one level of indentation
+    const lines = code.split('\n')
+    const indent = lines.find((l) => l.trim())?.match(/^(\s+)/)?.[1]?.length ?? 0
+    if (indent > 0) {
+      code = lines.map((l) => l.startsWith(' '.repeat(indent)) ? l.slice(indent) : l).join('\n')
+    }
+  }
+
+  return code.trim()
+}
+
 function stripImports(code: string): string {
   return code
     .split('\n')
@@ -257,20 +282,28 @@ export async function analyzeToolCode(
 ): Promise<AnalyzeToolCodeResult> {
   const systemPrompt =
     buildIdentityPrompt() +
-    '\n\nAnalyze the following tool code for issues:\n' +
-    '- Missing try/catch\n' +
-    '- No timeout on fetch calls\n' +
-    '- Hardcoded URLs that should be parameters\n' +
-    '- Potential secret/key leaks\n' +
-    '- Unused parameters\n' +
-    '- Missing error handling\n\n' +
-    'Respond with JSON: {"insights": [{"severity": "info|warning|error", "title": "<short>", "description": "<detail>", "suggestedCode": "<optional fix>"}]}'
+    '\n\nYou are a precise code reviewer. Analyze the tool code below and report ONLY issues you can directly verify in the code.' +
+    '\n\nRULES:' +
+    '\n- ONLY report an issue if you can point to a specific line or pattern in the code that proves it.' +
+    '\n- Do NOT guess or assume. If the code does not contain fetch() calls, do NOT flag "no timeout on fetch".' +
+    '\n- If the code does not contain URLs, do NOT flag "hardcoded URL".' +
+    '\n- If the code does not contain API keys/tokens/secrets, do NOT flag "secret leaks".' +
+    '\n- If all declared parameters are used in the code, do NOT flag "unused parameters".' +
+    '\n- If the code already has try/catch, do NOT flag "missing try/catch".' +
+    '\n- If you find zero issues, return {"insights": []}.' +
+    '\n- When providing suggestedCode, include the COMPLETE function body (all lines), not just the changed part. Do NOT wrap it in a function declaration — just the body code that goes inside the function.' +
+    '\n\nRespond with JSON: {"insights": [{"severity": "info|warning|error", "title": "<short>", "description": "<explain what specific code causes this issue>", "suggestedCode": "<complete fixed function body>"}]}'
 
+  const paramNames = params.parameters.map((p) => p.name)
   const userPrompt = [
     serializeToolContext(params.toolName, '', params.parameters),
     '',
+    `Declared parameters: ${paramNames.length > 0 ? paramNames.join(', ') : '(none)'}`,
+    '',
     'Current code:',
+    '```',
     params.code,
+    '```',
   ].join('\n')
 
   const messages: OllamaChatMessage[] = [
@@ -303,7 +336,34 @@ export async function analyzeToolCode(
       return { insights: [], trainingPairId, error: 'AI could not generate a valid response' }
     }
 
-    return { insights: parsed.insights, trainingPairId }
+    // Clean up suggested code from each insight
+    for (const insight of parsed.insights) {
+      if (insight.suggestedCode) {
+        insight.suggestedCode = cleanSuggestedCode(insight.suggestedCode)
+      }
+    }
+
+    // Post-filter: remove hallucinated insights that don't match the actual code
+    const code = params.code.toLowerCase()
+    const validInsights = parsed.insights.filter((insight) => {
+      const title = insight.title.toLowerCase()
+      // Don't flag fetch issues if no fetch() in code
+      if ((title.includes('fetch') || title.includes('timeout')) && !code.includes('fetch(') && !code.includes('fetch (')) return false
+      // Don't flag URL issues if no URL-like string in code
+      if (title.includes('url') && !code.includes('http://') && !code.includes('https://') && !code.includes('://')) return false
+      // Don't flag secret/key issues if no obvious patterns
+      if ((title.includes('secret') || title.includes('key') || title.includes('leak')) && !code.includes('key') && !code.includes('token') && !code.includes('secret') && !code.includes('password') && !code.includes('api_')) return false
+      // Don't flag unused parameters if parameters are referenced
+      if (title.includes('unused param')) {
+        const allUsed = paramNames.every((p) => code.includes(p.toLowerCase()))
+        if (allUsed) return false
+      }
+      // Don't flag missing try/catch if already present
+      if (title.includes('try') && title.includes('catch') && code.includes('try') && code.includes('catch')) return false
+      return true
+    })
+
+    return { insights: validInsights, trainingPairId }
   } catch (e) {
     return {
       insights: [],

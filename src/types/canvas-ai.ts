@@ -40,4 +40,5 @@ export interface AiTrainingPair {
   response: string
   accepted: boolean
   toolName: string
+  tags?: string[]
 }

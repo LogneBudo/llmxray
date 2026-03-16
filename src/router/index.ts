@@ -49,6 +49,11 @@ export const router = createRouter({
           component: () => import('@/pages/ToolWorkshopPage.vue'),
         },
         {
+          path: 'training',
+          name: 'training',
+          component: () => import('@/pages/AITrainingPage.vue'),
+        },
+        {
           path: 'system',
           name: 'system',
           component: () => import('@/pages/SystemPage.vue'),

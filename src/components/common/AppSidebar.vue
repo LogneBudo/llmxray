@@ -12,6 +12,7 @@ const navItems = [
   { path: '/embeddings', label: 'Embeddings', icon: '◈' },
   { path: '/rag', label: 'Knowledge Base', icon: '📚' },
   { path: '/tools', label: 'Tool Workshop', icon: '⚒' },
+  { path: '/training', label: 'AI Training', icon: '\u2697' },
   { path: '/settings?tab=models', label: 'Models', icon: '◎' },
   { path: '/benchmark', label: 'Benchmark', icon: '⏱' },
   { path: '/system', label: 'My System', icon: '🖥' },
