@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 440" font-family="system-ui, -apple-system, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="system-ui, -apple-system, sans-serif">
   <defs>
     <linearGradient id="bgT1" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#0f0a2e"/>
@@ -7,119 +7,115 @@
   </defs>
 
   <!-- Background -->
-  <rect width="800" height="440" rx="16" fill="url(#bgT1)"/>
+  <rect width="800" height="500" rx="16" fill="url(#bgT1)"/>
 
   <!-- Title -->
   <text x="400" y="35" text-anchor="middle" font-size="18" font-weight="700" fill="#e2e8f0">How Temperature Reshapes the Probability Distribution</text>
   <text x="400" y="56" text-anchor="middle" font-size="12" fill="#94a3b8">Same logits, different temperatures — the model's "confidence" changes</text>
 
-  <!-- Shared X axis labels (tokens) -->
-  <g transform="translate(0, 370)">
-    <text x="130" y="15" text-anchor="middle" font-size="10" fill="#64748b">the</text>
-    <text x="180" y="15" text-anchor="middle" font-size="10" fill="#64748b">a</text>
-    <text x="230" y="15" text-anchor="middle" font-size="10" fill="#64748b">is</text>
-    <text x="280" y="15" text-anchor="middle" font-size="10" fill="#64748b">an</text>
-    <text x="330" y="15" text-anchor="middle" font-size="10" fill="#64748b">was</text>
-    <text x="380" y="15" text-anchor="middle" font-size="10" fill="#64748b">it</text>
-    <text x="430" y="15" text-anchor="middle" font-size="10" fill="#64748b">has</text>
-    <text x="480" y="15" text-anchor="middle" font-size="10" fill="#64748b">can</text>
-    <text x="530" y="15" text-anchor="middle" font-size="10" fill="#64748b">my</text>
-    <text x="580" y="15" text-anchor="middle" font-size="10" fill="#64748b">we</text>
-    <text x="630" y="15" text-anchor="middle" font-size="10" fill="#64748b">not</text>
-    <text x="680" y="15" text-anchor="middle" font-size="10" fill="#64748b">oh</text>
-  </g>
-
-  <!-- T=0.1 (very peaked) -->
-  <g transform="translate(100, 80)">
+  <!-- ======== T=0.1 Section ======== -->
+  <g transform="translate(100, 100)">
     <text x="0" y="0" font-size="13" font-weight="700" fill="#4ade80">T = 0.1</text>
     <text x="80" y="0" font-size="11" fill="#94a3b8">Deterministic</text>
 
-    <!-- Bars -->
-    <rect x="22" y="-75" width="30" height="80" rx="3" fill="#4ade80" opacity="0.85"/>
-    <text x="37" y="-80" text-anchor="middle" font-size="9" fill="#4ade80">92%</text>
+    <!-- Bars grow downward from y=10 -->
+    <rect x="22" y="10" width="30" height="80" rx="3" fill="#4ade80" opacity="0.85"/>
+    <text x="37" y="100" text-anchor="middle" font-size="9" fill="#4ade80">92%</text>
 
-    <rect x="72" y="-8" width="30" height="13" rx="3" fill="#4ade80" opacity="0.4"/>
-    <rect x="122" y="-3" width="30" height="8" rx="3" fill="#4ade80" opacity="0.25"/>
-    <rect x="172" y="-2" width="30" height="7" rx="3" fill="#4ade80" opacity="0.15"/>
-    <rect x="222" y="-1" width="30" height="6" rx="3" fill="#4ade80" opacity="0.1"/>
-    <rect x="272" y="0" width="30" height="5" rx="3" fill="#4ade80" opacity="0.08"/>
-    <rect x="322" y="0" width="30" height="5" rx="3" fill="#4ade80" opacity="0.06"/>
-    <rect x="372" y="1" width="30" height="4" rx="3" fill="#4ade80" opacity="0.05"/>
-    <rect x="422" y="1" width="30" height="4" rx="3" fill="#4ade80" opacity="0.04"/>
-    <rect x="472" y="2" width="30" height="3" rx="3" fill="#4ade80" opacity="0.04"/>
-    <rect x="522" y="2" width="30" height="3" rx="3" fill="#4ade80" opacity="0.03"/>
-    <rect x="572" y="2" width="30" height="3" rx="3" fill="#4ade80" opacity="0.03"/>
-    <!-- Baseline -->
-    <line x1="20" y1="5" x2="605" y2="5" stroke="#334155" stroke-width="0.5"/>
+    <rect x="72" y="77" width="30" height="13" rx="3" fill="#4ade80" opacity="0.4"/>
+    <rect x="122" y="82" width="30" height="8" rx="3" fill="#4ade80" opacity="0.25"/>
+    <rect x="172" y="83" width="30" height="7" rx="3" fill="#4ade80" opacity="0.15"/>
+    <rect x="222" y="84" width="30" height="6" rx="3" fill="#4ade80" opacity="0.1"/>
+    <rect x="272" y="85" width="30" height="5" rx="3" fill="#4ade80" opacity="0.08"/>
+    <rect x="322" y="85" width="30" height="5" rx="3" fill="#4ade80" opacity="0.06"/>
+    <rect x="372" y="86" width="30" height="4" rx="3" fill="#4ade80" opacity="0.05"/>
+    <rect x="422" y="86" width="30" height="4" rx="3" fill="#4ade80" opacity="0.04"/>
+    <rect x="472" y="87" width="30" height="3" rx="3" fill="#4ade80" opacity="0.04"/>
+    <rect x="522" y="87" width="30" height="3" rx="3" fill="#4ade80" opacity="0.03"/>
+    <rect x="572" y="87" width="30" height="3" rx="3" fill="#4ade80" opacity="0.03"/>
+    <line x1="20" y1="90" x2="605" y2="90" stroke="#334155" stroke-width="0.5"/>
   </g>
 
-  <!-- T=0.7 (moderate) -->
-  <g transform="translate(100, 195)">
+  <g transform="translate(720, 130)">
+    <rect x="0" y="0" width="55" height="24" rx="12" fill="rgba(74,222,128,0.15)" stroke="#4ade80" stroke-width="1"/>
+    <text x="27" y="16" text-anchor="middle" font-size="10" font-weight="600" fill="#4ade80">Safe</text>
+  </g>
+
+  <!-- ======== T=0.7 Section ======== -->
+  <g transform="translate(100, 230)">
     <text x="0" y="0" font-size="13" font-weight="700" fill="#a855f7">T = 0.7</text>
     <text x="80" y="0" font-size="11" fill="#94a3b8">Balanced</text>
 
-    <!-- Bars -->
-    <rect x="22" y="-48" width="30" height="53" rx="3" fill="#a855f7" opacity="0.85"/>
-    <text x="37" y="-53" text-anchor="middle" font-size="9" fill="#a855f7">38%</text>
+    <rect x="22" y="10" width="30" height="55" rx="3" fill="#a855f7" opacity="0.85"/>
+    <text x="37" y="75" text-anchor="middle" font-size="9" fill="#a855f7">38%</text>
 
-    <rect x="72" y="-30" width="30" height="35" rx="3" fill="#a855f7" opacity="0.7"/>
-    <text x="87" y="-35" text-anchor="middle" font-size="9" fill="#a855f7">22%</text>
+    <rect x="72" y="30" width="30" height="35" rx="3" fill="#a855f7" opacity="0.7"/>
+    <text x="87" y="75" text-anchor="middle" font-size="9" fill="#a855f7">22%</text>
 
-    <rect x="122" y="-18" width="30" height="23" rx="3" fill="#a855f7" opacity="0.55"/>
-    <rect x="172" y="-12" width="30" height="17" rx="3" fill="#a855f7" opacity="0.4"/>
-    <rect x="222" y="-8" width="30" height="13" rx="3" fill="#a855f7" opacity="0.3"/>
-    <rect x="272" y="-5" width="30" height="10" rx="3" fill="#a855f7" opacity="0.25"/>
-    <rect x="322" y="-3" width="30" height="8" rx="3" fill="#a855f7" opacity="0.2"/>
-    <rect x="372" y="-2" width="30" height="7" rx="3" fill="#a855f7" opacity="0.15"/>
-    <rect x="422" y="-1" width="30" height="6" rx="3" fill="#a855f7" opacity="0.12"/>
-    <rect x="472" y="0" width="30" height="5" rx="3" fill="#a855f7" opacity="0.1"/>
-    <rect x="522" y="0" width="30" height="5" rx="3" fill="#a855f7" opacity="0.08"/>
-    <rect x="572" y="1" width="30" height="4" rx="3" fill="#a855f7" opacity="0.06"/>
-    <!-- Baseline -->
-    <line x1="20" y1="5" x2="605" y2="5" stroke="#334155" stroke-width="0.5"/>
+    <rect x="122" y="42" width="30" height="23" rx="3" fill="#a855f7" opacity="0.55"/>
+    <rect x="172" y="48" width="30" height="17" rx="3" fill="#a855f7" opacity="0.4"/>
+    <rect x="222" y="52" width="30" height="13" rx="3" fill="#a855f7" opacity="0.3"/>
+    <rect x="272" y="55" width="30" height="10" rx="3" fill="#a855f7" opacity="0.25"/>
+    <rect x="322" y="57" width="30" height="8" rx="3" fill="#a855f7" opacity="0.2"/>
+    <rect x="372" y="58" width="30" height="7" rx="3" fill="#a855f7" opacity="0.15"/>
+    <rect x="422" y="59" width="30" height="6" rx="3" fill="#a855f7" opacity="0.12"/>
+    <rect x="472" y="60" width="30" height="5" rx="3" fill="#a855f7" opacity="0.1"/>
+    <rect x="522" y="60" width="30" height="5" rx="3" fill="#a855f7" opacity="0.08"/>
+    <rect x="572" y="61" width="30" height="4" rx="3" fill="#a855f7" opacity="0.06"/>
+    <line x1="20" y1="65" x2="605" y2="65" stroke="#334155" stroke-width="0.5"/>
   </g>
 
-  <!-- T=2.0 (very flat) -->
-  <g transform="translate(100, 310)">
-    <text x="0" y="0" font-size="13" font-weight="700" fill="#ef4444">T = 2.0</text>
-    <text x="80" y="0" font-size="11" fill="#94a3b8">Chaotic</text>
-
-    <!-- Bars — nearly uniform -->
-    <rect x="22" y="-16" width="30" height="21" rx="3" fill="#ef4444" opacity="0.7"/>
-    <text x="37" y="-21" text-anchor="middle" font-size="9" fill="#ef4444">12%</text>
-
-    <rect x="72" y="-14" width="30" height="19" rx="3" fill="#ef4444" opacity="0.65"/>
-    <text x="87" y="-19" text-anchor="middle" font-size="9" fill="#ef4444">11%</text>
-
-    <rect x="122" y="-13" width="30" height="18" rx="3" fill="#ef4444" opacity="0.6"/>
-    <rect x="172" y="-12" width="30" height="17" rx="3" fill="#ef4444" opacity="0.55"/>
-    <rect x="222" y="-11" width="30" height="16" rx="3" fill="#ef4444" opacity="0.5"/>
-    <rect x="272" y="-10" width="30" height="15" rx="3" fill="#ef4444" opacity="0.45"/>
-    <rect x="322" y="-9" width="30" height="14" rx="3" fill="#ef4444" opacity="0.4"/>
-    <rect x="372" y="-8" width="30" height="13" rx="3" fill="#ef4444" opacity="0.38"/>
-    <rect x="422" y="-7" width="30" height="12" rx="3" fill="#ef4444" opacity="0.35"/>
-    <rect x="472" y="-6" width="30" height="11" rx="3" fill="#ef4444" opacity="0.32"/>
-    <rect x="522" y="-5" width="30" height="10" rx="3" fill="#ef4444" opacity="0.3"/>
-    <rect x="572" y="-5" width="30" height="10" rx="3" fill="#ef4444" opacity="0.28"/>
-    <!-- Baseline -->
-    <line x1="20" y1="5" x2="605" y2="5" stroke="#334155" stroke-width="0.5"/>
-  </g>
-
-  <!-- Right side annotations -->
-  <g transform="translate(720, 90)">
-    <rect x="0" y="0" width="65" height="24" rx="12" fill="rgba(74,222,128,0.15)" stroke="#4ade80" stroke-width="1"/>
-    <text x="32" y="16" text-anchor="middle" font-size="10" font-weight="600" fill="#4ade80">Safe</text>
-  </g>
-  <g transform="translate(720, 200)">
+  <g transform="translate(720, 250)">
     <rect x="0" y="0" width="65" height="24" rx="12" fill="rgba(168,85,247,0.15)" stroke="#a855f7" stroke-width="1"/>
     <text x="32" y="16" text-anchor="middle" font-size="10" font-weight="600" fill="#a855f7">Creative</text>
   </g>
-  <g transform="translate(720, 310)">
+
+  <!-- ======== T=2.0 Section ======== -->
+  <g transform="translate(100, 345)">
+    <text x="0" y="0" font-size="13" font-weight="700" fill="#ef4444">T = 2.0</text>
+    <text x="80" y="0" font-size="11" fill="#94a3b8">Chaotic</text>
+
+    <rect x="22" y="10" width="30" height="22" rx="3" fill="#ef4444" opacity="0.7"/>
+    <text x="37" y="42" text-anchor="middle" font-size="9" fill="#ef4444">12%</text>
+
+    <rect x="72" y="12" width="30" height="20" rx="3" fill="#ef4444" opacity="0.65"/>
+    <text x="87" y="42" text-anchor="middle" font-size="9" fill="#ef4444">11%</text>
+
+    <rect x="122" y="14" width="30" height="18" rx="3" fill="#ef4444" opacity="0.6"/>
+    <rect x="172" y="15" width="30" height="17" rx="3" fill="#ef4444" opacity="0.55"/>
+    <rect x="222" y="16" width="30" height="16" rx="3" fill="#ef4444" opacity="0.5"/>
+    <rect x="272" y="17" width="30" height="15" rx="3" fill="#ef4444" opacity="0.45"/>
+    <rect x="322" y="18" width="30" height="14" rx="3" fill="#ef4444" opacity="0.4"/>
+    <rect x="372" y="19" width="30" height="13" rx="3" fill="#ef4444" opacity="0.38"/>
+    <rect x="422" y="20" width="30" height="12" rx="3" fill="#ef4444" opacity="0.35"/>
+    <rect x="472" y="21" width="30" height="11" rx="3" fill="#ef4444" opacity="0.32"/>
+    <rect x="522" y="22" width="30" height="10" rx="3" fill="#ef4444" opacity="0.3"/>
+    <rect x="572" y="22" width="30" height="10" rx="3" fill="#ef4444" opacity="0.28"/>
+    <line x1="20" y1="32" x2="605" y2="32" stroke="#334155" stroke-width="0.5"/>
+  </g>
+
+  <g transform="translate(720, 360)">
     <rect x="0" y="0" width="65" height="24" rx="12" fill="rgba(239,68,68,0.15)" stroke="#ef4444" stroke-width="1"/>
     <text x="32" y="16" text-anchor="middle" font-size="10" font-weight="600" fill="#ef4444">Random</text>
   </g>
 
-  <!-- Formula at bottom -->
-  <text x="400" y="415" text-anchor="middle" font-size="12" fill="#94a3b8">P(token) = exp(logit / T) / sum( exp(logits / T) )</text>
-  <text x="400" y="433" text-anchor="middle" font-size="11" fill="#64748b">Lower T sharpens the peak | Higher T flattens toward uniform</text>
+  <!-- Shared X axis labels -->
+  <g transform="translate(100, 420)">
+    <text x="37" y="0" text-anchor="middle" font-size="10" fill="#64748b">the</text>
+    <text x="87" y="0" text-anchor="middle" font-size="10" fill="#64748b">a</text>
+    <text x="137" y="0" text-anchor="middle" font-size="10" fill="#64748b">is</text>
+    <text x="187" y="0" text-anchor="middle" font-size="10" fill="#64748b">an</text>
+    <text x="237" y="0" text-anchor="middle" font-size="10" fill="#64748b">was</text>
+    <text x="287" y="0" text-anchor="middle" font-size="10" fill="#64748b">it</text>
+    <text x="337" y="0" text-anchor="middle" font-size="10" fill="#64748b">has</text>
+    <text x="387" y="0" text-anchor="middle" font-size="10" fill="#64748b">can</text>
+    <text x="437" y="0" text-anchor="middle" font-size="10" fill="#64748b">my</text>
+    <text x="487" y="0" text-anchor="middle" font-size="10" fill="#64748b">we</text>
+    <text x="537" y="0" text-anchor="middle" font-size="10" fill="#64748b">not</text>
+    <text x="587" y="0" text-anchor="middle" font-size="10" fill="#64748b">oh</text>
+  </g>
+
+  <!-- Formula -->
+  <text x="400" y="458" text-anchor="middle" font-size="12" fill="#94a3b8">P(token) = exp(logit / T) / sum( exp(logits / T) )</text>
+  <text x="400" y="478" text-anchor="middle" font-size="11" fill="#64748b">Lower T sharpens the peak | Higher T flattens toward uniform</text>
 </svg>
