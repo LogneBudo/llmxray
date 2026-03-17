@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 240" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="bg3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f0a2e"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="240" rx="16" fill="url(#bg3)"/>
+
+  <!-- Title -->
+  <text x="450" y="32" text-anchor="middle" font-size="17" font-weight="700" fill="#e2e8f0">Du Texte au Token à la Prédiction</text>
+
+  <!-- Step 1: Text Input -->
+  <g transform="translate(15, 55)">
+    <rect x="0" y="0" width="140" height="90" rx="10" fill="rgba(74,222,128,0.12)" stroke="#4ade80" stroke-width="1.5"/>
+    <text x="70" y="24" text-anchor="middle" font-size="11" font-weight="600" fill="#4ade80">ENTRÉE</text>
+    <text x="70" y="52" text-anchor="middle" font-size="15" fill="#e2e8f0">"What is</text>
+    <text x="70" y="72" text-anchor="middle" font-size="15" fill="#e2e8f0">gravity?"</text>
+  </g>
+
+  <!-- Arrow 1 -->
+  <line x1="160" y1="100" x2="188" y2="100" stroke="#a855f7" stroke-width="2"/>
+  <polygon points="188,96 196,100 188,104" fill="#a855f7"/>
+
+  <!-- Step 2: Tokenizer -->
+  <g transform="translate(200, 50)">
+    <rect x="0" y="0" width="155" height="100" rx="10" fill="rgba(168,85,247,0.12)" stroke="#a855f7" stroke-width="1.5"/>
+    <text x="78" y="22" text-anchor="middle" font-size="11" font-weight="600" fill="#a855f7">TOKENIZER (BPE)</text>
+    <text x="78" y="44" text-anchor="middle" font-size="11" fill="#94a3b8">Découpe en sous-mots</text>
+    <text x="78" y="68" text-anchor="middle" font-size="13" fill="#e2e8f0" font-family="'Courier New',monospace">What | is | grav</text>
+    <text x="78" y="88" text-anchor="middle" font-size="13" fill="#e2e8f0" font-family="'Courier New',monospace">ity | ?</text>
+  </g>
+
+  <!-- Arrow 2 -->
+  <line x1="360" y1="100" x2="388" y2="100" stroke="#a855f7" stroke-width="2"/>
+  <polygon points="388,96 396,100 388,104" fill="#a855f7"/>
+
+  <!-- Step 3: Token IDs -->
+  <g transform="translate(400, 50)">
+    <rect x="0" y="0" width="145" height="100" rx="10" fill="rgba(96,165,250,0.12)" stroke="#60a5fa" stroke-width="1.5"/>
+    <text x="72" y="22" text-anchor="middle" font-size="11" font-weight="600" fill="#60a5fa">TOKEN IDs</text>
+    <text x="72" y="44" text-anchor="middle" font-size="11" fill="#94a3b8">Nombres pour le modèle</text>
+    <text x="72" y="68" text-anchor="middle" font-size="13" fill="#e2e8f0" font-family="'Courier New',monospace">3923 | 374 | 82</text>
+    <text x="72" y="88" text-anchor="middle" font-size="13" fill="#e2e8f0" font-family="'Courier New',monospace">488 | 30</text>
+  </g>
+
+  <!-- Arrow 3 -->
+  <line x1="550" y1="100" x2="578" y2="100" stroke="#a855f7" stroke-width="2"/>
+  <polygon points="578,96 586,100 578,104" fill="#a855f7"/>
+
+  <!-- Step 4: Model -->
+  <g transform="translate(590, 50)">
+    <rect x="0" y="0" width="120" height="100" rx="10" fill="rgba(251,191,36,0.12)" stroke="#fbbf24" stroke-width="1.5"/>
+    <text x="60" y="22" text-anchor="middle" font-size="11" font-weight="600" fill="#fbbf24">MODEL</text>
+    <text x="60" y="56" text-anchor="middle" font-size="34">&#x1F9E0;</text>
+    <text x="60" y="88" text-anchor="middle" font-size="11" fill="#94a3b8">Transformer</text>
+  </g>
+
+  <!-- Arrow 4 -->
+  <line x1="715" y1="100" x2="743" y2="100" stroke="#a855f7" stroke-width="2"/>
+  <polygon points="743,96 751,100 743,104" fill="#a855f7"/>
+
+  <!-- Step 5: Output -->
+  <g transform="translate(755, 50)">
+    <rect x="0" y="0" width="130" height="100" rx="10" fill="rgba(74,222,128,0.12)" stroke="#4ade80" stroke-width="1.5"/>
+    <text x="65" y="22" text-anchor="middle" font-size="11" font-weight="600" fill="#4ade80">TOKEN SUIVANT</text>
+    <text x="65" y="44" text-anchor="middle" font-size="11" fill="#94a3b8">Probabilités</text>
+    <text x="65" y="68" text-anchor="middle" font-size="14" fill="#e2e8f0">"Gravity" 72%</text>
+    <text x="65" y="88" text-anchor="middle" font-size="13" fill="#64748b">"It" 15%</text>
+  </g>
+
+  <!-- Feedback loop arrow -->
+  <path d="M 820,160 L 820,195 L 473,195 L 473,160" stroke="#c084fc" stroke-width="1.5" fill="none" stroke-dasharray="6 3" opacity="0.5"/>
+  <polygon points="469,160 473,150 477,160" fill="#c084fc" opacity="0.5"/>
+  <text x="646" y="218" text-anchor="middle" font-size="11" fill="#c084fc" opacity="0.7">Le token généré devient l'entrée — répéter jusqu'à la fin</text>
+</svg>
