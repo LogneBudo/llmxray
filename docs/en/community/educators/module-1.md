@@ -14,6 +14,8 @@
 
 This is the foundational insight that changes everything about how students understand language models. Every concept that follows — temperature, context windows, embeddings, tool calling — depends on understanding what tokens really are.
 
+![From Text to Token to Prediction](/educators/token-pipeline.svg)
+
 ---
 
 ## Conceptual Background
@@ -56,6 +58,8 @@ This means:
 
 The LLaMA 3 family uses a BPE tokenizer with a 128,000-token vocabulary, trained primarily on English text (Grattafiori et al., 2024).
 
+![How BPE Tokenization Works](/educators/bpe-process.svg)
+
 ---
 
 ## Hands-On Exercises
@@ -97,6 +101,8 @@ The word `strawberry` is tokenized as something like `["str", "aw", "berry"]` �
 
 This is not a bug — it's a fundamental consequence of subword tokenization. The model literally cannot "see" individual letters within a token.
 
+![Why LLMs Can't Count Letters in Strawberry](/educators/strawberry-tokenization.svg)
+
 ::: tip Try it yourself
 Visit the [Tiktokenizer playground](https://tiktokenizer.vercel.app/) or the [HuggingFace Tokenizer Playground](https://huggingface.co/spaces/Xenova/the-tokenizer-playground) to visualize how different models tokenize the same text. Compare how `llama` and `gpt-4` tokenize `"strawberry"` — they may split it differently.
 :::
@@ -128,6 +134,8 @@ The same semantic content requires **significantly more tokens** in non-English 
 | Chinese | 1.5-2.0x |
 | Arabic | 2.0-3.0x |
 | Some African languages | Up to 5-15x |
+
+![Tokenizer Language Bias](/educators/language-bias.svg)
 
 **Why this matters in practice:**
 

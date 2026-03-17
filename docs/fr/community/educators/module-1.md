@@ -14,6 +14,8 @@
 
 C'est l'intuition fondamentale qui change tout dans la comprehension des modeles de langage par les etudiants. Chaque concept qui suit — temperature, fenetres de contexte, embeddings, tool calling — repose sur la comprehension de ce que sont reellement les tokens.
 
+![Du Texte au Token a la Prediction](/educators/token-pipeline.svg)
+
 ---
 
 ## Contexte Conceptuel
@@ -56,6 +58,8 @@ Cela signifie :
 
 La famille LLaMA 3 utilise un tokenizer BPE avec un vocabulaire de 128 000 tokens, entraine principalement sur du texte anglais (Grattafiori et al., 2024).
 
+![Comment fonctionne la tokenisation BPE](/educators/bpe-process.svg)
+
 ---
 
 ## Exercices Pratiques
@@ -97,6 +101,8 @@ Le mot `strawberry` est tokenise en quelque chose comme `["str", "aw", "berry"]`
 
 Ce n'est pas un bug — c'est une consequence fondamentale de la tokenisation sous-lexicale. Le modele ne peut litteralement pas "voir" les lettres individuelles a l'interieur d'un token.
 
+![Pourquoi les LLMs ne peuvent pas compter les lettres dans Strawberry](/educators/strawberry-tokenization.svg)
+
 ::: tip Essayez par vous-meme
 Visitez le [playground Tiktokenizer](https://tiktokenizer.vercel.app/) ou le [HuggingFace Tokenizer Playground](https://huggingface.co/spaces/Xenova/the-tokenizer-playground) pour visualiser comment differents modeles tokenisent le meme texte. Comparez comment `llama` et `gpt-4` tokenisent `"strawberry"` — ils peuvent le decouper differemment.
 :::
@@ -128,6 +134,8 @@ Le meme contenu semantique necessite **significativement plus de tokens** dans l
 | Chinois | 1,5-2,0x |
 | Arabe | 2,0-3,0x |
 | Certaines langues africaines | Jusqu'a 5-15x |
+
+![Biais linguistique des tokenizers](/educators/language-bias.svg)
 
 **Pourquoi c'est important en pratique :**
 
