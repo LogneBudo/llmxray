@@ -1,25 +1,25 @@
-# Integration API
+# Intégration API
 
-LLMxRay communique avec Ollama via un proxy du serveur de developpement Vite. Cette page documente tous les endpoints utilises, leurs formats de requete/reponse et les protocoles de streaming.
+LLMxRay communique avec Ollama via un proxy du serveur de développement Vite. Cette page documente tous les endpoints utilisés, leurs formats de requête/réponse et les protocoles de streaming.
 
 ## Configuration du proxy
 
-Le serveur de developpement Vite redirige deux prefixes d'URL vers Ollama :
+Le serveur de développement Vite redirige deux préfixes d'URL vers Ollama :
 
 | URL frontend | URL Ollama |
 |---|---|
 | `http://localhost:5173/api/*` | `http://localhost:11434/api/*` |
 | `http://localhost:5173/v1/*` | `http://localhost:11434/v1/*` |
 
-Cela evite les problemes de CORS pendant le developpement. En production, configurez votre serveur web pour rediriger les memes chemins.
+Cela évite les problèmes de CORS pendant le développement. En production, configurez votre serveur web pour rediriger les mêmes chemins.
 
 ## Endpoints
 
 ### GET /api/tags
 
-Liste tous les modeles installes.
+Liste tous les modèles installés.
 
-**Reponse :**
+**Réponse :**
 ```json
 {
   "models": [
@@ -41,24 +41,24 @@ Liste tous les modeles installes.
 }
 ```
 
-**Utilise par :** `model-store.ts` → `fetchModels()`
+**Utilisé par :** `model-store.ts` → `fetchModels()`
 
 ### POST /api/show
 
-Obtient les informations detaillees d'un modele specifique.
+Obtient les informations détaillées d'un modèle spécifique.
 
-**Requete :**
+**Requête :**
 ```json
 { "name": "llama3.2:latest" }
 ```
 
-**Utilise par :** `model-store.ts` → `fetchModelInfo()`
+**Utilisé par :** `model-store.ts` → `fetchModelInfo()`
 
 ### POST /api/chat (streaming)
 
 Chat multi-tour avec streaming NDJSON.
 
-**Requete :**
+**Requête :**
 ```json
 {
   "model": "llama3.2",
@@ -71,19 +71,19 @@ Chat multi-tour avec streaming NDJSON.
 }
 ```
 
-**Reponse (NDJSON) :** Chaque ligne est un objet JSON :
+**Réponse (NDJSON) :** Chaque ligne est un objet JSON :
 ```json
 {"model":"llama3.2","message":{"role":"assistant","content":"Hi"},"done":false}
 {"model":"llama3.2","message":{"role":"assistant","content":"!"},"done":true,"total_duration":1234567890}
 ```
 
-**Utilise par :** `chat-service.ts` → `startChat()`
+**Utilisé par :** `chat-service.ts` → `startChat()`
 
 ### POST /api/generate (streaming)
 
-Generation a partir d'un prompt unique avec streaming NDJSON.
+Génération à partir d'un prompt unique avec streaming NDJSON.
 
-**Requete :**
+**Requête :**
 ```json
 {
   "model": "llama3.2",
@@ -93,13 +93,13 @@ Generation a partir d'un prompt unique avec streaming NDJSON.
 }
 ```
 
-**Utilise par :** `generate-service.ts` → `startGeneration()`
+**Utilisé par :** `generate-service.ts` → `startGeneration()`
 
 ### POST /api/embed
 
-Genere des embeddings pour du texte.
+Génère des embeddings pour du texte.
 
-**Requete :**
+**Requête :**
 ```json
 {
   "model": "nomic-embed-text",
@@ -107,7 +107,7 @@ Genere des embeddings pour du texte.
 }
 ```
 
-**Reponse :**
+**Réponse :**
 ```json
 {
   "model": "nomic-embed-text",
@@ -115,13 +115,13 @@ Genere des embeddings pour du texte.
 }
 ```
 
-**Utilise par :** `embedding-store.ts` → `embed()`, `rag-pipeline.ts`
+**Utilisé par :** `embedding-store.ts` → `embed()`, `rag-pipeline.ts`
 
 ### POST /v1/chat/completions (streaming SSE)
 
-Endpoint compatible OpenAI avec support des **logprobs**. Utilise exclusivement par le systeme de benchmark.
+Endpoint compatible OpenAI avec support des **logprobs**. Utilisé exclusivement par le système de benchmark.
 
-**Requete :**
+**Requête :**
 ```json
 {
   "model": "llama3.2",
@@ -132,20 +132,20 @@ Endpoint compatible OpenAI avec support des **logprobs**. Utilise exclusivement 
 }
 ```
 
-**Reponse (SSE) :**
+**Réponse (SSE) :**
 ```
 data: {"choices":[{"delta":{"content":"A"},"logprobs":{"content":[{"token":"A","logprob":-0.5,"top_logprobs":[...]}]}}]}
 
 data: [DONE]
 ```
 
-**Utilise par :** `benchmark-runner.ts`
+**Utilisé par :** `benchmark-runner.ts`
 
 ## Protocoles de streaming
 
 ### NDJSON (Newline-Delimited JSON)
 
-Utilise par `/api/chat` et `/api/generate`. Chaque ligne contient un objet JSON complet suivi d'un saut de ligne.
+Utilisé par `/api/chat` et `/api/generate`. Chaque ligne contient un objet JSON complet suivi d'un saut de ligne.
 
 **Approche d'analyse :**
 ```typescript
@@ -159,7 +159,7 @@ while (true) {
   if (done) break
   buffer += decoder.decode(value, { stream: true })
   const lines = buffer.split('\n')
-  buffer = lines.pop()! // conserver la ligne incomplete
+  buffer = lines.pop()! // conserver la ligne incomplète
   for (const line of lines) {
     if (line.trim()) {
       const chunk = JSON.parse(line)
@@ -171,17 +171,17 @@ while (true) {
 
 ### SSE (Server-Sent Events)
 
-Utilise par `/v1/chat/completions`. Chaque ligne d'evenement est prefixee par `data: `. Le flux se termine par `data: [DONE]`.
+Utilisé par `/v1/chat/completions`. Chaque ligne d'événement est préfixée par `data: `. Le flux se termine par `data: [DONE]`.
 
-**Approche d'analyse :** Similaire a NDJSON mais retire le prefixe `data: ` avant l'analyse JSON.
+**Approche d'analyse :** Similaire à NDJSON mais retire le préfixe `data: ` avant l'analyse JSON.
 
 ## Confiance des tokens
 
-| Contexte | Methode | Source de donnees |
+| Contexte | Méthode | Source de données |
 |---|---|---|
-| Chat | Approximation basee sur la latence | Calculee a partir du delai inter-token |
-| Benchmark | Logprobs reels | Champ logprobs de `/v1/chat/completions` |
+| Chat | Approximation basée sur la latence | Calculée à partir du délai inter-token |
+| Benchmark | Logprobs réels | Champ logprobs de `/v1/chat/completions` |
 
-La methode basee sur la latence suppose que la generation plus rapide de tokens correspond a une confiance plus elevee du modele — le modele produit les tokens « evidents » plus rapidement que les tokens incertains. Il s'agit d'une approximation, etiquetee comme telle dans l'interface.
+La méthode basée sur la latence suppose que la génération plus rapide de tokens correspond à une confiance plus élevée du modèle — le modèle produit les tokens « évidents » plus rapidement que les tokens incertains. Il s'agit d'une approximation, étiquetée comme telle dans l'interface.
 
-Les logprobs reels du endpoint compatible OpenAI fournissent des scores de confiance mathematiquement precis (probabilite = e^logprob).
+Les logprobs réels du endpoint compatible OpenAI fournissent des scores de confiance mathématiquement précis (probabilité = e^logprob).

@@ -1,21 +1,21 @@
 # Outils Communautaires
 
-Le Tool Workshop de LLMxRay est livre avec plus de 15 templates integres. Les membres de la communaute peuvent contribuer des templates d'outils supplementaires pour enrichir la bibliotheque.
+Le Tool Workshop de LLMxRay est livré avec plus de 15 templates intégrés. Les membres de la communauté peuvent contribuer des templates d'outils supplémentaires pour enrichir la bibliothèque.
 
 ## Comment contribuer
 
-1. Faites un **fork** du [depot LLMxRay](https://github.com/LogneBudo/llmxray)
-2. Creez un fichier JSON dans le repertoire `community-tools/`
-3. Respectez le schema defini dans [SCHEMA.md](https://github.com/LogneBudo/llmxray/blob/master/community-tools/SCHEMA.md)
+1. Faites un **fork** du [dépôt LLMxRay](https://github.com/LogneBudo/llmxray)
+2. Créez un fichier JSON dans le répertoire `community-tools/`
+3. Respectez le schéma défini dans [SCHEMA.md](https://github.com/LogneBudo/llmxray/blob/master/community-tools/SCHEMA.md)
 4. Soumettez une Pull Request
 
 ## Exigences
 
 - L'outil doit avoir un objectif clair et utile
-- Inclure un exemple `testInput` pour la verification
+- Inclure un exemple `testInput` pour la vérification
 - Aucun appel vers des domaines externes non fiables
-- Aucun acces au systeme de fichiers ni operations systeme
-- Implementation en JavaScript valide
+- Aucun accès au système de fichiers ni opérations système
+- Implémentation en JavaScript valide
 
 ## Format JSON
 
@@ -41,26 +41,26 @@ Le Tool Workshop de LLMxRay est livre avec plus de 15 templates integres. Les me
 }
 ```
 
-## Categories
+## Catégories
 
-| Categorie | Description |
+| Catégorie | Description |
 |---|---|
 | `api` | Outils qui appellent des API externes |
-| `data` | Transformation et traitement de donnees |
+| `data` | Transformation et traitement de données |
 | `utility` | Utilitaires polyvalents |
 | `custom` | Tout le reste |
 
-## Idees d'outils
+## Idées d'outils
 
-- **Formateur JSON** — Affichage formate ou minification de JSON
+- **Formateur JSON** — Affichage formaté ou minification de JSON
 - **Markdown vers HTML** — Conversion de texte Markdown
 - **Analyseur d'URL** — Extraction des composants d'une URL
-- **Encodeur/decodeur Base64** — Encodage et decodage de chaines
-- **CSV vers JSON** — Transformation de donnees tabulaires
+- **Encodeur/décodeur Base64** — Encodage et décodage de chaînes
+- **CSV vers JSON** — Transformation de données tabulaires
 - **Convertisseur de couleurs** — HSL vers RGB, hex vers RGB, etc.
 
 ## Outils communautaires
 
 *Aucun outil communautaire soumis pour le moment. Soyez le premier !*
 
-Consultez l'[outil d'exemple](https://github.com/LogneBudo/llmxray/blob/master/community-tools/_example.json) pour une reference fonctionnelle.
+Consultez l'[outil d'exemple](https://github.com/LogneBudo/llmxray/blob/master/community-tools/_example.json) pour une référence fonctionnelle.

@@ -1,49 +1,49 @@
-# Modeles
+# Modèles
 
-La page Modeles est un navigateur pour tous les modeles installes dans votre instance Ollama locale, avec des metadonnees detaillees et la detection des capacites.
+La page Modèles est un navigateur pour tous les modèles installés dans votre instance Ollama locale, avec des métadonnées détaillées et la détection des capacités.
 
-**Element de la barre laterale :** Modeles
+**Élément de la barre latérale :** Modèles
 **Route :** `/settings?tab=models`
 
 ## Vue d'ensemble de l'interface
 
-La page Modeles (accessible via l'onglet Parametres > Modeles) affiche une carte ou une liste pour chaque modele installe avec les informations essentielles en un coup d'oeil.
+La page Modèles (accessible via l'onglet Paramètres > Modèles) affiche une carte ou une liste pour chaque modèle installé avec les informations essentielles en un coup d'œil.
 
-## Details des modeles
+## Détails des modèles
 
-Chaque carte de modele affiche :
+Chaque carte de modèle affiche :
 
 | Champ | Description |
 |---|---|
-| **Nom** | Identifiant du modele (par ex., `llama3.2:latest`) |
-| **Nombre de parametres** | Nombre de parametres (par ex., 3B, 7B, 70B) |
+| **Nom** | Identifiant du modèle (par ex., `llama3.2:latest`) |
+| **Nombre de paramètres** | Nombre de paramètres (par ex., 3B, 7B, 70B) |
 | **Quantification** | Niveau de compression (par ex., Q4_0, Q8_0, F16) |
-| **Famille** | Famille du modele (par ex., llama, mistral, gemma) |
-| **Format** | Format du modele (par ex., gguf) |
+| **Famille** | Famille du modèle (par ex., llama, mistral, gemma) |
+| **Format** | Format du modèle (par ex., gguf) |
 
 ## Diagrammes d'architecture
 
-Cliquez sur un modele pour voir un diagramme d'architecture montrant la structure interne du modele -- nombre de couches, tetes d'attention, dimensions d'embedding, et plus encore. Ces informations sont extraites des metadonnees du modele fournies par Ollama.
+Cliquez sur un modèle pour voir un diagramme d'architecture montrant la structure interne du modèle -- nombre de couches, têtes d'attention, dimensions d'embedding, et plus encore. Ces informations sont extraites des métadonnées du modèle fournies par Ollama.
 
-## Detection des capacites
+## Détection des capacités
 
-LLMxRay detecte automatiquement ce que chaque modele peut faire :
+LLMxRay détecte automatiquement ce que chaque modèle peut faire :
 
-| Capacite | Comment elle est detectee | Effet sur l'interface |
+| Capacité | Comment elle est détectée | Effet sur l'interface |
 |---|---|---|
-| **Raisonnement** | Patterns dans le nom du modele (par ex., `deepseek-r1`) ou capacites Ollama | Active l'onglet raisonnement dans Diagnostics de Chat |
-| **Vision** | Capacites Ollama ou famille du modele | Active les pieces jointes images dans le chat |
-| **Embedding** | Capacites Ollama ou famille du modele | Apparait dans les selecteurs de modeles des pages Plongements et Base de Connaissances |
-| **Appel d'outils** | Capacites Ollama | Active l'appel d'outils dans le chat |
+| **Raisonnement** | Patterns dans le nom du modèle (par ex., `deepseek-r1`) ou capacités Ollama | Active l'onglet raisonnement dans Diagnostics de Chat |
+| **Vision** | Capacités Ollama ou famille du modèle | Active les pièces jointes images dans le chat |
+| **Embedding** | Capacités Ollama ou famille du modèle | Apparaît dans les sélecteurs de modèles des pages Plongements et Base de Connaissances |
+| **Appel d'outils** | Capacités Ollama | Active l'appel d'outils dans le chat |
 
-Les modeles ne prenant en charge que les embeddings sont automatiquement filtres des selecteurs de modeles de chat.
+Les modèles ne prenant en charge que les embeddings sont automatiquement filtrés des sélecteurs de modèles de chat.
 
-## Catalogue de modeles
+## Catalogue de modèles
 
-Le catalogue offre une vue organisee des modeles disponibles avec des tableaux comparatifs, vous aidant a choisir le modele adapte a votre cas d'utilisation.
+Le catalogue offre une vue organisée des modèles disponibles avec des tableaux comparatifs, vous aidant à choisir le modèle adapté à votre cas d'utilisation.
 
 ## Astuces
 
-- **Compromis de quantification** -- Une quantification basse (Q4) utilise moins de RAM mais reduit legerement la qualite. Q8 et F16 offrent une meilleure qualite mais necessitent plus de memoire.
-- **Telecharger d'autres modeles** depuis le terminal : `ollama pull <nom-du-modele>`
-- La detection des capacites adapte l'ensemble de l'interface -- vous n'avez rien a configurer manuellement.
+- **Compromis de quantification** -- Une quantification basse (Q4) utilise moins de RAM mais réduit légèrement la qualité. Q8 et F16 offrent une meilleure qualité mais nécessitent plus de mémoire.
+- **Télécharger d'autres modèles** depuis le terminal : `ollama pull <nom-du-modele>`
+- La détection des capacités adapte l'ensemble de l'interface -- vous n'avez rien à configurer manuellement.

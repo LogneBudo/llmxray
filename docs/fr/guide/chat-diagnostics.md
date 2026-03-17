@@ -1,83 +1,83 @@
 # Diagnostics de Chat
 
-La page Diagnostics de Chat est le coeur de LLMxRay. Elle combine une interface de chat complete avec une analyse approfondie en temps reel de chaque token produit par le modele.
+La page Diagnostics de Chat est le cœur de LLMxRay. Elle combine une interface de chat complète avec une analyse approfondie en temps réel de chaque token produit par le modèle.
 
-**Element de la barre laterale :** Diagnostics de Chat (premier element)
+**Élément de la barre latérale :** Diagnostics de Chat (premier élément)
 **Route :** `/`
 
 ![Interface Diagnostics de Chat](/screenshots/chat-diagnostics.png)
 
 ## Vue d'ensemble de l'interface
 
-La page est divisee en deux zones :
+La page est divisée en deux zones :
 
-- **Panneau gauche** -- Liste des sessions affichant toutes les conversations passees avec horodatage, noms de modeles et nombre de tokens.
-- **Panneau droit** -- Zone de chat active avec saisie de message, sortie en streaming et onglets de detail de session.
+- **Panneau gauche** -- Liste des sessions affichant toutes les conversations passées avec horodatage, noms de modèles et nombre de tokens.
+- **Panneau droit** -- Zone de chat active avec saisie de message, sortie en streaming et onglets de détail de session.
 
-## Demarrer une conversation
+## Démarrer une conversation
 
-1. Selectionnez un modele dans le **menu deroulant des modeles** en haut. Les modeles d'embedding sont automatiquement filtres -- seuls les modeles capables de chat apparaissent.
+1. Sélectionnez un modèle dans le **menu déroulant des modèles** en haut. Les modèles d'embedding sont automatiquement filtrés -- seuls les modèles capables de chat apparaissent.
 2. Saisissez votre message dans la zone de texte.
-3. Appuyez sur **Entree** ou cliquez sur Envoyer.
+3. Appuyez sur **Entrée** ou cliquez sur Envoyer.
 
-Les tokens arrivent un par un avec une **coloration par confiance** : chaque token est teinte en fonction de la vitesse a laquelle le modele l'a produit. Tokens rapides = confiance elevee (plus vert). Tokens lents = confiance faible (plus orange/rouge).
+Les tokens arrivent un par un avec une **coloration par confiance** : chaque token est teinté en fonction de la vitesse à laquelle le modèle l'a produit. Tokens rapides = confiance élevée (plus vert). Tokens lents = confiance faible (plus orange/rouge).
 
 ::: info La confiance est une approximation
-Comme le endpoint `/api/chat` d'Ollama n'expose pas les logprobs des tokens, LLMxRay approxime la confiance a partir de la latence inter-tokens. Cela est clairement indique dans l'interface. Pour de vrais logprobs, utilisez la fonctionnalite [Benchmark](./benchmark).
+Comme le endpoint `/api/chat` d'Ollama n'expose pas les logprobs des tokens, LLMxRay approxime la confiance à partir de la latence inter-tokens. Cela est clairement indiqué dans l'interface. Pour de vrais logprobs, utilisez la fonctionnalité [Benchmark](./benchmark).
 :::
 
-## Fonctionnalites
+## Fonctionnalités
 
 ### Rendu Markdown
-Les reponses du modele sont rendues en Markdown enrichi avec coloration syntaxique des blocs de code.
+Les réponses du modèle sont rendues en Markdown enrichi avec coloration syntaxique des blocs de code.
 
 ### Fichiers joints
-Cliquez sur le bouton de piece jointe pour telecharger des fichiers. Pour les **modeles de vision** (comme LLaVA), vous pouvez coller ou telecharger des images directement -- le modele les analysera.
+Cliquez sur le bouton de pièce jointe pour télécharger des fichiers. Pour les **modèles de vision** (comme LLaVA), vous pouvez coller ou télécharger des images directement -- le modèle les analysera.
 
 ### Commandes slash
 Tapez `/` dans la zone de saisie pour voir les commandes slash disponibles pour des actions rapides.
 
 ### Conversation multi-tours
-Chaque conversation conserve l'historique complet des messages. Le modele voit tous les messages precedents comme contexte.
+Chaque conversation conserve l'historique complet des messages. Le modèle voit tous les messages précédents comme contexte.
 
 ## Analyse approfondie des sessions
 
 Cliquez sur une session dans le panneau gauche pour explorer six onglets d'analyse :
 
 ### Onglet Stream
-Chaque token avec ses donnees de timing affiche dans une liste deroulante. Au-dessus de la liste de tokens, un **tableau de bord de metriques** affiche :
-- **TTFT** (Time to First Token) -- Temps mis par le modele pour commencer a repondre
-- **Tokens/sec** -- Vitesse de generation
+Chaque token avec ses données de timing affiché dans une liste déroulante. Au-dessus de la liste de tokens, un **tableau de bord de métriques** affiche :
+- **TTFT** (Time to First Token) -- Temps mis par le modèle pour commencer à répondre
+- **Tokens/sec** -- Vitesse de génération
 - **Total tokens** -- Nombre de tokens (prompt + completion)
-- **Graphique de latence** -- Chronologie visuelle des delais inter-tokens
+- **Graphique de latence** -- Chronologie visuelle des délais inter-tokens
 
 ### Onglet Raisonnement
-Si vous utilisez un modele de raisonnement comme **DeepSeek-R1**, les blocs `<think>` sont automatiquement analyses et affiches etape par etape. Chaque etape de raisonnement est categorisee comme pensee, observation, action, conclusion ou reflexion.
+Si vous utilisez un modèle de raisonnement comme **DeepSeek-R1**, les blocs `<think>` sont automatiquement analysés et affichés étape par étape. Chaque étape de raisonnement est catégorisée comme pensée, observation, action, conclusion ou réflexion.
 
 ### Onglet Introspection
-Visualisations des activations de couches, cartes de chaleur d'attention et architecture du modele.
+Visualisations des activations de couches, cartes de chaleur d'attention et architecture du modèle.
 
-::: warning Donnees illustratives
-Ces visualisations utilisent des donnees synthetiques pour montrer a quoi ressemblerait une veritable introspection. Elles sont clairement etiquetees "Illustratif" dans l'interface. L'introspection reelle necessite un acces aux mecanismes internes du modele qu'Ollama n'expose pas.
+::: warning Données illustratives
+Ces visualisations utilisent des données synthétiques pour montrer à quoi ressemblerait une véritable introspection. Elles sont clairement étiquetées "Illustratif" dans l'interface. L'introspection réelle nécessite un accès aux mécanismes internes du modèle qu'Ollama n'expose pas.
 :::
 
 ### Onglet Outils
-Une chronologie de tous les appels d'outils effectues par le modele pendant la conversation, montrant :
-- Nom de l'outil et parametres
-- Resultat de l'execution
-- Duree
+Une chronologie de tous les appels d'outils effectués par le modèle pendant la conversation, montrant :
+- Nom de l'outil et paramètres
+- Résultat de l'exécution
+- Durée
 
 ### Onglet Agent
-Un graphe de flux d'etats montrant comment un prompt de type agent a progresse a travers les etapes de planification, d'appels d'outils et de synthese.
+Un graphe de flux d'états montrant comment un prompt de type agent a progressé à travers les étapes de planification, d'appels d'outils et de synthèse.
 
 ### Onglet Prompt
 Une analyse anatomique de votre prompt montrant :
-- Les sections identifiees (systeme, utilisateur, contexte, outils, exemples)
+- Les sections identifiées (système, utilisateur, contexte, outils, exemples)
 - Le nombre de tokens par section
 - L'analyse de la structure globale
 
 ## Astuces
 
-- **Persistance des sessions** -- Toutes les conversations sont stockees dans IndexedDB et survivent aux actualisations du navigateur.
-- **Changement de modele** -- Vous pouvez changer de modele en cours de session. Le nouveau modele verra l'historique complet de la conversation.
+- **Persistance des sessions** -- Toutes les conversations sont stockées dans IndexedDB et survivent aux actualisations du navigateur.
+- **Changement de modèle** -- Vous pouvez changer de modèle en cours de session. Le nouveau modèle verra l'historique complet de la conversation.
 - **Performance** -- Le store de tokens utilise `shallowRef` pour garantir les performances avec des milliers de tokens.

@@ -1,31 +1,31 @@
-# Mon Systeme
+# Mon Système
 
-La page Systeme affiche les specifications materielles reelles et le statut d'Ollama en direct -- des donnees provenant de votre OS, pas des estimations du navigateur.
+La page Système affiche les spécifications matérielles réelles et le statut d'Ollama en direct -- des données provenant de votre OS, pas des estimations du navigateur.
 
-**Element de la barre laterale :** Mon Systeme
+**Élément de la barre latérale :** Mon Système
 **Route :** `/system`
 
-![Interface Mon Systeme](/screenshots/my-system.png)
+![Interface Mon Système](/screenshots/my-system.png)
 
-## Detection du materiel
+## Détection du matériel
 
-LLMxRay utilise un plugin Vite personnalise (`vite-plugin-system-info`) qui interroge directement le systeme d'exploitation :
+LLMxRay utilise un plugin Vite personnalisé (`vite-plugin-system-info`) qui interroge directement le système d'exploitation :
 
-| Plateforme | Methode de detection |
+| Plateforme | Méthode de détection |
 |---|---|
 | **Windows** | Commandes PowerShell |
-| **Linux** | Systeme de fichiers `/proc` + `lspci` |
+| **Linux** | Système de fichiers `/proc` + `lspci` |
 | **macOS** | Commandes `sysctl` |
 
-### Informations affichees
+### Informations affichées
 
-- **CPU** -- Nom du modele, nombre de coeurs, architecture
-- **RAM** -- Memoire totale installee avec utilisation en direct
-- **GPU** -- Nom du modele, VRAM, version du pilote
-- **Stockage** -- Capacite du disque et espace disponible
+- **CPU** -- Nom du modèle, nombre de cœurs, architecture
+- **RAM** -- Mémoire totale installée avec utilisation en direct
+- **GPU** -- Nom du modèle, VRAM, version du pilote
+- **Stockage** -- Capacité du disque et espace disponible
 
-::: tip Premiere configuration
-Les informations materielles sont lues au demarrage du serveur de developpement Vite. Si la page Systeme affiche "Redemarrer le serveur de developpement", arretez et relancez `npm run dev`.
+::: tip Première configuration
+Les informations matérielles sont lues au démarrage du serveur de développement Vite. Si la page Système affiche "Redémarrer le serveur de développement", arrêtez et relancez `npm run dev`.
 :::
 
 ## Statut d'Ollama
@@ -33,20 +33,20 @@ Les informations materielles sont lues au demarrage du serveur de developpement 
 La section Ollama affiche :
 
 - **Statut de connexion** -- Si Ollama est accessible
-- **Modeles en cours d'execution** -- Quels modeles sont actuellement charges en memoire
-- **Allocation memoire** -- Quantite de RAM/VRAM utilisee par chaque modele charge
-- **Parametres d'inference** -- Parametres par defaut de l'instance en cours d'execution
+- **Modèles en cours d'exécution** -- Quels modèles sont actuellement chargés en mémoire
+- **Allocation mémoire** -- Quantité de RAM/VRAM utilisée par chaque modèle chargé
+- **Paramètres d'inférence** -- Paramètres par défaut de l'instance en cours d'exécution
 
 ## Utilisation du stockage
 
-Une visualisation du stockage IndexedDB utilise par LLMxRay :
+Une visualisation du stockage IndexedDB utilisé par LLMxRay :
 
-- Stockage total utilise par l'origine
-- Repartition par base de donnees (conversations, benchmarks, vecteurs RAG, donnees d'entrainement)
+- Stockage total utilisé par l'origine
+- Répartition par base de données (conversations, benchmarks, vecteurs RAG, données d'entraînement)
 - Barre de pourcentage visuelle
 
 ## Astuces
 
-- **Utilisation elevee de la RAM ?** -- Ollama conserve les modeles en memoire apres la premiere utilisation. Utilisez des modeles quantifies plus legers (Q4) ou reduisez la longueur de contexte dans les Parametres.
-- **GPU non detecte ?** -- Assurez-vous que vos pilotes GPU sont a jour. Sous Linux, verifiez que `lspci` est disponible.
-- La visualisation du stockage se rafraichit automatiquement lorsque vous accedez a cette page.
+- **Utilisation élevée de la RAM ?** -- Ollama conserve les modèles en mémoire après la première utilisation. Utilisez des modèles quantifiés plus légers (Q4) ou réduisez la longueur de contexte dans les Paramètres.
+- **GPU non détecté ?** -- Assurez-vous que vos pilotes GPU sont à jour. Sous Linux, vérifiez que `lspci` est disponible.
+- La visualisation du stockage se rafraîchit automatiquement lorsque vous accédez à cette page.

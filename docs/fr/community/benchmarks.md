@@ -1,21 +1,21 @@
 # Benchmarks Communautaires
 
-LLMxRay est livre avec 5 suites de benchmark integrees (ARC, GSM8K, HellaSwag, MMLU-Pro, TruthfulQA). Les membres de la communaute peuvent contribuer des suites supplementaires pour evaluer les modeles sur des sujets specialises.
+LLMxRay est livré avec 5 suites de benchmark intégrées (ARC, GSM8K, HellaSwag, MMLU-Pro, TruthfulQA). Les membres de la communauté peuvent contribuer des suites supplémentaires pour évaluer les modèles sur des sujets spécialisés.
 
 ## Comment contribuer
 
-1. Faites un **fork** du [depot LLMxRay](https://github.com/LogneBudo/llmxray)
-2. Creez un fichier JSON dans le repertoire `community-benchmarks/`
-3. Respectez le schema defini dans [SCHEMA.md](https://github.com/LogneBudo/llmxray/blob/master/community-benchmarks/SCHEMA.md)
+1. Faites un **fork** du [dépôt LLMxRay](https://github.com/LogneBudo/llmxray)
+2. Créez un fichier JSON dans le répertoire `community-benchmarks/`
+3. Respectez le schéma défini dans [SCHEMA.md](https://github.com/LogneBudo/llmxray/blob/master/community-benchmarks/SCHEMA.md)
 4. Soumettez une Pull Request
 
 ## Exigences
 
 - Minimum **20 questions** par suite
-- Toutes les questions doivent avoir des **reponses correctes verifiables**
-- Exactement **4 choix de reponse** par question (A, B, C, D)
-- Definir `"builtIn": false`
-- Inclure un melange de niveaux de difficulte lorsque c'est pertinent
+- Toutes les questions doivent avoir des **réponses correctes vérifiables**
+- Exactement **4 choix de réponse** par question (A, B, C, D)
+- Définir `"builtIn": false`
+- Inclure un mélange de niveaux de difficulté lorsque c'est pertinent
 
 ## Format JSON
 
@@ -44,18 +44,18 @@ LLMxRay est livre avec 5 suites de benchmark integrees (ARC, GSM8K, HellaSwag, M
 }
 ```
 
-## Idees de suites
+## Idées de suites
 
-Vous cherchez l'inspiration ? Voici quelques domaines non couverts par les suites integrees :
+Vous cherchez l'inspiration ? Voici quelques domaines non couverts par les suites intégrées :
 
-- **Programmation** — Questions de comprehension et de debogage de code
-- **Enigmes logiques** — Logique formelle et raisonnement deductif
-- **Comprehension linguistique** — Expressions idiomatiques, ambiguites, pragmatique
-- **Domaines specialises** — Connaissances medicales, juridiques, financieres ou en ingenierie
+- **Programmation** — Questions de compréhension et de débogage de code
+- **Énigmes logiques** — Logique formelle et raisonnement déductif
+- **Compréhension linguistique** — Expressions idiomatiques, ambiguïtés, pragmatique
+- **Domaines spécialisés** — Connaissances médicales, juridiques, financières ou en ingénierie
 - **Multilingue** — Questions dans d'autres langues que l'anglais
 
 ## Suites communautaires
 
 *Aucune suite communautaire soumise pour le moment. Soyez le premier !*
 
-Consultez la [suite d'exemple](https://github.com/LogneBudo/llmxray/blob/master/community-benchmarks/_example.json) pour une reference fonctionnelle.
+Consultez la [suite d'exemple](https://github.com/LogneBudo/llmxray/blob/master/community-benchmarks/_example.json) pour une référence fonctionnelle.

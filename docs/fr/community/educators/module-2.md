@@ -1,204 +1,204 @@
-# Module 2 : Comment fonctionne la Temperature ?
+# Module 2 : Comment fonctionne la Température ?
 
 <div style="background: linear-gradient(135deg, rgba(168,85,247,0.08), rgba(124,58,237,0.04)); border-left: 4px solid #a855f7; padding: 1rem 1.5rem; border-radius: 0 8px 8px 0; margin-bottom: 2rem;">
 
-**L'Experimentateur** — Trouvez la transition de phase
+**L'Expérimentateur** — Trouvez la transition de phase
 
-**Duree :** 60 min | **Difficulte :** Debutant | **Prerequis :** [Module 1](./module-1)
+**Durée :** 60 min | **Difficulté :** Débutant | **Prérequis :** [Module 1](./module-1)
 
 </div>
 
 ## Le Moment Eureka
 
-> La temperature n'est pas un curseur de creativite — c'est une redistribution de probabilites. Et elle ne se degrade pas progressivement. Il y a un precipice.
+> La température n'est pas un curseur de créativité — c'est une redistribution de probabilités. Et elle ne se dégrade pas progressivement. Il y a un précipice.
 
-Les etudiants decouvrent que la temperature controle une transformation mathematique de la distribution de probabilites sur le vocabulaire. De petits changements pres du precipice produisent des variations de qualite spectaculaires — une transition de phase, pas une echelle lineaire.
+Les étudiants découvrent que la température contrôle une transformation mathématique de la distribution de probabilités sur le vocabulaire. De petits changements près du précipice produisent des variations de qualité spectaculaires — une transition de phase, pas une échelle linéaire.
 
-![How Temperature Reshapes the Probability Distribution](/educators/temperature-distribution.svg)
+![How Temperature Reshapes the Probability Distribution](/educators/fr/temperature-distribution.svg)
 
 ---
 
 ## Contexte Conceptuel
 
-### Ce que la temperature fait reellement
+### Ce que la température fait réellement
 
-Apres que le modele a calcule un score (logit) pour chaque token du vocabulaire, ces scores passent par une **fonction softmax** pour produire des probabilites. La temperature modifie ce softmax :
+Après que le modèle a calculé un score (logit) pour chaque token du vocabulaire, ces scores passent par une **fonction softmax** pour produire des probabilités. La température modifie ce softmax :
 
 **Softmax standard :**
 ```
 P(token_i) = exp(z_i) / sum_j exp(z_j)
 ```
 
-**Softmax avec temperature T :**
+**Softmax avec température T :**
 ```
 P(token_i) = exp(z_i / T) / sum_j exp(z_j / T)
 ```
 
 L'effet :
-- **T &lt; 1** — Divise les logits par un nombre inferieur a 1, rendant les logits eleves encore plus grands par rapport aux petits. La distribution devient **plus pointue** (plus concentree). Le token dominant l'emporte.
-- **T = 1** — Aucune modification. La distribution est telle que le modele l'a calculee.
-- **T &gt; 1** — Divise les logits par un nombre superieur a 1, comprimant tous les logits vers zero. La distribution devient **plus plate** (plus uniforme). Tous les tokens deviennent a peu pres equiprobables.
-- **T → 0** — La distribution s'effondre en un seul point. Seul le token avec le logit le plus eleve a une probabilite non nulle. C'est le **greedy decoding**.
+- **T &lt; 1** — Divise les logits par un nombre inférieur à 1, rendant les logits élevés encore plus grands par rapport aux petits. La distribution devient **plus pointue** (plus concentrée). Le token dominant l'emporte.
+- **T = 1** — Aucune modification. La distribution est telle que le modèle l'a calculée.
+- **T &gt; 1** — Divise les logits par un nombre supérieur à 1, comprimant tous les logits vers zéro. La distribution devient **plus plate** (plus uniforme). Tous les tokens deviennent à peu près équiprobables.
+- **T → 0** — La distribution s'effondre en un seul point. Seul le token avec le logit le plus élevé a une probabilité non nulle. C'est le **greedy decoding**.
 
 ### Pourquoi c'est important
 
-La temperature est le parametre le plus couramment ajuste lors de l'utilisation des LLM, mais elle est largement mal comprise. On la decrit souvent comme "creativite vs precision" — mais c'est une simplification. Ce qu'elle controle reellement, c'est l'**entropie de la distribution d'echantillonnage**.
+La température est le paramètre le plus couramment ajusté lors de l'utilisation des LLM, mais elle est largement mal comprise. On la décrit souvent comme "créativité vs précision" — mais c'est une simplification. Ce qu'elle contrôle réellement, c'est l'**entropie de la distribution d'échantillonnage**.
 
-Entropie basse = sortie previsible et repetitive. Entropie elevee = sortie diverse et surprenante, mais potentiellement incoherente. Le bon reglage depend entierement de la tache.
+Entropie basse = sortie prévisible et répétitive. Entropie élevée = sortie diverse et surprenante, mais potentiellement incohérente. Le bon réglage dépend entièrement de la tâche.
 
 ### La transition de phase
 
-Contrairement a un bouton de volume qui passe progressivement de silencieux a fort, la temperature presente une **transition de phase**. La qualite de sortie reste elevee sur une large plage (T=0 a T≈0.8-1.0), puis chute brutalement dans une bande etroite. Cela s'explique par :
+Contrairement à un bouton de volume qui passe progressivement de silencieux à fort, la température présente une **transition de phase**. La qualité de sortie reste élevée sur une large plage (T=0 à T≈0.8-1.0), puis chute brutalement dans une bande étroite. Cela s'explique par :
 
-1. A basses temperatures, le token dominant a une probabilite si elevee que l'echantillonnage est quasi deterministe dans tous les cas
-2. A temperatures moderees, les 3 a 5 premiers tokens se partagent l'essentiel de la probabilite — des choix encore raisonnables
-3. A un point critique, suffisamment de probabilite fuit vers des tokens improbables pour que le modele commence a generer du texte incoherent
-4. Au-dela du precipice, la sortie devient essentiellement aleatoire
+1. À basses températures, le token dominant a une probabilité si élevée que l'échantillonnage est quasi déterministe dans tous les cas
+2. À températures modérées, les 3 à 5 premiers tokens se partagent l'essentiel de la probabilité — des choix encore raisonnables
+3. À un point critique, suffisamment de probabilité fuit vers des tokens improbables pour que le modèle commence à générer du texte incohérent
+4. Au-delà du précipice, la sortie devient essentiellement aléatoire
 
-![The Temperature Cliff](/educators/temperature-cliff.svg)
+![The Temperature Cliff](/educators/fr/temperature-cliff.svg)
 
-### Autres methodes de sampling
+### Autres méthodes de sampling
 
-La temperature n'est pas la seule facon de controler la selection de tokens. Les LLM modernes prennent en charge plusieurs strategies de sampling qui peuvent etre combinees :
+La température n'est pas la seule façon de contrôler la sélection de tokens. Les LLM modernes prennent en charge plusieurs stratégies de sampling qui peuvent être combinées :
 
-![Sampling Methods Compared](/educators/sampling-methods.svg)
+![Sampling Methods Compared](/educators/fr/sampling-methods.svg)
 
-| Methode | Ce qu'elle fait | Quand l'utiliser |
+| Méthode | Ce qu'elle fait | Quand l'utiliser |
 |---|---|---|
-| **Greedy (T=0)** | Choisit toujours le token de plus haute probabilite | Reponses factuelles, sortie deterministe |
-| **Temperature** | Remodele la distribution de probabilites | Controle polyvalent de la variete des sorties |
-| **Top-k** | Echantillonne uniquement parmi les k tokens de plus haute probabilite | Controle de diversite simple, ensemble de candidats fixe |
-| **Top-p (nucleus)** | Echantillonne parmi le plus petit ensemble de tokens dont la probabilite cumulee depasse p | Diversite adaptative — plus d'options en cas d'incertitude, moins en cas de confiance |
-| **Min-p** | Supprime les tokens dont la probabilite est inferieure a une fraction du token dominant | Alternative plus recente a top-p, seuil plus intuitif |
-| **Mirostat** | Ajuste dynamiquement le sampling pour maintenir une perplexite cible | Niveau de "surprise" constant quel que soit le contexte |
-| **Penalite de repetition** | Reduit la probabilite des tokens recemment generes | Empeche les boucles et le texte repetitif |
+| **Greedy (T=0)** | Choisit toujours le token de plus haute probabilité | Réponses factuelles, sortie déterministe |
+| **Temperature** | Remodèle la distribution de probabilités | Contrôle polyvalent de la variété des sorties |
+| **Top-k** | Échantillonne uniquement parmi les k tokens de plus haute probabilité | Contrôle de diversité simple, ensemble de candidats fixe |
+| **Top-p (nucleus)** | Échantillonne parmi le plus petit ensemble de tokens dont la probabilité cumulée dépasse p | Diversité adaptative — plus d'options en cas d'incertitude, moins en cas de confiance |
+| **Min-p** | Supprime les tokens dont la probabilité est inférieure à une fraction du token dominant | Alternative plus récente à top-p, seuil plus intuitif |
+| **Mirostat** | Ajuste dynamiquement le sampling pour maintenir une perplexité cible | Niveau de "surprise" constant quel que soit le contexte |
+| **Pénalité de répétition** | Réduit la probabilité des tokens récemment générés | Empêche les boucles et le texte répétitif |
 
-::: info Ces methodes se composent
-En pratique, plusieurs methodes sont appliquees en sequence : la temperature d'abord (remodele la distribution), puis top-k ou top-p (tronque la distribution), puis l'echantillonnage parmi ce qui reste. La fonctionnalite Compare de LLMxRay vous permet de tester differentes combinaisons cote a cote.
+::: info Ces méthodes se composent
+En pratique, plusieurs méthodes sont appliquées en séquence : la température d'abord (remodèle la distribution), puis top-k ou top-p (tronque la distribution), puis l'échantillonnage parmi ce qui reste. La fonctionnalité Compare de LLMxRay vous permet de tester différentes combinaisons côte à côte.
 :::
 
 ---
 
 ## Exercices Pratiques
 
-### Exercice 1 : Le balayage de temperature
+### Exercice 1 : Le balayage de température
 
 **Ce qu'il faut faire :**
 
 1. Ouvrez **Compare** dans LLMxRay
-2. Cliquez sur le preset **Temperature Sweep** — cela cree 3 emplacements avec des temperatures de 0.2, 0.7 et 1.2
-3. Ajoutez un 4e emplacement manuellement et reglez-le a 2.0
+2. Cliquez sur le preset **Temperature Sweep** — cela crée 3 emplacements avec des températures de 0.2, 0.7 et 1.2
+3. Ajoutez un 4e emplacement manuellement et réglez-le à 2.0
 4. Utilisez ce prompt : *"Write a function in Python to check if a number is prime"*
-5. Cliquez sur **Run All** et observez les 4 generer simultanement
-6. Comparez les resultats en **Grid View**
+5. Cliquez sur **Run All** et observez les 4 générer simultanément
+6. Comparez les résultats en **Grid View**
 
 **Ce qu'il faut observer :**
 
-- **T=0.2** : Implementation propre et standard. Quasi identique si vous la relancez.
-- **T=0.7** : Legeres variations dans les noms de variables ou les commentaires. Toujours correct.
-- **T=1.2** : Approches plus creatives (peut-etre un algorithme different), mais attention aux bugs subtils.
-- **T=2.0** : Les noms de variables deviennent etranges, des erreurs de logique apparaissent, potentiellement incomplet.
+- **T=0.2** : Implémentation propre et standard. Quasi identique si vous la relancez.
+- **T=0.7** : Légères variations dans les noms de variables ou les commentaires. Toujours correct.
+- **T=1.2** : Approches plus créatives (peut-être un algorithme différent), mais attention aux bugs subtils.
+- **T=2.0** : Les noms de variables deviennent étranges, des erreurs de logique apparaissent, potentiellement incomplet.
 
-Passez en **Diff View** pour voir exactement quels mots ont change entre les sorties.
+Passez en **Diff View** pour voir exactement quels mots ont changé entre les sorties.
 
-**Question cle :** Entre quelles deux temperatures la chute de qualite vous semble-t-elle la plus marquee ?
+**Question clé :** Entre quelles deux températures la chute de qualité vous semble-t-elle la plus marquée ?
 
 ---
 
-### Exercice 2 : Trouver le precipice
+### Exercice 2 : Trouver le précipice
 
 **Ce qu'il faut faire :**
 
-1. Restez dans **Compare**. Configurez 4 emplacements avec les temperatures : 0.7, 0.9, 1.1, 1.3
+1. Restez dans **Compare**. Configurez 4 emplacements avec les températures : 0.7, 0.9, 1.1, 1.3
 2. Prompt : *"Write a function in Python to check if a number is prime"*
-3. Executez 3 fois. Pour chaque execution, notez si chaque emplacement a produit du code correct (Oui/Non)
-4. Consignez vos resultats dans un tableau :
+3. Exécutez 3 fois. Pour chaque exécution, notez si chaque emplacement a produit du code correct (Oui/Non)
+4. Consignez vos résultats dans un tableau :
 
-| Temperature | Exec 1 | Exec 2 | Exec 3 | Taux de reussite |
+| Température | Exec 1 | Exec 2 | Exec 3 | Taux de réussite |
 |---|---|---|---|---|
 | 0.7 | | | | /3 |
 | 0.9 | | | | /3 |
 | 1.1 | | | | /3 |
 | 1.3 | | | | /3 |
 
-5. Le precipice se situe la ou le taux de reussite chute brutalement — generalement entre T=0.9 et T=1.2
+5. Le précipice se situe là où le taux de réussite chute brutalement — généralement entre T=0.9 et T=1.2
 
 **Pourquoi c'est important :**
 
-Cela demontre que la temperature n'est pas un compromis lineaire. Il y a une **bande etroite** ou la sortie passe de "presque toujours correcte" a "generalement fausse". Trouver ce precipice pour votre modele et votre tache specifiques est l'une des competences les plus pratiques en prompt engineering.
+Cela démontre que la température n'est pas un compromis linéaire. Il y a une **bande étroite** où la sortie passe de "presque toujours correcte" à "généralement fausse". Trouver ce précipice pour votre modèle et votre tâche spécifiques est l'une des compétences les plus pratiques en prompt engineering.
 
 ---
 
-### Exercice 3 : Temperature vs type de tache
+### Exercice 3 : Température vs type de tâche
 
 **Ce qu'il faut faire :**
 
-1. Configurez 2 emplacements : tous deux avec le meme modele, l'un a T=0.2, l'autre a T=1.0
+1. Configurez 2 emplacements : tous deux avec le même modèle, l'un à T=0.2, l'autre à T=1.0
 2. **Prompt factuel :** *"What is the capital of France?"*
-   - Executez-le. Les deux devraient repondre "Paris." La basse temperature n'apporte rien ici.
-3. **Prompt creatif :** *"Write a haiku about debugging code at midnight"*
-   - Executez-le 3 fois. Comparez la variete.
-   - A T=0.2, vous obtiendrez quasiment le meme haiku a chaque fois.
-   - A T=1.0, vous obtiendrez des expressions creatives veritablement differentes.
+   - Exécutez-le. Les deux devraient répondre "Paris." La basse température n'apporte rien ici.
+3. **Prompt créatif :** *"Write a haiku about debugging code at midnight"*
+   - Exécutez-le 3 fois. Comparez la variété.
+   - À T=0.2, vous obtiendrez quasiment le même haiku à chaque fois.
+   - À T=1.0, vous obtiendrez des expressions créatives véritablement différentes.
 4. **Prompt de raisonnement :** *"A farmer has 15 sheep. All but 8 run away. How many sheep does the farmer have left?"*
-   - C'est une question piege (reponse : 8, pas 7). Testez aux deux temperatures.
-   - La temperature affecte-t-elle la precision du raisonnement ?
+   - C'est une question piège (réponse : 8, pas 7). Testez aux deux températures.
+   - La température affecte-t-elle la précision du raisonnement ?
 
-**Discussion :** Pourquoi n'y a-t-il pas de temperature "ideale" unique ? Quelle temperature choisiriez-vous pour :
+**Discussion :** Pourquoi n'y a-t-il pas de température "idéale" unique ? Quelle température choisiriez-vous pour :
 - Un chatbot de support client ?
-- Un assistant d'ecriture creative ?
-- Un outil de completion de code ?
-- Un systeme d'information medicale ?
+- Un assistant d'écriture créative ?
+- Un outil de complétion de code ?
+- Un système d'information médicale ?
 
 ---
 
-### Exercice 4 : Determinisme et seeds
+### Exercice 4 : Déterminisme et seeds
 
 **Ce qu'il faut faire :**
 
-1. Dans **Compare**, utilisez le preset **Deterministic Pair** — deux emplacements avec le meme modele, les memes parametres, le meme seed, T=0
-2. Executez le meme prompt 3 fois
-3. Toutes les sorties devraient etre **identiques** — le seed rend le generateur de nombres aleatoires reproductible
-4. Maintenant changez un emplacement a T=0.7 (gardez le meme seed)
-5. Executez a nouveau 3 fois — les sorties differeront desormais entre les executions
+1. Dans **Compare**, utilisez le preset **Deterministic Pair** — deux emplacements avec le même modèle, les mêmes paramètres, le même seed, T=0
+2. Exécutez le même prompt 3 fois
+3. Toutes les sorties devraient être **identiques** — le seed rend le générateur de nombres aléatoires reproductible
+4. Maintenant changez un emplacement à T=0.7 (gardez le même seed)
+5. Exécutez à nouveau 3 fois — les sorties différeront désormais entre les exécutions
 
-**Ce que cela revele :**
+**Ce que cela révèle :**
 
-- A T=0 (greedy), le seed n'a pas d'importance — il n'y a pas d'aleatoire a controler
-- A T>0, le seed controle quel chemin aleatoire est emprunte dans la distribution
-- Meme seed + meme temperature = aleatoire reproductible
-- C'est ainsi que les chercheurs assurent la reproductibilite des experiences tout en utilisant le decodage stochastique
+- À T=0 (greedy), le seed n'a pas d'importance — il n'y a pas d'aléatoire à contrôler
+- À T>0, le seed contrôle quel chemin aléatoire est emprunté dans la distribution
+- Même seed + même température = aléatoire reproductible
+- C'est ainsi que les chercheurs assurent la reproductibilité des expériences tout en utilisant le décodage stochastique
 
-::: tip Pourquoi la reproductibilite est importante
-En recherche et en production, vous devez pouvoir reproduire des sorties specifiques pour le debogage, la comparaison et l'audit. Fixer un seed avec une temperature moderee vous donne une **variete controlee** — differente du greedy (toujours identique) mais reproductible quand necessaire.
+::: tip Pourquoi la reproductibilité est importante
+En recherche et en production, vous devez pouvoir reproduire des sorties spécifiques pour le débogage, la comparaison et l'audit. Fixer un seed avec une température modérée vous donne une **variété contrôlée** — différente du greedy (toujours identique) mais reproductible quand nécessaire.
 :::
 
 ---
 
-## Points Cles
+## Points Clés
 
-1. **La temperature est une operation mathematique** — elle divise les logits par T avant le softmax, remodelant la distribution de probabilites
-2. **Le precipice est reel** — la qualite ne se degrade pas lineairement ; il y a une transition brusque ou la sortie passe de fiable a chaotique
-3. **Il n'y a pas de temperature universellement optimale** — la valeur ideale depend de la tache (factuelle, creative, raisonnement)
-4. **La temperature se compose avec d'autres methodes** — top-k, top-p et la penalite de repetition fonctionnent conjointement avec la temperature
-5. **Les seeds permettent la reproductibilite** — seed fixe + temperature fixe = meme sortie a chaque fois
+1. **La température est une opération mathématique** — elle divise les logits par T avant le softmax, remodelant la distribution de probabilités
+2. **Le précipice est réel** — la qualité ne se dégrade pas linéairement ; il y a une transition brusque où la sortie passe de fiable à chaotique
+3. **Il n'y a pas de température universellement optimale** — la valeur idéale dépend de la tâche (factuelle, créative, raisonnement)
+4. **La température se compose avec d'autres méthodes** — top-k, top-p et la pénalité de répétition fonctionnent conjointement avec la température
+5. **Les seeds permettent la reproductibilité** — seed fixe + température fixe = même sortie à chaque fois
 
 ---
 
 ## Questions de Discussion
 
-1. Si une entreprise deploie un chatbot a T=0 pour la securite, que perd-elle ? Une sortie deterministe est-elle toujours "plus sure" ?
-2. La position du precipice varie selon le modele. Pourquoi un modele de 70B parametres pourrait-il avoir une temperature de precipice plus elevee qu'un modele de 3B ?
-3. Les assistants d'ecriture creative utilisent souvent T=0.8-1.0. Mais a qui appartient la creativite — a l'utilisateur ou au modele ? La temperature change-t-elle cela ?
-4. Si vous ne pouviez ajuster qu'un seul parametre (temperature, top-k ou top-p), lequel choisiriez-vous et pourquoi ?
+1. Si une entreprise déploie un chatbot à T=0 pour la sécurité, que perd-elle ? Une sortie déterministe est-elle toujours "plus sûre" ?
+2. La position du précipice varie selon le modèle. Pourquoi un modèle de 70B paramètres pourrait-il avoir une température de précipice plus élevée qu'un modèle de 3B ?
+3. Les assistants d'écriture créative utilisent souvent T=0.8-1.0. Mais à qui appartient la créativité — à l'utilisateur ou au modèle ? La température change-t-elle cela ?
+4. Si vous ne pouviez ajuster qu'un seul paramètre (température, top-k ou top-p), lequel choisiriez-vous et pourquoi ?
 
 ---
 
-## Lectures Complementaires
+## Lectures Complémentaires
 
-### Articles academiques
+### Articles académiques
 
-| Article | Auteurs | Annee | Lien |
+| Article | Auteurs | Année | Lien |
 |---|---|---|---|
 | The Curious Case of Neural Text Degeneration | Holtzman, Buys, Du, Forbes, Choi | 2019 | [arXiv:1904.09751](https://arxiv.org/abs/1904.09751) |
 | Hierarchical Neural Story Generation | Fan, Lewis, Dauphin | 2018 | [arXiv:1805.04833](https://arxiv.org/abs/1805.04833) |
@@ -214,30 +214,30 @@ En recherche et en production, vous devez pouvoir reproduire des sorties specifi
 | Token Sampling Methods Primer | Aman.ai | [aman.ai/primers/ai/token-sampling](https://aman.ai/primers/ai/token-sampling/) |
 | The Illustrated Transformer | Jay Alammar | [jalammar.github.io](https://jalammar.github.io/illustrated-transformer/) |
 
-### Concepts cles
+### Concepts clés
 
-**Le nucleus sampling (top-p)** a ete introduit par Holtzman et al. (2019) en reponse a l'observation que le sampling standard avec temperature produit un texte soit trop generique (basse T) soit trop aleatoire (haute T). Leur idee : plutot qu'une temperature fixe, tronquer la distribution au plus petit ensemble de tokens couvrant un seuil de probabilite cumulee. Cela s'adapte automatiquement — quand le modele est confiant, moins de tokens sont consideres ; quand il est incertain, davantage d'options restent disponibles.
+**Le nucleus sampling (top-p)** a été introduit par Holtzman et al. (2019) en réponse à l'observation que le sampling standard avec température produit un texte soit trop générique (basse T) soit trop aléatoire (haute T). Leur idée : plutôt qu'une température fixe, tronquer la distribution au plus petit ensemble de tokens couvrant un seuil de probabilité cumulée. Cela s'adapte automatiquement — quand le modèle est confiant, moins de tokens sont considérés ; quand il est incertain, davantage d'options restent disponibles.
 
-**Mirostat** (Basu et al., 2020) va plus loin en ciblant un niveau de perplexite specifique plutot qu'une forme de distribution fixe. Il ajuste dynamiquement le sampling pour maintenir un niveau de "surprise" constant, que le modele genere une expression previsible ou navigue en territoire incertain.
+**Mirostat** (Basu et al., 2020) va plus loin en ciblant un niveau de perplexité spécifique plutôt qu'une forme de distribution fixe. Il ajuste dynamiquement le sampling pour maintenir un niveau de "surprise" constant, que le modèle génère une expression prévisible ou navigue en territoire incertain.
 
 ---
 
-## Evaluation
+## Évaluation
 
-**Option A — Collecte de donnees (individuel, 1 page) :**
-Effectuez l'experience de recherche du precipice (Exercice 2) avec 5 valeurs de temperature et 5 executions chacune. Presentez un tableau et un graphique lineaire du taux de reussite en fonction de la temperature. Identifiez le point de precipice pour votre modele.
+**Option A — Collecte de données (individuel, 1 page) :**
+Effectuez l'expérience de recherche du précipice (Exercice 2) avec 5 valeurs de température et 5 exécutions chacune. Présentez un tableau et un graphique linéaire du taux de réussite en fonction de la température. Identifiez le point de précipice pour votre modèle.
 
-**Option B — Analyse comparative (en binome, 1 page) :**
-Testez le meme prompt pour 3 types de taches (factuelle, creative, raisonnement) a 4 temperatures. Pour chaque combinaison, evaluez la qualite de sortie sur une echelle de 1 a 5. Presentez une heatmap et recommandez les temperatures optimales par type de tache.
+**Option B — Analyse comparative (en binôme, 1 page) :**
+Testez le même prompt pour 3 types de tâches (factuelle, créative, raisonnement) à 4 températures. Pour chaque combinaison, évaluez la qualité de sortie sur une échelle de 1 à 5. Présentez une heatmap et recommandez les températures optimales par type de tâche.
 
 **Option C — Explication technique (individuel, 500 mots) :**
-Expliquez a un chef de produit non technique pourquoi son chatbot ne devrait PAS utiliser T=0, malgre le fait que ce soit "l'option la plus sure". Utilisez des exemples concrets tires de vos experiences.
+Expliquez à un chef de produit non technique pourquoi son chatbot ne devrait PAS utiliser T=0, malgré le fait que ce soit "l'option la plus sûre". Utilisez des exemples concrets tirés de vos expériences.
 
 ---
 
 ## La suite
 
-Dans le **[Module 3 : L'IA peut-elle mentir ?](./module-3)**, vous utiliserez ce que vous avez appris sur les distributions de probabilites pour comprendre la **confiance vs la verite**. Un modele peut attribuer 95 % de probabilite a la mauvaise reponse — et vous decouvrirez pourquoi grace aux benchmarks avec de vrais logprobs.
+Dans le **[Module 3 : L'IA peut-elle mentir ?](./module-3)**, vous utiliserez ce que vous avez appris sur les distributions de probabilités pour comprendre la **confiance vs la vérité**. Un modèle peut attribuer 95 % de probabilité à la mauvaise réponse — et vous découvrirez pourquoi grâce aux benchmarks avec de vrais logprobs.
 
 ---
 

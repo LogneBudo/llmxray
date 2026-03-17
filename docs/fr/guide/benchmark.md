@@ -1,68 +1,68 @@
 # Benchmark
 
-La page Benchmark execute des evaluations standardisees sur vos modeles locaux en utilisant de vrais logprobs de tokens, vous fournissant des donnees de performance objectives.
+La page Benchmark exécute des évaluations standardisées sur vos modèles locaux en utilisant de vrais logprobs de tokens, vous fournissant des données de performance objectives.
 
-**Element de la barre laterale :** Benchmark
+**Élément de la barre latérale :** Benchmark
 **Route :** `/benchmark`
 
 ![Interface Benchmark](/screenshots/benchmark.png)
 
 ## Qu'est-ce que le Benchmark Chirurgical ?
 
-Contrairement aux benchmarks classiques qui verifient simplement si la reponse est correcte, le Benchmark Chirurgical de LLMxRay capture de **vrais logprobs de tokens** via le endpoint compatible OpenAI d'Ollama (`/v1/chat/completions`). Cela vous donne des donnees de confiance authentiques pour chaque reponse, et pas seulement la precision.
+Contrairement aux benchmarks classiques qui vérifient simplement si la réponse est correcte, le Benchmark Chirurgical de LLMxRay capture de **vrais logprobs de tokens** via le endpoint compatible OpenAI d'Ollama (`/v1/chat/completions`). Cela vous donne des données de confiance authentiques pour chaque réponse, et pas seulement la précision.
 
-## Suites de tests integrees
+## Suites de tests intégrées
 
-| Suite | Questions | Ce qu'elle evalue |
+| Suite | Questions | Ce qu'elle évalue |
 |---|---|---|
-| **ARC** | Raisonnement scientifique | Questions de sciences niveau college |
-| **GSM8K** | Problemes mathematiques | Raisonnement arithmetique en plusieurs etapes |
-| **HellaSwag** | Completion de phrases | Raisonnement de bon sens |
-| **MMLU-Pro** | Multi-disciplines | Connaissances academiques larges dans differents domaines |
-| **TruthfulQA** | Veracite | Resistance aux idees recues erronees |
+| **ARC** | Raisonnement scientifique | Questions de sciences niveau collège |
+| **GSM8K** | Problèmes mathématiques | Raisonnement arithmétique en plusieurs étapes |
+| **HellaSwag** | Complétion de phrases | Raisonnement de bon sens |
+| **MMLU-Pro** | Multi-disciplines | Connaissances académiques larges dans différents domaines |
+| **TruthfulQA** | Véracité | Résistance aux idées reçues erronées |
 
 ## Lancer un benchmark
 
-1. Selectionnez un **modele** dans le menu deroulant.
+1. Sélectionnez un **modèle** dans le menu déroulant.
 2. Choisissez une ou plusieurs **suites de tests**.
-3. Cliquez sur **Lancer**. Le benchmark diffuse les resultats en temps reel.
+3. Cliquez sur **Lancer**. Le benchmark diffuse les résultats en temps réel.
 
-Pendant l'execution, vous pouvez voir :
-- **Progression en direct** -- Nombre de questions, precision actuelle
-- **Resultats par question** -- Correct/incorrect, reponse du modele, scores de confiance
-- **Donnees de latence** -- TTFT et tokens/sec par question
+Pendant l'exécution, vous pouvez voir :
+- **Progression en direct** -- Nombre de questions, précision actuelle
+- **Résultats par question** -- Correct/incorrect, réponse du modèle, scores de confiance
+- **Données de latence** -- TTFT et tokens/sec par question
 
-## Modeles de raisonnement
+## Modèles de raisonnement
 
-Pour les modeles de raisonnement comme DeepSeek-R1, le benchmark utilise des **budgets de tokens dynamiques** -- accordant au modele plus de tokens pour ses blocs `<think>` sans les compter dans la reponse. Cela garantit que les modeles de raisonnement ne sont pas penalises pour avoir montre leur cheminement.
+Pour les modèles de raisonnement comme DeepSeek-R1, le benchmark utilise des **budgets de tokens dynamiques** -- accordant au modèle plus de tokens pour ses blocs `<think>` sans les compter dans la réponse. Cela garantit que les modèles de raisonnement ne sont pas pénalisés pour avoir montré leur cheminement.
 
-## Visualisation des resultats
+## Visualisation des résultats
 
-Apres completion, les resultats sont affiches sous forme de :
+Après complétion, les résultats sont affichés sous forme de :
 
-- **Score de precision** -- Pourcentage global de bonnes reponses
-- **Detail par categorie** -- Precision par domaine au sein de chaque suite
-- **Graphique radar** -- Comparaison visuelle entre les categories
-- **Distribution de confiance** -- Histogramme des scores de confiance bases sur les logprobs
+- **Score de précision** -- Pourcentage global de bonnes réponses
+- **Détail par catégorie** -- Précision par domaine au sein de chaque suite
+- **Graphique radar** -- Comparaison visuelle entre les catégories
+- **Distribution de confiance** -- Histogramme des scores de confiance basés sur les logprobs
 
-## Comparer les resultats
+## Comparer les résultats
 
-Lancez la meme suite sur plusieurs modeles pour comparer :
-- Quel modele est le plus precis sur quels sujets
-- Calibration de la confiance -- une confiance elevee correspond-elle a des reponses correctes ?
-- Compromis vitesse vs. precision
+Lancez la même suite sur plusieurs modèles pour comparer :
+- Quel modèle est le plus précis sur quels sujets
+- Calibration de la confiance -- une confiance élevée correspond-elle à des réponses correctes ?
+- Compromis vitesse vs. précision
 
-Les resultats sont stockes dans IndexedDB, ce qui vous permet de comparer entre les sessions.
+Les résultats sont stockés dans IndexedDB, ce qui vous permet de comparer entre les sessions.
 
-## Suites personnalisees
+## Suites personnalisées
 
-Cliquez sur **Importer** pour charger une suite de benchmark personnalisee. Le format attendu est un fichier JSON contenant :
+Cliquez sur **Importer** pour charger une suite de benchmark personnalisée. Le format attendu est un fichier JSON contenant :
 - Nom et description de la suite
-- Tableau de questions, chacune avec : texte de la question, choix de reponses, index de la reponse correcte et categorie optionnelle
+- Tableau de questions, chacune avec : texte de la question, choix de réponses, index de la réponse correcte et catégorie optionnelle
 
 ## Astuces
 
-- **Les logprobs necessitent le endpoint `/v1`** -- Cela utilise l'API compatible OpenAI d'Ollama, et non le endpoint natif `/api`.
-- **Commencez par des suites plus petites** -- Demarrez avec un sous-ensemble pour estimer la duree d'une execution complete.
-- **Reprise possible** -- Si un benchmark est interrompu, vous pouvez reprendre la ou il s'est arrete.
-- **Comparer les quantifications** -- Lancez le meme modele en Q4 et Q8 pour mesurer l'impact sur la precision.
+- **Les logprobs nécessitent le endpoint `/v1`** -- Cela utilise l'API compatible OpenAI d'Ollama, et non le endpoint natif `/api`.
+- **Commencez par des suites plus petites** -- Démarrez avec un sous-ensemble pour estimer la durée d'une exécution complète.
+- **Reprise possible** -- Si un benchmark est interrompu, vous pouvez reprendre là où il s'est arrêté.
+- **Comparer les quantifications** -- Lancez le même modèle en Q4 et Q8 pour mesurer l'impact sur la précision.

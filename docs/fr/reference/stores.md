@@ -1,33 +1,33 @@
 # Stores (Pinia)
 
-LLMxRay utilise 24 stores Pinia, organises selon le pattern **store par domaine**. Chaque store gere un seul domaine d'etat.
+LLMxRay utilise 24 stores Pinia, organisés selon le pattern **store par domaine**. Chaque store gère un seul domaine d'état.
 
 ## Stores principaux
 
 ### token-store
 **Fichier :** `src/stores/token-store.ts`
 
-Gere les tokens en streaming pour chaque session.
+Gère les tokens en streaming pour chaque session.
 
-| Etat | Type | Description |
+| État | Type | Description |
 |---|---|---|
-| `tokensBySession` | `Map<string, StreamToken[]>` | Tokens indexes par identifiant de session |
+| `tokensBySession` | `Map<string, StreamToken[]>` | Tokens indexés par identifiant de session |
 
 **Actions principales :** `pushToken`, `getTokens`, `getTokenCount`, `clearTokens`, `persistTokens`, `loadTokens`
 
 ::: tip Performance
-Utilise `shallowRef` pour la map de tokens. Avec des milliers de tokens par session, la reactivite profonde serait trop couteuse.
+Utilise `shallowRef` pour la map de tokens. Avec des milliers de tokens par session, la réactivité profonde serait trop coûteuse.
 :::
 
 ### session-store
 **Fichier :** `src/stores/session-store.ts`
 
-Gere le cycle de vie des sessions (creation, execution, finalisation, erreur).
+Gère le cycle de vie des sessions (création, exécution, finalisation, erreur).
 
-| Etat | Type | Description |
+| État | Type | Description |
 |---|---|---|
 | `sessions` | `Map<string, Session>` | Toutes les sessions |
-| `activeSessionId` | `string \| null` | Session actuellement selectionnee |
+| `activeSessionId` | `string \| null` | Session actuellement sélectionnée |
 
 **Computed :** `activeSession`, `recentSessions`
 **Actions principales :** `createSession`, `updateSessionStatus`, `appendOutput`, `finalizeSession`, `setSessionError`, `cancelSession`
@@ -35,12 +35,12 @@ Gere le cycle de vie des sessions (creation, execution, finalisation, erreur).
 ### conversation-store
 **Fichier :** `src/stores/conversation-store.ts`
 
-Conversations de chat persistees avec IndexedDB en arriere-plan.
+Conversations de chat persistées avec IndexedDB en arrière-plan.
 
-| Etat | Type | Description |
+| État | Type | Description |
 |---|---|---|
 | `conversations` | `Map<string, Conversation>` | Toutes les conversations |
-| `hydrated` | `boolean` | Indique si les donnees ont ete chargees depuis IndexedDB |
+| `hydrated` | `boolean` | Indique si les données ont été chargées depuis IndexedDB |
 
 **Computed :** `activeConversation`, `recentConversations`
 **Actions principales :** `hydrate`, `createConversation`, `addMessage`, `finalizeMessage`, `setActiveConversation`, `renameConversation`, `deleteConversation`
@@ -48,40 +48,40 @@ Conversations de chat persistees avec IndexedDB en arriere-plan.
 ### metrics-store
 **Fichier :** `src/stores/metrics-store.ts`
 
-Metriques de performance par session et agregees.
+Métriques de performance par session et agrégées.
 
-| Etat | Type | Description |
+| État | Type | Description |
 |---|---|---|
-| `metricsBySession` | `Map<string, SessionMetrics>` | Metriques par session |
+| `metricsBySession` | `Map<string, SessionMetrics>` | Métriques par session |
 | `aggregate` | `AggregateMetrics` | Moyennes inter-sessions |
-| `metricsHistory` | `SessionMetrics[]` | Historique des metriques |
+| `metricsHistory` | `SessionMetrics[]` | Historique des métriques |
 
 **Actions principales :** `recordMetrics`, `recalculateAggregate`, `getMetrics`
 
-## Stores de fonctionnalites
+## Stores de fonctionnalités
 
 ### comparison-store
 **Fichier :** `src/stores/comparison-store.ts`
 
-Gere les executions de comparaison avec plusieurs slots d'execution.
+Gère les exécutions de comparaison avec plusieurs slots d'exécution.
 
-| Etat | Type | Description |
+| État | Type | Description |
 |---|---|---|
-| `runs` | `Map<string, ComparisonRun>` | Toutes les executions de comparaison |
-| `activeRunId` | `string \| null` | Execution en cours |
+| `runs` | `Map<string, ComparisonRun>` | Toutes les exécutions de comparaison |
+| `activeRunId` | `string \| null` | Exécution en cours |
 
 **Actions principales :** `createRun`, `updateExecution`, `finalizeRun`, `getExecution`
 
 ### benchmark-store
 **Fichier :** `src/stores/benchmark-store.ts`
 
-Etat d'execution des benchmarks et resultats persistes.
+État d'exécution des benchmarks et résultats persistés.
 
-| Etat | Type | Description |
+| État | Type | Description |
 |---|---|---|
-| `runState` | `BenchmarkRunState` | Etat d'execution actuel |
-| `savedResults` | `BenchmarkResult[]` | Resultats persistes depuis IndexedDB |
-| `customSuites` | `BenchmarkSuite[]` | Suites importees par l'utilisateur |
+| `runState` | `BenchmarkRunState` | État d'exécution actuel |
+| `savedResults` | `BenchmarkResult[]` | Résultats persistés depuis IndexedDB |
+| `customSuites` | `BenchmarkSuite[]` | Suites importées par l'utilisateur |
 
 **Computed :** `activeResults`, `isRunning`
 **Actions principales :** `startRun`, `resumeRun`, `cancelRun`, `deleteResult`, `importCustomSuite`, `deleteCustomSuite`
@@ -89,12 +89,12 @@ Etat d'execution des benchmarks et resultats persistes.
 ### embedding-store
 **Fichier :** `src/stores/embedding-store.ts`
 
-Generation d'embeddings et resultats de comparaison.
+Génération d'embeddings et résultats de comparaison.
 
-| Etat | Type | Description |
+| État | Type | Description |
 |---|---|---|
-| `results` | `EmbeddingResult[]` | Embeddings generes |
-| `loading` | `boolean` | Etat de chargement |
+| `results` | `EmbeddingResult[]` | Embeddings générés |
+| `loading` | `boolean` | État de chargement |
 
 **Computed :** `recentResults`
 **Actions principales :** `embed`, `cosineSimilarity`, `comparePair`, `clearResults`, `removeResult`
@@ -104,10 +104,10 @@ Generation d'embeddings et resultats de comparaison.
 
 Gestion des documents RAG et recherche.
 
-| Etat | Type | Description |
+| État | Type | Description |
 |---|---|---|
-| `documents` | `RagDocument[]` | Documents uploades |
-| `searchResults` | `RagSearchResult[]` | Derniers resultats de recherche |
+| `documents` | `RagDocument[]` | Documents uploadés |
+| `searchResults` | `RagSearchResult[]` | Derniers résultats de recherche |
 | `enabledDocumentIds` | `Set<string>` | Documents actifs pour la recherche |
 
 **Computed :** `readyDocuments`, `enabledDocuments`
@@ -116,13 +116,13 @@ Gestion des documents RAG et recherche.
 ### training-store
 **Fichier :** `src/stores/training-store.ts`
 
-Curation des donnees d'entrainement IA.
+Curation des données d'entraînement IA.
 
-| Etat | Type | Description |
+| État | Type | Description |
 |---|---|---|
-| `pairs` | `AiTrainingPair[]` | Toutes les paires d'entrainement |
-| `filters` | `TrainingFilters` | Etat des filtres actifs |
-| `selectedIds` | `Set<string>` | Paires selectionnees pour les operations groupees |
+| `pairs` | `AiTrainingPair[]` | Toutes les paires d'entraînement |
+| `filters` | `TrainingFilters` | État des filtres actifs |
+| `selectedIds` | `Set<string>` | Paires sélectionnées pour les opérations groupées |
 
 **Computed :** `filteredPairs`, `stats`
 **Actions principales :** `loadPairs`, `updateResponse`, `toggleAccepted`, `deletePairs`, `bulkSetAccepted`, `bulkAddTag`, `exportSelected`
@@ -130,13 +130,13 @@ Curation des donnees d'entrainement IA.
 ### canvas-ai-store
 **Fichier :** `src/stores/canvas-ai-store.ts`
 
-Etat de l'assistant IA du canvas (brouillons, analyses, suggestions).
+État de l'assistant IA du canvas (brouillons, analyses, suggestions).
 
-| Etat | Type | Description |
+| État | Type | Description |
 |---|---|---|
-| `drafts` | `Map<string, AiDraft>` | Brouillons d'outils generes par l'IA |
-| `insights` | `AiInsightsResult \| null` | Dernieres suggestions d'amelioration |
-| `canvasAiModel` | `string` | Modele IA selectionne |
+| `drafts` | `Map<string, AiDraft>` | Brouillons d'outils générés par l'IA |
+| `insights` | `AiInsightsResult \| null` | Dernières suggestions d'amélioration |
+| `canvasAiModel` | `string` | Modèle IA sélectionné |
 
 **Actions principales :** `setDraft`, `clearDraft`, `setInsights`, `clearInsights`, `setIntent`, `startRequest`, `cancelRequest`
 
@@ -145,12 +145,12 @@ Etat de l'assistant IA du canvas (brouillons, analyses, suggestions).
 ### model-store
 **Fichier :** `src/stores/model-store.ts`
 
-Gestion des modeles Ollama et detection des capacites.
+Gestion des modèles Ollama et détection des capacités.
 
-| Etat | Type | Description |
+| État | Type | Description |
 |---|---|---|
-| `models` | `OllamaModel[]` | Modeles installes |
-| `modelInfoCache` | `Map<string, ModelInfo>` | Details des modeles mis en cache |
+| `models` | `OllamaModel[]` | Modèles installés |
+| `modelInfoCache` | `Map<string, ModelInfo>` | Détails des modèles mis en cache |
 
 **Computed :** `modelNames`, `chatModelNames`, `embeddingModelNames`
 **Actions principales :** `fetchModels`, `fetchModelInfo`, `deleteModel`, `isThinkingModel`, `isVisionModel`, `supportsTools`
@@ -158,7 +158,7 @@ Gestion des modeles Ollama et detection des capacites.
 ### reasoning-store
 **Fichier :** `src/stores/reasoning-store.ts`
 
-Etat de la chaine de raisonnement pour les modeles pensants.
+État de la chaîne de raisonnement pour les modèles pensants.
 
 **Actions principales :** `addStep`, `getChain`, `getSteps`, `clearChain`, `setThinking`, `getThinking`
 
@@ -172,12 +172,12 @@ Suivi des appels d'outils par session.
 ### tool-workshop-store / tool-definition-store
 **Fichiers :** `src/stores/tool-workshop-store.ts`, `src/stores/tool-definition-store.ts`
 
-Etat du canvas d'outils et persistance des schemas d'outils.
+État du canvas d'outils et persistance des schémas d'outils.
 
 ### agent-store
 **Fichier :** `src/stores/agent-store.ts`
 
-Etat du graphe de l'agent par session.
+État du graphe de l'agent par session.
 
 **Actions principales :** `initGraph`, `addNode`, `addEdge`, `getGraph`
 
@@ -189,14 +189,14 @@ Analyse de l'anatomie des prompts par session.
 ### introspection-store
 **Fichier :** `src/stores/introspection-store.ts`
 
-Donnees d'architecture du modele et de patterns d'attention.
+Données d'architecture du modèle et de patterns d'attention.
 
 ## Stores d'interface
 
 ### theme-store
 **Fichier :** `src/stores/theme-store.ts`
 
-Gestion du theme sombre/clair/systeme.
+Gestion du thème sombre/clair/système.
 
 **Actions principales :** `setMode`, `applyTheme`
 
@@ -210,11 +210,11 @@ Suivi de l'utilisation du stockage IndexedDB.
 ### memory-store
 **Fichier :** `src/stores/memory-store.ts`
 
-Memoire conversationnelle et faits.
+Mémoire conversationnelle et faits.
 
 ### google-auth-store
 **Fichier :** `src/stores/google-auth-store.ts`
 
-Gestion de l'etat OAuth2 Google.
+Gestion de l'état OAuth2 Google.
 
 **Actions principales :** `updateClientId`, `connect`, `handleOAuthCallback`, `disconnect`, `getToken`

@@ -1,6 +1,6 @@
 # Types
 
-LLMxRay definit ses interfaces TypeScript dans 21 fichiers de types sous `src/types/`. Cette page couvre les interfaces principales regroupees par domaine.
+LLMxRay définit ses interfaces TypeScript dans 21 fichiers de types sous `src/types/`. Cette page couvre les interfaces principales regroupées par domaine.
 
 ## Session et chat
 
@@ -119,7 +119,7 @@ interface ReasoningChain {
 }
 ```
 
-## Metriques
+## Métriques
 
 **Fichier :** `src/types/metrics.ts`
 

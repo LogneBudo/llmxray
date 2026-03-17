@@ -6,15 +6,15 @@ LLMxRay utilise **Vitest** pour les tests unitaires et **Playwright** pour les t
 
 | Commande | Description |
 |---|---|
-| `npm run test` | Executer les tests unitaires une fois |
-| `npm run test:watch` | Executer les tests unitaires en mode surveillance |
-| `npm run test:coverage` | Executer les tests unitaires avec rapport de couverture |
-| `npm run test:e2e` | Executer les tests E2E (Chromium headless) |
-| `npm run test:e2e:headed` | Executer les tests E2E avec navigateur visible |
-| `npm run test:e2e:ui` | Executer les tests E2E avec l'interface Playwright |
-| `npm run test:e2e:live` | Executer les tests E2E contre Ollama en direct |
+| `npm run test` | Exécuter les tests unitaires une fois |
+| `npm run test:watch` | Exécuter les tests unitaires en mode surveillance |
+| `npm run test:coverage` | Exécuter les tests unitaires avec rapport de couverture |
+| `npm run test:e2e` | Exécuter les tests E2E (Chromium headless) |
+| `npm run test:e2e:headed` | Exécuter les tests E2E avec navigateur visible |
+| `npm run test:e2e:ui` | Exécuter les tests E2E avec l'interface Playwright |
+| `npm run test:e2e:live` | Exécuter les tests E2E contre Ollama en direct |
 | `npm run test:e2e:live:headed` | Tests Ollama en direct avec navigateur visible |
-| `npm run test:e2e:all` | Executer tous les projets de tests E2E |
+| `npm run test:e2e:all` | Exécuter tous les projets de tests E2E |
 
 ## Tests unitaires (Vitest)
 
@@ -37,13 +37,13 @@ LLMxRay utilise **Vitest** pour les tests unitaires et **Playwright** pour les t
 }
 ```
 
-- **Environnement :** `happy-dom` — Une implementation DOM legere pour tester les composants Vue
+- **Environnement :** `happy-dom` — Une implémentation DOM légère pour tester les composants Vue
 - **Globals :** `true` — Rend `describe`, `it`, `expect` disponibles sans import
-- **Fichiers de test :** `src/**/*.test.ts` — Co-localises avec les fichiers source
+- **Fichiers de test :** `src/**/*.test.ts` — Co-localisés avec les fichiers source
 
-### Ecrire des tests unitaires
+### Écrire des tests unitaires
 
-Placez les fichiers de test a cote du code qu'ils testent :
+Placez les fichiers de test à côté du code qu'ils testent :
 
 ```
 src/services/
@@ -75,25 +75,25 @@ describe('parseThinkBlocks', () => {
 
 Deux projets de test :
 
-#### chromium (par defaut)
-- Execute tous les tests **sauf** les specifications `live-ollama`
-- Utilise un serveur de developpement Vite sur le port 5199
-- Pas d'Ollama requis — les tests simulent les reponses API
+#### chromium (par défaut)
+- Exécute tous les tests **sauf** les spécifications `live-ollama`
+- Utilise un serveur de développement Vite sur le port 5199
+- Pas d'Ollama requis — les tests simulent les réponses API
 
 #### live-ollama
-- Execute uniquement `live-ollama.spec.ts`
-- Necessite une instance Ollama en cours d'execution avec des modeles
-- Timeout : 120 secondes par test (le chargement du modele peut etre lent)
+- Exécute uniquement `live-ollama.spec.ts`
+- Nécessite une instance Ollama en cours d'exécution avec des modèles
+- Timeout : 120 secondes par test (le chargement du modèle peut être lent)
 
-### Repertoire de tests
+### Répertoire de tests
 
 ```
 e2e/
   example.spec.ts        # Tests de base de l'application
-  live-ollama.spec.ts    # Tests necessitant un Ollama reel
+  live-ollama.spec.ts    # Tests nécessitant un Ollama réel
 ```
 
-### Ecrire des tests E2E
+### Écrire des tests E2E
 
 ```typescript
 import { test, expect } from '@playwright/test'
@@ -104,25 +104,25 @@ test('dashboard loads', async ({ page }) => {
 })
 ```
 
-### Executer contre Ollama en direct
+### Exécuter contre Ollama en direct
 
-Le projet `live-ollama` teste des interactions reelles avec le modele :
+Le projet `live-ollama` teste des interactions réelles avec le modèle :
 
 ```bash
-# Assurez-vous qu'Ollama fonctionne avec au moins un modele
+# Assurez-vous qu'Ollama fonctionne avec au moins un modèle
 ollama serve
 ollama pull llama3.2
 
-# Executer les tests en direct
+# Exécuter les tests en direct
 npm run test:e2e:live
 ```
 
 ## Avant de soumettre
 
-Executez toujours les deux suites de tests avant de soumettre une PR :
+Exécutez toujours les deux suites de tests avant de soumettre une PR :
 
 ```bash
 npm run test          # Les tests unitaires passent
-npm run build         # Verification des types + build reussi
+npm run build         # Vérification des types + build réussi
 npm run test:e2e      # Les tests E2E passent (pas d'Ollama requis)
 ```

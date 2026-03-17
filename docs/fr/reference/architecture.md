@@ -5,36 +5,36 @@
 ```
 src/
 ├── pages/              12 composants de page
-├── components/         85+ composants organises par fonctionnalite
-│   ├── agent-graph/    Visualisation du graphe d'execution de l'agent
-│   ├── benchmark/      Execution et resultats des benchmarks
+├── components/         85+ composants organisés par fonctionnalité
+│   ├── agent-graph/    Visualisation du graphe d'exécution de l'agent
+│   ├── benchmark/      Exécution et résultats des benchmarks
 │   ├── chat/           Interface de chat, flux de tokens, messages
-│   ├── common/         Layout, barre laterale, en-tete, composants partages
-│   ├── comparison/     Configurateur de slots, grille, diff, metriques
-│   ├── embeddings/     Visualisation vectorielle, indicateur de similarite
+│   ├── common/         Layout, barre latérale, en-tête, composants partagés
+│   ├── comparison/     Configurateur de slots, grille, diff, métriques
+│   ├── embeddings/     Visualisation vectorielle, indicateur de similarité
 │   ├── introspection/  Activations de couches, attention, architecture
 │   ├── metrics/        Tableau de bord, graphiques, historique de sessions
 │   ├── prompt-anatomy/ Analyse de la structure des prompts
 │   ├── rag/            Upload de documents, recherche, ingestion
 │   ├── reasoning/      Visionneuse de blocs think
-│   ├── settings/       Onglets et formulaires de parametres
+│   ├── settings/       Onglets et formulaires de paramètres
 │   ├── storage/        Visualisation de l'utilisation du stockage
 │   ├── token-stream/   Visualisation du streaming de tokens
 │   ├── tool-calls/     Gestion des appels d'outils
-│   ├── tool-canvas/    Canvas visuel, editeur de noeuds, CodeMirror
-│   ├── tool-optimizer/  Optimiseur de reponses, arbre JSON
-│   └── training/       Gestion des donnees d'entrainement IA
+│   ├── tool-canvas/    Canvas visuel, éditeur de nœuds, CodeMirror
+│   ├── tool-optimizer/  Optimiseur de réponses, arbre JSON
+│   └── training/       Gestion des données d'entraînement IA
 ├── composables/        7 composables Vue
-├── data/               Suites de benchmarks integrees, catalogue de modeles
+├── data/               Suites de benchmarks intégrées, catalogue de modèles
 ├── layouts/            DefaultLayout.vue
-├── router/             Definitions des routes
+├── router/             Définitions des routes
 ├── services/           36 modules de services
 ├── stores/             24 stores Pinia
 ├── types/              21 fichiers de types TypeScript
 └── utils/              7 modules utilitaires
 ```
 
-## Flux de donnees
+## Flux de données
 
 ```
 Action utilisateur
@@ -43,27 +43,27 @@ Action utilisateur
 Composant Vue (UI)
     │
     ▼
-Composable (logique reactive)
+Composable (logique réactive)
     │
     ▼
-Store Pinia (etat global)
+Store Pinia (état global)
     │
     ▼
-Service (logique metier / appels API)
+Service (logique métier / appels API)
     │
     ▼
 API Ollama (via proxy Vite)
 ```
 
-Les composants utilisent des composables pour la logique reactive reutilisable. Les composables lisent et ecrivent dans les stores Pinia. Les stores delegent aux services pour les appels API et la logique metier. Les services communiquent avec Ollama via le proxy du serveur de developpement Vite.
+Les composants utilisent des composables pour la logique réactive réutilisable. Les composables lisent et écrivent dans les stores Pinia. Les stores délèguent aux services pour les appels API et la logique métier. Les services communiquent avec Ollama via le proxy du serveur de développement Vite.
 
 ## Architecture de streaming
 
 LLMxRay utilise deux protocoles de streaming selon le endpoint :
 
-### Streaming NDJSON (Chat et Generation)
+### Streaming NDJSON (Chat et Génération)
 
-Utilise pour `/api/chat` et `/api/generate`. Chaque ligne est un objet JSON complet :
+Utilisé pour `/api/chat` et `/api/generate`. Chaque ligne est un objet JSON complet :
 
 ```
 {"model":"llama3.2","message":{"role":"assistant","content":"Hello"},"done":false}
@@ -71,41 +71,41 @@ Utilise pour `/api/chat` et `/api/generate`. Chaque ligne est un objet JSON comp
 {"model":"llama3.2","message":{"role":"assistant","content":""},"done":true}
 ```
 
-Analyse via `fetch()` + `ReadableStream` + `TextDecoder`. Le service `stream-handler` decoupe sur les sauts de ligne et parse chaque fragment JSON.
+Analyse via `fetch()` + `ReadableStream` + `TextDecoder`. Le service `stream-handler` découpe sur les sauts de ligne et parse chaque fragment JSON.
 
 ### Streaming SSE (Benchmarks / Logprobs)
 
-Utilise pour `/v1/chat/completions` (endpoint compatible OpenAI). Chaque evenement est prefixe par `data: ` :
+Utilisé pour `/v1/chat/completions` (endpoint compatible OpenAI). Chaque événement est préfixé par `data: ` :
 
 ```
 data: {"choices":[{"delta":{"content":"Hello"},"logprobs":{"content":[{"token":"Hello","logprob":-0.5}]}}]}
 data: [DONE]
 ```
 
-Ce endpoint fournit des **logprobs de tokens reels** que le systeme de benchmark utilise pour le calcul de confiance.
+Ce endpoint fournit des **logprobs de tokens réels** que le système de benchmark utilise pour le calcul de confiance.
 
 ## Confiance des tokens
 
 Deux approches selon le contexte :
 
-| Contexte | Methode | Source |
+| Contexte | Méthode | Source |
 |---|---|---|
-| **Chat** | Approximation basee sur la latence | Delai inter-token : plus rapide = plus confiant |
-| **Benchmark** | Logprobs reels | Champ logprobs de `/v1/chat/completions` |
+| **Chat** | Approximation basée sur la latence | Délai inter-token : plus rapide = plus confiant |
+| **Benchmark** | Logprobs réels | Champ logprobs de `/v1/chat/completions` |
 
-La methode basee sur la latence est clairement etiquetee comme "approximation" dans l'interface.
+La méthode basée sur la latence est clairement étiquetée comme « approximation » dans l'interface.
 
-## Bases de donnees IndexedDB
+## Bases de données IndexedDB
 
-| Base de donnees | Service | Stores |
+| Base de données | Service | Stores |
 |---|---|---|
 | **conversation-db** | `conversation-db.ts` | Conversations, messages, sessions, tokens |
-| **benchmark-db** | `benchmark-db.ts` | Resultats de benchmarks, suites personnalisees |
-| **vector-db** | `vector-db.ts` | Documents RAG, chunks embarques |
-| **canvas-ai-db** | `canvas-ai-db.ts` | Paires d'entrainement IA |
-| **message-memory-db** | `message-memory-db.ts` | Resumes de conversations |
+| **benchmark-db** | `benchmark-db.ts` | Résultats de benchmarks, suites personnalisées |
+| **vector-db** | `vector-db.ts` | Documents RAG, chunks embarqués |
+| **canvas-ai-db** | `canvas-ai-db.ts` | Paires d'entraînement IA |
+| **message-memory-db** | `message-memory-db.ts` | Résumés de conversations |
 
-Toutes les bases de donnees utilisent l'API IndexedDB native du navigateur avec le clonage structure pour la serialisation.
+Toutes les bases de données utilisent l'API IndexedDB native du navigateur avec le clonage structuré pour la sérialisation.
 
 ## Configuration du proxy Vite
 
@@ -125,37 +125,37 @@ server: {
 }
 ```
 
-## Plugins Vite personnalises
+## Plugins Vite personnalisés
 
 ### vite-plugin-system-info
-Interroge le systeme d'exploitation pour obtenir les informations materielles au demarrage du serveur de developpement :
+Interroge le système d'exploitation pour obtenir les informations matérielles au démarrage du serveur de développement :
 - **Windows** : commandes PowerShell (`Get-CimInstance`)
 - **Linux** : `/proc/cpuinfo`, `/proc/meminfo`, `lspci`
 - **macOS** : `sysctl`, `system_profiler`
 
-Expose les donnees via un module virtuel importe par `system-info-client.ts`.
+Expose les données via un module virtuel importé par `system-info-client.ts`.
 
 ### vite-plugin-api-probe
-Verifie la disponibilite d'Ollama au moment du build et expose le statut.
+Vérifie la disponibilité d'Ollama au moment du build et expose le statut.
 
-## Patterns cles
+## Patterns clés
 
 ### Store par domaine
-Chaque domaine possede son propre store Pinia. Cela maintient l'etat modulaire et evite les stores monolithiques :
+Chaque domaine possède son propre store Pinia. Cela maintient l'état modulaire et évite les stores monolithiques :
 - `token-store` pour les tokens en streaming
-- `session-store` pour les metadonnees de session
-- `conversation-store` pour l'historique de chat persiste
+- `session-store` pour les métadonnées de session
+- `conversation-store` pour l'historique de chat persisté
 - etc.
 
 ### Optimisation shallowRef
-Le store de tokens utilise `shallowRef` au lieu de `ref` pour ses tableaux de tokens. Avec des milliers de tokens par session, la reactivite profonde serait trop couteuse. `shallowRef` ne declenche les mises a jour que lorsque la reference change, pas lorsque des tokens individuels sont modifies.
+Le store de tokens utilise `shallowRef` au lieu de `ref` pour ses tableaux de tokens. Avec des milliers de tokens par session, la réactivité profonde serait trop coûteuse. `shallowRef` ne déclenche les mises à jour que lorsque la référence change, pas lorsque des tokens individuels sont modifiés.
 
-### Registre de capacites des modeles
-Les modeles sont classes par capacite (raisonnement, vision, embedding, utilisation d'outils) en utilisant :
-1. Les metadonnees de capacite natives d'Ollama (preferees)
+### Registre de capacités des modèles
+Les modèles sont classés par capacité (raisonnement, vision, embedding, utilisation d'outils) en utilisant :
+1. Les métadonnées de capacité natives d'Ollama (préférées)
 2. Un fallback par pattern de nom (ex. `deepseek-r1` → raisonnement, `llava` → vision)
 
-L'interface s'adapte automatiquement en fonction des capacites detectees.
+L'interface s'adapte automatiquement en fonction des capacités détectées.
 
 ### Chargement paresseux
-Les conversations chargent les metadonnees immediatement (pour la liste des sessions) mais different le chargement des messages jusqu'a ce qu'une session soit selectionnee. Cela maintient le chargement initial rapide meme avec des centaines de sessions.
+Les conversations chargent les métadonnées immédiatement (pour la liste des sessions) mais diffèrent le chargement des messages jusqu'à ce qu'une session soit sélectionnée. Cela maintient le chargement initial rapide même avec des centaines de sessions.

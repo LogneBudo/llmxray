@@ -1,84 +1,84 @@
 # Atelier d'Outils
 
-L'Atelier d'Outils est un canevas visuel pour creer, modifier et tester des definitions d'outils que les modeles peuvent appeler pendant le chat.
+L'Atelier d'Outils est un canevas visuel pour créer, modifier et tester des définitions d'outils que les modèles peuvent appeler pendant le chat.
 
-**Element de la barre laterale :** Atelier d'Outils
+**Élément de la barre latérale :** Atelier d'Outils
 **Route :** `/tools`
 
 ## Vue d'ensemble de l'interface
 
-La page presente un **canevas a base de noeuds** propulse par Vue Flow. Chaque outil est represente sous forme de noeud visuel affichant son nom, sa description, ses parametres et le corps de son implementation.
+La page présente un **canevas à base de nœuds** propulsé par Vue Flow. Chaque outil est représenté sous forme de nœud visuel affichant son nom, sa description, ses paramètres et le corps de son implémentation.
 
-## Creer des outils
+## Créer des outils
 
-### A partir de modeles
-Cliquez sur **Modeles** pour parcourir plus de 15 modeles integres, notamment :
-- Requetes web (HTTP)
+### À partir de modèles
+Cliquez sur **Modèles** pour parcourir plus de 15 modèles intégrés, notamment :
+- Requêtes web (HTTP)
 - Calculatrice
-- Integration Google Calendar / Gmail
+- Intégration Google Calendar / Gmail
 - Testeur de regex
 - Utilitaires de date/heure
 - Et plus encore
 
-### A partir de zero
-Cliquez sur **Ajouter un outil** pour creer un noeud d'outil vierge. Remplissez :
-- **Nom** -- Le nom de la fonction (utilise par le modele)
-- **Description** -- Ce que fait l'outil (aide le modele a decider quand l'utiliser)
-- **Parametres** -- Entrees definies en JSON Schema
-- **Implementation** -- Corps de la fonction TypeScript
+### À partir de zéro
+Cliquez sur **Ajouter un outil** pour créer un nœud d'outil vierge. Remplissez :
+- **Nom** -- Le nom de la fonction (utilisé par le modèle)
+- **Description** -- Ce que fait l'outil (aide le modèle à décider quand l'utiliser)
+- **Paramètres** -- Entrées définies en JSON Schema
+- **Implémentation** -- Corps de la fonction TypeScript
 
 ## Modifier les outils
 
-### Edition de code en ligne
-Chaque noeud d'outil dispose d'un editeur **CodeMirror 6** complet avec coloration syntaxique TypeScript. Modifiez l'implementation directement sur le canevas.
+### Édition de code en ligne
+Chaque nœud d'outil dispose d'un éditeur **CodeMirror 6** complet avec coloration syntaxique TypeScript. Modifiez l'implémentation directement sur le canevas.
 
 ### Panneau de code (synchronisation bidirectionnelle)
-Ouvrez le **Panneau de code** pour voir tous les outils sous forme de code source TypeScript combine. Cela utilise un **analyseur AST Recast** pour une synchronisation bidirectionnelle :
-- Modification du code dans le panneau → les noeuds se mettent a jour sur le canevas
-- Modification des noeuds sur le canevas → le code se met a jour dans le panneau
+Ouvrez le **Panneau de code** pour voir tous les outils sous forme de code source TypeScript combiné. Cela utilise un **analyseur AST Recast** pour une synchronisation bidirectionnelle :
+- Modification du code dans le panneau → les nœuds se mettent à jour sur le canevas
+- Modification des nœuds sur le canevas → le code se met à jour dans le panneau
 
-### Visionneuse de schema
-Cliquez sur l'icone de schema sur n'importe quel outil pour voir son **schema JSON compatible OpenAI** genere automatiquement. Copie en un clic pour utilisation dans d'autres systemes.
+### Visionneuse de schéma
+Cliquez sur l'icône de schéma sur n'importe quel outil pour voir son **schéma JSON compatible OpenAI** généré automatiquement. Copie en un clic pour utilisation dans d'autres systèmes.
 
-## Sonder et selectionner
+## Sonder et sélectionner
 
 Pointez vers n'importe quelle URL d'API pour :
-1. **Sonder** le endpoint -- envoyer une requete et inspecter la reponse
-2. **Parcourir l'arborescence JSON** -- developper/reduire la structure de la reponse
-3. **Selectionner des champs** -- choisir les donnees dont vous avez besoin
-4. **Generer automatiquement** le code fetch et les correspondances de parametres
+1. **Sonder** le endpoint -- envoyer une requête et inspecter la réponse
+2. **Parcourir l'arborescence JSON** -- développer/réduire la structure de la réponse
+3. **Sélectionner des champs** -- choisir les données dont vous avez besoin
+4. **Générer automatiquement** le code fetch et les correspondances de paramètres
 
-## Decouverte OpenAPI
+## Découverte OpenAPI
 
-Si une API dispose d'une specification OpenAPI/Swagger :
-1. Saisissez l'URL de la specification
-2. LLMxRay analyse la specification automatiquement
+Si une API dispose d'une spécification OpenAPI/Swagger :
+1. Saisissez l'URL de la spécification
+2. LLMxRay analyse la spécification automatiquement
 3. Parcourez les endpoints disponibles
-4. Selectionnez un endpoint pour generer automatiquement une definition d'outil
+4. Sélectionnez un endpoint pour générer automatiquement une définition d'outil
 
-## Execution en direct
+## Exécution en direct
 
-Pendant le chat, lorsque le modele appelle un outil :
-- Le noeud correspondant **pulse** sur le canevas
-- Les resultats d'execution apparaissent en **superposition** sur le noeud
+Pendant le chat, lorsque le modèle appelle un outil :
+- Le nœud correspondant **pulse** sur le canevas
+- Les résultats d'exécution apparaissent en **superposition** sur le nœud
 - La chronologie des appels d'outils (dans Diagnostics de Chat) renvoie vers le canevas
 
 ## Optimiseur d'appels d'outils
 
-Lorsqu'un modele appelle un outil pendant le chat, un bouton **"Optimiser cet outil"** apparait sur le resultat. Cliquez dessus pour ouvrir le tiroir d'optimisation des reponses :
+Lorsqu'un modèle appelle un outil pendant le chat, un bouton **"Optimiser cet outil"** apparaît sur le résultat. Cliquez dessus pour ouvrir le tiroir d'optimisation des réponses :
 
-1. **Visualiser** la reponse de l'API sous forme d'arborescence JSON interactive
-2. **Selectionner** uniquement les champs dont le modele a reellement besoin
-3. **Generer automatiquement** un code fetch optimise avec extraction des champs
-4. **Creer** un nouvel outil optimise dans l'Atelier en un clic
+1. **Visualiser** la réponse de l'API sous forme d'arborescence JSON interactive
+2. **Sélectionner** uniquement les champs dont le modèle a réellement besoin
+3. **Générer automatiquement** un code fetch optimisé avec extraction des champs
+4. **Créer** un nouvel outil optimisé dans l'Atelier en un clic
 
 ## Persistance
 
-Les definitions d'outils, positions des noeuds, correspondances et configurations de sondage sont toutes persistees et survivent aux actualisations du navigateur.
+Les définitions d'outils, positions des nœuds, correspondances et configurations de sondage sont toutes persistées et survivent aux actualisations du navigateur.
 
 ## Astuces
 
-- Commencez par un modele et personnalisez-le -- c'est plus rapide que de partir de zero.
-- Utilisez la **Visionneuse de schema** pour verifier que votre definition d'outil correspond a ce que les modeles attendent.
-- Le flux de travail **Sonder et selectionner** est le moyen le plus rapide d'encapsuler une API REST en tant qu'outil.
-- Les outils sont automatiquement disponibles dans le chat lorsqu'ils sont actives.
+- Commencez par un modèle et personnalisez-le -- c'est plus rapide que de partir de zéro.
+- Utilisez la **Visionneuse de schéma** pour vérifier que votre définition d'outil correspond à ce que les modèles attendent.
+- Le flux de travail **Sonder et sélectionner** est le moyen le plus rapide d'encapsuler une API REST en tant qu'outil.
+- Les outils sont automatiquement disponibles dans le chat lorsqu'ils sont activés.

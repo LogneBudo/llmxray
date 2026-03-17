@@ -1,6 +1,6 @@
 # Badge Built with LLMxRay
 
-Montrez que votre projet, recherche ou travail universitaire utilise LLMxRay pour le test, le benchmarking ou l'analyse de modeles.
+Montrez que votre projet, recherche ou travail universitaire utilise LLMxRay pour le test, le benchmarking ou l'analyse de modèles.
 
 ## Badges
 
@@ -20,7 +20,7 @@ Montrez que votre projet, recherche ou travail universitaire utilise LLMxRay pou
 [![Built with LLMxRay](https://raw.githubusercontent.com/LogneBudo/llmxray/master/badges/built-with-llmxray.svg)](https://github.com/LogneBudo/llmxray)
 ```
 
-### Variante sombre (pour les README a theme clair)
+### Variante sombre (pour les README à thème clair)
 
 ```markdown
 [![Built with LLMxRay](https://raw.githubusercontent.com/LogneBudo/llmxray/master/badges/built-with-llmxray-dark.svg)](https://github.com/LogneBudo/llmxray)
@@ -36,12 +36,12 @@ Montrez que votre projet, recherche ou travail universitaire utilise LLMxRay pou
 
 ## Quand l'utiliser
 
-Utilisez le badge lorsque vous avez utilise LLMxRay pour :
-- Le benchmarking ou l'evaluation de modeles
+Utilisez le badge lorsque vous avez utilisé LLMxRay pour :
+- Le benchmarking ou l'évaluation de modèles
 - La recherche sur le comportement des LLM
-- La comparaison de performances entre modeles
-- Le test de fonctionnalites de tool calling
+- La comparaison de performances entre modèles
+- Le test de fonctionnalités de tool calling
 - La construction de pipelines RAG
-- Des demonstrations pedagogiques
+- Des démonstrations pédagogiques
 
 Placez-le dans le README de votre projet, en annexe de votre article de recherche ou dans vos supports de cours.

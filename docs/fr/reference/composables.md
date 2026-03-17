@@ -1,18 +1,18 @@
 # Composables
 
-LLMxRay dispose de 7 composables Vue dans `src/composables/`. Les composables encapsulent de la logique reactive reutilisable selon les conventions Vue 3.
+LLMxRay dispose de 7 composables Vue dans `src/composables/`. Les composables encapsulent de la logique réactive réutilisable selon les conventions Vue 3.
 
 ## useOllamaStream
 
 **Fichier :** `src/composables/useOllamaStream.ts`
 
-Encapsule `startGeneration` et `startChat` avec une gestion d'etat reactive du streaming.
+Encapsule `startGeneration` et `startChat` avec une gestion d'état réactive du streaming.
 
 **Retourne :**
 - `isStreaming` — Indique si un flux est actuellement actif
 - `error` — Toute erreur survenue
 - `startChat(model, messages, options)` — Lance un flux de chat
-- `startGeneration(model, prompt, options)` — Lance une generation a partir d'un prompt unique
+- `startGeneration(model, prompt, options)` — Lance une génération à partir d'un prompt unique
 - `cancel()` — Annule le flux actif
 
 **Utilisation :**
@@ -26,47 +26,47 @@ await startChat('llama3.2', messages, { temperature: 0.7 })
 
 **Fichier :** `src/composables/useMetrics.ts`
 
-Acces reactif aux metriques de session et aux statistiques agregees.
+Accès réactif aux métriques de session et aux statistiques agrégées.
 
 **Retourne :**
-- `metrics` — Metriques de la session en cours (TTFT, tokens/sec, etc.)
-- `aggregate` — Metriques agregees inter-sessions
-- `history` — Historique des metriques pour les graphiques
+- `metrics` — Métriques de la session en cours (TTFT, tokens/sec, etc.)
+- `aggregate` — Métriques agrégées inter-sessions
+- `history` — Historique des métriques pour les graphiques
 
 ## useTokenConfidence
 
 **Fichier :** `src/composables/useTokenConfidence.ts`
 
-Calcule la confiance des tokens a partir des logprobs (si disponibles) ou se rabat sur une approximation basee sur la latence.
+Calcule la confiance des tokens à partir des logprobs (si disponibles) ou se rabat sur une approximation basée sur la latence.
 
 **Retourne :**
 - `getConfidence(token)` — Renvoie un score de confiance entre 0 et 1
-- `getColor(confidence)` — Associe la confiance a une couleur CSS
+- `getColor(confidence)` — Associe la confiance à une couleur CSS
 
 ## useAgentGraph
 
 **Fichier :** `src/composables/useAgentGraph.ts`
 
-Gere la visualisation et la manipulation du graphe d'execution de l'agent.
+Gère la visualisation et la manipulation du graphe d'exécution de l'agent.
 
 **Retourne :**
-- `graph` — Etat reactif du graphe de l'agent
-- `nodes` — Liste calculee des noeuds
-- `edges` — Liste calculee des aretes
-- `addNode(node)` — Ajoute un noeud au graphe
-- `addEdge(edge)` — Ajoute une arete entre deux noeuds
+- `graph` — État réactif du graphe de l'agent
+- `nodes` — Liste calculée des nœuds
+- `edges` — Liste calculée des arêtes
+- `addNode(node)` — Ajoute un nœud au graphe
+- `addEdge(edge)` — Ajoute une arête entre deux nœuds
 
 ## useToolCanvas
 
 **Fichier :** `src/composables/useToolCanvas.ts`
 
-Gestion de l'etat du canvas d'outils, incluant le glisser-deposer, le positionnement des noeuds et la selection.
+Gestion de l'état du canvas d'outils, incluant le glisser-déposer, le positionnement des nœuds et la sélection.
 
 **Retourne :**
-- `tools` — Liste reactive des outils
-- `selectedTool` — Outil actuellement selectionne
-- `addTool(tool)` — Ajoute un noeud d'outil au canvas
-- `updateTool(id, changes)` — Met a jour les proprietes d'un outil
+- `tools` — Liste réactive des outils
+- `selectedTool` — Outil actuellement sélectionné
+- `addTool(tool)` — Ajoute un nœud d'outil au canvas
+- `updateTool(id, changes)` — Met à jour les propriétés d'un outil
 - `removeTool(id)` — Supprime un outil du canvas
 
 ## useMarkdown
@@ -76,17 +76,17 @@ Gestion de l'etat du canvas d'outils, incluant le glisser-deposer, le positionne
 Rendu Markdown avec `marked` et coloration syntaxique pour les blocs de code.
 
 **Retourne :**
-- `render(text)` — Rend une chaine Markdown en HTML
-- `renderInline(text)` — Rend du Markdown en ligne (sans elements de bloc)
+- `render(text)` — Rend une chaîne Markdown en HTML
+- `renderInline(text)` — Rend du Markdown en ligne (sans éléments de bloc)
 
 ## useFileAttachment
 
 **Fichier :** `src/composables/useFileAttachment.ts`
 
-Gestion de l'upload de fichiers avec detection de format et validation de taille.
+Gestion de l'upload de fichiers avec détection de format et validation de taille.
 
 **Retourne :**
-- `attachments` — Liste reactive des fichiers attaches
+- `attachments` — Liste réactive des fichiers attachés
 - `addFile(file)` — Traite et ajoute un fichier
-- `removeFile(index)` — Supprime une piece jointe
-- `clear()` — Efface toutes les pieces jointes
+- `removeFile(index)` — Supprime une pièce jointe
+- `clear()` — Efface toutes les pièces jointes
