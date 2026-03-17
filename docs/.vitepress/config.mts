@@ -18,11 +18,11 @@ function guideNav(prefix: string) {
         { text: fr ? 'Plongements' : 'Embeddings', link: `${prefix}/guide/embeddings` },
         { text: fr ? 'Base de Connaissances' : 'Knowledge Base', link: `${prefix}/guide/knowledge-base` },
         { text: fr ? "Atelier d'Outils" : 'Tool Workshop', link: `${prefix}/guide/tool-workshop` },
-        { text: fr ? 'Entrainement IA' : 'AI Training', link: `${prefix}/guide/ai-training` },
-        { text: fr ? 'Modeles' : 'Models', link: `${prefix}/guide/models` },
+        { text: fr ? 'Entraînement IA' : 'AI Training', link: `${prefix}/guide/ai-training` },
+        { text: fr ? 'Modèles' : 'Models', link: `${prefix}/guide/models` },
         { text: 'Benchmark', link: `${prefix}/guide/benchmark` },
-        { text: fr ? 'Mon Systeme' : 'My System', link: `${prefix}/guide/system` },
-        { text: fr ? 'Parametres' : 'Settings', link: `${prefix}/guide/settings` },
+        { text: fr ? 'Mon Système' : 'My System', link: `${prefix}/guide/system` },
+        { text: fr ? 'Paramètres' : 'Settings', link: `${prefix}/guide/settings` },
       ],
     },
   ]
@@ -32,7 +32,7 @@ function referenceNav(prefix: string) {
   const fr = prefix === '/fr'
   return [
     {
-      text: fr ? 'Reference' : 'Reference',
+      text: fr ? 'Référence' : 'Reference',
       items: [
         { text: fr ? "Vue d'ensemble" : 'Overview', link: `${prefix}/reference/` },
         { text: 'Architecture', link: `${prefix}/reference/architecture` },
@@ -40,7 +40,7 @@ function referenceNav(prefix: string) {
         { text: 'Services', link: `${prefix}/reference/services` },
         { text: 'Composables', link: `${prefix}/reference/composables` },
         { text: 'Types', link: `${prefix}/reference/types` },
-        { text: fr ? "Integration API" : 'API Integration', link: `${prefix}/reference/api-integration` },
+        { text: fr ? "Intégration API" : 'API Integration', link: `${prefix}/reference/api-integration` },
         { text: 'Testing', link: `${prefix}/reference/testing` },
       ],
     },
@@ -51,7 +51,7 @@ function communityNav(prefix: string) {
   const fr = prefix === '/fr'
   return [
     {
-      text: fr ? 'Communaute' : 'Community',
+      text: fr ? 'Communauté' : 'Community',
       items: [
         { text: fr ? "Vue d'ensemble" : 'Overview', link: `${prefix}/community/` },
         { text: fr ? 'Vitrine' : 'Showcase', link: `${prefix}/community/showcase` },
@@ -65,7 +65,7 @@ function communityNav(prefix: string) {
       text: fr ? 'Modules du Curriculum' : 'Curriculum Modules',
       items: [
         { text: fr ? 'Module 1: Qu\'est-ce qu\'un Token ?' : 'Module 1: What Is a Token?', link: `${prefix}/community/educators/module-1` },
-        { text: fr ? 'Module 2: La Temperature' : 'Module 2: Temperature', link: `${prefix}/community/educators/module-2` },
+        { text: fr ? 'Module 2: La Température' : 'Module 2: Temperature', link: `${prefix}/community/educators/module-2` },
       ],
     },
   ]
@@ -116,14 +116,14 @@ export default defineConfig({
       },
     },
     fr: {
-      label: 'Francais',
+      label: 'Français',
       lang: 'fr',
       link: '/fr/',
       themeConfig: {
         nav: [
           { text: 'Guide', link: '/fr/guide/' },
-          { text: 'Reference', link: '/fr/reference/' },
-          { text: 'Communaute', link: '/fr/community/' },
+          { text: 'Référence', link: '/fr/reference/' },
+          { text: 'Communauté', link: '/fr/community/' },
           { text: 'Site Web', link: 'https://lognebudo.github.io/llmxray/' },
         ],
         sidebar: {

@@ -32,7 +32,7 @@
   <!-- T=0.1 (very peaked) -->
   <g transform="translate(100, 80)">
     <text x="0" y="0" font-size="13" font-weight="700" fill="#4ade80">T = 0.1</text>
-    <text x="80" y="0" font-size="11" fill="#94a3b8">Déterministe</text>
+    <text x="95" y="0" font-size="11" fill="#94a3b8">Déterministe</text>
 
     <!-- Bars -->
     <rect x="22" y="-75" width="30" height="80" rx="3" fill="#4ade80" opacity="0.85"/>
@@ -56,7 +56,7 @@
   <!-- T=0.7 (moderate) -->
   <g transform="translate(100, 195)">
     <text x="0" y="0" font-size="13" font-weight="700" fill="#a855f7">T = 0.7</text>
-    <text x="80" y="0" font-size="11" fill="#94a3b8">Équilibré</text>
+    <text x="95" y="0" font-size="11" fill="#94a3b8">Équilibré</text>
 
     <!-- Bars -->
     <rect x="22" y="-48" width="30" height="53" rx="3" fill="#a855f7" opacity="0.85"/>
@@ -82,7 +82,7 @@
   <!-- T=2.0 (very flat) -->
   <g transform="translate(100, 310)">
     <text x="0" y="0" font-size="13" font-weight="700" fill="#ef4444">T = 2.0</text>
-    <text x="80" y="0" font-size="11" fill="#94a3b8">Chaotique</text>
+    <text x="95" y="0" font-size="11" fill="#94a3b8">Chaotique</text>
 
     <!-- Bars — nearly uniform -->
     <rect x="22" y="-16" width="30" height="21" rx="3" fill="#ef4444" opacity="0.7"/>
