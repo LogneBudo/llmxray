@@ -200,25 +200,42 @@ In research and production, you need to reproduce specific outputs for debugging
 
 | Paper | Authors | Year | Link |
 |---|---|---|---|
+| Distilling the Knowledge in a Neural Network | Hinton, Vinyals, Dean | 2015 | [arXiv:1503.02531](https://arxiv.org/abs/1503.02531) |
 | The Curious Case of Neural Text Degeneration | Holtzman, Buys, Du, Forbes, Choi | 2019 | [arXiv:1904.09751](https://arxiv.org/abs/1904.09751) |
 | Hierarchical Neural Story Generation | Fan, Lewis, Dauphin | 2018 | [arXiv:1805.04833](https://arxiv.org/abs/1805.04833) |
-| Mirostat: A Neural Text Decoding Algorithm | Basu, Anay, Tan, Yarin | 2020 | [arXiv:2007.14966](https://arxiv.org/abs/2007.14966) |
-| Attention Is All You Need | Vaswani et al. | 2017 | [arXiv:1706.03762](https://arxiv.org/abs/1706.03762) |
+| Mirostat: A Neural Text Decoding Algorithm | Basu, Ramachandran, Keskar, Varshney | 2020 | [arXiv:2007.14966](https://arxiv.org/abs/2007.14966) |
+| Phase Transitions in the Output Distribution of LLMs | — | 2024 | [arXiv:2405.17088](https://arxiv.org/abs/2405.17088) |
+| Turning Up the Heat: Min-p Sampling | — | 2024 | [arXiv:2407.01082](https://arxiv.org/abs/2407.01082) |
+| The Effect of Sampling Temperature on Problem Solving in LLMs | Renze, Guven | 2024 | [arXiv:2402.05201](https://arxiv.org/abs/2402.05201) |
+| CTRL: Conditional Transformer for Controllable Generation | Keskar, McCann, Varshney, Xiong, Socher | 2019 | [arXiv:1909.05858](https://arxiv.org/abs/1909.05858) |
 
 ### Tutorials and Explanations
 
 | Resource | Author | Link |
 |---|---|---|
-| Sampling Parameters Explained: Intuition to Math | Let's Data Science | [letsdatascience.com](https://letsdatascience.com/blog/llm-sampling-temperature-top-k-top-p-and-min-p-explained) |
+| The Unreasonable Effectiveness of Recurrent Neural Networks | Andrej Karpathy | [karpathy.github.io](http://karpathy.github.io/2015/05/21/rnn-effectiveness/) |
 | Generation Configurations: Temperature, Top-k, Top-p | Chip Huyen | [huyenchip.com](https://huyenchip.com/2024/01/16/sampling.html) |
-| Token Sampling Methods Primer | Aman.ai | [aman.ai/primers/ai/token-sampling](https://aman.ai/primers/ai/token-sampling/) |
-| The Illustrated Transformer | Jay Alammar | [jalammar.github.io](https://jalammar.github.io/illustrated-transformer/) |
+| Controllable Neural Text Generation | Lilian Weng | [lilianweng.github.io](https://lilianweng.github.io/posts/2021-01-02-controllable-text-generation/) |
+| Sampling Parameters Explained: Intuition to Math | Let's Data Science | [letsdatascience.com](https://letsdatascience.com/blog/llm-sampling-temperature-top-k-top-p-and-min-p-explained) |
+| Decoding Strategies in Large Language Models | mlabonne (HuggingFace) | [huggingface.co/blog](https://huggingface.co/blog/mlabonne/decoding-strategies) |
+
+### Interactive Tools
+
+| Tool | Link | What it does |
+|---|---|---|
+| Transformer Explainer | [poloclub.github.io](https://poloclub.github.io/transformer-explainer/) | Full transformer visualization with live temperature slider |
+| LLM Sampling Visualizer | [louis-7.github.io](https://louis-7.github.io/llm-sampling-visualizer/) | Adjust temperature, top-k, top-p and see distributions change |
+| Temperature & Top-k Visualizer | [andreban.github.io](https://andreban.github.io/temperature-topk-visualizer/) | Focused demo for temperature and top-k effects |
 
 ### Key Concepts
 
+**The origin of softmax temperature** comes from Hinton et al. (2015), who introduced it for knowledge distillation — transferring knowledge from a large model to a small one by "softening" the probability distribution. The same parameter was later adopted for controlling text generation diversity.
+
 **Nucleus sampling (top-p)** was introduced by Holtzman et al. (2019) as a response to the observation that standard sampling with temperature produces either too-generic (low T) or too-random (high T) text. Their insight: instead of a fixed temperature, truncate the distribution to the smallest set of tokens covering a cumulative probability threshold. This adapts automatically — when the model is confident, fewer tokens are considered; when uncertain, more options remain.
 
-**Mirostat** (Basu et al., 2020) takes this further by targeting a specific perplexity level rather than a fixed distribution shape. It dynamically adjusts the sampling to maintain consistent "surprise" regardless of whether the model is generating a predictable phrase or navigating uncertain territory.
+**The phase transition is real, not a metaphor.** Research by multiple teams (arXiv:2405.17088) using methods from statistical physics has shown that LLM output undergoes genuine phase transitions at specific temperature thresholds — with divergent statistical quantities at the transition points, just like phase transitions in physical systems.
+
+**Mirostat** (Basu et al., 2020) takes a different approach by targeting a specific perplexity level rather than a fixed distribution shape. It dynamically adjusts the sampling to maintain consistent "surprise" regardless of whether the model is generating a predictable phrase or navigating uncertain territory.
 
 ---
 
