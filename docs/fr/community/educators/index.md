@@ -40,7 +40,7 @@ Chaque module s'appuie sur le precedent. Les etudiants progressent de l'observat
 | Module | Titre | Duree | Difficulte | Le Moment Eureka |
 |---|---|---|---|---|
 | **1** | [Qu'est-ce qu'un token ?](./module-1) | 45 min | Debutant | L'IA ne pense pas en mots — elle pense en tokens |
-| **2** | Comment fonctionne la temperature ? | 60 min | Debutant | La temperature n'est pas un curseur lineaire — c'est une transition de phase |
+| **2** | [Comment fonctionne la Temperature ?](./module-2) | 60 min | Debutant | La temperature n'est pas un curseur lineaire — c'est une transition de phase |
 | **3** | L'IA peut-elle mentir ? | 90 min | Intermediaire | Une confiance elevee ne signifie pas la verite |
 | **4** | Que voit le modele ? | 45 min | Intermediaire | Les embeddings capturent le sujet, pas le sentiment |
 | **5** | Quand le modele oublie-t-il ? | 60 min | Intermediaire | Le contexte n'est pas de la memoire — c'est une fenetre glissante |
@@ -49,7 +49,7 @@ Chaque module s'appuie sur le precedent. Les etudiants progressent de l'observat
 | **8** | La vue d'ensemble | 120 min | Avance | Vous pouvez contribuer a de la vraie recherche en IA |
 
 ::: info Modules disponibles
-Le Module 1 est disponible des maintenant. Les Modules 2 a 8 arrivent prochainement. Chaque module contient des exercices pratiques avec LLMxRay, un contexte conceptuel ancre dans la recherche publiee, et des options d'evaluation.
+Les Modules 1 et 2 sont disponibles des maintenant. Les Modules 3 a 8 arrivent prochainement. Chaque module contient des exercices pratiques avec LLMxRay, un contexte conceptuel ancre dans la recherche publiee, et des options d'evaluation.
 :::
 
 ---

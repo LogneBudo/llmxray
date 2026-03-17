@@ -40,7 +40,7 @@ Each module builds on the previous one. Students progress from observation to ex
 | Module | Title | Duration | Difficulty | The Aha Moment |
 |---|---|---|---|---|
 | **1** | [What Is a Token?](./module-1) | 45 min | Beginner | AI doesn't think in words — it thinks in tokens |
-| **2** | How Does Temperature Work? | 60 min | Beginner | Temperature isn't a linear dial — it's a phase transition |
+| **2** | [How Does Temperature Work?](./module-2) | 60 min | Beginner | Temperature isn't a linear dial — it's a phase transition |
 | **3** | Can AI Lie? | 90 min | Intermediate | High confidence does not mean truth |
 | **4** | What Does the Model See? | 45 min | Intermediate | Embeddings capture topic, not sentiment |
 | **5** | When Does the Model Forget? | 60 min | Intermediate | Context isn't memory — it's a sliding window |
@@ -49,7 +49,7 @@ Each module builds on the previous one. Students progress from observation to ex
 | **8** | The Full Picture | 120 min | Advanced | You can contribute to real AI research |
 
 ::: info Available Modules
-Module 1 is available now. Modules 2-8 are coming soon. Each module contains hands-on exercises with LLMxRay, conceptual background grounded in published research, and assessment options.
+Modules 1 and 2 are available now. Modules 3-8 are coming soon. Each module contains hands-on exercises with LLMxRay, conceptual background grounded in published research, and assessment options.
 :::
 
 ---

@@ -65,6 +65,7 @@ function communityNav(prefix: string) {
       text: fr ? 'Modules du Curriculum' : 'Curriculum Modules',
       items: [
         { text: fr ? 'Module 1: Qu\'est-ce qu\'un Token ?' : 'Module 1: What Is a Token?', link: `${prefix}/community/educators/module-1` },
+        { text: fr ? 'Module 2: La Temperature' : 'Module 2: Temperature', link: `${prefix}/community/educators/module-2` },
       ],
     },
   ]
