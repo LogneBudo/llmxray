@@ -58,7 +58,13 @@ function communityNav(prefix: string) {
         { text: fr ? 'Benchmarks Communautaires' : 'Community Benchmarks', link: `${prefix}/community/benchmarks` },
         { text: fr ? 'Outils Communautaires' : 'Community Tools', link: `${prefix}/community/tools` },
         { text: 'Badge', link: `${prefix}/community/badge` },
-        { text: fr ? 'Kit Enseignants' : 'Educators Kit', link: `${prefix}/community/educators` },
+        { text: fr ? 'Kit Enseignants' : 'Educators Kit', link: `${prefix}/community/educators/` },
+      ],
+    },
+    {
+      text: fr ? 'Modules du Curriculum' : 'Curriculum Modules',
+      items: [
+        { text: fr ? 'Module 1: Qu\'est-ce qu\'un Token ?' : 'Module 1: What Is a Token?', link: `${prefix}/community/educators/module-1` },
       ],
     },
   ]
@@ -86,6 +92,7 @@ export default defineConfig({
 
   ignoreDeadLinks: [
     /localhost/,
+    /module-\d+/,
   ],
 
   locales: {

@@ -29,4 +29,8 @@ features:
     details: "Cr\xE9ez, modifiez et testez des d\xE9finitions d'outils sur un canevas visuel \xE0 base de noeuds avec synchronisation bidirectionnelle du code."
   - title: "100 % Local & Gratuit"
     details: "Tout s'ex\xE9cute sur votre mat\xE9riel via Ollama. Pas de cloud, pas de cl\xE9s API, aucun co\xFBt. Vos donn\xE9es restent les v\xF4tres."
+  - title: Kit Enseignants
+    details: "Curriculum progressif en 8 modules pour cours d'IA/ML. De 'Qu'est-ce qu'un token ?' jusqu'\xE0 la recherche originale. Gratuit, ancr\xE9 dans la science publi\xE9e."
+    link: /fr/community/educators/
+    linkText: Voir le Curriculum
 ---

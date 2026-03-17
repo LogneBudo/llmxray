@@ -29,4 +29,8 @@ features:
     details: Build, edit, and test tool definitions on a visual node-based canvas with bidirectional code sync.
   - title: 100% Local & Free
     details: Everything runs on your hardware via Ollama. No cloud, no API keys, no cost. Your data stays yours.
+  - title: Educators Kit
+    details: 8-module progressive curriculum for AI/ML courses. From "What is a token?" to original research. Free, grounded in published science.
+    link: /en/community/educators/
+    linkText: View Curriculum
 ---
