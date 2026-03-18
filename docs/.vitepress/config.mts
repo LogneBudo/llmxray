@@ -22,6 +22,7 @@ function guideNav(prefix: string) {
         { text: fr ? 'Entraînement IA' : 'AI Training', link: `${prefix}/guide/ai-training` },
         { text: fr ? 'Modèles' : 'Models', link: `${prefix}/guide/models` },
         { text: 'Benchmark', link: `${prefix}/guide/benchmark` },
+        { text: fr ? 'Constructeur de Benchmark' : 'Benchmark Builder', link: `${prefix}/guide/benchmark-builder` },
         { text: fr ? 'Mon Système' : 'My System', link: `${prefix}/guide/system` },
         { text: fr ? 'Paramètres' : 'Settings', link: `${prefix}/guide/settings` },
         { text: fr ? 'Exporter vos données' : 'Exporting Your Data', link: `${prefix}/guide/export` },

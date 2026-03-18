@@ -60,6 +60,8 @@ Click **Import** to load a custom benchmark suite. The expected format is a JSON
 - Suite name and description
 - Array of questions, each with: question text, answer choices, correct answer index, and optional category
 
+You can also create custom suites directly in the app using the **Benchmark Suite Builder** — add questions manually or let a local model generate them for you. See the [Benchmark Builder guide](./benchmark-builder) for details.
+
 ## Exporting Results
 
 Click the **Export** button in the results header to download your benchmark data as **JSON**, **CSV**, or **Markdown**. JSON includes full structured data for scripting and analysis; CSV provides flat tabular data for spreadsheets; Markdown gives you a formatted report ready to paste into documents. See the [Export guide](./export) for details on all export options and sharing to GitHub Discussions.

@@ -4,10 +4,26 @@ import { useModelStore } from '@/stores/model-store'
 import { useBenchmarkStore } from '@/stores/benchmark-store'
 import { BUILTIN_SUITES, BUILTIN_SUITE_IDS } from '@/data/benchmarks'
 import ModelCapabilityIcons from '@/components/common/ModelCapabilityIcons.vue'
+import BenchmarkBuilderDialog from './BenchmarkBuilderDialog.vue'
+import type { BenchmarkSuite } from '@/types/benchmark'
 
 const emit = defineEmits<{
   openImport: []
 }>()
+
+const showBuilder = ref(false)
+const editingSuite = ref<BenchmarkSuite | undefined>(undefined)
+
+function openBuilder(suite?: BenchmarkSuite) {
+  editingSuite.value = suite
+  showBuilder.value = true
+}
+
+async function onBuilderSaved(suite: BenchmarkSuite) {
+  await benchmarkStore.importCustomSuite(JSON.stringify(suite))
+  showBuilder.value = false
+  editingSuite.value = undefined
+}
 
 const modelStore = useModelStore()
 const benchmarkStore = useBenchmarkStore()
@@ -106,12 +122,20 @@ onMounted(() => {
     <div class="rounded-lg border border-border-default bg-surface-raised p-4">
       <div class="mb-3 flex items-center justify-between">
         <h3 class="text-sm font-medium text-text-primary">{{ $t('benchmark.configurator.benchmarkSuites') }}</h3>
-        <button
-          class="rounded-md border border-border-default px-2.5 py-1 text-[11px] text-text-secondary hover:border-accent hover:text-text-primary transition-colors"
-          @click="$emit('openImport')"
-        >
-          {{ $t('benchmark.configurator.importCustom') }}
-        </button>
+        <div class="flex gap-2">
+          <button
+            class="rounded-md border border-border-default px-2.5 py-1 text-[11px] text-text-secondary hover:border-accent hover:text-text-primary transition-colors"
+            @click="openBuilder()"
+          >
+            {{ $t('benchmark.builder.createSuite') }}
+          </button>
+          <button
+            class="rounded-md border border-border-default px-2.5 py-1 text-[11px] text-text-secondary hover:border-accent hover:text-text-primary transition-colors"
+            @click="$emit('openImport')"
+          >
+            {{ $t('benchmark.configurator.importCustom') }}
+          </button>
+        </div>
       </div>
       <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
         <button
@@ -135,7 +159,15 @@ onMounted(() => {
             <span class="text-[10px] text-text-muted">{{ suite.questions.length }}q</span>
           </div>
           <span class="mt-1 text-[10px] text-text-muted line-clamp-2">{{ suite.description }}</span>
-          <span v-if="!suite.builtIn" class="mt-1 inline-block rounded-full bg-warning/10 px-1.5 py-0.5 text-[9px] text-warning">{{ $t('benchmark.configurator.custom') }}</span>
+          <div v-if="!suite.builtIn" class="mt-1 flex items-center gap-2">
+            <span class="inline-block rounded-full bg-warning/10 px-1.5 py-0.5 text-[9px] text-warning">{{ $t('benchmark.configurator.custom') }}</span>
+            <button
+              class="text-[9px] text-text-muted hover:text-accent transition-colors"
+              @click.stop="openBuilder(suite)"
+            >
+              {{ $t('common.actions.edit') }}
+            </button>
+          </div>
         </button>
       </div>
     </div>
@@ -178,5 +210,13 @@ onMounted(() => {
         {{ $t('benchmark.configurator.runBenchmark') }}
       </button>
     </div>
+
+    <!-- Builder Dialog -->
+    <BenchmarkBuilderDialog
+      v-if="showBuilder"
+      :edit-suite="editingSuite"
+      @close="showBuilder = false"
+      @saved="onBuilderSaved"
+    />
   </div>
 </template>

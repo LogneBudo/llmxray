@@ -60,6 +60,8 @@ Cliquez sur **Importer** pour charger une suite de benchmark personnalisée. Le 
 - Nom et description de la suite
 - Tableau de questions, chacune avec : texte de la question, choix de réponses, index de la réponse correcte et catégorie optionnelle
 
+Vous pouvez aussi créer des suites personnalisées directement dans l'application avec le **Constructeur de Suites de Benchmark** — ajoutez des questions manuellement ou laissez un modèle local les générer pour vous. Consultez le [guide du Constructeur de Benchmark](./benchmark-builder) pour plus de détails.
+
 ## Exporter les resultats
 
 Cliquez sur le bouton **Exporter** dans l'en-tete des resultats pour telecharger vos donnees de benchmark en **JSON**, **CSV** ou **Markdown**. Le JSON inclut les donnees structurees completes pour le scripting et l'analyse ; le CSV fournit des donnees tabulaires plates pour les tableurs ; le Markdown vous donne un rapport formate pret a coller dans vos documents. Consultez le [guide d'export](./export) pour plus de details sur toutes les options d'export et le partage sur GitHub Discussions.
