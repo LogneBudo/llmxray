@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 350" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="bgBiasFr" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f0a2e"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="350" rx="16" fill="url(#bgBiasFr)"/>
+
+  <text x="400" y="32" text-anchor="middle" font-size="18" font-weight="700" fill="#e2e8f0">Comment fonctionne le biais de tokenisation</text>
+  <text x="400" y="52" text-anchor="middle" font-size="12" fill="#94a3b8">Le m&#xEA;me algorithme BPE, des r&#xE9;sultats tr&#xE8;s diff&#xE9;rents</text>
+
+  <!-- English pipeline (top) -->
+  <text x="40" y="90" font-size="11" font-weight="600" fill="#4ade80">Entr&#xE9;e anglaise</text>
+  <rect x="40" y="98" width="190" height="34" rx="8" fill="rgba(74,222,128,0.08)" stroke="#4ade80" stroke-width="1"/>
+  <text x="135" y="120" text-anchor="middle" font-size="12" fill="#e2e8f0">"Hello, how are you?"</text>
+
+  <!-- Arrow -->
+  <line x1="240" y1="115" x2="290" y2="115" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrowGray)"/>
+  <text x="265" y="108" text-anchor="middle" font-size="9" fill="#94a3b8">BPE</text>
+
+  <!-- English tokens (compact, green) -->
+  <g transform="translate(300, 98)">
+    <rect x="0" y="0" width="58" height="34" rx="6" fill="rgba(74,222,128,0.15)" stroke="#4ade80" stroke-width="1"/>
+    <text x="29" y="21" text-anchor="middle" font-size="11" fill="#4ade80">Hello</text>
+    <rect x="64" y="0" width="20" height="34" rx="6" fill="rgba(74,222,128,0.15)" stroke="#4ade80" stroke-width="1"/>
+    <text x="74" y="21" text-anchor="middle" font-size="11" fill="#4ade80">,</text>
+    <rect x="90" y="0" width="44" height="34" rx="6" fill="rgba(74,222,128,0.15)" stroke="#4ade80" stroke-width="1"/>
+    <text x="112" y="21" text-anchor="middle" font-size="11" fill="#4ade80">how</text>
+    <rect x="140" y="0" width="40" height="34" rx="6" fill="rgba(74,222,128,0.15)" stroke="#4ade80" stroke-width="1"/>
+    <text x="160" y="21" text-anchor="middle" font-size="11" fill="#4ade80">are</text>
+    <rect x="186" y="0" width="44" height="34" rx="6" fill="rgba(74,222,128,0.15)" stroke="#4ade80" stroke-width="1"/>
+    <text x="208" y="21" text-anchor="middle" font-size="11" fill="#4ade80">you</text>
+    <rect x="236" y="0" width="20" height="34" rx="6" fill="rgba(74,222,128,0.15)" stroke="#4ade80" stroke-width="1"/>
+    <text x="246" y="21" text-anchor="middle" font-size="11" fill="#4ade80">?</text>
+  </g>
+
+  <!-- Token count label -->
+  <rect x="580" y="98" width="100" height="34" rx="8" fill="rgba(74,222,128,0.1)" stroke="#4ade80" stroke-width="1" stroke-dasharray="4"/>
+  <text x="630" y="112" text-anchor="middle" font-size="11" font-weight="700" fill="#4ade80">6 tokens</text>
+  <text x="630" y="126" text-anchor="middle" font-size="9" fill="#94a3b8">compact</text>
+
+  <!-- Center divider -->
+  <line x1="60" y1="160" x2="740" y2="160" stroke="#334155" stroke-width="1" stroke-dasharray="6"/>
+  <rect x="280" y="148" width="240" height="24" rx="12" fill="#1e1b4b" stroke="#334155" stroke-width="1"/>
+  <text x="400" y="164" text-anchor="middle" font-size="10" font-weight="600" fill="#fbbf24">M&#xEA;me sens, m&#xEA;me tokenizer</text>
+
+  <!-- Arabic pipeline (bottom) -->
+  <text x="40" y="200" font-size="11" font-weight="600" fill="#f87171">Entr&#xE9;e arabe</text>
+  <rect x="40" y="208" width="190" height="34" rx="8" fill="rgba(248,113,113,0.08)" stroke="#f87171" stroke-width="1"/>
+  <text x="135" y="228" text-anchor="middle" font-size="12" fill="#e2e8f0" direction="rtl">"&#x645;&#x631;&#x62D;&#x628;&#x627;&#x60C; &#x643;&#x64A;&#x641; &#x62D;&#x627;&#x644;&#x643;&#x61F;"</text>
+
+  <!-- Arrow -->
+  <line x1="240" y1="225" x2="290" y2="225" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="265" y="218" text-anchor="middle" font-size="9" fill="#94a3b8">BPE</text>
+
+  <!-- Arabic tokens (fragmented, red/orange — show many small boxes) -->
+  <g transform="translate(300, 208)">
+    <rect x="0" y="0" width="24" height="34" rx="4" fill="rgba(248,113,113,0.15)" stroke="#f87171" stroke-width="1"/>
+    <text x="12" y="21" text-anchor="middle" font-size="9" fill="#fb923c">b1</text>
+    <rect x="28" y="0" width="24" height="34" rx="4" fill="rgba(248,113,113,0.15)" stroke="#f87171" stroke-width="1"/>
+    <text x="40" y="21" text-anchor="middle" font-size="9" fill="#fb923c">b2</text>
+    <rect x="56" y="0" width="24" height="34" rx="4" fill="rgba(248,113,113,0.15)" stroke="#f87171" stroke-width="1"/>
+    <text x="68" y="21" text-anchor="middle" font-size="9" fill="#fb923c">b3</text>
+    <rect x="84" y="0" width="24" height="34" rx="4" fill="rgba(251,146,60,0.15)" stroke="#fb923c" stroke-width="1"/>
+    <text x="96" y="21" text-anchor="middle" font-size="9" fill="#fb923c">b4</text>
+    <rect x="112" y="0" width="24" height="34" rx="4" fill="rgba(251,146,60,0.15)" stroke="#fb923c" stroke-width="1"/>
+    <text x="124" y="21" text-anchor="middle" font-size="9" fill="#fb923c">b5</text>
+    <rect x="140" y="0" width="24" height="34" rx="4" fill="rgba(251,146,60,0.15)" stroke="#fb923c" stroke-width="1"/>
+    <text x="152" y="21" text-anchor="middle" font-size="9" fill="#fb923c">b6</text>
+    <rect x="168" y="0" width="24" height="34" rx="4" fill="rgba(248,113,113,0.15)" stroke="#f87171" stroke-width="1"/>
+    <text x="180" y="21" text-anchor="middle" font-size="9" fill="#fb923c">b7</text>
+    <rect x="196" y="0" width="24" height="34" rx="4" fill="rgba(248,113,113,0.15)" stroke="#f87171" stroke-width="1"/>
+    <text x="208" y="21" text-anchor="middle" font-size="9" fill="#fb923c">b8</text>
+    <rect x="224" y="0" width="24" height="34" rx="4" fill="rgba(248,113,113,0.15)" stroke="#f87171" stroke-width="1"/>
+    <text x="236" y="21" text-anchor="middle" font-size="9" fill="#fb923c">b9</text>
+  </g>
+
+  <!-- Second row of Arabic tokens -->
+  <g transform="translate(300, 248)">
+    <rect x="0" y="0" width="24" height="34" rx="4" fill="rgba(251,146,60,0.15)" stroke="#fb923c" stroke-width="1"/>
+    <text x="12" y="21" text-anchor="middle" font-size="9" fill="#fb923c">b10</text>
+    <rect x="28" y="0" width="24" height="34" rx="4" fill="rgba(251,146,60,0.15)" stroke="#fb923c" stroke-width="1"/>
+    <text x="40" y="21" text-anchor="middle" font-size="9" fill="#fb923c">b11</text>
+    <rect x="56" y="0" width="24" height="34" rx="4" fill="rgba(248,113,113,0.15)" stroke="#f87171" stroke-width="1"/>
+    <text x="68" y="21" text-anchor="middle" font-size="9" fill="#fb923c">b12</text>
+    <rect x="84" y="0" width="24" height="34" rx="4" fill="rgba(248,113,113,0.15)" stroke="#f87171" stroke-width="1"/>
+    <text x="96" y="21" text-anchor="middle" font-size="9" fill="#fb923c">b13</text>
+    <rect x="112" y="0" width="24" height="34" rx="4" fill="rgba(248,113,113,0.15)" stroke="#f87171" stroke-width="1"/>
+    <text x="124" y="21" text-anchor="middle" font-size="9" fill="#fb923c">b14</text>
+    <rect x="140" y="0" width="24" height="34" rx="4" fill="rgba(251,146,60,0.15)" stroke="#fb923c" stroke-width="1"/>
+    <text x="152" y="21" text-anchor="middle" font-size="9" fill="#fb923c">b15</text>
+    <rect x="168" y="0" width="24" height="34" rx="4" fill="rgba(248,113,113,0.15)" stroke="#f87171" stroke-width="1"/>
+    <text x="180" y="21" text-anchor="middle" font-size="9" fill="#fb923c">b16</text>
+    <rect x="196" y="0" width="24" height="34" rx="4" fill="rgba(248,113,113,0.15)" stroke="#f87171" stroke-width="1"/>
+    <text x="208" y="21" text-anchor="middle" font-size="9" fill="#fb923c">b17</text>
+    <rect x="224" y="0" width="24" height="34" rx="4" fill="rgba(248,113,113,0.15)" stroke="#f87171" stroke-width="1"/>
+    <text x="236" y="21" text-anchor="middle" font-size="9" fill="#fb923c">b18</text>
+  </g>
+
+  <!-- Token count label -->
+  <rect x="580" y="228" width="100" height="34" rx="8" fill="rgba(248,113,113,0.1)" stroke="#f87171" stroke-width="1" stroke-dasharray="4"/>
+  <text x="630" y="242" text-anchor="middle" font-size="11" font-weight="700" fill="#f87171">18 tokens</text>
+  <text x="630" y="256" text-anchor="middle" font-size="9" fill="#94a3b8">fragment&#xE9;</text>
+
+  <!-- Multiplier badge -->
+  <rect x="700" y="148" width="60" height="36" rx="10" fill="rgba(251,191,36,0.15)" stroke="#fbbf24" stroke-width="1.5"/>
+  <text x="730" y="164" text-anchor="middle" font-size="14" font-weight="700" fill="#fbbf24">3x</text>
+  <text x="730" y="178" text-anchor="middle" font-size="8" fill="#fbbf24">de plus</text>
+
+  <!-- Insight box -->
+  <g transform="translate(40, 300)">
+    <rect x="0" y="0" width="720" height="38" rx="10" fill="rgba(168,85,247,0.06)" stroke="#a855f7" stroke-width="1" stroke-dasharray="4"/>
+    <text x="360" y="16" text-anchor="middle" font-size="10" fill="#e2e8f0">Les mots anglais correspondent aux r&#xE8;gles de fusion courantes. Les caract&#xE8;res arabes retombent en encodage octet par octet.</text>
+    <text x="360" y="30" text-anchor="middle" font-size="10" font-weight="600" fill="#fbbf24">Chaque caract&#xE8;re devient plusieurs tokens &#x2014; le m&#xEA;me sens, 3x le co&#xFB;t.</text>
+  </g>
+</svg>

@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 380" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="bgTax" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f0a2e"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="380" rx="16" fill="url(#bgTax)"/>
+
+  <text x="400" y="32" text-anchor="middle" font-size="18" font-weight="700" fill="#e2e8f0">The Token Tax Across Languages</text>
+  <text x="400" y="52" text-anchor="middle" font-size="12" fill="#94a3b8">Same sentence, wildly different token costs</text>
+
+  <!-- Subtitle: the sentence -->
+  <text x="400" y="72" text-anchor="middle" font-size="10" fill="#64748b">"The weather is nice today" &#x2014; translated into 6 languages</text>
+
+  <!-- Chart area: bars start at x=200, max bar width = 480 (for 22 tokens) -->
+  <!-- Scale: 480px / 22 tokens = ~21.8px per token -->
+
+  <!-- English: 6 tokens -->
+  <text x="190" y="108" text-anchor="end" font-size="12" font-weight="600" fill="#e2e8f0">English</text>
+  <text x="190" y="120" text-anchor="end" font-size="9" fill="#94a3b8">baseline</text>
+  <rect x="200" y="98" width="131" height="28" rx="6" fill="rgba(74,222,128,0.25)" stroke="#4ade80" stroke-width="1"/>
+  <text x="340" y="117" text-anchor="start" font-size="12" font-weight="700" fill="#4ade80">6 tokens</text>
+  <text x="408" y="117" text-anchor="start" font-size="10" fill="#94a3b8">1.0x</text>
+
+  <!-- French: 8 tokens -->
+  <text x="190" y="156" text-anchor="end" font-size="12" font-weight="600" fill="#e2e8f0">French</text>
+  <text x="190" y="168" text-anchor="end" font-size="9" fill="#94a3b8">Le temps est beau...</text>
+  <rect x="200" y="146" width="175" height="28" rx="6" fill="rgba(74,222,128,0.2)" stroke="#4ade80" stroke-width="1"/>
+  <text x="384" y="165" text-anchor="start" font-size="12" font-weight="700" fill="#4ade80">8 tokens</text>
+  <text x="452" y="165" text-anchor="start" font-size="10" fill="#94a3b8">1.3x</text>
+
+  <!-- German: 9 tokens -->
+  <text x="190" y="204" text-anchor="end" font-size="12" font-weight="600" fill="#e2e8f0">German</text>
+  <text x="190" y="216" text-anchor="end" font-size="9" fill="#94a3b8">Das Wetter ist...</text>
+  <rect x="200" y="194" width="196" height="28" rx="6" fill="rgba(250,204,21,0.2)" stroke="#facc15" stroke-width="1"/>
+  <text x="406" y="213" text-anchor="start" font-size="12" font-weight="700" fill="#facc15">9 tokens</text>
+  <text x="474" y="213" text-anchor="start" font-size="10" fill="#94a3b8">1.5x</text>
+
+  <!-- Chinese: 12 tokens -->
+  <text x="190" y="252" text-anchor="end" font-size="12" font-weight="600" fill="#e2e8f0">Chinese</text>
+  <text x="190" y="264" text-anchor="end" font-size="9" fill="#94a3b8">&#x4ECA;&#x5929;&#x5929;&#x6C14;&#x5F88;&#x597D;</text>
+  <rect x="200" y="242" width="262" height="28" rx="6" fill="rgba(250,204,21,0.25)" stroke="#facc15" stroke-width="1"/>
+  <text x="472" y="261" text-anchor="start" font-size="12" font-weight="700" fill="#facc15">12 tokens</text>
+  <text x="546" y="261" text-anchor="start" font-size="10" fill="#94a3b8">2.0x</text>
+
+  <!-- Arabic: 18 tokens -->
+  <text x="190" y="300" text-anchor="end" font-size="12" font-weight="600" fill="#e2e8f0">Arabic</text>
+  <text x="190" y="312" text-anchor="end" font-size="9" fill="#94a3b8">&#x627;&#x644;&#x637;&#x642;&#x633; &#x62C;&#x645;&#x64A;&#x644; &#x627;&#x644;&#x64A;&#x648;&#x645;</text>
+  <rect x="200" y="290" width="393" height="28" rx="6" fill="rgba(251,146,60,0.25)" stroke="#fb923c" stroke-width="1"/>
+  <text x="602" y="309" text-anchor="start" font-size="12" font-weight="700" fill="#fb923c">18 tokens</text>
+  <text x="676" y="309" text-anchor="start" font-size="10" fill="#94a3b8">3.0x</text>
+
+  <!-- Hindi: 22 tokens -->
+  <text x="190" y="348" text-anchor="end" font-size="12" font-weight="600" fill="#e2e8f0">Hindi</text>
+  <text x="190" y="360" text-anchor="end" font-size="9" fill="#94a3b8">&#x0906;&#x091C; &#x092E;&#x094C;&#x0938;&#x092E; &#x0905;&#x091A;&#x094D;&#x091B;&#x093E; &#x0939;&#x0948;</text>
+  <rect x="200" y="338" width="480" height="28" rx="6" fill="rgba(248,113,113,0.25)" stroke="#f87171" stroke-width="1"/>
+  <text x="690" y="357" text-anchor="start" font-size="12" font-weight="700" fill="#f87171">22</text>
+  <text x="710" y="357" text-anchor="start" font-size="10" fill="#94a3b8">3.7x</text>
+
+  <!-- Insight box -->
+  <g transform="translate(40, 334)">
+    <!-- Moved down to avoid overlap; using absolute positioning instead -->
+  </g>
+</svg>
