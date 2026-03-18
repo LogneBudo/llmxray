@@ -79,7 +79,6 @@ export default defineConfig({
   base: '/llmxray/docs/',
 
   head: [
-    ['meta', { name: 'google-site-verification', content: 'RX-PTSY9zNEgXtuELI1ETQfC0wO_07Y6VatxSE2m-Qg' }],
     ['link', { rel: 'icon', href: '/llmxray/docs/favicon.svg' }],
     ['meta', { property: 'og:title', content: 'LLMxRay — Local LLM Observatory | Free AI Model Analysis' }],
     ['meta', { property: 'og:description', content: 'See what your AI is actually doing — token by token, layer by layer. Stream, compare, benchmark, and inspect local LLMs with zero cloud, zero cost. Run with npx llmxray.' }],
