@@ -3,6 +3,7 @@ import { ref, computed } from 'vue'
 import { nanoid } from 'nanoid'
 import type { ComparisonRun, ComparisonExecution, ComparisonSlot } from '@/types/comparison'
 import { comparisonDB } from '@/services/comparison-db'
+import { recordComparison } from '@/services/history-writer'
 
 export const useComparisonStore = defineStore('comparison', () => {
   const runs = ref<Map<string, ComparisonRun>>(new Map())
@@ -60,6 +61,7 @@ export const useComparisonStore = defineStore('comparison', () => {
       run.status = allDone ? 'completed' : 'partial'
       // Auto-save to IndexedDB
       comparisonDB.saveRun(run).catch(() => { /* silent — persistence is best-effort */ })
+      recordComparison(run)
     }
   }
 

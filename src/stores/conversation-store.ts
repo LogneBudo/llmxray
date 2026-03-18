@@ -4,6 +4,7 @@ import { nanoid } from 'nanoid'
 import type { Conversation, ChatMessage } from '@/types/conversation'
 import type { OllamaChatMessage, OllamaOptions } from '@/types/ollama'
 import { conversationDB } from '@/services/conversation-db'
+import { recordChat } from '@/services/history-writer'
 
 export const useConversationStore = defineStore('conversations', () => {
   const conversations = ref<Map<string, Conversation>>(new Map())
@@ -113,6 +114,10 @@ export const useConversationStore = defineStore('conversations', () => {
       // Now persist the completed message
       conversationDB.saveMessage(msg).catch(console.error)
       conversationDB.saveConversationMeta(conv).catch(console.error)
+      // Record to history when an assistant message completes
+      if (msg.role === 'assistant') {
+        recordChat(conversationId, conv.model, conv.name, conv.messages.length)
+      }
     }
   }
 

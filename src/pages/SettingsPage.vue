@@ -7,6 +7,7 @@ import SettingsGeneralTab from '@/components/settings/SettingsGeneralTab.vue'
 import SettingsModelsTab from '@/components/settings/SettingsModelsTab.vue'
 import SettingsIntegrationsTab from '@/components/settings/SettingsIntegrationsTab.vue'
 import SettingsAboutTab from '@/components/settings/SettingsAboutTab.vue'
+import SettingsHistoryTab from '@/components/settings/SettingsHistoryTab.vue'
 
 const { t } = useI18n()
 const route = useRoute()
@@ -17,6 +18,7 @@ const tabs = computed(() => [
   { key: 'models', label: t('settings.tabs.models') },
   { key: 'integrations', label: t('settings.tabs.integrations') },
   { key: 'about', label: t('settings.tabs.about') },
+  { key: 'history', label: t('settings.tabs.history') },
 ])
 </script>
 
@@ -27,5 +29,6 @@ const tabs = computed(() => [
     <SettingsModelsTab v-else-if="activeTab === 'models'" />
     <SettingsIntegrationsTab v-else-if="activeTab === 'integrations'" />
     <SettingsAboutTab v-else-if="activeTab === 'about'" />
+    <SettingsHistoryTab v-else-if="activeTab === 'history'" />
   </div>
 </template>

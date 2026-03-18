@@ -26,6 +26,7 @@ function guideNav(prefix: string) {
         { text: fr ? 'Mon Système' : 'My System', link: `${prefix}/guide/system` },
         { text: fr ? 'Paramètres' : 'Settings', link: `${prefix}/guide/settings` },
         { text: fr ? 'Exporter vos données' : 'Exporting Your Data', link: `${prefix}/guide/export` },
+        { text: fr ? 'Historique local' : 'Local History', link: `${prefix}/guide/history` },
       ],
     },
   ]

@@ -10,6 +10,7 @@ import type {
   QuestionResult,
 } from '@/types/benchmark'
 import { benchmarkDB } from '@/services/benchmark-db'
+import { recordBenchmark } from '@/services/history-writer'
 import { runBenchmark, aggregateCategories } from '@/services/benchmark-runner'
 import { useModelStore } from '@/stores/model-store'
 
@@ -133,6 +134,7 @@ export const useBenchmarkStore = defineStore('benchmark', () => {
             latestResult.value = benchmarkResult
             savedResults.value.push(benchmarkResult)
             benchmarkDB.saveResult(benchmarkResult)
+            recordBenchmark(benchmarkResult)
           },
           onError(error) {
             runState.value.error = error.message
@@ -278,6 +280,7 @@ export const useBenchmarkStore = defineStore('benchmark', () => {
             latestResult.value = snapshot
             // Deep-clone to strip any remaining reactive proxies before IndexedDB put()
             benchmarkDB.saveResult(JSON.parse(JSON.stringify(snapshot)))
+            recordBenchmark(snapshot)
           },
           onComplete() {
             // Already saved incrementally in onQuestionComplete

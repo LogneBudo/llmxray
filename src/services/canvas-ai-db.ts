@@ -1,4 +1,5 @@
 import type { AiTrainingPair } from '@/types/canvas-ai'
+import { recordTrainingPair } from '@/services/history-writer'
 
 const DB_NAME = 'llmxray-canvas-ai'
 const DB_VERSION = 2
@@ -65,6 +66,7 @@ export const canvasAiDB = {
     tx.objectStore(STORE_NAME).put(pair)
     await txPromise(tx)
     db.close()
+    recordTrainingPair(pair.id, pair.model, pair.phase, pair.toolName, pair.accepted)
   },
 
   async updateAccepted(id: string, accepted = true): Promise<void> {

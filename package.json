@@ -1,6 +1,6 @@
 {
   "name": "llmxray",
-  "version": "0.3.5",
+  "version": "0.4.0",
   "description": "Local LLM Observatory — See what your AI is actually doing, token by token.",
   "license": "Apache-2.0",
   "type": "module",
@@ -36,6 +36,7 @@
     "deploy": "bash scripts/deploy-site.sh"
   },
   "dependencies": {
+    "dexie": "^4.3.0",
     "express": "^5.1.0",
     "franc-min": "^6.2.0",
     "http-proxy-middleware": "^3.0.3",

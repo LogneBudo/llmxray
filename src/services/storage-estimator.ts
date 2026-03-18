@@ -34,6 +34,8 @@ const DB_REGISTRY: DbRegistryEntry[] = [
   { id: 'benchmarks', dbName: 'llmxray-benchmarks', label: 'Benchmarks', icon: '\u23F1', stores: ['results', 'custom-suites'] },
   { id: 'message-memory', dbName: 'llmxray-message-memory', label: 'Message Memory', icon: '\u{1F9E0}', stores: ['messages'] },
   { id: 'canvas-ai', dbName: 'llmxray-canvas-ai', label: 'AI Training', icon: '\u{1F3A8}', stores: ['training-pairs'] },
+  { id: 'comparisons', dbName: 'llmxray-comparisons', label: 'Comparisons', icon: '\u2696', stores: ['runs'] },
+  { id: 'history', dbName: 'llmxray-history', label: 'History', icon: '\u{1F4C5}', stores: ['entries'] },
 ]
 
 /** Estimate total origin storage via the StorageManager API */

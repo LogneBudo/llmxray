@@ -3,7 +3,8 @@
     "general": "Général",
     "models": "Modèles",
     "integrations": "Intégrations",
-    "about": "À propos"
+    "about": "À propos",
+    "history": "Historique"
   },
   "general": {
     "ollamaConnection": "Connexion Ollama",
@@ -77,5 +78,58 @@
     "repository": "Dépôt",
     "techStack": "Stack technique",
     "localLlmObservatory": "Observatoire local de LLM"
+  },
+  "history": {
+    "title": "Historique IA local",
+    "subtitle": "Votre archive de recherche — toutes les exp\u00e9riences, interrogeables",
+    "storage": {
+      "title": "Comment vos donn\u00e9es sont stock\u00e9es",
+      "description": "Toutes vos donn\u00e9es sont stock\u00e9es localement dans votre navigateur via IndexedDB \u2014 une base de donn\u00e9es permanente et native du navigateur. Vos donn\u00e9es survivent \u00e0 la fermeture du navigateur, au red\u00e9marrage de l\u2019ordinateur et aux mises \u00e0 jour logicielles. Rien n\u2019est envoy\u00e9 \u00e0 un serveur.",
+      "indexedDb": "Les donn\u00e9es d\u2019origine (benchmarks, conversations, comparaisons, entra\u00eenements) sont stock\u00e9es dans 6 bases IndexedDB d\u00e9di\u00e9es \u2014 une par fonctionnalit\u00e9. IndexedDB n\u2019est PAS un stockage de session \u2014 les donn\u00e9es persistent de mani\u00e8re permanente jusqu\u2019\u00e0 ce que vous choisissiez de les supprimer.",
+      "historyDb": "La base Historique est un index de recherche unifi\u00e9 aliment\u00e9 par Dexie.js. Elle enregistre un r\u00e9sum\u00e9 de chaque exp\u00e9rience pour permettre des requ\u00eates rapides et l\u2019analyse des tendances. Consid\u00e9rez-la comme un moteur de recherche sur toute votre activit\u00e9 LLMxRay.",
+      "privacy": "Tout reste sur votre machine. Seules deux actions peuvent supprimer vos donn\u00e9es\u00a0: effacer les donn\u00e9es du site dans le navigateur, ou utiliser les boutons Effacer de cette application. Il n\u2019y a ni compte, ni synchronisation cloud, ni t\u00e9l\u00e9m\u00e9trie."
+    },
+    "filters": {
+      "type": "Type",
+      "model": "Mod\u00e8le",
+      "language": "Langue",
+      "dateRange": "P\u00e9riode",
+      "tags": "\u00c9tiquettes",
+      "all": "Tous",
+      "last7days": "7 derniers jours",
+      "last30days": "30 derniers jours",
+      "last90days": "90 derniers jours",
+      "allTime": "Tout"
+    },
+    "results": {
+      "entries": "{count} entr\u00e9es",
+      "noEntries": "Aucune entr\u00e9e d'historique pour le moment. Lancez un benchmark, une comparaison ou un chat pour commencer \u00e0 construire votre archive de recherche."
+    },
+    "trends": {
+      "title": "Tendances",
+      "activity": "Activit\u00e9 (30 derniers jours)",
+      "modelsUsed": "Mod\u00e8les utilis\u00e9s"
+    },
+    "management": {
+      "title": "Gestion de la base de donn\u00e9es",
+      "totalEntries": "Total des entr\u00e9es",
+      "estimatedSize": "Taille estim\u00e9e",
+      "exportAll": "Tout exporter (JSON)",
+      "exportFiltered": "Exporter le filtr\u00e9 (CSV)",
+      "retention": "R\u00e9tention",
+      "keepForever": "Conserver ind\u00e9finiment",
+      "days30": "30 jours",
+      "days90": "90 jours",
+      "year1": "1 an",
+      "clearHistory": "Effacer l'historique",
+      "confirmClear": "Cela supprimera toutes les entr\u00e9es d'historique. Les autres donn\u00e9es (benchmarks, conversations, etc.) ne sont pas affect\u00e9es."
+    },
+    "types": {
+      "benchmark": "Benchmark",
+      "comparison": "Comparaison",
+      "chat": "Chat",
+      "training": "Entra\u00eenement",
+      "session": "Session"
+    }
   }
 }
