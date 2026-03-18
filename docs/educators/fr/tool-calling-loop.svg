@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 360" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="bgLoopFr" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f0a2e"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
+    </linearGradient>
+    <marker id="arrowBlueFr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0,0 8,3 0,6" fill="#60a5fa"/>
+    </marker>
+    <marker id="arrowGreenFr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0,0 8,3 0,6" fill="#4ade80"/>
+    </marker>
+    <marker id="arrowYellowFr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0,0 8,3 0,6" fill="#fbbf24"/>
+    </marker>
+    <marker id="arrowPurpleFr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0,0 8,3 0,6" fill="#a855f7"/>
+    </marker>
+  </defs>
+
+  <rect width="800" height="360" rx="16" fill="url(#bgLoopFr)"/>
+
+  <text x="400" y="32" text-anchor="middle" font-size="18" font-weight="700" fill="#e2e8f0">La boucle d&#x2019;appel d&#x2019;outils</text>
+  <text x="400" y="52" text-anchor="middle" font-size="12" fill="#94a3b8">Le mod&#xe8;le g&#xe9;n&#xe8;re du JSON, pas des actions &#x2014; c&#x2019;est votre app qui fait le travail</text>
+
+  <!-- Step 1: Utilisateur (blue) -->
+  <g>
+    <rect x="20" y="80" width="130" height="64" rx="10" fill="rgba(96,165,250,0.12)" stroke="#60a5fa" stroke-width="1.5"/>
+    <text x="85" y="100" text-anchor="middle" font-size="11" font-weight="700" fill="#60a5fa">1. Utilisateur</text>
+    <text x="85" y="118" text-anchor="middle" font-size="9.5" fill="#e2e8f0">&#xAB; Quelle heure est-il ? &#xBB;</text>
+    <text x="85" y="134" text-anchor="middle" font-size="8" fill="#94a3b8">Envoie un message</text>
+  </g>
+
+  <!-- Arrow 1&#x2192;2 -->
+  <line x1="150" y1="112" x2="172" y2="112" stroke="#60a5fa" stroke-width="1.5" marker-end="url(#arrowBlueFr)"/>
+
+  <!-- Step 2: Mod&#xe8;le pr&#xe9;dit (purple) -->
+  <g>
+    <rect x="180" y="76" width="148" height="72" rx="10" fill="rgba(168,85,247,0.12)" stroke="#a855f7" stroke-width="1.5"/>
+    <text x="254" y="96" text-anchor="middle" font-size="11" font-weight="700" fill="#a855f7">2. Mod&#xe8;le</text>
+    <text x="254" y="113" text-anchor="middle" font-size="9" fill="#e2e8f0">&#xAB; Je devrais appeler</text>
+    <text x="254" y="126" text-anchor="middle" font-size="9" font-weight="600" fill="#a855f7">get_time()</text>
+    <text x="254" y="142" text-anchor="middle" font-size="8" fill="#94a3b8">G&#xe9;n&#xe8;re le JSON tool_call</text>
+  </g>
+
+  <!-- Arrow 2&#x2192;3 -->
+  <line x1="328" y1="112" x2="350" y2="112" stroke="#a855f7" stroke-width="1.5" marker-end="url(#arrowPurpleFr)"/>
+
+  <!-- Step 3: App ex&#xe9;cute (green) -->
+  <g>
+    <rect x="358" y="76" width="148" height="72" rx="10" fill="rgba(74,222,128,0.12)" stroke="#4ade80" stroke-width="1.5"/>
+    <text x="432" y="96" text-anchor="middle" font-size="11" font-weight="700" fill="#4ade80">3. App (LLMxRay)</text>
+    <text x="432" y="113" text-anchor="middle" font-size="9" fill="#e2e8f0">Ex&#xe9;cute</text>
+    <text x="432" y="126" text-anchor="middle" font-size="9" font-weight="600" fill="#4ade80">get_time()</text>
+    <text x="432" y="142" text-anchor="middle" font-size="8" fill="#94a3b8">Ex&#xe9;cute le code r&#xe9;el</text>
+  </g>
+
+  <!-- Arrow 3&#x2192;4 (down-right) -->
+  <path d="M 506 148 L 506 180 L 540 180" fill="none" stroke="#4ade80" stroke-width="1.5" marker-end="url(#arrowGreenFr)"/>
+
+  <!-- Step 4: R&#xe9;sultat de l'outil (yellow) -->
+  <g>
+    <rect x="548" y="160" width="148" height="60" rx="10" fill="rgba(251,191,36,0.10)" stroke="#fbbf24" stroke-width="1.5"/>
+    <text x="622" y="180" text-anchor="middle" font-size="11" font-weight="700" fill="#fbbf24">4. R&#xe9;sultat de l&#x2019;outil</text>
+    <text x="622" y="198" text-anchor="middle" font-size="9" font-style="normal" fill="#e2e8f0" font-family="Consolas, monospace">{"time": "14:32:07"}</text>
+    <text x="622" y="212" text-anchor="middle" font-size="8" fill="#94a3b8">Donn&#xe9;es JSON retourn&#xe9;es</text>
+  </g>
+
+  <!-- Arrow 4&#x2192;5 (down-left) -->
+  <path d="M 622 220 L 622 248 L 540 248" fill="none" stroke="#fbbf24" stroke-width="1.5" marker-end="url(#arrowYellowFr)"/>
+
+  <!-- Step 5: Mod&#xe8;le r&#xe9;pond (purple) -->
+  <g>
+    <rect x="388" y="228" width="148" height="68" rx="10" fill="rgba(168,85,247,0.12)" stroke="#a855f7" stroke-width="1.5"/>
+    <text x="462" y="248" text-anchor="middle" font-size="11" font-weight="700" fill="#a855f7">5. Mod&#xe8;le</text>
+    <text x="462" y="265" text-anchor="middle" font-size="9.5" fill="#e2e8f0">&#xAB; Il est 14h32 &#xBB;</text>
+    <text x="462" y="282" text-anchor="middle" font-size="8" fill="#94a3b8">G&#xe9;n&#xe8;re la r&#xe9;ponse finale</text>
+  </g>
+
+  <!-- "Mod&#xe8;le" labels to emphasize model appears twice -->
+  <rect x="180" y="152" width="60" height="16" rx="4" fill="rgba(168,85,247,0.2)"/>
+  <text x="210" y="163" text-anchor="middle" font-size="7.5" fill="#a855f7">PR&#xC9;DIT</text>
+
+  <rect x="388" y="300" width="60" height="16" rx="4" fill="rgba(168,85,247,0.2)"/>
+  <text x="418" y="311" text-anchor="middle" font-size="7.5" fill="#a855f7">R&#xC9;POND</text>
+
+  <!-- Bottom insight note -->
+  <g transform="translate(40, 322)">
+    <rect x="0" y="0" width="720" height="28" rx="8" fill="rgba(239,68,68,0.06)" stroke="#ef4444" stroke-width="1" stroke-dasharray="4"/>
+    <text x="360" y="18" text-anchor="middle" font-size="10" fill="#ef4444">Le mod&#xe8;le n&#x2019;ex&#xe9;cute JAMAIS de code &#x2014; il ne g&#xe9;n&#xe8;re que des requ&#xea;tes structur&#xe9;es.</text>
+  </g>
+</svg>
