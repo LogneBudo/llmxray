@@ -53,3 +53,15 @@
 .dark .VPFeature:hover {
   box-shadow: 0 8px 30px rgba(168, 85, 247, 0.30);
 }
+
+/* ── Clickable images in docs ── */
+.vp-doc img {
+  cursor: zoom-in;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  border-radius: 8px;
+}
+
+.vp-doc img:hover {
+  transform: scale(1.01);
+  box-shadow: 0 4px 20px rgba(168, 85, 247, 0.2);
+}
