@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="bgMemFr" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f0a2e"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="400" rx="16" fill="url(#bgMemFr)"/>
+
+  <text x="400" y="35" text-anchor="middle" font-size="18" font-weight="700" fill="#e2e8f0">Strat&#xe9;gies de m&#xe9;moire</text>
+  <text x="400" y="56" text-anchor="middle" font-size="12" fill="#94a3b8">Quatre approches pour lutter contre l'oubli</text>
+
+  <!-- Card 1: Sliding Window (top-left, blue) -->
+  <g transform="translate(40, 75)">
+    <rect x="0" y="0" width="350" height="120" rx="12" fill="rgba(96,165,250,0.08)" stroke="#60a5fa" stroke-width="1.5"/>
+    <!-- Icon: bracket moving right -->
+    <g transform="translate(18, 18)">
+      <rect x="0" y="2" width="40" height="18" rx="3" fill="none" stroke="#60a5fa" stroke-width="1.5"/>
+      <rect x="12" y="5" width="8" height="3" rx="1" fill="#60a5fa" opacity="0.3"/>
+      <rect x="22" y="5" width="8" height="3" rx="1" fill="#60a5fa" opacity="0.3"/>
+      <rect x="12" y="11" width="8" height="3" rx="1" fill="#60a5fa" opacity="0.3"/>
+      <rect x="22" y="11" width="8" height="3" rx="1" fill="#60a5fa" opacity="0.3"/>
+      <line x1="44" y1="11" x2="54" y2="11" stroke="#60a5fa" stroke-width="1.5"/>
+      <polygon points="54,8 60,11 54,14" fill="#60a5fa"/>
+    </g>
+    <text x="85" y="33" font-size="13" font-weight="700" fill="#60a5fa">Fen&#xEA;tre glissante</text>
+    <text x="18" y="56" font-size="10" fill="#e2e8f0">Garder les N derniers messages, supprimer le reste.</text>
+    <text x="18" y="80" font-size="9.5" fill="#4ade80">Avantage : Simple, pr&#xe9;visible</text>
+    <text x="18" y="98" font-size="9.5" fill="#ef4444">Inconv&#xe9;nient : L'ancien contexte est perdu &#xe0; jamais</text>
+  </g>
+
+  <!-- Card 2: Auto-Summarization (top-right, purple) -->
+  <g transform="translate(410, 75)">
+    <rect x="0" y="0" width="350" height="120" rx="12" fill="rgba(168,85,247,0.08)" stroke="#a855f7" stroke-width="1.5"/>
+    <!-- Icon: document shrinking -->
+    <g transform="translate(18, 14)">
+      <rect x="0" y="0" width="22" height="26" rx="3" fill="none" stroke="#a855f7" stroke-width="1.2"/>
+      <line x1="5" y1="7" x2="17" y2="7" stroke="#a855f7" stroke-width="0.8" opacity="0.5"/>
+      <line x1="5" y1="12" x2="17" y2="12" stroke="#a855f7" stroke-width="0.8" opacity="0.5"/>
+      <line x1="5" y1="17" x2="17" y2="17" stroke="#a855f7" stroke-width="0.8" opacity="0.5"/>
+      <line x1="26" y1="13" x2="36" y2="13" stroke="#a855f7" stroke-width="1.5"/>
+      <polygon points="36,10 42,13 36,16" fill="#a855f7"/>
+      <rect x="46" y="5" width="14" height="16" rx="2" fill="none" stroke="#a855f7" stroke-width="1.2"/>
+      <line x1="49" y1="11" x2="57" y2="11" stroke="#a855f7" stroke-width="0.8" opacity="0.7"/>
+      <line x1="49" y1="15" x2="55" y2="15" stroke="#a855f7" stroke-width="0.8" opacity="0.7"/>
+    </g>
+    <text x="85" y="33" font-size="13" font-weight="700" fill="#a855f7">R&#xe9;sum&#xe9; automatique</text>
+    <text x="18" y="56" font-size="10" fill="#e2e8f0">Compresser les anciens messages en un r&#xe9;sum&#xe9;.</text>
+    <text x="18" y="80" font-size="9.5" fill="#4ade80">Avantage : Conserve les faits cl&#xe9;s en moins de tokens</text>
+    <text x="18" y="98" font-size="9.5" fill="#ef4444">Inconv&#xe9;nient : Avec pertes &#x2014; les d&#xe9;tails disparaissent</text>
+  </g>
+
+  <!-- Card 3: User Facts (bottom-left, green) -->
+  <g transform="translate(40, 210)">
+    <rect x="0" y="0" width="350" height="120" rx="12" fill="rgba(74,222,128,0.08)" stroke="#4ade80" stroke-width="1.5"/>
+    <!-- Icon: pin/bookmark -->
+    <g transform="translate(18, 14)">
+      <rect x="8" y="0" width="16" height="22" rx="2" fill="none" stroke="#4ade80" stroke-width="1.2"/>
+      <line x1="12" y1="7" x2="20" y2="7" stroke="#4ade80" stroke-width="0.8"/>
+      <line x1="12" y1="11" x2="20" y2="11" stroke="#4ade80" stroke-width="0.8"/>
+      <circle cx="4" cy="6" r="3.5" fill="none" stroke="#4ade80" stroke-width="1.2"/>
+      <line x1="4" y1="9.5" x2="4" y2="16" stroke="#4ade80" stroke-width="1.2"/>
+      <circle cx="4" cy="6" r="1" fill="#4ade80"/>
+    </g>
+    <text x="85" y="33" font-size="13" font-weight="700" fill="#4ade80">Faits utilisateur</text>
+    <text x="18" y="56" font-size="10" fill="#e2e8f0">Faits persistants inject&#xe9;s comme messages syst&#xe8;me.</text>
+    <text x="18" y="80" font-size="9.5" fill="#4ade80">Avantage : Les faits importants sont toujours pr&#xe9;sents</text>
+    <text x="18" y="98" font-size="9.5" fill="#ef4444">Inconv&#xe9;nient : Manuel &#x2014; l'utilisateur doit /remember</text>
+  </g>
+
+  <!-- Card 4: RAG Memory (bottom-right, yellow) -->
+  <g transform="translate(410, 210)">
+    <rect x="0" y="0" width="350" height="120" rx="12" fill="rgba(251,191,36,0.08)" stroke="#fbbf24" stroke-width="1.5"/>
+    <!-- Icon: magnifying glass over messages -->
+    <g transform="translate(18, 14)">
+      <rect x="0" y="2" width="28" height="20" rx="3" fill="none" stroke="#fbbf24" stroke-width="1" opacity="0.5"/>
+      <line x1="4" y1="8" x2="16" y2="8" stroke="#fbbf24" stroke-width="0.8" opacity="0.4"/>
+      <line x1="4" y1="12" x2="20" y2="12" stroke="#fbbf24" stroke-width="0.8" opacity="0.4"/>
+      <line x1="4" y1="16" x2="14" y2="16" stroke="#fbbf24" stroke-width="0.8" opacity="0.4"/>
+      <circle cx="38" cy="10" r="8" fill="none" stroke="#fbbf24" stroke-width="1.5"/>
+      <line x1="44" y1="16" x2="50" y2="22" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"/>
+    </g>
+    <text x="85" y="33" font-size="13" font-weight="700" fill="#fbbf24">M&#xe9;moire RAG</text>
+    <text x="18" y="56" font-size="10" fill="#e2e8f0">Retrouver les messages pertinents via les embeddings.</text>
+    <text x="18" y="80" font-size="9.5" fill="#4ade80">Avantage : S&#xe9;mantique &#x2014; trouve ce qui compte</text>
+    <text x="18" y="98" font-size="9.5" fill="#ef4444">Inconv&#xe9;nient : N&#xe9;cessite un mod&#xe8;le d'embedding, pas exact</text>
+  </g>
+
+  <!-- Insight box -->
+  <g transform="translate(40, 348)">
+    <rect x="0" y="0" width="720" height="36" rx="10" fill="rgba(168,85,247,0.06)" stroke="#a855f7" stroke-width="1" stroke-dasharray="4"/>
+    <text x="360" y="23" text-anchor="middle" font-size="11" fill="#e2e8f0">Aucune strat&#xe9;gie n'est parfaite. LLMxRay permet de combiner les quatre.</text>
+  </g>
+</svg>

@@ -68,6 +68,7 @@ function communityNav(prefix: string) {
         { text: fr ? 'Module 2: La Température' : 'Module 2: Temperature', link: `${prefix}/community/educators/module-2` },
         { text: fr ? 'Module 3: L\'IA peut-elle mentir ?' : 'Module 3: Can AI Lie?', link: `${prefix}/community/educators/module-3` },
         { text: fr ? 'Module 4: Que voit le modèle ?' : 'Module 4: What Does the Model See?', link: `${prefix}/community/educators/module-4` },
+        { text: fr ? 'Module 5: Quand le modèle oublie-t-il ?' : 'Module 5: When Does the Model Forget?', link: `${prefix}/community/educators/module-5` },
       ],
     },
   ]

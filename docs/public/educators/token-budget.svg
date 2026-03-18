@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 350" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="bgBud" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f0a2e"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="350" rx="16" fill="url(#bgBud)"/>
+
+  <text x="400" y="35" text-anchor="middle" font-size="18" font-weight="700" fill="#e2e8f0">Token Budget Breakdown</text>
+  <text x="400" y="56" text-anchor="middle" font-size="12" fill="#94a3b8">Everyone competes for the same limited space</text>
+
+  <!-- Scenario 1: Balanced -->
+  <text x="50" y="82" font-size="11" font-weight="600" fill="#e2e8f0">Early conversation</text>
+  <text x="710" y="82" text-anchor="end" font-size="10" fill="#94a3b8">4,096 tokens total</text>
+
+  <!-- Bar outline -->
+  <rect x="50" y="90" width="700" height="36" rx="6" fill="rgba(255,255,255,0.03)" stroke="#94a3b8" stroke-width="0.5"/>
+
+  <!-- System Prompt — 15% = 105px -->
+  <rect x="50" y="90" width="105" height="36" rx="6" fill="rgba(168,85,247,0.35)" stroke="#a855f7" stroke-width="1"/>
+  <text x="102" y="112" text-anchor="middle" font-size="8.5" font-weight="600" fill="#a855f7">System Prompt</text>
+  <text x="102" y="122" text-anchor="middle" font-size="7.5" fill="#94a3b8">~600 tok</text>
+
+  <!-- Conversation History — 45% = 315px -->
+  <rect x="155" y="90" width="315" height="36" rx="6" fill="rgba(96,165,250,0.25)" stroke="#60a5fa" stroke-width="1"/>
+  <text x="312" y="112" text-anchor="middle" font-size="8.5" font-weight="600" fill="#60a5fa">Conversation History</text>
+  <text x="312" y="122" text-anchor="middle" font-size="7.5" fill="#94a3b8">~1,800 tok</text>
+
+  <!-- User's Message — 10% = 70px -->
+  <rect x="470" y="90" width="70" height="36" rx="6" fill="rgba(74,222,128,0.25)" stroke="#4ade80" stroke-width="1"/>
+  <text x="505" y="108" text-anchor="middle" font-size="8" font-weight="600" fill="#4ade80">User</text>
+  <text x="505" y="120" text-anchor="middle" font-size="7.5" fill="#94a3b8">~400</text>
+
+  <!-- Model's Reply — 25% = 175px -->
+  <rect x="540" y="90" width="175" height="36" rx="6" fill="rgba(251,191,36,0.25)" stroke="#fbbf24" stroke-width="1"/>
+  <text x="627" y="112" text-anchor="middle" font-size="8.5" font-weight="600" fill="#fbbf24">Model Reply</text>
+  <text x="627" y="122" text-anchor="middle" font-size="7.5" fill="#94a3b8">~1,000 tok</text>
+
+  <!-- Overhead — 5% = 35px -->
+  <rect x="715" y="90" width="35" height="36" rx="6" fill="rgba(239,68,68,0.25)" stroke="#ef4444" stroke-width="1"/>
+  <text x="732" y="108" text-anchor="middle" font-size="7" font-weight="600" fill="#ef4444">Over-</text>
+  <text x="732" y="118" text-anchor="middle" font-size="7" fill="#ef4444">head</text>
+
+  <!-- Scenario 2: After 20 turns -->
+  <text x="50" y="168" font-size="11" font-weight="600" fill="#e2e8f0">After 20 turns of conversation</text>
+  <text x="710" y="168" text-anchor="end" font-size="10" fill="#94a3b8">4,096 tokens total</text>
+
+  <!-- Bar outline -->
+  <rect x="50" y="176" width="700" height="36" rx="6" fill="rgba(255,255,255,0.03)" stroke="#94a3b8" stroke-width="0.5"/>
+
+  <!-- System Prompt — same 105px -->
+  <rect x="50" y="176" width="105" height="36" rx="6" fill="rgba(168,85,247,0.35)" stroke="#a855f7" stroke-width="1"/>
+  <text x="102" y="198" text-anchor="middle" font-size="8.5" font-weight="600" fill="#a855f7">System Prompt</text>
+
+  <!-- Conversation History — 80% = 490px, with truncation marker -->
+  <rect x="155" y="176" width="490" height="36" rx="6" fill="rgba(96,165,250,0.25)" stroke="#60a5fa" stroke-width="1"/>
+  <text x="400" y="196" text-anchor="middle" font-size="8.5" font-weight="600" fill="#60a5fa">History (oldest messages truncated)</text>
+
+  <!-- Truncation hatching on left side of history -->
+  <rect x="155" y="176" width="80" height="36" rx="6" fill="rgba(239,68,68,0.12)"/>
+  <line x1="160" y1="176" x2="160" y2="212" stroke="#ef4444" stroke-width="0.5" opacity="0.5"/>
+  <line x1="170" y1="176" x2="170" y2="212" stroke="#ef4444" stroke-width="0.5" opacity="0.5"/>
+  <line x1="180" y1="176" x2="180" y2="212" stroke="#ef4444" stroke-width="0.5" opacity="0.5"/>
+  <line x1="190" y1="176" x2="190" y2="212" stroke="#ef4444" stroke-width="0.5" opacity="0.5"/>
+  <line x1="200" y1="176" x2="200" y2="212" stroke="#ef4444" stroke-width="0.5" opacity="0.5"/>
+  <line x1="210" y1="176" x2="210" y2="212" stroke="#ef4444" stroke-width="0.5" opacity="0.5"/>
+  <line x1="220" y1="176" x2="220" y2="212" stroke="#ef4444" stroke-width="0.5" opacity="0.5"/>
+  <text x="195" y="198" text-anchor="middle" font-size="7.5" font-weight="700" fill="#ef4444">TRUNCATED</text>
+
+  <!-- Tiny User — 40px -->
+  <rect x="645" y="176" width="40" height="36" rx="6" fill="rgba(74,222,128,0.25)" stroke="#4ade80" stroke-width="1"/>
+  <text x="665" y="198" text-anchor="middle" font-size="7" font-weight="600" fill="#4ade80">User</text>
+
+  <!-- Tiny Reply — 50px, squeezed -->
+  <rect x="685" y="176" width="50" height="36" rx="6" fill="rgba(251,191,36,0.20)" stroke="#fbbf24" stroke-width="1"/>
+  <text x="710" y="198" text-anchor="middle" font-size="7" font-weight="600" fill="#fbbf24">Reply</text>
+
+  <!-- Squeeze arrow -->
+  <text x="680" y="228" text-anchor="middle" font-size="9.5" fill="#ef4444">Long conversations squeeze out reply space</text>
+
+  <!-- Insight box -->
+  <g transform="translate(40, 252)">
+    <rect x="0" y="0" width="720" height="72" rx="10" fill="rgba(168,85,247,0.06)" stroke="#a855f7" stroke-width="1" stroke-dasharray="4"/>
+    <text x="360" y="20" text-anchor="middle" font-size="11" fill="#e2e8f0">A verbose system prompt permanently reduces your available context.</text>
+    <text x="360" y="38" text-anchor="middle" font-size="11" fill="#e2e8f0">Every message adds to the history. Eventually, old messages must be dropped.</text>
+    <text x="360" y="56" text-anchor="middle" font-size="10" fill="#94a3b8">This is why context management strategies matter.</text>
+  </g>
+</svg>
