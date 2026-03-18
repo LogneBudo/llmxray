@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 350" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="bgFail" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f0a2e"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="350" rx="16" fill="url(#bgFail)"/>
+
+  <text x="400" y="32" text-anchor="middle" font-size="18" font-weight="700" fill="#e2e8f0">When Tool Calling Fails</text>
+  <text x="400" y="52" text-anchor="middle" font-size="12" fill="#94a3b8">Common failure modes and why they happen</text>
+
+  <!-- Card 1: Wrong Tool (red) -->
+  <g>
+    <rect x="24" y="72" width="178" height="200" rx="10" fill="rgba(239,68,68,0.06)" stroke="#ef4444" stroke-width="1.5"/>
+    <!-- Icon: X in circle -->
+    <circle cx="113" cy="98" r="14" fill="none" stroke="#ef4444" stroke-width="1.5"/>
+    <line x1="106" y1="91" x2="120" y2="105" stroke="#ef4444" stroke-width="2"/>
+    <line x1="120" y1="91" x2="106" y2="105" stroke="#ef4444" stroke-width="2"/>
+    <text x="113" y="130" text-anchor="middle" font-size="12" font-weight="700" fill="#ef4444">Wrong Tool</text>
+    <text x="113" y="152" text-anchor="middle" font-size="9" fill="#e2e8f0">Model picks</text>
+    <text x="113" y="166" text-anchor="middle" font-size="9" font-weight="600" fill="#e2e8f0">calculator</text>
+    <text x="113" y="180" text-anchor="middle" font-size="9" fill="#e2e8f0">instead of weather</text>
+    <!-- Cause -->
+    <rect x="36" y="198" width="154" height="30" rx="6" fill="rgba(239,68,68,0.08)"/>
+    <text x="113" y="210" text-anchor="middle" font-size="8" font-weight="600" fill="#ef4444">CAUSE</text>
+    <text x="113" y="222" text-anchor="middle" font-size="8.5" fill="#94a3b8">Vague or overlapping</text>
+    <text x="113" y="234" text-anchor="middle" font-size="8.5" fill="#94a3b8">descriptions</text>
+    <!-- Severity dots -->
+    <circle cx="96" cy="260" r="4" fill="#ef4444"/><circle cx="108" cy="260" r="4" fill="#ef4444"/><circle cx="120" cy="260" r="4" fill="#ef4444"/>
+  </g>
+
+  <!-- Card 2: Hallucinated Args (yellow/orange) -->
+  <g>
+    <rect x="214" y="72" width="178" height="200" rx="10" fill="rgba(251,191,36,0.06)" stroke="#fbbf24" stroke-width="1.5"/>
+    <!-- Icon: question mark in circle -->
+    <circle cx="303" cy="98" r="14" fill="none" stroke="#fbbf24" stroke-width="1.5"/>
+    <text x="303" y="104" text-anchor="middle" font-size="16" font-weight="700" fill="#fbbf24">?</text>
+    <text x="303" y="130" text-anchor="middle" font-size="12" font-weight="700" fill="#fbbf24">Hallucinated Args</text>
+    <text x="303" y="152" text-anchor="middle" font-size="9" fill="#e2e8f0">Model invents a</text>
+    <text x="303" y="166" text-anchor="middle" font-size="9" font-family="Consolas, monospace" font-weight="600" fill="#fbbf24">"format"</text>
+    <text x="303" y="180" text-anchor="middle" font-size="9" fill="#e2e8f0">parameter that doesn't exist</text>
+    <!-- Cause -->
+    <rect x="226" y="198" width="154" height="30" rx="6" fill="rgba(251,191,36,0.08)"/>
+    <text x="303" y="210" text-anchor="middle" font-size="8" font-weight="600" fill="#fbbf24">CAUSE</text>
+    <text x="303" y="222" text-anchor="middle" font-size="8.5" fill="#94a3b8">Schema not specific</text>
+    <text x="303" y="234" text-anchor="middle" font-size="8.5" fill="#94a3b8">enough</text>
+    <!-- Severity dots -->
+    <circle cx="291" cy="260" r="4" fill="#fbbf24"/><circle cx="303" cy="260" r="4" fill="#fbbf24"/><circle cx="315" cy="260" r="4" fill="rgba(251,191,36,0.3)"/>
+  </g>
+
+  <!-- Card 3: Missing Required Fields (purple) -->
+  <g>
+    <rect x="404" y="72" width="178" height="200" rx="10" fill="rgba(168,85,247,0.06)" stroke="#a855f7" stroke-width="1.5"/>
+    <!-- Icon: empty brackets -->
+    <circle cx="493" cy="98" r="14" fill="none" stroke="#a855f7" stroke-width="1.5"/>
+    <text x="493" y="103" text-anchor="middle" font-size="13" font-family="Consolas, monospace" font-weight="700" fill="#a855f7">{ }</text>
+    <text x="493" y="130" text-anchor="middle" font-size="11" font-weight="700" fill="#a855f7">Missing Required</text>
+    <text x="493" y="144" text-anchor="middle" font-size="11" font-weight="700" fill="#a855f7">Fields</text>
+    <text x="493" y="164" text-anchor="middle" font-size="9" fill="#e2e8f0">Model omits the</text>
+    <text x="493" y="178" text-anchor="middle" font-size="9" font-family="Consolas, monospace" font-weight="600" fill="#a855f7">"city"</text>
+    <text x="493" y="192" text-anchor="middle" font-size="9" fill="#e2e8f0">parameter entirely</text>
+    <!-- Cause -->
+    <rect x="416" y="198" width="154" height="30" rx="6" fill="rgba(168,85,247,0.08)"/>
+    <text x="493" y="210" text-anchor="middle" font-size="8" font-weight="600" fill="#a855f7">CAUSE</text>
+    <text x="493" y="222" text-anchor="middle" font-size="8.5" fill="#94a3b8">Complex schemas confuse</text>
+    <text x="493" y="234" text-anchor="middle" font-size="8.5" fill="#94a3b8">smaller models</text>
+    <!-- Severity dots -->
+    <circle cx="481" cy="260" r="4" fill="#a855f7"/><circle cx="493" cy="260" r="4" fill="#a855f7"/><circle cx="505" cy="260" r="4" fill="rgba(168,85,247,0.3)"/>
+  </g>
+
+  <!-- Card 4: No Tool Support (gray) -->
+  <g>
+    <rect x="594" y="72" width="178" height="200" rx="10" fill="rgba(148,163,184,0.06)" stroke="#64748b" stroke-width="1.5"/>
+    <!-- Icon: slash circle (blocked) -->
+    <circle cx="683" cy="98" r="14" fill="none" stroke="#64748b" stroke-width="1.5"/>
+    <line x1="673" y1="108" x2="693" y2="88" stroke="#64748b" stroke-width="2"/>
+    <text x="683" y="130" text-anchor="middle" font-size="12" font-weight="700" fill="#64748b">No Tool Support</text>
+    <text x="683" y="152" text-anchor="middle" font-size="9" fill="#e2e8f0">Model ignores tools</text>
+    <text x="683" y="166" text-anchor="middle" font-size="9" fill="#e2e8f0">entirely and responds</text>
+    <text x="683" y="180" text-anchor="middle" font-size="9" fill="#e2e8f0">with plain text</text>
+    <!-- Cause -->
+    <rect x="606" y="198" width="154" height="30" rx="6" fill="rgba(148,163,184,0.06)"/>
+    <text x="683" y="210" text-anchor="middle" font-size="8" font-weight="600" fill="#64748b">CAUSE</text>
+    <text x="683" y="222" text-anchor="middle" font-size="8.5" fill="#94a3b8">Model wasn't trained</text>
+    <text x="683" y="234" text-anchor="middle" font-size="8.5" fill="#94a3b8">for tool calling</text>
+    <!-- Severity dots -->
+    <circle cx="671" cy="260" r="4" fill="#64748b"/><circle cx="683" cy="260" r="4" fill="rgba(100,116,139,0.3)"/><circle cx="695" cy="260" r="4" fill="rgba(100,116,139,0.3)"/>
+  </g>
+
+  <!-- Bottom insight -->
+  <g transform="translate(40, 310)">
+    <rect x="0" y="0" width="720" height="28" rx="8" fill="rgba(168,85,247,0.06)" stroke="#a855f7" stroke-width="1" stroke-dasharray="4"/>
+    <text x="360" y="18" text-anchor="middle" font-size="10" fill="#e2e8f0">Tool calling reliability scales with model size. Larger models follow schemas more faithfully.</text>
+  </g>
+</svg>

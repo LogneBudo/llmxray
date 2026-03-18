@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 360" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="bgLoop" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f0a2e"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
+    </linearGradient>
+    <marker id="arrowBlue" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0,0 8,3 0,6" fill="#60a5fa"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0,0 8,3 0,6" fill="#4ade80"/>
+    </marker>
+    <marker id="arrowYellow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0,0 8,3 0,6" fill="#fbbf24"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0,0 8,3 0,6" fill="#a855f7"/>
+    </marker>
+  </defs>
+
+  <rect width="800" height="360" rx="16" fill="url(#bgLoop)"/>
+
+  <text x="400" y="32" text-anchor="middle" font-size="18" font-weight="700" fill="#e2e8f0">The Tool Calling Loop</text>
+  <text x="400" y="52" text-anchor="middle" font-size="12" fill="#94a3b8">The model generates JSON, not actions — your app does the work</text>
+
+  <!-- Step 1: User (blue) -->
+  <g>
+    <rect x="20" y="80" width="130" height="64" rx="10" fill="rgba(96,165,250,0.12)" stroke="#60a5fa" stroke-width="1.5"/>
+    <text x="85" y="100" text-anchor="middle" font-size="11" font-weight="700" fill="#60a5fa">1. User</text>
+    <text x="85" y="118" text-anchor="middle" font-size="9.5" fill="#e2e8f0">"What time is it?"</text>
+    <text x="85" y="134" text-anchor="middle" font-size="8" fill="#94a3b8">Sends message</text>
+  </g>
+
+  <!-- Arrow 1→2 -->
+  <line x1="150" y1="112" x2="172" y2="112" stroke="#60a5fa" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+
+  <!-- Step 2: Model predicts (purple) -->
+  <g>
+    <rect x="180" y="76" width="148" height="72" rx="10" fill="rgba(168,85,247,0.12)" stroke="#a855f7" stroke-width="1.5"/>
+    <text x="254" y="96" text-anchor="middle" font-size="11" font-weight="700" fill="#a855f7">2. Model</text>
+    <text x="254" y="113" text-anchor="middle" font-size="9" fill="#e2e8f0">"I should call</text>
+    <text x="254" y="126" text-anchor="middle" font-size="9" font-weight="600" fill="#a855f7">get_time()</text>
+    <text x="254" y="142" text-anchor="middle" font-size="8" fill="#94a3b8">Generates tool_call JSON</text>
+  </g>
+
+  <!-- Arrow 2→3 -->
+  <line x1="328" y1="112" x2="350" y2="112" stroke="#a855f7" stroke-width="1.5" marker-end="url(#arrowPurple)"/>
+
+  <!-- Step 3: App executes (green) -->
+  <g>
+    <rect x="358" y="76" width="148" height="72" rx="10" fill="rgba(74,222,128,0.12)" stroke="#4ade80" stroke-width="1.5"/>
+    <text x="432" y="96" text-anchor="middle" font-size="11" font-weight="700" fill="#4ade80">3. App (LLMxRay)</text>
+    <text x="432" y="113" text-anchor="middle" font-size="9" fill="#e2e8f0">Executes</text>
+    <text x="432" y="126" text-anchor="middle" font-size="9" font-weight="600" fill="#4ade80">get_time()</text>
+    <text x="432" y="142" text-anchor="middle" font-size="8" fill="#94a3b8">Runs the actual code</text>
+  </g>
+
+  <!-- Arrow 3→4 (down-right) -->
+  <path d="M 506 148 L 506 180 L 540 180" fill="none" stroke="#4ade80" stroke-width="1.5" marker-end="url(#arrowGreen)"/>
+
+  <!-- Step 4: Tool Result (yellow) -->
+  <g>
+    <rect x="548" y="160" width="148" height="60" rx="10" fill="rgba(251,191,36,0.10)" stroke="#fbbf24" stroke-width="1.5"/>
+    <text x="622" y="180" text-anchor="middle" font-size="11" font-weight="700" fill="#fbbf24">4. Tool Result</text>
+    <text x="622" y="198" text-anchor="middle" font-size="9" font-style="normal" fill="#e2e8f0" font-family="Consolas, monospace">{"time": "14:32:07"}</text>
+    <text x="622" y="212" text-anchor="middle" font-size="8" fill="#94a3b8">JSON data returned</text>
+  </g>
+
+  <!-- Arrow 4→5 (down-left) -->
+  <path d="M 622 220 L 622 248 L 540 248" fill="none" stroke="#fbbf24" stroke-width="1.5" marker-end="url(#arrowYellow)"/>
+
+  <!-- Step 5: Model responds (purple) -->
+  <g>
+    <rect x="388" y="228" width="148" height="68" rx="10" fill="rgba(168,85,247,0.12)" stroke="#a855f7" stroke-width="1.5"/>
+    <text x="462" y="248" text-anchor="middle" font-size="11" font-weight="700" fill="#a855f7">5. Model</text>
+    <text x="462" y="265" text-anchor="middle" font-size="9.5" fill="#e2e8f0">"It's 2:32 PM"</text>
+    <text x="462" y="282" text-anchor="middle" font-size="8" fill="#94a3b8">Generates final response</text>
+  </g>
+
+  <!-- "Model" labels to emphasize model appears twice -->
+  <rect x="180" y="152" width="60" height="16" rx="4" fill="rgba(168,85,247,0.2)"/>
+  <text x="210" y="163" text-anchor="middle" font-size="7.5" fill="#a855f7">PREDICT</text>
+
+  <rect x="388" y="300" width="60" height="16" rx="4" fill="rgba(168,85,247,0.2)"/>
+  <text x="418" y="311" text-anchor="middle" font-size="7.5" fill="#a855f7">RESPOND</text>
+
+  <!-- Bottom insight note -->
+  <g transform="translate(40, 322)">
+    <rect x="0" y="0" width="720" height="28" rx="8" fill="rgba(239,68,68,0.06)" stroke="#ef4444" stroke-width="1" stroke-dasharray="4"/>
+    <text x="360" y="18" text-anchor="middle" font-size="10" fill="#ef4444">The model NEVER executes code — it only generates structured requests.</text>
+  </g>
+</svg>
