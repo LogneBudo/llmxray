@@ -74,3 +74,32 @@ Each slot includes a translation capability powered by your local Ollama model �
 - **Connect this to the Educators Kit.** [Module 9: What Words Cost](../community/educators/module-9) provides a structured lesson plan built around this exact feature, with exercises and discussion questions for classroom use.
 - **Short prompts amplify the effect.** A single sentence can show dramatic token count differences. Try a common phrase like "The weather is nice today" in five languages.
 - **Check both directions.** If your native language is not English, try prompting in your language first — you may find that the model's response quality differs, not just the token count.
+
+## Saving Results
+
+Comparison runs are automatically saved to your browser's IndexedDB. No manual action is needed — every completed comparison is preserved locally.
+
+- Saved comparisons appear in the **"Saved Comparisons"** panel on the Compare page.
+- Click **"Load"** to reload a past comparison with full results.
+- Click **"Delete"** to remove a saved run.
+- Data stays local on your machine — nothing is sent to any server.
+
+## Exporting Data
+
+Click the **"Export"** button in the results header to access export options:
+
+- **Download as JSON** — Full comparison data including prompts, outputs, metrics, and token counts. Ideal for further analysis in scripts or notebooks.
+- **Download as Markdown** — Formatted report with tables showing prompts, results, and Token Tax ratios. Ready to paste into documents or blog posts.
+
+## Sharing to GitHub Discussions
+
+Click **"Share to GitHub Discussions"** in the Export menu to share your findings with the community.
+
+1. A dialog opens with a preview of the markdown report.
+2. Add your own commentary at the top — describe what you discovered.
+3. Click **"Open GitHub Discussions"** to be redirected to GitHub with the report pre-filled.
+4. You review and submit the post yourself — nothing is posted without your consent.
+
+Alternatively, click **"Copy Markdown"** to paste the report anywhere you like.
+
+> **Your data stays local.** LLMxRay never sends comparison results anywhere automatically. Sharing is always opt-in — you control what gets posted and where.

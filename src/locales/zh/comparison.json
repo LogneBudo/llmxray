@@ -85,5 +85,26 @@
     "translating": "翻译中……根据模型大小可能需要一些时间",
     "qualityWarning": "翻译质量取决于模型的语言能力。更大的模型能产生更好的翻译。",
     "promptPlaceholder": "输入或粘贴{lang}提示词..."
+  },
+  "history": {
+    "title": "已保存的对比",
+    "load": "加载",
+    "noSavedRuns": "暂无保存的对比"
+  },
+  "export": {
+    "title": "导出",
+    "json": "下载 JSON",
+    "markdown": "下载 Markdown"
+  },
+  "share": {
+    "toDiscussions": "分享到 GitHub Discussions",
+    "dialogTitle": "分享你的发现",
+    "commentaryLabel": "添加你的评论",
+    "commentaryPlaceholder": "你发现了什么？分享你的见解...",
+    "preview": "报告预览",
+    "openGithub": "打开 GitHub Discussions",
+    "copyMarkdown": "复制 Markdown",
+    "copied": "已复制！",
+    "note": "你将被重定向到 GitHub 查看并发布你的结果。"
   }
 }

@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { nanoid } from 'nanoid'
 import type { ComparisonRun, ComparisonExecution, ComparisonSlot } from '@/types/comparison'
+import { comparisonDB } from '@/services/comparison-db'
 
 export const useComparisonStore = defineStore('comparison', () => {
   const runs = ref<Map<string, ComparisonRun>>(new Map())
@@ -57,7 +58,24 @@ export const useComparisonStore = defineStore('comparison', () => {
         (e) => e.status === 'completed' || e.status === 'error',
       )
       run.status = allDone ? 'completed' : 'partial'
+      // Auto-save to IndexedDB
+      comparisonDB.saveRun(run).catch(() => { /* silent — persistence is best-effort */ })
     }
+  }
+
+  async function loadSavedRuns(): Promise<ComparisonRun[]> {
+    return comparisonDB.getAllRuns()
+  }
+
+  async function deleteSavedRun(id: string): Promise<void> {
+    await comparisonDB.deleteRun(id)
+    runs.value.delete(id)
+    if (activeRunId.value === id) activeRunId.value = null
+  }
+
+  function loadRunIntoView(run: ComparisonRun) {
+    runs.value.set(run.id, run)
+    activeRunId.value = run.id
   }
 
   function getExecution(
@@ -75,5 +93,8 @@ export const useComparisonStore = defineStore('comparison', () => {
     updateExecution,
     finalizeRun,
     getExecution,
+    loadSavedRuns,
+    deleteSavedRun,
+    loadRunIntoView,
   }
 })

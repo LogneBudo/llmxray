@@ -85,5 +85,26 @@
     "translating": "Translating... this may take a moment depending on model size",
     "qualityWarning": "Translation quality depends on your model's language capabilities. Larger models produce better translations.",
     "promptPlaceholder": "Type or paste your prompt in {lang}..."
+  },
+  "history": {
+    "title": "Saved Comparisons",
+    "load": "Load",
+    "noSavedRuns": "No saved comparisons yet"
+  },
+  "export": {
+    "title": "Export",
+    "json": "Download as JSON",
+    "markdown": "Download as Markdown"
+  },
+  "share": {
+    "toDiscussions": "Share to GitHub Discussions",
+    "dialogTitle": "Share Your Findings",
+    "commentaryLabel": "Add your commentary",
+    "commentaryPlaceholder": "What did you discover? Share your insights...",
+    "preview": "Report Preview",
+    "openGithub": "Open GitHub Discussions",
+    "copyMarkdown": "Copy Markdown",
+    "copied": "Copied!",
+    "note": "You'll be redirected to GitHub to review and post your findings."
   }
 }

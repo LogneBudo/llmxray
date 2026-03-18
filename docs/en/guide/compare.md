@@ -57,6 +57,10 @@ One-click presets to set up common comparison scenarios:
 - **Temperature Sweep** — Same model at 3 different temperatures (0.2, 0.7, 1.2) to see how creativity changes
 - **Deterministic Pair** — Same model, same seed, same settings — verifies reproducibility
 
+## Saving, Exporting, and Sharing
+
+Comparison results are automatically saved to IndexedDB, and you can export them as JSON or Markdown, or share them to GitHub Discussions. These features are covered in detail in the [Language Compare](./language-compare#saving-results) guide — they apply to all comparison types, not just language comparisons.
+
 ## Tips
 
 - **Same model, different settings** is often more insightful than comparing different models. Try varying temperature or system prompts.

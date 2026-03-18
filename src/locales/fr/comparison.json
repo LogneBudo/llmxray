@@ -85,5 +85,26 @@
     "translating": "Traduction en cours... cela peut prendre un moment selon la taille du modèle",
     "qualityWarning": "La qualité de la traduction dépend des capacités linguistiques de votre modèle. Les modèles plus grands produisent de meilleures traductions.",
     "promptPlaceholder": "Tapez ou collez votre prompt en {lang}..."
+  },
+  "history": {
+    "title": "Comparaisons sauvegardées",
+    "load": "Charger",
+    "noSavedRuns": "Aucune comparaison sauvegardée"
+  },
+  "export": {
+    "title": "Exporter",
+    "json": "Télécharger en JSON",
+    "markdown": "Télécharger en Markdown"
+  },
+  "share": {
+    "toDiscussions": "Partager sur GitHub Discussions",
+    "dialogTitle": "Partagez vos découvertes",
+    "commentaryLabel": "Ajoutez votre commentaire",
+    "commentaryPlaceholder": "Qu'avez-vous découvert ? Partagez vos observations...",
+    "preview": "Aperçu du rapport",
+    "openGithub": "Ouvrir GitHub Discussions",
+    "copyMarkdown": "Copier le Markdown",
+    "copied": "Copié !",
+    "note": "Vous serez redirigé vers GitHub pour relire et publier vos résultats."
   }
 }

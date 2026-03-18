@@ -74,3 +74,32 @@ Chaque slot inclut une capacite de traduction alimentee par votre modele Ollama 
 - **Connectez cela au Kit Enseignants.** Le [Module 9 : Ce que coutent les mots](../community/educators/module-9) fournit un plan de cours structure autour de cette fonctionnalite, avec des exercices et des questions de discussion pour une utilisation en classe.
 - **Les prompts courts amplifient l'effet.** Une seule phrase peut montrer des differences dramatiques de nombre de tokens. Essayez une expression courante comme "Il fait beau aujourd'hui" dans cinq langues.
 - **Verifiez dans les deux sens.** Si votre langue maternelle n'est pas l'anglais, essayez d'abord de prompter dans votre langue -- vous constaterez peut-etre que la qualite de la reponse du modele differe, pas seulement le nombre de tokens.
+
+## Sauvegarde des Resultats
+
+Les comparaisons sont automatiquement sauvegardees dans l'IndexedDB de votre navigateur. Aucune action manuelle n'est necessaire -- chaque comparaison terminee est conservee localement.
+
+- Les comparaisons sauvegardees apparaissent dans le panneau **"Comparaisons Sauvegardees"** sur la page Comparer.
+- Cliquez sur **"Charger"** pour recharger une comparaison passee avec tous ses resultats.
+- Cliquez sur **"Supprimer"** pour effacer une comparaison sauvegardee.
+- Les donnees restent locales sur votre machine -- rien n'est envoye a un serveur.
+
+## Exportation des Donnees
+
+Cliquez sur le bouton **"Exporter"** dans l'en-tete des resultats pour acceder aux options d'exportation :
+
+- **Telecharger en JSON** -- Donnees completes de la comparaison incluant les prompts, les sorties, les metriques et le nombre de tokens. Ideal pour une analyse approfondie dans des scripts ou des notebooks.
+- **Telecharger en Markdown** -- Rapport formate avec des tableaux montrant les prompts, les resultats et les ratios de Taxe de Tokens. Pret a etre colle dans des documents ou des articles de blog.
+
+## Partage sur GitHub Discussions
+
+Cliquez sur **"Partager sur GitHub Discussions"** dans le menu Exporter pour partager vos decouvertes avec la communaute.
+
+1. Une boite de dialogue s'ouvre avec un apercu du rapport en markdown.
+2. Ajoutez votre propre commentaire en haut -- decrivez ce que vous avez decouvert.
+3. Cliquez sur **"Ouvrir GitHub Discussions"** pour etre redirige vers GitHub avec le rapport pre-rempli.
+4. Vous verifiez et soumettez la publication vous-meme -- rien n'est publie sans votre consentement.
+
+Vous pouvez aussi cliquer sur **"Copier le Markdown"** pour coller le rapport ou vous le souhaitez.
+
+> **Vos donnees restent locales.** LLMxRay n'envoie jamais les resultats de comparaison automatiquement. Le partage est toujours volontaire -- vous controlez ce qui est publie et ou.
