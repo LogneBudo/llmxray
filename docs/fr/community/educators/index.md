@@ -46,10 +46,10 @@ Chaque module s'appuie sur le précédent. Les étudiants progressent de l'obser
 | **5** | [Quand le modèle oublie-t-il ?](./module-5) | 60 min | Intermédiaire | Le contexte n'est pas de la mémoire — c'est une fenêtre glissante |
 | **6** | [L'IA peut-elle utiliser des outils ?](./module-6) | 60 min | Intermédiaire | Le tool calling est du pattern matching, pas de la compréhension |
 | **7** | [Comment comparer les modèles ?](./module-7) | 90 min | Avancé | Aucun modèle n'est universellement le meilleur |
-| **8** | La vue d'ensemble | 120 min | Avancé | Vous pouvez contribuer à de la vraie recherche en IA |
+| **8** | [La vue d'ensemble](./module-8) | 120 min | Avancé | Vous pouvez contribuer à de la vraie recherche en IA |
 
 ::: info Modules disponibles
-Les Modules 1 à 7 sont disponibles dès maintenant. Le Module 8 arrive prochainement. Chaque module contient des exercices pratiques avec LLMxRay, un contexte conceptuel ancré dans la recherche publiée, et des options d'évaluation.
+Les 8 modules sont tous disponibles. Chaque module contient des exercices pratiques avec LLMxRay, un contexte conceptuel ancré dans la recherche publiée, et des options d'évaluation.
 :::
 
 ---

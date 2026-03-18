@@ -46,10 +46,10 @@ Each module builds on the previous one. Students progress from observation to ex
 | **5** | [When Does the Model Forget?](./module-5) | 60 min | Intermediate | Context isn't memory — it's a sliding window |
 | **6** | [Can AI Use Tools?](./module-6) | 60 min | Intermediate | Tool calling is pattern matching, not understanding |
 | **7** | [How Do Models Compare?](./module-7) | 90 min | Advanced | No model is universally best |
-| **8** | The Full Picture | 120 min | Advanced | You can contribute to real AI research |
+| **8** | [The Full Picture](./module-8) | 120 min | Advanced | You can contribute to real AI research |
 
 ::: info Available Modules
-Modules 1 through 7 are available now. Module 8 is coming soon. Each module contains hands-on exercises with LLMxRay, conceptual background grounded in published research, and assessment options.
+All 8 modules are available now. Each module contains hands-on exercises with LLMxRay, conceptual background grounded in published research, and assessment options.
 :::
 
 ---

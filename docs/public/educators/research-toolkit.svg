@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="bgToolkit" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f0a2e"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="400" rx="16" fill="url(#bgToolkit)"/>
+
+  <!-- Title -->
+  <text x="400" y="30" text-anchor="middle" font-size="18" font-weight="700" fill="#e2e8f0">The LLMxRay Research Toolkit</text>
+  <text x="400" y="48" text-anchor="middle" font-size="12" fill="#94a3b8">Every page is a research instrument</text>
+
+  <!-- Row 1: 4 cards — x positions: 40, 225, 410, 595. Card width: 170, height: 110 -->
+  <!-- Card 1: Chat (blue) -->
+  <g transform="translate(40, 65)">
+    <rect x="0" y="0" width="170" height="115" rx="10" fill="rgba(96,165,250,0.08)" stroke="#60a5fa" stroke-width="1"/>
+    <!-- Chat icon: speech bubble -->
+    <g transform="translate(15, 16)">
+      <rect x="0" y="0" width="20" height="14" rx="3" fill="none" stroke="#60a5fa" stroke-width="1.2"/>
+      <path d="M5,14 L3,19 L9,14" fill="none" stroke="#60a5fa" stroke-width="1.2"/>
+    </g>
+    <text x="42" y="26" font-size="12" font-weight="700" fill="#60a5fa">Chat</text>
+    <line x1="10" y1="36" x2="160" y2="36" stroke="#334155" stroke-width="0.5"/>
+    <text x="85" y="52" text-anchor="middle" font-size="9" font-weight="600" fill="#e2e8f0">Qualitative observation</text>
+    <text x="85" y="68" text-anchor="middle" font-size="8" fill="#94a3b8">Explore model behavior</text>
+    <text x="85" y="80" text-anchor="middle" font-size="8" fill="#94a3b8">in conversation</text>
+    <!-- Arrow indicator -->
+    <text x="85" y="102" text-anchor="middle" font-size="9" fill="#60a5fa">&#x2192; observe &#x2192; record</text>
+  </g>
+
+  <!-- Card 2: Compare (purple) -->
+  <g transform="translate(225, 65)">
+    <rect x="0" y="0" width="170" height="115" rx="10" fill="rgba(168,85,247,0.08)" stroke="#a855f7" stroke-width="1"/>
+    <!-- Compare icon: two columns -->
+    <g transform="translate(15, 14)">
+      <rect x="0" y="0" width="8" height="16" rx="2" fill="none" stroke="#a855f7" stroke-width="1.2"/>
+      <rect x="12" y="0" width="8" height="16" rx="2" fill="none" stroke="#a855f7" stroke-width="1.2"/>
+      <path d="M8,8 L12,8" stroke="#a855f7" stroke-width="1" stroke-dasharray="1.5"/>
+    </g>
+    <text x="42" y="26" font-size="12" font-weight="700" fill="#a855f7">Compare</text>
+    <line x1="10" y1="36" x2="160" y2="36" stroke="#334155" stroke-width="0.5"/>
+    <text x="85" y="52" text-anchor="middle" font-size="9" font-weight="600" fill="#e2e8f0">Controlled experiments</text>
+    <text x="85" y="68" text-anchor="middle" font-size="8" fill="#94a3b8">Isolate variables</text>
+    <text x="85" y="80" text-anchor="middle" font-size="8" fill="#94a3b8">with presets</text>
+    <text x="85" y="102" text-anchor="middle" font-size="9" fill="#a855f7">&#x2192; isolate &#x2192; compare</text>
+  </g>
+
+  <!-- Card 3: Embeddings (green) -->
+  <g transform="translate(410, 65)">
+    <rect x="0" y="0" width="170" height="115" rx="10" fill="rgba(74,222,128,0.08)" stroke="#4ade80" stroke-width="1"/>
+    <!-- Embeddings icon: vector dots -->
+    <g transform="translate(15, 14)">
+      <circle cx="4" cy="4" r="3" fill="none" stroke="#4ade80" stroke-width="1.2"/>
+      <circle cx="16" cy="12" r="3" fill="none" stroke="#4ade80" stroke-width="1.2"/>
+      <line x1="7" y1="6" x2="13" y2="10" stroke="#4ade80" stroke-width="0.8"/>
+    </g>
+    <text x="42" y="26" font-size="12" font-weight="700" fill="#4ade80">Embeddings</text>
+    <line x1="10" y1="36" x2="160" y2="36" stroke="#334155" stroke-width="0.5"/>
+    <text x="85" y="52" text-anchor="middle" font-size="9" font-weight="600" fill="#e2e8f0">Semantic analysis</text>
+    <text x="85" y="68" text-anchor="middle" font-size="8" fill="#94a3b8">Measure meaning</text>
+    <text x="85" y="80" text-anchor="middle" font-size="8" fill="#94a3b8">as vectors</text>
+    <text x="85" y="102" text-anchor="middle" font-size="9" fill="#4ade80">&#x2192; embed &#x2192; cluster</text>
+  </g>
+
+  <!-- Card 4: Benchmark (yellow) -->
+  <g transform="translate(595, 65)">
+    <rect x="0" y="0" width="170" height="115" rx="10" fill="rgba(251,191,36,0.08)" stroke="#fbbf24" stroke-width="1"/>
+    <!-- Benchmark icon: bar chart -->
+    <g transform="translate(15, 14)">
+      <rect x="0" y="8" width="5" height="10" rx="1" fill="none" stroke="#fbbf24" stroke-width="1.2"/>
+      <rect x="7" y="3" width="5" height="15" rx="1" fill="none" stroke="#fbbf24" stroke-width="1.2"/>
+      <rect x="14" y="6" width="5" height="12" rx="1" fill="none" stroke="#fbbf24" stroke-width="1.2"/>
+    </g>
+    <text x="42" y="26" font-size="12" font-weight="700" fill="#fbbf24">Benchmark</text>
+    <line x1="10" y1="36" x2="160" y2="36" stroke="#334155" stroke-width="0.5"/>
+    <text x="85" y="52" text-anchor="middle" font-size="9" font-weight="600" fill="#e2e8f0">Standardized evaluation</text>
+    <text x="85" y="68" text-anchor="middle" font-size="8" fill="#94a3b8">5 suites, real logprobs,</text>
+    <text x="85" y="80" text-anchor="middle" font-size="8" fill="#94a3b8">calibration</text>
+    <text x="85" y="102" text-anchor="middle" font-size="9" fill="#fbbf24">&#x2192; measure &#x2192; rank</text>
+  </g>
+
+  <!-- Row 2: 3 cards — x positions: 132, 317, 502. Card width: 170, height: 110 -->
+  <!-- Card 5: Tool Workshop (red) -->
+  <g transform="translate(132, 195)">
+    <rect x="0" y="0" width="170" height="115" rx="10" fill="rgba(239,68,68,0.08)" stroke="#ef4444" stroke-width="1"/>
+    <!-- Workshop icon: wrench -->
+    <g transform="translate(15, 14)">
+      <circle cx="6" cy="6" r="5" fill="none" stroke="#ef4444" stroke-width="1.2"/>
+      <line x1="10" y1="10" x2="18" y2="18" stroke="#ef4444" stroke-width="1.5" stroke-linecap="round"/>
+    </g>
+    <text x="42" y="26" font-size="12" font-weight="700" fill="#ef4444">Tool Workshop</text>
+    <line x1="10" y1="36" x2="160" y2="36" stroke="#334155" stroke-width="0.5"/>
+    <text x="85" y="52" text-anchor="middle" font-size="9" font-weight="600" fill="#e2e8f0">Agent capabilities</text>
+    <text x="85" y="68" text-anchor="middle" font-size="8" fill="#94a3b8">Build, test, optimize</text>
+    <text x="85" y="80" text-anchor="middle" font-size="8" fill="#94a3b8">tools</text>
+    <text x="85" y="102" text-anchor="middle" font-size="9" fill="#ef4444">&#x2192; build &#x2192; iterate</text>
+  </g>
+
+  <!-- Card 6: Knowledge Base (teal) -->
+  <g transform="translate(317, 195)">
+    <rect x="0" y="0" width="170" height="115" rx="10" fill="rgba(6,182,212,0.08)" stroke="#06b6d4" stroke-width="1"/>
+    <!-- KB icon: database/book -->
+    <g transform="translate(15, 14)">
+      <ellipse cx="10" cy="4" rx="10" ry="4" fill="none" stroke="#06b6d4" stroke-width="1.2"/>
+      <line x1="0" y1="4" x2="0" y2="14" stroke="#06b6d4" stroke-width="1.2"/>
+      <line x1="20" y1="4" x2="20" y2="14" stroke="#06b6d4" stroke-width="1.2"/>
+      <ellipse cx="10" cy="14" rx="10" ry="4" fill="none" stroke="#06b6d4" stroke-width="1.2"/>
+    </g>
+    <text x="42" y="26" font-size="12" font-weight="700" fill="#06b6d4">Knowledge Base</text>
+    <line x1="10" y1="36" x2="160" y2="36" stroke="#334155" stroke-width="0.5"/>
+    <text x="85" y="52" text-anchor="middle" font-size="9" font-weight="600" fill="#e2e8f0">Retrieval effectiveness</text>
+    <text x="85" y="68" text-anchor="middle" font-size="8" fill="#94a3b8">RAG pipeline</text>
+    <text x="85" y="80" text-anchor="middle" font-size="8" fill="#94a3b8">analysis</text>
+    <text x="85" y="102" text-anchor="middle" font-size="9" fill="#06b6d4">&#x2192; retrieve &#x2192; validate</text>
+  </g>
+
+  <!-- Card 7: AI Training (pink) -->
+  <g transform="translate(502, 195)">
+    <rect x="0" y="0" width="170" height="115" rx="10" fill="rgba(236,72,153,0.08)" stroke="#ec4899" stroke-width="1"/>
+    <!-- Training icon: brain/neural -->
+    <g transform="translate(15, 14)">
+      <circle cx="4" cy="4" r="2.5" fill="none" stroke="#ec4899" stroke-width="1"/>
+      <circle cx="16" cy="4" r="2.5" fill="none" stroke="#ec4899" stroke-width="1"/>
+      <circle cx="10" cy="14" r="2.5" fill="none" stroke="#ec4899" stroke-width="1"/>
+      <line x1="6" y1="5.5" x2="9" y2="12" stroke="#ec4899" stroke-width="0.8"/>
+      <line x1="14" y1="5.5" x2="11" y2="12" stroke="#ec4899" stroke-width="0.8"/>
+    </g>
+    <text x="42" y="26" font-size="12" font-weight="700" fill="#ec4899">AI Training</text>
+    <line x1="10" y1="36" x2="160" y2="36" stroke="#334155" stroke-width="0.5"/>
+    <text x="85" y="52" text-anchor="middle" font-size="9" font-weight="600" fill="#e2e8f0">Data curation</text>
+    <text x="85" y="68" text-anchor="middle" font-size="8" fill="#94a3b8">JSONL export</text>
+    <text x="85" y="80" text-anchor="middle" font-size="8" fill="#94a3b8">for fine-tuning</text>
+    <text x="85" y="102" text-anchor="middle" font-size="9" fill="#ec4899">&#x2192; curate &#x2192; train</text>
+  </g>
+
+  <!-- Bottom insight box -->
+  <g transform="translate(40, 330)">
+    <rect x="0" y="0" width="720" height="50" rx="10" fill="rgba(168,85,247,0.06)" stroke="#a855f7" stroke-width="1" stroke-dasharray="4"/>
+    <text x="360" y="18" text-anchor="middle" font-size="10" fill="#e2e8f0">You've already used all of these.</text>
+    <text x="360" y="36" text-anchor="middle" font-size="10" font-weight="600" fill="#fbbf24">Now combine them to answer questions nobody has answered yet.</text>
+  </g>
+</svg>
