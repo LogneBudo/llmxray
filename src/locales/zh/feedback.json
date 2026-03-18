@@ -1,0 +1,25 @@
+{
+  "title": "发送反馈",
+  "thankYou": "感谢你的反馈！",
+  "thankYouDetail": "你的意见有助于改进 LLMxRay。",
+  "typeQuestion": "反馈类型？",
+  "types": {
+    "bug": "缺陷",
+    "idea": "建议",
+    "question": "问题",
+    "other": "其他"
+  },
+  "message": {
+    "placeholder": "告诉我们你的想法..."
+  },
+  "email": {
+    "label": "邮箱",
+    "optional": "（可选 — 仅在你希望收到回复时填写）",
+    "placeholder": "your{'@'}email.com"
+  },
+  "submit": {
+    "send": "发送反馈",
+    "sending": "发送中..."
+  },
+  "disclaimer": "会包含应用上下文（页面、模型、系统）以帮助我们理解你的反馈。"
+}

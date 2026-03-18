@@ -76,14 +76,14 @@ const categoryLabel = computed<Record<string, string>>(() => ({
       <button
         v-for="(cmd, i) in matches"
         :key="cmd.name"
-        class="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm transition-colors"
+        class="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-start text-sm transition-colors"
         :class="i === selectedIndex ? 'bg-accent/10 text-accent' : 'text-text-primary hover:bg-surface-overlay'"
         @mouseenter="selectedIndex = i"
         @click="$emit('select', cmd)"
       >
         <span class="shrink-0 font-mono text-xs text-accent">/{{ cmd.name }}</span>
         <span class="truncate text-xs text-text-muted">{{ cmd.description }}</span>
-        <span class="ml-auto shrink-0 rounded bg-surface-overlay px-1.5 py-0.5 text-[10px] text-text-muted">
+        <span class="ms-auto shrink-0 rounded bg-surface-overlay px-1.5 py-0.5 text-[10px] text-text-muted">
           {{ categoryLabel[cmd.category] ?? cmd.category }}
         </span>
       </button>

@@ -388,7 +388,7 @@ onUnmounted(() => {
         </div>
 
         <div v-if="aggregate.modelsUsed.length > 0" class="flex flex-wrap gap-1.5 pt-1">
-          <span class="text-[10px] text-text-muted mr-1">{{ $t('system.inference.modelsUsed') }}:</span>
+          <span class="text-[10px] text-text-muted me-1">{{ $t('system.inference.modelsUsed') }}:</span>
           <span
             v-for="name in aggregate.modelsUsed"
             :key="name"
@@ -428,21 +428,21 @@ onUnmounted(() => {
               {{ model.details.parameter_size }} · {{ model.details.quantization_level }} · {{ model.details.family }}
             </p>
           </div>
-          <div class="text-right text-xs space-y-0.5 shrink-0">
+          <div class="text-end text-xs space-y-0.5 shrink-0">
             <p v-if="model.size_vram > 0">
               <span class="text-text-muted">{{ $t('system.activeModels.vram') }}</span>
-              <span class="ml-1.5 text-accent font-medium">{{ formatBytes(model.size_vram) }}</span>
+              <span class="ms-1.5 text-accent font-medium">{{ formatBytes(model.size_vram) }}</span>
             </p>
             <p v-if="model.size - model.size_vram > 0">
               <span class="text-text-muted">{{ $t('system.activeModels.ram') }}</span>
-              <span class="ml-1.5 text-text-primary font-medium">{{ formatBytes(model.size - model.size_vram) }}</span>
+              <span class="ms-1.5 text-text-primary font-medium">{{ formatBytes(model.size - model.size_vram) }}</span>
             </p>
             <p>
               <span class="text-text-muted">{{ $t('system.activeModels.ctx') }}</span>
-              <span class="ml-1.5 text-text-secondary">{{ model.context_length.toLocaleString() }}</span>
+              <span class="ms-1.5 text-text-secondary">{{ model.context_length.toLocaleString() }}</span>
             </p>
           </div>
-          <div class="text-xs text-text-muted shrink-0 w-16 text-right" :title="model.expires_at">
+          <div class="text-xs text-text-muted shrink-0 w-16 text-end" :title="model.expires_at">
             {{ formatExpiry(model.expires_at) }}
           </div>
         </div>
@@ -463,11 +463,11 @@ onUnmounted(() => {
         <table class="w-full text-xs">
           <thead>
             <tr class="border-b border-border-default text-text-muted">
-              <th class="text-left py-1.5 pr-4 font-medium">{{ $t('system.installedModels.model') }}</th>
-              <th class="text-left py-1.5 pr-4 font-medium">{{ $t('system.installedModels.family') }}</th>
-              <th class="text-left py-1.5 pr-4 font-medium">{{ $t('system.installedModels.parameters') }}</th>
-              <th class="text-left py-1.5 pr-4 font-medium">{{ $t('system.installedModels.quantization') }}</th>
-              <th class="text-right py-1.5 font-medium">{{ $t('system.installedModels.size') }}</th>
+              <th class="text-start py-1.5 pe-4 font-medium">{{ $t('system.installedModels.model') }}</th>
+              <th class="text-start py-1.5 pe-4 font-medium">{{ $t('system.installedModels.family') }}</th>
+              <th class="text-start py-1.5 pe-4 font-medium">{{ $t('system.installedModels.parameters') }}</th>
+              <th class="text-start py-1.5 pe-4 font-medium">{{ $t('system.installedModels.quantization') }}</th>
+              <th class="text-end py-1.5 font-medium">{{ $t('system.installedModels.size') }}</th>
             </tr>
           </thead>
           <tbody>
@@ -476,11 +476,11 @@ onUnmounted(() => {
               :key="model.name"
               class="border-b border-border-default/50"
             >
-              <td class="py-1.5 pr-4 text-text-primary font-medium">{{ model.name }}</td>
-              <td class="py-1.5 pr-4 text-text-secondary">{{ model.details.family }}</td>
-              <td class="py-1.5 pr-4 text-text-secondary">{{ model.details.parameter_size }}</td>
-              <td class="py-1.5 pr-4 text-text-secondary">{{ model.details.quantization_level }}</td>
-              <td class="py-1.5 text-right text-text-secondary">{{ formatBytes(model.size) }}</td>
+              <td class="py-1.5 pe-4 text-text-primary font-medium">{{ model.name }}</td>
+              <td class="py-1.5 pe-4 text-text-secondary">{{ model.details.family }}</td>
+              <td class="py-1.5 pe-4 text-text-secondary">{{ model.details.parameter_size }}</td>
+              <td class="py-1.5 pe-4 text-text-secondary">{{ model.details.quantization_level }}</td>
+              <td class="py-1.5 text-end text-text-secondary">{{ formatBytes(model.size) }}</td>
             </tr>
           </tbody>
         </table>

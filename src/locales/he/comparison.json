@@ -1,0 +1,70 @@
+{
+  "title": "Compare Models",
+  "configurator": {
+    "title": "Comparison Slots",
+    "description": "Each slot is a model + settings combination. Add the same model multiple times with different settings to compare behavior.",
+    "addSlot": "Add slot",
+    "removeSlot": "Remove slot",
+    "clearAll": "Clear All",
+    "model": "Model",
+    "systemPrompt": "System Prompt",
+    "optionalSystemPrompt": "Optional system prompt...",
+    "options": "Options",
+    "settings": "Settings",
+    "temperature": "Temperature",
+    "topP": "Top-P",
+    "seed": "Seed",
+    "seedPlaceholder": "Random (leave empty)",
+    "advanced": "Advanced",
+    "topK": "Top-K",
+    "repeatPenalty": "Repeat Penalty",
+    "mirostat": "Mirostat",
+    "mirostatOff": "Off",
+    "maxTokens": "Max Tokens",
+    "contextLength": "Context Length",
+    "defaultPlaceholder": "Default",
+    "slotsConfigured": "{count} slot(s) configured",
+    "emptyTitle": "No slots configured yet",
+    "emptyDescription": "Add a slot to pick a model and settings, or use a quick-start preset above to get going.",
+    "addFirstSlot": "+ Add First Slot",
+    "addSlotCount": "+ Add Slot ({current}/4)",
+    "presets": {
+      "quickStart": "Quick start:",
+      "tempSweep": "Temperature Sweep",
+      "tempSweepDesc": "Creates 3 slots of the same model at temperatures 0.2 (focused), 0.7 (balanced), and 1.2 (creative). See how temperature changes the output for the exact same prompt.",
+      "deterministicPair": "Deterministic Pair",
+      "deterministicPairDesc": "Creates 2 slots of the same model with the same seed but different temperatures (0.3 and 1.0). The shared seed means any difference in the output is purely from temperature, not randomness."
+    }
+  },
+  "prompt": {
+    "placeholder": "Enter prompt to compare across slots...",
+    "compare": "Compare",
+    "running": "Running..."
+  },
+  "results": {
+    "title": "Results",
+    "grid": "Grid",
+    "diff": "Diff"
+  },
+  "diff": {
+    "needTwoResults": "Need at least 2 completed results to show a diff.",
+    "compare": "Compare:",
+    "vs": "vs",
+    "only": "{label} only"
+  },
+  "metrics": {
+    "performanceComparison": "Performance Comparison",
+    "timeToFirstToken": "Time to First Token",
+    "lowerBetter": "lower is better",
+    "tokensPerSec": "Tokens/sec",
+    "higherBetter": "higher is better",
+    "totalTokens": "Total Tokens",
+    "speed": "Speed",
+    "ttft": "TTFT",
+    "tokens": "Tokens",
+    "duration": "Duration"
+  },
+  "column": {
+    "tokens": "Tokens"
+  }
+}

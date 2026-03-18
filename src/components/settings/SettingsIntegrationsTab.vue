@@ -80,7 +80,7 @@ function saveGoogleClientId() {
 
         <div v-if="showSetupGuide" class="mt-3 space-y-2 text-xs text-text-secondary">
           <p class="font-medium text-text-primary">One-time setup (5 minutes):</p>
-          <ol class="list-decimal list-inside space-y-2 ml-1">
+          <ol class="list-decimal list-inside space-y-2 ms-1">
             <li>Go to <a href="https://console.cloud.google.com/" target="_blank" rel="noopener" class="text-accent hover:underline">Google Cloud Console</a> and create a new project</li>
             <li>Enable the <a href="https://console.cloud.google.com/apis/library/calendar-json.googleapis.com" target="_blank" rel="noopener" class="text-accent hover:underline">Google Calendar API</a></li>
             <li>Enable the <a href="https://console.cloud.google.com/apis/library/gmail.googleapis.com" target="_blank" rel="noopener" class="text-accent hover:underline">Gmail API</a></li>

@@ -257,7 +257,7 @@ function handlePaste(e: ClipboardEvent) {
           :title="$t('dashboard.input.sendMessage')"
           @click="sendMessage"
         >
-          <Send class="h-4 w-4" />
+          <Send class="h-4 w-4 rtl:-scale-x-100" />
         </button>
       </div>
     </div>

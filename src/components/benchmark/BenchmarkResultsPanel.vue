@@ -122,7 +122,7 @@ const pressureCategories = computed(() => {
             · {{ Math.round((result.completedAt - result.startedAt) / 1000) }}s total
           </span>
         </div>
-        <div class="text-right">
+        <div class="text-end">
           <div class="text-2xl font-bold" :class="result.accuracy >= 0.5 ? 'text-success' : 'text-error'">
             {{ Math.round(result.accuracy * 100) }}%
           </div>
@@ -164,8 +164,8 @@ const pressureCategories = computed(() => {
               :style="{ width: `${(cat.avgLatencyMs / maxLatency) * 100}%` }"
             />
           </div>
-          <span class="w-20 text-right text-xs text-text-muted">{{ cat.avgLatencyRound }}ms</span>
-          <span class="w-12 text-right text-xs" :class="cat.accuracyPct >= 50 ? 'text-success' : 'text-error'">
+          <span class="w-20 text-end text-xs text-text-muted">{{ cat.avgLatencyRound }}ms</span>
+          <span class="w-12 text-end text-xs" :class="cat.accuracyPct >= 50 ? 'text-success' : 'text-error'">
             {{ cat.accuracyPct }}%
           </span>
         </div>
@@ -195,24 +195,24 @@ const pressureCategories = computed(() => {
       <div class="overflow-x-auto">
         <table class="w-full text-xs">
           <thead>
-            <tr class="border-b border-border-default text-left text-text-muted">
-              <th class="pb-2 pr-4">{{ $t('benchmark.results.category') }}</th>
-              <th class="pb-2 pr-4">{{ $t('benchmark.results.accuracy') }}</th>
-              <th class="pb-2 pr-4">{{ $t('benchmark.results.correct') }}</th>
-              <th class="pb-2 pr-4">{{ $t('benchmark.results.avgTtft') }}</th>
-              <th class="pb-2 pr-4">{{ $t('benchmark.results.avgTotal') }}</th>
+            <tr class="border-b border-border-default text-start text-text-muted">
+              <th class="pb-2 pe-4">{{ $t('benchmark.results.category') }}</th>
+              <th class="pb-2 pe-4">{{ $t('benchmark.results.accuracy') }}</th>
+              <th class="pb-2 pe-4">{{ $t('benchmark.results.correct') }}</th>
+              <th class="pb-2 pe-4">{{ $t('benchmark.results.avgTtft') }}</th>
+              <th class="pb-2 pe-4">{{ $t('benchmark.results.avgTotal') }}</th>
               <th class="pb-2">{{ $t('benchmark.results.avgConfidence') }}</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="cat in categories" :key="cat.category" class="border-b border-border-default/50">
-              <td class="py-2 pr-4 text-text-primary">{{ cat.label }}</td>
-              <td class="py-2 pr-4" :class="cat.accuracyPct >= 50 ? 'text-success' : 'text-error'">
+              <td class="py-2 pe-4 text-text-primary">{{ cat.label }}</td>
+              <td class="py-2 pe-4" :class="cat.accuracyPct >= 50 ? 'text-success' : 'text-error'">
                 {{ cat.accuracyPct }}%
               </td>
-              <td class="py-2 pr-4 text-text-secondary">{{ cat.correctCount }}/{{ cat.questionCount }}</td>
-              <td class="py-2 pr-4 text-text-secondary">{{ cat.avgTtftRound }}ms</td>
-              <td class="py-2 pr-4 text-text-secondary">{{ cat.avgLatencyRound }}ms</td>
+              <td class="py-2 pe-4 text-text-secondary">{{ cat.correctCount }}/{{ cat.questionCount }}</td>
+              <td class="py-2 pe-4 text-text-secondary">{{ cat.avgTtftRound }}ms</td>
+              <td class="py-2 pe-4 text-text-secondary">{{ cat.avgLatencyRound }}ms</td>
               <td class="py-2 text-text-secondary">{{ cat.confidencePct }}%</td>
             </tr>
           </tbody>
@@ -283,7 +283,7 @@ const pressureCategories = computed(() => {
             class="rounded-md border border-border-default/50"
           >
             <button
-              class="flex w-full items-center gap-3 px-3 py-2 text-xs text-left"
+              class="flex w-full items-center gap-3 px-3 py-2 text-xs text-start"
               :class="qr.thinkingResponse ? 'cursor-pointer hover:bg-surface' : ''"
               @click="qr.thinkingResponse && (expandedThinking = expandedThinking === qr.questionId ? null : qr.questionId)"
             >
@@ -297,10 +297,10 @@ const pressureCategories = computed(() => {
               <span class="flex-1 truncate text-text-secondary" :title="qr.fullResponse">
                 {{ qr.modelAnswer }} (expected {{ qr.expectedAnswer }})
               </span>
-              <span class="w-28 shrink-0 text-right text-text-muted" :title="`TTFT ${Math.round(qr.ttftMs ?? qr.latencyMs)}ms · Total ${Math.round(qr.latencyMs)}ms`">
+              <span class="w-28 shrink-0 text-end text-text-muted" :title="`TTFT ${Math.round(qr.ttftMs ?? qr.latencyMs)}ms · Total ${Math.round(qr.latencyMs)}ms`">
                 {{ Math.round(qr.ttftMs ?? qr.latencyMs) }}ms / {{ Math.round(qr.latencyMs) }}ms
               </span>
-              <span class="w-14 shrink-0 text-right text-text-muted">{{ Math.round(qr.avgTokenConfidence * 100) }}%</span>
+              <span class="w-14 shrink-0 text-end text-text-muted">{{ Math.round(qr.avgTokenConfidence * 100) }}%</span>
               <span v-if="qr.thinkingResponse" class="w-4 shrink-0 text-center text-text-muted">
                 {{ expandedThinking === qr.questionId ? '▲' : '▼' }}
               </span>

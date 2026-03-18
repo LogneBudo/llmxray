@@ -98,7 +98,7 @@ const phaseColors: Record<string, string> = {
         v-if="expandedId === pair.id"
         :pair="pair"
         :all-tags="allTags"
-        class="mt-1 ml-7"
+        class="mt-1 ms-7"
         @close="emit('set-expanded', null)"
         @update:response="(id: string, resp: string) => emit('update:response', id, resp)"
         @update:tags="(id: string, tags: string[]) => emit('update:tags', id, tags)"

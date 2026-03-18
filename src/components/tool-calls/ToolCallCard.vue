@@ -25,14 +25,14 @@ const expanded = ref(false)
 <template>
   <div class="rounded-lg border border-border-default bg-surface-raised">
     <button
-      class="flex w-full items-center justify-between px-4 py-3 text-left hover:bg-surface-overlay transition-colors"
+      class="flex w-full items-center justify-between px-4 py-3 text-start hover:bg-surface-overlay transition-colors"
       @click="expanded = !expanded"
     >
       <div class="flex items-center gap-3">
         <span class="text-base">⚡</span>
         <div>
           <span class="text-sm font-medium text-text-primary">{{ entry.functionName }}</span>
-          <span class="ml-2 text-xs text-text-muted">
+          <span class="ms-2 text-xs text-text-muted">
             {{ entry.durationMs != null ? formatDuration(entry.durationMs) : 'pending' }}
           </span>
         </div>

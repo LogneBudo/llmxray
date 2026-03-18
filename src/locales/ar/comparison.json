@@ -1,0 +1,70 @@
+{
+  "title": "مقارنة النماذج",
+  "configurator": {
+    "title": "خانات المقارنة",
+    "description": "كل خانة هي مزيج من نموذج + إعدادات. أضف نفس النموذج عدة مرات بإعدادات مختلفة لمقارنة السلوك.",
+    "addSlot": "إضافة خانة",
+    "removeSlot": "إزالة خانة",
+    "clearAll": "مسح الكل",
+    "model": "النموذج",
+    "systemPrompt": "موجه النظام",
+    "optionalSystemPrompt": "موجه نظام اختياري...",
+    "options": "الخيارات",
+    "settings": "الإعدادات",
+    "temperature": "درجة الحرارة",
+    "topP": "Top-P",
+    "seed": "Seed",
+    "seedPlaceholder": "عشوائي (اتركه فارغاً)",
+    "advanced": "متقدم",
+    "topK": "Top-K",
+    "repeatPenalty": "عقوبة التكرار",
+    "mirostat": "Mirostat",
+    "mirostatOff": "معطّل",
+    "maxTokens": "الحد الأقصى لعدد token",
+    "contextLength": "طول السياق",
+    "defaultPlaceholder": "افتراضي",
+    "slotsConfigured": "{count} خانة مهيّأة",
+    "emptyTitle": "لم يتم تهيئة خانات بعد",
+    "emptyDescription": "أضف خانة لاختيار نموذج وإعدادات، أو استخدم إعداداً مسبقاً للبدء السريع أعلاه.",
+    "addFirstSlot": "+ إضافة الخانة الأولى",
+    "addSlotCount": "+ إضافة خانة ({current}/4)",
+    "presets": {
+      "quickStart": "بداية سريعة:",
+      "tempSweep": "مسح درجة الحرارة",
+      "tempSweepDesc": "ينشئ 3 خانات لنفس النموذج بدرجات حرارة 0.2 (مركّز)، 0.7 (متوازن)، و 1.2 (إبداعي). شاهد كيف تغيّر درجة الحرارة المخرجات لنفس الموجه.",
+      "deterministicPair": "زوج حتمي",
+      "deterministicPairDesc": "ينشئ خانتين لنفس النموذج بنفس البذرة لكن بدرجات حرارة مختلفة (0.3 و 1.0). البذرة المشتركة تعني أن أي اختلاف في المخرجات ناتج فقط عن درجة الحرارة وليس العشوائية."
+    }
+  },
+  "prompt": {
+    "placeholder": "أدخل موجهاً للمقارنة عبر الخانات...",
+    "compare": "مقارنة",
+    "running": "جارٍ التشغيل..."
+  },
+  "results": {
+    "title": "النتائج",
+    "grid": "شبكة",
+    "diff": "الفرق"
+  },
+  "diff": {
+    "needTwoResults": "يلزم نتيجتان مكتملتان على الأقل لعرض الفرق.",
+    "compare": "مقارنة:",
+    "vs": "مقابل",
+    "only": "{label} فقط"
+  },
+  "metrics": {
+    "performanceComparison": "مقارنة الأداء",
+    "timeToFirstToken": "وقت أول token",
+    "lowerBetter": "الأقل أفضل",
+    "tokensPerSec": "token/ث",
+    "higherBetter": "الأعلى أفضل",
+    "totalTokens": "إجمالي token",
+    "speed": "السرعة",
+    "ttft": "TTFT",
+    "tokens": "token",
+    "duration": "المدة"
+  },
+  "column": {
+    "tokens": "token"
+  }
+}

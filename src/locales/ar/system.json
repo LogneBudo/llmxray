@@ -1,0 +1,94 @@
+{
+  "title": "نظامي",
+  "subtitle": "نظرة عامة على العتاد وبيئة التشغيل والاستدلال",
+  "refresh": "تحديث",
+  "detecting": "جارٍ اكتشاف العتاد...",
+  "detectingDetail": "الاستعلام عن CPU والذاكرة و GPU والتخزين",
+  "unavailable": "اكتشاف العتاد غير متاح. يرجى إعادة تشغيل خادم التطوير لتفعيل إضافة معلومات النظام.",
+  "os": {
+    "title": "نظام التشغيل",
+    "os": "نظام التشغيل",
+    "version": "الإصدار",
+    "build": "البناء",
+    "architecture": "البنية"
+  },
+  "device": {
+    "title": "الجهاز",
+    "name": "الاسم",
+    "manufacturer": "الشركة المصنّعة",
+    "model": "الطراز",
+    "family": "العائلة"
+  },
+  "cpu": {
+    "title": "المعالج",
+    "cpu": "CPU",
+    "physicalCores": "الأنوية الفيزيائية",
+    "logicalProcessors": "المعالجات المنطقية",
+    "maxClock": "أقصى تردد"
+  },
+  "memory": {
+    "title": "الذاكرة",
+    "totalRam": "إجمالي RAM",
+    "available": "متاح",
+    "inUse": "قيد الاستخدام"
+  },
+  "gpu": {
+    "title": "الرسومات",
+    "gpu": "GPU",
+    "adapterRam": "ذاكرة المحوّل",
+    "sharedNotReported": "مشتركة / غير مُبلّغ عنها",
+    "driver": "برنامج التشغيل"
+  },
+  "storage": {
+    "title": "التخزين",
+    "drive": "القرص",
+    "total": "الإجمالي",
+    "free": "متاح",
+    "used": "مستخدم"
+  },
+  "browserStorage": {
+    "title": "تخزين المتصفح",
+    "persistent": "دائم",
+    "bestEffort": "أفضل جهد",
+    "scanning": "جارٍ الفحص...",
+    "indexedDbQuota": "حصة IndexedDB",
+    "totalRecords": "{count} سجل إجمالي عبر {databases} قاعدة بيانات",
+    "clearAll": "مسح جميع البيانات",
+    "empty": "فارغ"
+  },
+  "ollama": {
+    "title": "بيئة تشغيل Ollama",
+    "status": "الحالة",
+    "version": "الإصدار",
+    "installedModels": "النماذج المثبّتة",
+    "totalModelStorage": "إجمالي تخزين النماذج",
+    "modelsLoaded": "النماذج المحمّلة"
+  },
+  "inference": {
+    "title": "الاستدلال",
+    "thisSession": "هذه الجلسة",
+    "noSessions": "لا توجد جلسات استدلال بعد.",
+    "sessions": "الجلسات",
+    "avgSpeed": "متوسط السرعة",
+    "tokensGenerated": "token المولّدة",
+    "avgTtft": "متوسط TTFT",
+    "modelsUsed": "النماذج المستخدمة"
+  },
+  "activeModels": {
+    "title": "النماذج النشطة",
+    "noModels": "لا توجد نماذج محمّلة حالياً في الذاكرة. أرسل رسالة لتحميل واحد.",
+    "vram": "VRAM",
+    "ram": "RAM",
+    "total": "الإجمالي",
+    "ctx": "السياق"
+  },
+  "installedModels": {
+    "title": "النماذج المثبّتة",
+    "noModels": "لا توجد نماذج مثبّتة.",
+    "model": "النموذج",
+    "family": "العائلة",
+    "parameters": "المعاملات",
+    "quantization": "التكميم",
+    "size": "الحجم"
+  }
+}

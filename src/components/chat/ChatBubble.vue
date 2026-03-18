@@ -125,7 +125,7 @@ const formattedTime = computed(() => {
         <span>{{ sessionMetrics.ttftMs < 1000 ? sessionMetrics.ttftMs.toFixed(0) + 'ms' : (sessionMetrics.ttftMs / 1000).toFixed(1) + 's' }} {{ $t('dashboard.bubble.ttft') }}</span>
       </div>
 
-      <div class="mt-1" :class="isUser ? 'text-right' : ''">
+      <div class="mt-1" :class="isUser ? 'text-end' : ''">
         <span class="text-[10px] opacity-50">{{ formattedTime }}</span>
       </div>
     </div>

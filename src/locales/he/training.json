@@ -1,0 +1,63 @@
+{
+  "title": "AI Training",
+  "subtitle": "Browse, curate, and export your training data from the Tool Workshop.",
+  "dashboard": {
+    "totalPairs": "Total pairs",
+    "accepted": "accepted",
+    "rejected": "rejected",
+    "pending": "Pending",
+    "trainingPairs": "Training Pairs",
+    "acceptanceRate": "Acceptance Rate",
+    "byPhase": "By Phase",
+    "topModels": "Top Models"
+  },
+  "filters": {
+    "search": "Search...",
+    "searchPrompts": "Search prompts...",
+    "model": "Model",
+    "toolName": "Tool name",
+    "tag": "Tag",
+    "status": "Status",
+    "allModels": "All models",
+    "allTools": "All tools",
+    "allTags": "All tags",
+    "allStatuses": "All statuses"
+  },
+  "bulk": {
+    "selected": "{count} selected",
+    "export": "Export",
+    "exportJsonl": "Export JSONL",
+    "markAccepted": "Mark Accepted",
+    "markRejected": "Mark Rejected",
+    "addTag": "Add Tag",
+    "tagPlaceholder": "Tag name...",
+    "delete": "Delete",
+    "confirm": "Confirm?",
+    "deselectAll": "Deselect"
+  },
+  "tags": {
+    "addPlaceholder": "Add tag..."
+  },
+  "table": {
+    "selectAll": "Select all",
+    "deselectAll": "Deselect all",
+    "pairsShown": "{shown} of {total} pairs shown",
+    "noResults": "No training pairs match your filters."
+  },
+  "detail": {
+    "accepted": "Accepted",
+    "rejected": "Rejected",
+    "systemPrompt": "System Prompt",
+    "userPrompt": "User Prompt",
+    "reasoning": "Reasoning",
+    "aiResponse": "AI Response",
+    "editResponse": "Edit response",
+    "tags": "Tags",
+    "deletePair": "Delete pair",
+    "confirmDelete": "Confirm delete?"
+  },
+  "empty": {
+    "title": "No training data collected yet.",
+    "description": "Training pairs are generated automatically when you use AI features in the Tool Workshop (draft generation, code analysis, auto-mapping, and AI fix)."
+  }
+}

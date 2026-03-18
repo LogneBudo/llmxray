@@ -1,0 +1,63 @@
+{
+  "title": "AI 训练",
+  "subtitle": "浏览、筛选和导出工具工坊中的训练数据。",
+  "dashboard": {
+    "totalPairs": "总数据对",
+    "accepted": "已采纳",
+    "rejected": "已拒绝",
+    "pending": "待处理",
+    "trainingPairs": "训练数据对",
+    "acceptanceRate": "采纳率",
+    "byPhase": "按阶段",
+    "topModels": "热门模型"
+  },
+  "filters": {
+    "search": "搜索...",
+    "searchPrompts": "搜索提示词...",
+    "model": "模型",
+    "toolName": "工具名称",
+    "tag": "标签",
+    "status": "状态",
+    "allModels": "所有模型",
+    "allTools": "所有工具",
+    "allTags": "所有标签",
+    "allStatuses": "所有状态"
+  },
+  "bulk": {
+    "selected": "已选择 {count} 项",
+    "export": "导出",
+    "exportJsonl": "导出 JSONL",
+    "markAccepted": "标记为已采纳",
+    "markRejected": "标记为已拒绝",
+    "addTag": "添加标签",
+    "tagPlaceholder": "标签名称...",
+    "delete": "删除",
+    "confirm": "确认？",
+    "deselectAll": "取消选择"
+  },
+  "tags": {
+    "addPlaceholder": "添加标签..."
+  },
+  "table": {
+    "selectAll": "全选",
+    "deselectAll": "取消全选",
+    "pairsShown": "显示 {shown} / 共 {total} 对",
+    "noResults": "没有匹配筛选条件的训练数据对。"
+  },
+  "detail": {
+    "accepted": "已采纳",
+    "rejected": "已拒绝",
+    "systemPrompt": "系统提示词",
+    "userPrompt": "用户提示词",
+    "reasoning": "推理过程",
+    "aiResponse": "AI 回复",
+    "editResponse": "编辑回复",
+    "tags": "标签",
+    "deletePair": "删除数据对",
+    "confirmDelete": "确认删除？"
+  },
+  "empty": {
+    "title": "尚未收集到训练数据。",
+    "description": "当你在工具工坊中使用 AI 功能（草拟生成、代码分析、自动映射和 AI 修复）时，训练数据对会自动生成。"
+  }
+}

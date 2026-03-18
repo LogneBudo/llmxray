@@ -1,0 +1,54 @@
+{
+  "title": "التضمينات",
+  "modelSelector": {
+    "noModels": "لا توجد نماذج متاحة",
+    "noEmbeddingModels": "لم يتم العثور على نماذج embedding. قم بتنزيل واحد: ollama pull nomic-embed-text"
+  },
+  "storage": {
+    "embeddingMemory": "ذاكرة embedding",
+    "records": "سجلات"
+  },
+  "playground": {
+    "title": "ساحة تجربة embedding",
+    "description": "أدخل نصاً لتوليد متجه embedding الخاص به وفحص الأبعاد.",
+    "placeholder": "أدخل نصاً لعمل embedding...",
+    "embed": "تضمين",
+    "embedding": "جارٍ التضمين...",
+    "showRawValues": "عرض القيم الخام (أول 50 من {total})"
+  },
+  "similarity": {
+    "title": "حاسبة التشابه",
+    "description": "قارن نصين لقياس تشابههما الدلالي باستخدام مسافة cosine similarity.",
+    "textA": "النص أ",
+    "textB": "النص ب",
+    "placeholderA": "النص الأول...",
+    "placeholderB": "النص الثاني...",
+    "compare": "مقارنة",
+    "comparing": "جارٍ المقارنة..."
+  },
+  "modelComparison": {
+    "title": "مقارنة النماذج",
+    "description": "تضمين نفس النص بنموذجين لمقارنة كيفية تمثيلهما للمعنى.",
+    "modelA": "النموذج أ",
+    "modelB": "النموذج ب",
+    "placeholder": "أدخل نصاً لتضمينه بكلا النموذجين...",
+    "compareModels": "مقارنة النماذج",
+    "comparingModels": "جارٍ مقارنة النماذج...",
+    "crossModelSimilarity": "التشابه بين النماذج — مدى تمثيل هذه النماذج لنفس النص بشكل متشابه.",
+    "veryDifferent": "هذه النماذج تشفّر المعنى بطرق مختلفة جداً.",
+    "moderateAgreement": "توافق متوسط — النماذج تتشارك بعض البنية الدلالية.",
+    "highAgreement": "توافق عالٍ — هذه النماذج تمثل هذا النص بشكل متشابه.",
+    "dimensionsMismatch": "الأبعاد مختلفة ({dimA} مقابل {dimB}) — لا يمكن حساب cosine similarity مباشرة.",
+    "compareStats": "قارن الإحصائيات أعلاه لتقييم جودة تمثيل كل نموذج."
+  },
+  "stats": {
+    "dims": "الأبعاد",
+    "l2Norm": "معيار L2",
+    "sparsity": "التناثر",
+    "time": "الوقت"
+  },
+  "history": {
+    "title": "التضمينات الأخيرة",
+    "clearAll": "مسح الكل"
+  }
+}

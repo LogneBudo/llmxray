@@ -122,7 +122,7 @@ onMounted(() => {
             <label class="text-xs text-text-muted">{{ $t('settings.general.temperature') }}</label>
             <div class="group relative">
               <span class="inline-flex h-4 w-4 items-center justify-center rounded-full border border-border-default text-[10px] text-text-muted cursor-help">?</span>
-              <div class="pointer-events-none absolute left-full top-1/2 z-10 ml-2 w-72 -translate-y-1/2 rounded-lg border border-border-default bg-surface-raised p-3 text-xs text-text-secondary opacity-0 shadow-lg transition-opacity group-hover:pointer-events-auto group-hover:opacity-100">
+              <div class="pointer-events-none absolute left-full top-1/2 z-10 ms-2 w-72 -translate-y-1/2 rounded-lg border border-border-default bg-surface-raised p-3 text-xs text-text-secondary opacity-0 shadow-lg transition-opacity group-hover:pointer-events-auto group-hover:opacity-100">
                 <p class="font-medium text-text-primary mb-1">{{ $t('settings.general.temperatureTooltipTitle') }}</p>
                 <p class="mb-2">{{ $t('settings.general.temperatureTooltipDesc') }}</p>
                 <ul class="space-y-1 text-[11px]">
@@ -132,7 +132,7 @@ onMounted(() => {
                 </ul>
               </div>
             </div>
-            <span class="ml-auto text-xs text-text-primary font-medium">{{ defaultTemperature }}</span>
+            <span class="ms-auto text-xs text-text-primary font-medium">{{ defaultTemperature }}</span>
             <span class="rounded-full bg-surface-overlay px-2 py-0.5 text-[10px] text-text-secondary">{{ temperatureLabel }}</span>
           </div>
 
@@ -147,19 +147,19 @@ onMounted(() => {
           />
 
           <div class="relative mt-1 h-4">
-            <span class="absolute left-0 text-[10px] text-text-muted">0</span>
-            <span class="absolute text-[10px] text-text-muted" style="left: 15%">0.3</span>
-            <span class="absolute text-[10px] text-accent font-medium" style="left: 35%">0.7</span>
-            <span class="absolute text-[10px] text-text-muted" style="left: 50%">1.0</span>
-            <span class="absolute text-[10px] text-text-muted" style="left: 75%">1.5</span>
-            <span class="absolute right-0 text-[10px] text-text-muted">2.0</span>
+            <span class="absolute start-0 text-[10px] text-text-muted">0</span>
+            <span class="absolute text-[10px] text-text-muted" :style="{ insetInlineStart: '15%' }">0.3</span>
+            <span class="absolute text-[10px] text-accent font-medium" :style="{ insetInlineStart: '35%' }">0.7</span>
+            <span class="absolute text-[10px] text-text-muted" :style="{ insetInlineStart: '50%' }">1.0</span>
+            <span class="absolute text-[10px] text-text-muted" :style="{ insetInlineStart: '75%' }">1.5</span>
+            <span class="absolute end-0 text-[10px] text-text-muted">2.0</span>
           </div>
 
           <div class="relative mt-0.5 h-3">
             <div class="absolute inset-0 flex">
-              <div class="flex-[15] text-center text-[9px] text-text-muted border-r border-border-default/30">{{ $t('settings.general.temperatureFocused') }}</div>
-              <div class="flex-[20] text-center text-[9px] text-text-muted border-r border-border-default/30">{{ $t('settings.general.temperatureBalanced') }}</div>
-              <div class="flex-[25] text-center text-[9px] text-text-muted border-r border-border-default/30">{{ $t('settings.general.temperatureCreative') }}</div>
+              <div class="flex-[15] text-center text-[9px] text-text-muted border-e border-border-default/30">{{ $t('settings.general.temperatureFocused') }}</div>
+              <div class="flex-[20] text-center text-[9px] text-text-muted border-e border-border-default/30">{{ $t('settings.general.temperatureBalanced') }}</div>
+              <div class="flex-[25] text-center text-[9px] text-text-muted border-e border-border-default/30">{{ $t('settings.general.temperatureCreative') }}</div>
               <div class="flex-[40] text-center text-[9px] text-text-muted">{{ $t('settings.general.temperatureWild') }}</div>
             </div>
           </div>
@@ -179,7 +179,7 @@ onMounted(() => {
             <label class="text-xs text-text-muted">{{ $t('settings.general.contextLength') }}</label>
             <div class="group relative">
               <span class="inline-flex h-4 w-4 items-center justify-center rounded-full border border-border-default text-[10px] text-text-muted cursor-help">?</span>
-              <div class="pointer-events-none absolute left-full top-1/2 z-10 ml-2 w-72 -translate-y-1/2 rounded-lg border border-border-default bg-surface-raised p-3 text-xs text-text-secondary opacity-0 shadow-lg transition-opacity group-hover:pointer-events-auto group-hover:opacity-100">
+              <div class="pointer-events-none absolute left-full top-1/2 z-10 ms-2 w-72 -translate-y-1/2 rounded-lg border border-border-default bg-surface-raised p-3 text-xs text-text-secondary opacity-0 shadow-lg transition-opacity group-hover:pointer-events-auto group-hover:opacity-100">
                 <p class="font-medium text-text-primary mb-1">{{ $t('settings.general.contextLengthTooltipTitle') }}</p>
                 <p class="mb-2">{{ $t('settings.general.contextLengthTooltipDesc') }}</p>
                 <div class="mt-2 text-[10px] text-text-muted">{{ $t('settings.general.contextLengthTooltipNote') }}</div>

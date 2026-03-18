@@ -31,7 +31,7 @@ const badgeClass = computed(() => {
     :class="badgeClass"
     :title="detail"
   >
-    <span v-if="isActive" class="relative mr-1.5 flex h-2 w-2">
+    <span v-if="isActive" class="relative me-1.5 flex h-2 w-2">
       <span class="absolute inline-flex h-full w-full rounded-full bg-current opacity-75" style="animation: ripple 1.5s ease-out infinite" />
       <span class="relative inline-flex h-2 w-2 rounded-full bg-current" />
     </span>

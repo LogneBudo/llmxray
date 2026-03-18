@@ -46,7 +46,7 @@ const segmentWidths = computed(() => {
       <span class="text-text-secondary">{{ label ?? 'Storage' }}</span>
       <span class="text-text-muted">
         {{ formatBytes(used) }} / {{ formatBytes(total) }}
-        <span class="ml-1">({{ percent }}%)</span>
+        <span class="ms-1">({{ percent }}%)</span>
       </span>
     </div>
 
@@ -59,7 +59,7 @@ const segmentWidths = computed(() => {
         <div
           v-for="seg in segmentWidths"
           :key="seg.name"
-          class="h-full transition-all duration-500 first:rounded-l-full last:rounded-r-full"
+          class="h-full transition-all duration-500 first:rounded-s-full last:rounded-e-full"
           :style="{ width: `${seg.width}%`, backgroundColor: seg.color }"
           :title="`${seg.name}: ${formatBytes(seg.bytes)}`"
         />

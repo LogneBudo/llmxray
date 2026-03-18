@@ -1,0 +1,63 @@
+{
+  "title": "تدريب الذكاء الاصطناعي",
+  "subtitle": "تصفّح وانتقِ وصدّر بيانات التدريب من ورشة الأدوات.",
+  "dashboard": {
+    "totalPairs": "إجمالي الأزواج",
+    "accepted": "مقبول",
+    "rejected": "مرفوض",
+    "pending": "قيد الانتظار",
+    "trainingPairs": "أزواج التدريب",
+    "acceptanceRate": "معدل القبول",
+    "byPhase": "حسب المرحلة",
+    "topModels": "أفضل النماذج"
+  },
+  "filters": {
+    "search": "بحث...",
+    "searchPrompts": "البحث في الموجّهات...",
+    "model": "النموذج",
+    "toolName": "اسم الأداة",
+    "tag": "وسم",
+    "status": "الحالة",
+    "allModels": "جميع النماذج",
+    "allTools": "جميع الأدوات",
+    "allTags": "جميع الوسوم",
+    "allStatuses": "جميع الحالات"
+  },
+  "bulk": {
+    "selected": "{count} محدد",
+    "export": "تصدير",
+    "exportJsonl": "تصدير JSONL",
+    "markAccepted": "تعيين كمقبول",
+    "markRejected": "تعيين كمرفوض",
+    "addTag": "إضافة وسم",
+    "tagPlaceholder": "اسم الوسم...",
+    "delete": "حذف",
+    "confirm": "تأكيد؟",
+    "deselectAll": "إلغاء التحديد"
+  },
+  "tags": {
+    "addPlaceholder": "إضافة وسم..."
+  },
+  "table": {
+    "selectAll": "تحديد الكل",
+    "deselectAll": "إلغاء تحديد الكل",
+    "pairsShown": "{shown} من {total} زوج معروض",
+    "noResults": "لا توجد أزواج تدريب تطابق مرشحاتك."
+  },
+  "detail": {
+    "accepted": "مقبول",
+    "rejected": "مرفوض",
+    "systemPrompt": "موجه النظام",
+    "userPrompt": "موجه المستخدم",
+    "reasoning": "الاستدلال",
+    "aiResponse": "استجابة الذكاء الاصطناعي",
+    "editResponse": "تعديل الاستجابة",
+    "tags": "الوسوم",
+    "deletePair": "حذف الزوج",
+    "confirmDelete": "تأكيد الحذف؟"
+  },
+  "empty": {
+    "title": "لم يتم جمع بيانات تدريب بعد.",
+    "description": "تُنشأ أزواج التدريب تلقائياً عند استخدام ميزات الذكاء الاصطناعي في ورشة الأدوات (توليد المسودات، تحليل الشفرة، التعيين التلقائي، وإصلاح الذكاء الاصطناعي)."
+  }
+}

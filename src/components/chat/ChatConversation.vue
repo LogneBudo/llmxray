@@ -601,7 +601,7 @@ async function handleCommand(name: string, args: string) {
             <button
               v-for="name in modelStore.chatModelNames"
               :key="name"
-              class="flex w-full items-center gap-2 px-3 py-1.5 text-left text-sm transition-colors"
+              class="flex w-full items-center gap-2 px-3 py-1.5 text-start text-sm transition-colors"
               :class="name === selectedModel ? 'bg-accent/10 text-accent' : 'text-text-primary hover:bg-surface-overlay'"
               @mousedown.prevent="selectedModel = name; modelDropdownOpen = false"
             >
@@ -667,7 +667,7 @@ async function handleCommand(name: string, args: string) {
       <!-- History side panel -->
       <div
         v-if="showHistory"
-        class="w-64 shrink-0 border-r border-border-default bg-surface-raised flex flex-col"
+        class="w-64 shrink-0 border-e border-border-default bg-surface-raised flex flex-col"
       >
         <div class="flex items-center justify-between border-b border-border-default px-4 py-2">
           <span class="text-xs font-medium text-text-secondary">{{ $t('dashboard.conversation.chatHistory') }}</span>
@@ -758,7 +758,7 @@ async function handleCommand(name: string, args: string) {
       <!-- Settings side panel -->
       <div
         v-if="showSettings"
-        class="w-72 shrink-0 border-l border-border-default bg-surface-raised"
+        class="w-72 shrink-0 border-s border-border-default bg-surface-raised"
       >
         <div class="flex items-center justify-between border-b border-border-default px-4 py-2">
           <span class="text-xs font-medium text-text-secondary">{{ $t('dashboard.settings.chatSettings') }}</span>

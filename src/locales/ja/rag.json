@@ -1,0 +1,40 @@
+{
+  "title": "Knowledge Base",
+  "subtitle": "Ingest documents for RAG-powered conversations",
+  "modelSelector": {
+    "noEmbeddingModels": "No embedding models"
+  },
+  "storage": {
+    "title": "Knowledge Base Storage",
+    "documents": "documents",
+    "chunks": "chunks",
+    "stored": "stored",
+    "ragStorage": "RAG Storage"
+  },
+  "upload": {
+    "dropZone": "Drag and drop files here",
+    "browse": "Browse",
+    "dropText": "Drop files here or click to browse",
+    "supportedFormats": "Supports PDF, DOCX, TXT, Markdown, CSV"
+  },
+  "documents": {
+    "title": "Documents",
+    "noDocuments": "No documents ingested yet",
+    "toggleContext": "Toggle RAG context",
+    "removeDocument": "Remove document"
+  },
+  "search": {
+    "title": "Semantic Search",
+    "placeholder": "Search your documents...",
+    "noResults": "No search results",
+    "searching": "Searching...",
+    "button": "Search",
+    "results": "results",
+    "showLess": "Show less",
+    "showFullChunk": "Show full chunk"
+  },
+  "ingest": {
+    "progress": "Ingest progress",
+    "ingesting": "Ingesting..."
+  }
+}

@@ -98,7 +98,7 @@ async function runComparison() {
       <div class="flex items-center gap-3">
         <h3 class="text-sm font-medium text-text-secondary">{{ $t('comparison.results.title') }}</h3>
         <StatusBadge :status="activeRun.status" />
-        <div v-if="hasCompletedResults" class="ml-auto flex gap-1 rounded-lg border border-border-default p-0.5">
+        <div v-if="hasCompletedResults" class="ms-auto flex gap-1 rounded-lg border border-border-default p-0.5">
           <button
             class="rounded-md px-2.5 py-1 text-[11px] transition-colors"
             :class="viewMode === 'grid' ? 'bg-surface-overlay text-text-primary' : 'text-text-muted hover:text-text-secondary'"

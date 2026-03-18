@@ -1,0 +1,39 @@
+{
+  "title": "Session",
+  "sessionId": "Session {id}",
+  "notFound": "Session not found.",
+  "tabs": {
+    "stream": "Stream",
+    "reasoning": "Reasoning",
+    "introspection": "Introspection",
+    "tools": "Tools",
+    "agent": "Agent Graph",
+    "prompt": "Prompt"
+  },
+  "stream": {
+    "tokenStream": "Token Stream",
+    "metrics": "Metrics"
+  },
+  "tokenStream": {
+    "promptPlaceholder": "Enter your prompt..."
+  },
+  "reasoning": {
+    "title": "Reasoning",
+    "noReasoning": "No reasoning data available for this session."
+  },
+  "introspection": {
+    "title": "Introspection",
+    "illustrative": "Illustrative"
+  },
+  "toolCalls": {
+    "title": "Tool Calls",
+    "timeline": "Timeline",
+    "optimize": "Optimize"
+  },
+  "agentGraph": {
+    "title": "Agent Graph"
+  },
+  "promptInspector": {
+    "title": "Prompt Inspector"
+  }
+}

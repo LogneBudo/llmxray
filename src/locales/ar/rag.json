@@ -1,0 +1,40 @@
+{
+  "title": "قاعدة المعرفة",
+  "subtitle": "استيعاب المستندات لمحادثات مدعومة بـ RAG",
+  "modelSelector": {
+    "noEmbeddingModels": "لا توجد نماذج embedding"
+  },
+  "storage": {
+    "title": "تخزين قاعدة المعرفة",
+    "documents": "مستندات",
+    "chunks": "أجزاء",
+    "stored": "مخزّن",
+    "ragStorage": "تخزين RAG"
+  },
+  "upload": {
+    "dropZone": "اسحب وأسقط الملفات هنا",
+    "browse": "تصفح",
+    "dropText": "أسقط الملفات هنا أو انقر للتصفح",
+    "supportedFormats": "يدعم PDF، DOCX، TXT، Markdown، CSV"
+  },
+  "documents": {
+    "title": "المستندات",
+    "noDocuments": "لم يتم استيعاب أي مستندات بعد",
+    "toggleContext": "تبديل سياق RAG",
+    "removeDocument": "إزالة المستند"
+  },
+  "search": {
+    "title": "البحث الدلالي",
+    "placeholder": "ابحث في مستنداتك...",
+    "noResults": "لا توجد نتائج بحث",
+    "searching": "جارٍ البحث...",
+    "button": "بحث",
+    "results": "نتائج",
+    "showLess": "عرض أقل",
+    "showFullChunk": "عرض الجزء كاملاً"
+  },
+  "ingest": {
+    "progress": "تقدم الاستيعاب",
+    "ingesting": "جارٍ الاستيعاب..."
+  }
+}

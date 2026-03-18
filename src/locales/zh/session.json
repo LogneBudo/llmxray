@@ -1,0 +1,39 @@
+{
+  "title": "会话",
+  "sessionId": "会话 {id}",
+  "notFound": "未找到会话。",
+  "tabs": {
+    "stream": "流",
+    "reasoning": "推理",
+    "introspection": "内省",
+    "tools": "工具",
+    "agent": "Agent 图",
+    "prompt": "提示词"
+  },
+  "stream": {
+    "tokenStream": "Token 流",
+    "metrics": "指标"
+  },
+  "tokenStream": {
+    "promptPlaceholder": "输入你的提示词..."
+  },
+  "reasoning": {
+    "title": "推理",
+    "noReasoning": "此会话没有可用的推理数据。"
+  },
+  "introspection": {
+    "title": "内省",
+    "illustrative": "示意性"
+  },
+  "toolCalls": {
+    "title": "工具调用",
+    "timeline": "时间线",
+    "optimize": "优化"
+  },
+  "agentGraph": {
+    "title": "Agent 图"
+  },
+  "promptInspector": {
+    "title": "提示词检查器"
+  }
+}

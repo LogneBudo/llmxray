@@ -268,7 +268,7 @@ async function pullEmbeddingModel(name: string) {
         <span class="transition-transform" :class="{ 'rotate-180': showAdvanced }">▾</span>
       </button>
 
-      <div v-if="showAdvanced" class="space-y-4 pl-1">
+      <div v-if="showAdvanced" class="space-y-4 ps-1">
         <!-- Top-P -->
         <div>
           <div class="mb-1.5 flex items-center justify-between">
@@ -386,14 +386,14 @@ async function pullEmbeddingModel(name: string) {
         >
           <span>
             {{ $t('dashboard.settings.tools') }}
-            <span v-if="toolStore.enabledDefinitions.length > 0" class="ml-1 text-accent">
+            <span v-if="toolStore.enabledDefinitions.length > 0" class="ms-1 text-accent">
               ({{ toolStore.enabledDefinitions.length }} {{ $t('dashboard.settings.active') }})
             </span>
           </span>
           <span class="transition-transform" :class="{ 'rotate-180': showTools }">▾</span>
         </button>
 
-        <div v-if="showTools" class="pl-1 space-y-2">
+        <div v-if="showTools" class="ps-1 space-y-2">
         <div v-if="toolStore.allTools.length > 0" class="space-y-1">
           <div
             v-for="tool in toolStore.allTools"
@@ -435,14 +435,14 @@ async function pullEmbeddingModel(name: string) {
       >
         <span>
           {{ $t('dashboard.memory.memory') }}
-          <span v-if="memoryStore.factCount > 0" class="ml-1 text-accent">
+          <span v-if="memoryStore.factCount > 0" class="ms-1 text-accent">
             ({{ memoryStore.factCount }} {{ $t('dashboard.memory.facts') }})
           </span>
         </span>
         <span class="transition-transform" :class="{ 'rotate-180': showMemory }">▾</span>
       </button>
 
-      <div v-if="showMemory" class="space-y-4 pl-1">
+      <div v-if="showMemory" class="space-y-4 ps-1">
         <!-- Sliding Window -->
         <div class="flex items-center justify-between">
           <div>

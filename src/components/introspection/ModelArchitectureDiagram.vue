@@ -192,8 +192,8 @@ function hideTip() {
     <div class="grid grid-cols-2 gap-3 text-xs">
       <div class="relative rounded-lg bg-surface p-3" @mouseenter="showTip('aheads')" @mouseleave="hideTip">
         <span class="text-text-muted">Attention Heads</span>
-        <Info class="inline ml-1 h-3 w-3 text-text-muted align-text-top" />
-        <span class="ml-1 text-text-primary">{{ architecture.attentionHeadCount }}</span>
+        <Info class="inline ms-1 h-3 w-3 text-text-muted align-text-top" />
+        <span class="ms-1 text-text-primary">{{ architecture.attentionHeadCount }}</span>
         <div
           v-if="activeTooltip === 'aheads'"
           class="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-60 rounded-lg border border-border-default bg-surface-overlay px-3 py-2 text-xs text-text-secondary shadow-lg z-10"
@@ -204,8 +204,8 @@ function hideTip() {
       </div>
       <div class="relative rounded-lg bg-surface p-3" @mouseenter="showTip('kvheads')" @mouseleave="hideTip">
         <span class="text-text-muted">KV Heads</span>
-        <Info class="inline ml-1 h-3 w-3 text-text-muted align-text-top" />
-        <span class="ml-1 text-text-primary">{{ architecture.kvHeadCount }}</span>
+        <Info class="inline ms-1 h-3 w-3 text-text-muted align-text-top" />
+        <span class="ms-1 text-text-primary">{{ architecture.kvHeadCount }}</span>
         <div
           v-if="activeTooltip === 'kvheads'"
           class="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-64 rounded-lg border border-border-default bg-surface-overlay px-3 py-2 text-xs text-text-secondary shadow-lg z-10"
@@ -216,8 +216,8 @@ function hideTip() {
       </div>
       <div class="relative rounded-lg bg-surface p-3" @mouseenter="showTip('embdim')" @mouseleave="hideTip">
         <span class="text-text-muted">Embedding Dim</span>
-        <Info class="inline ml-1 h-3 w-3 text-text-muted align-text-top" />
-        <span class="ml-1 text-text-primary">{{ architecture.embeddingLength }}</span>
+        <Info class="inline ms-1 h-3 w-3 text-text-muted align-text-top" />
+        <span class="ms-1 text-text-primary">{{ architecture.embeddingLength }}</span>
         <div
           v-if="activeTooltip === 'embdim'"
           class="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-60 rounded-lg border border-border-default bg-surface-overlay px-3 py-2 text-xs text-text-secondary shadow-lg z-10"
@@ -228,8 +228,8 @@ function hideTip() {
       </div>
       <div class="relative rounded-lg bg-surface p-3" @mouseenter="showTip('ffndim')" @mouseleave="hideTip">
         <span class="text-text-muted">FFN Dim</span>
-        <Info class="inline ml-1 h-3 w-3 text-text-muted align-text-top" />
-        <span class="ml-1 text-text-primary">{{ architecture.feedForwardLength }}</span>
+        <Info class="inline ms-1 h-3 w-3 text-text-muted align-text-top" />
+        <span class="ms-1 text-text-primary">{{ architecture.feedForwardLength }}</span>
         <div
           v-if="activeTooltip === 'ffndim'"
           class="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-64 rounded-lg border border-border-default bg-surface-overlay px-3 py-2 text-xs text-text-secondary shadow-lg z-10"
@@ -243,7 +243,7 @@ function hideTip() {
     <!-- Model Defaults -->
     <div v-if="modelDefaults" class="rounded-lg bg-surface">
       <button
-        class="flex w-full items-center justify-between p-4 text-left"
+        class="flex w-full items-center justify-between p-4 text-start"
         @click="showDefaults = !showDefaults"
       >
         <h4 class="text-xs font-medium text-text-muted uppercase tracking-wide">Model Defaults</h4>
@@ -258,7 +258,7 @@ function hideTip() {
       <div v-if="showDefaults" class="border-t border-border-default px-4 pb-4 pt-2">
         <table class="w-full text-xs">
           <tr v-for="(value, key) in modelDefaults" :key="key" class="border-b border-border-default/50 last:border-0">
-            <td class="py-1.5 pr-4 text-text-muted font-mono">{{ key }}</td>
+            <td class="py-1.5 pe-4 text-text-muted font-mono">{{ key }}</td>
             <td class="py-1.5 text-text-primary font-mono">{{ value }}</td>
           </tr>
         </table>
@@ -268,7 +268,7 @@ function hideTip() {
     <!-- Chat Template -->
     <div v-if="chatTemplate" class="rounded-lg bg-surface">
       <button
-        class="flex w-full items-center justify-between p-4 text-left"
+        class="flex w-full items-center justify-between p-4 text-start"
         @click="showTemplate = !showTemplate"
       >
         <h4 class="text-xs font-medium text-text-muted uppercase tracking-wide">Chat Template</h4>

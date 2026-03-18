@@ -42,7 +42,7 @@ function handleDelete() {
   <div class="flex items-center gap-2 rounded-lg border border-accent/30 bg-surface-raised px-4 py-2.5">
     <span class="text-xs font-medium text-accent">{{ $t('training.bulk.selected', { count: selectedCount }) }}</span>
 
-    <div class="ml-auto flex items-center gap-2">
+    <div class="ms-auto flex items-center gap-2">
       <button
         class="rounded-lg bg-surface-overlay px-3 py-1 text-[10px] text-text-secondary hover:text-text-primary transition-colors"
         @click="emit('export')"

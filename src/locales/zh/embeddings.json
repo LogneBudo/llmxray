@@ -1,0 +1,54 @@
+{
+  "title": "Embeddings",
+  "modelSelector": {
+    "noModels": "没有可用的模型",
+    "noEmbeddingModels": "未找到 embedding 模型。请拉取一个：ollama pull nomic-embed-text"
+  },
+  "storage": {
+    "embeddingMemory": "Embedding 存储",
+    "records": "条记录"
+  },
+  "playground": {
+    "title": "Embed 实验场",
+    "description": "输入文本以生成其 embedding 向量并查看各维度。",
+    "placeholder": "输入要嵌入的文本...",
+    "embed": "嵌入",
+    "embedding": "嵌入中...",
+    "showRawValues": "显示原始值（前 50 / 共 {total}）"
+  },
+  "similarity": {
+    "title": "相似度计算器",
+    "description": "比较两段文本，使用 cosine similarity 衡量语义相似度。",
+    "textA": "文本 A",
+    "textB": "文本 B",
+    "placeholderA": "第一段文本...",
+    "placeholderB": "第二段文本...",
+    "compare": "比较",
+    "comparing": "比较中..."
+  },
+  "modelComparison": {
+    "title": "模型对比",
+    "description": "用两个模型嵌入相同文本，比较它们如何表示语义。",
+    "modelA": "模型 A",
+    "modelB": "模型 B",
+    "placeholder": "输入文本以使用两个模型进行嵌入...",
+    "compareModels": "对比模型",
+    "comparingModels": "对比模型中...",
+    "crossModelSimilarity": "跨模型相似度 — 这两个模型对相同文本的表示有多相似。",
+    "veryDifferent": "这两个模型编码语义的方式差异很大。",
+    "moderateAgreement": "中等一致 — 两个模型共享部分语义结构。",
+    "highAgreement": "高度一致 — 这两个模型对此文本的表示相似。",
+    "dimensionsMismatch": "维度不同（{dimA} 与 {dimB}）— 无法直接计算 cosine similarity。",
+    "compareStats": "比较上方统计数据以评估每个模型的表示质量。"
+  },
+  "stats": {
+    "dims": "维度",
+    "l2Norm": "L2 范数",
+    "sparsity": "稀疏度",
+    "time": "耗时"
+  },
+  "history": {
+    "title": "最近的 Embeddings",
+    "clearAll": "全部清除"
+  }
+}

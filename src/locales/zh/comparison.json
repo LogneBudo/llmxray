@@ -1,0 +1,70 @@
+{
+  "title": "模型对比",
+  "configurator": {
+    "title": "对比插槽",
+    "description": "每个插槽是一个模型 + 设置组合。可多次添加同一模型并使用不同设置来对比行为。",
+    "addSlot": "添加插槽",
+    "removeSlot": "移除插槽",
+    "clearAll": "全部清除",
+    "model": "模型",
+    "systemPrompt": "系统提示词",
+    "optionalSystemPrompt": "可选的系统提示词...",
+    "options": "选项",
+    "settings": "设置",
+    "temperature": "温度",
+    "topP": "Top-P",
+    "seed": "Seed",
+    "seedPlaceholder": "随机（留空）",
+    "advanced": "高级",
+    "topK": "Top-K",
+    "repeatPenalty": "重复惩罚",
+    "mirostat": "Mirostat",
+    "mirostatOff": "关闭",
+    "maxTokens": "最大 tokens",
+    "contextLength": "上下文长度",
+    "defaultPlaceholder": "默认",
+    "slotsConfigured": "已配置 {count} 个插槽",
+    "emptyTitle": "尚未配置插槽",
+    "emptyDescription": "添加一个插槽来选择模型和设置，或使用上方的快速启动预设开始。",
+    "addFirstSlot": "+ 添加第一个插槽",
+    "addSlotCount": "+ 添加插槽 ({current}/4)",
+    "presets": {
+      "quickStart": "快速启动：",
+      "tempSweep": "温度扫描",
+      "tempSweepDesc": "创建同一模型的 3 个插槽，温度分别为 0.2（专注）、0.7（均衡）和 1.2（创意）。观察温度如何影响相同提示词的输出。",
+      "deterministicPair": "确定性配对",
+      "deterministicPairDesc": "创建同一模型的 2 个插槽，使用相同 seed 但不同温度（0.3 和 1.0）。共享 seed 意味着输出的任何差异纯粹来自温度，而非随机性。"
+    }
+  },
+  "prompt": {
+    "placeholder": "输入提示词以跨插槽进行对比...",
+    "compare": "对比",
+    "running": "运行中..."
+  },
+  "results": {
+    "title": "结果",
+    "grid": "网格",
+    "diff": "差异"
+  },
+  "diff": {
+    "needTwoResults": "需要至少 2 个已完成的结果才能显示差异。",
+    "compare": "比较：",
+    "vs": "与",
+    "only": "仅 {label}"
+  },
+  "metrics": {
+    "performanceComparison": "性能对比",
+    "timeToFirstToken": "首 token 时间",
+    "lowerBetter": "越低越好",
+    "tokensPerSec": "Tokens/秒",
+    "higherBetter": "越高越好",
+    "totalTokens": "总 tokens",
+    "speed": "速度",
+    "ttft": "TTFT",
+    "tokens": "Tokens",
+    "duration": "耗时"
+  },
+  "column": {
+    "tokens": "Tokens"
+  }
+}

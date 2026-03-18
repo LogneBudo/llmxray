@@ -28,10 +28,10 @@ const expanded = ref(false)
     </button>
     <div
       v-if="expanded"
-      class="mt-1 ml-2 rounded-lg border-l-2 border-[#a78bfa]/30 bg-surface px-4 py-3 text-sm text-text-secondary leading-relaxed whitespace-pre-wrap max-h-80 overflow-auto"
+      class="mt-1 ms-2 rounded-lg border-s-2 border-[#a78bfa]/30 bg-surface px-4 py-3 text-sm text-text-secondary leading-relaxed whitespace-pre-wrap max-h-80 overflow-auto"
     >
       {{ content }}
-      <span v-if="isThinking" class="inline-flex items-center gap-0.5 ml-1 align-text-bottom">
+      <span v-if="isThinking" class="inline-flex items-center gap-0.5 ms-1 align-text-bottom">
         <span class="h-1 w-1 rounded-full bg-[#a78bfa]" style="animation: typing-bounce 1.2s ease-in-out infinite" />
         <span class="h-1 w-1 rounded-full bg-[#a78bfa]" style="animation: typing-bounce 1.2s ease-in-out 0.2s infinite" />
         <span class="h-1 w-1 rounded-full bg-[#a78bfa]" style="animation: typing-bounce 1.2s ease-in-out 0.4s infinite" />

@@ -1,0 +1,108 @@
+{
+  "nav": {
+    "chatDiagnostics": "聊天诊断",
+    "compare": "对比",
+    "embeddings": "Embeddings",
+    "knowledgeBase": "知识库",
+    "toolWorkshop": "工具工坊",
+    "aiTraining": "AI 训练",
+    "models": "模型",
+    "benchmark": "基准测试",
+    "mySystem": "我的系统",
+    "settings": "设置",
+    "tagline": "本地 LLM 观测站"
+  },
+  "header": {
+    "chatDiagnostics": "聊天诊断",
+    "session": "会话",
+    "compareModels": "模型对比",
+    "embeddings": "Embeddings",
+    "knowledgeBase": "知识库",
+    "models": "模型",
+    "benchmark": "基准测试",
+    "toolWorkshop": "工具工坊",
+    "mySystem": "我的系统",
+    "settings": "设置",
+    "default": "LLMxRay"
+  },
+  "status": {
+    "ollamaConnected": "Ollama 已连接",
+    "ollamaDisconnected": "Ollama 未连接",
+    "loading": "加载中...",
+    "processing": "处理中...",
+    "ready": "就绪",
+    "error": "错误",
+    "success": "成功",
+    "pending": "等待中",
+    "running": "运行中",
+    "completed": "已完成",
+    "failed": "失败",
+    "streaming": "流式传输中",
+    "idle": "空闲",
+    "connected": "已连接",
+    "disconnected": "未连接"
+  },
+  "theme": {
+    "dark": "深色",
+    "light": "浅色",
+    "system": "跟随系统",
+    "themeLabel": "主题"
+  },
+  "locale": {
+    "language": "语言",
+    "english": "英语",
+    "french": "法语"
+  },
+  "actions": {
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除",
+    "close": "关闭",
+    "copy": "复制",
+    "edit": "编辑",
+    "test": "测试",
+    "refresh": "刷新",
+    "clear": "清除",
+    "send": "发送",
+    "stop": "停止",
+    "add": "添加",
+    "remove": "移除",
+    "confirm": "确认",
+    "back": "返回",
+    "next": "下一步",
+    "submit": "提交",
+    "reset": "重置",
+    "export": "导出",
+    "import": "导入"
+  },
+  "time": {
+    "justNow": "刚刚",
+    "minutesAgo": "{count} 分钟前",
+    "hoursAgo": "{count} 小时前",
+    "daysAgo": "{count} 天前",
+    "monthsAgo": "{count} 个月前"
+  },
+  "units": {
+    "tokens": "tokens",
+    "tokensPerSec": "tokens/s",
+    "milliseconds": "ms",
+    "seconds": "s",
+    "bytes": "B",
+    "kilobytes": "KB",
+    "megabytes": "MB",
+    "gigabytes": "GB",
+    "percent": "%",
+    "dimensions": "维度"
+  },
+  "model": {
+    "selectModel": "选择模型",
+    "noModels": "没有可用的模型",
+    "loadingModels": "加载模型中...",
+    "pullModel": "拉取模型"
+  },
+  "empty": {
+    "noData": "暂无数据",
+    "noResults": "未找到结果",
+    "nothingHere": "这里还没有内容"
+  }
+}

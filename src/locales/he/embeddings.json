@@ -1,0 +1,54 @@
+{
+  "title": "Embeddings",
+  "modelSelector": {
+    "noModels": "No models available",
+    "noEmbeddingModels": "No embedding models found. Pull one: ollama pull nomic-embed-text"
+  },
+  "storage": {
+    "embeddingMemory": "Embedding Memory",
+    "records": "records"
+  },
+  "playground": {
+    "title": "Embed Playground",
+    "description": "Enter text to generate its embedding vector and inspect the dimensions.",
+    "placeholder": "Enter text to embed...",
+    "embed": "Embed",
+    "embedding": "Embedding...",
+    "showRawValues": "Show raw values (first 50 of {total})"
+  },
+  "similarity": {
+    "title": "Similarity Calculator",
+    "description": "Compare two texts to measure their semantic similarity using cosine distance.",
+    "textA": "Text A",
+    "textB": "Text B",
+    "placeholderA": "First text...",
+    "placeholderB": "Second text...",
+    "compare": "Compare",
+    "comparing": "Comparing..."
+  },
+  "modelComparison": {
+    "title": "Model Comparison",
+    "description": "Embed the same text with two models to compare how they represent meaning.",
+    "modelA": "Model A",
+    "modelB": "Model B",
+    "placeholder": "Enter text to embed with both models...",
+    "compareModels": "Compare Models",
+    "comparingModels": "Comparing models...",
+    "crossModelSimilarity": "Cross-model similarity — how similarly these models represent the same text.",
+    "veryDifferent": "These models encode meaning very differently.",
+    "moderateAgreement": "Moderate agreement — the models share some semantic structure.",
+    "highAgreement": "High agreement — these models represent this text similarly.",
+    "dimensionsMismatch": "Dimensions differ ({dimA} vs {dimB}) — direct cosine similarity not possible.",
+    "compareStats": "Compare stats above to evaluate each model's representation quality."
+  },
+  "stats": {
+    "dims": "Dims",
+    "l2Norm": "L2 Norm",
+    "sparsity": "Sparsity",
+    "time": "Time"
+  },
+  "history": {
+    "title": "Recent Embeddings",
+    "clearAll": "Clear all"
+  }
+}

@@ -76,7 +76,7 @@ const formatIcons: Record<string, string> = {
         <p class="text-sm font-medium text-text-primary truncate">{{ doc.name }}</p>
         <p class="text-xs text-text-muted">
           {{ formatSize(doc.sizeBytes) }} · {{ doc.chunkCount }} chunks · ~{{ formatSize(estimateDocStorage(doc)) }} stored · {{ doc.embeddingModel }}
-          <span v-if="doc.status !== 'ready'" class="ml-1">
+          <span v-if="doc.status !== 'ready'" class="ms-1">
             · <span
               :class="doc.status === 'error' ? 'text-error' : 'text-accent'"
             >{{ doc.status }}</span>

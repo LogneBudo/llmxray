@@ -39,7 +39,7 @@ function cellColor(accuracy: number | null): string {
       <table class="w-full text-xs">
         <thead>
           <tr>
-            <th class="pb-2 pr-3 text-left text-text-muted">Model</th>
+            <th class="pb-2 pe-3 text-start text-text-muted">Model</th>
             <th
               v-for="cat in allCategories"
               :key="cat"
@@ -51,7 +51,7 @@ function cellColor(accuracy: number | null): string {
         </thead>
         <tbody>
           <tr v-for="result in results" :key="result.id">
-            <td class="py-1.5 pr-3 text-text-primary truncate max-w-[120px]">{{ result.modelName }}</td>
+            <td class="py-1.5 pe-3 text-text-primary truncate max-w-[120px]">{{ result.modelName }}</td>
             <td
               v-for="cat in allCategories"
               :key="cat"

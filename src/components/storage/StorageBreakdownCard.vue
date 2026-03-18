@@ -58,7 +58,7 @@ const segments = computed(() =>
         <div
           v-for="seg in segments"
           :key="seg.name"
-          class="h-full transition-all duration-500 first:rounded-l-full last:rounded-r-full"
+          class="h-full transition-all duration-500 first:rounded-s-full last:rounded-e-full"
           :style="{ width: `${(seg.bytes / database.totalBytes) * 100}%`, backgroundColor: seg.color }"
           :title="`${seg.name}: ${formatBytes(seg.bytes)}`"
         />
@@ -84,7 +84,7 @@ const segments = computed(() =>
         />
         <span class="flex-1 text-text-muted">{{ store.name }}</span>
         <span class="text-text-muted">{{ store.count }}</span>
-        <span class="text-text-secondary w-14 text-right">{{ formatBytes(store.bytes) }}</span>
+        <span class="text-text-secondary w-14 text-end">{{ formatBytes(store.bytes) }}</span>
       </div>
     </div>
     <p v-else class="text-[10px] text-text-muted italic">{{ $t('system.browserStorage.empty') }}</p>

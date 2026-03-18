@@ -3,7 +3,7 @@ import { useRoute } from 'vue-router'
 import { computed, ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useThemeStore } from '@/stores/theme-store'
-import { useLocaleStore } from '@/stores/locale-store'
+import { useLocaleStore, AVAILABLE_LOCALES } from '@/stores/locale-store'
 import { Sun, Moon } from 'lucide-vue-next'
 
 const route = useRoute()
@@ -12,8 +12,14 @@ const themeStore = useThemeStore()
 const localeStore = useLocaleStore()
 
 function toggleLocale() {
-  localeStore.setLocale(localeStore.locale === 'en' ? 'fr' : 'en')
+  const codes = AVAILABLE_LOCALES.map(l => l.code)
+  const idx = codes.indexOf(localeStore.locale)
+  localeStore.setLocale(codes[(idx + 1) % codes.length]!)
 }
+
+const currentFlag = computed(() =>
+  AVAILABLE_LOCALES.find(l => l.code === localeStore.locale)?.flag ?? '🌐'
+)
 
 const pageTitle = computed(() => {
   const name = route.name as string | undefined
@@ -76,7 +82,7 @@ onMounted(() => {
         :title="$t('settings.general.language')"
         @click="toggleLocale"
       >
-        {{ localeStore.locale === 'fr' ? '\uD83C\uDDEB\uD83C\uDDF7' : '\uD83C\uDDEC\uD83C\uDDE7' }}
+        {{ currentFlag }}
       </button>
 
       <div class="flex items-center gap-2 text-sm text-text-secondary">

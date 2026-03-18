@@ -1,0 +1,25 @@
+{
+  "title": "Send Feedback",
+  "thankYou": "Thank you for your feedback!",
+  "thankYouDetail": "Your input helps make LLMxRay better.",
+  "typeQuestion": "What kind of feedback?",
+  "types": {
+    "bug": "Bug",
+    "idea": "Idea",
+    "question": "Question",
+    "other": "Other"
+  },
+  "message": {
+    "placeholder": "Tell us what's on your mind..."
+  },
+  "email": {
+    "label": "Email",
+    "optional": "(optional — only if you'd like a response)",
+    "placeholder": "your{'@'}email.com"
+  },
+  "submit": {
+    "send": "Send Feedback",
+    "sending": "Sending..."
+  },
+  "disclaimer": "Includes app context (page, model, system) to help us understand your feedback."
+}

@@ -122,7 +122,7 @@ function handleSave() {
     <div class="flex items-center gap-2">
       <span class="text-xs text-text-secondary">{{ $t('tools.builder.parameters') }}</span>
       <button
-        class="ml-auto rounded px-2 py-0.5 text-[10px] transition-colors"
+        class="ms-auto rounded px-2 py-0.5 text-[10px] transition-colors"
         :class="showRawJson ? 'bg-accent/10 text-accent' : 'text-text-muted hover:text-text-primary'"
         @click="showRawJson = !showRawJson"
       >

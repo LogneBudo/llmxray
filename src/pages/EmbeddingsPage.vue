@@ -441,7 +441,7 @@ onMounted(async () => {
             </div>
           </div>
           <button
-            class="ml-3 text-text-muted hover:text-error text-xs"
+            class="ms-3 text-text-muted hover:text-error text-xs"
             @click.stop="embeddingStore.removeResult(result.id)"
           >
             ✕

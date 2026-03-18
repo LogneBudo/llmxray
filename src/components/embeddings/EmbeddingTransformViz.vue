@@ -251,7 +251,7 @@ onUnmounted(() => cancelAnimationFrame(animFrame))
             }"
           >
             <span class="text-text-muted">dim[{{ hoveredDim.index }}]</span>
-            <span class="ml-1.5 font-mono" :class="hoveredDim.value >= 0 ? 'text-accent' : 'text-warning'">
+            <span class="ms-1.5 font-mono" :class="hoveredDim.value >= 0 ? 'text-accent' : 'text-warning'">
               {{ hoveredDim.value.toFixed(6) }}
             </span>
           </div>

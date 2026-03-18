@@ -67,7 +67,10 @@ body {
   margin: 0;
   background-color: var(--color-surface);
   color: var(--color-text-primary);
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'Inter', 'Noto Sans SC', 'Noto Sans JP', 'Noto Sans KR',
+    'Noto Sans Arabic', 'Noto Sans Hebrew',
+    'Microsoft YaHei', 'Hiragino Sans', 'Meiryo',
+    system-ui, -apple-system, sans-serif;
 }
 
 ::-webkit-scrollbar {
@@ -164,7 +167,7 @@ body {
 .markdown-prose ul,
 .markdown-prose ol {
   margin: 0.5em 0;
-  padding-left: 1.5em;
+  padding-inline-start: 1.5em;
 }
 
 .markdown-prose ul {
@@ -187,9 +190,10 @@ body {
 .markdown-prose blockquote {
   margin: 0.75em 0;
   padding: 0.5em 1em;
-  border-left: 3px solid var(--color-accent);
+  border-inline-start: 3px solid var(--color-accent);
   background: var(--color-surface);
-  border-radius: 0 6px 6px 0;
+  border-start-end-radius: 6px;
+  border-end-end-radius: 6px;
   color: var(--color-text-secondary);
 }
 
@@ -215,10 +219,18 @@ body {
 .markdown-prose td {
   padding: 0.4em 0.75em;
   border: 1px solid var(--color-border-default);
-  text-align: left;
+  text-align: start;
 }
 
 .markdown-prose th {
   background: var(--color-surface);
   font-weight: 600;
+}
+
+/* CJK line-breaking */
+html[lang="zh"],
+html[lang="ja"],
+html[lang="ko"] {
+  word-break: break-all;
+  overflow-wrap: anywhere;
 }

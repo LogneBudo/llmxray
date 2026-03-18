@@ -130,7 +130,7 @@ function formatDuration(r: BenchmarkResult): string {
                 {{ $t('benchmark.comparison.incomplete') }} ({{ r.questionResults.length }}/{{ r.totalQuestions }})
               </div>
             </div>
-            <div class="text-right shrink-0">
+            <div class="text-end shrink-0">
               <div class="font-bold" :class="r.accuracy >= 0.5 ? 'text-success' : 'text-error'">
                 {{ Math.round(r.accuracy * 100) }}%
               </div>
@@ -138,14 +138,14 @@ function formatDuration(r: BenchmarkResult): string {
             </div>
             <button
               v-if="isIncomplete(r)"
-              class="ml-1 shrink-0 text-text-muted hover:text-accent transition-colors"
+              class="ms-1 shrink-0 text-text-muted hover:text-accent transition-colors"
               :title="$t('benchmark.comparison.resumeIncomplete')"
               @click.stop="emit('resume', r)"
             >
               &#x25B6;
             </button>
             <button
-              class="ml-1 shrink-0 text-text-muted hover:text-accent transition-colors"
+              class="ms-1 shrink-0 text-text-muted hover:text-accent transition-colors"
               :title="$t('benchmark.comparison.viewDetails')"
               @click.stop="emit('viewDetails', r)"
             >

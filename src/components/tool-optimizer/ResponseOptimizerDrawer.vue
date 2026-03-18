@@ -145,7 +145,7 @@ function close() {
 
       <!-- Drawer panel -->
       <div
-        class="relative flex h-full w-full max-w-2xl flex-col border-l border-border-default bg-bg-base shadow-xl"
+        class="relative flex h-full w-full max-w-2xl flex-col border-s border-border-default bg-bg-base shadow-xl"
       >
         <!-- Header -->
         <div class="flex items-center justify-between border-b border-border-default px-5 py-4">
@@ -191,7 +191,7 @@ function close() {
             <!-- Response tree + Selected fields -->
             <div class="grid grid-cols-3 gap-0 border-b border-border-default">
               <!-- JSON Tree (2/3 width) -->
-              <div class="col-span-2 border-r border-border-default p-4">
+              <div class="col-span-2 border-e border-border-default p-4">
                 <div class="mb-2 text-xs font-medium uppercase tracking-wide text-text-muted">
                   Response (click fields to select)
                 </div>
@@ -222,7 +222,7 @@ function close() {
                   >
                     <span class="truncate text-text-secondary" :title="path">{{ path }}</span>
                     <button
-                      class="ml-2 flex-shrink-0 text-text-muted hover:text-error transition-colors"
+                      class="ms-2 flex-shrink-0 text-text-muted hover:text-error transition-colors"
                       @click="removePath(path)"
                     >
                       &times;

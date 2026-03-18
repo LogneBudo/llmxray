@@ -1,0 +1,108 @@
+{
+  "nav": {
+    "chatDiagnostics": "Chat Diagnostics",
+    "compare": "Compare",
+    "embeddings": "Embeddings",
+    "knowledgeBase": "Knowledge Base",
+    "toolWorkshop": "Tool Workshop",
+    "aiTraining": "AI Training",
+    "models": "Models",
+    "benchmark": "Benchmark",
+    "mySystem": "My System",
+    "settings": "Settings",
+    "tagline": "Local LLM Observatory"
+  },
+  "header": {
+    "chatDiagnostics": "Chat Diagnostics",
+    "session": "Session",
+    "compareModels": "Compare Models",
+    "embeddings": "Embeddings",
+    "knowledgeBase": "Knowledge Base",
+    "models": "Models",
+    "benchmark": "Benchmark",
+    "toolWorkshop": "Tool Workshop",
+    "mySystem": "My System",
+    "settings": "Settings",
+    "default": "LLMxRay"
+  },
+  "status": {
+    "ollamaConnected": "Ollama connected",
+    "ollamaDisconnected": "Ollama disconnected",
+    "loading": "Loading...",
+    "processing": "Processing...",
+    "ready": "Ready",
+    "error": "Error",
+    "success": "Success",
+    "pending": "Pending",
+    "running": "Running",
+    "completed": "Completed",
+    "failed": "Failed",
+    "streaming": "Streaming",
+    "idle": "Idle",
+    "connected": "Connected",
+    "disconnected": "Disconnected"
+  },
+  "theme": {
+    "dark": "Dark",
+    "light": "Light",
+    "system": "System",
+    "themeLabel": "Theme"
+  },
+  "locale": {
+    "language": "Language",
+    "english": "English",
+    "french": "French"
+  },
+  "actions": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "close": "Close",
+    "copy": "Copy",
+    "edit": "Edit",
+    "test": "Test",
+    "refresh": "Refresh",
+    "clear": "Clear",
+    "send": "Send",
+    "stop": "Stop",
+    "add": "Add",
+    "remove": "Remove",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Submit",
+    "reset": "Reset",
+    "export": "Export",
+    "import": "Import"
+  },
+  "time": {
+    "justNow": "Just now",
+    "minutesAgo": "{count} minute ago | {count} minutes ago",
+    "hoursAgo": "{count} hour ago | {count} hours ago",
+    "daysAgo": "{count} day ago | {count} days ago",
+    "monthsAgo": "{count} month ago | {count} months ago"
+  },
+  "units": {
+    "tokens": "tokens",
+    "tokensPerSec": "tokens/s",
+    "milliseconds": "ms",
+    "seconds": "s",
+    "bytes": "B",
+    "kilobytes": "KB",
+    "megabytes": "MB",
+    "gigabytes": "GB",
+    "percent": "%",
+    "dimensions": "dimensions"
+  },
+  "model": {
+    "selectModel": "Select a model",
+    "noModels": "No models available",
+    "loadingModels": "Loading models...",
+    "pullModel": "Pull a model"
+  },
+  "empty": {
+    "noData": "No data available",
+    "noResults": "No results found",
+    "nothingHere": "Nothing here yet"
+  }
+}

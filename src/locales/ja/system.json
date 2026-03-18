@@ -1,0 +1,94 @@
+{
+  "title": "My System",
+  "subtitle": "Hardware, runtime, and inference overview",
+  "refresh": "Refresh",
+  "detecting": "Detecting hardware...",
+  "detectingDetail": "Querying CPU, memory, GPU, and storage",
+  "unavailable": "Hardware detection unavailable. Please restart the dev server to enable the system info plugin.",
+  "os": {
+    "title": "Operating System",
+    "os": "OS",
+    "version": "Version",
+    "build": "Build",
+    "architecture": "Architecture"
+  },
+  "device": {
+    "title": "Device",
+    "name": "Name",
+    "manufacturer": "Manufacturer",
+    "model": "Model",
+    "family": "Family"
+  },
+  "cpu": {
+    "title": "Processor",
+    "cpu": "CPU",
+    "physicalCores": "Physical Cores",
+    "logicalProcessors": "Logical Processors",
+    "maxClock": "Max Clock"
+  },
+  "memory": {
+    "title": "Memory",
+    "totalRam": "Total RAM",
+    "available": "Available",
+    "inUse": "In Use"
+  },
+  "gpu": {
+    "title": "Graphics",
+    "gpu": "GPU",
+    "adapterRam": "Adapter RAM",
+    "sharedNotReported": "Shared / Not reported",
+    "driver": "Driver"
+  },
+  "storage": {
+    "title": "Storage",
+    "drive": "Drive",
+    "total": "Total",
+    "free": "Free",
+    "used": "Used"
+  },
+  "browserStorage": {
+    "title": "Browser Storage",
+    "persistent": "Persistent",
+    "bestEffort": "Best-effort",
+    "scanning": "Scanning...",
+    "indexedDbQuota": "IndexedDB Quota",
+    "totalRecords": "{count} total records across {databases} databases",
+    "clearAll": "Clear all data",
+    "empty": "Empty"
+  },
+  "ollama": {
+    "title": "Ollama Runtime",
+    "status": "Status",
+    "version": "Version",
+    "installedModels": "Installed Models",
+    "totalModelStorage": "Total Model Storage",
+    "modelsLoaded": "Models Loaded"
+  },
+  "inference": {
+    "title": "Inference",
+    "thisSession": "this session",
+    "noSessions": "No inference sessions yet.",
+    "sessions": "Sessions",
+    "avgSpeed": "Avg Speed",
+    "tokensGenerated": "Tokens Generated",
+    "avgTtft": "Avg TTFT",
+    "modelsUsed": "Models used"
+  },
+  "activeModels": {
+    "title": "Active Models",
+    "noModels": "No models currently loaded in memory. Send a message to load one.",
+    "vram": "VRAM",
+    "ram": "RAM",
+    "total": "Total",
+    "ctx": "Ctx"
+  },
+  "installedModels": {
+    "title": "Installed Models",
+    "noModels": "No models installed.",
+    "model": "Model",
+    "family": "Family",
+    "parameters": "Parameters",
+    "quantization": "Quantization",
+    "size": "Size"
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "nav": {
+    "chatDiagnostics": "تشخيص المحادثة",
+    "compare": "مقارنة",
+    "embeddings": "التضمينات",
+    "knowledgeBase": "قاعدة المعرفة",
+    "toolWorkshop": "ورشة الأدوات",
+    "aiTraining": "تدريب الذكاء الاصطناعي",
+    "models": "النماذج",
+    "benchmark": "اختبار الأداء",
+    "mySystem": "نظامي",
+    "settings": "الإعدادات",
+    "tagline": "مرصد النماذج اللغوية المحلية"
+  },
+  "header": {
+    "chatDiagnostics": "تشخيص المحادثة",
+    "session": "الجلسة",
+    "compareModels": "مقارنة النماذج",
+    "embeddings": "التضمينات",
+    "knowledgeBase": "قاعدة المعرفة",
+    "models": "النماذج",
+    "benchmark": "اختبار الأداء",
+    "toolWorkshop": "ورشة الأدوات",
+    "mySystem": "نظامي",
+    "settings": "الإعدادات",
+    "default": "LLMxRay"
+  },
+  "status": {
+    "ollamaConnected": "Ollama متصل",
+    "ollamaDisconnected": "Ollama غير متصل",
+    "loading": "جارٍ التحميل...",
+    "processing": "جارٍ المعالجة...",
+    "ready": "جاهز",
+    "error": "خطأ",
+    "success": "نجاح",
+    "pending": "قيد الانتظار",
+    "running": "قيد التشغيل",
+    "completed": "مكتمل",
+    "failed": "فشل",
+    "streaming": "جارٍ البث",
+    "idle": "خامل",
+    "connected": "متصل",
+    "disconnected": "غير متصل"
+  },
+  "theme": {
+    "dark": "داكن",
+    "light": "فاتح",
+    "system": "النظام",
+    "themeLabel": "المظهر"
+  },
+  "locale": {
+    "language": "اللغة",
+    "english": "الإنجليزية",
+    "french": "الفرنسية"
+  },
+  "actions": {
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "close": "إغلاق",
+    "copy": "نسخ",
+    "edit": "تعديل",
+    "test": "اختبار",
+    "refresh": "تحديث",
+    "clear": "مسح",
+    "send": "إرسال",
+    "stop": "إيقاف",
+    "add": "إضافة",
+    "remove": "إزالة",
+    "confirm": "تأكيد",
+    "back": "رجوع",
+    "next": "التالي",
+    "submit": "إرسال",
+    "reset": "إعادة تعيين",
+    "export": "تصدير",
+    "import": "استيراد"
+  },
+  "time": {
+    "justNow": "الآن",
+    "minutesAgo": "منذ {count} دقيقة | منذ {count} دقائق",
+    "hoursAgo": "منذ {count} ساعة | منذ {count} ساعات",
+    "daysAgo": "منذ {count} يوم | منذ {count} أيام",
+    "monthsAgo": "منذ {count} شهر | منذ {count} أشهر"
+  },
+  "units": {
+    "tokens": "token",
+    "tokensPerSec": "token/ث",
+    "milliseconds": "مللي ثانية",
+    "seconds": "ث",
+    "bytes": "بايت",
+    "kilobytes": "كيلوبايت",
+    "megabytes": "ميغابايت",
+    "gigabytes": "غيغابايت",
+    "percent": "%",
+    "dimensions": "أبعاد"
+  },
+  "model": {
+    "selectModel": "اختر نموذجاً",
+    "noModels": "لا توجد نماذج متاحة",
+    "loadingModels": "جارٍ تحميل النماذج...",
+    "pullModel": "تنزيل نموذج"
+  },
+  "empty": {
+    "noData": "لا توجد بيانات متاحة",
+    "noResults": "لم يتم العثور على نتائج",
+    "nothingHere": "لا يوجد شيء هنا بعد"
+  }
+}

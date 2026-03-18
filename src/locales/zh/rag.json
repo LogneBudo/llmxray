@@ -1,0 +1,40 @@
+{
+  "title": "知识库",
+  "subtitle": "导入文档用于 RAG 增强对话",
+  "modelSelector": {
+    "noEmbeddingModels": "没有 embedding 模型"
+  },
+  "storage": {
+    "title": "知识库存储",
+    "documents": "篇文档",
+    "chunks": "个片段",
+    "stored": "已存储",
+    "ragStorage": "RAG 存储"
+  },
+  "upload": {
+    "dropZone": "将文件拖放到此处",
+    "browse": "浏览",
+    "dropText": "将文件拖放到此处或点击浏览",
+    "supportedFormats": "支持 PDF、DOCX、TXT、Markdown、CSV"
+  },
+  "documents": {
+    "title": "文档",
+    "noDocuments": "尚未导入任何文档",
+    "toggleContext": "切换 RAG 上下文",
+    "removeDocument": "移除文档"
+  },
+  "search": {
+    "title": "语义搜索",
+    "placeholder": "搜索你的文档...",
+    "noResults": "没有搜索结果",
+    "searching": "搜索中...",
+    "button": "搜索",
+    "results": "条结果",
+    "showLess": "收起",
+    "showFullChunk": "显示完整片段"
+  },
+  "ingest": {
+    "progress": "导入进度",
+    "ingesting": "导入中..."
+  }
+}

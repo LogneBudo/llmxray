@@ -1,0 +1,94 @@
+{
+  "title": "我的系统",
+  "subtitle": "硬件、运行时和推理概览",
+  "refresh": "刷新",
+  "detecting": "检测硬件中...",
+  "detectingDetail": "正在查询 CPU、内存、GPU 和存储",
+  "unavailable": "硬件检测不可用。请重启开发服务器以启用系统信息插件。",
+  "os": {
+    "title": "操作系统",
+    "os": "系统",
+    "version": "版本",
+    "build": "构建版本",
+    "architecture": "架构"
+  },
+  "device": {
+    "title": "设备",
+    "name": "名称",
+    "manufacturer": "制造商",
+    "model": "型号",
+    "family": "系列"
+  },
+  "cpu": {
+    "title": "处理器",
+    "cpu": "CPU",
+    "physicalCores": "物理核心",
+    "logicalProcessors": "逻辑处理器",
+    "maxClock": "最大频率"
+  },
+  "memory": {
+    "title": "内存",
+    "totalRam": "总 RAM",
+    "available": "可用",
+    "inUse": "已使用"
+  },
+  "gpu": {
+    "title": "显卡",
+    "gpu": "GPU",
+    "adapterRam": "适配器 RAM",
+    "sharedNotReported": "共享 / 未报告",
+    "driver": "驱动程序"
+  },
+  "storage": {
+    "title": "存储",
+    "drive": "磁盘",
+    "total": "总计",
+    "free": "可用",
+    "used": "已使用"
+  },
+  "browserStorage": {
+    "title": "浏览器存储",
+    "persistent": "持久化",
+    "bestEffort": "尽力而为",
+    "scanning": "扫描中...",
+    "indexedDbQuota": "IndexedDB 配额",
+    "totalRecords": "共 {count} 条记录，分布于 {databases} 个数据库",
+    "clearAll": "清除所有数据",
+    "empty": "空"
+  },
+  "ollama": {
+    "title": "Ollama 运行时",
+    "status": "状态",
+    "version": "版本",
+    "installedModels": "已安装模型",
+    "totalModelStorage": "模型总存储",
+    "modelsLoaded": "已加载模型"
+  },
+  "inference": {
+    "title": "推理",
+    "thisSession": "本次会话",
+    "noSessions": "尚无推理会话。",
+    "sessions": "会话",
+    "avgSpeed": "平均速度",
+    "tokensGenerated": "已生成 tokens",
+    "avgTtft": "平均 TTFT",
+    "modelsUsed": "使用的模型"
+  },
+  "activeModels": {
+    "title": "活跃模型",
+    "noModels": "当前内存中没有加载模型。发送一条消息即可加载。",
+    "vram": "VRAM",
+    "ram": "RAM",
+    "total": "总计",
+    "ctx": "上下文"
+  },
+  "installedModels": {
+    "title": "已安装模型",
+    "noModels": "未安装任何模型。",
+    "model": "模型",
+    "family": "系列",
+    "parameters": "参数量",
+    "quantization": "量化",
+    "size": "大小"
+  }
+}

@@ -146,7 +146,7 @@ onMounted(() => {
       <div class="flex items-center justify-between">
         <h3 class="text-sm font-medium text-text-primary">
           {{ $t('settings.models.installedModels') }}
-          <span class="ml-1 text-text-muted">({{ modelStore.models.length }})</span>
+          <span class="ms-1 text-text-muted">({{ modelStore.models.length }})</span>
         </h3>
         <button
           class="rounded-lg px-3 py-1.5 text-xs text-text-secondary hover:bg-surface-overlay hover:text-text-primary transition-colors"

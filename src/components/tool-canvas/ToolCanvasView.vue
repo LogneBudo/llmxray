@@ -124,7 +124,7 @@ async function copySchema() {
     <!-- Code panel (collapsible) -->
     <div
       v-if="codePanelOpen"
-      class="w-[440px] flex flex-col border-r border-border-default bg-surface-base shrink-0"
+      class="w-[440px] flex flex-col border-e border-border-default bg-surface-base shrink-0"
     >
       <!-- Header -->
       <div class="p-3 border-b border-border-default flex items-center justify-between">
@@ -201,7 +201,7 @@ async function copySchema() {
       <!-- Warnings -->
       <div v-if="codeWarnings.length > 0" class="p-3 border-t border-border-default">
         <label class="text-xs text-warning uppercase tracking-wider">{{ $t('tools.canvas.warnings') }}</label>
-        <ul class="mt-1 text-xs text-warning/80 list-disc pl-4 space-y-0.5">
+        <ul class="mt-1 text-xs text-warning/80 list-disc ps-4 space-y-0.5">
           <li v-for="(w, i) in codeWarnings" :key="i">{{ w }}</li>
         </ul>
       </div>
@@ -349,7 +349,7 @@ async function copySchema() {
     <!-- Tool Library panel (collapsible, right side) -->
     <div
       v-if="libraryPanelOpen"
-      class="w-[280px] flex flex-col border-l border-border-default bg-surface-base shrink-0"
+      class="w-[280px] flex flex-col border-s border-border-default bg-surface-base shrink-0"
     >
       <!-- Header -->
       <div class="p-3 border-b border-border-default flex items-center justify-between">

@@ -36,7 +36,7 @@ const navItems = computed<{ path: string; label: string; icon: Component }[]>(()
 </script>
 
 <template>
-  <aside class="flex w-56 flex-col border-r border-border-default bg-surface-raised">
+  <aside class="flex w-56 flex-col border-e border-border-default bg-surface-raised">
     <div class="flex h-14 items-center gap-2 border-b border-border-default px-4">
       <span class="text-xl font-bold text-accent">xR</span>
       <span class="text-sm font-medium text-text-secondary">LLMxRay</span>

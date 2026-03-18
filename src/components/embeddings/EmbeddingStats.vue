@@ -114,7 +114,7 @@ const statDefs = computed<StatDef[]>(() => [
         <div class="w-52 rounded-lg border border-border-default bg-surface-raised px-3 py-2 text-[10px] leading-relaxed text-text-secondary shadow-lg">
           {{ stat.tooltip }}
         </div>
-        <div class="mx-auto h-2 w-2 -translate-y-1 rotate-45 border-b border-r border-border-default bg-surface-raised" />
+        <div class="mx-auto h-2 w-2 -translate-y-1 rotate-45 border-b border-e border-border-default bg-surface-raised" />
       </div>
     </div>
   </div>

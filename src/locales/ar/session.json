@@ -1,0 +1,39 @@
+{
+  "title": "الجلسة",
+  "sessionId": "الجلسة {id}",
+  "notFound": "لم يتم العثور على الجلسة.",
+  "tabs": {
+    "stream": "البث",
+    "reasoning": "الاستدلال",
+    "introspection": "الاستبطان",
+    "tools": "الأدوات",
+    "agent": "رسم الوكيل البياني",
+    "prompt": "الموجه"
+  },
+  "stream": {
+    "tokenStream": "بث token",
+    "metrics": "المقاييس"
+  },
+  "tokenStream": {
+    "promptPlaceholder": "أدخل الموجه الخاص بك..."
+  },
+  "reasoning": {
+    "title": "الاستدلال",
+    "noReasoning": "لا تتوفر بيانات استدلال لهذه الجلسة."
+  },
+  "introspection": {
+    "title": "الاستبطان",
+    "illustrative": "توضيحي"
+  },
+  "toolCalls": {
+    "title": "استدعاءات الأدوات",
+    "timeline": "الخط الزمني",
+    "optimize": "تحسين"
+  },
+  "agentGraph": {
+    "title": "رسم الوكيل البياني"
+  },
+  "promptInspector": {
+    "title": "فاحص الموجه"
+  }
+}
