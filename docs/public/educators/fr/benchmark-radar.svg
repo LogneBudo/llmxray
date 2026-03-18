@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="bgRadarFr" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f0a2e"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="400" rx="16" fill="url(#bgRadarFr)"/>
+
+  <text x="400" y="32" text-anchor="middle" font-size="18" font-weight="700" fill="#e2e8f0">Ce que mesurent les benchmarks</text>
+  <text x="400" y="52" text-anchor="middle" font-size="12" fill="#94a3b8">Chaque benchmark teste une dimension diff&#xe9;rente &#x2014; aucun score unique ne raconte toute l'histoire</text>
+
+  <!-- Radar chart center: 280, 215  radius: 110 -->
+  <!-- Axes angles (from top, clockwise):
+       ARC (top):          -90°  → (0, -1)
+       MMLU-Pro (top-R):   -18°  → (0.951, -0.309)
+       HellaSwag (bot-R):   54°  → (0.588, 0.809)
+       GSM8K (bot-L):      126°  → (-0.588, 0.809)
+       TruthfulQA (top-L): 198°  → (-0.951, -0.309)
+  -->
+
+  <!-- Grid rings at 25%, 50%, 75%, 100% -->
+  <g opacity="0.2" stroke="#94a3b8" stroke-width="0.5" fill="none">
+    <!-- 25% ring (r=27.5) -->
+    <polygon points="280,187.5 306.2,206.5 296.2,237.2 263.8,237.2 253.8,206.5"/>
+    <!-- 50% ring (r=55) -->
+    <polygon points="280,160 332.3,198 312.3,259.5 247.7,259.5 227.7,198"/>
+    <!-- 75% ring (r=82.5) -->
+    <polygon points="280,132.5 358.5,189.5 328.5,281.7 231.5,281.7 201.5,189.5"/>
+    <!-- 100% ring (r=110) -->
+    <polygon points="280,105 384.6,181 344.7,304 215.3,304 175.4,181"/>
+  </g>
+
+  <!-- Axis lines -->
+  <g stroke="#94a3b8" stroke-width="0.5" opacity="0.3">
+    <line x1="280" y1="215" x2="280" y2="105"/>
+    <line x1="280" y1="215" x2="384.6" y2="181"/>
+    <line x1="280" y1="215" x2="344.7" y2="304"/>
+    <line x1="280" y1="215" x2="215.3" y2="304"/>
+    <line x1="280" y1="215" x2="175.4" y2="181"/>
+  </g>
+
+  <!-- Axis labels -->
+  <text x="280" y="92" text-anchor="middle" font-size="10" font-weight="600" fill="#e2e8f0">ARC</text>
+  <text x="280" y="82" text-anchor="middle" font-size="8" fill="#94a3b8">(Sciences)</text>
+  <text x="398" y="178" text-anchor="start" font-size="10" font-weight="600" fill="#e2e8f0">MMLU-Pro</text>
+  <text x="398" y="190" text-anchor="start" font-size="8" fill="#94a3b8">(Connaissances)</text>
+  <text x="356" y="316" text-anchor="start" font-size="10" font-weight="600" fill="#e2e8f0">HellaSwag</text>
+  <text x="356" y="328" text-anchor="start" font-size="8" fill="#94a3b8">(Sens commun)</text>
+  <text x="204" y="316" text-anchor="end" font-size="10" font-weight="600" fill="#e2e8f0">GSM8K</text>
+  <text x="204" y="328" text-anchor="end" font-size="8" fill="#94a3b8">(Maths)</text>
+  <text x="162" y="178" text-anchor="end" font-size="10" font-weight="600" fill="#e2e8f0">TruthfulQA</text>
+  <text x="162" y="190" text-anchor="end" font-size="8" fill="#94a3b8">(V&#xe9;racit&#xe9;)</text>
+
+  <!-- Model A polygon (green): ARC 85%, MMLU 70%, HellaSwag 80%, GSM8K 40%, TruthfulQA 45% -->
+  <polygon points="280,121.5 353.2,191.2 331.7,286.2 254.1,250.6 232.9,199.7"
+           fill="rgba(74,222,128,0.15)" stroke="#4ade80" stroke-width="1.5"/>
+
+  <!-- Model B polygon (blue): ARC 60%, MMLU 55%, HellaSwag 65%, GSM8K 75%, TruthfulQA 70% -->
+  <polygon points="280,149 337.5,196.3 322.0,272.8 231.5,281.7 206.8,191.2"
+           fill="rgba(96,165,250,0.15)" stroke="#60a5fa" stroke-width="1.5"/>
+
+  <!-- Data point dots — Model A (green) -->
+  <g fill="#4ade80">
+    <circle cx="280" cy="121.5" r="3"/>
+    <circle cx="353.2" cy="191.2" r="3"/>
+    <circle cx="331.7" cy="286.2" r="3"/>
+    <circle cx="254.1" cy="250.6" r="3"/>
+    <circle cx="232.9" cy="199.7" r="3"/>
+  </g>
+  <!-- Data point dots — Model B (blue) -->
+  <g fill="#60a5fa">
+    <circle cx="280" cy="149" r="3"/>
+    <circle cx="337.5" cy="196.3" r="3"/>
+    <circle cx="322.0" cy="272.8" r="3"/>
+    <circle cx="231.5" cy="281.7" r="3"/>
+    <circle cx="206.8" cy="191.2" r="3"/>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(540, 100)">
+    <rect x="0" y="0" width="210" height="80" rx="10" fill="rgba(168,85,247,0.06)" stroke="#334155" stroke-width="0.5"/>
+    <text x="105" y="22" text-anchor="middle" font-size="11" font-weight="600" fill="#e2e8f0">L&#xe9;gende</text>
+    <rect x="20" y="34" width="14" height="14" rx="3" fill="rgba(74,222,128,0.3)" stroke="#4ade80" stroke-width="1"/>
+    <text x="42" y="45" font-size="10" fill="#4ade80">Mod&#xe8;le A (orient&#xe9; sciences)</text>
+    <rect x="20" y="56" width="14" height="14" rx="3" fill="rgba(96,165,250,0.3)" stroke="#60a5fa" stroke-width="1"/>
+    <text x="42" y="67" font-size="10" fill="#60a5fa">Mod&#xe8;le B (orient&#xe9; maths)</text>
+  </g>
+
+  <!-- Score tables -->
+  <g transform="translate(540, 195)">
+    <rect x="0" y="0" width="210" height="145" rx="10" fill="rgba(168,85,247,0.04)" stroke="#334155" stroke-width="0.5"/>
+    <text x="105" y="20" text-anchor="middle" font-size="9" font-weight="600" fill="#94a3b8">SCORES</text>
+    <text x="105" y="36" text-anchor="middle" font-size="8" fill="#64748b">Benchmark       A       B</text>
+    <line x1="15" y1="42" x2="195" y2="42" stroke="#334155" stroke-width="0.5"/>
+    <text x="20" y="58" font-size="9" fill="#94a3b8">ARC</text>
+    <text x="135" y="58" text-anchor="middle" font-size="9" font-weight="600" fill="#4ade80">85%</text>
+    <text x="175" y="58" text-anchor="middle" font-size="9" fill="#60a5fa">60%</text>
+    <text x="20" y="76" font-size="9" fill="#94a3b8">MMLU-Pro</text>
+    <text x="135" y="76" text-anchor="middle" font-size="9" font-weight="600" fill="#4ade80">70%</text>
+    <text x="175" y="76" text-anchor="middle" font-size="9" fill="#60a5fa">55%</text>
+    <text x="20" y="94" font-size="9" fill="#94a3b8">HellaSwag</text>
+    <text x="135" y="94" text-anchor="middle" font-size="9" font-weight="600" fill="#4ade80">80%</text>
+    <text x="175" y="94" text-anchor="middle" font-size="9" fill="#60a5fa">65%</text>
+    <text x="20" y="112" font-size="9" fill="#94a3b8">GSM8K</text>
+    <text x="135" y="112" text-anchor="middle" font-size="9" fill="#4ade80">40%</text>
+    <text x="175" y="112" text-anchor="middle" font-size="9" font-weight="600" fill="#60a5fa">75%</text>
+    <text x="20" y="130" font-size="9" fill="#94a3b8">TruthfulQA</text>
+    <text x="135" y="130" text-anchor="middle" font-size="9" fill="#4ade80">45%</text>
+    <text x="175" y="130" text-anchor="middle" font-size="9" font-weight="600" fill="#60a5fa">70%</text>
+  </g>
+
+  <!-- Insight box at bottom -->
+  <g transform="translate(40, 348)">
+    <rect x="0" y="0" width="720" height="38" rx="10" fill="rgba(168,85,247,0.06)" stroke="#a855f7" stroke-width="1" stroke-dasharray="4"/>
+    <text x="360" y="16" text-anchor="middle" font-size="10" fill="#e2e8f0">Le Mod&#xe8;le A gagne en sciences et sens commun. Le Mod&#xe8;le B gagne en maths et v&#xe9;racit&#xe9;.</text>
+    <text x="360" y="30" text-anchor="middle" font-size="10" font-weight="600" fill="#fbbf24">Lequel est &#xab; meilleur &#xbb; ? Cela d&#xe9;pend de votre t&#xe2;che.</text>
+  </g>
+</svg>

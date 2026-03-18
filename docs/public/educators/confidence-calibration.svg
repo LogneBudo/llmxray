@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="bgCalib" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f0a2e"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="400" rx="16" fill="url(#bgCalib)"/>
+
+  <text x="400" y="32" text-anchor="middle" font-size="18" font-weight="700" fill="#e2e8f0">Confidence Calibration</text>
+  <text x="400" y="52" text-anchor="middle" font-size="12" fill="#94a3b8">Does the model know when it's right?</text>
+
+  <!-- Chart area: x=100..580, y=75..310 (width=480, height=235) -->
+  <!-- Axes -->
+  <line x1="100" y1="310" x2="580" y2="310" stroke="#94a3b8" stroke-width="1"/>
+  <line x1="100" y1="310" x2="100" y2="75" stroke="#94a3b8" stroke-width="1"/>
+
+  <!-- X-axis label -->
+  <text x="340" y="338" text-anchor="middle" font-size="11" fill="#e2e8f0">Model Confidence (%)</text>
+  <!-- Y-axis label -->
+  <text x="42" y="192" text-anchor="middle" font-size="11" fill="#e2e8f0" transform="rotate(-90, 42, 192)">Actual Accuracy (%)</text>
+
+  <!-- Grid lines and tick labels -->
+  <g stroke="#334155" stroke-width="0.5" opacity="0.5">
+    <line x1="100" y1="251.25" x2="580" y2="251.25"/>
+    <line x1="100" y1="192.5" x2="580" y2="192.5"/>
+    <line x1="100" y1="133.75" x2="580" y2="133.75"/>
+    <line x1="100" y1="75" x2="580" y2="75"/>
+    <line x1="220" y1="310" x2="220" y2="75"/>
+    <line x1="340" y1="310" x2="340" y2="75"/>
+    <line x1="460" y1="310" x2="460" y2="75"/>
+    <line x1="580" y1="310" x2="580" y2="75"/>
+  </g>
+  <!-- X tick labels -->
+  <text x="100" y="325" text-anchor="middle" font-size="9" fill="#94a3b8">0</text>
+  <text x="220" y="325" text-anchor="middle" font-size="9" fill="#94a3b8">25</text>
+  <text x="340" y="325" text-anchor="middle" font-size="9" fill="#94a3b8">50</text>
+  <text x="460" y="325" text-anchor="middle" font-size="9" fill="#94a3b8">75</text>
+  <text x="580" y="325" text-anchor="middle" font-size="9" fill="#94a3b8">100</text>
+  <!-- Y tick labels -->
+  <text x="90" y="313" text-anchor="end" font-size="9" fill="#94a3b8">0</text>
+  <text x="90" y="255" text-anchor="end" font-size="9" fill="#94a3b8">25</text>
+  <text x="90" y="196" text-anchor="end" font-size="9" fill="#94a3b8">50</text>
+  <text x="90" y="137" text-anchor="end" font-size="9" fill="#94a3b8">75</text>
+  <text x="90" y="78" text-anchor="end" font-size="9" fill="#94a3b8">100</text>
+
+  <!-- Perfect calibration diagonal (dashed) -->
+  <line x1="100" y1="310" x2="580" y2="75" stroke="#a855f7" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.7"/>
+  <text x="530" y="100" text-anchor="start" font-size="9" font-style="italic" fill="#a855f7" transform="rotate(-26, 530, 100)">Perfect calibration</text>
+
+  <!-- Model A dots (green, well-calibrated — near the diagonal) -->
+  <!-- Mapping: x = 100 + confidence*4.8, y = 310 - accuracy*2.35 -->
+  <g fill="#4ade80" opacity="0.85">
+    <circle cx="148" cy="299.6" r="4"/>   <!-- 10%, 12% -->
+    <circle cx="196" cy="256.7" r="4"/>   <!-- 20%, 23% -->
+    <circle cx="244" cy="243.2" r="4"/>   <!-- 30%, 28% -->
+    <circle cx="268" cy="226.6" r="4"/>   <!-- 35%, 35% -->
+    <circle cx="316" cy="213.1" r="4"/>   <!-- 45%, 42% -->
+    <circle cx="340" cy="197.5" r="4"/>   <!-- 50%, 48% -->
+    <circle cx="364" cy="181.9" r="4"/>   <!-- 55%, 55% -->
+    <circle cx="388" cy="168.4" r="4"/>   <!-- 60%, 60% -->
+    <circle cx="412" cy="152.8" r="4"/>   <!-- 65%, 67% -->
+    <circle cx="436" cy="139.3" r="4"/>   <!-- 70%, 73% -->
+    <circle cx="460" cy="121.7" r="4"/>   <!-- 75%, 80% -->
+    <circle cx="508" cy="104.1" r="4"/>   <!-- 85%, 88% -->
+    <circle cx="544" cy="89.5" r="4"/>    <!-- 93%, 94% -->
+    <circle cx="484" cy="113.0" r="4"/>   <!-- 80%, 84% -->
+  </g>
+
+  <!-- Model B dots (red/orange, poorly calibrated — scattered) -->
+  <g fill="#ef4444" opacity="0.85">
+    <!-- Overconfident: high confidence, low accuracy -->
+    <circle cx="508" cy="263.0" r="4"/>   <!-- 85%, 20% -->
+    <circle cx="532" cy="239.5" r="4"/>   <!-- 90%, 30% -->
+    <circle cx="556" cy="274.5" r="4"/>   <!-- 95%, 15% -->
+    <circle cx="484" cy="251.2" r="4"/>   <!-- 80%, 25% -->
+    <circle cx="460" cy="227.8" r="4"/>   <!-- 75%, 35% -->
+    <!-- Underconfident: low confidence, high accuracy -->
+    <circle cx="148" cy="145.0" r="4"/>   <!-- 10%, 70% -->
+    <circle cx="172" cy="121.7" r="4"/>   <!-- 15%, 80% -->
+    <circle cx="196" cy="157.5" r="4"/>   <!-- 20%, 65% -->
+    <circle cx="220" cy="133.0" r="4"/>   <!-- 25%, 75% -->
+    <!-- Somewhat scattered mid-range -->
+    <circle cx="340" cy="274.5" r="4"/>   <!-- 50%, 15% -->
+    <circle cx="316" cy="145.0" r="4"/>   <!-- 45%, 70% -->
+    <circle cx="388" cy="286.0" r="4"/>   <!-- 60%, 10% -->
+  </g>
+
+  <!-- Annotation: Overconfident zone (top-left of chart = high conf, low acc → bottom-right area) -->
+  <g transform="translate(460, 283)">
+    <rect x="0" y="0" width="125" height="22" rx="6" fill="rgba(239,68,68,0.12)" stroke="#ef4444" stroke-width="0.8"/>
+    <text x="62" y="15" text-anchor="middle" font-size="8" fill="#ef4444">Overconfident zone</text>
+  </g>
+
+  <!-- Annotation: Underconfident zone -->
+  <g transform="translate(115, 100)">
+    <rect x="0" y="0" width="130" height="22" rx="6" fill="rgba(251,191,36,0.12)" stroke="#fbbf24" stroke-width="0.8"/>
+    <text x="65" y="15" text-anchor="middle" font-size="8" fill="#fbbf24">Underconfident zone</text>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(620, 80)">
+    <rect x="0" y="0" width="155" height="105" rx="10" fill="rgba(168,85,247,0.06)" stroke="#334155" stroke-width="0.5"/>
+    <text x="78" y="20" text-anchor="middle" font-size="10" font-weight="600" fill="#e2e8f0">Legend</text>
+    <circle cx="18" cy="40" r="5" fill="#4ade80"/>
+    <text x="30" y="44" font-size="9" fill="#4ade80">Model A (calibrated)</text>
+    <circle cx="18" cy="60" r="5" fill="#ef4444"/>
+    <text x="30" y="64" font-size="9" fill="#ef4444">Model B (uncalibrated)</text>
+    <line x1="10" y1="80" x2="30" y2="80" stroke="#a855f7" stroke-width="1.5" stroke-dasharray="4,3"/>
+    <text x="36" y="84" font-size="9" fill="#a855f7">Perfect calibration</text>
+  </g>
+
+  <!-- Explanation callouts -->
+  <g transform="translate(620, 200)">
+    <rect x="0" y="0" width="155" height="60" rx="8" fill="rgba(239,68,68,0.08)" stroke="#ef4444" stroke-width="0.8"/>
+    <text x="78" y="16" text-anchor="middle" font-size="8" font-weight="600" fill="#ef4444">Overconfident</text>
+    <text x="78" y="30" text-anchor="middle" font-size="8" fill="#94a3b8">Thinks it's right,</text>
+    <text x="78" y="42" text-anchor="middle" font-size="8" fill="#94a3b8">but isn't</text>
+  </g>
+  <g transform="translate(620, 268)">
+    <rect x="0" y="0" width="155" height="60" rx="8" fill="rgba(251,191,36,0.08)" stroke="#fbbf24" stroke-width="0.8"/>
+    <text x="78" y="16" text-anchor="middle" font-size="8" font-weight="600" fill="#fbbf24">Underconfident</text>
+    <text x="78" y="30" text-anchor="middle" font-size="8" fill="#94a3b8">Right, but</text>
+    <text x="78" y="42" text-anchor="middle" font-size="8" fill="#94a3b8">unsure about it</text>
+  </g>
+
+  <!-- Insight box at bottom -->
+  <g transform="translate(40, 352)">
+    <rect x="0" y="0" width="720" height="38" rx="10" fill="rgba(168,85,247,0.06)" stroke="#a855f7" stroke-width="1" stroke-dasharray="4"/>
+    <text x="360" y="16" text-anchor="middle" font-size="10" fill="#e2e8f0">A well-calibrated model's confidence score is trustworthy.</text>
+    <text x="360" y="30" text-anchor="middle" font-size="10" font-weight="600" fill="#a855f7">LLMxRay measures this with real token logprobs.</text>
+  </g>
+</svg>

@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 350" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="bgThinkFr" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f0a2e"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="350" rx="16" fill="url(#bgThinkFr)"/>
+
+  <text x="400" y="32" text-anchor="middle" font-size="18" font-weight="700" fill="#e2e8f0">Mod&#xe8;les pensants vs Mod&#xe8;les standard</text>
+  <text x="400" y="52" text-anchor="middle" font-size="12" fill="#94a3b8">Raisonnement pas &#xe0; pas : plus lent mais plus pr&#xe9;cis</text>
+
+  <!-- Left panel — Standard Model (blue) -->
+  <g transform="translate(30, 68)">
+    <rect x="0" y="0" width="360" height="228" rx="12" fill="rgba(96,165,250,0.06)" stroke="#60a5fa" stroke-width="1.5"/>
+
+    <!-- Panel title -->
+    <rect x="110" y="-10" width="140" height="20" rx="10" fill="#1e1b4b"/>
+    <text x="180" y="4" text-anchor="middle" font-size="11" font-weight="700" fill="#60a5fa">Mod&#xe8;le standard</text>
+
+    <!-- Input -->
+    <rect x="80" y="22" width="200" height="30" rx="8" fill="rgba(96,165,250,0.1)" stroke="#60a5fa" stroke-width="0.8"/>
+    <text x="180" y="34" text-anchor="middle" font-size="8" fill="#94a3b8">ENTR&#xc9;E</text>
+    <text x="180" y="46" text-anchor="middle" font-size="10" font-weight="600" fill="#e2e8f0">Combien font 23 &#xd7; 47 ?</text>
+
+    <!-- Arrow down -->
+    <line x1="180" y1="52" x2="180" y2="75" stroke="#60a5fa" stroke-width="1.5"/>
+    <polygon points="175,72 185,72 180,80" fill="#60a5fa"/>
+
+    <!-- No thinking — direct jump -->
+    <rect x="80" y="82" width="200" height="42" rx="8" fill="rgba(96,165,250,0.05)" stroke="#334155" stroke-width="0.5" stroke-dasharray="3"/>
+    <text x="180" y="100" text-anchor="middle" font-size="9" font-style="italic" fill="#64748b">Aucune &#xe9;tape de raisonnement</text>
+    <text x="180" y="114" text-anchor="middle" font-size="8" fill="#475569">Pr&#xe9;diction directe</text>
+
+    <!-- Arrow down -->
+    <line x1="180" y1="124" x2="180" y2="140" stroke="#60a5fa" stroke-width="1.5"/>
+    <polygon points="175,137 185,137 180,145" fill="#60a5fa"/>
+
+    <!-- Output -->
+    <rect x="80" y="147" width="200" height="28" rx="8" fill="rgba(96,165,250,0.12)" stroke="#60a5fa" stroke-width="0.8"/>
+    <text x="130" y="165" text-anchor="middle" font-size="8" fill="#94a3b8">SORTIE</text>
+    <text x="230" y="165" text-anchor="middle" font-size="13" font-weight="700" fill="#e2e8f0">1081</text>
+
+    <!-- Metrics -->
+    <g transform="translate(30, 188)">
+      <rect x="0" y="0" width="90" height="32" rx="6" fill="rgba(96,165,250,0.08)"/>
+      <text x="45" y="13" text-anchor="middle" font-size="8" fill="#94a3b8">Budget de tokens</text>
+      <text x="45" y="26" text-anchor="middle" font-size="11" font-weight="600" fill="#60a5fa">64</text>
+    </g>
+    <g transform="translate(135, 188)">
+      <rect x="0" y="0" width="90" height="32" rx="6" fill="rgba(96,165,250,0.08)"/>
+      <text x="45" y="13" text-anchor="middle" font-size="8" fill="#94a3b8">Latence</text>
+      <text x="45" y="26" text-anchor="middle" font-size="11" font-weight="600" fill="#60a5fa">0,8s</text>
+    </g>
+    <g transform="translate(240, 188)">
+      <rect x="0" y="0" width="90" height="32" rx="6" fill="rgba(96,165,250,0.08)"/>
+      <text x="45" y="13" text-anchor="middle" font-size="8" fill="#94a3b8">Pr&#xe9;cision</text>
+      <text x="45" y="26" text-anchor="middle" font-size="11" font-weight="600" fill="#60a5fa">72%</text>
+    </g>
+  </g>
+
+  <!-- Right panel — Thinking Model (purple) -->
+  <g transform="translate(410, 68)">
+    <rect x="0" y="0" width="360" height="228" rx="12" fill="rgba(168,85,247,0.06)" stroke="#a855f7" stroke-width="1.5"/>
+
+    <!-- Panel title -->
+    <rect x="110" y="-10" width="140" height="20" rx="10" fill="#1e1b4b"/>
+    <text x="180" y="4" text-anchor="middle" font-size="11" font-weight="700" fill="#a855f7">Mod&#xe8;le pensant</text>
+
+    <!-- Input -->
+    <rect x="80" y="22" width="200" height="30" rx="8" fill="rgba(168,85,247,0.1)" stroke="#a855f7" stroke-width="0.8"/>
+    <text x="180" y="34" text-anchor="middle" font-size="8" fill="#94a3b8">ENTR&#xc9;E</text>
+    <text x="180" y="46" text-anchor="middle" font-size="10" font-weight="600" fill="#e2e8f0">Combien font 23 &#xd7; 47 ?</text>
+
+    <!-- Arrow down -->
+    <line x1="180" y1="52" x2="180" y2="75" stroke="#a855f7" stroke-width="1.5"/>
+    <polygon points="175,72 185,72 180,80" fill="#a855f7"/>
+
+    <!-- Think block -->
+    <rect x="30" y="82" width="300" height="42" rx="8" fill="rgba(168,85,247,0.08)" stroke="#a855f7" stroke-width="0.8" stroke-dasharray="3"/>
+    <text x="42" y="97" font-size="8" font-weight="600" fill="#a855f7">&lt;think&gt;</text>
+    <text x="42" y="110" font-size="8" font-style="italic" fill="#94a3b8">23&#xd7;40=920, 23&#xd7;7=161, 920+161=1081</text>
+    <text x="282" y="110" font-size="8" font-weight="600" fill="#a855f7">&lt;/think&gt;</text>
+
+    <!-- Arrow down -->
+    <line x1="180" y1="124" x2="180" y2="140" stroke="#a855f7" stroke-width="1.5"/>
+    <polygon points="175,137 185,137 180,145" fill="#a855f7"/>
+
+    <!-- Output -->
+    <rect x="80" y="147" width="200" height="28" rx="8" fill="rgba(168,85,247,0.12)" stroke="#a855f7" stroke-width="0.8"/>
+    <text x="130" y="165" text-anchor="middle" font-size="8" fill="#94a3b8">SORTIE</text>
+    <text x="230" y="165" text-anchor="middle" font-size="13" font-weight="700" fill="#e2e8f0">1081</text>
+
+    <!-- Metrics -->
+    <g transform="translate(30, 188)">
+      <rect x="0" y="0" width="90" height="32" rx="6" fill="rgba(168,85,247,0.08)"/>
+      <text x="45" y="13" text-anchor="middle" font-size="8" fill="#94a3b8">Budget de tokens</text>
+      <text x="45" y="26" text-anchor="middle" font-size="11" font-weight="600" fill="#a855f7">2048</text>
+    </g>
+    <g transform="translate(135, 188)">
+      <rect x="0" y="0" width="90" height="32" rx="6" fill="rgba(168,85,247,0.08)"/>
+      <text x="45" y="13" text-anchor="middle" font-size="8" fill="#94a3b8">Latence</text>
+      <text x="45" y="26" text-anchor="middle" font-size="11" font-weight="600" fill="#a855f7">3,2s</text>
+    </g>
+    <g transform="translate(240, 188)">
+      <rect x="0" y="0" width="90" height="32" rx="6" fill="rgba(168,85,247,0.08)"/>
+      <text x="45" y="13" text-anchor="middle" font-size="8" fill="#94a3b8">Pr&#xe9;cision</text>
+      <text x="45" y="26" text-anchor="middle" font-size="11" font-weight="600" fill="#4ade80">91%</text>
+    </g>
+  </g>
+
+  <!-- Insight box at bottom -->
+  <g transform="translate(40, 304)">
+    <rect x="0" y="0" width="720" height="38" rx="10" fill="rgba(168,85,247,0.06)" stroke="#a855f7" stroke-width="1" stroke-dasharray="4"/>
+    <text x="360" y="16" text-anchor="middle" font-size="10" fill="#e2e8f0">Les mod&#xe8;les pensants &#xe9;changent la vitesse contre la pr&#xe9;cision en raisonnant &#xe9;tape par &#xe9;tape dans les blocs &lt;think&gt;.</text>
+    <text x="360" y="30" text-anchor="middle" font-size="10" font-weight="600" fill="#a855f7">LLMxRay d&#xe9;tecte automatiquement les mod&#xe8;les pensants et alloue des budgets de tokens plus grands.</text>
+  </g>
+</svg>

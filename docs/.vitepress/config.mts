@@ -70,6 +70,7 @@ function communityNav(prefix: string) {
         { text: fr ? 'Module 4: Que voit le modèle ?' : 'Module 4: What Does the Model See?', link: `${prefix}/community/educators/module-4` },
         { text: fr ? 'Module 5: Quand le modèle oublie-t-il ?' : 'Module 5: When Does the Model Forget?', link: `${prefix}/community/educators/module-5` },
         { text: fr ? 'Module 6: L\'IA peut-elle utiliser des outils ?' : 'Module 6: Can AI Use Tools?', link: `${prefix}/community/educators/module-6` },
+        { text: fr ? 'Module 7: Comment comparer les modèles ?' : 'Module 7: How Do Models Compare?', link: `${prefix}/community/educators/module-7` },
       ],
     },
   ]
