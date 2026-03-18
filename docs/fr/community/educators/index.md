@@ -4,7 +4,7 @@
 
 **Un programme progressif pour enseigner l'IA/ML avec des modèles locaux.**
 
-8 modules. De "Qu'est-ce qu'un token ?" à "J'ai contribué à de la vraie recherche en IA."
+9 modules. De "Qu'est-ce qu'un token ?" à "J'ai contribué à de la vraie recherche en IA."
 Gratuit. Local. Visuel. Aucun coût cloud. Aucune clé API pour les étudiants.
 
 </div>
@@ -47,9 +47,10 @@ Chaque module s'appuie sur le précédent. Les étudiants progressent de l'obser
 | **6** | [L'IA peut-elle utiliser des outils ?](./module-6) | 60 min | Intermédiaire | Le tool calling est du pattern matching, pas de la compréhension |
 | **7** | [Comment comparer les modèles ?](./module-7) | 90 min | Avancé | Aucun modèle n'est universellement le meilleur |
 | **8** | [La vue d'ensemble](./module-8) | 120 min | Avancé | Vous pouvez contribuer à de la vraie recherche en IA |
+| **9** | [Ce que coûtent les mots](./module-9) | 60 min | Intermédiaire | Les tokeniseurs ont un biais linguistique — même sens, coût différent |
 
 ::: info Modules disponibles
-Les 8 modules sont tous disponibles. Chaque module contient des exercices pratiques avec LLMxRay, un contexte conceptuel ancré dans la recherche publiée, et des options d'évaluation.
+Les 9 modules sont tous disponibles. Chaque module contient des exercices pratiques avec LLMxRay, un contexte conceptuel ancré dans la recherche publiée, et des options d'évaluation.
 :::
 
 ---
@@ -61,7 +62,7 @@ Exercices autonomes de 15 minutes pour n'importe quel cours — aucun engagement
 | Atelier | La surprise | Durée |
 |---|---|---|
 | L'atelier hallucination | Les modèles inventent de l'histoire avec assurance | 15 min |
-| Le biais du tokenizer | La même phrase, 5x plus de tokens dans certaines langues | 15 min |
+| Le biais du tokenizer | La même phrase, 5x plus de tokens dans certaines langues ([Module 9](./module-9) couvre ce sujet en profondeur) | 15 min |
 | Le test du perroquet | Les modèles ne peuvent pas répéter un texte mot pour mot — ils génèrent, ils ne rappellent pas | 15 min |
 | La fuite du prompt système | Les étudiants extraient un prompt système "secret" | 15 min |
 | La galerie d'art de la température | Le même prompt à 8 températures affiché sous forme de galerie | 15 min |

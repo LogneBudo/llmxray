@@ -276,7 +276,7 @@ La communauté LLMxRay grandit chaque fois que quelqu'un partage une suite de be
 
 <div style="background: rgba(168,85,247,0.06); border-radius: 8px; padding: 1rem 1.5rem; margin-top: 2rem; font-size: 0.9rem; color: var(--vp-c-text-2);">
 
-**Module 8 sur 8 — Le Grand Projet** du Kit Enseignants LLMxRay
-[&larr; Module 7 : Comment comparer les modèles ?](./module-7) | [Retour au programme](./index)
+**Module 8 sur 9 — Le Grand Projet** du Kit Enseignants LLMxRay
+[&larr; Module 7 : Comment comparer les modèles ?](./module-7) | [Module 9 : Ce que coûtent les mots &rarr;](./module-9) | [Retour au programme](./index)
 
 </div>

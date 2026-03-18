@@ -33,7 +33,9 @@
       "tempSweep": "Balayage de temp\u00e9rature",
       "tempSweepDesc": "Cr\u00e9e 3 emplacements du m\u00eame mod\u00e8le aux temp\u00e9ratures 0.2 (focalis\u00e9), 0.7 (\u00e9quilibr\u00e9) et 1.2 (cr\u00e9atif). Observez comment la temp\u00e9rature modifie la sortie pour le m\u00eame prompt.",
       "deterministicPair": "Paire d\u00e9terministe",
-      "deterministicPairDesc": "Cr\u00e9e 2 emplacements du m\u00eame mod\u00e8le avec le m\u00eame seed mais des temp\u00e9ratures diff\u00e9rentes (0.3 et 1.0). Le seed partag\u00e9 signifie que toute diff\u00e9rence dans la sortie provient uniquement de la temp\u00e9rature, pas de l'al\u00e9atoire."
+      "deterministicPairDesc": "Cr\u00e9e 2 emplacements du m\u00eame mod\u00e8le avec le m\u00eame seed mais des temp\u00e9ratures diff\u00e9rentes (0.3 et 1.0). Le seed partag\u00e9 signifie que toute diff\u00e9rence dans la sortie provient uniquement de la temp\u00e9rature, pas de l'al\u00e9atoire.",
+      "languageCompare": "Comparaison linguistique",
+      "languageCompareTooltip": "Comparer comment diff\u00e9rentes langues affectent le co\u00fbt en tokens et le comportement du mod\u00e8le"
     }
   },
   "prompt": {
@@ -66,5 +68,22 @@
   },
   "column": {
     "tokens": "Tokens"
+  },
+  "language": {
+    "mismatchTitle": "Incompatibilit\u00e9 de langue d\u00e9tect\u00e9e",
+    "mismatchDescription": "Votre prompt semble \u00eatre en {detected}.",
+    "targetIs": "cible : {language}",
+    "translateTo": "Traduire en {language}",
+    "keepDetected": "Garder {language}",
+    "translateAll": "Tout traduire",
+    "cancel": "Annuler",
+    "tokenTaxTitle": "Taxe de tokens",
+    "promptTokens": "Tokens du prompt",
+    "promptText": "Prompt traduit",
+    "translated": "Traduit",
+    "unsupported": "Langue non supportée",
+    "translating": "Traduction en cours... cela peut prendre un moment selon la taille du modèle",
+    "qualityWarning": "La qualité de la traduction dépend des capacités linguistiques de votre modèle. Les modèles plus grands produisent de meilleures traductions.",
+    "promptPlaceholder": "Tapez ou collez votre prompt en {lang}..."
   }
 }

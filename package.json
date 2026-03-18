@@ -1,6 +1,6 @@
 {
   "name": "llmxray",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Local LLM Observatory — See what your AI is actually doing, token by token.",
   "license": "Apache-2.0",
   "type": "module",
@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "express": "^5.1.0",
+    "franc-min": "^6.2.0",
     "http-proxy-middleware": "^3.0.3",
     "lucide-vue-next": "^0.577.0",
     "vue-i18n": "^10.0.8"

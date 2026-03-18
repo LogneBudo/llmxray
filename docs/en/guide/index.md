@@ -19,6 +19,7 @@ LLMxRay has a sidebar with 10 navigation items, each representing a major featur
 
 1. **[Chat Diagnostics](./chat-diagnostics)** — The main chat interface with streaming and session analysis
 2. **[Compare](./compare)** — Side-by-side model and settings comparison
+   - **[Language Compare](./language-compare)** — Understanding the token tax across languages
 3. **[Embeddings](./embeddings)** — Text embedding visualization and similarity
 4. **[Knowledge Base](./knowledge-base)** — Document upload, chunking, and RAG search
 5. **[Tool Workshop](./tool-workshop)** — Visual tool builder with code sync

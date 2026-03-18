@@ -104,5 +104,20 @@
     "noData": "Aucune donn\u00e9e disponible",
     "noResults": "Aucun r\u00e9sultat trouv\u00e9",
     "nothingHere": "Rien ici pour le moment"
+  },
+  "languages": {
+    "en": "Anglais",
+    "fr": "Fran\u00e7ais",
+    "ar": "Arabe",
+    "zh": "Chinois",
+    "ja": "Japonais",
+    "he": "H\u00e9breu",
+    "de": "Allemand",
+    "es": "Espagnol",
+    "pt": "Portugais",
+    "it": "Italien",
+    "ru": "Russe",
+    "ko": "Cor\u00e9en",
+    "hi": "Hindi"
   }
 }

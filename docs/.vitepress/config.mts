@@ -15,6 +15,7 @@ function guideNav(prefix: string) {
       items: [
         { text: fr ? 'Diagnostics de Chat' : 'Chat Diagnostics', link: `${prefix}/guide/chat-diagnostics` },
         { text: fr ? 'Comparer' : 'Compare', link: `${prefix}/guide/compare` },
+        { text: fr ? 'Comparaison de Langues' : 'Language Compare', link: `${prefix}/guide/language-compare` },
         { text: fr ? 'Plongements' : 'Embeddings', link: `${prefix}/guide/embeddings` },
         { text: fr ? 'Base de Connaissances' : 'Knowledge Base', link: `${prefix}/guide/knowledge-base` },
         { text: fr ? "Atelier d'Outils" : 'Tool Workshop', link: `${prefix}/guide/tool-workshop` },
@@ -72,6 +73,7 @@ function communityNav(prefix: string) {
         { text: fr ? 'Module 6: L\'IA peut-elle utiliser des outils ?' : 'Module 6: Can AI Use Tools?', link: `${prefix}/community/educators/module-6` },
         { text: fr ? 'Module 7: Comment comparer les modèles ?' : 'Module 7: How Do Models Compare?', link: `${prefix}/community/educators/module-7` },
         { text: fr ? 'Module 8: La vue d\'ensemble' : 'Module 8: The Full Picture', link: `${prefix}/community/educators/module-8` },
+        { text: fr ? 'Module 9: Ce que coûtent les mots' : 'Module 9: What Words Cost', link: `${prefix}/community/educators/module-9` },
       ],
     },
   ]

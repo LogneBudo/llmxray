@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 320" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="bgShrinkFr" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f0a2e"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="320" rx="16" fill="url(#bgShrinkFr)"/>
+
+  <text x="400" y="32" text-anchor="middle" font-size="18" font-weight="700" fill="#e2e8f0">La fen&#xEA;tre de contexte r&#xE9;tr&#xE9;cit pour les non-anglophones</text>
+  <text x="400" y="52" text-anchor="middle" font-size="12" fill="#94a3b8">Un budget de 4 096 tokens n'est pas &#xE9;gal selon les langues</text>
+
+  <!-- Legend -->
+  <g transform="translate(130, 66)">
+    <rect x="0" y="0" width="12" height="12" rx="3" fill="rgba(168,85,247,0.4)"/>
+    <text x="18" y="10" font-size="9" fill="#c4b5fd">Prompt syst&#xE8;me</text>
+    <rect x="130" y="0" width="12" height="12" rx="3" fill="rgba(96,165,250,0.4)"/>
+    <text x="148" y="10" font-size="9" fill="#93c5fd">Prompt utilisateur</text>
+    <rect x="280" y="0" width="12" height="12" rx="3" fill="rgba(74,222,128,0.3)"/>
+    <text x="298" y="10" font-size="9" fill="#86efac">Disponible pour la r&#xE9;ponse</text>
+    <rect x="460" y="0" width="12" height="12" rx="3" fill="rgba(251,146,60,0.3)"/>
+    <text x="478" y="10" font-size="9" fill="#fdba74">Attention : limit&#xE9;</text>
+  </g>
+
+  <!-- ENGLISH -->
+  <text x="110" y="112" text-anchor="end" font-size="13" font-weight="600" fill="#e2e8f0">Anglais</text>
+  <text x="110" y="126" text-anchor="end" font-size="9" fill="#94a3b8">500 mots</text>
+
+  <!-- System prompt: 200 tokens = 29px -->
+  <rect x="120" y="98" width="29" height="36" rx="4" fill="rgba(168,85,247,0.35)" stroke="#a855f7" stroke-width="0.5"/>
+  <text x="135" y="120" text-anchor="middle" font-size="7" fill="#c4b5fd">200</text>
+
+  <!-- User prompt: 500 tokens = 73px -->
+  <rect x="149" y="98" width="73" height="36" rx="4" fill="rgba(96,165,250,0.35)" stroke="#60a5fa" stroke-width="0.5"/>
+  <text x="186" y="120" text-anchor="middle" font-size="8" fill="#93c5fd">500</text>
+
+  <!-- Available: 3396 tokens = 498px -->
+  <rect x="222" y="98" width="498" height="36" rx="4" fill="rgba(74,222,128,0.2)" stroke="#4ade80" stroke-width="0.5"/>
+  <text x="471" y="114" text-anchor="middle" font-size="12" font-weight="700" fill="#4ade80">3 396 tokens disponibles</text>
+  <text x="471" y="128" text-anchor="middle" font-size="9" fill="#86efac">83 % du contexte restant</text>
+
+  <!-- FRENCH -->
+  <text x="110" y="172" text-anchor="end" font-size="13" font-weight="600" fill="#e2e8f0">Fran&#xE7;ais</text>
+  <text x="110" y="186" text-anchor="end" font-size="9" fill="#94a3b8">m&#xEA;me contenu</text>
+
+  <!-- System prompt: 200 tokens = 29px -->
+  <rect x="120" y="158" width="29" height="36" rx="4" fill="rgba(168,85,247,0.35)" stroke="#a855f7" stroke-width="0.5"/>
+  <text x="135" y="180" text-anchor="middle" font-size="7" fill="#c4b5fd">200</text>
+
+  <!-- User prompt: 650 tokens = 95px -->
+  <rect x="149" y="158" width="95" height="36" rx="4" fill="rgba(96,165,250,0.35)" stroke="#60a5fa" stroke-width="0.5"/>
+  <text x="197" y="180" text-anchor="middle" font-size="8" fill="#93c5fd">650</text>
+
+  <!-- Available: 3246 tokens = 476px -->
+  <rect x="244" y="158" width="476" height="36" rx="4" fill="rgba(74,222,128,0.18)" stroke="#4ade80" stroke-width="0.5"/>
+  <text x="482" y="174" text-anchor="middle" font-size="12" font-weight="700" fill="#4ade80">3 246 tokens disponibles</text>
+  <text x="482" y="188" text-anchor="middle" font-size="9" fill="#86efac">79 % du contexte restant</text>
+
+  <!-- ARABIC -->
+  <text x="110" y="232" text-anchor="end" font-size="13" font-weight="600" fill="#e2e8f0">Arabe</text>
+  <text x="110" y="246" text-anchor="end" font-size="9" fill="#94a3b8">m&#xEA;me contenu</text>
+
+  <!-- System prompt: 200 tokens = 29px -->
+  <rect x="120" y="218" width="29" height="36" rx="4" fill="rgba(168,85,247,0.35)" stroke="#a855f7" stroke-width="0.5"/>
+  <text x="135" y="240" text-anchor="middle" font-size="7" fill="#c4b5fd">200</text>
+
+  <!-- User prompt: 1500 tokens = 220px -->
+  <rect x="149" y="218" width="220" height="36" rx="4" fill="rgba(96,165,250,0.35)" stroke="#60a5fa" stroke-width="0.5"/>
+  <text x="259" y="240" text-anchor="middle" font-size="8" fill="#93c5fd">1 500</text>
+
+  <!-- Available: 2396 tokens = 351px -->
+  <rect x="369" y="218" width="351" height="36" rx="4" fill="rgba(251,146,60,0.2)" stroke="#fb923c" stroke-width="0.5"/>
+  <text x="545" y="234" text-anchor="middle" font-size="12" font-weight="700" fill="#fb923c">2 396 tokens disponibles</text>
+  <text x="545" y="248" text-anchor="middle" font-size="9" fill="#fdba74">58 % du contexte restant</text>
+
+  <!-- Warning indicator on Arabic bar -->
+  <text x="730" y="240" text-anchor="start" font-size="14" fill="#fb923c">&#x26A0;</text>
+
+  <!-- Insight box -->
+  <g transform="translate(40, 272)">
+    <rect x="0" y="0" width="720" height="38" rx="10" fill="rgba(168,85,247,0.06)" stroke="#a855f7" stroke-width="1" stroke-dasharray="4"/>
+    <text x="360" y="16" text-anchor="middle" font-size="10" fill="#e2e8f0">La m&#xEA;me question en arabe consomme 3x plus du budget de contexte.</text>
+    <text x="360" y="30" text-anchor="middle" font-size="10" font-weight="600" fill="#fbbf24">Moins de place pour la r&#xE9;ponse du mod&#xE8;le signifie des r&#xE9;ponses de moindre qualit&#xE9;.</text>
+  </g>
+</svg>

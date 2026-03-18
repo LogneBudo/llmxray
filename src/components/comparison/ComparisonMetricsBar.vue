@@ -51,6 +51,34 @@ const COLORS = ['bg-accent', 'bg-success', 'bg-warning', 'bg-error']
 function barColor(idx: number): string {
   return COLORS[idx % COLORS.length] ?? 'bg-accent'
 }
+
+// Token Tax (Language Compare mode)
+const hasLanguageData = computed(() =>
+  props.executions.some(e => e.language && e.status === 'completed')
+)
+
+const tokenTaxEntries = computed(() => {
+  const completed = props.executions
+    .filter(e => e.language && e.status === 'completed' && e.sessionId)
+    .map(e => ({
+      slotId: e.slotId,
+      label: e.label || e.model,
+      language: e.language!,
+      promptTokens: metricsStore.getMetrics(e.sessionId)?.promptTokenCount ?? 0,
+    }))
+
+  const minTokens = Math.min(...completed.map(e => e.promptTokens).filter(t => t > 0)) || 1
+  const maxTokens = Math.max(...completed.map(e => e.promptTokens)) || 1
+
+  return completed.map(e => ({
+    ...e,
+    ratio: e.promptTokens / minTokens,
+    barWidth: (e.promptTokens / maxTokens) * 100,
+    taxColor: e.promptTokens / minTokens <= 1.1 ? 'bg-success'
+      : e.promptTokens / minTokens <= 2 ? 'bg-warning'
+      : 'bg-error',
+  }))
+})
 </script>
 
 <template>
@@ -110,6 +138,32 @@ function barColor(idx: number): string {
           />
         </div>
         <span class="text-[10px] text-text-muted w-14 text-right shrink-0">{{ entry.totalTokens }}</span>
+      </div>
+    </div>
+
+    <!-- Token Tax (Language Compare mode) -->
+    <div v-if="hasLanguageData" class="space-y-2">
+      <h4 class="text-xs font-medium text-text-muted uppercase tracking-wide">
+        {{ $t('comparison.language.tokenTaxTitle') }}
+      </h4>
+      <!-- Prompt Token bars -->
+      <div class="space-y-1.5">
+        <div v-for="entry in tokenTaxEntries" :key="entry.slotId" class="flex items-center gap-2">
+          <span class="w-28 truncate text-end text-xs text-text-secondary">{{ entry.label }}</span>
+          <div class="flex-1 h-4 rounded-full bg-surface-overlay overflow-hidden">
+            <div
+              class="h-full rounded-full transition-all duration-500"
+              :class="entry.taxColor"
+              :style="{ width: entry.barWidth + '%' }"
+            />
+          </div>
+          <span class="w-20 text-xs text-text-secondary">
+            {{ entry.promptTokens }} tokens
+            <span v-if="entry.ratio > 1" class="font-medium" :class="entry.taxColor.replace('bg-', 'text-')">
+              ({{ entry.ratio.toFixed(1) }}x)
+            </span>
+          </span>
+        </div>
       </div>
     </div>
   </div>

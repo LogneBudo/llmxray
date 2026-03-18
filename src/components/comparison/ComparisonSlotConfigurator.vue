@@ -63,7 +63,7 @@ function toggleExpanded(slotId: string) {
   expandedSlots.value[slotId] = !expandedSlots.value[slotId]
 }
 
-function applyPreset(preset: 'temp-sweep' | 'deterministic-pair') {
+function applyPreset(preset: 'temp-sweep' | 'deterministic-pair' | 'language-compare') {
   const model = modelStore.chatModelNames[0] ?? ''
   if (!model) return
 
@@ -76,7 +76,7 @@ function applyPreset(preset: 'temp-sweep' | 'deterministic-pair') {
       system: '',
       options: { temperature: t },
     }))
-  } else {
+  } else if (preset === 'deterministic-pair') {
     const seed = Math.floor(Math.random() * 100000)
     next = [0.3, 1.0].map((t) => ({
       slotId: nanoid(),
@@ -84,6 +84,16 @@ function applyPreset(preset: 'temp-sweep' | 'deterministic-pair') {
       label: '',
       system: '',
       options: { temperature: t, seed },
+    }))
+  } else {
+    // language-compare
+    next = (['en', 'fr', 'ar'] as const).map((lang) => ({
+      slotId: nanoid(),
+      model,
+      label: '',
+      system: '',
+      options: { temperature: 0.7 },
+      language: lang,
     }))
   }
   slots.value = assignLabels(next)
@@ -149,6 +159,18 @@ onMounted(async () => {
         <div class="pointer-events-none absolute left-0 top-full z-10 mt-1.5 w-64 rounded-lg border border-border-default bg-surface-raised p-3 text-xs text-text-secondary opacity-0 shadow-lg transition-opacity group-hover:pointer-events-auto group-hover:opacity-100">
           <p class="font-medium text-text-primary mb-1">{{ $t('comparison.configurator.presets.deterministicPair') }}</p>
           <p>{{ $t('comparison.configurator.presets.deterministicPairDesc') }}</p>
+        </div>
+      </div>
+      <div class="group relative">
+        <button
+          class="rounded-md border border-border-default px-2.5 py-1 text-[11px] text-text-secondary hover:border-accent hover:text-text-primary transition-colors"
+          @click="applyPreset('language-compare')"
+        >
+          {{ $t('comparison.configurator.presets.languageCompare') }}
+        </button>
+        <div class="pointer-events-none absolute left-0 top-full z-10 mt-1.5 w-64 rounded-lg border border-border-default bg-surface-raised p-3 text-xs text-text-secondary opacity-0 shadow-lg transition-opacity group-hover:pointer-events-auto group-hover:opacity-100">
+          <p class="font-medium text-text-primary mb-1">{{ $t('comparison.configurator.presets.languageCompare') }}</p>
+          <p>{{ $t('comparison.configurator.presets.languageCompareTooltip') }}</p>
         </div>
       </div>
     </div>

@@ -8,6 +8,10 @@ export interface ComparisonSlot {
   label: string
   system: string
   options: OllamaOptions
+  language?: string       // target language code (e.g., 'en', 'fr', 'ar', 'zh')
+  promptOverride?: string // per-slot prompt (falls back to shared prompt if not set)
+  wasTranslated?: boolean // true only when the model translated this prompt
+  detectedLanguage?: string | null // detected language of the prompt text
 }
 
 export interface ComparisonRun {
@@ -27,4 +31,6 @@ export interface ComparisonExecution {
   status: SessionStatus
   outputText: string
   metrics: SessionMetrics | null
+  effectivePrompt?: string // the actual prompt sent to this slot
+  language?: string        // language tag from the slot
 }

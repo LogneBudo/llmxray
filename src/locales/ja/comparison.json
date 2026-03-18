@@ -66,5 +66,14 @@
   },
   "column": {
     "tokens": "Tokens"
+  },
+  "language": {
+    "mismatchTitle": "\u8a00\u8a9e\u306e\u4e0d\u4e00\u81f4\u3092\u691c\u51fa",
+    "mismatchDescription": "\u30d7\u30ed\u30f3\u30d7\u30c8\u306f{detected}\u3067\u66f8\u304b\u308c\u3066\u3044\u308b\u3088\u3046\u3067\u3059\u3002",
+    "targetIs": "\u30bf\u30fc\u30b2\u30c3\u30c8: {language}",
+    "translateTo": "{language}\u306b\u7ffb\u8a33",
+    "keepDetected": "{language}\u3092\u7dad\u6301",
+    "translateAll": "\u3059\u3079\u3066\u7ffb\u8a33",
+    "cancel": "\u30ad\u30e3\u30f3\u30bb\u30eb"
   }
 }

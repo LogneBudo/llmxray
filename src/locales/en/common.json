@@ -104,5 +104,20 @@
     "noData": "No data available",
     "noResults": "No results found",
     "nothingHere": "Nothing here yet"
+  },
+  "languages": {
+    "en": "English",
+    "fr": "French",
+    "ar": "Arabic",
+    "zh": "Chinese",
+    "ja": "Japanese",
+    "he": "Hebrew",
+    "de": "German",
+    "es": "Spanish",
+    "pt": "Portuguese",
+    "it": "Italian",
+    "ru": "Russian",
+    "ko": "Korean",
+    "hi": "Hindi"
   }
 }

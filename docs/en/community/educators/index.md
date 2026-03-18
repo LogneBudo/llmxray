@@ -4,7 +4,7 @@
 
 **A progressive curriculum for teaching AI/ML with local models.**
 
-8 modules. From "What is a token?" to "I contributed to real AI research."
+9 modules. From "What is a token?" to "I contributed to real AI research."
 Free. Local. Visual. No cloud costs. No student API keys.
 
 </div>
@@ -47,9 +47,10 @@ Each module builds on the previous one. Students progress from observation to ex
 | **6** | [Can AI Use Tools?](./module-6) | 60 min | Intermediate | Tool calling is pattern matching, not understanding |
 | **7** | [How Do Models Compare?](./module-7) | 90 min | Advanced | No model is universally best |
 | **8** | [The Full Picture](./module-8) | 120 min | Advanced | You can contribute to real AI research |
+| **9** | [What Words Cost](./module-9) | 60 min | Intermediate | Tokenizers have a language bias — same meaning, different cost |
 
 ::: info Available Modules
-All 8 modules are available now. Each module contains hands-on exercises with LLMxRay, conceptual background grounded in published research, and assessment options.
+All 9 modules are available now. Each module contains hands-on exercises with LLMxRay, conceptual background grounded in published research, and assessment options.
 :::
 
 ---
@@ -61,7 +62,7 @@ Standalone 15-minute exercises for any lecture — no curriculum commitment need
 | Lab | The Surprise | Time |
 |---|---|---|
 | The Hallucination Lab | Models confidently fabricate history | 15 min |
-| The Tokenizer Bias | Same sentence, 5x more tokens in some languages | 15 min |
+| The Tokenizer Bias | Same sentence, 5x more tokens in some languages ([Module 9](./module-9) covers this in depth) | 15 min |
 | The Parrot Test | Models can't repeat text verbatim — they generate, not recall | 15 min |
 | The System Prompt Leak | Students extract a "secret" system prompt | 15 min |
 | The Temperature Art Gallery | Same prompt at 8 temperatures displayed as a gallery | 15 min |

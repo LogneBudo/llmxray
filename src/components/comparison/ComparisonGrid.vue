@@ -5,6 +5,7 @@ import ComparisonColumn from './ComparisonColumn.vue'
 const props = defineProps<{
   executions: ComparisonExecution[]
   slots: ComparisonSlot[]
+  prompt?: string
 }>()
 
 function slotFor(exec: ComparisonExecution): ComparisonSlot | undefined {
@@ -27,6 +28,7 @@ function slotFor(exec: ComparisonExecution): ComparisonSlot | undefined {
       :key="exec.slotId"
       :execution="exec"
       :slot-config="slotFor(exec)"
+      :shared-prompt="prompt"
     />
   </div>
 </template>

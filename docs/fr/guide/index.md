@@ -19,6 +19,7 @@ LLMxRay dispose d'une barre latérale avec 10 éléments de navigation, chacun r
 
 1. **[Diagnostics de Chat](./chat-diagnostics)** -- L'interface de chat principale avec streaming et analyse de session
 2. **[Comparer](./compare)** -- Comparaison côté à côté de modèles et de paramètres
+   - **[Comparaison de Langues](./language-compare)** -- Comprendre la taxe de tokens entre les langues
 3. **[Plongements](./embeddings)** -- Visualisation d'embeddings textuels et similarité
 4. **[Base de Connaissances](./knowledge-base)** -- Téléchargement de documents, découpage et recherche RAG
 5. **[Atelier d'Outils](./tool-workshop)** -- Constructeur visuel d'outils avec synchronisation du code

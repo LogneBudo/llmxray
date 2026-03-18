@@ -22,6 +22,8 @@ export const useComparisonStore = defineStore('comparison', () => {
       status: 'idle',
       outputText: '',
       metrics: null,
+      effectivePrompt: slot.promptOverride ?? prompt,
+      language: slot.language,
     }))
 
     runs.value.set(id, {

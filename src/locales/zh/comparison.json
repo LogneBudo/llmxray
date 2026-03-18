@@ -33,7 +33,9 @@
       "tempSweep": "温度扫描",
       "tempSweepDesc": "创建同一模型的 3 个插槽，温度分别为 0.2（专注）、0.7（均衡）和 1.2（创意）。观察温度如何影响相同提示词的输出。",
       "deterministicPair": "确定性配对",
-      "deterministicPairDesc": "创建同一模型的 2 个插槽，使用相同 seed 但不同温度（0.3 和 1.0）。共享 seed 意味着输出的任何差异纯粹来自温度，而非随机性。"
+      "deterministicPairDesc": "创建同一模型的 2 个插槽，使用相同 seed 但不同温度（0.3 和 1.0）。共享 seed 意味着输出的任何差异纯粹来自温度，而非随机性。",
+      "languageCompare": "语言对比",
+      "languageCompareTooltip": "比较不同语言如何影响 token 成本和模型行为"
     }
   },
   "prompt": {
@@ -66,5 +68,22 @@
   },
   "column": {
     "tokens": "Tokens"
+  },
+  "language": {
+    "mismatchTitle": "\u68c0\u6d4b\u5230\u8bed\u8a00\u4e0d\u5339\u914d",
+    "mismatchDescription": "\u60a8\u7684\u63d0\u793a\u8bcd\u4f3c\u4e4e\u662f{detected}\u3002",
+    "targetIs": "\u76ee\u6807\u8bed\u8a00\uff1a{language}",
+    "translateTo": "\u7ffb\u8bd1\u4e3a{language}",
+    "keepDetected": "\u4fdd\u7559{language}",
+    "translateAll": "\u5168\u90e8\u7ffb\u8bd1",
+    "cancel": "\u53d6\u6d88",
+    "tokenTaxTitle": "Token \u7a0e",
+    "promptTokens": "\u63d0\u793a\u8bcd Tokens",
+    "promptText": "翻译后的提示词",
+    "translated": "已翻译",
+    "unsupported": "暂不支持该语言",
+    "translating": "翻译中……根据模型大小可能需要一些时间",
+    "qualityWarning": "翻译质量取决于模型的语言能力。更大的模型能产生更好的翻译。",
+    "promptPlaceholder": "输入或粘贴{lang}提示词..."
   }
 }
