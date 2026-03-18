@@ -18,6 +18,8 @@ export interface BenchmarkSuite {
 
 export interface QuestionResult {
   questionId: string
+  questionText?: string
+  choices?: string[]
   category: string
   correct: boolean
   modelAnswer: string

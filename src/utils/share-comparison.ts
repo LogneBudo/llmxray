@@ -1,6 +1,7 @@
 import type { ComparisonRun } from '@/types/comparison'
 import type { SessionMetrics } from '@/types/metrics'
 import { LANGUAGE_NAMES } from '@/utils/slot-labels'
+import { downloadJson, downloadMarkdown } from '@/utils/download'
 
 function formatDate(ts: number): string {
   return new Date(ts).toISOString().split('T')[0] ?? ''
@@ -135,22 +136,10 @@ export function buildDiscussionUrl(run: ComparisonRun, metricsGetter?: (sessionI
   return `https://github.com/LogneBudo/llmxray/discussions/new?category=show-and-tell&title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`
 }
 
-export function downloadFile(content: string, filename: string, mimeType: string): void {
-  const blob = new Blob([content], { type: mimeType })
-  const url = URL.createObjectURL(blob)
-  const a = document.createElement('a')
-  a.href = url
-  a.download = filename
-  a.click()
-  URL.revokeObjectURL(url)
-}
-
 export function exportAsJson(run: ComparisonRun): void {
-  const data = JSON.stringify(run, null, 2)
-  downloadFile(data, `llmxray-compare-${run.id}.json`, 'application/json')
+  downloadJson(run, `llmxray-compare-${run.id}.json`)
 }
 
 export function exportAsMarkdown(run: ComparisonRun, metricsGetter?: (sessionId: string) => SessionMetrics | null): void {
-  const md = buildMarkdownReport(run, metricsGetter)
-  downloadFile(md, `llmxray-compare-${run.id}.md`, 'text/markdown')
+  downloadMarkdown(buildMarkdownReport(run, metricsGetter), `llmxray-compare-${run.id}.md`)
 }

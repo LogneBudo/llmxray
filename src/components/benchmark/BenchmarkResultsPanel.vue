@@ -8,8 +8,15 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js'
+import { Download, Share2 } from 'lucide-vue-next'
 import type { BenchmarkResult } from '@/types/benchmark'
 import { getBenchmarkLabel } from '@/data/benchmarks/baselines'
+import {
+  exportBenchmarkAsJson,
+  exportBenchmarkAsCsv,
+  exportBenchmarkAsMarkdown,
+} from '@/utils/share-benchmark'
+import ShareBenchmarkDialog from './ShareBenchmarkDialog.vue'
 
 ChartJS.register(LinearScale, PointElement, Tooltip, Legend)
 
@@ -17,6 +24,27 @@ const props = defineProps<{
   result: BenchmarkResult
   contextPressureResult?: BenchmarkResult | null
 }>()
+
+const showExportMenu = ref(false)
+
+function handleExportJson() {
+  exportBenchmarkAsJson(props.result)
+  showExportMenu.value = false
+}
+function handleExportCsv() {
+  exportBenchmarkAsCsv(props.result)
+  showExportMenu.value = false
+}
+function handleExportMarkdown() {
+  exportBenchmarkAsMarkdown(props.result)
+  showExportMenu.value = false
+}
+const showShareDialog = ref(false)
+
+function handleShareDiscussions() {
+  showExportMenu.value = false
+  showShareDialog.value = true
+}
 
 const filterCategory = ref<string | null>(null)
 const filterCorrect = ref<boolean | null>(null)
@@ -122,11 +150,43 @@ const pressureCategories = computed(() => {
             · {{ Math.round((result.completedAt - result.startedAt) / 1000) }}s total
           </span>
         </div>
-        <div class="text-end">
-          <div class="text-2xl font-bold" :class="result.accuracy >= 0.5 ? 'text-success' : 'text-error'">
-            {{ Math.round(result.accuracy * 100) }}%
+        <div class="flex items-center gap-3">
+          <!-- Export dropdown -->
+          <div class="relative">
+            <button
+              class="flex items-center gap-1 rounded-lg border border-border-default px-2.5 py-1 text-xs text-text-secondary hover:text-text-primary transition-colors"
+              @click="showExportMenu = !showExportMenu"
+            >
+              <Download class="h-3.5 w-3.5" />
+              {{ $t('benchmark.export.title') }}
+            </button>
+            <div v-if="showExportMenu" class="fixed inset-0 z-10" @click="showExportMenu = false" />
+            <div
+              v-if="showExportMenu"
+              class="absolute end-0 top-full z-20 mt-1 w-48 rounded-lg border border-border-default bg-surface-raised shadow-lg py-1"
+            >
+              <button class="w-full px-3 py-2 text-start text-xs text-text-secondary hover:bg-surface-overlay" @click="handleExportJson">
+                {{ $t('benchmark.export.downloadJson') }}
+              </button>
+              <button class="w-full px-3 py-2 text-start text-xs text-text-secondary hover:bg-surface-overlay" @click="handleExportCsv">
+                {{ $t('benchmark.export.downloadCsv') }}
+              </button>
+              <button class="w-full px-3 py-2 text-start text-xs text-text-secondary hover:bg-surface-overlay" @click="handleExportMarkdown">
+                {{ $t('benchmark.export.downloadMarkdown') }}
+              </button>
+              <div class="border-t border-border-default my-1" />
+              <button class="w-full px-3 py-2 text-start text-xs text-accent hover:bg-surface-overlay flex items-center gap-2" @click="handleShareDiscussions">
+                <Share2 class="h-3 w-3" />
+                {{ $t('comparison.share.toDiscussions') }}
+              </button>
+            </div>
           </div>
-          <div class="text-[10px] text-text-muted">{{ result.correctCount }}/{{ result.totalQuestions }}</div>
+          <div class="text-end">
+            <div class="text-2xl font-bold" :class="result.accuracy >= 0.5 ? 'text-success' : 'text-error'">
+              {{ Math.round(result.accuracy * 100) }}%
+            </div>
+            <div class="text-[10px] text-text-muted">{{ result.correctCount }}/{{ result.totalQuestions }}</div>
+          </div>
         </div>
       </div>
     </div>
@@ -320,5 +380,11 @@ const pressureCategories = computed(() => {
         </div>
       </template>
     </div>
+
+    <ShareBenchmarkDialog
+      v-if="showShareDialog"
+      :result="result"
+      @close="showShareDialog = false"
+    />
   </div>
 </template>

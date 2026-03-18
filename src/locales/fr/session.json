@@ -10,6 +10,12 @@
     "agent": "Graphe d'agent",
     "prompt": "Prompt"
   },
+  "export": {
+    "title": "Exporter",
+    "downloadJson": "T\u00e9l\u00e9charger JSON",
+    "downloadMarkdown": "T\u00e9l\u00e9charger Markdown",
+    "downloadTokenCsv": "T\u00e9l\u00e9charger flux de tokens CSV"
+  },
   "stream": {
     "tokenStream": "Flux de tokens",
     "metrics": "M\u00e9triques"

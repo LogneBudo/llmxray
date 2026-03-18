@@ -10,6 +10,12 @@
     "agent": "رسم الوكيل البياني",
     "prompt": "الموجه"
   },
+  "export": {
+    "title": "تصدير",
+    "downloadJson": "تحميل JSON",
+    "downloadMarkdown": "تحميل Markdown",
+    "downloadTokenCsv": "تحميل CSV بث token"
+  },
   "stream": {
     "tokenStream": "بث token",
     "metrics": "المقاييس"

@@ -91,6 +91,12 @@
     "viewDetails": "查看完整详情",
     "resumeIncomplete": "继续未完成的基准测试"
   },
+  "export": {
+    "title": "导出",
+    "downloadJson": "下载 JSON",
+    "downloadCsv": "下载 CSV",
+    "downloadMarkdown": "下载 Markdown"
+  },
   "import": {
     "importSuite": "导入测试套件",
     "importCustomBenchmarkSuite": "导入自定义基准测试套件",

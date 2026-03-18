@@ -91,6 +91,12 @@
     "viewDetails": "عرض التفاصيل الكاملة",
     "resumeIncomplete": "استئناف اختبار أداء غير مكتمل"
   },
+  "export": {
+    "title": "تصدير",
+    "downloadJson": "تحميل JSON",
+    "downloadCsv": "تحميل CSV",
+    "downloadMarkdown": "تحميل Markdown"
+  },
   "import": {
     "importSuite": "استيراد مجموعة اختبار",
     "importCustomBenchmarkSuite": "استيراد مجموعة اختبار أداء مخصصة",

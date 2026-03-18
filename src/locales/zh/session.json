@@ -10,6 +10,12 @@
     "agent": "Agent 图",
     "prompt": "提示词"
   },
+  "export": {
+    "title": "导出",
+    "downloadJson": "下载 JSON",
+    "downloadMarkdown": "下载 Markdown",
+    "downloadTokenCsv": "下载 Token 流 CSV"
+  },
   "stream": {
     "tokenStream": "Token 流",
     "metrics": "指标"

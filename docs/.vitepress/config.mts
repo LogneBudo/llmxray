@@ -24,6 +24,7 @@ function guideNav(prefix: string) {
         { text: 'Benchmark', link: `${prefix}/guide/benchmark` },
         { text: fr ? 'Mon Système' : 'My System', link: `${prefix}/guide/system` },
         { text: fr ? 'Paramètres' : 'Settings', link: `${prefix}/guide/settings` },
+        { text: fr ? 'Exporter vos données' : 'Exporting Your Data', link: `${prefix}/guide/export` },
       ],
     },
   ]

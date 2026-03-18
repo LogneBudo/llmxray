@@ -167,6 +167,8 @@ async function runQuestion(
 
   const result: QuestionResult = {
     questionId: question.id,
+    questionText: question.question,
+    choices: question.choices,
     category: question.category,
     correct,
     modelAnswer,

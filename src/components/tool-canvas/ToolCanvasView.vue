@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, markRaw, nextTick, watch, onMounted } from 'vue'
-import { Trash2 } from 'lucide-vue-next'
+import { Trash2, Download } from 'lucide-vue-next'
+import { downloadJson } from '@/utils/download'
 import { VueFlow, useVueFlow } from '@vue-flow/core'
 import { Background } from '@vue-flow/background'
 import { Controls } from '@vue-flow/controls'
@@ -116,6 +117,20 @@ async function copySchema() {
   } catch {
     // fallback silently
   }
+}
+
+const showExportMenu = ref(false)
+
+function exportAllToolsJson() {
+  const allDefs = workshopStore.allTools.map((t) => t.definition)
+  downloadJson(allDefs, 'llmxray-tools.json')
+  showExportMenu.value = false
+}
+
+function exportSingleToolJson(toolId: string) {
+  const tool = workshopStore.allTools.find((t) => t.id === toolId)
+  if (!tool) return
+  downloadJson(tool.definition, `tool-${tool.definition.function.name}.json`)
 }
 </script>
 
@@ -274,13 +289,34 @@ async function copySchema() {
           </option>
         </select>
 
-        <button
-          @click="exportTrainingData()"
-          class="px-3 py-1.5 rounded-lg bg-surface-overlay/90 text-text-secondary text-xs font-medium hover:bg-surface-overlay transition-colors cursor-pointer border border-border-default shadow-lg"
-          :title="$t('tools.canvas.exportTitle')"
-        >
-          {{ $t('tools.canvas.export') }}
-        </button>
+        <!-- Export dropdown -->
+        <div class="relative">
+          <button
+            class="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-surface-overlay/90 text-text-secondary text-xs font-medium hover:bg-surface-overlay transition-colors cursor-pointer border border-border-default shadow-lg"
+            @click="showExportMenu = !showExportMenu"
+          >
+            <Download class="h-3.5 w-3.5" />
+            {{ $t('tools.canvas.export') }}
+          </button>
+          <div v-if="showExportMenu" class="fixed inset-0 z-10" @click="showExportMenu = false" />
+          <div
+            v-if="showExportMenu"
+            class="absolute end-0 top-full z-20 mt-1 w-56 rounded-lg border border-border-default bg-surface-raised shadow-lg py-1"
+          >
+            <button
+              class="w-full px-3 py-2 text-start text-xs text-text-secondary hover:bg-surface-overlay"
+              @click="exportTrainingData(); showExportMenu = false"
+            >
+              {{ $t('tools.canvas.exportTitle') }}
+            </button>
+            <button
+              class="w-full px-3 py-2 text-start text-xs text-text-secondary hover:bg-surface-overlay"
+              @click="exportAllToolsJson"
+            >
+              {{ $t('tools.canvas.exportAllJson') }}
+            </button>
+          </div>
+        </div>
         <button
           v-if="!codePanelOpen"
           @click="codePanelOpen = true"
@@ -394,6 +430,15 @@ async function copySchema() {
               {{ tool.definition.function.description }}
             </p>
           </div>
+
+          <!-- Export single tool -->
+          <button
+            class="shrink-0 text-text-muted hover:text-accent transition-colors bg-transparent border-none cursor-pointer"
+            :title="$t('tools.canvas.exportToolJson')"
+            @click="exportSingleToolJson(tool.id)"
+          >
+            <Download class="h-3.5 w-3.5" />
+          </button>
 
           <!-- Delete button -->
           <button

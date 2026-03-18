@@ -76,6 +76,10 @@ Lorsqu'un modèle appelle un outil pendant le chat, un bouton **"Optimiser cet o
 
 Les définitions d'outils, positions des nœuds, correspondances et configurations de sondage sont toutes persistées et survivent aux actualisations du navigateur.
 
+## Exporter les outils
+
+Cliquez sur le bouton **Exporter** pour telecharger vos definitions d'outils au format **JSON**. L'export inclut les noms, descriptions, schemas de parametres et corps d'implementation -- tout ce qu'il faut pour reimporter ou partager vos outils. Consultez le [guide d'export](./export) pour plus de details sur toutes les options d'export.
+
 ## Astuces
 
 - Commencez par un modèle et personnalisez-le -- c'est plus rapide que de partir de zéro.

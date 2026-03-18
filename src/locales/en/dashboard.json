@@ -121,6 +121,12 @@
     "tokPerSec": "tok/s",
     "ttft": "TTFT"
   },
+  "export": {
+    "title": "Export",
+    "downloadJson": "Download JSON",
+    "downloadMarkdown": "Download Markdown",
+    "downloadText": "Download Text"
+  },
   "slashCommands": {
     "chatConversation": "Chat & Conversation",
     "modelSettings": "Model & Settings",

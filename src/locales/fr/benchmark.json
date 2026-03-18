@@ -91,6 +91,12 @@
     "viewDetails": "Voir les details complets",
     "resumeIncomplete": "Reprendre le benchmark incomplet"
   },
+  "export": {
+    "title": "Exporter",
+    "downloadJson": "T\u00e9l\u00e9charger JSON",
+    "downloadCsv": "T\u00e9l\u00e9charger CSV",
+    "downloadMarkdown": "T\u00e9l\u00e9charger Markdown"
+  },
   "import": {
     "importSuite": "Importer une suite",
     "importCustomBenchmarkSuite": "Importer une suite de benchmark personnalisee",

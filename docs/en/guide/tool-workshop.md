@@ -76,6 +76,10 @@ When a model calls a tool during chat, an **"Optimize this Tool"** button appear
 
 Tool definitions, node positions, mappings, and probe configurations are all persisted and survive browser refreshes.
 
+## Exporting Tools
+
+Click the **Export** button to download your tool definitions as **JSON**. The export includes tool names, descriptions, parameter schemas, and implementation bodies — everything needed to reimport or share your tools. See the [Export guide](./export) for details on all export options.
+
 ## Tips
 
 - Start with a template and customize it — faster than building from scratch.

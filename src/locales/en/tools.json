@@ -35,7 +35,9 @@
     "enableForChat": "Enable for chat",
     "deleteToolTitle": "Delete tool",
     "noToolsYet": "No tools yet",
-    "enabledForChat": "enabled for chat"
+    "enabledForChat": "enabled for chat",
+    "exportAllJson": "Export All Tools (JSON)",
+    "exportToolJson": "Export tool as JSON"
   },
   "templates": {
     "title": "Tool Templates",

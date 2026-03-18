@@ -35,7 +35,9 @@
     "enableForChat": "Activer pour le chat",
     "deleteToolTitle": "Supprimer l'outil",
     "noToolsYet": "Aucun outil",
-    "enabledForChat": "activ\u00e9(s) pour le chat"
+    "enabledForChat": "activ\u00e9(s) pour le chat",
+    "exportAllJson": "Exporter tous les outils (JSON)",
+    "exportToolJson": "Exporter l'outil en JSON"
   },
   "templates": {
     "title": "Mod\u00e8les d'outils",

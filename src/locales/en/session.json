@@ -10,6 +10,12 @@
     "agent": "Agent Graph",
     "prompt": "Prompt"
   },
+  "export": {
+    "title": "Export",
+    "downloadJson": "Download JSON",
+    "downloadMarkdown": "Download Markdown",
+    "downloadTokenCsv": "Download Token Stream CSV"
+  },
   "stream": {
     "tokenStream": "Token Stream",
     "metrics": "Metrics"

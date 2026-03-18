@@ -35,7 +35,9 @@
     "enableForChat": "تفعيل للمحادثة",
     "deleteToolTitle": "حذف الأداة",
     "noToolsYet": "لا توجد أدوات بعد",
-    "enabledForChat": "مفعّل للمحادثة"
+    "enabledForChat": "مفعّل للمحادثة",
+    "exportAllJson": "تصدير جميع الأدوات (JSON)",
+    "exportToolJson": "تصدير الأداة كـ JSON"
   },
   "templates": {
     "title": "قوالب الأدوات",

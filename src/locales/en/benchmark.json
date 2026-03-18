@@ -91,6 +91,12 @@
     "viewDetails": "View full details",
     "resumeIncomplete": "Resume incomplete benchmark"
   },
+  "export": {
+    "title": "Export",
+    "downloadJson": "Download JSON",
+    "downloadCsv": "Download CSV",
+    "downloadMarkdown": "Download Markdown"
+  },
   "import": {
     "importSuite": "Import Suite",
     "importCustomBenchmarkSuite": "Import Custom Benchmark Suite",

@@ -2,7 +2,7 @@
 import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { X } from 'lucide-vue-next'
-import { buildMarkdownReport, buildDiscussionUrl } from '@/utils/share-comparison'
+import { buildMarkdownReport } from '@/utils/share-comparison'
 import { useMetricsStore } from '@/stores/metrics-store'
 import type { ComparisonRun } from '@/types/comparison'
 
@@ -13,6 +13,7 @@ const { t } = useI18n()
 const metricsStore = useMetricsStore()
 const commentary = ref('')
 const copied = ref(false)
+const pasteHint = ref(false)
 
 const markdownPreview = computed(() =>
   buildMarkdownReport(
@@ -22,13 +23,25 @@ const markdownPreview = computed(() =>
   ),
 )
 
-function openDiscussions() {
-  const url = buildDiscussionUrl(
-    props.run,
-    (sid) => metricsStore.getMetrics(sid),
-    commentary.value || undefined,
-  )
-  window.open(url, '_blank')
+async function openDiscussions() {
+  // Copy full report to clipboard first
+  try {
+    await navigator.clipboard.writeText(markdownPreview.value)
+    pasteHint.value = true
+  } catch { /* clipboard may fail */ }
+
+  // Open Discussions with title only (body too long for URL)
+  const hasLanguages = props.run.executions.some(e => e.language)
+  const models = [...new Set(props.run.executions.map(e => e.model))]
+  let title: string
+  if (hasLanguages) {
+    const langs = props.run.executions.filter(e => e.language).map(e => e.language!.toUpperCase()).join(' vs ')
+    title = `Language Compare: ${langs} — ${models[0]}`
+  } else {
+    title = `Model Comparison: ${models.join(' vs ')}`
+  }
+  const params = new URLSearchParams({ category: 'show-and-tell', title })
+  window.open(`https://github.com/LogneBudo/llmxray/discussions/new?${params.toString()}`, '_blank')
 }
 
 async function copyMarkdown() {
@@ -95,8 +108,12 @@ function handleBackdropClick(e: MouseEvent) {
           </button>
         </div>
 
+        <!-- Paste hint -->
+        <p v-if="pasteHint" class="mt-3 rounded-lg bg-accent/10 border border-accent/20 px-3 py-2 text-xs text-accent text-center">
+          Report copied to clipboard — paste it in the Discussion body (Ctrl+V)
+        </p>
         <!-- Note -->
-        <p class="mt-3 text-center text-[9px] text-text-muted">
+        <p v-else class="mt-3 text-center text-[9px] text-text-muted">
           {{ t('comparison.share.note') }}
         </p>
       </div>

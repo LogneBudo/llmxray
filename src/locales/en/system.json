@@ -5,6 +5,11 @@
   "detecting": "Detecting hardware...",
   "detectingDetail": "Querying CPU, memory, GPU, and storage",
   "unavailable": "Hardware detection unavailable. Please restart the dev server to enable the system info plugin.",
+  "export": {
+    "title": "Export",
+    "downloadMarkdown": "Download System Report (Markdown)",
+    "downloadJson": "Download System Info (JSON)"
+  },
   "os": {
     "title": "Operating System",
     "os": "OS",

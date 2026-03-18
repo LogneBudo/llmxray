@@ -5,6 +5,11 @@
   "detecting": "检测硬件中...",
   "detectingDetail": "正在查询 CPU、内存、GPU 和存储",
   "unavailable": "硬件检测不可用。请重启开发服务器以启用系统信息插件。",
+  "export": {
+    "title": "导出",
+    "downloadMarkdown": "下载系统报告 (Markdown)",
+    "downloadJson": "下载系统信息 (JSON)"
+  },
   "os": {
     "title": "操作系统",
     "os": "系统",

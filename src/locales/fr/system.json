@@ -5,6 +5,11 @@
   "detecting": "D\u00e9tection du mat\u00e9riel...",
   "detectingDetail": "Interrogation du CPU, de la m\u00e9moire, du GPU et du stockage",
   "unavailable": "D\u00e9tection du mat\u00e9riel indisponible. Veuillez red\u00e9marrer le serveur de d\u00e9veloppement pour activer le plugin d'information syst\u00e8me.",
+  "export": {
+    "title": "Exporter",
+    "downloadMarkdown": "T\u00e9l\u00e9charger rapport syst\u00e8me (Markdown)",
+    "downloadJson": "T\u00e9l\u00e9charger infos syst\u00e8me (JSON)"
+  },
   "os": {
     "title": "Syst\u00e8me d'exploitation",
     "os": "SE",

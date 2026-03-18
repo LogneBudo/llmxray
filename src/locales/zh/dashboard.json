@@ -121,6 +121,12 @@
     "tokPerSec": "tok/s",
     "ttft": "TTFT"
   },
+  "export": {
+    "title": "导出",
+    "downloadJson": "下载 JSON",
+    "downloadMarkdown": "下载 Markdown",
+    "downloadText": "下载文本"
+  },
   "slashCommands": {
     "chatConversation": "聊天与对话",
     "modelSettings": "模型与设置",

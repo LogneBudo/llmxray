@@ -35,7 +35,9 @@
     "enableForChat": "在聊天中启用",
     "deleteToolTitle": "删除工具",
     "noToolsYet": "还没有工具",
-    "enabledForChat": "已在聊天中启用"
+    "enabledForChat": "已在聊天中启用",
+    "exportAllJson": "导出所有工具 (JSON)",
+    "exportToolJson": "导出工具为 JSON"
   },
   "templates": {
     "title": "工具模板",

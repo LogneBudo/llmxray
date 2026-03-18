@@ -60,6 +60,10 @@ Cliquez sur **Importer** pour charger une suite de benchmark personnalisée. Le 
 - Nom et description de la suite
 - Tableau de questions, chacune avec : texte de la question, choix de réponses, index de la réponse correcte et catégorie optionnelle
 
+## Exporter les resultats
+
+Cliquez sur le bouton **Exporter** dans l'en-tete des resultats pour telecharger vos donnees de benchmark en **JSON**, **CSV** ou **Markdown**. Le JSON inclut les donnees structurees completes pour le scripting et l'analyse ; le CSV fournit des donnees tabulaires plates pour les tableurs ; le Markdown vous donne un rapport formate pret a coller dans vos documents. Consultez le [guide d'export](./export) pour plus de details sur toutes les options d'export et le partage sur GitHub Discussions.
+
 ## Astuces
 
 - **Les logprobs nécessitent le endpoint `/v1`** -- Cela utilise l'API compatible OpenAI d'Ollama, et non le endpoint natif `/api`.
