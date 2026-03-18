@@ -141,13 +141,13 @@ onMounted(async () => {
         v-model="selectedModel"
         class="rounded-lg border border-border-default bg-surface px-3 py-2 text-sm text-text-primary focus:border-accent focus:outline-none"
       >
-        <option v-if="availableModels.length === 0" value="" disabled>No models available</option>
+        <option v-if="availableModels.length === 0" value="" disabled>{{ $t('embeddings.modelSelector.noModels') }}</option>
         <option v-for="m in availableModels" :key="m.name" :value="m.name">
           {{ m.name }} {{ modelStore.capabilityIcons(m.name) }}
         </option>
       </select>
       <span v-if="embeddingModels.length === 0 && modelStore.models.length > 0" class="text-xs text-warning">
-        No embedding models found. Pull one: ollama pull nomic-embed-text
+        {{ $t('embeddings.modelSelector.noEmbeddingModels') }}
       </span>
     </div>
 
@@ -157,19 +157,19 @@ onMounted(async () => {
       :used="memoryDb.totalBytes"
       :total="storageStore.origin.quota"
       compact
-      :label="`Embedding Memory \u00B7 ${memoryDb.recordCount.toLocaleString()} records`"
+      :label="`${$t('embeddings.storage.embeddingMemory')} \u00B7 ${memoryDb.recordCount.toLocaleString()} ${$t('embeddings.storage.records')}`"
     />
 
     <!-- Embed Playground -->
     <section class="rounded-lg border border-border-default bg-surface-raised p-5 space-y-4">
-      <h2 class="text-base font-semibold text-text-primary">Embed Playground</h2>
-      <p class="text-sm text-text-muted">Enter text to generate its embedding vector and inspect the dimensions.</p>
+      <h2 class="text-base font-semibold text-text-primary">{{ $t('embeddings.playground.title') }}</h2>
+      <p class="text-sm text-text-muted">{{ $t('embeddings.playground.description') }}</p>
 
       <textarea
         v-model="inputText"
         class="w-full rounded-lg border border-border-default bg-surface px-4 py-3 text-sm text-text-primary placeholder-text-muted focus:border-accent focus:outline-none resize-none"
         rows="3"
-        placeholder="Enter text to embed..."
+        :placeholder="$t('embeddings.playground.placeholder')"
         :disabled="embeddingStore.loading"
         @keydown.ctrl.enter="embedText"
       />
@@ -181,9 +181,9 @@ onMounted(async () => {
           @click="embedText"
         >
           <span v-if="embeddingStore.loading" class="flex items-center gap-2">
-            <LoadingSpinner size="sm" /> Embedding...
+            <LoadingSpinner size="sm" /> {{ $t('embeddings.playground.embedding') }}
           </span>
-          <span v-else>Embed</span>
+          <span v-else>{{ $t('embeddings.playground.embed') }}</span>
         </button>
         <span v-if="embeddingStore.error" class="text-sm text-error">{{ embeddingStore.error }}</span>
       </div>
@@ -202,7 +202,7 @@ onMounted(async () => {
         <!-- Raw values (first 50) -->
         <details class="text-xs">
           <summary class="cursor-pointer text-text-muted hover:text-text-secondary">
-            Show raw values (first 50 of {{ activeResult.dimensions }})
+            {{ $t('embeddings.playground.showRawValues', { total: activeResult.dimensions }) }}
           </summary>
           <div class="mt-2 grid grid-cols-5 gap-1 font-mono text-text-secondary">
             <span
@@ -220,27 +220,27 @@ onMounted(async () => {
 
     <!-- Similarity Calculator -->
     <section class="rounded-lg border border-border-default bg-surface-raised p-5 space-y-4">
-      <h2 class="text-base font-semibold text-text-primary">Similarity Calculator</h2>
-      <p class="text-sm text-text-muted">Compare two texts to measure their semantic similarity using cosine distance.</p>
+      <h2 class="text-base font-semibold text-text-primary">{{ $t('embeddings.similarity.title') }}</h2>
+      <p class="text-sm text-text-muted">{{ $t('embeddings.similarity.description') }}</p>
 
       <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <div>
-          <label class="block text-xs font-medium text-text-muted mb-1">Text A</label>
+          <label class="block text-xs font-medium text-text-muted mb-1">{{ $t('embeddings.similarity.textA') }}</label>
           <textarea
             v-model="compareTextA"
             class="w-full rounded-lg border border-border-default bg-surface px-4 py-3 text-sm text-text-primary placeholder-text-muted focus:border-accent focus:outline-none resize-none"
             rows="3"
-            placeholder="First text..."
+            :placeholder="$t('embeddings.similarity.placeholderA')"
             :disabled="comparing"
           />
         </div>
         <div>
-          <label class="block text-xs font-medium text-text-muted mb-1">Text B</label>
+          <label class="block text-xs font-medium text-text-muted mb-1">{{ $t('embeddings.similarity.textB') }}</label>
           <textarea
             v-model="compareTextB"
             class="w-full rounded-lg border border-border-default bg-surface px-4 py-3 text-sm text-text-primary placeholder-text-muted focus:border-accent focus:outline-none resize-none"
             rows="3"
-            placeholder="Second text..."
+            :placeholder="$t('embeddings.similarity.placeholderB')"
             :disabled="comparing"
           />
         </div>
@@ -252,16 +252,16 @@ onMounted(async () => {
         @click="compareSimilarity"
       >
         <span v-if="comparing" class="flex items-center gap-2">
-          <LoadingSpinner size="sm" /> Comparing...
+          <LoadingSpinner size="sm" /> {{ $t('embeddings.similarity.comparing') }}
         </span>
-        <span v-else>Compare</span>
+        <span v-else>{{ $t('embeddings.similarity.compare') }}</span>
       </button>
 
       <!-- Similarity result -->
       <template v-if="similarityScore !== null && compareResultA && compareResultB">
         <div class="flex flex-col items-center gap-6 py-4 lg:flex-row lg:items-start lg:justify-center">
           <div class="flex-1 space-y-2">
-            <div class="text-xs font-medium text-text-muted">Text A</div>
+            <div class="text-xs font-medium text-text-muted">{{ $t('embeddings.similarity.textA') }}</div>
             <div class="rounded-lg bg-surface p-3 text-sm text-text-secondary">
               {{ compareResultA.input }}
             </div>
@@ -271,7 +271,7 @@ onMounted(async () => {
           <SimilarityMeter :score="similarityScore" />
 
           <div class="flex-1 space-y-2">
-            <div class="text-xs font-medium text-text-muted">Text B</div>
+            <div class="text-xs font-medium text-text-muted">{{ $t('embeddings.similarity.textB') }}</div>
             <div class="rounded-lg bg-surface p-3 text-sm text-text-secondary">
               {{ compareResultB.input }}
             </div>
@@ -283,12 +283,12 @@ onMounted(async () => {
 
     <!-- Model Comparison -->
     <section class="rounded-lg border border-border-default bg-surface-raised p-5 space-y-4">
-      <h2 class="text-base font-semibold text-text-primary">Model Comparison</h2>
-      <p class="text-sm text-text-muted">Embed the same text with two models to compare how they represent meaning.</p>
+      <h2 class="text-base font-semibold text-text-primary">{{ $t('embeddings.modelComparison.title') }}</h2>
+      <p class="text-sm text-text-muted">{{ $t('embeddings.modelComparison.description') }}</p>
 
       <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <div>
-          <label class="block text-xs font-medium text-text-muted mb-1">Model A</label>
+          <label class="block text-xs font-medium text-text-muted mb-1">{{ $t('embeddings.modelComparison.modelA') }}</label>
           <select
             v-model="modelCompareA"
             class="w-full rounded-lg border border-border-default bg-surface px-3 py-2 text-sm text-text-primary outline-none focus:border-accent"
@@ -300,7 +300,7 @@ onMounted(async () => {
           </select>
         </div>
         <div>
-          <label class="block text-xs font-medium text-text-muted mb-1">Model B</label>
+          <label class="block text-xs font-medium text-text-muted mb-1">{{ $t('embeddings.modelComparison.modelB') }}</label>
           <select
             v-model="modelCompareB"
             class="w-full rounded-lg border border-border-default bg-surface px-3 py-2 text-sm text-text-primary outline-none focus:border-accent"
@@ -317,7 +317,7 @@ onMounted(async () => {
         v-model="modelCompareText"
         class="w-full rounded-lg border border-border-default bg-surface px-4 py-3 text-sm text-text-primary placeholder-text-muted focus:border-accent focus:outline-none resize-none"
         rows="2"
-        placeholder="Enter text to embed with both models..."
+        :placeholder="$t('embeddings.modelComparison.placeholder')"
         :disabled="modelComparing"
       />
 
@@ -327,9 +327,9 @@ onMounted(async () => {
         @click="compareModels"
       >
         <span v-if="modelComparing" class="flex items-center gap-2">
-          <LoadingSpinner size="sm" /> Comparing models...
+          <LoadingSpinner size="sm" /> {{ $t('embeddings.modelComparison.comparingModels') }}
         </span>
-        <span v-else>Compare Models</span>
+        <span v-else>{{ $t('embeddings.modelComparison.compareModels') }}</span>
       </button>
 
       <!-- Comparison results -->
@@ -344,19 +344,19 @@ onMounted(async () => {
             <EmbeddingVectorViz :vector="modelCompareResultA.vector" :height="80" />
             <div class="grid grid-cols-4 gap-1.5 text-[10px]">
               <div class="rounded bg-surface-overlay p-1.5">
-                <div class="text-text-muted">Dims</div>
+                <div class="text-text-muted">{{ $t('embeddings.stats.dims') }}</div>
                 <div class="font-medium text-text-primary">{{ modelCompareResultA.dimensions }}</div>
               </div>
               <div class="rounded bg-surface-overlay p-1.5">
-                <div class="text-text-muted">L2 Norm</div>
+                <div class="text-text-muted">{{ $t('embeddings.stats.l2Norm') }}</div>
                 <div class="font-medium text-text-primary">{{ Math.sqrt(modelCompareResultA.vector.reduce((s, v) => s + v * v, 0)).toFixed(2) }}</div>
               </div>
               <div class="rounded bg-surface-overlay p-1.5">
-                <div class="text-text-muted">Sparsity</div>
+                <div class="text-text-muted">{{ $t('embeddings.stats.sparsity') }}</div>
                 <div class="font-medium text-text-primary">{{ (modelCompareResultA.vector.filter(v => Math.abs(v) < 0.001).length / modelCompareResultA.dimensions * 100).toFixed(1) }}%</div>
               </div>
               <div class="rounded bg-surface-overlay p-1.5">
-                <div class="text-text-muted">Time</div>
+                <div class="text-text-muted">{{ $t('embeddings.stats.time') }}</div>
                 <div class="font-medium text-text-primary">{{ formatDuration(modelCompareResultA.durationMs) }}</div>
               </div>
             </div>
@@ -371,19 +371,19 @@ onMounted(async () => {
             <EmbeddingVectorViz :vector="modelCompareResultB.vector" :height="80" />
             <div class="grid grid-cols-4 gap-1.5 text-[10px]">
               <div class="rounded bg-surface-overlay p-1.5">
-                <div class="text-text-muted">Dims</div>
+                <div class="text-text-muted">{{ $t('embeddings.stats.dims') }}</div>
                 <div class="font-medium text-text-primary">{{ modelCompareResultB.dimensions }}</div>
               </div>
               <div class="rounded bg-surface-overlay p-1.5">
-                <div class="text-text-muted">L2 Norm</div>
+                <div class="text-text-muted">{{ $t('embeddings.stats.l2Norm') }}</div>
                 <div class="font-medium text-text-primary">{{ Math.sqrt(modelCompareResultB.vector.reduce((s, v) => s + v * v, 0)).toFixed(2) }}</div>
               </div>
               <div class="rounded bg-surface-overlay p-1.5">
-                <div class="text-text-muted">Sparsity</div>
+                <div class="text-text-muted">{{ $t('embeddings.stats.sparsity') }}</div>
                 <div class="font-medium text-text-primary">{{ (modelCompareResultB.vector.filter(v => Math.abs(v) < 0.001).length / modelCompareResultB.dimensions * 100).toFixed(1) }}%</div>
               </div>
               <div class="rounded bg-surface-overlay p-1.5">
-                <div class="text-text-muted">Time</div>
+                <div class="text-text-muted">{{ $t('embeddings.stats.time') }}</div>
                 <div class="font-medium text-text-primary">{{ formatDuration(modelCompareResultB.durationMs) }}</div>
               </div>
             </div>
@@ -395,18 +395,18 @@ onMounted(async () => {
           <template v-if="modelCompareScore !== null">
             <SimilarityMeter :score="modelCompareScore" />
             <p class="mt-2 text-xs text-text-muted">
-              Cross-model similarity — how similarly these models represent the same text.
-              <template v-if="modelCompareScore < 0.5"> These models encode meaning very differently.</template>
-              <template v-else-if="modelCompareScore < 0.8"> Moderate agreement — the models share some semantic structure.</template>
-              <template v-else> High agreement — these models represent this text similarly.</template>
+              {{ $t('embeddings.modelComparison.crossModelSimilarity') }}
+              <template v-if="modelCompareScore < 0.5"> {{ $t('embeddings.modelComparison.veryDifferent') }}</template>
+              <template v-else-if="modelCompareScore < 0.8"> {{ $t('embeddings.modelComparison.moderateAgreement') }}</template>
+              <template v-else> {{ $t('embeddings.modelComparison.highAgreement') }}</template>
             </p>
           </template>
           <template v-else>
             <p class="text-sm text-text-muted py-2">
-              Dimensions differ ({{ modelCompareResultA.dimensions }} vs {{ modelCompareResultB.dimensions }}) — direct cosine similarity not possible.
+              {{ $t('embeddings.modelComparison.dimensionsMismatch', { dimA: modelCompareResultA.dimensions, dimB: modelCompareResultB.dimensions }) }}
             </p>
             <p class="text-xs text-text-muted">
-              Compare stats above to evaluate each model's representation quality.
+              {{ $t('embeddings.modelComparison.compareStats') }}
             </p>
           </template>
         </div>
@@ -416,12 +416,12 @@ onMounted(async () => {
     <!-- History -->
     <section v-if="embeddingStore.recentResults.length > 0" class="rounded-lg border border-border-default bg-surface-raised p-5 space-y-4">
       <div class="flex items-center justify-between">
-        <h2 class="text-base font-semibold text-text-primary">Recent Embeddings</h2>
+        <h2 class="text-base font-semibold text-text-primary">{{ $t('embeddings.history.title') }}</h2>
         <button
           class="text-xs text-text-muted hover:text-error transition-colors"
           @click="embeddingStore.clearResults()"
         >
-          Clear all
+          {{ $t('embeddings.history.clearAll') }}
         </button>
       </div>
 

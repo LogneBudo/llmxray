@@ -64,14 +64,14 @@ async function handleSearch(query: string) {
   <div class="space-y-6">
     <div class="flex items-center justify-between">
       <div>
-        <h2 class="text-lg font-semibold text-text-primary">Document Knowledge Base</h2>
-        <p class="text-sm text-text-muted">Ingest documents for RAG-powered conversations</p>
+        <h2 class="text-lg font-semibold text-text-primary">{{ $t('rag.title') }}</h2>
+        <p class="text-sm text-text-muted">{{ $t('rag.subtitle') }}</p>
       </div>
       <select
         v-model="embeddingModel"
         class="rounded-lg border border-border-default bg-surface px-3 py-1.5 text-sm text-text-primary outline-none focus:border-accent"
       >
-        <option v-if="modelStore.embeddingModelNames.length === 0" value="" disabled>No embedding models</option>
+        <option v-if="modelStore.embeddingModelNames.length === 0" value="" disabled>{{ $t('rag.modelSelector.noEmbeddingModels') }}</option>
         <option v-for="name in modelStore.embeddingModelNames" :key="name" :value="name">
           {{ name }} {{ modelStore.capabilityIcons(name) }}
         </option>
@@ -84,16 +84,16 @@ async function handleSearch(query: string) {
       class="rounded-lg border border-border-default bg-surface-raised p-3 space-y-2"
     >
       <div class="flex items-center justify-between text-xs">
-        <span class="text-text-secondary font-medium">Knowledge Base Storage</span>
+        <span class="text-text-secondary font-medium">{{ $t('rag.storage.title') }}</span>
         <span class="text-text-muted">
-          {{ ragStore.readyDocuments.length }} documents · {{ totalChunks.toLocaleString() }} chunks
-          <template v-if="ragDb">· {{ formatBytes(ragDb.totalBytes) }} stored</template>
+          {{ ragStore.readyDocuments.length }} {{ $t('rag.storage.documents') }} · {{ totalChunks.toLocaleString() }} {{ $t('rag.storage.chunks') }}
+          <template v-if="ragDb">· {{ formatBytes(ragDb.totalBytes) }} {{ $t('rag.storage.stored') }}</template>
         </span>
       </div>
       <StorageGauge
         :used="ragDb?.totalBytes ?? 0"
         :total="storageStore.origin.quota"
-        label="RAG Storage"
+        :label="$t('rag.storage.ragStorage')"
         :animating="ragStore.isIngesting"
         compact
       />
@@ -116,7 +116,7 @@ async function handleSearch(query: string) {
     <!-- Documents -->
     <div>
       <h3 class="mb-3 text-sm font-medium text-text-secondary">
-        Documents ({{ ragStore.readyDocuments.length }})
+        {{ $t('rag.documents.title') }} ({{ ragStore.readyDocuments.length }})
       </h3>
       <DocumentList
         :documents="ragStore.documents"
@@ -128,7 +128,7 @@ async function handleSearch(query: string) {
 
     <!-- Search -->
     <div>
-      <h3 class="mb-3 text-sm font-medium text-text-secondary">Semantic Search</h3>
+      <h3 class="mb-3 text-sm font-medium text-text-secondary">{{ $t('rag.search.title') }}</h3>
       <RAGSearchPanel
         :results="ragStore.searchResults"
         :is-searching="ragStore.isSearching"

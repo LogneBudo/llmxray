@@ -1,0 +1,39 @@
+{
+  "title": "Session",
+  "sessionId": "Session {id}",
+  "notFound": "Session introuvable.",
+  "tabs": {
+    "stream": "Flux",
+    "reasoning": "Raisonnement",
+    "introspection": "Introspection",
+    "tools": "Outils",
+    "agent": "Graphe d'agent",
+    "prompt": "Prompt"
+  },
+  "stream": {
+    "tokenStream": "Flux de tokens",
+    "metrics": "M\u00e9triques"
+  },
+  "tokenStream": {
+    "promptPlaceholder": "Entrez votre prompt..."
+  },
+  "reasoning": {
+    "title": "Raisonnement",
+    "noReasoning": "Aucune donn\u00e9e de raisonnement disponible pour cette session."
+  },
+  "introspection": {
+    "title": "Introspection",
+    "illustrative": "Illustratif"
+  },
+  "toolCalls": {
+    "title": "Appels d'outils",
+    "timeline": "Chronologie",
+    "optimize": "Optimiser"
+  },
+  "agentGraph": {
+    "title": "Graphe d'agent"
+  },
+  "promptInspector": {
+    "title": "Inspecteur de prompt"
+  }
+}

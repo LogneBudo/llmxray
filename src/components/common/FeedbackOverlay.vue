@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
+import { CheckCircle, X } from 'lucide-vue-next'
 import { useModelStore } from '@/stores/model-store'
 import { ollamaClient } from '@/services/ollama-client'
 import {
@@ -22,11 +23,11 @@ const email = ref('')
 const submitting = ref(false)
 const submitted = ref(false)
 
-const types: { value: FeedbackType; label: string; icon: string }[] = [
-  { value: 'bug', label: 'Bug', icon: '!' },
-  { value: 'idea', label: 'Idea', icon: '?' },
-  { value: 'question', label: 'Question', icon: 'Q' },
-  { value: 'other', label: 'Other', icon: '...' },
+const types: { value: FeedbackType; labelKey: string; icon: string }[] = [
+  { value: 'bug', labelKey: 'feedback.types.bug', icon: '!' },
+  { value: 'idea', labelKey: 'feedback.types.idea', icon: '?' },
+  { value: 'question', labelKey: 'feedback.types.question', icon: 'Q' },
+  { value: 'other', labelKey: 'feedback.types.other', icon: '...' },
 ]
 
 async function handleSubmit() {
@@ -80,31 +81,27 @@ function handleBackdropClick(e: MouseEvent) {
         <!-- Success state -->
         <div v-if="submitted" class="flex flex-col items-center gap-3 py-8">
           <div class="flex h-12 w-12 items-center justify-center rounded-full bg-success/10">
-            <svg class="h-6 w-6 text-success" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M20 6L9 17l-5-5" />
-            </svg>
+            <CheckCircle class="h-6 w-6 text-success" />
           </div>
-          <p class="text-sm font-medium text-text-primary">Thank you for your feedback!</p>
-          <p class="text-xs text-text-muted">Your input helps make LLMxRay better.</p>
+          <p class="text-sm font-medium text-text-primary">{{ $t('feedback.thankYou') }}</p>
+          <p class="text-xs text-text-muted">{{ $t('feedback.thankYouDetail') }}</p>
         </div>
 
         <!-- Form -->
         <template v-else>
           <div class="flex items-center justify-between mb-4">
-            <h3 class="text-sm font-semibold text-text-primary">Send Feedback</h3>
+            <h3 class="text-sm font-semibold text-text-primary">{{ $t('feedback.title') }}</h3>
             <button
               class="rounded p-1 text-text-muted hover:text-text-primary transition-colors"
               @click="emit('close')"
             >
-              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
+              <X class="h-4 w-4" />
             </button>
           </div>
 
           <!-- Type selector -->
           <div class="mb-4">
-            <p class="mb-2 text-xs text-text-muted">What kind of feedback?</p>
+            <p class="mb-2 text-xs text-text-muted">{{ $t('feedback.typeQuestion') }}</p>
             <div class="grid grid-cols-4 gap-2">
               <button
                 v-for="t in types"
@@ -118,7 +115,7 @@ function handleBackdropClick(e: MouseEvent) {
                 @click="feedbackType = t.value"
               >
                 <span class="text-sm font-bold">{{ t.icon }}</span>
-                <span>{{ t.label }}</span>
+                <span>{{ $t(t.labelKey) }}</span>
               </button>
             </div>
           </div>
@@ -129,18 +126,18 @@ function handleBackdropClick(e: MouseEvent) {
               v-model="message"
               rows="4"
               class="w-full resize-none rounded-lg border border-border-default bg-surface px-3 py-2 text-sm text-text-primary placeholder-text-muted outline-none focus:border-accent"
-              placeholder="Tell us what's on your mind..."
+              :placeholder="$t('feedback.message.placeholder')"
             />
           </div>
 
           <!-- Email (optional) -->
           <div class="mb-4">
-            <label class="mb-1 block text-xs text-text-muted">Email <span class="text-text-muted/50">(optional — only if you'd like a response)</span></label>
+            <label class="mb-1 block text-xs text-text-muted">{{ $t('feedback.email.label') }} <span class="text-text-muted/50">{{ $t('feedback.email.optional') }}</span></label>
             <input
               v-model="email"
               type="email"
               class="w-full rounded-lg border border-border-default bg-surface px-3 py-1.5 text-sm text-text-primary placeholder-text-muted outline-none focus:border-accent"
-              placeholder="your@email.com"
+              :placeholder="$t('feedback.email.placeholder')"
             />
           </div>
 
@@ -150,11 +147,11 @@ function handleBackdropClick(e: MouseEvent) {
             class="w-full rounded-lg bg-accent px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-accent-hover disabled:opacity-40"
             @click="handleSubmit"
           >
-            {{ submitting ? 'Sending...' : 'Send Feedback' }}
+            {{ submitting ? $t('feedback.submit.sending') : $t('feedback.submit.send') }}
           </button>
 
           <p class="mt-2 text-center text-[9px] text-text-muted">
-            Includes app context (page, model, system) to help us understand your feedback.
+            {{ $t('feedback.disclaimer') }}
           </p>
         </template>
       </div>

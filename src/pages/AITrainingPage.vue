@@ -17,8 +17,8 @@ onMounted(() => {
   <div class="mx-auto max-w-6xl space-y-6">
     <!-- Header -->
     <div>
-      <h2 class="text-lg font-semibold text-text-primary">AI Training</h2>
-      <p class="text-sm text-text-muted">Browse, curate, and export your training data from the Tool Workshop.</p>
+      <h2 class="text-lg font-semibold text-text-primary">{{ $t('training.title') }}</h2>
+      <p class="text-sm text-text-muted">{{ $t('training.subtitle') }}</p>
     </div>
 
     <!-- Dashboard -->
@@ -51,10 +51,10 @@ onMounted(() => {
         class="text-[10px] text-text-muted hover:text-accent transition-colors"
         @click="store.selectedIds.size === store.filteredPairs.length ? store.deselectAll() : store.selectAll()"
       >
-        {{ store.selectedIds.size === store.filteredPairs.length ? 'Deselect all' : `Select all ${store.filteredPairs.length}` }}
+        {{ store.selectedIds.size === store.filteredPairs.length ? $t('training.table.deselectAll') : $t('training.table.selectAll') + ' ' + store.filteredPairs.length }}
       </button>
       <span class="text-[10px] text-text-muted">
-        {{ store.filteredPairs.length }} of {{ store.pairs.length }} pairs shown
+        {{ $t('training.table.pairsShown', { shown: store.filteredPairs.length, total: store.pairs.length }) }}
       </span>
     </div>
 
@@ -77,11 +77,9 @@ onMounted(() => {
       v-if="store.pairs.length === 0 && !store.loading"
       class="rounded-lg border border-border-default bg-surface-raised p-8 text-center"
     >
-      <p class="text-sm text-text-muted mb-2">No training data collected yet.</p>
+      <p class="text-sm text-text-muted mb-2">{{ $t('training.empty.title') }}</p>
       <p class="text-xs text-text-muted">
-        Training pairs are generated automatically when you use AI features in the
-        <RouterLink to="/tools" class="text-accent hover:underline">Tool Workshop</RouterLink>
-        (draft generation, code analysis, auto-mapping, and AI fix).
+        {{ $t('training.empty.description') }}
       </p>
     </div>
   </div>

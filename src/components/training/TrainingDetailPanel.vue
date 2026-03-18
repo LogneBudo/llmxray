@@ -72,7 +72,7 @@ const phaseColors: Record<string, string> = {
           :class="pair.accepted ? 'bg-success/10 text-success' : 'bg-error/10 text-error'"
           @click="emit('toggle-accepted', pair.id)"
         >
-          {{ pair.accepted ? 'Accepted' : 'Rejected' }}
+          {{ pair.accepted ? $t('training.detail.accepted') : $t('training.detail.rejected') }}
         </button>
         <button
           class="text-text-muted hover:text-text-primary transition-colors text-xs"
@@ -85,32 +85,32 @@ const phaseColors: Record<string, string> = {
 
     <!-- System Prompt -->
     <div>
-      <p class="mb-1 text-[10px] font-medium uppercase tracking-wider text-text-muted">System Prompt</p>
+      <p class="mb-1 text-[10px] font-medium uppercase tracking-wider text-text-muted">{{ $t('training.detail.systemPrompt') }}</p>
       <pre class="max-h-32 overflow-auto rounded-lg bg-surface p-3 text-xs text-text-secondary whitespace-pre-wrap font-mono">{{ pair.systemPrompt }}</pre>
     </div>
 
     <!-- User Prompt -->
     <div>
-      <p class="mb-1 text-[10px] font-medium uppercase tracking-wider text-text-muted">User Prompt</p>
+      <p class="mb-1 text-[10px] font-medium uppercase tracking-wider text-text-muted">{{ $t('training.detail.userPrompt') }}</p>
       <pre class="max-h-32 overflow-auto rounded-lg bg-surface p-3 text-xs text-text-secondary whitespace-pre-wrap font-mono">{{ pair.userPrompt }}</pre>
     </div>
 
     <!-- Reasoning (if captured from thinking models) -->
     <div v-if="pair.reasoning">
-      <p class="mb-1 text-[10px] font-medium uppercase tracking-wider text-accent">Reasoning</p>
+      <p class="mb-1 text-[10px] font-medium uppercase tracking-wider text-accent">{{ $t('training.detail.reasoning') }}</p>
       <pre class="max-h-40 overflow-auto rounded-lg bg-accent/5 border border-accent/20 p-3 text-xs text-text-secondary whitespace-pre-wrap font-mono italic">{{ pair.reasoning }}</pre>
     </div>
 
     <!-- AI Response -->
     <div>
       <div class="mb-1 flex items-center justify-between">
-        <p class="text-[10px] font-medium uppercase tracking-wider text-text-muted">AI Response</p>
+        <p class="text-[10px] font-medium uppercase tracking-wider text-text-muted">{{ $t('training.detail.aiResponse') }}</p>
         <button
           v-if="!editing"
           class="text-[10px] text-accent hover:underline"
           @click="startEdit"
         >
-          Edit response
+          {{ $t('training.detail.editResponse') }}
         </button>
       </div>
       <textarea
@@ -128,20 +128,20 @@ const phaseColors: Record<string, string> = {
           class="rounded-lg bg-accent px-3 py-1 text-xs text-white hover:bg-accent-hover transition-colors"
           @click="saveEdit"
         >
-          Save
+          {{ $t('common.actions.save') }}
         </button>
         <button
           class="rounded-lg px-3 py-1 text-xs text-text-muted hover:text-text-primary transition-colors"
           @click="cancelEdit"
         >
-          Cancel
+          {{ $t('common.actions.cancel') }}
         </button>
       </div>
     </div>
 
     <!-- Tags -->
     <div>
-      <p class="mb-1.5 text-[10px] font-medium uppercase tracking-wider text-text-muted">Tags</p>
+      <p class="mb-1.5 text-[10px] font-medium uppercase tracking-wider text-text-muted">{{ $t('training.detail.tags') }}</p>
       <TrainingTagEditor
         :tags="pair.tags ?? []"
         :all-tags="allTags"
@@ -156,7 +156,7 @@ const phaseColors: Record<string, string> = {
         :class="confirmDelete ? 'bg-error/10 text-error' : 'text-text-muted hover:text-error'"
         @click="handleDelete"
       >
-        {{ confirmDelete ? 'Confirm delete?' : 'Delete pair' }}
+        {{ confirmDelete ? $t('training.detail.confirmDelete') : $t('training.detail.deletePair') }}
       </button>
     </div>
   </div>

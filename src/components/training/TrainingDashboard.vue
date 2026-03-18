@@ -40,7 +40,7 @@ const phaseColors: Record<string, string> = {
   <div class="grid grid-cols-2 gap-3 lg:grid-cols-4">
     <!-- Total pairs + dataset size -->
     <div class="rounded-lg border border-border-default bg-surface-raised p-3 space-y-2">
-      <p class="text-[10px] text-text-muted uppercase tracking-wider">Training Pairs</p>
+      <p class="text-[10px] text-text-muted uppercase tracking-wider">{{ $t('training.dashboard.trainingPairs') }}</p>
       <p class="text-xl font-bold text-text-primary">{{ stats.total }}</p>
       <StorageGauge
         v-if="stats.estimatedBytes > 0"
@@ -53,12 +53,12 @@ const phaseColors: Record<string, string> = {
 
     <!-- Accepted / Rejected -->
     <div class="rounded-lg border border-border-default bg-surface-raised p-3 space-y-2">
-      <p class="text-[10px] text-text-muted uppercase tracking-wider">Acceptance Rate</p>
+      <p class="text-[10px] text-text-muted uppercase tracking-wider">{{ $t('training.dashboard.acceptanceRate') }}</p>
       <p class="text-xl font-bold text-text-primary">{{ acceptRate }}%</p>
       <div class="flex items-center gap-2 text-[10px]">
-        <span class="text-success">{{ stats.accepted }} accepted</span>
+        <span class="text-success">{{ stats.accepted }} {{ $t('training.dashboard.accepted') }}</span>
         <span class="text-text-muted">/</span>
-        <span class="text-error">{{ stats.rejected }} rejected</span>
+        <span class="text-error">{{ stats.rejected }} {{ $t('training.dashboard.rejected') }}</span>
       </div>
       <div v-if="stats.total > 0" class="h-1.5 rounded-full bg-surface-overlay overflow-hidden">
         <div
@@ -70,7 +70,7 @@ const phaseColors: Record<string, string> = {
 
     <!-- By Phase -->
     <div class="rounded-lg border border-border-default bg-surface-raised p-3 space-y-2">
-      <p class="text-[10px] text-text-muted uppercase tracking-wider">By Phase</p>
+      <p class="text-[10px] text-text-muted uppercase tracking-wider">{{ $t('training.dashboard.byPhase') }}</p>
       <div class="flex flex-wrap gap-1.5">
         <span
           v-for="p in phases"
@@ -85,7 +85,7 @@ const phaseColors: Record<string, string> = {
 
     <!-- Top Models -->
     <div class="rounded-lg border border-border-default bg-surface-raised p-3 space-y-2">
-      <p class="text-[10px] text-text-muted uppercase tracking-wider">Top Models</p>
+      <p class="text-[10px] text-text-muted uppercase tracking-wider">{{ $t('training.dashboard.topModels') }}</p>
       <div v-if="topModels.length > 0" class="space-y-1">
         <div
           v-for="[model, count] in topModels"
@@ -96,7 +96,7 @@ const phaseColors: Record<string, string> = {
           <span class="text-text-muted shrink-0">{{ count }}</span>
         </div>
       </div>
-      <p v-else class="text-[10px] text-text-muted italic">No data</p>
+      <p v-else class="text-[10px] text-text-muted italic">{{ $t('common.empty.noData') }}</p>
     </div>
   </div>
 </template>

@@ -1,21 +1,23 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import TabBar from '@/components/common/TabBar.vue'
 import SettingsGeneralTab from '@/components/settings/SettingsGeneralTab.vue'
 import SettingsModelsTab from '@/components/settings/SettingsModelsTab.vue'
 import SettingsIntegrationsTab from '@/components/settings/SettingsIntegrationsTab.vue'
 import SettingsAboutTab from '@/components/settings/SettingsAboutTab.vue'
 
+const { t } = useI18n()
 const route = useRoute()
 const activeTab = ref((route.query.tab as string) ?? 'general')
 
-const tabs = [
-  { key: 'general', label: 'General' },
-  { key: 'models', label: 'Models' },
-  { key: 'integrations', label: 'Integrations' },
-  { key: 'about', label: 'About' },
-]
+const tabs = computed(() => [
+  { key: 'general', label: t('settings.tabs.general') },
+  { key: 'models', label: t('settings.tabs.models') },
+  { key: 'integrations', label: t('settings.tabs.integrations') },
+  { key: 'about', label: t('settings.tabs.about') },
+])
 </script>
 
 <template>

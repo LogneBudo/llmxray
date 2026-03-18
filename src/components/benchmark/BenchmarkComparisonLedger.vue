@@ -96,7 +96,7 @@ function formatDuration(r: BenchmarkResult): string {
       <!-- Saved results list -->
       <div class="rounded-lg border border-border-default bg-surface-raised p-4">
         <h4 class="mb-3 text-xs font-medium uppercase tracking-wide text-text-muted">
-          Saved Results ({{ results.length }})
+          {{ $t('benchmark.comparison.savedResults') }} ({{ results.length }})
         </h4>
         <div v-if="results.length > 0" class="max-h-[400px] space-y-1.5 overflow-auto">
           <div
@@ -127,7 +127,7 @@ function formatDuration(r: BenchmarkResult): string {
                 {{ formatDate(r.completedAt) }} · ctx {{ r.contextSize }} · {{ formatDuration(r) }}
               </div>
               <div v-if="isIncomplete(r)" class="mt-0.5 text-[10px] text-warning">
-                Incomplete ({{ r.questionResults.length }}/{{ r.totalQuestions }})
+                {{ $t('benchmark.comparison.incomplete') }} ({{ r.questionResults.length }}/{{ r.totalQuestions }})
               </div>
             </div>
             <div class="text-right shrink-0">
@@ -139,21 +139,21 @@ function formatDuration(r: BenchmarkResult): string {
             <button
               v-if="isIncomplete(r)"
               class="ml-1 shrink-0 text-text-muted hover:text-accent transition-colors"
-              title="Resume incomplete benchmark"
+              :title="$t('benchmark.comparison.resumeIncomplete')"
               @click.stop="emit('resume', r)"
             >
               &#x25B6;
             </button>
             <button
               class="ml-1 shrink-0 text-text-muted hover:text-accent transition-colors"
-              title="View full details"
+              :title="$t('benchmark.comparison.viewDetails')"
               @click.stop="emit('viewDetails', r)"
             >
               &#x1F50D;
             </button>
             <button
               class="shrink-0 text-text-muted hover:text-error transition-colors"
-              title="Delete result"
+              :title="$t('benchmark.comparison.deleteResult')"
               @click.stop="benchmarkStore.deleteResult(r.id)"
             >
               ✕
@@ -161,10 +161,10 @@ function formatDuration(r: BenchmarkResult): string {
           </div>
         </div>
         <div v-else class="flex h-24 items-center justify-center text-xs text-text-muted">
-          No saved results yet
+          {{ $t('benchmark.comparison.noSavedResults') }}
         </div>
         <div v-if="results.length > 0" class="mt-2 text-[10px] text-text-muted text-center">
-          Click to select for comparison
+          {{ $t('benchmark.comparison.clickToCompare') }}
         </div>
       </div>
 

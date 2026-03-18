@@ -58,9 +58,9 @@ const settingsPills = computed(() => {
       />
 
       <div v-if="metrics" class="grid grid-cols-3 gap-2">
-        <MetricCard label="TTFT" :value="formatDuration(metrics.ttftMs)" />
-        <MetricCard label="Speed" :value="formatTps(metrics.tokensPerSecond)" />
-        <MetricCard label="Tokens" :value="metrics.completionTokenCount" />
+        <MetricCard :label="$t('comparison.metrics.ttft')" :value="formatDuration(metrics.ttftMs)" />
+        <MetricCard :label="$t('comparison.metrics.speed')" :value="formatTps(metrics.tokensPerSecond)" />
+        <MetricCard :label="$t('comparison.column.tokens')" :value="metrics.completionTokenCount" />
       </div>
     </div>
   </div>

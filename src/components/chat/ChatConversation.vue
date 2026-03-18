@@ -21,6 +21,10 @@ import type { ChatSettings } from '@/types/conversation'
 import type { ChatAttachment } from '@/types/attachment'
 import ChatSettingsPanel from './ChatSettingsPanel.vue'
 import ModelCapabilityIcons from '@/components/common/ModelCapabilityIcons.vue'
+import { useI18n } from 'vue-i18n'
+import { ChevronDown, Pencil, X, Clock, Settings } from 'lucide-vue-next'
+
+const { t } = useI18n()
 
 const router = useRouter()
 const conversationStore = useConversationStore()
@@ -76,12 +80,12 @@ function formatRelativeDate(timestamp: number): string {
   const now = Date.now()
   const diff = now - timestamp
   const minutes = Math.floor(diff / 60_000)
-  if (minutes < 1) return 'Just now'
-  if (minutes < 60) return `${minutes}m ago`
+  if (minutes < 1) return t('common.time.justNow')
+  if (minutes < 60) return t('dashboard.conversation.minutesAgo', { n: minutes })
   const hours = Math.floor(minutes / 60)
-  if (hours < 24) return `${hours}h ago`
+  if (hours < 24) return t('dashboard.conversation.hoursAgo', { n: hours })
   const days = Math.floor(hours / 24)
-  if (days < 7) return `${days}d ago`
+  if (days < 7) return t('dashboard.conversation.daysAgo', { n: days })
   return new Date(timestamp).toLocaleDateString()
 }
 const chatSettings = ref<ChatSettings>({
@@ -114,7 +118,7 @@ const latestSessionId = computed(() => {
 })
 
 // Pending name for conversations not yet created (pre-chat naming)
-const pendingName = ref('Untitled')
+const pendingName = ref(t('dashboard.conversation.untitled'))
 const editingName = ref(false)
 const editNameValue = ref('')
 
@@ -220,10 +224,10 @@ async function handleSend(text: string, attachments: ChatAttachment[] = []) {
   if (!convId) {
     convId = conversationStore.createConversation(selectedModel.value)
     // Apply pending name if user set one before chatting
-    if (pendingName.value !== 'Untitled') {
+    if (pendingName.value !== t('dashboard.conversation.untitled')) {
       conversationStore.renameConversation(convId, pendingName.value)
     }
-    pendingName.value = 'Untitled'
+    pendingName.value = t('dashboard.conversation.untitled')
   }
   // Update the conversation's model if user changed it
   const conv0 = conversationStore.conversations.get(convId)
@@ -408,7 +412,7 @@ function handleCancel() {
 
 function startNewChat() {
   conversationStore.setActiveConversation(null)
-  pendingName.value = 'Untitled'
+  pendingName.value = t('dashboard.conversation.untitled')
 }
 
 function openSession(sessionId: string) {
@@ -583,12 +587,12 @@ async function handleCommand(name: string, args: string) {
             @click="modelDropdownOpen = !modelDropdownOpen"
             @blur="closeDropdownDelayed"
           >
-            <span v-if="!selectedModel" class="text-text-muted">No models</span>
+            <span v-if="!selectedModel" class="text-text-muted">{{ $t('common.model.noModels') }}</span>
             <template v-else>
               <span>{{ selectedModel }}</span>
               <ModelCapabilityIcons :model-name="selectedModel" />
             </template>
-            <svg class="h-3 w-3 text-text-muted transition-transform" :class="modelDropdownOpen ? 'rotate-180' : ''" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            <ChevronDown class="h-3 w-3 text-text-muted transition-transform" :class="modelDropdownOpen ? 'rotate-180' : ''" />
           </button>
           <div
             v-if="modelDropdownOpen"
@@ -618,13 +622,11 @@ async function handleCommand(name: string, args: string) {
         <button
           v-else
           class="flex items-center gap-1 rounded px-1.5 py-0.5 text-xs text-text-muted hover:text-text-primary hover:bg-surface-overlay transition-colors truncate max-w-[200px]"
-          title="Click to rename"
+          :title="$t('dashboard.conversation.clickToRename')"
           @click="startEditName"
         >
           <span class="truncate">{{ displayName }}</span>
-          <svg class="h-2.5 w-2.5 shrink-0 opacity-0 group-hover:opacity-100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
-          </svg>
+          <Pencil class="h-2.5 w-2.5 shrink-0 opacity-0 group-hover:opacity-100" />
         </button>
       </div>
       <div class="flex items-center gap-2">
@@ -633,34 +635,29 @@ async function handleCommand(name: string, args: string) {
           class="rounded-lg px-3 py-1.5 text-xs text-accent hover:bg-surface-overlay transition-colors"
           @click="openSession(latestSessionId!)"
         >
-          View session details
+          {{ $t('dashboard.conversation.viewSessionDetails') }}
         </button>
         <button
           class="flex items-center gap-1 rounded-lg px-3 py-1.5 text-xs transition-colors"
           :class="showHistory ? 'bg-accent/10 text-accent' : 'text-text-secondary hover:bg-surface-overlay hover:text-text-primary'"
           @click="showHistory = !showHistory"
         >
-          <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 8v4l3 3" /><circle cx="12" cy="12" r="10" />
-          </svg>
-          <span>History</span>
+          <Clock class="h-3.5 w-3.5" />
+          <span>{{ $t('dashboard.conversation.history') }}</span>
         </button>
         <button
           class="rounded-lg px-3 py-1.5 text-xs text-text-secondary hover:bg-surface-overlay hover:text-text-primary transition-colors"
           @click="startNewChat"
         >
-          + New Chat
+          {{ $t('dashboard.conversation.newChatButton') }}
         </button>
         <button
           class="flex items-center gap-1 rounded-lg px-3 py-1.5 text-xs transition-colors"
           :class="showSettings ? 'bg-accent/10 text-accent' : 'text-text-secondary hover:bg-surface-overlay hover:text-text-primary'"
           @click="showSettings = !showSettings"
         >
-          <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
-            <circle cx="12" cy="12" r="3" />
-          </svg>
-          <span>Settings</span>
+          <Settings class="h-3.5 w-3.5" />
+          <span>{{ $t('dashboard.settings.chatSettings') }}</span>
         </button>
       </div>
     </div>
@@ -673,7 +670,7 @@ async function handleCommand(name: string, args: string) {
         class="w-64 shrink-0 border-r border-border-default bg-surface-raised flex flex-col"
       >
         <div class="flex items-center justify-between border-b border-border-default px-4 py-2">
-          <span class="text-xs font-medium text-text-secondary">Chat History</span>
+          <span class="text-xs font-medium text-text-secondary">{{ $t('dashboard.conversation.chatHistory') }}</span>
           <button
             class="text-text-muted hover:text-text-primary transition-colors text-xs"
             @click="showHistory = false"
@@ -686,7 +683,7 @@ async function handleCommand(name: string, args: string) {
             v-if="conversationStore.recentConversations.length === 0"
             class="px-2 py-4 text-[10px] text-text-muted italic text-center"
           >
-            No conversations yet.
+            {{ $t('dashboard.conversation.noConversationsYet') }}
           </p>
           <div v-else class="space-y-0.5">
             <div
@@ -719,21 +716,17 @@ async function handleCommand(name: string, args: string) {
                 <div class="hidden shrink-0 items-center gap-0.5 group-hover:flex">
                   <button
                     class="rounded p-0.5 text-text-muted hover:text-text-primary transition-colors"
-                    title="Rename"
+                    :title="$t('dashboard.conversation.rename')"
                     @click.stop="startHistoryRename(conv.id, conv.name)"
                   >
-                    <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
-                    </svg>
+                    <Pencil class="h-3 w-3" />
                   </button>
                   <button
                     class="rounded p-0.5 text-text-muted hover:text-error transition-colors"
-                    title="Delete"
+                    :title="$t('common.actions.delete')"
                     @click.stop="conversationStore.deleteConversation(conv.id)"
                   >
-                    <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
-                    </svg>
+                    <X class="h-3 w-3" />
                   </button>
                 </div>
               </template>
@@ -749,7 +742,7 @@ async function handleCommand(name: string, args: string) {
           v-if="sessionError"
           class="mx-4 mt-2 rounded-lg border border-error/30 bg-error/10 px-4 py-2.5 text-sm text-error"
         >
-          <span class="font-medium">Error:</span> {{ sessionError }}
+          <span class="font-medium">{{ $t('common.status.error') }}:</span> {{ sessionError }}
         </div>
         <ChatMessageList :messages="messages" />
         <ChatInput
@@ -768,7 +761,7 @@ async function handleCommand(name: string, args: string) {
         class="w-72 shrink-0 border-l border-border-default bg-surface-raised"
       >
         <div class="flex items-center justify-between border-b border-border-default px-4 py-2">
-          <span class="text-xs font-medium text-text-secondary">Chat Settings</span>
+          <span class="text-xs font-medium text-text-secondary">{{ $t('dashboard.settings.chatSettings') }}</span>
           <button
             class="text-text-muted hover:text-text-primary transition-colors text-xs"
             @click="showSettings = false"

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, markRaw, nextTick, watch, onMounted } from 'vue'
+import { Trash2 } from 'lucide-vue-next'
 import { VueFlow, useVueFlow } from '@vue-flow/core'
 import { Background } from '@vue-flow/background'
 import { Controls } from '@vue-flow/controls'
@@ -128,14 +129,14 @@ async function copySchema() {
       <!-- Header -->
       <div class="p-3 border-b border-border-default flex items-center justify-between">
         <div class="flex items-center gap-2">
-          <span class="text-sm font-semibold text-text-primary">Code Panel</span>
+          <span class="text-sm font-semibold text-text-primary">{{ $t('tools.canvas.codePanel') }}</span>
           <span class="sync-dot" :class="codeSyncStatus"></span>
         </div>
         <button
           class="text-xs text-text-muted hover:text-text-primary transition-colors bg-transparent border-none cursor-pointer"
           @click="codePanelOpen = false"
         >
-          Close
+          {{ $t('tools.canvas.close') }}
         </button>
       </div>
 
@@ -150,7 +151,7 @@ async function copySchema() {
               : 'bg-transparent text-text-muted'
           "
         >
-          Source
+          {{ $t('tools.canvas.source') }}
         </button>
         <button
           @click="activeTab = 'schema'"
@@ -161,7 +162,7 @@ async function copySchema() {
               : 'bg-transparent text-text-muted'
           "
         >
-          Schema
+          {{ $t('tools.canvas.schema') }}
         </button>
       </div>
 
@@ -179,12 +180,12 @@ async function copySchema() {
       <!-- Schema viewer -->
       <div v-show="activeTab === 'schema'" class="flex-1 flex flex-col p-3 gap-2 min-h-0">
         <div class="flex items-center justify-between">
-          <span class="text-xs text-text-muted">OpenAI-compatible tools manifest</span>
+          <span class="text-xs text-text-muted">{{ $t('tools.canvas.schemaManifest') }}</span>
           <button
             @click="copySchema"
             class="px-2 py-1 text-xs rounded bg-surface-overlay text-text-secondary hover:bg-surface-raised transition-colors cursor-pointer border-none"
           >
-            Copy
+            {{ $t('tools.canvas.copy') }}
           </button>
         </div>
         <div class="flex-1 overflow-auto">
@@ -199,7 +200,7 @@ async function copySchema() {
 
       <!-- Warnings -->
       <div v-if="codeWarnings.length > 0" class="p-3 border-t border-border-default">
-        <label class="text-xs text-warning uppercase tracking-wider">Warnings</label>
+        <label class="text-xs text-warning uppercase tracking-wider">{{ $t('tools.canvas.warnings') }}</label>
         <ul class="mt-1 text-xs text-warning/80 list-disc pl-4 space-y-0.5">
           <li v-for="(w, i) in codeWarnings" :key="i">{{ w }}</li>
         </ul>
@@ -239,20 +240,20 @@ async function copySchema() {
       >
         <div class="text-center pointer-events-auto">
           <div class="text-text-muted text-sm mb-4">
-            No tools yet. Create your first tool or start from a template.
+            {{ $t('tools.canvas.emptyState') }}
           </div>
           <div class="flex items-center gap-3">
             <button
               @click="handleAddTool"
               class="px-4 py-2 rounded-lg bg-accent text-surface-base font-semibold text-sm hover:opacity-90 transition-opacity cursor-pointer border-none"
             >
-              + New Tool
+              {{ $t('tools.canvas.newTool') }}
             </button>
             <button
               @click="emit('add-template')"
               class="px-4 py-2 rounded-lg border border-dashed border-border-default text-text-muted text-sm font-medium hover:border-accent hover:text-text-primary transition-colors cursor-pointer bg-transparent"
             >
-              From Template...
+              {{ $t('tools.canvas.fromTemplate') }}
             </button>
           </div>
         </div>
@@ -276,44 +277,44 @@ async function copySchema() {
         <button
           @click="exportTrainingData()"
           class="px-3 py-1.5 rounded-lg bg-surface-overlay/90 text-text-secondary text-xs font-medium hover:bg-surface-overlay transition-colors cursor-pointer border border-border-default shadow-lg"
-          title="Export training data (JSONL)"
+          :title="$t('tools.canvas.exportTitle')"
         >
-          Export
+          {{ $t('tools.canvas.export') }}
         </button>
         <button
           v-if="!codePanelOpen"
           @click="codePanelOpen = true"
           class="px-3 py-1.5 rounded-lg bg-surface-overlay/90 text-text-secondary text-xs font-medium hover:bg-surface-overlay transition-colors cursor-pointer border border-border-default shadow-lg"
         >
-          Code Panel
+          {{ $t('tools.canvas.codePanel') }}
         </button>
         <button
           @click="libraryPanelOpen = !libraryPanelOpen"
           class="px-3 py-1.5 rounded-lg bg-surface-overlay/90 text-xs font-medium hover:bg-surface-overlay transition-colors cursor-pointer border border-border-default shadow-lg"
           :class="libraryPanelOpen ? 'text-accent' : 'text-text-secondary'"
         >
-          Tool Library
+          {{ $t('tools.canvas.toolLibrary') }}
         </button>
         <button
           v-if="flowNodes.length > 0"
           @click="showClearConfirm = true"
           class="px-3 py-1.5 rounded-lg bg-surface-overlay/90 text-text-secondary text-xs font-medium hover:bg-surface-overlay hover:text-error transition-colors cursor-pointer border border-border-default shadow-lg"
-          title="Remove all tools from canvas"
+          :title="$t('tools.canvas.clearAllTitle')"
         >
-          Clear All
+          {{ $t('tools.canvas.clearAll') }}
         </button>
         <button
           @click="emit('add-template')"
           class="px-3 py-1.5 rounded-lg bg-surface-overlay/90 text-text-secondary text-xs font-medium hover:bg-surface-overlay transition-colors cursor-pointer border border-dashed border-border-default shadow-lg"
         >
-          From Template...
+          {{ $t('tools.canvas.fromTemplate') }}
         </button>
         <button
           v-if="flowNodes.length > 0"
           @click="handleAddTool"
           class="px-3 py-1.5 rounded-lg bg-accent/90 text-surface-base font-semibold text-xs hover:bg-accent transition-colors cursor-pointer border-none shadow-lg"
         >
-          + New Tool
+          {{ $t('tools.canvas.newTool') }}
         </button>
       </div>
 
@@ -323,22 +324,22 @@ async function copySchema() {
         class="absolute inset-0 z-50 flex items-center justify-center bg-black/40"
       >
         <div class="rounded-xl bg-surface-raised border border-border-default p-6 shadow-2xl max-w-xs text-center">
-          <p class="text-sm text-text-primary mb-1 font-semibold">Clear all tools?</p>
+          <p class="text-sm text-text-primary mb-1 font-semibold">{{ $t('tools.canvas.clearAllConfirm') }}</p>
           <p class="text-xs text-text-muted mb-4">
-            This will remove all {{ flowNodes.length }} tool(s) from the canvas. This cannot be undone.
+            {{ $t('tools.canvas.clearAllWarning', { count: flowNodes.length }) }}
           </p>
           <div class="flex items-center justify-center gap-3">
             <button
               @click="showClearConfirm = false"
               class="px-4 py-1.5 rounded-lg text-xs text-text-secondary bg-surface-overlay hover:bg-surface-raised transition-colors cursor-pointer border border-border-default"
             >
-              Cancel
+              {{ $t('tools.canvas.cancel') }}
             </button>
             <button
               @click="confirmClearAll"
               class="px-4 py-1.5 rounded-lg text-xs text-white bg-error hover:opacity-90 transition-opacity cursor-pointer border-none"
             >
-              Delete All
+              {{ $t('tools.canvas.deleteAll') }}
             </button>
           </div>
         </div>
@@ -352,12 +353,12 @@ async function copySchema() {
     >
       <!-- Header -->
       <div class="p-3 border-b border-border-default flex items-center justify-between">
-        <span class="text-sm font-semibold text-text-primary">Tool Library</span>
+        <span class="text-sm font-semibold text-text-primary">{{ $t('tools.canvas.toolLibrary') }}</span>
         <button
           class="text-xs text-text-muted hover:text-text-primary transition-colors bg-transparent border-none cursor-pointer"
           @click="libraryPanelOpen = false"
         >
-          Close
+          {{ $t('tools.canvas.close') }}
         </button>
       </div>
 
@@ -372,7 +373,7 @@ async function copySchema() {
           <button
             class="h-4 w-7 shrink-0 rounded-full transition-colors"
             :class="tool.enabled ? 'bg-accent' : 'bg-surface-overlay'"
-            :title="tool.enabled ? 'Disable for chat' : 'Enable for chat'"
+            :title="tool.enabled ? $t('tools.canvas.disableForChat') : $t('tools.canvas.enableForChat')"
             @click="workshopStore.toggleEnabled(tool.id)"
           >
             <span
@@ -397,24 +398,21 @@ async function copySchema() {
           <!-- Delete button -->
           <button
             class="shrink-0 text-text-muted hover:text-error transition-colors bg-transparent border-none cursor-pointer"
-            title="Delete tool"
+            :title="$t('tools.canvas.deleteToolTitle')"
             @click="handleRemoveTool(tool.id)"
           >
-            <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="3 6 5 6 21 6" />
-              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-            </svg>
+            <Trash2 class="h-3.5 w-3.5" />
           </button>
         </div>
 
         <p v-if="workshopStore.allTools.length === 0" class="px-3 py-4 text-xs text-text-muted text-center">
-          No tools yet
+          {{ $t('tools.canvas.noToolsYet') }}
         </p>
       </div>
 
       <!-- Footer stats -->
       <div class="p-3 border-t border-border-default text-xs text-text-muted">
-        {{ workshopStore.enabledTools.length }}/{{ workshopStore.allTools.length }} enabled for chat
+        {{ workshopStore.enabledTools.length }}/{{ workshopStore.allTools.length }} {{ $t('tools.canvas.enabledForChat') }}
       </div>
     </div>
   </div>

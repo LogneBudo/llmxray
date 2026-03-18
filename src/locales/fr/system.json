@@ -1,0 +1,94 @@
+{
+  "title": "Mon syst\u00e8me",
+  "subtitle": "Mat\u00e9riel, environnement d'ex\u00e9cution et aper\u00e7u de l'inf\u00e9rence",
+  "refresh": "Actualiser",
+  "detecting": "D\u00e9tection du mat\u00e9riel...",
+  "detectingDetail": "Interrogation du CPU, de la m\u00e9moire, du GPU et du stockage",
+  "unavailable": "D\u00e9tection du mat\u00e9riel indisponible. Veuillez red\u00e9marrer le serveur de d\u00e9veloppement pour activer le plugin d'information syst\u00e8me.",
+  "os": {
+    "title": "Syst\u00e8me d'exploitation",
+    "os": "SE",
+    "version": "Version",
+    "build": "Build",
+    "architecture": "Architecture"
+  },
+  "device": {
+    "title": "Appareil",
+    "name": "Nom",
+    "manufacturer": "Fabricant",
+    "model": "Mod\u00e8le",
+    "family": "Famille"
+  },
+  "cpu": {
+    "title": "Processeur",
+    "cpu": "CPU",
+    "physicalCores": "C\u0153urs physiques",
+    "logicalProcessors": "Processeurs logiques",
+    "maxClock": "Fr\u00e9quence maximale"
+  },
+  "memory": {
+    "title": "M\u00e9moire",
+    "totalRam": "RAM totale",
+    "available": "Disponible",
+    "inUse": "Utilis\u00e9e"
+  },
+  "gpu": {
+    "title": "Graphiques",
+    "gpu": "GPU",
+    "adapterRam": "RAM de l'adaptateur",
+    "sharedNotReported": "Partag\u00e9e / Non rapport\u00e9e",
+    "driver": "Pilote"
+  },
+  "storage": {
+    "title": "Stockage",
+    "drive": "Disque",
+    "total": "Total",
+    "free": "Libre",
+    "used": "Utilis\u00e9"
+  },
+  "browserStorage": {
+    "title": "Stockage navigateur",
+    "persistent": "Persistant",
+    "bestEffort": "Au mieux",
+    "scanning": "Analyse en cours...",
+    "indexedDbQuota": "Quota IndexedDB",
+    "totalRecords": "{count} enregistrements au total dans {databases} bases de donn\u00e9es",
+    "clearAll": "Effacer toutes les donn\u00e9es",
+    "empty": "Vide"
+  },
+  "ollama": {
+    "title": "Environnement Ollama",
+    "status": "Statut",
+    "version": "Version",
+    "installedModels": "Mod\u00e8les install\u00e9s",
+    "totalModelStorage": "Stockage total des mod\u00e8les",
+    "modelsLoaded": "Mod\u00e8les charg\u00e9s"
+  },
+  "inference": {
+    "title": "Inf\u00e9rence",
+    "thisSession": "cette session",
+    "noSessions": "Aucune session d'inf\u00e9rence pour le moment.",
+    "sessions": "Sessions",
+    "avgSpeed": "Vitesse moyenne",
+    "tokensGenerated": "Tokens g\u00e9n\u00e9r\u00e9s",
+    "avgTtft": "TTFT moyen",
+    "modelsUsed": "Mod\u00e8les utilis\u00e9s"
+  },
+  "activeModels": {
+    "title": "Mod\u00e8les actifs",
+    "noModels": "Aucun mod\u00e8le charg\u00e9 en m\u00e9moire. Envoyez un message pour en charger un.",
+    "vram": "VRAM",
+    "ram": "RAM",
+    "total": "Total",
+    "ctx": "Ctx"
+  },
+  "installedModels": {
+    "title": "Mod\u00e8les install\u00e9s",
+    "noModels": "Aucun mod\u00e8le install\u00e9.",
+    "model": "Mod\u00e8le",
+    "family": "Famille",
+    "parameters": "Param\u00e8tres",
+    "quantization": "Quantification",
+    "size": "Taille"
+  }
+}

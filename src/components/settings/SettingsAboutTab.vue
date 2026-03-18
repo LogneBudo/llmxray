@@ -8,16 +8,16 @@
         <span class="text-2xl font-bold text-accent">xR</span>
         <div>
           <h3 class="text-sm font-semibold text-text-primary">LLMxRay</h3>
-          <p class="text-xs text-text-muted">Local LLM Observatory</p>
+          <p class="text-xs text-text-muted">{{ $t('settings.about.localLlmObservatory') }}</p>
         </div>
       </div>
 
       <div class="grid grid-cols-[auto_1fr] gap-y-2 gap-x-4 text-xs">
-        <span class="text-text-muted">Version</span>
+        <span class="text-text-muted">{{ $t('settings.about.version') }}</span>
         <span class="text-text-primary">1.0.0</span>
-        <span class="text-text-muted">License</span>
+        <span class="text-text-muted">{{ $t('settings.about.license') }}</span>
         <span class="text-text-primary">Apache 2.0</span>
-        <span class="text-text-muted">Repository</span>
+        <span class="text-text-muted">{{ $t('settings.about.repository') }}</span>
         <a
           href="https://github.com/LogneBudo/llmxray"
           target="_blank"
@@ -30,7 +30,7 @@
     </div>
 
     <div class="rounded-lg border border-border-default bg-surface-raised p-5 space-y-3">
-      <h3 class="text-sm font-medium text-text-primary">Tech Stack</h3>
+      <h3 class="text-sm font-medium text-text-primary">{{ $t('settings.about.techStack') }}</h3>
       <div class="grid grid-cols-2 gap-2 text-xs">
         <div class="rounded-lg bg-surface p-2.5">
           <p class="font-medium text-text-primary">Vue 3.5</p>

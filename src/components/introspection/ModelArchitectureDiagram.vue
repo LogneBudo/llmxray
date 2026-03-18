@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { Info } from 'lucide-vue-next'
 import type { ModelArchitecture } from '@/types/introspection'
 import { useModelStore } from '@/stores/model-store'
 import { resolveCapabilities } from '@/utils/capability-defs'
@@ -77,9 +78,7 @@ function hideTip() {
           @mouseenter="showTip('cap-' + cap.key)"
           @mouseleave="hideTip"
         >
-          <svg v-if="cap.svg" class="h-3.5 w-3.5 shrink-0" :class="cap.color" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path :d="cap.svg" />
-          </svg>
+          <component :is="cap.icon" v-if="cap.icon" class="h-3.5 w-3.5 shrink-0" :class="cap.color" />
           <span class="text-xs font-medium" :class="cap.color">{{ cap.label }}</span>
           <div
             v-if="activeTooltip === 'cap-' + cap.key"
@@ -97,7 +96,7 @@ function hideTip() {
       <div class="relative rounded-lg bg-surface p-3" @mouseenter="showTip('family')" @mouseleave="hideTip">
         <div class="flex items-center gap-1 text-xs text-text-muted">
           Family
-          <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" /></svg>
+          <Info class="h-3 w-3" />
         </div>
         <div class="text-sm font-medium text-text-primary">{{ architecture.family }}</div>
         <div
@@ -111,7 +110,7 @@ function hideTip() {
       <div class="relative rounded-lg bg-surface p-3" @mouseenter="showTip('params')" @mouseleave="hideTip">
         <div class="flex items-center gap-1 text-xs text-text-muted">
           Parameters
-          <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" /></svg>
+          <Info class="h-3 w-3" />
         </div>
         <div class="text-sm font-medium text-text-primary">{{ formatParamCount(architecture.totalParameters) }}</div>
         <div
@@ -125,7 +124,7 @@ function hideTip() {
       <div class="relative rounded-lg bg-surface p-3" @mouseenter="showTip('ctx')" @mouseleave="hideTip">
         <div class="flex items-center gap-1 text-xs text-text-muted">
           Context Length
-          <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" /></svg>
+          <Info class="h-3 w-3" />
         </div>
         <div class="text-sm font-medium text-text-primary">{{ architecture.contextLength.toLocaleString() }}</div>
         <div
@@ -139,7 +138,7 @@ function hideTip() {
       <div class="relative rounded-lg bg-surface p-3" @mouseenter="showTip('quant')" @mouseleave="hideTip">
         <div class="flex items-center gap-1 text-xs text-text-muted">
           Quantization
-          <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" /></svg>
+          <Info class="h-3 w-3" />
         </div>
         <div class="text-sm font-medium text-text-primary">{{ architecture.quantization }}</div>
         <div
@@ -157,7 +156,7 @@ function hideTip() {
       <div class="flex items-center gap-1 mb-3">
         <h4 class="text-xs font-medium text-text-muted uppercase tracking-wide">Layer Structure ({{ architecture.blockCount }} blocks)</h4>
         <div class="relative" @mouseenter="showTip('layers')" @mouseleave="hideTip">
-          <svg class="h-3 w-3 text-text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" /></svg>
+          <Info class="h-3 w-3 text-text-muted" />
           <div
             v-if="activeTooltip === 'layers'"
             class="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-64 rounded-lg border border-border-default bg-surface-overlay px-3 py-2 text-xs text-text-secondary shadow-lg z-10"
@@ -193,7 +192,7 @@ function hideTip() {
     <div class="grid grid-cols-2 gap-3 text-xs">
       <div class="relative rounded-lg bg-surface p-3" @mouseenter="showTip('aheads')" @mouseleave="hideTip">
         <span class="text-text-muted">Attention Heads</span>
-        <svg class="inline ml-1 h-3 w-3 text-text-muted align-text-top" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" /></svg>
+        <Info class="inline ml-1 h-3 w-3 text-text-muted align-text-top" />
         <span class="ml-1 text-text-primary">{{ architecture.attentionHeadCount }}</span>
         <div
           v-if="activeTooltip === 'aheads'"
@@ -205,7 +204,7 @@ function hideTip() {
       </div>
       <div class="relative rounded-lg bg-surface p-3" @mouseenter="showTip('kvheads')" @mouseleave="hideTip">
         <span class="text-text-muted">KV Heads</span>
-        <svg class="inline ml-1 h-3 w-3 text-text-muted align-text-top" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" /></svg>
+        <Info class="inline ml-1 h-3 w-3 text-text-muted align-text-top" />
         <span class="ml-1 text-text-primary">{{ architecture.kvHeadCount }}</span>
         <div
           v-if="activeTooltip === 'kvheads'"
@@ -217,7 +216,7 @@ function hideTip() {
       </div>
       <div class="relative rounded-lg bg-surface p-3" @mouseenter="showTip('embdim')" @mouseleave="hideTip">
         <span class="text-text-muted">Embedding Dim</span>
-        <svg class="inline ml-1 h-3 w-3 text-text-muted align-text-top" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" /></svg>
+        <Info class="inline ml-1 h-3 w-3 text-text-muted align-text-top" />
         <span class="ml-1 text-text-primary">{{ architecture.embeddingLength }}</span>
         <div
           v-if="activeTooltip === 'embdim'"
@@ -229,7 +228,7 @@ function hideTip() {
       </div>
       <div class="relative rounded-lg bg-surface p-3" @mouseenter="showTip('ffndim')" @mouseleave="hideTip">
         <span class="text-text-muted">FFN Dim</span>
-        <svg class="inline ml-1 h-3 w-3 text-text-muted align-text-top" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" /></svg>
+        <Info class="inline ml-1 h-3 w-3 text-text-muted align-text-top" />
         <span class="ml-1 text-text-primary">{{ architecture.feedForwardLength }}</span>
         <div
           v-if="activeTooltip === 'ffndim'"

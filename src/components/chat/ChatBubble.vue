@@ -109,7 +109,7 @@ const formattedTime = computed(() => {
 
         <!-- Truncation warning -->
         <div v-if="wasTruncated && !message.isStreaming" class="mt-1 text-[10px] text-warning">
-          Response was truncated — increase num_predict in settings for longer responses
+          {{ $t('dashboard.bubble.truncatedWarning') }}
         </div>
       </template>
 
@@ -118,11 +118,11 @@ const formattedTime = computed(() => {
         v-if="!isUser && !message.isStreaming && sessionMetrics"
         class="mt-1.5 flex items-center gap-2 text-[10px] text-text-muted"
       >
-        <span>{{ sessionMetrics.completionTokenCount }} tokens</span>
+        <span>{{ sessionMetrics.completionTokenCount }} {{ $t('dashboard.bubble.tokens') }}</span>
         <span class="opacity-40">·</span>
-        <span>{{ sessionMetrics.tokensPerSecond.toFixed(1) }} tok/s</span>
+        <span>{{ sessionMetrics.tokensPerSecond.toFixed(1) }} {{ $t('dashboard.bubble.tokPerSec') }}</span>
         <span class="opacity-40">·</span>
-        <span>{{ sessionMetrics.ttftMs < 1000 ? sessionMetrics.ttftMs.toFixed(0) + 'ms' : (sessionMetrics.ttftMs / 1000).toFixed(1) + 's' }} TTFT</span>
+        <span>{{ sessionMetrics.ttftMs < 1000 ? sessionMetrics.ttftMs.toFixed(0) + 'ms' : (sessionMetrics.ttftMs / 1000).toFixed(1) + 's' }} {{ $t('dashboard.bubble.ttft') }}</span>
       </div>
 
       <div class="mt-1" :class="isUser ? 'text-right' : ''">

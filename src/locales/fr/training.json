@@ -1,0 +1,63 @@
+{
+  "title": "Entra\u00eenement IA",
+  "subtitle": "Parcourez, organisez et exportez vos donn\u00e9es d'entra\u00eenement depuis l'Atelier d'outils.",
+  "dashboard": {
+    "totalPairs": "Total de paires",
+    "accepted": "accept\u00e9es",
+    "rejected": "rejet\u00e9es",
+    "pending": "En attente",
+    "trainingPairs": "Paires d'entra\u00eenement",
+    "acceptanceRate": "Taux d'acceptation",
+    "byPhase": "Par phase",
+    "topModels": "Meilleurs mod\u00e8les"
+  },
+  "filters": {
+    "search": "Rechercher...",
+    "searchPrompts": "Rechercher des prompts...",
+    "model": "Mod\u00e8le",
+    "toolName": "Nom de l'outil",
+    "tag": "\u00c9tiquette",
+    "status": "Statut",
+    "allModels": "Tous les mod\u00e8les",
+    "allTools": "Tous les outils",
+    "allTags": "Toutes les \u00e9tiquettes",
+    "allStatuses": "Tous les statuts"
+  },
+  "bulk": {
+    "selected": "{count} s\u00e9lectionn\u00e9(s)",
+    "export": "Exporter",
+    "exportJsonl": "Exporter JSONL",
+    "markAccepted": "Marquer accept\u00e9",
+    "markRejected": "Marquer rejet\u00e9",
+    "addTag": "Ajouter une \u00e9tiquette",
+    "tagPlaceholder": "Nom de l'\u00e9tiquette...",
+    "delete": "Supprimer",
+    "confirm": "Confirmer ?",
+    "deselectAll": "D\u00e9s\u00e9lectionner"
+  },
+  "tags": {
+    "addPlaceholder": "Ajouter une \u00e9tiquette..."
+  },
+  "table": {
+    "selectAll": "Tout s\u00e9lectionner",
+    "deselectAll": "Tout d\u00e9s\u00e9lectionner",
+    "pairsShown": "{shown} sur {total} paires affich\u00e9es",
+    "noResults": "Aucune paire d'entra\u00eenement ne correspond \u00e0 vos filtres."
+  },
+  "detail": {
+    "accepted": "Accept\u00e9",
+    "rejected": "Rejet\u00e9",
+    "systemPrompt": "Prompt syst\u00e8me",
+    "userPrompt": "Prompt utilisateur",
+    "reasoning": "Raisonnement",
+    "aiResponse": "R\u00e9ponse IA",
+    "editResponse": "Modifier la r\u00e9ponse",
+    "tags": "\u00c9tiquettes",
+    "deletePair": "Supprimer la paire",
+    "confirmDelete": "Confirmer la suppression ?"
+  },
+  "empty": {
+    "title": "Aucune donn\u00e9e d'entra\u00eenement collect\u00e9e pour le moment.",
+    "description": "Les paires d'entra\u00eenement sont g\u00e9n\u00e9r\u00e9es automatiquement lorsque vous utilisez les fonctionnalit\u00e9s IA dans l'Atelier d'outils (g\u00e9n\u00e9ration de brouillon, analyse de code, auto-mapping et correction IA)."
+  }
+}

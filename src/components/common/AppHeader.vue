@@ -1,26 +1,35 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
 import { computed, ref, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useThemeStore } from '@/stores/theme-store'
+import { useLocaleStore } from '@/stores/locale-store'
+import { Sun, Moon } from 'lucide-vue-next'
 
 const route = useRoute()
+const { t } = useI18n()
 const themeStore = useThemeStore()
+const localeStore = useLocaleStore()
+
+function toggleLocale() {
+  localeStore.setLocale(localeStore.locale === 'en' ? 'fr' : 'en')
+}
 
 const pageTitle = computed(() => {
   const name = route.name as string | undefined
   const titles: Record<string, string> = {
-    dashboard: 'Chat Diagnostics',
-    session: 'Session',
-    comparison: 'Compare Models',
-    embeddings: 'Embeddings',
-    rag: 'Knowledge Base',
-    models: 'Models',
-    benchmark: 'Benchmark',
-    tools: 'Tool Workshop',
-    system: 'My System',
-    settings: 'Settings',
+    dashboard: t('common.header.chatDiagnostics'),
+    session: t('common.header.session'),
+    comparison: t('common.header.compareModels'),
+    embeddings: t('common.header.embeddings'),
+    rag: t('common.header.knowledgeBase'),
+    models: t('common.header.models'),
+    benchmark: t('common.header.benchmark'),
+    tools: t('common.header.toolWorkshop'),
+    system: t('common.header.mySystem'),
+    settings: t('common.header.settings'),
   }
-  return titles[name ?? ''] ?? 'LLMxRay'
+  return titles[name ?? ''] ?? t('common.header.default')
 })
 
 const connected = ref(false)
@@ -44,7 +53,7 @@ onMounted(() => {
   <header class="flex h-14 items-center justify-between border-b border-border-default bg-surface-raised px-6">
     <h1 class="text-lg font-semibold text-text-primary">
       <template v-if="route.name === 'session'">
-        <RouterLink to="/" class="text-text-secondary hover:text-accent transition-colors">Chat Diagnostics</RouterLink>
+        <RouterLink to="/" class="text-text-secondary hover:text-accent transition-colors">{{ $t('common.header.chatDiagnostics') }}</RouterLink>
         <span class="mx-2 text-text-muted">/</span>
         <span>Session {{ (route.params.id as string)?.slice(0, 8) }}</span>
       </template>
@@ -57,14 +66,17 @@ onMounted(() => {
         :title="`Theme: ${themeStore.mode}`"
         @click="themeStore.setMode(themeStore.resolvedTheme === 'dark' ? 'light' : 'dark')"
       >
-        <!-- Sun icon (shown in dark mode) -->
-        <svg v-if="themeStore.resolvedTheme === 'dark'" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-        </svg>
-        <!-- Moon icon (shown in light mode) -->
-        <svg v-else class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-        </svg>
+        <Sun v-if="themeStore.resolvedTheme === 'dark'" class="h-4 w-4" />
+        <Moon v-else class="h-4 w-4" />
+      </button>
+
+      <!-- Language toggle -->
+      <button
+        class="flex items-center justify-center rounded-lg px-1.5 py-1 text-xs font-medium text-text-secondary hover:bg-surface-overlay hover:text-text-primary transition-colors"
+        :title="$t('settings.general.language')"
+        @click="toggleLocale"
+      >
+        {{ localeStore.locale === 'fr' ? '\uD83C\uDDEB\uD83C\uDDF7' : '\uD83C\uDDEC\uD83C\uDDE7' }}
       </button>
 
       <div class="flex items-center gap-2 text-sm text-text-secondary">
@@ -72,7 +84,7 @@ onMounted(() => {
           class="inline-block h-2 w-2 rounded-full"
           :class="connected ? 'bg-success' : 'bg-error'"
         />
-        {{ connected ? 'Ollama Connected' : 'Ollama Disconnected' }}
+        {{ connected ? $t('common.status.ollamaConnected') : $t('common.status.ollamaDisconnected') }}
       </div>
     </div>
   </header>

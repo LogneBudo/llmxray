@@ -1,0 +1,108 @@
+{
+  "nav": {
+    "chatDiagnostics": "Diagnostic de chat",
+    "compare": "Comparer",
+    "embeddings": "Embeddings",
+    "knowledgeBase": "Base de connaissances",
+    "toolWorkshop": "Atelier d'outils",
+    "aiTraining": "Entra\u00eenement IA",
+    "models": "Mod\u00e8les",
+    "benchmark": "Benchmark",
+    "mySystem": "Mon syst\u00e8me",
+    "settings": "Paramètres",
+    "tagline": "Observatoire local de LLM"
+  },
+  "header": {
+    "chatDiagnostics": "Diagnostic de chat",
+    "session": "Session",
+    "compareModels": "Comparer les modèles",
+    "embeddings": "Embeddings",
+    "knowledgeBase": "Base de connaissances",
+    "models": "Modèles",
+    "benchmark": "Benchmark",
+    "toolWorkshop": "Atelier d'outils",
+    "mySystem": "Mon système",
+    "settings": "Paramètres",
+    "default": "LLMxRay"
+  },
+  "status": {
+    "ollamaConnected": "Ollama connect\u00e9",
+    "ollamaDisconnected": "Ollama d\u00e9connect\u00e9",
+    "loading": "Chargement...",
+    "processing": "Traitement...",
+    "ready": "Pr\u00eat",
+    "error": "Erreur",
+    "success": "Succ\u00e8s",
+    "pending": "En attente",
+    "running": "En cours",
+    "completed": "Termin\u00e9",
+    "failed": "\u00c9chou\u00e9",
+    "streaming": "Streaming",
+    "idle": "Inactif",
+    "connected": "Connect\u00e9",
+    "disconnected": "D\u00e9connect\u00e9"
+  },
+  "theme": {
+    "dark": "Sombre",
+    "light": "Clair",
+    "system": "Syst\u00e8me",
+    "themeLabel": "Th\u00e8me"
+  },
+  "locale": {
+    "language": "Langue",
+    "english": "Anglais",
+    "french": "Fran\u00e7ais"
+  },
+  "actions": {
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "close": "Fermer",
+    "copy": "Copier",
+    "edit": "Modifier",
+    "test": "Tester",
+    "refresh": "Actualiser",
+    "clear": "Effacer",
+    "send": "Envoyer",
+    "stop": "Arr\u00eater",
+    "add": "Ajouter",
+    "remove": "Retirer",
+    "confirm": "Confirmer",
+    "back": "Retour",
+    "next": "Suivant",
+    "submit": "Soumettre",
+    "reset": "R\u00e9initialiser",
+    "export": "Exporter",
+    "import": "Importer"
+  },
+  "time": {
+    "justNow": "\u00c0 l'instant",
+    "minutesAgo": "Il y a {count} min",
+    "hoursAgo": "Il y a {count} h",
+    "daysAgo": "Il y a {count} j",
+    "monthsAgo": "Il y a {count} mois"
+  },
+  "units": {
+    "tokens": "tokens",
+    "tokensPerSec": "tokens/s",
+    "milliseconds": "ms",
+    "seconds": "s",
+    "bytes": "o",
+    "kilobytes": "Ko",
+    "megabytes": "Mo",
+    "gigabytes": "Go",
+    "percent": "%",
+    "dimensions": "dimensions"
+  },
+  "model": {
+    "selectModel": "S\u00e9lectionner un mod\u00e8le",
+    "noModels": "Aucun mod\u00e8le disponible",
+    "loadingModels": "Chargement des mod\u00e8les...",
+    "pullModel": "T\u00e9l\u00e9charger un mod\u00e8le"
+  },
+  "empty": {
+    "noData": "Aucune donn\u00e9e disponible",
+    "noResults": "Aucun r\u00e9sultat trouv\u00e9",
+    "nothingHere": "Rien ici pour le moment"
+  }
+}

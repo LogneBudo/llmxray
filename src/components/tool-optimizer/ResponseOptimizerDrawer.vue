@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
+import { X } from 'lucide-vue-next'
 import type { ToolCallEntry } from '@/types/toolcall'
 import { useToolWorkshopStore } from '@/stores/tool-workshop-store'
 import { optimizeToolCode } from '@/services/optimize-tool-code'
@@ -155,9 +156,7 @@ function close() {
             class="rounded p-1 text-text-muted hover:bg-surface-overlay hover:text-text-primary transition-colors"
             @click="close"
           >
-            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
+            <X class="h-5 w-5" />
           </button>
         </div>
 

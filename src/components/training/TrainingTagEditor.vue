@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { X } from 'lucide-vue-next'
 
 defineProps<{
   tags: string[]
@@ -40,15 +41,13 @@ function removeTag(currentTags: string[], tag: string) {
         class="text-accent/60 hover:text-accent transition-colors"
         @click="removeTag(tags, tag)"
       >
-        <svg class="h-2.5 w-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-          <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
-        </svg>
+        <X class="h-2.5 w-2.5" :stroke-width="3" />
       </button>
     </span>
     <input
       v-model="input"
       type="text"
-      placeholder="Add tag..."
+      :placeholder="$t('training.tags.addPlaceholder')"
       class="w-20 bg-transparent text-[10px] text-text-primary placeholder-text-muted outline-none"
       @keydown="handleKeydown($event, tags)"
     />

@@ -56,10 +56,10 @@ function openFilePicker() {
     <div class="space-y-2">
       <div class="text-3xl">📄</div>
       <p class="text-sm font-medium text-text-primary">
-        Drop files here or click to browse
+        {{ $t('rag.upload.dropText') }}
       </p>
       <p class="text-xs text-text-muted">
-        Supports PDF, DOCX, TXT, Markdown, CSV
+        {{ $t('rag.upload.supportedFormats') }}
       </p>
     </div>
   </div>

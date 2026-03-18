@@ -78,25 +78,25 @@ async function runComparison() {
         class="w-full rounded-lg border border-border-default bg-surface px-4 py-3 text-sm text-text-primary placeholder-text-muted focus:border-accent focus:outline-none resize-none"
         :disabled="isRunning"
         rows="3"
-        placeholder="Enter prompt to compare across slots..."
+        :placeholder="$t('comparison.prompt.placeholder')"
       />
       <div class="flex items-center justify-between">
         <span class="text-xs text-text-muted">
-          {{ slots.length }} slot{{ slots.length !== 1 ? 's' : '' }} configured
+          {{ $t('comparison.configurator.slotsConfigured', { count: slots.length }) }}
         </span>
         <button
           class="rounded-lg bg-accent px-4 py-2 text-sm font-medium text-surface hover:bg-accent-hover transition-colors disabled:opacity-50"
           :disabled="!canRun"
           @click="runComparison"
         >
-          {{ isRunning ? 'Running...' : 'Compare' }}
+          {{ isRunning ? $t('comparison.prompt.running') : $t('comparison.prompt.compare') }}
         </button>
       </div>
     </div>
 
     <div v-if="activeRun" class="space-y-4">
       <div class="flex items-center gap-3">
-        <h3 class="text-sm font-medium text-text-secondary">Results</h3>
+        <h3 class="text-sm font-medium text-text-secondary">{{ $t('comparison.results.title') }}</h3>
         <StatusBadge :status="activeRun.status" />
         <div v-if="hasCompletedResults" class="ml-auto flex gap-1 rounded-lg border border-border-default p-0.5">
           <button
@@ -104,14 +104,14 @@ async function runComparison() {
             :class="viewMode === 'grid' ? 'bg-surface-overlay text-text-primary' : 'text-text-muted hover:text-text-secondary'"
             @click="viewMode = 'grid'"
           >
-            Grid
+            {{ $t('comparison.results.grid') }}
           </button>
           <button
             class="rounded-md px-2.5 py-1 text-[11px] transition-colors"
             :class="viewMode === 'diff' ? 'bg-surface-overlay text-text-primary' : 'text-text-muted hover:text-text-secondary'"
             @click="viewMode = 'diff'"
           >
-            Diff
+            {{ $t('comparison.results.diff') }}
           </button>
         </div>
       </div>

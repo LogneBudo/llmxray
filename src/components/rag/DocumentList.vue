@@ -43,7 +43,7 @@ const formatIcons: Record<string, string> = {
 
 <template>
   <div v-if="documents.length === 0" class="rounded-lg bg-surface-overlay p-6 text-center">
-    <p class="text-sm text-text-muted">No documents ingested yet</p>
+    <p class="text-sm text-text-muted">{{ $t('rag.documents.noDocuments') }}</p>
   </div>
 
   <div v-else class="space-y-2">
@@ -61,7 +61,7 @@ const formatIcons: Record<string, string> = {
             ? 'border-accent bg-accent text-white'
             : 'border-border-default hover:border-accent'
         "
-        title="Toggle RAG context"
+        :title="$t('rag.documents.toggleContext')"
         @click="emit('toggle', doc.id)"
       >
         <span v-if="enabledIds.has(doc.id)" class="text-xs">✓</span>
@@ -90,7 +90,7 @@ const formatIcons: Record<string, string> = {
       <!-- Delete -->
       <button
         class="shrink-0 rounded p-1 text-text-muted hover:text-error transition-colors"
-        title="Remove document"
+        :title="$t('rag.documents.removeDocument')"
         @click="emit('remove', doc.id)"
       >
         ✕

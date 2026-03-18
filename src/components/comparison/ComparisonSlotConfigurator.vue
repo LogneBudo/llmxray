@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { X } from 'lucide-vue-next'
 import { nanoid } from 'nanoid'
 import { useModelStore } from '@/stores/model-store'
 import { generateSlotLabel } from '@/utils/slot-labels'
@@ -109,9 +110,9 @@ onMounted(async () => {
   <div class="rounded-lg border border-border-default bg-surface-raised p-4 space-y-4">
     <div class="flex items-center justify-between">
       <div>
-        <h3 class="text-sm font-medium text-text-primary">Comparison Slots</h3>
+        <h3 class="text-sm font-medium text-text-primary">{{ $t('comparison.configurator.title') }}</h3>
         <p class="text-[11px] text-text-muted mt-0.5">
-          Each slot is a model + settings combination. Add the same model multiple times with different settings to compare behavior.
+          {{ $t('comparison.configurator.description') }}
         </p>
       </div>
       <button
@@ -119,23 +120,23 @@ onMounted(async () => {
         class="rounded-md border border-border-default px-2.5 py-1 text-[11px] text-text-muted hover:border-error hover:text-error transition-colors shrink-0 self-start"
         @click="clearAll"
       >
-        Clear All
+        {{ $t('comparison.configurator.clearAll') }}
       </button>
     </div>
 
     <!-- Quick presets -->
     <div class="flex items-center gap-2">
-      <span class="text-[11px] text-text-muted">Quick start:</span>
+      <span class="text-[11px] text-text-muted">{{ $t('comparison.configurator.presets.quickStart') }}</span>
       <div class="group relative">
         <button
           class="rounded-md border border-border-default px-2.5 py-1 text-[11px] text-text-secondary hover:border-accent hover:text-text-primary transition-colors"
           @click="applyPreset('temp-sweep')"
         >
-          Temperature Sweep
+          {{ $t('comparison.configurator.presets.tempSweep') }}
         </button>
         <div class="pointer-events-none absolute left-0 top-full z-10 mt-1.5 w-64 rounded-lg border border-border-default bg-surface-raised p-3 text-xs text-text-secondary opacity-0 shadow-lg transition-opacity group-hover:pointer-events-auto group-hover:opacity-100">
-          <p class="font-medium text-text-primary mb-1">Temperature Sweep</p>
-          <p>Creates 3 slots of the same model at temperatures <strong>0.2</strong> (focused), <strong>0.7</strong> (balanced), and <strong>1.2</strong> (creative). See how temperature changes the output for the exact same prompt.</p>
+          <p class="font-medium text-text-primary mb-1">{{ $t('comparison.configurator.presets.tempSweep') }}</p>
+          <p>{{ $t('comparison.configurator.presets.tempSweepDesc') }}</p>
         </div>
       </div>
       <div class="group relative">
@@ -143,11 +144,11 @@ onMounted(async () => {
           class="rounded-md border border-border-default px-2.5 py-1 text-[11px] text-text-secondary hover:border-accent hover:text-text-primary transition-colors"
           @click="applyPreset('deterministic-pair')"
         >
-        Deterministic Pair
+        {{ $t('comparison.configurator.presets.deterministicPair') }}
       </button>
         <div class="pointer-events-none absolute left-0 top-full z-10 mt-1.5 w-64 rounded-lg border border-border-default bg-surface-raised p-3 text-xs text-text-secondary opacity-0 shadow-lg transition-opacity group-hover:pointer-events-auto group-hover:opacity-100">
-          <p class="font-medium text-text-primary mb-1">Deterministic Pair</p>
-          <p>Creates 2 slots of the same model with the <strong>same seed</strong> but different temperatures (0.3 and 1.0). The shared seed means any difference in the output is purely from temperature, not randomness.</p>
+          <p class="font-medium text-text-primary mb-1">{{ $t('comparison.configurator.presets.deterministicPair') }}</p>
+          <p>{{ $t('comparison.configurator.presets.deterministicPairDesc') }}</p>
         </div>
       </div>
     </div>
@@ -168,12 +169,10 @@ onMounted(async () => {
         </select>
         <button
           class="rounded-md p-1 text-text-muted hover:text-error transition-colors"
-          title="Remove slot"
+          :title="$t('comparison.configurator.removeSlot')"
           @click="removeSlot(slot.slotId)"
         >
-          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M18 6L6 18M6 6l12 12" />
-          </svg>
+          <X class="h-4 w-4" />
         </button>
       </div>
 
@@ -191,7 +190,7 @@ onMounted(async () => {
           >
             <path d="M8 5l8 7-8 7z" />
           </svg>
-          Settings
+          {{ $t('comparison.configurator.settings') }}
         </button>
         <span class="text-[10px] text-text-muted">{{ settingsSummary(slot) }}</span>
       </div>
@@ -200,12 +199,12 @@ onMounted(async () => {
       <div v-if="expandedSlots[slot.slotId]" class="space-y-3 pt-1 border-t border-border-default/50">
         <!-- System prompt -->
         <div>
-          <label class="text-[11px] text-text-muted block mb-1">System Prompt</label>
+          <label class="text-[11px] text-text-muted block mb-1">{{ $t('comparison.configurator.systemPrompt') }}</label>
           <textarea
             :value="slot.system"
             rows="2"
             class="w-full rounded-md border border-border-default bg-surface-raised px-2.5 py-1.5 text-xs text-text-primary placeholder-text-muted focus:border-accent focus:outline-none resize-none"
-            placeholder="Optional system prompt..."
+            :placeholder="$t('comparison.configurator.optionalSystemPrompt')"
             @input="updateSlot(slot.slotId, { system: ($event.target as HTMLTextAreaElement).value })"
           />
         </div>
@@ -213,7 +212,7 @@ onMounted(async () => {
         <!-- Temperature -->
         <div>
           <div class="flex items-center justify-between mb-1">
-            <label class="text-[11px] text-text-muted">Temperature</label>
+            <label class="text-[11px] text-text-muted">{{ $t('comparison.configurator.temperature') }}</label>
             <span class="text-[11px] text-text-primary font-medium">{{ (slot.options.temperature ?? 0.7).toFixed(1) }}</span>
           </div>
           <input
@@ -230,7 +229,7 @@ onMounted(async () => {
         <!-- Top-P -->
         <div>
           <div class="flex items-center justify-between mb-1">
-            <label class="text-[11px] text-text-muted">Top-P</label>
+            <label class="text-[11px] text-text-muted">{{ $t('comparison.configurator.topP') }}</label>
             <span class="text-[11px] text-text-primary font-medium">{{ (slot.options.top_p ?? 0.9).toFixed(2) }}</span>
           </div>
           <input
@@ -246,22 +245,22 @@ onMounted(async () => {
 
         <!-- Seed -->
         <div>
-          <label class="text-[11px] text-text-muted block mb-1">Seed</label>
+          <label class="text-[11px] text-text-muted block mb-1">{{ $t('comparison.configurator.seed') }}</label>
           <input
             type="number"
             :value="slot.options.seed ?? ''"
             class="w-full rounded-md border border-border-default bg-surface-raised px-2.5 py-1.5 text-xs text-text-primary placeholder-text-muted focus:border-accent focus:outline-none"
-            placeholder="Random (leave empty)"
+            :placeholder="$t('comparison.configurator.seedPlaceholder')"
             @input="updateSlotOptions(slot.slotId, { seed: ($event.target as HTMLInputElement).value ? parseInt(($event.target as HTMLInputElement).value, 10) : undefined })"
           />
         </div>
 
         <!-- Advanced (collapsible) -->
         <details class="text-[11px]">
-          <summary class="text-text-muted cursor-pointer hover:text-text-secondary">Advanced</summary>
+          <summary class="text-text-muted cursor-pointer hover:text-text-secondary">{{ $t('comparison.configurator.advanced') }}</summary>
           <div class="mt-2 space-y-2">
             <div class="flex items-center gap-2">
-              <label class="text-text-muted w-24 shrink-0">Top-K</label>
+              <label class="text-text-muted w-24 shrink-0">{{ $t('comparison.configurator.topK') }}</label>
               <input
                 type="number"
                 :value="slot.options.top_k ?? ''"
@@ -271,7 +270,7 @@ onMounted(async () => {
               />
             </div>
             <div class="flex items-center gap-2">
-              <label class="text-text-muted w-24 shrink-0">Repeat Penalty</label>
+              <label class="text-text-muted w-24 shrink-0">{{ $t('comparison.configurator.repeatPenalty') }}</label>
               <input
                 type="number"
                 step="0.1"
@@ -282,34 +281,34 @@ onMounted(async () => {
               />
             </div>
             <div class="flex items-center gap-2">
-              <label class="text-text-muted w-24 shrink-0">Mirostat</label>
+              <label class="text-text-muted w-24 shrink-0">{{ $t('comparison.configurator.mirostat') }}</label>
               <select
                 :value="slot.options.mirostat ?? 0"
                 class="flex-1 rounded-md border border-border-default bg-surface-raised px-2 py-1 text-xs text-text-primary focus:border-accent focus:outline-none"
                 @change="updateSlotOptions(slot.slotId, { mirostat: parseInt(($event.target as HTMLSelectElement).value, 10) || undefined })"
               >
-                <option :value="0">Off</option>
+                <option :value="0">{{ $t('comparison.configurator.mirostatOff') }}</option>
                 <option :value="1">Mirostat 1</option>
                 <option :value="2">Mirostat 2</option>
               </select>
             </div>
             <div class="flex items-center gap-2">
-              <label class="text-text-muted w-24 shrink-0">Max Tokens</label>
+              <label class="text-text-muted w-24 shrink-0">{{ $t('comparison.configurator.maxTokens') }}</label>
               <input
                 type="number"
                 :value="slot.options.num_predict ?? ''"
                 class="flex-1 rounded-md border border-border-default bg-surface-raised px-2 py-1 text-xs text-text-primary focus:border-accent focus:outline-none"
-                placeholder="Default"
+                :placeholder="$t('comparison.configurator.defaultPlaceholder')"
                 @input="updateSlotOptions(slot.slotId, { num_predict: ($event.target as HTMLInputElement).value ? parseInt(($event.target as HTMLInputElement).value, 10) : undefined })"
               />
             </div>
             <div class="flex items-center gap-2">
-              <label class="text-text-muted w-24 shrink-0">Context Length</label>
+              <label class="text-text-muted w-24 shrink-0">{{ $t('comparison.configurator.contextLength') }}</label>
               <input
                 type="number"
                 :value="slot.options.num_ctx ?? ''"
                 class="flex-1 rounded-md border border-border-default bg-surface-raised px-2 py-1 text-xs text-text-primary focus:border-accent focus:outline-none"
-                placeholder="Default"
+                :placeholder="$t('comparison.configurator.defaultPlaceholder')"
                 @input="updateSlotOptions(slot.slotId, { num_ctx: ($event.target as HTMLInputElement).value ? parseInt(($event.target as HTMLInputElement).value, 10) : undefined })"
               />
             </div>
@@ -320,15 +319,15 @@ onMounted(async () => {
 
     <!-- Empty state -->
     <div v-if="slots.length === 0" class="rounded-lg border border-dashed border-border-default py-8 text-center space-y-3">
-      <p class="text-sm text-text-secondary">No slots configured yet</p>
+      <p class="text-sm text-text-secondary">{{ $t('comparison.configurator.emptyTitle') }}</p>
       <p class="text-xs text-text-muted max-w-sm mx-auto">
-        Add a slot to pick a model and settings, or use a quick-start preset above to get going.
+        {{ $t('comparison.configurator.emptyDescription') }}
       </p>
       <button
         class="rounded-lg bg-accent px-4 py-2 text-sm font-medium text-surface hover:bg-accent-hover transition-colors"
         @click="addSlot"
       >
-        + Add First Slot
+        {{ $t('comparison.configurator.addFirstSlot') }}
       </button>
     </div>
 
@@ -338,7 +337,7 @@ onMounted(async () => {
       class="w-full rounded-lg border border-dashed border-border-default py-2.5 text-sm text-text-muted hover:border-accent hover:text-text-primary transition-colors"
       @click="addSlot"
     >
-      + Add Slot ({{ slots.length }}/4)
+      {{ $t('comparison.configurator.addSlotCount', { current: slots.length }) }}
     </button>
   </div>
 </template>

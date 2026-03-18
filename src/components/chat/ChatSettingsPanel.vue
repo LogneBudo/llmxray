@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
+import { X } from 'lucide-vue-next'
 import type { ChatSettings } from '@/types/conversation'
 import { useToolWorkshopStore } from '@/stores/tool-workshop-store'
 import { useMemoryStore } from '@/stores/memory-store'
@@ -150,29 +151,29 @@ async function pullEmbeddingModel(name: string) {
     <div class="space-y-5 p-4 pb-12">
       <!-- System Prompt -->
       <div>
-        <label class="mb-1.5 block text-xs font-medium text-text-secondary">System Prompt</label>
+        <label class="mb-1.5 block text-xs font-medium text-text-secondary">{{ $t('dashboard.settings.systemPrompt') }}</label>
         <textarea
           v-model="systemPrompt"
           rows="6"
           class="w-full resize-y rounded-lg border border-border-default bg-surface px-3 py-2 text-sm text-text-primary placeholder-text-muted outline-none focus:border-accent"
-          placeholder="You are a helpful assistant..."
+          :placeholder="$t('dashboard.settings.systemPromptPlaceholder')"
         />
         <p class="mt-1 text-[10px] text-text-muted">
-          Instructions sent before the conversation. Sets the model's behavior and persona.
+          {{ $t('dashboard.settings.systemPromptHint') }}
         </p>
       </div>
 
       <!-- Knowledge Base toggle -->
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-2">
-          <span class="text-xs font-medium text-text-secondary">Knowledge Base</span>
+          <span class="text-xs font-medium text-text-secondary">{{ $t('dashboard.settings.knowledgeBase') }}</span>
           <span
             class="rounded-full px-1.5 py-0.5 text-[9px] font-medium"
             :class="ragEnabled && ragStore.readyDocuments.length > 0
               ? 'bg-accent/10 text-accent'
               : 'bg-surface-overlay text-text-muted'"
           >
-            {{ ragEnabled && ragStore.readyDocuments.length > 0 ? 'KB Enabled' : 'KB Disabled' }}
+            {{ ragEnabled && ragStore.readyDocuments.length > 0 ? $t('dashboard.settings.kbEnabled') : $t('dashboard.settings.kbDisabled') }}
           </span>
         </div>
         <button
@@ -188,18 +189,18 @@ async function pullEmbeddingModel(name: string) {
         </button>
       </div>
       <p v-if="ragStore.readyDocuments.length > 0" class="text-[10px] text-text-muted -mt-3">
-        {{ ragStore.enabledDocuments.length }}/{{ ragStore.readyDocuments.length }} documents &middot;
-        <button class="text-accent hover:underline" @click="chatRouter.push('/rag')">Manage</button>
+        {{ ragStore.enabledDocuments.length }}/{{ ragStore.readyDocuments.length }} {{ $t('dashboard.settings.documents') }} &middot;
+        <button class="text-accent hover:underline" @click="chatRouter.push('/rag')">{{ $t('dashboard.settings.manage') }}</button>
       </p>
       <p v-else class="text-[10px] text-text-muted -mt-3">
-        No documents ingested &middot;
-        <button class="text-accent hover:underline" @click="chatRouter.push('/rag')">Add documents</button>
+        {{ $t('dashboard.settings.noDocumentsIngested') }} &middot;
+        <button class="text-accent hover:underline" @click="chatRouter.push('/rag')">{{ $t('dashboard.settings.addDocuments') }}</button>
       </p>
 
       <!-- Temperature -->
       <div>
         <div class="mb-1.5 flex items-center justify-between">
-          <label class="text-xs font-medium text-text-secondary">Temperature</label>
+          <label class="text-xs font-medium text-text-secondary">{{ $t('dashboard.settings.temperature') }}</label>
           <span class="text-xs text-text-muted">{{ temperature.toFixed(2) }}</span>
         </div>
         <input
@@ -211,16 +212,16 @@ async function pullEmbeddingModel(name: string) {
           class="w-full accent-accent"
         />
         <div class="mt-0.5 flex justify-between text-[10px] text-text-muted">
-          <span>Precise</span>
-          <span>Creative</span>
+          <span>{{ $t('dashboard.settings.precise') }}</span>
+          <span>{{ $t('dashboard.settings.creative') }}</span>
         </div>
       </div>
 
       <!-- Max Tokens -->
       <div>
         <div class="mb-1.5 flex items-center justify-between">
-          <label class="text-xs font-medium text-text-secondary">Max Tokens</label>
-          <span class="text-xs text-text-muted">{{ numPredict === -1 ? 'Unlimited' : numPredict }}</span>
+          <label class="text-xs font-medium text-text-secondary">{{ $t('dashboard.settings.maxTokens') }}</label>
+          <span class="text-xs text-text-muted">{{ numPredict === -1 ? $t('dashboard.settings.unlimited') : numPredict }}</span>
         </div>
         <input
           v-model.number="numPredict"
@@ -228,17 +229,17 @@ async function pullEmbeddingModel(name: string) {
           min="-1"
           max="32768"
           class="w-full rounded-lg border border-border-default bg-surface px-3 py-1.5 text-sm text-text-primary outline-none focus:border-accent"
-          placeholder="-1 for unlimited"
+          :placeholder="$t('dashboard.settings.maxTokensPlaceholder')"
         />
         <p class="mt-1 text-[10px] text-text-muted">
-          Maximum response length. -1 = unlimited.
+          {{ $t('dashboard.settings.maxTokensHint') }}
         </p>
       </div>
 
       <!-- Context Window -->
       <div>
         <div class="mb-1.5 flex items-center justify-between">
-          <label class="text-xs font-medium text-text-secondary">Context Window</label>
+          <label class="text-xs font-medium text-text-secondary">{{ $t('dashboard.settings.contextWindow') }}</label>
           <span class="text-xs text-text-muted">{{ numCtx.toLocaleString() }}</span>
         </div>
         <select
@@ -254,7 +255,7 @@ async function pullEmbeddingModel(name: string) {
           <option :value="131072">131,072</option>
         </select>
         <p class="mt-1 text-[10px] text-text-muted">
-          Total context the model can see. Higher = more memory, slower.
+          {{ $t('dashboard.settings.contextWindowHint') }}
         </p>
       </div>
 
@@ -263,7 +264,7 @@ async function pullEmbeddingModel(name: string) {
         class="flex w-full items-center justify-between rounded-lg px-3 py-2 text-xs text-text-secondary hover:bg-surface-overlay transition-colors"
         @click="showAdvanced = !showAdvanced"
       >
-        <span>Advanced Sampling</span>
+        <span>{{ $t('dashboard.settings.advancedSampling') }}</span>
         <span class="transition-transform" :class="{ 'rotate-180': showAdvanced }">▾</span>
       </button>
 
@@ -271,7 +272,7 @@ async function pullEmbeddingModel(name: string) {
         <!-- Top-P -->
         <div>
           <div class="mb-1.5 flex items-center justify-between">
-            <label class="text-xs font-medium text-text-secondary">Top-P</label>
+            <label class="text-xs font-medium text-text-secondary">{{ $t('dashboard.settings.topP') }}</label>
             <span class="text-xs text-text-muted">{{ topP.toFixed(2) }}</span>
           </div>
           <input
@@ -283,14 +284,14 @@ async function pullEmbeddingModel(name: string) {
             class="w-full accent-accent"
           />
           <p class="mt-1 text-[10px] text-text-muted">
-            Nucleus sampling. Lower = more focused on likely tokens.
+            {{ $t('dashboard.settings.topPHint') }}
           </p>
         </div>
 
         <!-- Top-K -->
         <div>
           <div class="mb-1.5 flex items-center justify-between">
-            <label class="text-xs font-medium text-text-secondary">Top-K</label>
+            <label class="text-xs font-medium text-text-secondary">{{ $t('dashboard.settings.topK') }}</label>
             <span class="text-xs text-text-muted">{{ topK }}</span>
           </div>
           <input
@@ -302,14 +303,14 @@ async function pullEmbeddingModel(name: string) {
             class="w-full accent-accent"
           />
           <p class="mt-1 text-[10px] text-text-muted">
-            Limits sampling to the top K tokens at each step.
+            {{ $t('dashboard.settings.topKHint') }}
           </p>
         </div>
 
         <!-- Repeat Penalty -->
         <div>
           <div class="mb-1.5 flex items-center justify-between">
-            <label class="text-xs font-medium text-text-secondary">Repeat Penalty</label>
+            <label class="text-xs font-medium text-text-secondary">{{ $t('dashboard.settings.repeatPenalty') }}</label>
             <span class="text-xs text-text-muted">{{ repeatPenalty.toFixed(2) }}</span>
           </div>
           <input
@@ -321,58 +322,58 @@ async function pullEmbeddingModel(name: string) {
             class="w-full accent-accent"
           />
           <p class="mt-1 text-[10px] text-text-muted">
-            Penalizes tokens that already appeared. Higher = less repetition.
+            {{ $t('dashboard.settings.repeatPenaltyHint') }}
           </p>
         </div>
 
         <!-- Mirostat -->
         <div>
           <div class="mb-1.5 flex items-center justify-between">
-            <label class="text-xs font-medium text-text-secondary">Mirostat</label>
-            <span class="text-xs text-text-muted">{{ mirostat === 0 ? 'Off' : `v${mirostat}` }}</span>
+            <label class="text-xs font-medium text-text-secondary">{{ $t('dashboard.settings.mirostat') }}</label>
+            <span class="text-xs text-text-muted">{{ mirostat === 0 ? $t('dashboard.settings.mirostatOff') : `v${mirostat}` }}</span>
           </div>
           <select
             v-model.number="mirostat"
             class="w-full rounded-lg border border-border-default bg-surface px-3 py-1.5 text-sm text-text-primary outline-none focus:border-accent"
           >
-            <option :value="0">Disabled</option>
-            <option :value="1">Mirostat v1</option>
-            <option :value="2">Mirostat v2</option>
+            <option :value="0">{{ $t('dashboard.settings.mirostatDisabled') }}</option>
+            <option :value="1">{{ $t('dashboard.settings.mirostatV1') }}</option>
+            <option :value="2">{{ $t('dashboard.settings.mirostatV2') }}</option>
           </select>
           <p class="mt-1 text-[10px] text-text-muted">
-            Adaptive perplexity-based sampling. Overrides top-p/top-k when enabled.
+            {{ $t('dashboard.settings.mirostatHint') }}
           </p>
         </div>
 
         <!-- Seed -->
         <div>
           <div class="mb-1.5 flex items-center justify-between">
-            <label class="text-xs font-medium text-text-secondary">Seed</label>
-            <span class="text-xs text-text-muted">{{ seed === -1 ? 'Random' : seed }}</span>
+            <label class="text-xs font-medium text-text-secondary">{{ $t('dashboard.settings.seed') }}</label>
+            <span class="text-xs text-text-muted">{{ seed === -1 ? $t('dashboard.settings.seedRandom') : seed }}</span>
           </div>
           <input
             v-model.number="seed"
             type="number"
             min="-1"
             class="w-full rounded-lg border border-border-default bg-surface px-3 py-1.5 text-sm text-text-primary outline-none focus:border-accent"
-            placeholder="-1 for random"
+            :placeholder="$t('dashboard.settings.seedPlaceholder')"
           />
           <p class="mt-1 text-[10px] text-text-muted">
-            Fixed seed for reproducible outputs. -1 = random.
+            {{ $t('dashboard.settings.seedHint') }}
           </p>
         </div>
 
         <!-- Stop sequences -->
         <div>
-          <label class="mb-1.5 block text-xs font-medium text-text-secondary">Stop Sequences</label>
+          <label class="mb-1.5 block text-xs font-medium text-text-secondary">{{ $t('dashboard.settings.stopSequences') }}</label>
           <input
             v-model="stopSequences"
             type="text"
             class="w-full rounded-lg border border-border-default bg-surface px-3 py-1.5 text-sm text-text-primary placeholder-text-muted outline-none focus:border-accent"
-            placeholder="e.g. Human:, \n\n"
+            :placeholder="$t('dashboard.settings.stopSequencesPlaceholder')"
           />
           <p class="mt-1 text-[10px] text-text-muted">
-            Comma-separated strings that stop generation when produced.
+            {{ $t('dashboard.settings.stopSequencesHint') }}
           </p>
         </div>
       </div>
@@ -384,9 +385,9 @@ async function pullEmbeddingModel(name: string) {
           @click="showTools = !showTools"
         >
           <span>
-            Tools
+            {{ $t('dashboard.settings.tools') }}
             <span v-if="toolStore.enabledDefinitions.length > 0" class="ml-1 text-accent">
-              ({{ toolStore.enabledDefinitions.length }} active)
+              ({{ toolStore.enabledDefinitions.length }} {{ $t('dashboard.settings.active') }})
             </span>
           </span>
           <span class="transition-transform" :class="{ 'rotate-180': showTools }">▾</span>
@@ -417,12 +418,12 @@ async function pullEmbeddingModel(name: string) {
             </span>
           </div>
         </div>
-        <p v-else class="text-[10px] text-text-muted px-2">No tools defined yet</p>
+        <p v-else class="text-[10px] text-text-muted px-2">{{ $t('dashboard.settings.noToolsDefined') }}</p>
         <button
           class="w-full rounded-lg border border-dashed border-border-default px-3 py-1.5 text-[11px] text-text-muted hover:border-accent hover:text-text-primary transition-colors"
           @click="chatRouter.push('/tools')"
         >
-          Manage in Tool Workshop...
+          {{ $t('dashboard.settings.manageInToolWorkshop') }}
         </button>
       </div>
       </template>
@@ -433,9 +434,9 @@ async function pullEmbeddingModel(name: string) {
         @click="showMemory = !showMemory"
       >
         <span>
-          Memory
+          {{ $t('dashboard.memory.memory') }}
           <span v-if="memoryStore.factCount > 0" class="ml-1 text-accent">
-            ({{ memoryStore.factCount }} facts)
+            ({{ memoryStore.factCount }} {{ $t('dashboard.memory.facts') }})
           </span>
         </span>
         <span class="transition-transform" :class="{ 'rotate-180': showMemory }">▾</span>
@@ -445,8 +446,8 @@ async function pullEmbeddingModel(name: string) {
         <!-- Sliding Window -->
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-xs font-medium text-text-secondary">Sliding Window</p>
-            <p class="text-[10px] text-text-muted">Keep only the last N messages</p>
+            <p class="text-xs font-medium text-text-secondary">{{ $t('dashboard.memory.slidingWindow') }}</p>
+            <p class="text-[10px] text-text-muted">{{ $t('dashboard.memory.slidingWindowHint') }}</p>
           </div>
           <button
             class="h-4 w-7 shrink-0 rounded-full transition-colors"
@@ -461,7 +462,7 @@ async function pullEmbeddingModel(name: string) {
         </div>
         <div v-if="memoryStore.settings.slidingWindow.enabled">
           <div class="mb-1 flex items-center justify-between">
-            <label class="text-[10px] text-text-muted">Max messages</label>
+            <label class="text-[10px] text-text-muted">{{ $t('dashboard.memory.maxMessages') }}</label>
             <span class="text-[10px] text-text-muted">{{ memoryStore.settings.slidingWindow.maxMessages }}</span>
           </div>
           <input
@@ -477,8 +478,8 @@ async function pullEmbeddingModel(name: string) {
         <!-- Auto-Summarization -->
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-xs font-medium text-text-secondary">Auto-Summarize</p>
-            <p class="text-[10px] text-text-muted">Summarize older messages automatically</p>
+            <p class="text-xs font-medium text-text-secondary">{{ $t('dashboard.memory.autoSummarize') }}</p>
+            <p class="text-[10px] text-text-muted">{{ $t('dashboard.memory.autoSummarizeHint') }}</p>
           </div>
           <button
             class="h-4 w-7 shrink-0 rounded-full transition-colors"
@@ -493,8 +494,8 @@ async function pullEmbeddingModel(name: string) {
         </div>
         <div v-if="memoryStore.settings.autoSummarize.enabled">
           <div class="mb-1 flex items-center justify-between">
-            <label class="text-[10px] text-text-muted">Trigger after</label>
-            <span class="text-[10px] text-text-muted">{{ memoryStore.settings.autoSummarize.triggerThreshold }} messages</span>
+            <label class="text-[10px] text-text-muted">{{ $t('dashboard.memory.triggerAfter') }}</label>
+            <span class="text-[10px] text-text-muted">{{ memoryStore.settings.autoSummarize.triggerThreshold }} {{ $t('dashboard.memory.messages') }}</span>
           </div>
           <input
             v-model.number="memoryStore.settings.autoSummarize.triggerThreshold"
@@ -509,8 +510,8 @@ async function pullEmbeddingModel(name: string) {
         <!-- User Facts -->
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-xs font-medium text-text-secondary">User Memories</p>
-            <p class="text-[10px] text-text-muted">/remember facts injected into context</p>
+            <p class="text-xs font-medium text-text-secondary">{{ $t('dashboard.memory.userMemories') }}</p>
+            <p class="text-[10px] text-text-muted">{{ $t('dashboard.memory.userMemoriesHint') }}</p>
           </div>
           <button
             class="h-4 w-7 shrink-0 rounded-full transition-colors"
@@ -534,9 +535,7 @@ async function pullEmbeddingModel(name: string) {
               class="shrink-0 text-text-muted hover:text-error transition-colors"
               @click="memoryStore.removeFact(fact.id)"
             >
-              <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
+              <X class="h-3 w-3" />
             </button>
           </div>
         </div>
@@ -544,8 +543,8 @@ async function pullEmbeddingModel(name: string) {
         <!-- RAG Message Memory -->
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-xs font-medium text-text-secondary">Message Memory (RAG)</p>
-            <p class="text-[10px] text-text-muted">Retrieve relevant past messages via embeddings</p>
+            <p class="text-xs font-medium text-text-secondary">{{ $t('dashboard.memory.messageMemoryRag') }}</p>
+            <p class="text-[10px] text-text-muted">{{ $t('dashboard.memory.messageMemoryHint') }}</p>
           </div>
           <button
             class="h-4 w-7 shrink-0 rounded-full transition-colors"
@@ -562,12 +561,12 @@ async function pullEmbeddingModel(name: string) {
         <div v-if="memoryStore.settings.ragMemory.enabled" class="space-y-2">
           <!-- Embedding model picker -->
           <div>
-            <label class="mb-1 block text-[10px] text-text-muted">Embedding Model</label>
+            <label class="mb-1 block text-[10px] text-text-muted">{{ $t('dashboard.memory.embeddingModel') }}</label>
             <select
               v-model="memoryStore.settings.ragMemory.embeddingModel"
               class="w-full rounded-lg border border-border-default bg-surface px-2 py-1 text-xs text-text-primary outline-none focus:border-accent"
             >
-              <option value="" disabled>Select embedding model...</option>
+              <option value="" disabled>{{ $t('dashboard.memory.selectEmbeddingModel') }}</option>
               <option v-for="name in modelStore.embeddingModelNames" :key="name" :value="name">
                 {{ name }} {{ modelStore.capabilityIcons(name) }}
               </option>
@@ -576,7 +575,7 @@ async function pullEmbeddingModel(name: string) {
 
           <!-- No embedding models available: suggest pulling one -->
           <div v-if="modelStore.embeddingModelNames.length === 0" class="rounded-lg border border-accent/20 bg-accent/5 p-2">
-            <p class="mb-2 text-[10px] text-accent">No embedding models found. Pull one:</p>
+            <p class="mb-2 text-[10px] text-accent">{{ $t('dashboard.memory.noEmbeddingModels') }}</p>
             <div class="space-y-1.5">
               <div
                 v-for="model in SUGGESTED_EMBEDDING_MODELS"
@@ -592,7 +591,7 @@ async function pullEmbeddingModel(name: string) {
                   class="shrink-0 rounded-md bg-accent px-2 py-0.5 text-[10px] text-white hover:bg-accent-hover disabled:opacity-30 transition-colors"
                   @click="pullEmbeddingModel(model.name)"
                 >
-                  {{ isPulling && pullModelName === model.name ? 'Pulling...' : 'Pull' }}
+                  {{ isPulling && pullModelName === model.name ? $t('dashboard.settings.pulling') : $t('dashboard.settings.pull') }}
                 </button>
               </div>
             </div>
@@ -602,8 +601,8 @@ async function pullEmbeddingModel(name: string) {
           <!-- Top-K slider -->
           <div>
             <div class="mb-1 flex items-center justify-between">
-              <label class="text-[10px] text-text-muted">Retrieve top</label>
-              <span class="text-[10px] text-text-muted">{{ memoryStore.settings.ragMemory.topK }} messages</span>
+              <label class="text-[10px] text-text-muted">{{ $t('dashboard.memory.retrieveTop') }}</label>
+              <span class="text-[10px] text-text-muted">{{ memoryStore.settings.ragMemory.topK }} {{ $t('dashboard.memory.messages') }}</span>
             </div>
             <input
               v-model.number="memoryStore.settings.ragMemory.topK"

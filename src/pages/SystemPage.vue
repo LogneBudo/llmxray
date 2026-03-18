@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { Loader2 } from 'lucide-vue-next'
 import { ollamaClient } from '@/services/ollama-client'
 import { useMetricsStore } from '@/stores/metrics-store'
 import { useModelStore } from '@/stores/model-store'
@@ -137,30 +138,27 @@ onUnmounted(() => {
     <!-- Header -->
     <div class="flex items-center justify-between">
       <div>
-        <h2 class="text-lg font-semibold text-text-primary">My System</h2>
-        <p class="text-xs text-text-muted mt-0.5">Hardware, runtime, and inference overview</p>
+        <h2 class="text-lg font-semibold text-text-primary">{{ $t('system.title') }}</h2>
+        <p class="text-xs text-text-muted mt-0.5">{{ $t('system.subtitle') }}</p>
       </div>
       <button
         class="rounded-lg bg-surface-overlay px-3 py-1.5 text-xs text-text-secondary hover:bg-border-default transition-colors"
         @click="refreshAll"
       >
-        Refresh
+        {{ $t('system.refresh') }}
       </button>
     </div>
 
     <!-- Loading state -->
     <div v-if="hwLoading && !hwInfo" class="flex flex-col items-center justify-center py-16 gap-4">
-      <svg class="h-10 w-10 animate-spin text-accent" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle class="opacity-20" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" />
-        <path class="opacity-80" d="M12 2a10 10 0 0 1 10 10" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
-      </svg>
-      <p class="text-sm text-text-secondary">Detecting hardware...</p>
-      <p class="text-[10px] text-text-muted">Querying CPU, memory, GPU, and storage</p>
+      <Loader2 class="h-10 w-10 animate-spin text-accent" />
+      <p class="text-sm text-text-secondary">{{ $t('system.detecting') }}</p>
+      <p class="text-[10px] text-text-muted">{{ $t('system.detectingDetail') }}</p>
     </div>
 
     <!-- Fallback when hardware info unavailable -->
     <div v-if="!hwLoading && !hwInfo" class="rounded-lg border border-border-default bg-surface-raised p-4 text-xs text-text-muted">
-      Hardware detection unavailable. Please restart the dev server (<code class="text-text-secondary">npm run dev</code>) to enable the system info plugin.
+      {{ $t('system.unavailable') }}
     </div>
 
     <template v-if="hwInfo">
@@ -169,16 +167,16 @@ onUnmounted(() => {
         <!-- Operating System -->
         <div class="rounded-lg border border-border-default bg-surface-raised p-4 space-y-3">
           <h3 class="text-sm font-medium text-text-primary flex items-center gap-2">
-            <span class="text-base">&#x1F5A5;</span> Operating System
+            <span class="text-base">&#x1F5A5;</span> {{ $t('system.os.title') }}
           </h3>
           <div class="grid grid-cols-[auto_1fr] gap-y-2 gap-x-4 text-xs">
-            <span class="text-text-muted">OS</span>
+            <span class="text-text-muted">{{ $t('system.os.os') }}</span>
             <span class="text-text-primary">{{ hwInfo.os.name }}</span>
-            <span class="text-text-muted">Version</span>
+            <span class="text-text-muted">{{ $t('system.os.version') }}</span>
             <span class="text-text-primary">{{ hwInfo.os.version }}</span>
-            <span class="text-text-muted">Build</span>
+            <span class="text-text-muted">{{ $t('system.os.build') }}</span>
             <span class="text-text-primary">{{ hwInfo.os.build || '—' }}</span>
-            <span class="text-text-muted">Architecture</span>
+            <span class="text-text-muted">{{ $t('system.os.architecture') }}</span>
             <span class="text-text-primary">{{ hwInfo.os.arch }}</span>
           </div>
         </div>
@@ -186,17 +184,17 @@ onUnmounted(() => {
         <!-- Device -->
         <div class="rounded-lg border border-border-default bg-surface-raised p-4 space-y-3">
           <h3 class="text-sm font-medium text-text-primary flex items-center gap-2">
-            <span class="text-base">&#x1F4BB;</span> Device
+            <span class="text-base">&#x1F4BB;</span> {{ $t('system.device.title') }}
           </h3>
           <div class="grid grid-cols-[auto_1fr] gap-y-2 gap-x-4 text-xs">
-            <span class="text-text-muted">Name</span>
+            <span class="text-text-muted">{{ $t('system.device.name') }}</span>
             <span class="text-text-primary">{{ hwInfo.device.name }}</span>
-            <span class="text-text-muted">Manufacturer</span>
+            <span class="text-text-muted">{{ $t('system.device.manufacturer') }}</span>
             <span class="text-text-primary">{{ hwInfo.device.manufacturer || '—' }}</span>
-            <span class="text-text-muted">Model</span>
+            <span class="text-text-muted">{{ $t('system.device.model') }}</span>
             <span class="text-text-primary">{{ hwInfo.device.model || '—' }}</span>
             <template v-if="hwInfo.device.family">
-              <span class="text-text-muted">Family</span>
+              <span class="text-text-muted">{{ $t('system.device.family') }}</span>
               <span class="text-text-primary">{{ hwInfo.device.family }}</span>
             </template>
           </div>
@@ -208,16 +206,16 @@ onUnmounted(() => {
         <!-- CPU -->
         <div class="rounded-lg border border-border-default bg-surface-raised p-4 space-y-3">
           <h3 class="text-sm font-medium text-text-primary flex items-center gap-2">
-            <span class="text-base">&#x2699;</span> Processor
+            <span class="text-base">&#x2699;</span> {{ $t('system.cpu.title') }}
           </h3>
           <div class="grid grid-cols-[auto_1fr] gap-y-2 gap-x-4 text-xs">
-            <span class="text-text-muted">CPU</span>
+            <span class="text-text-muted">{{ $t('system.cpu.cpu') }}</span>
             <span class="text-text-primary">{{ hwInfo.cpu.name }}</span>
-            <span class="text-text-muted">Physical Cores</span>
+            <span class="text-text-muted">{{ $t('system.cpu.physicalCores') }}</span>
             <span class="text-text-primary">{{ hwInfo.cpu.cores }}</span>
-            <span class="text-text-muted">Logical Processors</span>
+            <span class="text-text-muted">{{ $t('system.cpu.logicalProcessors') }}</span>
             <span class="text-text-primary">{{ hwInfo.cpu.logicalProcessors }}</span>
-            <span class="text-text-muted">Max Clock</span>
+            <span class="text-text-muted">{{ $t('system.cpu.maxClock') }}</span>
             <span class="text-text-primary">{{ cpuClockGhz }}</span>
           </div>
         </div>
@@ -225,14 +223,14 @@ onUnmounted(() => {
         <!-- Memory -->
         <div class="rounded-lg border border-border-default bg-surface-raised p-4 space-y-3">
           <h3 class="text-sm font-medium text-text-primary flex items-center gap-2">
-            <span class="text-base">&#x1F9E0;</span> Memory
+            <span class="text-base">&#x1F9E0;</span> {{ $t('system.memory.title') }}
           </h3>
           <div class="grid grid-cols-[auto_1fr] gap-y-2 gap-x-4 text-xs">
-            <span class="text-text-muted">Total RAM</span>
+            <span class="text-text-muted">{{ $t('system.memory.totalRam') }}</span>
             <span class="text-text-primary">{{ formatBytes(hwInfo.memory.totalBytes) }}</span>
-            <span class="text-text-muted">Available</span>
+            <span class="text-text-muted">{{ $t('system.memory.available') }}</span>
             <span class="text-text-primary">{{ formatBytes(hwInfo.memory.freeBytes) }}</span>
-            <span class="text-text-muted">In Use</span>
+            <span class="text-text-muted">{{ $t('system.memory.inUse') }}</span>
             <span class="text-text-primary">{{ formatBytes(hwInfo.memory.totalBytes - hwInfo.memory.freeBytes) }} ({{ memoryUsedPercent }}%)</span>
           </div>
           <!-- Memory bar -->
@@ -249,15 +247,15 @@ onUnmounted(() => {
       <!-- GPU -->
       <div class="rounded-lg border border-border-default bg-surface-raised p-4 space-y-3">
         <h3 class="text-sm font-medium text-text-primary flex items-center gap-2">
-          <span class="text-base">&#x1F3AE;</span> Graphics
+          <span class="text-base">&#x1F3AE;</span> {{ $t('system.gpu.title') }}
         </h3>
         <div v-for="(gpu, i) in hwInfo.gpu" :key="i" class="grid grid-cols-[auto_1fr] gap-y-2 gap-x-4 text-xs">
-          <span class="text-text-muted">GPU {{ hwInfo.gpu.length > 1 ? i + 1 : '' }}</span>
+          <span class="text-text-muted">{{ $t('system.gpu.gpu') }} {{ hwInfo.gpu.length > 1 ? i + 1 : '' }}</span>
           <span class="text-text-primary">{{ gpu.name }}</span>
-          <span class="text-text-muted">Adapter RAM</span>
-          <span class="text-text-primary">{{ gpu.adapterRamBytes > 0 ? formatBytes(gpu.adapterRamBytes) : 'Shared / Not reported' }}</span>
+          <span class="text-text-muted">{{ $t('system.gpu.adapterRam') }}</span>
+          <span class="text-text-primary">{{ gpu.adapterRamBytes > 0 ? formatBytes(gpu.adapterRamBytes) : $t('system.gpu.sharedNotReported') }}</span>
           <template v-if="gpu.driverVersion">
-            <span class="text-text-muted">Driver</span>
+            <span class="text-text-muted">{{ $t('system.gpu.driver') }}</span>
             <span class="text-text-primary">{{ gpu.driverVersion }}</span>
           </template>
           <template v-if="i < hwInfo.gpu.length - 1">
@@ -269,17 +267,17 @@ onUnmounted(() => {
       <!-- Storage -->
       <div class="rounded-lg border border-border-default bg-surface-raised p-4 space-y-3">
         <h3 class="text-sm font-medium text-text-primary flex items-center gap-2">
-          <span class="text-base">&#x1F4BE;</span> Storage
+          <span class="text-base">&#x1F4BE;</span> {{ $t('system.storage.title') }}
         </h3>
         <div v-for="(disk, i) in hwInfo.storage" :key="i" class="space-y-2">
           <div class="grid grid-cols-[auto_1fr] gap-y-2 gap-x-4 text-xs">
-            <span class="text-text-muted">Drive</span>
+            <span class="text-text-muted">{{ $t('system.storage.drive') }}</span>
             <span class="text-text-primary">{{ disk.drive }}</span>
-            <span class="text-text-muted">Total</span>
+            <span class="text-text-muted">{{ $t('system.storage.total') }}</span>
             <span class="text-text-primary">{{ formatBytes(disk.totalBytes) }}</span>
-            <span class="text-text-muted">Free</span>
+            <span class="text-text-muted">{{ $t('system.storage.free') }}</span>
             <span class="text-text-primary">{{ formatBytes(disk.freeBytes) }}</span>
-            <span class="text-text-muted">Used</span>
+            <span class="text-text-muted">{{ $t('system.storage.used') }}</span>
             <span class="text-text-primary">
               {{ formatBytes(disk.totalBytes - disk.freeBytes) }}
               ({{ disk.totalBytes > 0 ? Math.round(((disk.totalBytes - disk.freeBytes) / disk.totalBytes) * 100) : 0 }}%)
@@ -302,7 +300,7 @@ onUnmounted(() => {
     <div class="rounded-lg border border-border-default bg-surface-raised p-4 space-y-4">
       <div class="flex items-center justify-between">
         <h3 class="text-sm font-medium text-text-primary flex items-center gap-2">
-          <span class="text-base">&#x1F4C0;</span> Browser Storage
+          <span class="text-base">&#x1F4C0;</span> {{ $t('system.browserStorage.title') }}
         </h3>
         <div class="flex items-center gap-2">
           <span
@@ -310,16 +308,16 @@ onUnmounted(() => {
             class="rounded-full px-2 py-0.5 text-[9px]"
             :class="storageStore.origin.persisted ? 'bg-success/10 text-success' : 'bg-warning/10 text-warning'"
           >
-            {{ storageStore.origin.persisted ? 'Persistent' : 'Best-effort' }}
+            {{ storageStore.origin.persisted ? $t('system.browserStorage.persistent') : $t('system.browserStorage.bestEffort') }}
           </span>
           <button
             v-if="!storageStore.loading"
             class="text-[10px] text-text-muted hover:text-text-primary transition-colors"
             @click="storageStore.refresh()"
           >
-            Refresh
+            {{ $t('system.refresh') }}
           </button>
-          <span v-else class="text-[10px] text-text-muted">Scanning...</span>
+          <span v-else class="text-[10px] text-text-muted">{{ $t('system.browserStorage.scanning') }}</span>
         </div>
       </div>
 
@@ -327,7 +325,7 @@ onUnmounted(() => {
         v-if="storageStore.origin"
         :used="storageStore.origin.usage"
         :total="storageStore.origin.quota"
-        label="IndexedDB Quota"
+        :label="$t('system.browserStorage.indexedDbQuota')"
       />
 
       <div v-if="storageStore.databases.length > 0" class="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -340,7 +338,7 @@ onUnmounted(() => {
       </div>
 
       <p v-if="storageStore.databases.length > 0" class="text-[9px] text-text-muted">
-        {{ storageStore.totalRecordCount.toLocaleString() }} total records across {{ storageStore.databases.length }} databases
+        {{ $t('system.browserStorage.totalRecords', { count: storageStore.totalRecordCount.toLocaleString(), databases: storageStore.databases.length }) }}
       </p>
     </div>
 
@@ -348,21 +346,21 @@ onUnmounted(() => {
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div class="rounded-lg border border-border-default bg-surface-raised p-4 space-y-3">
         <h3 class="text-sm font-medium text-text-primary flex items-center gap-2">
-          <span class="text-base">&#x26A1;</span> Ollama Runtime
+          <span class="text-base">&#x26A1;</span> {{ $t('system.ollama.title') }}
         </h3>
         <div class="grid grid-cols-[auto_1fr] gap-y-2 gap-x-4 text-xs">
-          <span class="text-text-muted">Status</span>
+          <span class="text-text-muted">{{ $t('system.ollama.status') }}</span>
           <span class="flex items-center gap-1.5">
             <span class="inline-block h-2 w-2 rounded-full" :class="ollamaConnected ? 'bg-success' : 'bg-error'" />
-            <span :class="ollamaConnected ? 'text-success' : 'text-error'">{{ ollamaConnected ? 'Connected' : 'Disconnected' }}</span>
+            <span :class="ollamaConnected ? 'text-success' : 'text-error'">{{ ollamaConnected ? $t('common.status.connected') : $t('common.status.disconnected') }}</span>
           </span>
-          <span class="text-text-muted">Version</span>
+          <span class="text-text-muted">{{ $t('system.ollama.version') }}</span>
           <span class="text-text-primary">{{ ollamaVersion ?? '—' }}</span>
-          <span class="text-text-muted">Installed Models</span>
+          <span class="text-text-muted">{{ $t('system.ollama.installedModels') }}</span>
           <span class="text-text-primary">{{ modelStore.models.length }}</span>
-          <span class="text-text-muted">Total Model Storage</span>
+          <span class="text-text-muted">{{ $t('system.ollama.totalModelStorage') }}</span>
           <span class="text-text-primary">{{ formatBytes(totalModelSize) }}</span>
-          <span class="text-text-muted">Models Loaded</span>
+          <span class="text-text-muted">{{ $t('system.ollama.modelsLoaded') }}</span>
           <span class="text-text-primary">{{ runningModels.length }}</span>
         </div>
       </div>
@@ -370,27 +368,27 @@ onUnmounted(() => {
       <!-- Inference Performance (compact) -->
       <div class="rounded-lg border border-border-default bg-surface-raised p-4 space-y-3">
         <h3 class="text-sm font-medium text-text-primary flex items-center gap-2">
-          <span class="text-base">&#x1F4CA;</span> Inference
-          <span class="text-[10px] text-text-muted font-normal">(this session)</span>
+          <span class="text-base">&#x1F4CA;</span> {{ $t('system.inference.title') }}
+          <span class="text-[10px] text-text-muted font-normal">({{ $t('system.inference.thisSession') }})</span>
         </h3>
 
         <div v-if="aggregate.totalSessions === 0" class="text-xs text-text-muted py-2">
-          No inference sessions yet.
+          {{ $t('system.inference.noSessions') }}
         </div>
 
         <div v-else class="grid grid-cols-[auto_1fr] gap-y-2 gap-x-4 text-xs">
-          <span class="text-text-muted">Sessions</span>
+          <span class="text-text-muted">{{ $t('system.inference.sessions') }}</span>
           <span class="text-text-primary font-medium">{{ aggregate.totalSessions }}</span>
-          <span class="text-text-muted">Avg Speed</span>
+          <span class="text-text-muted">{{ $t('system.inference.avgSpeed') }}</span>
           <span class="text-accent font-medium">{{ aggregate.avgTps.toFixed(1) }} tok/s</span>
-          <span class="text-text-muted">Tokens Generated</span>
+          <span class="text-text-muted">{{ $t('system.inference.tokensGenerated') }}</span>
           <span class="text-text-primary font-medium">{{ aggregate.totalTokensGenerated.toLocaleString() }}</span>
-          <span class="text-text-muted">Avg TTFT</span>
+          <span class="text-text-muted">{{ $t('system.inference.avgTtft') }}</span>
           <span class="text-text-primary font-medium">{{ aggregate.avgTtftMs.toFixed(0) }} ms</span>
         </div>
 
         <div v-if="aggregate.modelsUsed.length > 0" class="flex flex-wrap gap-1.5 pt-1">
-          <span class="text-[10px] text-text-muted mr-1">Models used:</span>
+          <span class="text-[10px] text-text-muted mr-1">{{ $t('system.inference.modelsUsed') }}:</span>
           <span
             v-for="name in aggregate.modelsUsed"
             :key="name"
@@ -403,19 +401,19 @@ onUnmounted(() => {
     <!-- Active Models -->
     <div class="rounded-lg border border-border-default bg-surface-raised p-4 space-y-3">
       <h3 class="text-sm font-medium text-text-primary flex items-center gap-2">
-        <span class="text-base">&#x26A1;</span> Active Models
+        <span class="text-base">&#x26A1;</span> {{ $t('system.activeModels.title') }}
       </h3>
 
       <div v-if="runningModels.length === 0" class="text-xs text-text-muted py-2">
-        No models currently loaded in memory. Send a message to load one.
+        {{ $t('system.activeModels.noModels') }}
       </div>
 
       <div v-else class="space-y-2">
         <!-- Summary bar -->
         <div class="flex gap-4 text-xs text-text-secondary">
-          <span v-if="totalVram > 0">VRAM: <span class="text-accent font-medium">{{ formatBytes(totalVram) }}</span></span>
-          <span v-if="totalRam > 0">RAM: <span class="text-text-primary font-medium">{{ formatBytes(totalRam) }}</span></span>
-          <span>Total: <span class="text-text-primary font-medium">{{ formatBytes(totalVram + totalRam) }}</span></span>
+          <span v-if="totalVram > 0">{{ $t('system.activeModels.vram') }}: <span class="text-accent font-medium">{{ formatBytes(totalVram) }}</span></span>
+          <span v-if="totalRam > 0">{{ $t('system.activeModels.ram') }}: <span class="text-text-primary font-medium">{{ formatBytes(totalRam) }}</span></span>
+          <span>{{ $t('system.activeModels.total') }}: <span class="text-text-primary font-medium">{{ formatBytes(totalVram + totalRam) }}</span></span>
         </div>
 
         <!-- Model cards -->
@@ -432,15 +430,15 @@ onUnmounted(() => {
           </div>
           <div class="text-right text-xs space-y-0.5 shrink-0">
             <p v-if="model.size_vram > 0">
-              <span class="text-text-muted">VRAM</span>
+              <span class="text-text-muted">{{ $t('system.activeModels.vram') }}</span>
               <span class="ml-1.5 text-accent font-medium">{{ formatBytes(model.size_vram) }}</span>
             </p>
             <p v-if="model.size - model.size_vram > 0">
-              <span class="text-text-muted">RAM</span>
+              <span class="text-text-muted">{{ $t('system.activeModels.ram') }}</span>
               <span class="ml-1.5 text-text-primary font-medium">{{ formatBytes(model.size - model.size_vram) }}</span>
             </p>
             <p>
-              <span class="text-text-muted">Ctx</span>
+              <span class="text-text-muted">{{ $t('system.activeModels.ctx') }}</span>
               <span class="ml-1.5 text-text-secondary">{{ model.context_length.toLocaleString() }}</span>
             </p>
           </div>
@@ -454,22 +452,22 @@ onUnmounted(() => {
     <!-- Installed Models Summary -->
     <div class="rounded-lg border border-border-default bg-surface-raised p-4 space-y-3">
       <h3 class="text-sm font-medium text-text-primary flex items-center gap-2">
-        <span class="text-base">&#x1F4E6;</span> Installed Models
+        <span class="text-base">&#x1F4E6;</span> {{ $t('system.installedModels.title') }}
       </h3>
 
       <div v-if="modelStore.models.length === 0" class="text-xs text-text-muted py-2">
-        No models installed.
+        {{ $t('system.installedModels.noModels') }}
       </div>
 
       <div v-else class="overflow-x-auto">
         <table class="w-full text-xs">
           <thead>
             <tr class="border-b border-border-default text-text-muted">
-              <th class="text-left py-1.5 pr-4 font-medium">Model</th>
-              <th class="text-left py-1.5 pr-4 font-medium">Family</th>
-              <th class="text-left py-1.5 pr-4 font-medium">Parameters</th>
-              <th class="text-left py-1.5 pr-4 font-medium">Quantization</th>
-              <th class="text-right py-1.5 font-medium">Size</th>
+              <th class="text-left py-1.5 pr-4 font-medium">{{ $t('system.installedModels.model') }}</th>
+              <th class="text-left py-1.5 pr-4 font-medium">{{ $t('system.installedModels.family') }}</th>
+              <th class="text-left py-1.5 pr-4 font-medium">{{ $t('system.installedModels.parameters') }}</th>
+              <th class="text-left py-1.5 pr-4 font-medium">{{ $t('system.installedModels.quantization') }}</th>
+              <th class="text-right py-1.5 font-medium">{{ $t('system.installedModels.size') }}</th>
             </tr>
           </thead>
           <tbody>

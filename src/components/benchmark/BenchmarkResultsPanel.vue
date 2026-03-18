@@ -134,25 +134,25 @@ const pressureCategories = computed(() => {
     <!-- X-Ray Diagnostics: Confidence vs Accuracy -->
     <div class="rounded-lg border border-border-default bg-surface-raised p-4">
       <h4 class="mb-3 text-xs font-medium uppercase tracking-wide text-text-muted">
-        Confidence vs Accuracy — X-Ray Scatter
+        {{ $t('benchmark.results.confidenceVsAccuracyScatter') }}
       </h4>
       <div class="mb-2 flex items-center justify-between text-[10px] text-text-muted">
-        <span>Confused (low conf, wrong)</span>
-        <span>Calibrated (high conf, right)</span>
+        <span>{{ $t('benchmark.results.confused') }}</span>
+        <span>{{ $t('benchmark.results.calibrated') }}</span>
       </div>
       <div class="mx-auto max-w-lg">
         <Scatter :data="scatterData" :options="scatterOptions" />
       </div>
       <div class="mt-2 flex items-center justify-between text-[10px] text-text-muted">
-        <span>Overconfident (high conf, wrong)</span>
-        <span>Lucky (low conf, right)</span>
+        <span>{{ $t('benchmark.results.overconfident') }}</span>
+        <span>{{ $t('benchmark.results.lucky') }}</span>
       </div>
     </div>
 
     <!-- Per-Category Latency Bars -->
     <div class="rounded-lg border border-border-default bg-surface-raised p-4">
       <h4 class="mb-3 text-xs font-medium uppercase tracking-wide text-text-muted">
-        Per-Category Total Time
+        {{ $t('benchmark.results.perCategoryTotalTime') }}
       </h4>
       <div class="space-y-2">
         <div v-for="cat in categories" :key="cat.category" class="flex items-center gap-3">
@@ -175,7 +175,7 @@ const pressureCategories = computed(() => {
     <!-- Context Pressure -->
     <div v-if="pressureCategories.length > 0" class="rounded-lg border border-warning/30 bg-warning/5 p-4">
       <h4 class="mb-2 text-xs font-medium uppercase tracking-wide text-warning">
-        Context Pressure — Accuracy Degradation
+        {{ $t('benchmark.results.contextPressure') }}
       </h4>
       <div class="space-y-1">
         <div v-for="pc in pressureCategories" :key="pc.category" class="flex items-center justify-between text-xs">
@@ -190,18 +190,18 @@ const pressureCategories = computed(() => {
     <!-- Category Breakdown Table -->
     <div class="rounded-lg border border-border-default bg-surface-raised p-4">
       <h4 class="mb-3 text-xs font-medium uppercase tracking-wide text-text-muted">
-        Category Breakdown
+        {{ $t('benchmark.results.categoryBreakdown') }}
       </h4>
       <div class="overflow-x-auto">
         <table class="w-full text-xs">
           <thead>
             <tr class="border-b border-border-default text-left text-text-muted">
-              <th class="pb-2 pr-4">Category</th>
-              <th class="pb-2 pr-4">Accuracy</th>
-              <th class="pb-2 pr-4">Correct</th>
-              <th class="pb-2 pr-4">Avg TTFT</th>
-              <th class="pb-2 pr-4">Avg Total</th>
-              <th class="pb-2">Avg Confidence</th>
+              <th class="pb-2 pr-4">{{ $t('benchmark.results.category') }}</th>
+              <th class="pb-2 pr-4">{{ $t('benchmark.results.accuracy') }}</th>
+              <th class="pb-2 pr-4">{{ $t('benchmark.results.correct') }}</th>
+              <th class="pb-2 pr-4">{{ $t('benchmark.results.avgTtft') }}</th>
+              <th class="pb-2 pr-4">{{ $t('benchmark.results.avgTotal') }}</th>
+              <th class="pb-2">{{ $t('benchmark.results.avgConfidence') }}</th>
             </tr>
           </thead>
           <tbody>
@@ -227,7 +227,7 @@ const pressureCategories = computed(() => {
         @click="expandedQuestions = !expandedQuestions"
       >
         <h4 class="text-xs font-medium uppercase tracking-wide text-text-muted">
-          Per-Question Detail ({{ result.questionResults.length }})
+          {{ $t('benchmark.results.perQuestionDetail') }} ({{ result.questionResults.length }})
         </h4>
         <span class="text-xs text-text-muted">{{ expandedQuestions ? '▲' : '▼' }}</span>
       </button>
@@ -240,7 +240,7 @@ const pressureCategories = computed(() => {
             :class="filterCategory === null ? 'border-accent text-accent' : 'border-border-default text-text-muted'"
             @click="filterCategory = null"
           >
-            All
+            {{ $t('benchmark.results.all') }}
           </button>
           <button
             v-for="cat in result.categories"
@@ -257,21 +257,21 @@ const pressureCategories = computed(() => {
             :class="filterCorrect === null ? 'border-accent text-accent' : 'border-border-default text-text-muted'"
             @click="filterCorrect = null"
           >
-            All
+            {{ $t('benchmark.results.all') }}
           </button>
           <button
             class="rounded-md border px-2 py-0.5 text-[10px] transition-colors"
             :class="filterCorrect === true ? 'border-success text-success' : 'border-border-default text-text-muted'"
             @click="filterCorrect = true"
           >
-            Correct
+            {{ $t('benchmark.results.correct') }}
           </button>
           <button
             class="rounded-md border px-2 py-0.5 text-[10px] transition-colors"
             :class="filterCorrect === false ? 'border-error text-error' : 'border-border-default text-text-muted'"
             @click="filterCorrect = false"
           >
-            Wrong
+            {{ $t('benchmark.results.wrong') }}
           </button>
         </div>
 
@@ -309,10 +309,10 @@ const pressureCategories = computed(() => {
               v-if="expandedThinking === qr.questionId && qr.thinkingResponse"
               class="border-t border-border-default/50 bg-surface px-3 py-2"
             >
-              <div class="mb-1 text-[10px] font-medium uppercase tracking-wide text-warning">Reasoning</div>
+              <div class="mb-1 text-[10px] font-medium uppercase tracking-wide text-warning">{{ $t('benchmark.results.reasoning') }}</div>
               <div class="max-h-[200px] overflow-auto whitespace-pre-wrap font-mono text-[10px] leading-relaxed text-text-muted italic">{{ qr.thinkingResponse }}</div>
               <div v-if="qr.fullResponse" class="mt-2">
-                <div class="mb-1 text-[10px] font-medium uppercase tracking-wide text-accent">Response</div>
+                <div class="mb-1 text-[10px] font-medium uppercase tracking-wide text-accent">{{ $t('benchmark.results.response') }}</div>
                 <div class="font-mono text-[10px] text-text-secondary">{{ qr.fullResponse }}</div>
               </div>
             </div>

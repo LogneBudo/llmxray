@@ -29,7 +29,7 @@ const phaseColors: Record<string, string> = {
 
 <template>
   <div v-if="pairs.length === 0" class="rounded-lg bg-surface-overlay p-8 text-center">
-    <p class="text-sm text-text-muted">No training pairs match your filters.</p>
+    <p class="text-sm text-text-muted">{{ $t('training.table.noResults') }}</p>
   </div>
 
   <div v-else class="space-y-1">
@@ -68,7 +68,7 @@ const phaseColors: Record<string, string> = {
           class="shrink-0 rounded-full px-1.5 py-0.5 text-[9px]"
           :class="pair.accepted ? 'bg-success/10 text-success' : 'bg-error/10 text-error'"
         >
-          {{ pair.accepted ? 'accepted' : 'rejected' }}
+          {{ pair.accepted ? $t('training.dashboard.accepted') : $t('training.dashboard.rejected') }}
         </span>
 
         <!-- Tags -->

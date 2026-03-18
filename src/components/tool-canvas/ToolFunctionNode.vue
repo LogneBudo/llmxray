@@ -518,18 +518,18 @@ function applySelection() {
 
     <!-- Header -->
     <div class="block-header">
-      <span class="block-badge">LLM Tool</span>
+      <span class="block-badge">{{ $t('tools.node.badge') }}</span>
       <input
         class="block-name-input"
         :value="data.name"
         @change="(e: Event) => emitField('name', (e.target as HTMLInputElement).value)"
-        placeholder="function_name"
+        :placeholder="$t('tools.node.functionNamePlaceholder')"
       />
       <button
         class="ai-header-btn"
         :class="{ active: intentOpen }"
         :disabled="isDraftLoading"
-        title="Draft with AI"
+        :title="$t('tools.node.draftWithAi')"
         @click.stop="intentOpen = !intentOpen"
       >
         {{ isDraftLoading ? '...' : '&#10024;' }}
@@ -537,7 +537,7 @@ function applySelection() {
       <button
         class="ai-header-btn ai-analyze"
         :disabled="insightsLoading || !data.body.trim()"
-        title="AI Insights"
+        :title="$t('tools.node.aiInsights')"
         @click.stop="handleAnalyze"
       >
         {{ insightsLoading ? '...' : '&#128269;' }}
@@ -572,7 +572,7 @@ function applySelection() {
     <div v-if="expandedInsight" class="insight-detail nodrag nowheel">
       <p class="insight-desc">{{ expandedInsight.description }}</p>
       <template v-if="expandedInsight.suggestedCode">
-        <p class="insight-suggestion-label">AI-suggested fix (review before applying):</p>
+        <p class="insight-suggestion-label">{{ $t('tools.node.insightSuggestionLabel') }}</p>
         <CodeEditor
           :model-value="expandedInsight.suggestedCode"
           language="typescript"
@@ -586,9 +586,9 @@ function applySelection() {
           class="insight-apply"
           @click.stop.prevent="applyInsightFix"
         >
-          Apply fix
+          {{ $t('tools.node.applyFix') }}
         </button>
-        <button class="insight-close" @click.stop="expandedInsight = null">&times; Close</button>
+        <button class="insight-close" @click.stop="expandedInsight = null">&times; {{ $t('tools.node.closeInsight') }}</button>
       </div>
     </div>
 
@@ -601,20 +601,20 @@ function applySelection() {
         v-if="data.executionStatus === 'executing'"
         class="exec-badge exec-executing"
       >
-        Running...
+        {{ $t('tools.node.running') }}
       </span>
       <button
         v-else-if="data.executionStatus === 'completed'"
         class="exec-badge exec-completed"
         @click.stop="showResult = !showResult"
       >
-        &#10003; {{ data.lastDurationMs != null ? `${data.lastDurationMs}ms` : 'Done' }}
+        &#10003; {{ data.lastDurationMs != null ? `${data.lastDurationMs}ms` : $t('tools.node.done') }}
       </button>
       <span
         v-else-if="data.executionStatus === 'failed'"
         class="exec-badge exec-failed"
       >
-        &#10007; Failed
+        &#10007; {{ $t('tools.node.failed') }}
       </span>
       <button
         v-if="data.executionStatus === 'failed'"
@@ -622,7 +622,7 @@ function applySelection() {
         :disabled="fixLoading"
         @click.stop="handleAiFix"
       >
-        {{ fixLoading ? '...' : 'AI Fix' }}
+        {{ fixLoading ? '...' : $t('tools.node.aiFix') }}
       </button>
     </div>
 
@@ -640,22 +640,22 @@ function applySelection() {
 
     <!-- Description -->
     <div class="block-section">
-      <label>Description</label>
+      <label>{{ $t('tools.node.description') }}</label>
       <input
         class="block-input"
         :value="data.description"
         @change="(e: Event) => emitField('description', (e.target as HTMLInputElement).value)"
-        placeholder="What does this tool do?"
+        :placeholder="$t('tools.node.descriptionPlaceholder')"
       />
     </div>
 
     <!-- AI Intent input -->
     <div v-if="intentOpen" class="block-section nodrag nowheel">
-      <label>Intent</label>
+      <label>{{ $t('tools.node.intent') }}</label>
       <textarea
         v-model="intentText"
         class="intent-textarea"
-        placeholder="Describe what this tool should do..."
+        :placeholder="$t('tools.node.intentPlaceholder')"
         rows="2"
       />
       <div class="intent-actions">
@@ -664,7 +664,7 @@ function applySelection() {
           :disabled="isDraftLoading || !intentText.trim()"
           @click="handleDraftGenerate"
         >
-          {{ isDraftLoading ? 'Generating...' : 'Generate' }}
+          {{ isDraftLoading ? $t('tools.node.generating') : $t('tools.node.generate') }}
         </button>
       </div>
       <div v-if="draft?.error" class="intent-error">{{ draft.error }}</div>
@@ -673,33 +673,33 @@ function applySelection() {
     <!-- Parameters -->
     <div class="block-section">
       <div class="param-header">
-        <label>Parameters</label>
-        <button class="param-add-btn" @click="addParam">+ Add</button>
+        <label>{{ $t('tools.node.parameters') }}</label>
+        <button class="param-add-btn" @click="addParam">{{ $t('tools.node.addParam') }}</button>
       </div>
       <div v-for="(param, i) in data.parameters" :key="i" class="param-row">
         <input
           class="param-name"
           :value="param.name"
           @change="(e: Event) => updateParam(i, 'name', (e.target as HTMLInputElement).value)"
-          placeholder="name"
+          :placeholder="$t('tools.node.paramNamePlaceholder')"
         />
         <input
           class="param-type"
           :value="param.type"
           @change="(e: Event) => updateParam(i, 'type', (e.target as HTMLInputElement).value)"
-          placeholder="type"
+          :placeholder="$t('tools.node.paramTypePlaceholder')"
         />
         <button class="param-remove-btn" @click="removeParam(i)">&times;</button>
       </div>
-      <div v-if="data.parameters.length === 0" class="param-empty">No parameters</div>
+      <div v-if="data.parameters.length === 0" class="param-empty">{{ $t('tools.node.noParameters') }}</div>
     </div>
 
     <!-- Probe & Pick -->
     <div class="block-section probe-section">
       <div class="probe-toggle" @click="probeOpen = !probeOpen">
         <span class="toggle-arrow" :class="{ open: probeOpen }">&#9654;</span>
-        <label>Probe &amp; Pick</label>
-        <span class="probe-badge">API</span>
+        <label>{{ $t('tools.node.probeAndPick') }}</label>
+        <span class="probe-badge">{{ $t('tools.node.apiBadge') }}</span>
       </div>
 
       <div v-if="probeOpen" class="probe-panel nodrag nowheel">
@@ -714,7 +714,7 @@ function applySelection() {
           <input
             v-model="probeUrl"
             class="block-input probe-url"
-            placeholder="https://api.example.com/..."
+            :placeholder="$t('tools.node.urlPlaceholder')"
             @keydown.enter="runProbe"
           />
           <button
@@ -722,7 +722,7 @@ function applySelection() {
             :disabled="probePhase === 'discovering' || !probeUrl.trim()"
             @click="runProbe"
           >
-            {{ probePhase === 'discovering' ? '...' : 'Probe' }}
+            {{ probePhase === 'discovering' ? '...' : $t('tools.node.probe') }}
           </button>
         </div>
 
@@ -752,22 +752,22 @@ function applySelection() {
         <!-- Custom Headers -->
         <div class="config-section">
           <div class="config-header">
-            <span class="config-label">Headers</span>
-            <button class="param-add-btn" @click="addHeader">+ Add</button>
+            <span class="config-label">{{ $t('tools.node.headers') }}</span>
+            <button class="param-add-btn" @click="addHeader">{{ $t('tools.node.addHeader') }}</button>
           </div>
           <div v-for="(_h, i) in customHeaders" :key="i" class="param-row">
-            <input class="param-name" v-model="customHeaders[i]!.key" placeholder="Header name" />
+            <input class="param-name" v-model="customHeaders[i]!.key" :placeholder="$t('tools.node.headerNamePlaceholder')" />
             <input
               class="param-type"
               :class="{ 'secret-masked': secretHeaderKeys.has(customHeaders[i]!.key.trim()) }"
               v-model="customHeaders[i]!.value"
-              placeholder="value"
+              :placeholder="$t('tools.node.headerValuePlaceholder')"
             />
             <button
               class="secret-toggle-btn"
               :class="{ active: secretHeaderKeys.has(customHeaders[i]!.key.trim()) }"
               @click="toggleSecret(i)"
-              title="Mark as secret (use env var in generated code)"
+              :title="$t('tools.node.markAsSecret')"
             >
               &#x1F512;
             </button>
@@ -777,7 +777,7 @@ function applySelection() {
 
         <!-- Request body for POST/PUT -->
         <div v-if="httpMethod === 'POST' || httpMethod === 'PUT'" class="config-section">
-          <span class="config-label">Request Body</span>
+          <span class="config-label">{{ $t('tools.node.requestBody') }}</span>
           <CodeEditor
             v-model="requestBody"
             language="json"
@@ -789,11 +789,11 @@ function applySelection() {
         <!-- Endpoint Picker -->
         <template v-if="parsedSpec && parsedSpec.endpoints.length > 0">
           <div class="ep-section">
-            <span class="config-label">Endpoints</span>
+            <span class="config-label">{{ $t('tools.node.endpoints') }}</span>
             <input
               v-model="endpointSearch"
               class="block-input ep-search"
-              placeholder="Search endpoints..."
+              :placeholder="$t('tools.node.searchEndpoints')"
             />
             <div class="ep-list">
               <div
@@ -810,7 +810,7 @@ function applySelection() {
                 <span v-if="ep.summary" class="ep-summary">{{ ep.summary }}</span>
               </div>
               <div v-if="filteredEndpoints.length === 0" class="param-empty">
-                No matching endpoints
+                {{ $t('tools.node.noMatchingEndpoints') }}
               </div>
             </div>
           </div>
@@ -825,7 +825,7 @@ function applySelection() {
               :disabled="autoMapLoading"
               @click="handleAutoMap"
             >
-              {{ autoMapLoading ? 'Thinking...' : 'AI Suggest' }}
+              {{ autoMapLoading ? $t('tools.node.thinking') : $t('tools.node.aiSuggest') }}
             </button>
           </div>
 
@@ -847,11 +847,9 @@ function applySelection() {
 
           <div v-if="selectedPaths.size > 0" class="probe-footer">
             <span class="probe-count"
-              >{{ selectedPaths.size }} field{{
-                selectedPaths.size !== 1 ? 's' : ''
-              }}</span
+              >{{ selectedPaths.size }} {{ selectedPaths.size !== 1 ? $t('tools.node.fields') : $t('tools.node.field') }}</span
             >
-            <button class="probe-apply-btn" @click="applySelection">Apply</button>
+            <button class="probe-apply-btn" @click="applySelection">{{ $t('tools.node.apply') }}</button>
           </div>
         </template>
 
@@ -869,12 +867,12 @@ function applySelection() {
       class="block-section mappings-section"
     >
       <div class="mappings-header">
-        <label>Mappings</label>
+        <label>{{ $t('tools.node.mappings') }}</label>
         <span
           v-if="hasStaleMappings"
           class="stale-badge"
           title="Some mapped fields are missing from the function body"
-          >Out of Sync</span
+          >{{ $t('tools.node.outOfSync') }}</span
         >
       </div>
       <div class="mappings-list">
@@ -892,7 +890,7 @@ function applySelection() {
 
     <!-- Body -->
     <div class="block-section nodrag nowheel">
-      <label>Body (TypeScript)</label>
+      <label>{{ $t('tools.node.bodyLabel') }}</label>
       <!-- Draft overlay -->
       <template v-if="draft && !draft.loading && draft.code">
         <AiDiffView
@@ -909,7 +907,7 @@ function applySelection() {
           :model-value="data.body"
           language="typescript"
           min-height="100px"
-          placeholder="// Tool implementation..."
+          :placeholder="$t('tools.node.bodyPlaceholder')"
           @update:model-value="(v: string) => emitField('body', v)"
         />
       </template>

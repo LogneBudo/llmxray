@@ -55,13 +55,13 @@ function barColor(idx: number): string {
 
 <template>
   <div v-if="entries.length >= 2" class="rounded-lg border border-border-default bg-surface-raised p-4 space-y-4">
-    <h4 class="text-xs font-medium text-text-secondary">Performance Comparison</h4>
+    <h4 class="text-xs font-medium text-text-secondary">{{ $t('comparison.metrics.performanceComparison') }}</h4>
 
     <!-- TTFT (lower is better) -->
     <div class="space-y-1.5">
       <div class="flex items-center justify-between">
-        <span class="text-[11px] text-text-muted">Time to First Token</span>
-        <span class="text-[10px] text-text-muted">lower is better</span>
+        <span class="text-[11px] text-text-muted">{{ $t('comparison.metrics.timeToFirstToken') }}</span>
+        <span class="text-[10px] text-text-muted">{{ $t('comparison.metrics.lowerBetter') }}</span>
       </div>
       <div v-for="(entry, idx) in entries" :key="entry.slotId + '-ttft'" class="flex items-center gap-2">
         <span class="text-[10px] text-text-secondary w-28 truncate shrink-0">{{ entry.label }}</span>
@@ -79,8 +79,8 @@ function barColor(idx: number): string {
     <!-- Tokens/sec (higher is better) -->
     <div class="space-y-1.5">
       <div class="flex items-center justify-between">
-        <span class="text-[11px] text-text-muted">Tokens/sec</span>
-        <span class="text-[10px] text-text-muted">higher is better</span>
+        <span class="text-[11px] text-text-muted">{{ $t('comparison.metrics.tokensPerSec') }}</span>
+        <span class="text-[10px] text-text-muted">{{ $t('comparison.metrics.higherBetter') }}</span>
       </div>
       <div v-for="(entry, idx) in entries" :key="entry.slotId + '-tps'" class="flex items-center gap-2">
         <span class="text-[10px] text-text-secondary w-28 truncate shrink-0">{{ entry.label }}</span>
@@ -98,7 +98,7 @@ function barColor(idx: number): string {
     <!-- Total tokens -->
     <div class="space-y-1.5">
       <div class="flex items-center justify-between">
-        <span class="text-[11px] text-text-muted">Total Tokens</span>
+        <span class="text-[11px] text-text-muted">{{ $t('comparison.metrics.totalTokens') }}</span>
       </div>
       <div v-for="(entry, idx) in entries" :key="entry.slotId + '-tokens'" class="flex items-center gap-2">
         <span class="text-[10px] text-text-secondary w-28 truncate shrink-0">{{ entry.label }}</span>

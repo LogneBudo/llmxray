@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { getMatchingCommands, getCommandsByCategory } from '@/services/slash-command-registry'
 import type { SlashCommand } from '@/types/slash-command'
+
+const { t } = useI18n()
 
 const props = defineProps<{
   filter: string
@@ -57,11 +60,11 @@ function handleKeydown(e: KeyboardEvent) {
 
 defineExpose({ handleKeydown })
 
-const categoryLabel: Record<string, string> = {
-  chat: 'Chat & Conversation',
-  settings: 'Model & Settings',
-  navigation: 'Features & Navigation',
-}
+const categoryLabel = computed<Record<string, string>>(() => ({
+  chat: t('dashboard.slashCommands.chatConversation'),
+  settings: t('dashboard.slashCommands.modelSettings'),
+  navigation: t('dashboard.slashCommands.featuresNavigation'),
+}))
 </script>
 
 <template>

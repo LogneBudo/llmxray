@@ -14,11 +14,11 @@ function saveGoogleClientId() {
 <template>
   <div class="space-y-6">
     <div class="rounded-lg border border-border-default bg-surface-raised p-4 space-y-4">
-      <h3 class="text-sm font-medium text-text-primary">Google Integration</h3>
-      <p class="text-[10px] text-text-muted">Connect your Google account to enable Calendar and Gmail tools in the Tool Workshop.</p>
+      <h3 class="text-sm font-medium text-text-primary">{{ $t('settings.integrations.googleIntegration') }}</h3>
+      <p class="text-[10px] text-text-muted">{{ $t('settings.integrations.googleIntegrationDesc') }}</p>
 
       <div>
-        <label class="block text-xs text-text-secondary mb-1">OAuth2 Client ID</label>
+        <label class="block text-xs text-text-secondary mb-1">{{ $t('settings.integrations.oauthClientId') }}</label>
         <div class="flex gap-3">
           <input
             v-model="googleClientIdInput"
@@ -29,7 +29,7 @@ function saveGoogleClientId() {
             class="rounded-lg bg-surface-overlay px-4 py-2 text-sm text-text-primary hover:bg-border-default transition-colors"
             @click="saveGoogleClientId"
           >
-            Save
+            {{ $t('common.actions.save') }}
           </button>
         </div>
       </div>
@@ -44,9 +44,9 @@ function saveGoogleClientId() {
           }"
         />
         <span class="text-text-secondary">
-          <template v-if="googleAuth.isAuthenticating">Authenticating...</template>
-          <template v-else-if="googleAuth.connected">Connected as <span class="text-text-primary font-medium">{{ googleAuth.userEmail ?? 'unknown' }}</span></template>
-          <template v-else>Not connected</template>
+          <template v-if="googleAuth.isAuthenticating">{{ $t('settings.integrations.authenticating') }}</template>
+          <template v-else-if="googleAuth.connected">{{ $t('settings.integrations.connectedAs') }} <span class="text-text-primary font-medium">{{ googleAuth.userEmail ?? 'unknown' }}</span></template>
+          <template v-else>{{ $t('settings.integrations.notConnected') }}</template>
         </span>
       </div>
 
@@ -59,14 +59,14 @@ function saveGoogleClientId() {
           :disabled="!googleAuth.clientId || googleAuth.isAuthenticating"
           @click="googleAuth.connect()"
         >
-          Connect Google Account
+          {{ $t('settings.integrations.connectGoogleAccount') }}
         </button>
         <button
           v-if="googleAuth.connected"
           class="rounded-lg border border-error/30 px-4 py-2 text-sm text-error hover:bg-error/10 transition-colors"
           @click="googleAuth.disconnect()"
         >
-          Disconnect
+          {{ $t('settings.integrations.disconnect') }}
         </button>
       </div>
 
@@ -75,7 +75,7 @@ function saveGoogleClientId() {
           class="text-xs text-accent hover:text-accent-hover transition-colors"
           @click="showSetupGuide = !showSetupGuide"
         >
-          {{ showSetupGuide ? 'Hide' : 'Show' }} setup instructions
+          {{ showSetupGuide ? $t('settings.integrations.hideSetup') : $t('settings.integrations.showSetup') }}
         </button>
 
         <div v-if="showSetupGuide" class="mt-3 space-y-2 text-xs text-text-secondary">

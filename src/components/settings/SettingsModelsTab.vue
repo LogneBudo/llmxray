@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
+import { RefreshCw, Trash2 } from 'lucide-vue-next'
 import { useModelStore } from '@/stores/model-store'
 import { ollamaClient } from '@/services/ollama-client'
 import { formatBytes } from '@/utils/format'
@@ -144,21 +145,22 @@ onMounted(() => {
     <div class="rounded-lg border border-border-default bg-surface-raised p-4 space-y-4">
       <div class="flex items-center justify-between">
         <h3 class="text-sm font-medium text-text-primary">
-          Installed Models
+          {{ $t('settings.models.installedModels') }}
           <span class="ml-1 text-text-muted">({{ modelStore.models.length }})</span>
         </h3>
         <button
           class="rounded-lg px-3 py-1.5 text-xs text-text-secondary hover:bg-surface-overlay hover:text-text-primary transition-colors"
           @click="modelStore.fetchModels()"
         >
-          Refresh
+          <RefreshCw class="h-3.5 w-3.5" />
+          {{ $t('settings.models.refresh') }}
         </button>
       </div>
 
       <p v-if="deleteError" class="text-xs text-error">{{ deleteError }}</p>
 
       <div v-if="modelStore.models.length === 0" class="py-4 text-center text-sm text-text-muted">
-        No models installed. Pull one from the catalog below.
+        {{ $t('settings.models.noModelsInstalled') }}
       </div>
 
       <div v-else class="space-y-1">
@@ -184,17 +186,15 @@ onMounted(() => {
             class="shrink-0 rounded-lg border border-error/30 px-2.5 py-1 text-[10px] text-error hover:bg-error/10 transition-colors"
             @click="handleDelete(model.name)"
           >
-            Confirm delete?
+            {{ $t('settings.models.confirmDeletePrompt') }}
           </button>
           <button
             v-else
             class="shrink-0 rounded p-1 text-text-muted hover:text-error transition-colors"
-            title="Delete model"
+            :title="$t('settings.models.delete')"
             @click="handleDelete(model.name)"
           >
-            <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-            </svg>
+            <Trash2 class="h-3.5 w-3.5" />
           </button>
         </div>
       </div>
@@ -202,7 +202,7 @@ onMounted(() => {
 
     <!-- Download Catalog -->
     <div class="rounded-lg border border-border-default bg-surface-raised p-4 space-y-4">
-      <h3 class="text-sm font-medium text-text-primary">Download Models</h3>
+      <h3 class="text-sm font-medium text-text-primary">{{ $t('settings.models.downloadModels') }}</h3>
 
       <!-- Category filter -->
       <div class="flex flex-wrap gap-1.5">
@@ -225,7 +225,7 @@ onMounted(() => {
       <input
         v-model="searchQuery"
         type="text"
-        placeholder="Search models..."
+        :placeholder="$t('settings.models.searchModels')"
         class="w-full rounded-lg border border-border-default bg-surface px-3 py-2 text-sm text-text-primary placeholder-text-muted outline-none focus:border-accent"
       />
 
@@ -233,7 +233,7 @@ onMounted(() => {
 
       <!-- Catalog entries -->
       <div v-if="filteredEntries.length === 0" class="py-4 text-center text-sm text-text-muted">
-        No models match your search.
+        {{ $t('settings.models.noModelsMatch') }}
       </div>
 
       <div v-else class="space-y-2">
@@ -250,7 +250,7 @@ onMounted(() => {
                   v-if="isInstalled(entry.name, getSelectedVariant(entry).tag)"
                   class="rounded-full bg-success/10 px-1.5 py-0.5 text-[9px] text-success"
                 >
-                  Installed
+                  {{ $t('settings.models.installed') }}
                 </span>
               </div>
               <p class="text-[10px] text-text-muted mt-0.5">{{ entry.description }}</p>
@@ -278,7 +278,7 @@ onMounted(() => {
                 class="rounded-lg bg-accent px-3 py-1 text-[10px] text-white hover:bg-accent-hover disabled:opacity-40 transition-colors"
                 @click="pullCatalogEntry(entry)"
               >
-                Pull
+                {{ $t('settings.models.pull') }}
               </button>
             </div>
           </div>
@@ -303,7 +303,7 @@ onMounted(() => {
 
       <!-- Free-text pull -->
       <div class="border-t border-border-default pt-4">
-        <p class="mb-2 text-xs text-text-muted">Pull any model by name</p>
+        <p class="mb-2 text-xs text-text-muted">{{ $t('settings.models.pullByName') }}</p>
         <div class="flex gap-2">
           <input
             v-model="customPullName"
@@ -317,7 +317,7 @@ onMounted(() => {
             class="rounded-lg bg-accent px-4 py-2 text-sm text-white hover:bg-accent-hover disabled:opacity-40 transition-colors"
             @click="pullCustomModel"
           >
-            Pull
+            {{ $t('settings.models.pull') }}
           </button>
         </div>
         <!-- Custom pull progress -->

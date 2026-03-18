@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { Trash2 } from 'lucide-vue-next'
 import { useToolDefinitionStore } from '@/stores/tool-definition-store'
 import type { OllamaToolDefinition } from '@/types/ollama'
 import ToolDefinitionBuilder from './ToolDefinitionBuilder.vue'
@@ -41,7 +42,7 @@ const editingDefinition = () => {
     <div v-if="showBuilder" class="border-b border-border-default">
       <div class="flex items-center justify-between px-4 pt-3">
         <span class="text-xs font-medium text-text-secondary">
-          {{ editingId ? 'Edit Tool' : 'New Tool' }}
+          {{ editingId ? $t('tools.list.editTool') : $t('tools.list.newTool') }}
         </span>
       </div>
       <ToolDefinitionBuilder
@@ -77,7 +78,7 @@ const editingDefinition = () => {
 
         <button
           class="shrink-0 text-text-muted hover:text-text-primary transition-colors"
-          title="Edit"
+          :title="$t('common.actions.edit')"
           @click="startEdit(tool.id)"
         >
           <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -88,25 +89,22 @@ const editingDefinition = () => {
 
         <button
           class="shrink-0 text-text-muted hover:text-error transition-colors"
-          title="Delete"
+          :title="$t('common.actions.delete')"
           @click="toolStore.removeDefinition(tool.id)"
         >
-          <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="3 6 5 6 21 6" />
-            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-          </svg>
+          <Trash2 class="h-3.5 w-3.5" />
         </button>
       </div>
 
       <p v-if="toolStore.allDefinitions.length === 0" class="px-3 py-2 text-xs text-text-muted">
-        No tools defined yet.
+        {{ $t('tools.list.noTools') }}
       </p>
 
       <button
         class="flex w-full items-center justify-center gap-1 rounded-lg py-2 text-xs text-accent hover:bg-accent/10 transition-colors"
         @click="showBuilder = true"
       >
-        + Add Tool
+        {{ $t('tools.list.addTool') }}
       </button>
     </div>
   </div>

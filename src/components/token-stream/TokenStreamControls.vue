@@ -79,7 +79,7 @@ onMounted(async () => {
       class="w-full rounded-lg border border-border-default bg-surface px-4 py-3 text-sm text-text-primary placeholder-text-muted focus:border-accent focus:outline-none resize-none"
       :disabled="isStreaming"
       rows="3"
-      placeholder="Enter your prompt..."
+      :placeholder="$t('session.tokenStream.promptPlaceholder')"
       @keydown.ctrl.enter="!isStreaming && prompt.trim() && selectedModel && emit('run')"
     />
   </div>

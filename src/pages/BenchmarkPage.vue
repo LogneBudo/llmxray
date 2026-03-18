@@ -58,9 +58,9 @@ onMounted(() => {
   <div class="mx-auto max-w-6xl space-y-6 p-6">
     <div class="flex items-center justify-between">
       <div>
-        <h1 class="text-lg font-bold text-text-primary">Surgical Benchmark</h1>
+        <h1 class="text-lg font-bold text-text-primary">{{ $t('benchmark.surgicalBenchmark') }}</h1>
         <p class="text-xs text-text-muted">
-          Evaluate models with curated question sets — real logprob confidence, per-category diagnostics
+          {{ $t('benchmark.surgicalBenchmarkDesc') }}
         </p>
       </div>
     </div>
@@ -79,14 +79,14 @@ onMounted(() => {
     <section v-if="shownResult">
       <div class="flex items-center justify-between mb-3">
         <h2 class="text-sm font-medium text-text-primary">
-          {{ detailResult ? 'Result Details' : 'Latest Result' }} — {{ shownResult.modelName }}
+          {{ detailResult ? $t('benchmark.resultDetails') : $t('benchmark.latestResult') }} — {{ shownResult.modelName }}
         </h2>
         <button
           v-if="detailResult"
           class="rounded-md border border-border-default px-2 py-1 text-xs text-text-muted transition-colors hover:text-text-primary"
           @click="closeDetailView()"
         >
-          Close
+          {{ $t('common.actions.close') }}
         </button>
       </div>
       <BenchmarkResultsPanel
@@ -97,7 +97,7 @@ onMounted(() => {
 
     <!-- Comparison Ledger -->
     <section v-if="hasSavedResults">
-      <h2 class="mb-3 text-sm font-medium text-text-primary">Comparison Ledger</h2>
+      <h2 class="mb-3 text-sm font-medium text-text-primary">{{ $t('benchmark.comparisonLedger') }}</h2>
       <BenchmarkComparisonLedger @view-details="onViewDetails" @resume="onResume" />
     </section>
 

@@ -99,7 +99,7 @@ function handleSave() {
 <template>
   <div class="space-y-4 p-4">
     <div>
-      <label class="mb-1 block text-xs font-medium text-text-secondary">Function Name</label>
+      <label class="mb-1 block text-xs font-medium text-text-secondary">{{ $t('tools.builder.functionName') }}</label>
       <input
         v-model="name"
         type="text"
@@ -109,24 +109,24 @@ function handleSave() {
     </div>
 
     <div>
-      <label class="mb-1 block text-xs font-medium text-text-secondary">Description</label>
+      <label class="mb-1 block text-xs font-medium text-text-secondary">{{ $t('tools.builder.description') }}</label>
       <textarea
         v-model="description"
         rows="2"
-        placeholder="Get the current weather for a given location"
+        :placeholder="$t('tools.builder.descriptionPlaceholder')"
         class="w-full resize-y rounded-lg border border-border-default bg-surface px-3 py-1.5 text-sm text-text-primary outline-none focus:border-accent"
       />
     </div>
 
     <!-- Toggle: visual builder vs raw JSON -->
     <div class="flex items-center gap-2">
-      <span class="text-xs text-text-secondary">Parameters</span>
+      <span class="text-xs text-text-secondary">{{ $t('tools.builder.parameters') }}</span>
       <button
         class="ml-auto rounded px-2 py-0.5 text-[10px] transition-colors"
         :class="showRawJson ? 'bg-accent/10 text-accent' : 'text-text-muted hover:text-text-primary'"
         @click="showRawJson = !showRawJson"
       >
-        {{ showRawJson ? 'Visual Builder' : 'Raw JSON' }}
+        {{ showRawJson ? $t('tools.builder.visualBuilder') : $t('tools.builder.rawJson') }}
       </button>
     </div>
 
@@ -152,7 +152,7 @@ function handleSave() {
         class="rounded-lg px-3 py-1.5 text-xs text-accent hover:bg-accent/10 transition-colors"
         @click="addParameter"
       >
-        + Add Parameter
+        {{ $t('tools.builder.addParameter') }}
       </button>
     </div>
 
@@ -162,14 +162,14 @@ function handleSave() {
         class="rounded-lg px-3 py-1.5 text-xs text-text-secondary hover:text-text-primary transition-colors"
         @click="$emit('cancel')"
       >
-        Cancel
+        {{ $t('common.actions.cancel') }}
       </button>
       <button
         :disabled="!isValid"
         class="rounded-lg bg-accent px-4 py-1.5 text-xs text-white transition-colors hover:bg-accent-hover disabled:opacity-30 disabled:cursor-not-allowed"
         @click="handleSave"
       >
-        Save Tool
+        {{ $t('tools.builder.saveTool') }}
       </button>
     </div>
   </div>

@@ -91,7 +91,7 @@ const phases: Array<{ value: AiPhase | ''; label: string }> = [
     <input
       :value="filters.search"
       type="text"
-      placeholder="Search prompts..."
+      :placeholder="$t('training.filters.searchPrompts')"
       class="flex-1 min-w-[150px] rounded-lg border border-border-default bg-surface px-2.5 py-1.5 text-xs text-text-primary placeholder-text-muted outline-none focus:border-accent"
       @input="patch({ search: ($event.target as HTMLInputElement).value })"
     />

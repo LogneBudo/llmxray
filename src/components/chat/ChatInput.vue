@@ -4,6 +4,7 @@ import { useModelStore } from '@/stores/model-store'
 import { useFileAttachment } from '@/composables/useFileAttachment'
 import { ACCEPTED_FILE_TYPES } from '@/types/attachment'
 import type { ChatAttachment } from '@/types/attachment'
+import { Paperclip, Eye, Slash, Send } from 'lucide-vue-next'
 import SlashCommandDropdown from './SlashCommandDropdown.vue'
 import AttachmentPreview from './AttachmentPreview.vue'
 import type { SlashCommand } from '@/types/slash-command'
@@ -167,7 +168,7 @@ function handlePaste(e: ClipboardEvent) {
       v-if="isDragging"
       class="pointer-events-none absolute inset-0 z-10 flex items-center justify-center rounded-xl border-2 border-dashed border-accent bg-accent/5"
     >
-      <span class="text-sm text-accent">Drop files to attach</span>
+      <span class="text-sm text-accent">{{ $t('dashboard.dropZone') }}</span>
     </div>
 
     <!-- Slash command dropdown -->
@@ -205,22 +206,17 @@ function handlePaste(e: ClipboardEvent) {
         <button
           :disabled="isStreaming"
           class="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-text-muted transition-colors hover:bg-surface-overlay hover:text-text-primary disabled:opacity-30"
-          :title="isVisionModel ? 'Attach files or images' : 'Attach files'"
+          :title="isVisionModel ? $t('dashboard.input.attachFilesVision') : $t('dashboard.input.attachFiles')"
           @click="triggerFileInput"
         >
-          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
-          </svg>
+          <Paperclip class="h-4 w-4" />
           <!-- Vision badge -->
           <span
             v-if="isVisionModel"
             class="absolute -right-0.5 -top-0.5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-success text-[8px] text-white"
-            title="Vision model — can process images"
+            :title="$t('dashboard.input.visionBadge')"
           >
-            <svg class="h-2.5 w-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-              <circle cx="12" cy="12" r="3" />
-            </svg>
+            <Eye class="h-2.5 w-2.5" :stroke-width="3" />
           </span>
         </button>
 
@@ -228,12 +224,10 @@ function handlePaste(e: ClipboardEvent) {
         <button
           :disabled="isStreaming"
           class="flex h-8 shrink-0 items-center justify-center rounded-lg px-1.5 text-text-muted transition-colors hover:bg-surface-overlay hover:text-text-primary disabled:opacity-30"
-          title="Commands"
+          :title="$t('dashboard.input.commands')"
           @click="openSlashCommands"
         >
-          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-            <line x1="17" y1="4" x2="7" y2="20" />
-          </svg>
+          <Slash class="h-4 w-4" />
         </button>
 
         <textarea
@@ -242,7 +236,7 @@ function handlePaste(e: ClipboardEvent) {
           :disabled="isStreaming"
           rows="1"
           class="flex-1 resize-none bg-transparent px-1 py-1 text-sm text-text-primary placeholder-text-muted outline-none disabled:opacity-50"
-          :placeholder="isVisionModel ? 'Send a message or paste/drop an image...' : 'Send a message... (Shift+Enter for new line)'"
+          :placeholder="isVisionModel ? $t('dashboard.input.placeholderVision') : $t('dashboard.input.placeholder')"
           @keydown="handleKeydown"
           @input="autoResize"
           @paste="handlePaste"
@@ -251,7 +245,7 @@ function handlePaste(e: ClipboardEvent) {
         <button
           v-if="isStreaming"
           class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-error text-white transition-colors hover:bg-error/80"
-          title="Stop generating"
+          :title="$t('dashboard.input.stopGenerating')"
           @click="$emit('cancel')"
         >
           <span class="inline-block h-2.5 w-2.5 rounded-sm bg-white" />
@@ -260,12 +254,10 @@ function handlePaste(e: ClipboardEvent) {
           v-else
           :disabled="!canSend || !selectedModel"
           class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-accent text-white transition-colors hover:bg-accent-hover disabled:opacity-30 disabled:cursor-not-allowed"
-          title="Send message"
+          :title="$t('dashboard.input.sendMessage')"
           @click="sendMessage"
         >
-          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
-          </svg>
+          <Send class="h-4 w-4" />
         </button>
       </div>
     </div>

@@ -62,11 +62,11 @@ watch(
             class="rounded border px-1 py-px text-[9px] font-medium leading-tight"
             :class="isThinkingModel ? 'bg-warning/15 text-warning border-warning/30' : 'bg-accent/15 text-accent border-accent/30'"
           >
-            {{ isThinkingModel ? 'Thinking' : 'Standard' }}
+            {{ isThinkingModel ? $t('benchmark.live.thinking') : $t('benchmark.live.standard') }}
           </span>
         </div>
         <span class="text-xs text-text-muted">
-          Question {{ state.currentQuestionIndex + 1 }} / {{ state.totalQuestions }}
+          {{ $t('benchmark.live.question') }} {{ state.currentQuestionIndex + 1 }} / {{ state.totalQuestions }}
         </span>
       </div>
       <div class="h-2 overflow-hidden rounded-full bg-surface">
@@ -89,7 +89,7 @@ watch(
       <!-- Current question (60%) -->
       <div class="lg:col-span-3 rounded-lg border border-border-default bg-surface-raised p-4">
         <h4 class="mb-2 text-xs font-medium uppercase tracking-wide text-text-muted">
-          Current Question
+          {{ $t('benchmark.live.currentQuestion') }}
         </h4>
         <template v-if="state.currentQuestion">
           <p class="mb-3 text-sm text-text-primary">{{ state.currentQuestion.question }}</p>
@@ -109,7 +109,7 @@ watch(
           </div>
         </template>
         <div v-else class="flex h-32 items-center justify-center text-sm text-text-muted">
-          Waiting for question...
+          {{ $t('benchmark.live.waitingQuestion') }}
         </div>
       </div>
 
@@ -124,7 +124,7 @@ watch(
               : 'border-error/30 bg-error/5'
         ">
           <h4 class="mb-2 text-xs font-medium uppercase tracking-wide text-text-muted">
-            Last Answer
+            {{ $t('benchmark.live.lastAnswer') }}
           </h4>
           <template v-if="state.lastAnswer">
             <div class="flex items-center gap-3">
@@ -136,10 +136,10 @@ watch(
               </span>
               <div>
                 <div class="text-sm font-medium" :class="state.lastAnswer.correct ? 'text-success' : 'text-error'">
-                  {{ state.lastAnswer.correct ? 'Correct' : 'Incorrect' }}
+                  {{ state.lastAnswer.correct ? $t('benchmark.live.correct') : $t('benchmark.live.incorrect') }}
                 </div>
                 <div v-if="!state.lastAnswer.correct" class="text-xs text-text-muted">
-                  Expected: {{ state.lastAnswer.expectedAnswer }}
+                  {{ $t('benchmark.live.expected') }} {{ state.lastAnswer.expectedAnswer }}
                 </div>
                 <div class="text-[10px] text-text-muted">
                   TTFT {{ Math.round(state.lastAnswer.ttftMs ?? state.lastAnswer.latencyMs) }}ms · Total {{ Math.round(state.lastAnswer.latencyMs) }}ms
@@ -148,7 +148,7 @@ watch(
             </div>
           </template>
           <div v-else class="flex h-12 items-center justify-center text-xs text-text-muted">
-            Waiting for first answer...
+            {{ $t('benchmark.live.waitingFirstAnswer') }}
           </div>
         </div>
 
@@ -160,7 +160,7 @@ watch(
               <span class="absolute h-full w-full rounded-full border border-transparent border-t-warning" style="animation: thinking-orbit 1s linear infinite" />
               <span class="h-1 w-1 rounded-full bg-warning" />
             </span>
-            <h4 class="text-xs font-medium uppercase tracking-wide text-warning">Reasoning</h4>
+            <h4 class="text-xs font-medium uppercase tracking-wide text-warning">{{ $t('benchmark.live.reasoning') }}</h4>
           </div>
           <div
             ref="streamContainer"
@@ -177,7 +177,7 @@ watch(
             <span class="h-1 w-1 rounded-full bg-accent" style="animation: typing-bounce 1.2s ease-in-out 0.2s infinite" />
             <span class="h-1 w-1 rounded-full bg-accent" style="animation: typing-bounce 1.2s ease-in-out 0.4s infinite" />
           </span>
-          <span class="text-xs text-text-muted">Processing question...</span>
+          <span class="text-xs text-text-muted">{{ $t('benchmark.live.processingQuestion') }}</span>
         </div>
       </div>
     </div>
@@ -185,25 +185,25 @@ watch(
     <!-- Live stats -->
     <div class="grid grid-cols-2 gap-3 lg:grid-cols-5">
       <div class="rounded-lg border border-border-default bg-surface-raised p-3 text-center">
-        <div class="text-xs text-text-muted">Accuracy</div>
+        <div class="text-xs text-text-muted">{{ $t('benchmark.live.accuracy') }}</div>
         <div class="mt-1 text-lg font-bold" :class="accuracyPercent >= 50 ? 'text-success' : 'text-error'">
           {{ accuracyPercent }}%
         </div>
       </div>
       <div class="rounded-lg border border-border-default bg-surface-raised p-3 text-center">
-        <div class="text-xs text-text-muted">Avg TTFT</div>
+        <div class="text-xs text-text-muted">{{ $t('benchmark.live.avgTtft') }}</div>
         <div class="mt-1 text-lg font-bold text-text-primary">{{ avgTtft }}ms</div>
       </div>
       <div class="rounded-lg border border-border-default bg-surface-raised p-3 text-center">
-        <div class="text-xs text-text-muted">Avg Total</div>
+        <div class="text-xs text-text-muted">{{ $t('benchmark.live.avgTotal') }}</div>
         <div class="mt-1 text-lg font-bold text-text-primary">{{ avgTotal }}ms</div>
       </div>
       <div class="rounded-lg border border-border-default bg-surface-raised p-3 text-center">
-        <div class="text-xs text-text-muted">Progress</div>
+        <div class="text-xs text-text-muted">{{ $t('benchmark.live.progress') }}</div>
         <div class="mt-1 text-lg font-bold text-accent">{{ progressPercent }}%</div>
       </div>
       <div class="rounded-lg border border-border-default bg-surface-raised p-3 text-center">
-        <div class="text-xs text-text-muted">Suites</div>
+        <div class="text-xs text-text-muted">{{ $t('benchmark.live.suites') }}</div>
         <div class="mt-1 text-lg font-bold text-text-primary">{{ categoryEntries.length }}</div>
       </div>
     </div>
@@ -211,7 +211,7 @@ watch(
     <!-- Category progress -->
     <div v-if="categoryEntries.length > 0" class="rounded-lg border border-border-default bg-surface-raised p-4">
       <h4 class="mb-3 text-xs font-medium uppercase tracking-wide text-text-muted">
-        Benchmark Progress
+        {{ $t('benchmark.live.benchmarkProgress') }}
       </h4>
       <div class="space-y-2">
         <div v-for="cat in categoryEntries" :key="cat.category" class="flex items-center gap-3">
@@ -236,7 +236,7 @@ watch(
         class="rounded-lg border border-error/50 px-4 py-2 text-sm font-medium text-error transition-colors hover:bg-error/10"
         @click="benchmarkStore.cancelRun()"
       >
-        Stop Benchmark
+        {{ $t('benchmark.live.stopBenchmark') }}
       </button>
     </div>
   </div>

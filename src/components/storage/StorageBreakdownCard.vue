@@ -44,10 +44,10 @@ const segments = computed(() =>
         <button
           v-if="database.totalBytes > 0"
           class="rounded px-1.5 py-0.5 text-[9px] text-text-muted hover:text-error hover:bg-error/10 transition-colors"
-          title="Clear all data"
+          :title="$t('system.browserStorage.clearAll')"
           @click="emit('clear', database.id)"
         >
-          Clear
+          {{ $t('common.actions.clear') }}
         </button>
       </div>
     </div>
@@ -87,6 +87,6 @@ const segments = computed(() =>
         <span class="text-text-secondary w-14 text-right">{{ formatBytes(store.bytes) }}</span>
       </div>
     </div>
-    <p v-else class="text-[10px] text-text-muted italic">Empty</p>
+    <p v-else class="text-[10px] text-text-muted italic">{{ $t('system.browserStorage.empty') }}</p>
   </div>
 </template>

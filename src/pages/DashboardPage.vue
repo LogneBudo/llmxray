@@ -32,17 +32,17 @@ const recentConversations = computed(() => conversationStore.recentConversations
         @click="showMetrics = !showMetrics"
       >
         <span>
-          {{ aggregate.totalSessions }} sessions · Avg {{ formatTps(aggregate.avgTps) }}
+          {{ aggregate.totalSessions }} {{ $t('dashboard.metrics.sessions') }} · Avg {{ formatTps(aggregate.avgTps) }}
         </span>
         <span class="transition-transform" :class="{ 'rotate-180': showMetrics }">▾</span>
       </button>
 
       <div v-if="showMetrics" class="max-h-80 overflow-auto px-4 pb-4 space-y-4">
         <div class="grid grid-cols-2 gap-3 lg:grid-cols-4">
-          <MetricCard label="Total Sessions" :value="aggregate.totalSessions" />
-          <MetricCard label="Avg TTFT" :value="formatDuration(aggregate.avgTtftMs)" />
-          <MetricCard label="Avg Speed" :value="formatTps(aggregate.avgTps)" />
-          <MetricCard label="Total Tokens" :value="formatNumber(aggregate.totalTokensGenerated)" unit="tok" />
+          <MetricCard :label="$t('dashboard.metrics.totalSessions')" :value="aggregate.totalSessions" />
+          <MetricCard :label="$t('dashboard.metrics.avgTtft')" :value="formatDuration(aggregate.avgTtftMs)" />
+          <MetricCard :label="$t('dashboard.metrics.avgSpeed')" :value="formatTps(aggregate.avgTps)" />
+          <MetricCard :label="$t('dashboard.metrics.totalTokens')" :value="formatNumber(aggregate.totalTokensGenerated)" unit="tok" />
         </div>
         <SessionHistoryTable />
       </div>
@@ -53,7 +53,7 @@ const recentConversations = computed(() => conversationStore.recentConversations
       v-if="recentConversations.length > 1"
       class="border-t border-border-default px-4 py-2"
     >
-      <p class="text-[10px] uppercase tracking-wider text-text-muted mb-1">Recent Chats</p>
+      <p class="text-[10px] uppercase tracking-wider text-text-muted mb-1">{{ $t('dashboard.metrics.recentChats') }}</p>
       <div class="flex gap-2 overflow-x-auto pb-1">
         <button
           v-for="conv in recentConversations.slice(0, 5)"

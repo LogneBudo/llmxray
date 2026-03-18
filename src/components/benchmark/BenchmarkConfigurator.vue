@@ -81,8 +81,8 @@ onMounted(() => {
     <!-- Model Selection -->
     <div class="rounded-lg border border-border-default bg-surface-raised p-4">
       <div class="mb-3 flex items-center justify-between">
-        <h3 class="text-sm font-medium text-text-primary">Models</h3>
-        <span class="text-xs text-text-muted">{{ selectedModels.length }}/4 selected</span>
+        <h3 class="text-sm font-medium text-text-primary">{{ $t('benchmark.configurator.models') }}</h3>
+        <span class="text-xs text-text-muted">{{ selectedModels.length }}/4 {{ $t('benchmark.configurator.selected') }}</span>
       </div>
       <div class="flex flex-wrap gap-2">
         <button
@@ -105,12 +105,12 @@ onMounted(() => {
     <!-- Suite Selection -->
     <div class="rounded-lg border border-border-default bg-surface-raised p-4">
       <div class="mb-3 flex items-center justify-between">
-        <h3 class="text-sm font-medium text-text-primary">Benchmark Suites</h3>
+        <h3 class="text-sm font-medium text-text-primary">{{ $t('benchmark.configurator.benchmarkSuites') }}</h3>
         <button
           class="rounded-md border border-border-default px-2.5 py-1 text-[11px] text-text-secondary hover:border-accent hover:text-text-primary transition-colors"
           @click="$emit('openImport')"
         >
-          + Import Custom
+          {{ $t('benchmark.configurator.importCustom') }}
         </button>
       </div>
       <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
@@ -135,7 +135,7 @@ onMounted(() => {
             <span class="text-[10px] text-text-muted">{{ suite.questions.length }}q</span>
           </div>
           <span class="mt-1 text-[10px] text-text-muted line-clamp-2">{{ suite.description }}</span>
-          <span v-if="!suite.builtIn" class="mt-1 inline-block rounded-full bg-warning/10 px-1.5 py-0.5 text-[9px] text-warning">custom</span>
+          <span v-if="!suite.builtIn" class="mt-1 inline-block rounded-full bg-warning/10 px-1.5 py-0.5 text-[9px] text-warning">{{ $t('benchmark.configurator.custom') }}</span>
         </button>
       </div>
     </div>
@@ -143,7 +143,7 @@ onMounted(() => {
     <!-- Context Size + Run -->
     <div class="flex items-center gap-4">
       <div class="flex items-center gap-2">
-        <span class="text-xs text-text-muted">Context:</span>
+        <span class="text-xs text-text-muted">{{ $t('benchmark.configurator.context') }}</span>
         <button
           v-for="size in [2048, 8192]"
           :key="size"
@@ -175,7 +175,7 @@ onMounted(() => {
         "
         @click="startBenchmark"
       >
-        Run Benchmark
+        {{ $t('benchmark.configurator.runBenchmark') }}
       </button>
     </div>
   </div>

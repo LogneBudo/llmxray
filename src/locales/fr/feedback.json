@@ -1,0 +1,25 @@
+{
+  "title": "Envoyer un retour",
+  "thankYou": "Merci pour votre retour !",
+  "thankYouDetail": "Votre contribution aide \u00e0 am\u00e9liorer LLMxRay.",
+  "typeQuestion": "Quel type de retour ?",
+  "types": {
+    "bug": "Bug",
+    "idea": "Id\u00e9e",
+    "question": "Question",
+    "other": "Autre"
+  },
+  "message": {
+    "placeholder": "Dites-nous ce que vous avez en t\u00eate..."
+  },
+  "email": {
+    "label": "E-mail",
+    "optional": "(facultatif \u2014 uniquement si vous souhaitez une r\u00e9ponse)",
+    "placeholder": "votre{'@'}email.com"
+  },
+  "submit": {
+    "send": "Envoyer le retour",
+    "sending": "Envoi en cours..."
+  },
+  "disclaimer": "Inclut le contexte de l'application (page, mod\u00e8le, syst\u00e8me) pour nous aider \u00e0 comprendre votre retour."
+}

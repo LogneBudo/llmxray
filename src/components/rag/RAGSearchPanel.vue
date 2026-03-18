@@ -40,7 +40,7 @@ function toggleExpand(index: number) {
       <input
         v-model="query"
         type="text"
-        placeholder="Search your documents..."
+        :placeholder="$t('rag.search.placeholder')"
         class="flex-1 rounded-lg border border-border-default bg-surface px-4 py-2 text-sm text-text-primary placeholder-text-muted outline-none focus:border-accent"
         @keydown.enter="handleSearch"
       />
@@ -49,13 +49,13 @@ function toggleExpand(index: number) {
         class="rounded-lg bg-accent px-4 py-2 text-sm text-white transition-colors hover:bg-accent-hover disabled:opacity-40"
         @click="handleSearch"
       >
-        {{ isSearching ? 'Searching...' : 'Search' }}
+        {{ isSearching ? $t('rag.search.searching') : $t('rag.search.button') }}
       </button>
     </div>
 
     <!-- Results -->
     <div v-if="results.length > 0" class="space-y-3">
-      <p class="text-xs text-text-muted">{{ results.length }} results</p>
+      <p class="text-xs text-text-muted">{{ results.length }} {{ $t('rag.search.results') }}</p>
 
       <div
         v-for="(result, i) in results"
@@ -88,7 +88,7 @@ function toggleExpand(index: number) {
           class="mt-1.5 text-[10px] text-accent hover:underline"
           @click="toggleExpand(i)"
         >
-          {{ expandedIds.has(i) ? 'Show less' : 'Show full chunk' }}
+          {{ expandedIds.has(i) ? $t('rag.search.showLess') : $t('rag.search.showFullChunk') }}
         </button>
       </div>
     </div>

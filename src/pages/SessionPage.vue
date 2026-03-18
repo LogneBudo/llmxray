@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useSessionStore } from '@/stores/session-store'
 import { useMetricsStore } from '@/stores/metrics-store'
 import type { ToolCallEntry } from '@/types/toolcall'
@@ -18,17 +19,19 @@ const props = defineProps<{ id: string }>()
 
 const sessionStore = useSessionStore()
 const metricsStore = useMetricsStore()
+const { t } = useI18n()
 
 const activeTab = ref('stream')
 
-const tabs = [
-  { key: 'stream', label: 'Stream' },
-  { key: 'reasoning', label: 'Reasoning' },
-  { key: 'introspection', label: 'Introspection' },
-  { key: 'tools', label: 'Tools' },
-  { key: 'agent', label: 'Agent Graph' },
-  { key: 'prompt', label: 'Prompt' },
-]
+const tabs = computed(() => [
+  { key: 'stream', label: t('session.tabs.stream') },
+  { key: 'reasoning', label: t('session.tabs.reasoning') },
+  { key: 'introspection', label: t('session.tabs.introspection') },
+  { key: 'tools', label: t('session.tabs.tools') },
+  { key: 'agent', label: t('session.tabs.agent') },
+  { key: 'prompt', label: t('session.tabs.prompt') },
+])
+
 
 const session = computed(() => sessionStore.sessionById(props.id) ?? null)
 const metrics = computed(() => metricsStore.getMetrics(props.id))
@@ -47,7 +50,7 @@ onMounted(() => {
         <h2 class="text-lg font-semibold">{{ session.model }}</h2>
         <StatusBadge :status="session.status" />
       </div>
-      <div class="text-xs text-text-muted">Session {{ session.id.slice(0, 8) }}</div>
+      <div class="text-xs text-text-muted">{{ $t('session.sessionId', { id: session.id.slice(0, 8) }) }}</div>
     </div>
 
     <TabBar :tabs="tabs" :active-tab="activeTab" @update:active-tab="activeTab = $event" />
@@ -83,7 +86,7 @@ onMounted(() => {
   </div>
 
   <div v-else class="flex items-center justify-center py-20 text-text-muted">
-    Session not found.
+    {{ $t('session.notFound') }}
   </div>
 
   <ResponseOptimizerDrawer

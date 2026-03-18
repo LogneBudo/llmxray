@@ -41,7 +41,7 @@ const typeOptions = ['string', 'number', 'boolean', 'array', 'object'] as const
     </label>
     <button
       class="shrink-0 py-1.5 text-text-muted hover:text-error transition-colors text-xs"
-      title="Remove parameter"
+      :title="$t('tools.builder.removeParameter')"
       @click="$emit('remove')"
     >
       ✕

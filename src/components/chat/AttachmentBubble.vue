@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import type { ChatAttachment } from '@/types/attachment'
 import { formatBytes } from '@/utils/format'
+import { FileText, X } from 'lucide-vue-next'
 
 defineProps<{
   attachments: ChatAttachment[]
@@ -41,10 +42,7 @@ function closeLightbox() {
         :key="att.id"
         class="flex items-center gap-1.5 rounded-md bg-white/10 px-2 py-1 text-[11px]"
       >
-        <svg class="h-3.5 w-3.5 opacity-70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-          <polyline points="14 2 14 8 20 8" />
-        </svg>
+        <FileText class="h-3.5 w-3.5 opacity-70" />
         <span class="max-w-[100px] truncate opacity-90">{{ att.name }}</span>
         <span class="opacity-60">{{ formatBytes(att.sizeBytes) }}</span>
       </div>
@@ -72,9 +70,7 @@ function closeLightbox() {
             class="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
             @click="closeLightbox"
           >
-            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
+            <X class="h-5 w-5" />
           </button>
         </div>
       </Transition>

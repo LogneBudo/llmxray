@@ -1,0 +1,54 @@
+{
+  "title": "Embeddings",
+  "modelSelector": {
+    "noModels": "Aucun mod\u00e8le disponible",
+    "noEmbeddingModels": "Aucun mod\u00e8le d'embedding trouv\u00e9. T\u00e9l\u00e9chargez-en un : ollama pull nomic-embed-text"
+  },
+  "storage": {
+    "embeddingMemory": "M\u00e9moire d'embedding",
+    "records": "enregistrements"
+  },
+  "playground": {
+    "title": "Aire de jeu Embedding",
+    "description": "Saisissez du texte pour g\u00e9n\u00e9rer son vecteur d'embedding et inspecter les dimensions.",
+    "placeholder": "Saisissez du texte \u00e0 encoder...",
+    "embed": "Encoder",
+    "embedding": "Encodage en cours...",
+    "showRawValues": "Afficher les valeurs brutes (50 premi\u00e8res sur {total})"
+  },
+  "similarity": {
+    "title": "Calculateur de similarit\u00e9",
+    "description": "Comparez deux textes pour mesurer leur similarit\u00e9 s\u00e9mantique via la distance cosinus.",
+    "textA": "Texte A",
+    "textB": "Texte B",
+    "placeholderA": "Premier texte...",
+    "placeholderB": "Deuxi\u00e8me texte...",
+    "compare": "Comparer",
+    "comparing": "Comparaison en cours..."
+  },
+  "modelComparison": {
+    "title": "Comparaison de mod\u00e8les",
+    "description": "Encodez le m\u00eame texte avec deux mod\u00e8les pour comparer leur repr\u00e9sentation du sens.",
+    "modelA": "Mod\u00e8le A",
+    "modelB": "Mod\u00e8le B",
+    "placeholder": "Saisissez du texte \u00e0 encoder avec les deux mod\u00e8les...",
+    "compareModels": "Comparer les mod\u00e8les",
+    "comparingModels": "Comparaison des mod\u00e8les...",
+    "crossModelSimilarity": "Similarit\u00e9 inter-mod\u00e8les \u2014 \u00e0 quel point ces mod\u00e8les repr\u00e9sentent le m\u00eame texte de mani\u00e8re similaire.",
+    "veryDifferent": "Ces mod\u00e8les encodent le sens tr\u00e8s diff\u00e9remment.",
+    "moderateAgreement": "Accord mod\u00e9r\u00e9 \u2014 les mod\u00e8les partagent une certaine structure s\u00e9mantique.",
+    "highAgreement": "Accord \u00e9lev\u00e9 \u2014 ces mod\u00e8les repr\u00e9sentent ce texte de mani\u00e8re similaire.",
+    "dimensionsMismatch": "Les dimensions diff\u00e8rent ({dimA} vs {dimB}) \u2014 la similarit\u00e9 cosinus directe est impossible.",
+    "compareStats": "Comparez les statistiques ci-dessus pour \u00e9valuer la qualit\u00e9 de repr\u00e9sentation de chaque mod\u00e8le."
+  },
+  "stats": {
+    "dims": "Dims",
+    "l2Norm": "Norme L2",
+    "sparsity": "Parcimonie",
+    "time": "Temps"
+  },
+  "history": {
+    "title": "Embeddings r\u00e9cents",
+    "clearAll": "Tout effacer"
+  }
+}

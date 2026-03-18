@@ -38,8 +38,8 @@ const diff = computed(() => diffLines(props.oldCode, props.newCode))
 
     <!-- Actions -->
     <div class="diff-actions">
-      <button class="diff-accept" @click="$emit('accept')">Accept</button>
-      <button class="diff-dismiss" @click="$emit('dismiss')">Dismiss</button>
+      <button class="diff-accept" @click="$emit('accept')">{{ $t('tools.aiDiff.accept') }}</button>
+      <button class="diff-dismiss" @click="$emit('dismiss')">{{ $t('tools.aiDiff.dismiss') }}</button>
     </div>
   </div>
 </template>

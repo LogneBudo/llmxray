@@ -40,28 +40,28 @@ function handleDelete() {
 
 <template>
   <div class="flex items-center gap-2 rounded-lg border border-accent/30 bg-surface-raised px-4 py-2.5">
-    <span class="text-xs font-medium text-accent">{{ selectedCount }} selected</span>
+    <span class="text-xs font-medium text-accent">{{ $t('training.bulk.selected', { count: selectedCount }) }}</span>
 
     <div class="ml-auto flex items-center gap-2">
       <button
         class="rounded-lg bg-surface-overlay px-3 py-1 text-[10px] text-text-secondary hover:text-text-primary transition-colors"
         @click="emit('export')"
       >
-        Export JSONL
+        {{ $t('training.bulk.exportJsonl') }}
       </button>
 
       <button
         class="rounded-lg bg-success/10 px-3 py-1 text-[10px] text-success hover:bg-success/20 transition-colors"
         @click="emit('mark-accepted')"
       >
-        Mark Accepted
+        {{ $t('training.bulk.markAccepted') }}
       </button>
 
       <button
         class="rounded-lg bg-error/10 px-3 py-1 text-[10px] text-error hover:bg-error/20 transition-colors"
         @click="emit('mark-rejected')"
       >
-        Mark Rejected
+        {{ $t('training.bulk.markRejected') }}
       </button>
 
       <!-- Tag input -->
@@ -69,7 +69,7 @@ function handleDelete() {
         <input
           v-model="tagInput"
           type="text"
-          placeholder="Tag name..."
+          :placeholder="$t('training.bulk.tagPlaceholder')"
           class="w-24 rounded border border-accent bg-surface px-2 py-0.5 text-[10px] text-text-primary outline-none"
           @keydown.enter="submitTag"
           @keydown.escape="showTagInput = false"
@@ -77,14 +77,14 @@ function handleDelete() {
         <button
           class="text-[10px] text-accent hover:underline"
           @click="submitTag"
-        >Add</button>
+        >{{ $t('common.actions.add') }}</button>
       </div>
       <button
         v-else
         class="rounded-lg bg-accent/10 px-3 py-1 text-[10px] text-accent hover:bg-accent/20 transition-colors"
         @click="showTagInput = true"
       >
-        Add Tag
+        {{ $t('training.bulk.addTag') }}
       </button>
 
       <button
@@ -92,14 +92,14 @@ function handleDelete() {
         :class="confirmDelete ? 'bg-error/10 text-error' : 'text-text-muted hover:text-error'"
         @click="handleDelete"
       >
-        {{ confirmDelete ? 'Confirm?' : 'Delete' }}
+        {{ confirmDelete ? $t('training.bulk.confirm') : $t('training.bulk.delete') }}
       </button>
 
       <button
         class="text-[10px] text-text-muted hover:text-text-primary transition-colors"
         @click="emit('deselect-all')"
       >
-        Deselect
+        {{ $t('training.bulk.deselectAll') }}
       </button>
     </div>
   </div>

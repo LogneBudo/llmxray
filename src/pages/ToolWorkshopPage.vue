@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import type { ToolCategory } from '@/types/tool-workshop'
 import { useToolWorkshopStore } from '@/stores/tool-workshop-store'
 import type { OllamaToolDefinition } from '@/types/ollama'
 import ToolCanvasView from '@/components/tool-canvas/ToolCanvasView.vue'
 
 const store = useToolWorkshopStore()
+const { t } = useI18n()
 const showTemplateModal = ref(false)
 
 // --- Templates ---
@@ -547,28 +549,20 @@ return { success: true, trashed_message_id: args.message_id }`,
   },
 ]
 
-const CATEGORY_LABELS: Record<string, string> = {
-  utility: 'Utility',
-  api: 'API',
-  data: 'Data',
-  google: 'Google (Calendar & Gmail)',
-  custom: 'Custom',
-}
-
 const CATEGORY_ORDER = ['utility', 'api', 'data', 'google', 'custom']
 
 const templatesByCategory = computed(() => {
   const groups: { category: string; label: string; items: ToolTemplate[] }[] = []
   const map = new Map<string, ToolTemplate[]>()
-  for (const t of templates) {
-    const cat = t.category
+  for (const tmpl of templates) {
+    const cat = tmpl.category
     if (!map.has(cat)) map.set(cat, [])
-    map.get(cat)!.push(t)
+    map.get(cat)!.push(tmpl)
   }
   for (const cat of CATEGORY_ORDER) {
     const items = map.get(cat)
     if (items && items.length > 0) {
-      groups.push({ category: cat, label: CATEGORY_LABELS[cat] ?? cat, items })
+      groups.push({ category: cat, label: t(`tools.templates.categories.${cat}`), items })
     }
   }
   return groups
@@ -599,8 +593,8 @@ function addTemplate(template: ToolTemplate) {
       >
         <div class="bg-surface-raised rounded-xl border border-border-default shadow-xl w-[480px] max-h-[70vh] overflow-hidden">
           <div class="p-4 border-b border-border-default">
-            <h3 class="text-sm font-medium text-text-primary">Tool Templates</h3>
-            <p class="text-[10px] text-text-muted mt-0.5">Start with a working template and customize it</p>
+            <h3 class="text-sm font-medium text-text-primary">{{ $t('tools.templates.title') }}</h3>
+            <p class="text-[10px] text-text-muted mt-0.5">{{ $t('tools.templates.subtitle') }}</p>
           </div>
           <div class="p-3 space-y-4 overflow-y-auto max-h-[50vh]">
             <div v-for="group in templatesByCategory" :key="group.category">
@@ -625,7 +619,7 @@ function addTemplate(template: ToolTemplate) {
               class="w-full rounded-lg border border-border-default px-3 py-1.5 text-xs text-text-muted hover:text-text-primary transition-colors"
               @click="showTemplateModal = false"
             >
-              Cancel
+              {{ $t('common.actions.cancel') }}
             </button>
           </div>
         </div>

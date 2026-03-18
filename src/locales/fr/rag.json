@@ -1,0 +1,40 @@
+{
+  "title": "Base de connaissances",
+  "subtitle": "Ing\u00e9rez des documents pour des conversations aliment\u00e9es par RAG",
+  "modelSelector": {
+    "noEmbeddingModels": "Aucun mod\u00e8le d'embedding"
+  },
+  "storage": {
+    "title": "Stockage de la base de connaissances",
+    "documents": "documents",
+    "chunks": "fragments",
+    "stored": "stock\u00e9s",
+    "ragStorage": "Stockage RAG"
+  },
+  "upload": {
+    "dropZone": "Glissez-d\u00e9posez des fichiers ici",
+    "browse": "Parcourir",
+    "dropText": "D\u00e9posez des fichiers ici ou cliquez pour parcourir",
+    "supportedFormats": "Formats : PDF, DOCX, TXT, Markdown, CSV"
+  },
+  "documents": {
+    "title": "Documents",
+    "noDocuments": "Aucun document ing\u00e9r\u00e9 pour le moment",
+    "toggleContext": "Activer/d\u00e9sactiver le contexte RAG",
+    "removeDocument": "Supprimer le document"
+  },
+  "search": {
+    "title": "Recherche s\u00e9mantique",
+    "placeholder": "Rechercher dans vos documents...",
+    "noResults": "Aucun r\u00e9sultat de recherche",
+    "searching": "Recherche en cours...",
+    "button": "Rechercher",
+    "results": "r\u00e9sultats",
+    "showLess": "R\u00e9duire",
+    "showFullChunk": "Afficher le fragment complet"
+  },
+  "ingest": {
+    "progress": "Progression de l'ing\u00e9ration",
+    "ingesting": "Ing\u00e9ration en cours..."
+  }
+}

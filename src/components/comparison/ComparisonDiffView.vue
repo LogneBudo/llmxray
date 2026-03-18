@@ -41,13 +41,13 @@ const rightLabel = computed(() => completedExecs.value[rightIdx.value]?.label ||
 <template>
   <div class="rounded-lg border border-border-default bg-surface-raised p-4 space-y-3">
     <div v-if="completedExecs.length < 2" class="text-sm text-text-muted text-center py-4">
-      Need at least 2 completed results to show a diff.
+      {{ $t('comparison.diff.needTwoResults') }}
     </div>
 
     <template v-else>
       <!-- Pair selector (only if more than 2 results) -->
       <div v-if="completedExecs.length > 2" class="flex items-center gap-3 text-sm">
-        <span class="text-text-muted text-xs">Compare:</span>
+        <span class="text-text-muted text-xs">{{ $t('comparison.diff.compare') }}</span>
         <select
           v-model.number="leftIdx"
           class="rounded-md border border-border-default bg-surface px-2 py-1 text-xs text-text-primary focus:border-accent focus:outline-none"
@@ -56,7 +56,7 @@ const rightLabel = computed(() => completedExecs.value[rightIdx.value]?.label ||
             {{ exec.label || exec.model }}
           </option>
         </select>
-        <span class="text-text-muted text-xs">vs</span>
+        <span class="text-text-muted text-xs">{{ $t('comparison.diff.vs') }}</span>
         <select
           v-model.number="rightIdx"
           class="rounded-md border border-border-default bg-surface px-2 py-1 text-xs text-text-primary focus:border-accent focus:outline-none"
@@ -71,11 +71,11 @@ const rightLabel = computed(() => completedExecs.value[rightIdx.value]?.label ||
       <div class="flex items-center gap-4 text-[11px]">
         <div class="flex items-center gap-1.5">
           <span class="inline-block h-2.5 w-2.5 rounded-sm bg-success/30" />
-          <span class="text-text-muted">{{ leftLabel }} only</span>
+          <span class="text-text-muted">{{ $t('comparison.diff.only', { label: leftLabel }) }}</span>
         </div>
         <div class="flex items-center gap-1.5">
           <span class="inline-block h-2.5 w-2.5 rounded-sm bg-error/30" />
-          <span class="text-text-muted">{{ rightLabel }} only</span>
+          <span class="text-text-muted">{{ $t('comparison.diff.only', { label: rightLabel }) }}</span>
         </div>
       </div>
 
