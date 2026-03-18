@@ -66,6 +66,7 @@ function communityNav(prefix: string) {
       items: [
         { text: fr ? 'Module 1: Qu\'est-ce qu\'un Token ?' : 'Module 1: What Is a Token?', link: `${prefix}/community/educators/module-1` },
         { text: fr ? 'Module 2: La Température' : 'Module 2: Temperature', link: `${prefix}/community/educators/module-2` },
+        { text: fr ? 'Module 3: L\'IA peut-elle mentir ?' : 'Module 3: Can AI Lie?', link: `${prefix}/community/educators/module-3` },
       ],
     },
   ]
@@ -78,6 +79,7 @@ export default defineConfig({
   base: '/llmxray/docs/',
 
   head: [
+    ['meta', { name: 'google-site-verification', content: 'RX-PTSY9zNEgXtuELI1ETQfC0wO_07Y6VatxSE2m-Qg' }],
     ['link', { rel: 'icon', href: '/llmxray/docs/favicon.svg' }],
     ['meta', { property: 'og:title', content: 'LLMxRay — Local LLM Observatory | Free AI Model Analysis' }],
     ['meta', { property: 'og:description', content: 'See what your AI is actually doing — token by token, layer by layer. Stream, compare, benchmark, and inspect local LLMs with zero cloud, zero cost. Run with npx llmxray.' }],

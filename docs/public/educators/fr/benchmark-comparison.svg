@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="bgBenchFr" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f0a2e"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="400" rx="16" fill="url(#bgBenchFr)"/>
+
+  <text x="400" y="35" text-anchor="middle" font-size="18" font-weight="700" fill="#e2e8f0">Différents benchmarks testent différentes choses</text>
+  <text x="400" y="56" text-anchor="middle" font-size="12" fill="#94a3b8">Un modèle peut bien scorer en connaissances mais mal en véracité</text>
+
+  <!-- Benchmark cards -->
+
+  <!-- ARC -->
+  <g transform="translate(30, 80)">
+    <rect x="0" y="0" width="170" height="140" rx="10" fill="rgba(74,222,128,0.08)" stroke="#4ade80" stroke-width="1.5"/>
+    <text x="85" y="25" text-anchor="middle" font-size="14" font-weight="700" fill="#4ade80">ARC</text>
+    <text x="85" y="43" text-anchor="middle" font-size="10" fill="#94a3b8">Raisonnement scientifique</text>
+    <text x="85" y="75" text-anchor="middle" font-size="28" font-weight="700" fill="#4ade80">72%</text>
+    <text x="85" y="100" text-anchor="middle" font-size="10" fill="#94a3b8">Teste : Le modèle</text>
+    <text x="85" y="115" text-anchor="middle" font-size="10" fill="#94a3b8">raisonne-t-il en sciences ?</text>
+    <rect x="30" y="125" width="110" height="6" rx="3" fill="#334155"/>
+    <rect x="30" y="125" width="79" height="6" rx="3" fill="#4ade80" opacity="0.7"/>
+  </g>
+
+  <!-- MMLU -->
+  <g transform="translate(220, 80)">
+    <rect x="0" y="0" width="170" height="140" rx="10" fill="rgba(96,165,250,0.08)" stroke="#60a5fa" stroke-width="1.5"/>
+    <text x="85" y="25" text-anchor="middle" font-size="14" font-weight="700" fill="#60a5fa">MMLU-Pro</text>
+    <text x="85" y="43" text-anchor="middle" font-size="10" fill="#94a3b8">Connaissances académiques</text>
+    <text x="85" y="75" text-anchor="middle" font-size="28" font-weight="700" fill="#60a5fa">65%</text>
+    <text x="85" y="100" text-anchor="middle" font-size="10" fill="#94a3b8">Teste : Connaissances</text>
+    <text x="85" y="115" text-anchor="middle" font-size="10" fill="#94a3b8">dans plus de 50 domaines</text>
+    <rect x="30" y="125" width="110" height="6" rx="3" fill="#334155"/>
+    <rect x="30" y="125" width="71" height="6" rx="3" fill="#60a5fa" opacity="0.7"/>
+  </g>
+
+  <!-- HellaSwag -->
+  <g transform="translate(410, 80)">
+    <rect x="0" y="0" width="170" height="140" rx="10" fill="rgba(168,85,247,0.08)" stroke="#a855f7" stroke-width="1.5"/>
+    <text x="85" y="25" text-anchor="middle" font-size="14" font-weight="700" fill="#a855f7">HellaSwag</text>
+    <text x="85" y="43" text-anchor="middle" font-size="10" fill="#94a3b8">Sens commun</text>
+    <text x="85" y="75" text-anchor="middle" font-size="28" font-weight="700" fill="#a855f7">78%</text>
+    <text x="85" y="100" text-anchor="middle" font-size="10" fill="#94a3b8">Teste : Le modèle peut-il</text>
+    <text x="85" y="115" text-anchor="middle" font-size="10" fill="#94a3b8">prédire la suite ?</text>
+    <rect x="30" y="125" width="110" height="6" rx="3" fill="#334155"/>
+    <rect x="30" y="125" width="86" height="6" rx="3" fill="#a855f7" opacity="0.7"/>
+  </g>
+
+  <!-- TruthfulQA -->
+  <g transform="translate(600, 80)">
+    <rect x="0" y="0" width="170" height="140" rx="10" fill="rgba(239,68,68,0.08)" stroke="#ef4444" stroke-width="1.5"/>
+    <text x="85" y="25" text-anchor="middle" font-size="14" font-weight="700" fill="#ef4444">TruthfulQA</text>
+    <text x="85" y="43" text-anchor="middle" font-size="10" fill="#94a3b8">Véracité</text>
+    <text x="85" y="75" text-anchor="middle" font-size="28" font-weight="700" fill="#ef4444">41%</text>
+    <text x="85" y="100" text-anchor="middle" font-size="10" fill="#94a3b8">Teste : Le modèle</text>
+    <text x="85" y="115" text-anchor="middle" font-size="10" fill="#94a3b8">résiste-t-il aux mythes ?</text>
+    <rect x="30" y="125" width="110" height="6" rx="3" fill="#334155"/>
+    <rect x="30" y="125" width="45" height="6" rx="3" fill="#ef4444" opacity="0.7"/>
+  </g>
+
+  <!-- Insight box -->
+  <g transform="translate(30, 250)">
+    <rect x="0" y="0" width="740" height="120" rx="12" fill="rgba(239,68,68,0.06)" stroke="#ef4444" stroke-width="1"/>
+
+    <text x="370" y="28" text-anchor="middle" font-size="14" font-weight="700" fill="#f87171">Le Paradoxe</text>
+
+    <text x="370" y="52" text-anchor="middle" font-size="12" fill="#e2e8f0">Ce modèle obtient 72% en raisonnement scientifique mais seulement 41% en véracité.</text>
+    <text x="370" y="72" text-anchor="middle" font-size="12" fill="#e2e8f0">Il « sait » la physique mais croit aux idées reçues.</text>
+
+    <text x="370" y="100" text-anchor="middle" font-size="11" fill="#94a3b8">ARC teste les connaissances des données d'entraînement. TruthfulQA teste la résistance aux croyances</text>
+    <text x="370" y="115" text-anchor="middle" font-size="11" fill="#94a3b8">populaires mais fausses, aussi présentes dans les données. Le modèle a appris vérité et fiction.</text>
+  </g>
+</svg>

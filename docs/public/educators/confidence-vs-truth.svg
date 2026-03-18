@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="bgConf" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f0a2e"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="450" rx="16" fill="url(#bgConf)"/>
+
+  <text x="400" y="35" text-anchor="middle" font-size="18" font-weight="700" fill="#e2e8f0">Confidence vs Truth</text>
+  <text x="400" y="56" text-anchor="middle" font-size="12" fill="#94a3b8">High probability does not mean the answer is correct</text>
+
+  <!-- Chart area -->
+  <g transform="translate(120, 80)">
+    <!-- Axes -->
+    <line x1="0" y1="0" x2="0" y2="280" stroke="#334155" stroke-width="1"/>
+    <line x1="0" y1="280" x2="550" y2="280" stroke="#334155" stroke-width="1"/>
+
+    <!-- Y axis -->
+    <text x="-55" y="140" text-anchor="middle" font-size="12" fill="#94a3b8" transform="rotate(-90, -55, 140)">Model Confidence (logprob)</text>
+    <text x="-12" y="284" text-anchor="end" font-size="10" fill="#64748b">0%</text>
+    <text x="-12" y="214" text-anchor="end" font-size="10" fill="#64748b">25%</text>
+    <text x="-12" y="144" text-anchor="end" font-size="10" fill="#64748b">50%</text>
+    <text x="-12" y="74" text-anchor="end" font-size="10" fill="#64748b">75%</text>
+    <text x="-12" y="4" text-anchor="end" font-size="10" fill="#64748b">100%</text>
+
+    <!-- X axis -->
+    <text x="275" y="310" text-anchor="middle" font-size="12" fill="#94a3b8">Questions</text>
+
+    <!-- Grid -->
+    <line x1="0" y1="210" x2="550" y2="210" stroke="#334155" stroke-width="0.5" stroke-dasharray="4"/>
+    <line x1="0" y1="140" x2="550" y2="140" stroke="#334155" stroke-width="0.5" stroke-dasharray="4"/>
+    <line x1="0" y1="70" x2="550" y2="70" stroke="#334155" stroke-width="0.5" stroke-dasharray="4"/>
+
+    <!-- Correct answers (green dots) -->
+    <circle cx="30" cy="25" r="5" fill="#4ade80" opacity="0.8"/>
+    <circle cx="65" cy="35" r="5" fill="#4ade80" opacity="0.8"/>
+    <circle cx="100" cy="20" r="5" fill="#4ade80" opacity="0.8"/>
+    <circle cx="135" cy="55" r="5" fill="#4ade80" opacity="0.8"/>
+    <circle cx="170" cy="40" r="5" fill="#4ade80" opacity="0.8"/>
+    <circle cx="205" cy="90" r="5" fill="#4ade80" opacity="0.8"/>
+    <circle cx="240" cy="60" r="5" fill="#4ade80" opacity="0.8"/>
+    <circle cx="275" cy="30" r="5" fill="#4ade80" opacity="0.8"/>
+    <circle cx="310" cy="110" r="5" fill="#4ade80" opacity="0.8"/>
+    <circle cx="345" cy="80" r="5" fill="#4ade80" opacity="0.8"/>
+    <circle cx="380" cy="150" r="5" fill="#4ade80" opacity="0.8"/>
+    <circle cx="415" cy="170" r="5" fill="#4ade80" opacity="0.8"/>
+    <circle cx="450" cy="200" r="5" fill="#4ade80" opacity="0.8"/>
+
+    <!-- WRONG answers with HIGH confidence (red dots - the dangerous ones) -->
+    <circle cx="55" cy="30" r="7" fill="#ef4444" opacity="0.9" stroke="#ef4444" stroke-width="2"/>
+    <circle cx="150" cy="45" r="7" fill="#ef4444" opacity="0.9" stroke="#ef4444" stroke-width="2"/>
+    <circle cx="260" cy="65" r="7" fill="#ef4444" opacity="0.9" stroke="#ef4444" stroke-width="2"/>
+    <circle cx="330" cy="50" r="7" fill="#ef4444" opacity="0.9" stroke="#ef4444" stroke-width="2"/>
+    <circle cx="490" cy="85" r="7" fill="#ef4444" opacity="0.9" stroke="#ef4444" stroke-width="2"/>
+
+    <!-- Wrong answers with LOW confidence (orange dots - expected) -->
+    <circle cx="85" cy="230" r="5" fill="#fbbf24" opacity="0.7"/>
+    <circle cx="190" cy="245" r="5" fill="#fbbf24" opacity="0.7"/>
+    <circle cx="300" cy="260" r="5" fill="#fbbf24" opacity="0.7"/>
+    <circle cx="430" cy="220" r="5" fill="#fbbf24" opacity="0.7"/>
+    <circle cx="520" cy="250" r="5" fill="#fbbf24" opacity="0.7"/>
+
+    <!-- Danger zone annotation -->
+    <rect x="0" y="-5" width="550" height="80" rx="0" fill="#ef4444" opacity="0.04"/>
+    <line x1="0" y1="75" x2="550" y2="75" stroke="#ef4444" stroke-width="1" stroke-dasharray="6 3" opacity="0.4"/>
+    <text x="555" y="35" font-size="10" fill="#ef4444" opacity="0.7">DANGER</text>
+    <text x="555" y="48" font-size="10" fill="#ef4444" opacity="0.7">ZONE</text>
+    <text x="555" y="65" font-size="9" fill="#ef4444" opacity="0.5">High confidence</text>
+    <text x="555" y="77" font-size="9" fill="#ef4444" opacity="0.5">+ wrong answer</text>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(150, 400)">
+    <circle cx="0" cy="0" r="5" fill="#4ade80" opacity="0.8"/>
+    <text x="12" y="4" font-size="11" fill="#e2e8f0">Correct answer</text>
+
+    <circle cx="170" cy="0" r="7" fill="#ef4444" opacity="0.9" stroke="#ef4444" stroke-width="2"/>
+    <text x="184" y="4" font-size="11" fill="#e2e8f0">Wrong + confident</text>
+
+    <circle cx="370" cy="0" r="5" fill="#fbbf24" opacity="0.7"/>
+    <text x="382" y="4" font-size="11" fill="#e2e8f0">Wrong + uncertain</text>
+  </g>
+
+  <!-- Bottom insight -->
+  <g transform="translate(100, 430)">
+    <text x="300" y="0" text-anchor="middle" font-size="11" fill="#f87171">The red dots are the dangerous cases: the model sounds right but isn't</text>
+  </g>
+</svg>
