@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="bgTopic" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f0a2e"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="400" rx="16" fill="url(#bgTopic)"/>
+
+  <text x="400" y="35" text-anchor="middle" font-size="18" font-weight="700" fill="#e2e8f0">Topic vs Sentiment in Vector Space</text>
+  <text x="400" y="56" text-anchor="middle" font-size="12" fill="#94a3b8">Embeddings capture what you're talking about, not how you feel about it</text>
+
+  <!-- Conceptual 2D space -->
+  <g transform="translate(60, 75)">
+    <!-- Faint axes -->
+    <line x1="0" y1="260" x2="680" y2="260" stroke="#334155" stroke-width="0.5" opacity="0.4"/>
+    <line x1="0" y1="0" x2="0" y2="260" stroke="#334155" stroke-width="0.5" opacity="0.4"/>
+
+    <!-- Movie cluster (top-left) -->
+    <!-- Dotted circle around cluster -->
+    <ellipse cx="185" cy="90" rx="155" ry="80" fill="none" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3" opacity="0.4"/>
+    <text x="185" y="18" text-anchor="middle" font-size="10" fill="#94a3b8" opacity="0.6">Same topic (movies)</text>
+
+    <!-- Green dot: I love this movie -->
+    <circle cx="140" cy="80" r="8" fill="#4ade80" opacity="0.85"/>
+    <text x="140" y="110" text-anchor="middle" font-size="10" fill="#4ade80">"I love this movie"</text>
+
+    <!-- Red dot: I hate this movie -->
+    <circle cx="230" cy="85" r="8" fill="#ef4444" opacity="0.85"/>
+    <text x="230" y="115" text-anchor="middle" font-size="10" fill="#ef4444">"I hate this movie"</text>
+
+    <!-- Similarity line between movie dots -->
+    <line x1="148" y1="80" x2="222" y2="85" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="2"/>
+    <rect x="150" y="56" width="90" height="18" rx="4" fill="rgba(251,191,36,0.12)"/>
+    <text x="195" y="68" text-anchor="middle" font-size="9" font-weight="600" fill="#fbbf24">Similarity: 0.92</text>
+
+    <!-- Weather cluster (bottom-right) -->
+    <ellipse cx="520" cy="195" rx="155" ry="65" fill="none" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3" opacity="0.4"/>
+    <text x="520" y="145" text-anchor="middle" font-size="10" fill="#94a3b8" opacity="0.6">Same topic (weather)</text>
+
+    <!-- Blue dot: weather is nice -->
+    <circle cx="475" cy="190" r="8" fill="#60a5fa" opacity="0.85"/>
+    <text x="475" y="220" text-anchor="middle" font-size="10" fill="#60a5fa">"The weather is nice today"</text>
+
+    <!-- Blue dot: raining -->
+    <circle cx="570" cy="195" r="8" fill="#60a5fa" opacity="0.85"/>
+    <text x="570" y="225" text-anchor="middle" font-size="10" fill="#60a5fa">"It's raining outside"</text>
+
+    <!-- Dashed line between clusters showing low similarity -->
+    <line x1="250" y1="100" x2="460" y2="185" stroke="#ef4444" stroke-width="1" stroke-dasharray="6 4" opacity="0.5"/>
+    <!-- Similarity label on the cross-cluster line -->
+    <g transform="translate(340, 130)">
+      <rect x="-48" y="-10" width="96" height="20" rx="4" fill="rgba(239,68,68,0.12)"/>
+      <text x="0" y="4" text-anchor="middle" font-size="9" font-weight="600" fill="#ef4444">Similarity: 0.31</text>
+    </g>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(100, 358)">
+    <circle cx="0" cy="0" r="5" fill="#4ade80" opacity="0.85"/>
+    <text x="12" y="4" font-size="10" fill="#e2e8f0">Positive sentiment</text>
+
+    <circle cx="160" cy="0" r="5" fill="#ef4444" opacity="0.85"/>
+    <text x="172" y="4" font-size="10" fill="#e2e8f0">Negative sentiment</text>
+
+    <circle cx="320" cy="0" r="5" fill="#60a5fa" opacity="0.85"/>
+    <text x="332" y="4" font-size="10" fill="#e2e8f0">Neutral / varied</text>
+  </g>
+
+  <!-- Bottom insight -->
+  <text x="400" y="386" text-anchor="middle" font-size="11" fill="#fbbf24">Opposite sentiments about the same topic are closer than same sentiments about different topics</text>
+</svg>

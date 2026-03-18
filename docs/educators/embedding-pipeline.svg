@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 320" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="bgEmb" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f0a2e"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="320" rx="16" fill="url(#bgEmb)"/>
+
+  <text x="400" y="35" text-anchor="middle" font-size="18" font-weight="700" fill="#e2e8f0">How Embeddings Work</text>
+  <text x="400" y="56" text-anchor="middle" font-size="12" fill="#94a3b8">Text becomes a fixed-size vector of numbers</text>
+
+  <!-- Step 1: Text box -->
+  <g transform="translate(30, 80)">
+    <rect x="0" y="0" width="190" height="90" rx="12" fill="rgba(96,165,250,0.10)" stroke="#60a5fa" stroke-width="1.5"/>
+    <text x="95" y="28" text-anchor="middle" font-size="13" font-weight="600" fill="#60a5fa">Text</text>
+    <text x="95" y="52" text-anchor="middle" font-size="10" fill="#e2e8f0">"The cat sat</text>
+    <text x="95" y="68" text-anchor="middle" font-size="10" fill="#e2e8f0">on the mat"</text>
+  </g>
+
+  <!-- Arrow 1 -->
+  <line x1="230" y1="125" x2="270" y2="125" stroke="#94a3b8" stroke-width="2"/>
+  <polygon points="270,121 280,125 270,129" fill="#94a3b8"/>
+
+  <!-- Step 2: Embedding Model box -->
+  <g transform="translate(290, 80)">
+    <rect x="0" y="0" width="200" height="90" rx="12" fill="rgba(168,85,247,0.10)" stroke="#a855f7" stroke-width="1.5"/>
+    <text x="100" y="28" text-anchor="middle" font-size="13" font-weight="600" fill="#a855f7">Embedding Model</text>
+    <text x="100" y="50" text-anchor="middle" font-size="10" fill="#e2e8f0">nomic-embed-text</text>
+    <text x="100" y="68" text-anchor="middle" font-size="10" fill="#94a3b8">768 dimensions</text>
+  </g>
+
+  <!-- Arrow 2 -->
+  <line x1="500" y1="125" x2="540" y2="125" stroke="#94a3b8" stroke-width="2"/>
+  <polygon points="540,121 550,125 540,129" fill="#94a3b8"/>
+
+  <!-- Step 3: Vector output -->
+  <g transform="translate(558, 80)">
+    <rect x="0" y="0" width="212" height="90" rx="12" fill="rgba(74,222,128,0.10)" stroke="#4ade80" stroke-width="1.5"/>
+    <text x="106" y="28" text-anchor="middle" font-size="13" font-weight="600" fill="#4ade80">Vector</text>
+    <text x="106" y="50" text-anchor="middle" font-size="9.5" fill="#e2e8f0" font-family="monospace, system-ui">[0.023, -0.147, 0.891, ..., 0.042]</text>
+
+    <!-- Mini bar visualization -->
+    <g transform="translate(16, 62)">
+      <!-- Positive bars (purple) -->
+      <rect x="0" y="-12" width="4" height="12" rx="1" fill="#a855f7" opacity="0.8"/>
+      <rect x="9" y="-6" width="4" height="6" rx="1" fill="#a855f7" opacity="0.8"/>
+      <rect x="18" y="-18" width="4" height="18" rx="1" fill="#a855f7" opacity="0.8"/>
+      <rect x="36" y="-10" width="4" height="10" rx="1" fill="#a855f7" opacity="0.8"/>
+      <rect x="45" y="-4" width="4" height="4" rx="1" fill="#a855f7" opacity="0.8"/>
+      <rect x="63" y="-14" width="4" height="14" rx="1" fill="#a855f7" opacity="0.8"/>
+      <rect x="72" y="-8" width="4" height="8" rx="1" fill="#a855f7" opacity="0.8"/>
+      <rect x="90" y="-16" width="4" height="16" rx="1" fill="#a855f7" opacity="0.8"/>
+      <rect x="108" y="-6" width="4" height="6" rx="1" fill="#a855f7" opacity="0.8"/>
+      <rect x="117" y="-11" width="4" height="11" rx="1" fill="#a855f7" opacity="0.8"/>
+      <rect x="135" y="-9" width="4" height="9" rx="1" fill="#a855f7" opacity="0.8"/>
+      <rect x="153" y="-5" width="4" height="5" rx="1" fill="#a855f7" opacity="0.8"/>
+      <rect x="171" y="-13" width="4" height="13" rx="1" fill="#a855f7" opacity="0.8"/>
+      <!-- Negative bars (orange) -->
+      <rect x="27" y="0" width="4" height="15" rx="1" fill="#fb923c" opacity="0.8"/>
+      <rect x="54" y="0" width="4" height="8" rx="1" fill="#fb923c" opacity="0.8"/>
+      <rect x="81" y="0" width="4" height="12" rx="1" fill="#fb923c" opacity="0.8"/>
+      <rect x="99" y="0" width="4" height="17" rx="1" fill="#fb923c" opacity="0.8"/>
+      <rect x="126" y="0" width="4" height="7" rx="1" fill="#fb923c" opacity="0.8"/>
+      <rect x="144" y="0" width="4" height="14" rx="1" fill="#fb923c" opacity="0.8"/>
+      <rect x="162" y="0" width="4" height="10" rx="1" fill="#fb923c" opacity="0.8"/>
+      <!-- Zero line -->
+      <line x1="0" y1="0" x2="180" y2="0" stroke="#94a3b8" stroke-width="0.5" opacity="0.4"/>
+    </g>
+  </g>
+
+  <!-- Insight box at bottom -->
+  <g transform="translate(40, 200)">
+    <rect x="0" y="0" width="720" height="60" rx="10" fill="rgba(168,85,247,0.06)" stroke="#a855f7" stroke-width="1" stroke-dasharray="4"/>
+    <text x="360" y="24" text-anchor="middle" font-size="11" fill="#e2e8f0">Each number captures a fragment of meaning. No single dimension is interpretable —</text>
+    <text x="360" y="42" text-anchor="middle" font-size="11" fill="#e2e8f0">meaning emerges from the pattern of all dimensions together.</text>
+  </g>
+
+  <!-- Step labels -->
+  <text x="125" y="188" text-anchor="middle" font-size="10" fill="#60a5fa" opacity="0.6">1. Input</text>
+  <text x="390" y="188" text-anchor="middle" font-size="10" fill="#a855f7" opacity="0.6">2. Encode</text>
+  <text x="664" y="188" text-anchor="middle" font-size="10" fill="#4ade80" opacity="0.6">3. Output</text>
+</svg>

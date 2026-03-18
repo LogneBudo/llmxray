@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 350" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="bgModels" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f0a2e"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="350" rx="16" fill="url(#bgModels)"/>
+
+  <text x="400" y="35" text-anchor="middle" font-size="18" font-weight="700" fill="#e2e8f0">Embedding Models at a Glance</text>
+  <text x="400" y="56" text-anchor="middle" font-size="12" fill="#94a3b8">Different models, different vector spaces</text>
+
+  <!-- Card 1: nomic-embed-text (green) -->
+  <g transform="translate(22, 78)">
+    <rect x="0" y="0" width="178" height="170" rx="12" fill="rgba(74,222,128,0.08)" stroke="#4ade80" stroke-width="1.5"/>
+    <!-- Tag -->
+    <rect x="44" y="10" width="90" height="20" rx="10" fill="rgba(74,222,128,0.2)"/>
+    <text x="89" y="24" text-anchor="middle" font-size="9" font-weight="600" fill="#4ade80">Recommended</text>
+    <!-- Model name -->
+    <text x="89" y="52" text-anchor="middle" font-size="11" font-weight="700" fill="#e2e8f0">nomic-embed-text</text>
+    <!-- Specs -->
+    <text x="89" y="78" text-anchor="middle" font-size="10" fill="#4ade80">768 dimensions</text>
+    <line x1="30" y1="90" x2="148" y2="90" stroke="#334155" stroke-width="0.5"/>
+    <text x="89" y="110" text-anchor="middle" font-size="10" fill="#94a3b8">137M params</text>
+    <text x="89" y="128" text-anchor="middle" font-size="10" fill="#94a3b8">274 MB</text>
+    <!-- Dimension bar -->
+    <rect x="20" y="145" width="138" height="6" rx="3" fill="#1e293b"/>
+    <rect x="20" y="145" width="103" height="6" rx="3" fill="#4ade80" opacity="0.6"/>
+    <text x="89" y="162" text-anchor="middle" font-size="8" fill="#64748b">75% of max dims</text>
+  </g>
+
+  <!-- Card 2: mxbai-embed-large (purple) -->
+  <g transform="translate(212, 78)">
+    <rect x="0" y="0" width="178" height="170" rx="12" fill="rgba(168,85,247,0.08)" stroke="#a855f7" stroke-width="1.5"/>
+    <!-- Tag -->
+    <rect x="39" y="10" width="100" height="20" rx="10" fill="rgba(168,85,247,0.2)"/>
+    <text x="89" y="24" text-anchor="middle" font-size="9" font-weight="600" fill="#a855f7">High Quality</text>
+    <!-- Model name -->
+    <text x="89" y="52" text-anchor="middle" font-size="11" font-weight="700" fill="#e2e8f0">mxbai-embed-large</text>
+    <!-- Specs -->
+    <text x="89" y="78" text-anchor="middle" font-size="10" fill="#a855f7">1024 dimensions</text>
+    <line x1="30" y1="90" x2="148" y2="90" stroke="#334155" stroke-width="0.5"/>
+    <text x="89" y="110" text-anchor="middle" font-size="10" fill="#94a3b8">335M params</text>
+    <text x="89" y="128" text-anchor="middle" font-size="10" fill="#94a3b8">670 MB</text>
+    <!-- Dimension bar -->
+    <rect x="20" y="145" width="138" height="6" rx="3" fill="#1e293b"/>
+    <rect x="20" y="145" width="138" height="6" rx="3" fill="#a855f7" opacity="0.6"/>
+    <text x="89" y="162" text-anchor="middle" font-size="8" fill="#64748b">100% of max dims</text>
+  </g>
+
+  <!-- Card 3: all-minilm (blue) -->
+  <g transform="translate(402, 78)">
+    <rect x="0" y="0" width="178" height="170" rx="12" fill="rgba(96,165,250,0.08)" stroke="#60a5fa" stroke-width="1.5"/>
+    <!-- Tag -->
+    <rect x="39" y="10" width="100" height="20" rx="10" fill="rgba(96,165,250,0.2)"/>
+    <text x="89" y="24" text-anchor="middle" font-size="9" font-weight="600" fill="#60a5fa">Lightweight</text>
+    <!-- Model name -->
+    <text x="89" y="52" text-anchor="middle" font-size="11" font-weight="700" fill="#e2e8f0">all-minilm</text>
+    <!-- Specs -->
+    <text x="89" y="78" text-anchor="middle" font-size="10" fill="#60a5fa">384 dimensions</text>
+    <line x1="30" y1="90" x2="148" y2="90" stroke="#334155" stroke-width="0.5"/>
+    <text x="89" y="110" text-anchor="middle" font-size="10" fill="#94a3b8">23M params</text>
+    <text x="89" y="128" text-anchor="middle" font-size="10" fill="#94a3b8">46 MB</text>
+    <!-- Dimension bar -->
+    <rect x="20" y="145" width="138" height="6" rx="3" fill="#1e293b"/>
+    <rect x="20" y="145" width="52" height="6" rx="3" fill="#60a5fa" opacity="0.6"/>
+    <text x="89" y="162" text-anchor="middle" font-size="8" fill="#64748b">38% of max dims</text>
+  </g>
+
+  <!-- Card 4: bge-m3 (yellow) -->
+  <g transform="translate(592, 78)">
+    <rect x="0" y="0" width="178" height="170" rx="12" fill="rgba(251,191,36,0.08)" stroke="#fbbf24" stroke-width="1.5"/>
+    <!-- Tag -->
+    <rect x="39" y="10" width="100" height="20" rx="10" fill="rgba(251,191,36,0.2)"/>
+    <text x="89" y="24" text-anchor="middle" font-size="9" font-weight="600" fill="#fbbf24">Multilingual</text>
+    <!-- Model name -->
+    <text x="89" y="52" text-anchor="middle" font-size="11" font-weight="700" fill="#e2e8f0">bge-m3</text>
+    <!-- Specs -->
+    <text x="89" y="78" text-anchor="middle" font-size="10" fill="#fbbf24">1024 dimensions</text>
+    <line x1="30" y1="90" x2="148" y2="90" stroke="#334155" stroke-width="0.5"/>
+    <text x="89" y="110" text-anchor="middle" font-size="10" fill="#94a3b8">567M params</text>
+    <text x="89" y="128" text-anchor="middle" font-size="10" fill="#94a3b8">1.2 GB</text>
+    <!-- Dimension bar -->
+    <rect x="20" y="145" width="138" height="6" rx="3" fill="#1e293b"/>
+    <rect x="20" y="145" width="138" height="6" rx="3" fill="#fbbf24" opacity="0.6"/>
+    <text x="89" y="162" text-anchor="middle" font-size="8" fill="#64748b">100% of max dims</text>
+  </g>
+
+  <!-- Insight box at bottom -->
+  <g transform="translate(40, 268)">
+    <rect x="0" y="0" width="720" height="60" rx="10" fill="rgba(168,85,247,0.06)" stroke="#a855f7" stroke-width="1" stroke-dasharray="4"/>
+    <text x="360" y="24" text-anchor="middle" font-size="11" fill="#e2e8f0">More dimensions does not always mean better. Match the model to your task:</text>
+    <text x="360" y="42" text-anchor="middle" font-size="11" fill="#e2e8f0">fast search &#x2192; all-minilm | multilingual &#x2192; bge-m3 | general purpose &#x2192; nomic-embed-text</text>
+  </g>
+</svg>
