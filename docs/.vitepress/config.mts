@@ -67,6 +67,7 @@ function communityNav(prefix: string) {
         { text: fr ? 'Module 1: Qu\'est-ce qu\'un Token ?' : 'Module 1: What Is a Token?', link: `${prefix}/community/educators/module-1` },
         { text: fr ? 'Module 2: La Température' : 'Module 2: Temperature', link: `${prefix}/community/educators/module-2` },
         { text: fr ? 'Module 3: L\'IA peut-elle mentir ?' : 'Module 3: Can AI Lie?', link: `${prefix}/community/educators/module-3` },
+        { text: fr ? 'Module 4: Que voit le modèle ?' : 'Module 4: What Does the Model See?', link: `${prefix}/community/educators/module-4` },
       ],
     },
   ]
