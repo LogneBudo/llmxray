@@ -8,6 +8,7 @@
     "aiTraining": "AI 训练",
     "models": "模型",
     "benchmark": "基准测试",
+    "costDashboard": "成本",
     "mySystem": "我的系统",
     "settings": "设置",
     "tagline": "本地 LLM 观测站"
@@ -21,6 +22,7 @@
     "models": "模型",
     "benchmark": "基准测试",
     "toolWorkshop": "工具工坊",
+    "costDashboard": "成本",
     "mySystem": "我的系统",
     "settings": "设置",
     "default": "LLMxRay"

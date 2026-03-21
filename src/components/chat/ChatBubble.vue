@@ -4,10 +4,12 @@ import type { ChatMessage } from '@/types/conversation'
 import { useSessionStore } from '@/stores/session-store'
 import { useReasoningStore } from '@/stores/reasoning-store'
 import { useMetricsStore } from '@/stores/metrics-store'
+import { useQualityStore } from '@/stores/quality-store'
 import { renderMarkdown } from '@/composables/useMarkdown'
 import InlineThinkingBlock from './InlineThinkingBlock.vue'
 import AssistantTokenStream from './AssistantTokenStream.vue'
 import AttachmentBubble from './AttachmentBubble.vue'
+import QualityBadges from './QualityBadges.vue'
 
 const props = defineProps<{
   message: ChatMessage
@@ -16,6 +18,9 @@ const props = defineProps<{
 const sessionStore = useSessionStore()
 const reasoningStore = useReasoningStore()
 const metricsStore = useMetricsStore()
+const qualityStore = useQualityStore()
+
+const qualityReport = computed(() => qualityStore.getReport(props.message.id))
 
 const sessionMetrics = computed(() => {
   if (!props.message.sessionId) return null
@@ -107,8 +112,8 @@ const formattedTime = computed(() => {
           <span class="h-1.5 w-1.5 rounded-full bg-accent" style="animation: typing-bounce 1.2s ease-in-out 0.4s infinite" />
         </span>
 
-        <!-- Truncation warning -->
-        <div v-if="wasTruncated && !message.isStreaming" class="mt-1 text-[10px] text-warning">
+        <!-- Truncation warning (fallback when quality analysis hasn't run yet) -->
+        <div v-if="wasTruncated && !message.isStreaming && !qualityReport" class="mt-1 text-[10px] text-warning">
           {{ $t('dashboard.bubble.truncatedWarning') }}
         </div>
       </template>
@@ -123,7 +128,16 @@ const formattedTime = computed(() => {
         <span>{{ sessionMetrics.tokensPerSecond.toFixed(1) }} {{ $t('dashboard.bubble.tokPerSec') }}</span>
         <span class="opacity-40">·</span>
         <span>{{ sessionMetrics.ttftMs < 1000 ? sessionMetrics.ttftMs.toFixed(0) + 'ms' : (sessionMetrics.ttftMs / 1000).toFixed(1) + 's' }} {{ $t('dashboard.bubble.ttft') }}</span>
+        <span
+          v-if="qualityReport && qualityReport.overall !== 'pass'"
+          class="ml-1 inline-block h-1.5 w-1.5 rounded-full"
+          :class="qualityReport.overall === 'fail' ? 'bg-error' : 'bg-warning'"
+          :title="$t('quality.issuesDetected')"
+        />
       </div>
+
+      <!-- Quality badges -->
+      <QualityBadges :report="qualityReport" />
 
       <div class="mt-1" :class="isUser ? 'text-end' : ''">
         <span class="text-[10px] opacity-50">{{ formattedTime }}</span>

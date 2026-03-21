@@ -8,6 +8,7 @@
     "aiTraining": "Entra\u00eenement IA",
     "models": "Mod\u00e8les",
     "benchmark": "Benchmark",
+    "costDashboard": "Co\u00fbts",
     "mySystem": "Mon syst\u00e8me",
     "settings": "Paramètres",
     "tagline": "Observatoire local de LLM"
@@ -21,6 +22,7 @@
     "models": "Modèles",
     "benchmark": "Benchmark",
     "toolWorkshop": "Atelier d'outils",
+    "costDashboard": "Co\u00fbts",
     "mySystem": "Mon système",
     "settings": "Paramètres",
     "default": "LLMxRay"

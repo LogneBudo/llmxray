@@ -1,0 +1,27 @@
+{
+  "title": "Tableau de bord des couts",
+  "summary": {
+    "totalTokens": "Tokens totaux",
+    "totalSessions": "Sessions",
+    "estimatedCost": "Cout estime",
+    "avgCostPerSession": "Cout moy./session"
+  },
+  "charts": {
+    "tokensByModel": "Utilisation de tokens par modele",
+    "dailyUsage": "Utilisation quotidienne",
+    "promptTokens": "Tokens de prompt",
+    "completionTokens": "Tokens de completion",
+    "estimatedCost": "Cout estime"
+  },
+  "table": {
+    "model": "Modele",
+    "sessions": "Sessions",
+    "promptTokens": "Prompt",
+    "completionTokens": "Completion",
+    "totalTokens": "Total",
+    "estimatedCost": "Cout est.",
+    "pricingSource": "Source"
+  },
+  "disclaimer": "Ces couts sont des estimations basees sur les tarifs equivalents des API cloud. Ollama fonctionne localement sans frais.",
+  "noData": "Aucune donnee d'utilisation. Commencez a discuter pour voir l'utilisation des tokens et les estimations de couts."
+}

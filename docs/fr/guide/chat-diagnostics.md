@@ -40,6 +40,26 @@ Tapez `/` dans la zone de saisie pour voir les commandes slash disponibles pour 
 ### Conversation multi-tours
 Chaque conversation conserve l'historique complet des messages. Le modèle voit tous les messages précédents comme contexte.
 
+### Portes de qualite des reponses
+
+Chaque reponse de l'assistant est automatiquement analysee par cinq detecteurs cote client. Lorsque des problemes sont detectes, de petits badges colores apparaissent sous les metriques de la reponse :
+
+| Detecteur | Condition | Severite |
+|-----------|-----------|----------|
+| **Repetition** | >50% de 4-grammes repetes | Echec (rouge) |
+| **Repetition** | >30% de 4-grammes repetes | Attention (jaune) |
+| **Refus** | Correspond a 8 modeles de refus courants | Attention |
+| **Charabia** | >40% de caracteres non-ASCII (texte >20 car.) | Attention |
+| **Vide** | 0 mots | Echec |
+| **Vide** | 1-9 mots | Attention |
+| **Troncature** | Limite de tokens atteinte ou >90% du budget sans fin propre | Attention |
+
+Un petit point colore apparait egalement dans la ligne de metriques pour un scan rapide. Si tous les controles passent, rien de supplementaire n'est affiche.
+
+::: tip Toute l'analyse est cote client
+Les controles de qualite s'executent instantanement dans votre navigateur sur le texte de la reponse affichee. Aucun appel API, aucun service externe.
+:::
+
 ## Analyse approfondie des sessions
 
 Cliquez sur une session dans le panneau gauche pour explorer six onglets d'analyse :

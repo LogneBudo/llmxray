@@ -1,0 +1,27 @@
+{
+  "title": "Cost Dashboard",
+  "summary": {
+    "totalTokens": "Total Tokens",
+    "totalSessions": "Sessions",
+    "estimatedCost": "Estimated Cost",
+    "avgCostPerSession": "Avg Cost/Session"
+  },
+  "charts": {
+    "tokensByModel": "Token Usage by Model",
+    "dailyUsage": "Daily Usage",
+    "promptTokens": "Prompt Tokens",
+    "completionTokens": "Completion Tokens",
+    "estimatedCost": "Estimated Cost"
+  },
+  "table": {
+    "model": "Model",
+    "sessions": "Sessions",
+    "promptTokens": "Prompt",
+    "completionTokens": "Completion",
+    "totalTokens": "Total",
+    "estimatedCost": "Est. Cost",
+    "pricingSource": "Source"
+  },
+  "disclaimer": "These costs are estimates based on equivalent cloud API pricing. Ollama runs locally at no cost.",
+  "noData": "No usage data yet. Start chatting to see token usage and cost estimates."
+}

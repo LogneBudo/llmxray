@@ -92,6 +92,27 @@ When the model calls a tool during chat, an **"Optimize this Tool"** button appe
 - Auto-generate optimized fetch code with field extraction
 - One click to create a new optimized tool in the Workshop
 
+### Response Quality Gates
+Every assistant response is automatically analyzed for common quality issues. Small colored badges appear below the response metrics when problems are detected:
+
+- **Repetition** &mdash; Flags responses with excessive repeated 4-gram phrases (>50% = fail, >30% = warn)
+- **Refusal** &mdash; Detects 8 common refusal patterns ("as an AI language model", "I cannot help", etc.)
+- **Gibberish** &mdash; Warns when non-ASCII characters exceed 40% of the response
+- **Empty** &mdash; Flags responses with fewer than 10 words
+- **Truncation** &mdash; Warns when the response hit the token limit or used >90% of budget without clean ending
+
+No news is good news &mdash; badges only appear when something is wrong.
+
+### Cost Dashboard
+Track token usage across all your sessions with estimated cloud-equivalent costs. Navigate to the **Costs** page in the sidebar to see:
+
+- **Summary cards** &mdash; Total tokens, sessions, estimated cost, average cost per session
+- **Token usage by model** &mdash; Stacked bar chart showing prompt vs completion tokens per model
+- **Daily usage trends** &mdash; Line chart with dual axes (tokens + estimated cost over time)
+- **Model breakdown table** &mdash; Detailed per-model statistics with pricing source transparency
+
+Costs are estimates based on equivalent cloud API pricing (Groq, Together AI, Google, Mistral, etc.). Ollama runs locally at zero cost &mdash; the dashboard shows what you're saving.
+
 ### Model Browser
 See every model installed in Ollama with details like parameter count, quantization level, family, and format. Includes architecture diagrams showing the model's structure.
 

@@ -8,6 +8,7 @@
     "aiTraining": "AI Training",
     "models": "Models",
     "benchmark": "Benchmark",
+    "costDashboard": "Costs",
     "mySystem": "My System",
     "settings": "Settings",
     "tagline": "Local LLM Observatory"
@@ -21,6 +22,7 @@
     "models": "Models",
     "benchmark": "Benchmark",
     "toolWorkshop": "Tool Workshop",
+    "costDashboard": "Costs",
     "mySystem": "My System",
     "settings": "Settings",
     "default": "LLMxRay"

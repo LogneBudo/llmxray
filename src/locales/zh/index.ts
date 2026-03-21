@@ -10,6 +10,8 @@ import system from './system.json'
 import comparison from './comparison.json'
 import session from './session.json'
 import feedback from './feedback.json'
+import quality from './quality.json'
+import cost from './cost.json'
 
 export default {
   common,
@@ -24,4 +26,6 @@ export default {
   comparison,
   session,
   feedback,
+  quality,
+  cost,
 }

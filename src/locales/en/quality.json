@@ -1,0 +1,23 @@
+{
+  "issuesDetected": "Quality issues detected",
+  "repetition": {
+    "label": "Repetitive",
+    "reason": "Response contains excessive repeated phrases"
+  },
+  "refusal": {
+    "label": "Refusal",
+    "reason": "Response appears to be a refusal"
+  },
+  "gibberish": {
+    "label": "Garbled",
+    "reason": "Response contains high ratio of non-printable characters"
+  },
+  "empty": {
+    "label": "Empty",
+    "reason": "Response contains very little content"
+  },
+  "truncation": {
+    "label": "Truncated",
+    "reason": "Response may have been cut short"
+  }
+}

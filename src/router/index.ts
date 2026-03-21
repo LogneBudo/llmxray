@@ -54,6 +54,11 @@ export const router = createRouter({
           component: () => import('@/pages/AITrainingPage.vue'),
         },
         {
+          path: 'costs',
+          name: 'costs',
+          component: () => import('@/pages/CostDashboardPage.vue'),
+        },
+        {
           path: 'system',
           name: 'system',
           component: () => import('@/pages/SystemPage.vue'),

@@ -1,0 +1,23 @@
+{
+  "issuesDetected": "Problemes de qualite detectes",
+  "repetition": {
+    "label": "Repetitif",
+    "reason": "La reponse contient des phrases excessivement repetees"
+  },
+  "refusal": {
+    "label": "Refus",
+    "reason": "La reponse semble etre un refus"
+  },
+  "gibberish": {
+    "label": "Brouille",
+    "reason": "La reponse contient un ratio eleve de caracteres non imprimables"
+  },
+  "empty": {
+    "label": "Vide",
+    "reason": "La reponse contient tres peu de contenu"
+  },
+  "truncation": {
+    "label": "Tronque",
+    "reason": "La reponse a peut-etre ete coupee"
+  }
+}

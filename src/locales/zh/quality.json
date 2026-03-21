@@ -1,0 +1,23 @@
+{
+  "issuesDetected": "检测到质量问题",
+  "repetition": {
+    "label": "重复",
+    "reason": "回复包含过多重复短语"
+  },
+  "refusal": {
+    "label": "拒绝",
+    "reason": "回复似乎是拒绝回答"
+  },
+  "gibberish": {
+    "label": "乱码",
+    "reason": "回复包含大量不可打印字符"
+  },
+  "empty": {
+    "label": "空白",
+    "reason": "回复内容极少"
+  },
+  "truncation": {
+    "label": "截断",
+    "reason": "回复可能被提前中断"
+  }
+}

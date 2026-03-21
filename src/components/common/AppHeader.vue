@@ -31,6 +31,7 @@ const pageTitle = computed(() => {
     rag: t('common.header.knowledgeBase'),
     models: t('common.header.models'),
     benchmark: t('common.header.benchmark'),
+    costs: t('common.header.costDashboard'),
     tools: t('common.header.toolWorkshop'),
     system: t('common.header.mySystem'),
     settings: t('common.header.settings'),

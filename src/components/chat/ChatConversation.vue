@@ -12,6 +12,8 @@ import { findCommand } from '@/services/slash-command-registry'
 import { useToolWorkshopStore } from '@/stores/tool-workshop-store'
 import { useMemoryStore } from '@/stores/memory-store'
 import { useTokenStore } from '@/stores/token-store'
+import { useQualityStore } from '@/stores/quality-store'
+import { analyzeResponseQuality } from '@/services/quality-analyzer'
 import { prepareContext, embedNewMessages } from '@/services/context-manager'
 import { conversationDB } from '@/services/conversation-db'
 import type { SlashCommandContext } from '@/types/slash-command'
@@ -35,6 +37,7 @@ const metricsStore = useMetricsStore()
 const toolWorkshopStore = useToolWorkshopStore()
 const memoryStore = useMemoryStore()
 const tokenStore = useTokenStore()
+const qualityStore = useQualityStore()
 const { isStreaming, currentSessionId, startChatStream, cancel } = useOllamaStream()
 
 const selectedModel = ref('')
@@ -429,6 +432,23 @@ async function handleSend(text: string, attachments: ChatAttachment[] = []) {
 
           // Persist token array to IndexedDB for diagnostic replay
           tokenStore.persistTokens(sessionId)
+
+          // Run quality analysis on completed assistant response
+          if (status === 'completed') {
+            const session = sessionStore.sessionById(sessionId)
+            const assistantContent = session?.outputText ?? ''
+            const displayText = assistantContent.replace(/<think>[\s\S]*?<\/think>/g, '').trim()
+            const metrics = metricsStore.getMetrics(sessionId)
+            const report = analyzeResponseQuality(
+              assistantMsgId,
+              sessionId,
+              displayText,
+              metrics?.completionTokenCount ?? 0,
+              chatSettings.value.options.num_predict as number | undefined,
+              session?.doneReason,
+            )
+            qualityStore.setReport(assistantMsgId, report)
+          }
 
           // Embed user + assistant messages for RAG-based message memory (fire and forget)
           if (

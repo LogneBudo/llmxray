@@ -40,6 +40,26 @@ Type `/` in the input to see available slash commands for quick actions.
 ### Multi-turn Conversation
 Each conversation maintains full message history. The model sees all previous messages for context.
 
+### Response Quality Gates
+
+Every completed assistant response is automatically analyzed by five client-side detectors. When issues are found, small colored badges appear below the response metrics:
+
+| Detector | Condition | Severity |
+|----------|-----------|----------|
+| **Repetition** | >50% repeated 4-grams | Fail (red) |
+| **Repetition** | >30% repeated 4-grams | Warn (yellow) |
+| **Refusal** | Matches 8 common refusal patterns | Warn |
+| **Gibberish** | >40% non-ASCII chars (text >20 chars) | Warn |
+| **Empty** | 0 words | Fail |
+| **Empty** | 1-9 words | Warn |
+| **Truncation** | Hit token limit or >90% budget without clean ending | Warn |
+
+A small colored dot also appears in the metrics row for quick scanning. If all checks pass, nothing extra is shown &mdash; no news is good news.
+
+::: tip All analysis is client-side
+Quality checks run instantly in your browser on the displayed response text. No API calls, no external services.
+:::
+
 ## Session Deep Dive
 
 Click any session in the left panel to explore six analysis tabs:

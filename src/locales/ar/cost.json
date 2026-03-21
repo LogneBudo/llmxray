@@ -1,0 +1,27 @@
+{
+  "title": "لوحة التكاليف",
+  "summary": {
+    "totalTokens": "إجمالي الرموز",
+    "totalSessions": "الجلسات",
+    "estimatedCost": "التكلفة المقدرة",
+    "avgCostPerSession": "متوسط التكلفة/جلسة"
+  },
+  "charts": {
+    "tokensByModel": "استخدام الرموز حسب النموذج",
+    "dailyUsage": "الاستخدام اليومي",
+    "promptTokens": "رموز المطالبة",
+    "completionTokens": "رموز الإكمال",
+    "estimatedCost": "التكلفة المقدرة"
+  },
+  "table": {
+    "model": "النموذج",
+    "sessions": "الجلسات",
+    "promptTokens": "المطالبة",
+    "completionTokens": "الإكمال",
+    "totalTokens": "الإجمالي",
+    "estimatedCost": "التكلفة المقدرة",
+    "pricingSource": "المصدر"
+  },
+  "disclaimer": "هذه التكاليف تقديرات مبنية على أسعار واجهات برمجة التطبيقات السحابية المكافئة. يعمل Ollama محلياً بدون تكلفة.",
+  "noData": "لا توجد بيانات استخدام بعد. ابدأ المحادثة لرؤية استخدام الرموز وتقديرات التكلفة."
+}

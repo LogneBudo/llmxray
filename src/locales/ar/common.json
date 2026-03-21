@@ -8,6 +8,7 @@
     "aiTraining": "تدريب الذكاء الاصطناعي",
     "models": "النماذج",
     "benchmark": "اختبار الأداء",
+    "costDashboard": "التكاليف",
     "mySystem": "نظامي",
     "settings": "الإعدادات",
     "tagline": "مرصد النماذج اللغوية المحلية"
@@ -21,6 +22,7 @@
     "models": "النماذج",
     "benchmark": "اختبار الأداء",
     "toolWorkshop": "ورشة الأدوات",
+    "costDashboard": "التكاليف",
     "mySystem": "نظامي",
     "settings": "الإعدادات",
     "default": "LLMxRay"
