@@ -9,3 +9,4 @@ docs/.vitepress/dist
 tsconfig.tsbuildinfo
 site-dist
 internal/
+BACKLOG.md
