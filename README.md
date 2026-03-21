@@ -3,167 +3,194 @@
 </p>
 
 <h1 align="center">LLMxRay</h1>
-<p align="center"><strong>Local LLM Observatory</strong></p>
+<p align="center"><strong>See what your AI is actually doing.</strong></p>
 <p align="center">
-  See what your AI is <em>actually</em> doing &mdash; token by token, layer by layer.
+  Real-time token streaming, quality analysis, performance profiling, and cost tracking<br/>
+  for local LLMs. No cloud. No API keys. No cost.
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/vue-3.5-42b883?logo=vuedotjs&logoColor=white" alt="Vue 3.5" />
-  <img src="https://img.shields.io/badge/vite-7.3-646cff?logo=vite&logoColor=white" alt="Vite 7.3" />
-  <img src="https://img.shields.io/badge/typescript-5.9-3178c6?logo=typescript&logoColor=white" alt="TypeScript 5.9" />
-  <img src="https://img.shields.io/badge/tailwind-4.2-06b6d4?logo=tailwindcss&logoColor=white" alt="Tailwind 4.2" />
+  <a href="https://www.npmjs.com/package/llmxray"><img src="https://img.shields.io/npm/v/llmxray?color=cb3837&logo=npm&logoColor=white" alt="npm" /></a>
+  <a href="https://hub.docker.com/r/djovaneli/llmxray"><img src="https://img.shields.io/docker/pulls/djovaneli/llmxray?color=2496ED&logo=docker&logoColor=white" alt="Docker" /></a>
+  <img src="https://img.shields.io/badge/license-Apache%202.0-blue" alt="License" />
   <img src="https://img.shields.io/badge/ollama-local-000?logo=ollama&logoColor=white" alt="Ollama" />
 </p>
 
----
+<p align="center">
+  <a href="#quick-start">Quick Start</a> &bull;
+  <a href="#features">Features</a> &bull;
+  <a href="#screenshots">Screenshots</a> &bull;
+  <a href="#who-is-this-for">Who Is This For</a> &bull;
+  <a href="CHANGELOG.md">Changelog</a>
+</p>
 
-## What is LLMxRay?
-
-LLMxRay is a **free, local-first** dashboard that connects to [Ollama](https://ollama.com) running on your machine. It lets you chat with any model you've downloaded and then **inspect everything that happened behind the scenes**: how fast each token arrived, what the model might have been "thinking", how different settings change the output, and much more.
-
-**No cloud. No API keys. No cost.** Everything runs on your hardware.
-
-### Who is this for?
-
-| You are... | LLMxRay helps you... |
-|---|---|
-| **Curious beginner** | See AI responses form in real-time and learn what "temperature" or "tokens" actually mean |
-| **Student / educator** | Explore model behavior visually &mdash; great for AI/ML coursework and demos |
-| **Developer** | Debug prompts, compare models, profile latency, inspect tool calls |
-| **Researcher** | Run controlled experiments: same prompt, different settings, side-by-side results |
-
----
-
-## Features at a Glance
-
-### Chat with Real-Time Token Streaming
-Start a conversation with any Ollama model. Watch tokens appear one by one with **confidence coloring** &mdash; each token is tinted based on how quickly the model produced it (faster = more confident). Supports markdown rendering, multi-turn conversation, file attachments, and slash commands.
-
-### Session Deep Dive
-Click any past session to explore six tabs of detail:
-
-- **Stream** &mdash; Every token with timing data, plus a metrics dashboard (time-to-first-token, tokens/sec, latency chart)
-- **Reasoning** &mdash; If you're running a reasoning model like DeepSeek-R1, the `<think>` blocks are parsed and displayed step-by-step
-- **Introspection** &mdash; Visualizations of layer activations, attention heatmaps, and model architecture (illustrative)
-- **Tools** &mdash; Timeline of any tool calls the model made, with parameters and results
-- **Agent** &mdash; State-flow graph showing how an agent-style prompt progressed
-- **Prompt** &mdash; Anatomy breakdown of your prompt: sections, token counts, structure
-
-### Compare Models (and Settings)
-The comparison workbench goes beyond "Model A vs Model B". Create up to **4 slots**, each with its own model, temperature, system prompt, and sampling parameters. Compare the *same* model at different temperatures to see how creativity changes. Features include:
-
-- **Grid view** &mdash; Side-by-side streaming results with per-slot settings pills
-- **Diff view** &mdash; Word-level highlighting of what changed between two outputs
-- **Metrics bar** &mdash; Visual comparison of TTFT, tokens/sec, and total tokens
-- **Quick presets** &mdash; "Temperature Sweep" (3 temps) and "Deterministic Pair" (same seed) one-click setups
-- Embedding models are automatically filtered out &mdash; only chat-capable models appear
-
-### Embeddings Lab
-Embed any text and visualize the resulting vector. Compare two texts with a **cosine similarity meter** to see how semantically close they are. A hands-on way to understand what embeddings actually represent.
-
-### RAG Pipeline
-Build a local knowledge base from your documents:
-
-1. **Upload** PDFs, Word docs (.docx), or CSVs
-2. **Chunk & embed** automatically using your chosen embedding model
-3. **Search** with natural language &mdash; results ranked by semantic similarity
-
-Everything is stored in **IndexedDB** (your browser's built-in database). Zero cost, zero setup, zero external services.
-
-### Tool Workshop (Visual Canvas)
-Build, edit, and test tool definitions on an interactive **node-based canvas** powered by Vue Flow:
-
-- **Drag-and-drop nodes** &mdash; Each tool is a visual node showing name, description, parameters, and implementation body
-- **Inline code editing** &mdash; Full CodeMirror 6 editors with TypeScript syntax highlighting directly on each node
-- **Bidirectional code sync** &mdash; Open the Code Panel to see all tools as combined TypeScript source. Edit code, nodes update. Edit nodes, code updates. Powered by a Recast AST parser
-- **Schema viewer** &mdash; Auto-generated OpenAI-compatible JSON schemas with one-click copy
-- **Probe & Pick** &mdash; Point at any API URL, inspect the response JSON tree, and auto-generate fetch code + parameter mappings
-- **OpenAPI discovery** &mdash; Auto-detect and parse OpenAPI/Swagger specs to pick endpoints visually
-- **Live execution overlays** &mdash; During chat, tool nodes pulse when the model calls them and show results inline
-- **Templates** &mdash; Start from 15+ built-in templates (web fetch, calculator, Google Calendar/Gmail, regex tester, and more)
-- **Persistent layout** &mdash; Node positions, mappings, and probe configs survive across sessions
-
-### Tool Call Optimizer
-When the model calls a tool during chat, an **"Optimize this Tool"** button appears on the result. Click it to open the Response Optimizer Drawer:
-
-- Visualize the API response as an interactive JSON tree
-- Select only the fields the model actually needs
-- Auto-generate optimized fetch code with field extraction
-- One click to create a new optimized tool in the Workshop
-
-### Response Quality Gates
-Every assistant response is automatically analyzed for common quality issues. Small colored badges appear below the response metrics when problems are detected:
-
-- **Repetition** &mdash; Flags responses with excessive repeated 4-gram phrases (>50% = fail, >30% = warn)
-- **Refusal** &mdash; Detects 8 common refusal patterns ("as an AI language model", "I cannot help", etc.)
-- **Gibberish** &mdash; Warns when non-ASCII characters exceed 40% of the response
-- **Empty** &mdash; Flags responses with fewer than 10 words
-- **Truncation** &mdash; Warns when the response hit the token limit or used >90% of budget without clean ending
-
-No news is good news &mdash; badges only appear when something is wrong.
-
-### Cost Dashboard
-Track token usage across all your sessions with estimated cloud-equivalent costs. Navigate to the **Costs** page in the sidebar to see:
-
-- **Summary cards** &mdash; Total tokens, sessions, estimated cost, average cost per session
-- **Token usage by model** &mdash; Stacked bar chart showing prompt vs completion tokens per model
-- **Daily usage trends** &mdash; Line chart with dual axes (tokens + estimated cost over time)
-- **Model breakdown table** &mdash; Detailed per-model statistics with pricing source transparency
-
-Costs are estimates based on equivalent cloud API pricing (Groq, Together AI, Google, Mistral, etc.). Ollama runs locally at zero cost &mdash; the dashboard shows what you're saving.
-
-### Performance Analytics
-A dedicated **Analytics** page (`/analytics`) provides deep insight into your usage patterns:
-
-- **Latency percentiles** (P50/P95/P99) for request duration and time-to-first-token
-- **Quality over turns** &mdash; per-turn quality scoring across multi-turn conversations
-- **Error intelligence** &mdash; error classification (7 categories) with timeline and per-model breakdown
-- **Usage heatmap** &mdash; 7-day x 24-hour grid showing your active hours
-- **Model distribution** &mdash; doughnut chart of request volume per model
-- **Settings impact** &mdash; scatter plots correlating temperature with generation speed
-- **Model load history** &mdash; timeline of cold/warm starts with load durations
-
-### Model Browser
-See every model installed in Ollama with details like parameter count, quantization level, family, and format. Includes architecture diagrams showing the model's structure.
-
-### System Monitor
-Real hardware specs (not browser estimates) &mdash; CPU model, total RAM with live usage, GPU with driver version, storage. Plus live Ollama status: running models, memory allocation, inference settings.
-
-### Settings
-Configure your Ollama connection URL with a live connection tester. Set default **temperature** and **context length** with visual scales and educational tooltips that explain what each setting does in plain language.
+<p align="center">
+  <img src="docs/public/screenshots/demo.gif" alt="LLMxRay demo — real-time token streaming with confidence coloring" width="800" />
+</p>
 
 ---
 
 ## Quick Start
 
-### Prerequisites
+**One command. 30 seconds.**
 
-1. **Node.js 18+** &mdash; [Download](https://nodejs.org)
-2. **Ollama** running locally &mdash; [Download](https://ollama.com/download)
-3. At least one model pulled:
-   ```bash
-   ollama pull llama3.2
-   ```
+```bash
+npx llmxray
+```
 
-### Install and Run
+Or with Docker:
 
+```bash
+docker run -p 5174:5174 djovaneli/llmxray
+```
+
+Open **http://localhost:5174** and start chatting. That's it.
+
+> **Prerequisite:** [Ollama](https://ollama.com/download) running locally with at least one model pulled (`ollama pull llama3.2`).
+
+---
+
+## Why LLMxRay?
+
+You run a local LLM. You chat with it. But what actually happened?
+
+- How fast was each token? Which ones was the model confident about?
+- Is the response quality degrading over long conversations?
+- What would this have cost if you ran it in the cloud?
+- Is the model repeating itself? Refusing? Generating gibberish?
+- How does temperature 0.3 compare to 0.9 on the *same* prompt?
+
+**LLMxRay answers all of these, visually, in real time, for free.**
+
+---
+
+## Features
+
+### Real-Time Chat with Token Intelligence
+Chat with any Ollama model and watch tokens arrive with **confidence coloring** — each token is tinted based on generation speed. Supports markdown, multi-turn conversations, file attachments, vision models, and slash commands.
+
+### Response Quality Gates
+Every response is automatically analyzed. Colored badges appear only when something is wrong:
+- **Repetition** — excessive repeated phrases (4-gram analysis)
+- **Refusal** — "as an AI language model" and 7 other patterns
+- **Gibberish** — high non-ASCII ratio
+- **Empty** — fewer than 10 words
+- **Truncation** — hit the token limit without finishing
+
+### Model Comparison Workbench
+Up to **4 slots** with independent model, temperature, and system prompt. Features include side-by-side streaming, word-level diff highlighting, metrics comparison, and one-click presets (Temperature Sweep, Deterministic Pair, Language Compare with Token Tax visualization).
+
+### Performance Analytics
+- **Latency percentiles** (P50/P95/P99) for duration and TTFT
+- **Error intelligence** — 7-category classifier with timeline
+- **Usage heatmap** — 7x24 grid of your active hours
+- **Settings impact** — temperature vs tokens/sec scatter plots
+- **Cold vs warm start** tracking with model load history
+
+### Cost Dashboard
+Token usage per model/day with estimated cloud-equivalent pricing. See what you're *saving* by running locally.
+
+### Surgical Benchmark
+Test model knowledge with multi-choice question suites. Uses real logprobs via OpenAI-compatible endpoint for accurate confidence measurement. Build custom suites visually or let AI generate them from a topic.
+
+### Embeddings Lab & RAG Pipeline
+Embed text, visualize vectors, measure cosine similarity. Build a local knowledge base from PDFs, DOCX, and CSV — chunked, embedded, and searchable. All stored in IndexedDB. Zero cost.
+
+### Tool Workshop (Visual Canvas)
+Drag-and-drop node canvas for building tool definitions. Bidirectional code sync (edit nodes or TypeScript — both update). Probe APIs, auto-generate schemas, test with live execution.
+
+### AI Training Pipeline
+Curate training data from your conversations. Tag, review, and export as JSONL for fine-tuning.
+
+### Local AI History Database
+Every experiment (benchmarks, comparisons, chats, training pairs) is automatically archived in a queryable IndexedDB database with filters, trends, exports, and retention policies.
+
+### Multilingual
+Full translations in English, French, Chinese, and Arabic. RTL layout support. Community scaffolds for Hebrew and Japanese.
+
+---
+
+## Screenshots
+
+<table>
+<tr>
+<td width="50%">
+
+**Chat with token streaming and confidence**
+![Chat](docs/public/screenshots/chat-diagnostics.png)
+
+</td>
+<td width="50%">
+
+**Model comparison — side by side**
+![Compare](docs/public/screenshots/compare-sidebyside.png)
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+**Session deep dive — metrics and timing**
+![Session](docs/public/screenshots/session-details.png)
+
+</td>
+<td width="50%">
+
+**Benchmark with confidence radar**
+![Benchmark](docs/public/screenshots/benchmark.png)
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+**Embeddings — cosine similarity**
+![Embeddings](docs/public/screenshots/embed-similarity.png)
+
+</td>
+<td width="50%">
+
+**System monitor — hardware and Ollama status**
+![System](docs/public/screenshots/my-system.png)
+
+</td>
+</tr>
+</table>
+
+---
+
+## Who Is This For
+
+| You are... | LLMxRay helps you... |
+|---|---|
+| **Developer** | Debug prompts, profile latency, compare models, inspect tool calls, track costs |
+| **Researcher** | Run controlled experiments with consistent settings across models and temperatures |
+| **Student / Educator** | Explore model behavior visually — built-in Educators Kit with 9 interactive modules |
+| **AI team lead** | Understand quality trends, error patterns, and resource usage across your local fleet |
+
+---
+
+## Install Options
+
+### npx (recommended)
+```bash
+npx llmxray
+npx llmxray --port 3000
+npx llmxray --ollama-url http://192.168.1.50:11434
+```
+
+### Docker
+```bash
+docker run -p 5174:5174 djovaneli/llmxray
+docker run -p 5174:5174 -e OLLAMA_URL=http://host.docker.internal:11434 djovaneli/llmxray
+```
+
+### From source
 ```bash
 git clone https://github.com/LogneBudo/llmxray.git
 cd llmxray
 npm install
-npm run dev
-```
-
-Open **http://localhost:5173** in your browser. That's it.
-
-> LLMxRay's dev server automatically proxies API calls to Ollama at `localhost:11434`. If Ollama is running on a different port or machine, change it in **Settings**.
-
-### Build for Production
-
-```bash
-npm run build    # Output in dist/
-npm run preview  # Preview the build locally
+npm run dev     # http://localhost:5173
 ```
 
 ---
@@ -172,105 +199,73 @@ npm run preview  # Preview the build locally
 
 | Layer | Technology |
 |---|---|
-| Framework | Vue 3.5 + Composition API (`<script setup>`) |
+| Framework | Vue 3.5 + Composition API |
 | Language | TypeScript 5.9 (strict) |
 | Build | Vite 7.3 |
-| Styling | Tailwind CSS 4.2 (custom dark theme) |
-| State | Pinia 3 (one store per concern) |
-| Routing | Vue Router 5 |
-| Charts | Chart.js 4 + vue-chartjs, D3.js 7 |
-| Canvas | Vue Flow 1.x (node-based visual editor) |
-| Code Editor | CodeMirror 6 (TypeScript + JSON highlighting) |
-| AST Parser | Recast + @babel/parser (bidirectional code sync) |
-| Markdown | marked |
-| Diffing | diff (word-level) |
-| Documents | pdfjs-dist (lazy), mammoth (DOCX), papaparse (CSV) |
-| Storage | IndexedDB (browser-native, zero-cost) |
-| IDs | nanoid |
-| LLM Backend | Ollama (local, via `/api` proxy) |
+| Styling | Tailwind CSS 4.2 |
+| State | Pinia 3 (store-per-concern) |
+| Charts | Chart.js 4, D3.js 7 |
+| Canvas | Vue Flow (visual node editor) |
+| Code Editor | CodeMirror 6 |
+| Storage | IndexedDB (browser-native) |
+| LLM Backend | Ollama (local) |
 
 ---
 
-## Architecture Highlights
+## Architecture
 
-**Streaming** &mdash; LLMxRay reads Ollama's NDJSON response streams via `fetch()` + `ReadableStream`. Tokens arrive one by one and update the UI reactively through Pinia stores.
+**Streaming** — Reads Ollama NDJSON via `fetch()` + `ReadableStream`. Tokens update the UI reactively through Pinia stores.
 
-**Token confidence** &mdash; Ollama doesn't expose logprobs, so confidence is approximated from inter-token latency. Faster tokens = higher confidence. This is labeled clearly in the UI as an approximation.
+**Token confidence** — Approximated from inter-token latency (faster = more confident). Clearly labeled as approximation. Benchmarks use real logprobs via OpenAI-compatible endpoint.
 
-**Introspection data** &mdash; Layer activations and attention heatmaps are synthetic (illustrative). They demonstrate what these visualizations *would* look like with real data. Clearly labeled as "Illustrative" in the UI.
+**Store-per-concern** — Each domain has its own Pinia store: tokens, sessions, metrics, reasoning, comparison, embeddings, quality, cost, and more.
 
-**Store-per-concern** &mdash; Each domain has its own Pinia store: tokens, sessions, metrics, reasoning, comparison, embeddings, RAG, models, and more. This keeps state management modular and testable.
-
-**Hardware detection** &mdash; The System page uses a custom Vite plugin (`vite-plugin-system-info.ts`) that queries the OS directly via PowerShell (Windows), `/proc` + `lspci` (Linux), or `sysctl` (macOS) for accurate hardware specs.
+**Hardware detection** — Custom Vite plugin queries the OS directly (PowerShell/proc/sysctl) for accurate hardware specs.
 
 ---
 
 ## Development
 
-### Scripts
-
 | Command | What it does |
 |---|---|
-| `npm run dev` | Start dev server (port 5173) |
+| `npm run dev` | Dev server (port 5173) |
 | `npm run build` | Type-check + production build |
-| `npm run preview` | Preview production build |
-| `npm run test` | Run unit tests (Vitest) |
-| `npm run test:watch` | Tests in watch mode |
-| `npm run test:coverage` | Coverage report |
-| `npm run test:e2e` | Playwright end-to-end tests |
-| `npm run test:e2e:headed` | E2E with visible browser |
-| `npm run test:e2e:live` | E2E against live Ollama |
-
-### Project Structure
-
-```
-src/
-  pages/            8 page components (Dashboard, Compare, RAG, etc.)
-  components/       50+ components organized by feature
-    chat/           Chat UI, token stream, attachments
-    comparison/     Slot configurator, grid, diff view, metrics bar
-    metrics/        Dashboard, charts, session history
-    reasoning/      Think-block viewer
-    introspection/  Layer activations, attention, architecture
-    rag/            Document upload, search, ingest
-    embeddings/     Vector viz, similarity meter
-    tool-canvas/    Visual canvas, node editor, CodeMirror wrapper
-    tool-optimizer/ Response optimizer drawer, JSON tree
-    tool-calls/     Tool call timeline, definitions
-    agent-graph/    Agent state flow
-    common/         Layout, sidebar, shared components
-  stores/           Pinia stores (one per concern)
-  services/         Ollama client, streaming, generation, RAG, AST parser, probe
-  types/            TypeScript interfaces
-  utils/            Formatting, color scales, slot labels
-  composables/      Vue composables (markdown, etc.)
-  router/           Route definitions
-```
+| `npm run test` | Unit tests (Vitest) |
+| `npm run test:e2e` | End-to-end (Playwright) |
 
 ---
 
-## Troubleshooting
+## Contributing
 
-| Problem | Solution |
-|---|---|
-| "Disconnected" in Settings | Make sure Ollama is running: `ollama serve` |
-| No models in dropdowns | Pull a model first: `ollama pull llama3.2` |
-| System page shows "Restart dev server" | Stop and restart `npm run dev` (the hardware plugin loads at startup) |
-| Slow first response | Normal &mdash; Ollama loads the model into memory on first use |
-| High RAM/VRAM usage | Use smaller quantized models (Q4) or reduce context length in Settings |
+Contributions welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for setup and guidelines.
+
+**Community translations especially welcome** — scaffold files ready for Hebrew and Japanese.
+
+---
+
+## Coming Next
+
+LLMxRay is the observation layer. **[Sentinel](https://github.com/LogneBudo/llmxray-sentinel)** is the security and compliance layer — a transparent proxy that captures all LLM traffic with zero SDK integration. Prompt injection detection, PII scanning, agent trace reconstruction, and more. Currently in private beta.
 
 ---
 
 ## License
 
-Licensed under the [Apache License 2.0](LICENSE). You are free to use, modify, and distribute this software under the terms of the license.
+[Apache License 2.0](LICENSE)
 
 ## Trademark
 
-**LLMxRay** is a trademark of Ivan Stankovic ([LogneBudo](https://github.com/LogneBudo)). See [TRADEMARK.md](TRADEMARK.md) for usage guidelines.
+**LLMxRay** is a trademark of Ivan Stankovic ([LogneBudo](https://github.com/LogneBudo)). See [TRADEMARK.md](TRADEMARK.md).
 
 ---
 
 <p align="center">
-  Built with curiosity by <a href="https://github.com/LogneBudo">LogneBudo</a>
+  <strong>If LLMxRay helps you understand your AI better, consider giving it a star.</strong><br/>
+  It helps others discover the project.
+</p>
+
+<p align="center">
+  <a href="https://github.com/LogneBudo/llmxray">
+    <img src="https://img.shields.io/github/stars/LogneBudo/llmxray?style=social" alt="GitHub stars" />
+  </a>
 </p>
