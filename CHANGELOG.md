@@ -5,6 +5,66 @@ All notable changes to LLMxRay are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.2] — 2026-03-21
+
+### Added
+
+- Analytics Dashboard — per-turn quality score (0-5), requests over time, model distribution doughnut, active hours heatmap (7x24), settings impact scatter, error timeline
+- Performance Analytics — P50/P95/P99 latency over time, TTFT percentile chart, inter-token latency histogram, cold vs warm start indicators, load duration trend
+- Error Intelligence — 7-category error classifier (connection, timeout, model_not_found, context_exceeded, oom, tool_error, cancelled), error rate by model stacked bar chart
+
+## [0.4.1] — 2026-03-21
+
+### Added
+
+- Response Quality Gates — repetition detection (4-gram), refusal detection (8 patterns), gibberish detection, empty response detection, truncation warning, quality badges (red/yellow/green) per response
+- Cost & Usage Dashboard — token usage per model/day, estimated cost display with model pricing, daily cost trend chart
+
+## [0.4.0] — 2026-03-18
+
+### Added
+
+- Local AI History Database — unified queryable archive of all experiments (benchmarks, comparisons, chats, training pairs, sessions)
+- History tab in Settings with filters (type, model, language, date, tags), trend charts, export (JSON/CSV), retention policies
+- Powered by Dexie.js over IndexedDB — permanent, browser-native, no cloud
+
+## [0.3.5] — 2026-03-18
+
+### Added
+
+- Website: Full Feature Coverage — Surgical Benchmark section (3 cards with screenshots), AI Training Pipeline (4-step animated flow), System at a Glance diagnostics
+- Updated sitemap with lastmod dates
+- All sections bilingual (EN + FR)
+
+## [0.3.4] — 2026-03-18
+
+### Added
+
+- Benchmark Suite Builder — visual question editor (2-6 choices, category, difficulty), AI-assisted generation from topic, edit existing suites, JSON export
+- Benchmark Builder guide (EN + FR)
+
+## [0.3.3] — 2026-03-18
+
+### Fixed
+
+- Re-tagged from v0.3.2.2 for npm semver compatibility (npm requires 3-part versions)
+
+## [0.3.2] — 2026-03-18
+
+### Added
+
+- Language Compare — per-slot prompts with language tags, inline language detection, translate-to-X with streaming, cancel support, Token Tax visualization, RTL-aware textareas
+- Module 9: What Words Cost — Educators Kit module on tokenization bias (EN + FR + 6 SVGs)
+- Language Compare guide and Diagnostics Token Tax section on website
+
+## [0.3.1] — 2026-03-18
+
+### Added
+
+- RTL Layout Support — 119 directional CSS classes replaced with logical properties across 35 files, automatic `dir="rtl"`, directional icon flipping
+- New Locales — Chinese (zh), Arabic (ar) fully translated; Hebrew (he), Japanese (ja) scaffold ready for community
+- CJK Readiness — Noto Sans SC/JP/KR font stack, CJK line-breaking CSS, character-based token counting
+
 ## [0.2.0] — 2026-03-17
 
 ### Added
