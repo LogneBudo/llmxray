@@ -9,8 +9,9 @@
     "models": "Mod\u00e8les",
     "benchmark": "Benchmark",
     "costDashboard": "Co\u00fbts",
+    "analytics": "Analytique",
     "mySystem": "Mon syst\u00e8me",
-    "settings": "Paramètres",
+    "settings": "Param\u00e8tres",
     "tagline": "Observatoire local de LLM"
   },
   "header": {
@@ -23,8 +24,9 @@
     "benchmark": "Benchmark",
     "toolWorkshop": "Atelier d'outils",
     "costDashboard": "Co\u00fbts",
-    "mySystem": "Mon système",
-    "settings": "Paramètres",
+    "analytics": "Analytique",
+    "mySystem": "Mon syst\u00e8me",
+    "settings": "Param\u00e8tres",
     "default": "LLMxRay"
   },
   "status": {

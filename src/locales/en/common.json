@@ -9,6 +9,7 @@
     "models": "Models",
     "benchmark": "Benchmark",
     "costDashboard": "Costs",
+    "analytics": "Analytics",
     "mySystem": "My System",
     "settings": "Settings",
     "tagline": "Local LLM Observatory"
@@ -23,6 +24,7 @@
     "benchmark": "Benchmark",
     "toolWorkshop": "Tool Workshop",
     "costDashboard": "Costs",
+    "analytics": "Analytics",
     "mySystem": "My System",
     "settings": "Settings",
     "default": "LLMxRay"

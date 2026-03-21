@@ -1,0 +1,36 @@
+{
+  "title": "分析",
+  "sections": {
+    "quality": "回复质量",
+    "latency": "延迟分析",
+    "reliability": "可靠性",
+    "usage": "使用模式",
+    "settings": "参数影响",
+    "modelMemory": "模型内存"
+  },
+  "quality": {
+    "title": "逐轮质量",
+    "hint": "绿色 = 好 (3.5+)，黄色 = 一般 (2-3.5)，红色 = 差 (< 2)。基于字数、词汇多样性和非重复性评分。",
+    "noData": "开始多轮对话以查看质量趋势。"
+  },
+  "errors": {
+    "timelineTitle": "错误时间线",
+    "noErrors": "未记录任何错误。"
+  },
+  "usage": {
+    "requestVolume": "请求量",
+    "modelDistribution": "模型分布",
+    "activeHours": "活跃时段",
+    "noData": "暂无会话数据。"
+  },
+  "settings": {
+    "title": "温度 vs 速度",
+    "hint": "每个点代表一个会话，展示温度对生成速度的影响。",
+    "noData": "至少需要2个带有显式温度设置的会话。"
+  },
+  "modelLoad": {
+    "title": "模型加载历史",
+    "cold": "冷启动",
+    "noData": "暂无会话数据。"
+  }
+}

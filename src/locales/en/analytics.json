@@ -1,0 +1,36 @@
+{
+  "title": "Analytics",
+  "sections": {
+    "quality": "Response Quality",
+    "latency": "Latency Analysis",
+    "reliability": "Reliability",
+    "usage": "Usage Patterns",
+    "settings": "Settings Impact",
+    "modelMemory": "Model Memory"
+  },
+  "quality": {
+    "title": "Quality Over Turns",
+    "hint": "Green = good (3.5+), yellow = moderate (2-3.5), red = poor (< 2). Score based on word count, vocabulary diversity, and non-repetition.",
+    "noData": "Start a multi-turn conversation to see quality trends."
+  },
+  "errors": {
+    "timelineTitle": "Error Timeline",
+    "noErrors": "No errors recorded."
+  },
+  "usage": {
+    "requestVolume": "Request Volume",
+    "modelDistribution": "Model Distribution",
+    "activeHours": "Active Hours",
+    "noData": "No session data yet."
+  },
+  "settings": {
+    "title": "Temperature vs Speed",
+    "hint": "Each dot is a session. Shows how temperature affects generation speed.",
+    "noData": "Need at least 2 sessions with explicit temperature settings."
+  },
+  "modelLoad": {
+    "title": "Model Load History",
+    "cold": "cold",
+    "noData": "No session data yet."
+  }
+}

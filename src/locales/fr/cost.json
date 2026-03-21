@@ -11,7 +11,8 @@
     "dailyUsage": "Utilisation quotidienne",
     "promptTokens": "Tokens de prompt",
     "completionTokens": "Tokens de completion",
-    "estimatedCost": "Cout estime"
+    "estimatedCost": "Cout estime",
+    "costTrend": "Tendance des co\u00fbts"
   },
   "table": {
     "model": "Modele",
@@ -21,6 +22,23 @@
     "totalTokens": "Total",
     "estimatedCost": "Cout est.",
     "pricingSource": "Source"
+  },
+  "percentiles": {
+    "latencyTitle": "Latence des requ\u00eates (P50 / P95 / P99)",
+    "ttftTitle": "Temps avant premier token (P50 / P95 / P99)",
+    "histogramTitle": "Distribution de latence inter-tokens",
+    "histogramHint": "Les intervalles suivent les conventions OTel GenAI. Agr\u00e9g\u00e9 sur toutes les sessions.",
+    "noData": "Pas assez de donn\u00e9es pour l'analyse en percentiles."
+  },
+  "errors": {
+    "title": "Erreurs par mod\u00e8le",
+    "noErrors": "Aucune erreur enregistr\u00e9e."
+  },
+  "loadDuration": {
+    "title": "Dur\u00e9e de chargement du mod\u00e8le",
+    "coldStarts": "d\u00e9marrages froids",
+    "hint": "Les points orange indiquent les d\u00e9marrages froids (mod\u00e8le charg\u00e9 depuis le disque, > 500ms).",
+    "noData": "Aucune donn\u00e9e de session."
   },
   "disclaimer": "Ces couts sont des estimations basees sur les tarifs equivalents des API cloud. Ollama fonctionne localement sans frais.",
   "noData": "Aucune donnee d'utilisation. Commencez a discuter pour voir l'utilisation des tokens et les estimations de couts."

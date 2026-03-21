@@ -119,7 +119,9 @@
     "truncatedWarning": "Response was truncated — increase num_predict in settings for longer responses",
     "tokens": "tokens",
     "tokPerSec": "tok/s",
-    "ttft": "TTFT"
+    "ttft": "TTFT",
+    "cold": "cold start",
+    "coldStart": "Model was loaded from disk for this request (load time > 500ms)"
   },
   "export": {
     "title": "Export",

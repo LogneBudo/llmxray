@@ -11,7 +11,8 @@
     "dailyUsage": "Daily Usage",
     "promptTokens": "Prompt Tokens",
     "completionTokens": "Completion Tokens",
-    "estimatedCost": "Estimated Cost"
+    "estimatedCost": "Estimated Cost",
+    "costTrend": "Cost Trend"
   },
   "table": {
     "model": "Model",
@@ -21,6 +22,23 @@
     "totalTokens": "Total",
     "estimatedCost": "Est. Cost",
     "pricingSource": "Source"
+  },
+  "percentiles": {
+    "latencyTitle": "Request Latency (P50 / P95 / P99)",
+    "ttftTitle": "Time to First Token (P50 / P95 / P99)",
+    "histogramTitle": "Inter-Token Latency Distribution",
+    "histogramHint": "Bucket boundaries follow OTel GenAI conventions. Aggregated across all sessions.",
+    "noData": "Not enough session data for percentile analysis."
+  },
+  "errors": {
+    "title": "Errors by Model",
+    "noErrors": "No errors recorded."
+  },
+  "loadDuration": {
+    "title": "Model Load Duration",
+    "coldStarts": "cold starts",
+    "hint": "Orange dots indicate cold starts (model loaded from disk, > 500ms).",
+    "noData": "No session data yet."
   },
   "disclaimer": "These costs are estimates based on equivalent cloud API pricing. Ollama runs locally at no cost.",
   "noData": "No usage data yet. Start chatting to see token usage and cost estimates."

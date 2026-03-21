@@ -119,7 +119,9 @@
     "truncatedWarning": "تم اقتطاع الاستجابة — قم بزيادة num_predict في الإعدادات للحصول على استجابات أطول",
     "tokens": "token",
     "tokPerSec": "tok/ث",
-    "ttft": "TTFT"
+    "ttft": "TTFT",
+    "cold": "بداية باردة",
+    "coldStart": "تم تحميل النموذج من القرص لهذا الطلب (وقت التحميل > 500 مللي ثانية)"
   },
   "export": {
     "title": "تصدير",

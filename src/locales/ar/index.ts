@@ -12,6 +12,7 @@ import session from './session.json'
 import feedback from './feedback.json'
 import quality from './quality.json'
 import cost from './cost.json'
+import analytics from './analytics.json'
 
 export default {
   common,
@@ -28,4 +29,5 @@ export default {
   feedback,
   quality,
   cost,
+  analytics,
 }

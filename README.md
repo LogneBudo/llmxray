@@ -113,6 +113,17 @@ Track token usage across all your sessions with estimated cloud-equivalent costs
 
 Costs are estimates based on equivalent cloud API pricing (Groq, Together AI, Google, Mistral, etc.). Ollama runs locally at zero cost &mdash; the dashboard shows what you're saving.
 
+### Performance Analytics
+A dedicated **Analytics** page (`/analytics`) provides deep insight into your usage patterns:
+
+- **Latency percentiles** (P50/P95/P99) for request duration and time-to-first-token
+- **Quality over turns** &mdash; per-turn quality scoring across multi-turn conversations
+- **Error intelligence** &mdash; error classification (7 categories) with timeline and per-model breakdown
+- **Usage heatmap** &mdash; 7-day x 24-hour grid showing your active hours
+- **Model distribution** &mdash; doughnut chart of request volume per model
+- **Settings impact** &mdash; scatter plots correlating temperature with generation speed
+- **Model load history** &mdash; timeline of cold/warm starts with load durations
+
 ### Model Browser
 See every model installed in Ollama with details like parameter count, quantization level, family, and format. Includes architecture diagrams showing the model's structure.
 

@@ -1,0 +1,36 @@
+{
+  "title": "Analytique",
+  "sections": {
+    "quality": "Qualit\u00e9 des r\u00e9ponses",
+    "latency": "Analyse de latence",
+    "reliability": "Fiabilit\u00e9",
+    "usage": "Habitudes d'utilisation",
+    "settings": "Impact des param\u00e8tres",
+    "modelMemory": "M\u00e9moire du mod\u00e8le"
+  },
+  "quality": {
+    "title": "Qualit\u00e9 par tour",
+    "hint": "Vert = bon (3.5+), jaune = moyen (2-3.5), rouge = faible (< 2). Score bas\u00e9 sur le nombre de mots, la diversit\u00e9 du vocabulaire et la non-r\u00e9p\u00e9tition.",
+    "noData": "D\u00e9marrez une conversation multi-tours pour voir les tendances de qualit\u00e9."
+  },
+  "errors": {
+    "timelineTitle": "Chronologie des erreurs",
+    "noErrors": "Aucune erreur enregistr\u00e9e."
+  },
+  "usage": {
+    "requestVolume": "Volume de requ\u00eates",
+    "modelDistribution": "R\u00e9partition des mod\u00e8les",
+    "activeHours": "Heures d'activit\u00e9",
+    "noData": "Aucune donn\u00e9e de session."
+  },
+  "settings": {
+    "title": "Temp\u00e9rature vs vitesse",
+    "hint": "Chaque point est une session. Montre l'impact de la temp\u00e9rature sur la vitesse.",
+    "noData": "Au moins 2 sessions avec temp\u00e9rature explicite n\u00e9cessaires."
+  },
+  "modelLoad": {
+    "title": "Historique de chargement",
+    "cold": "froid",
+    "noData": "Aucune donn\u00e9e de session."
+  }
+}

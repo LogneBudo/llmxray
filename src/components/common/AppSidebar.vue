@@ -15,6 +15,7 @@ import {
   Settings,
   MessageSquare,
   DollarSign,
+  BarChart3,
 } from 'lucide-vue-next'
 import FeedbackOverlay from './FeedbackOverlay.vue'
 
@@ -32,6 +33,7 @@ const navItems = computed<{ path: string; label: string; icon: Component }[]>(()
   { path: '/settings?tab=models', label: t('common.nav.models'), icon: Boxes },
   { path: '/benchmark', label: t('common.nav.benchmark'), icon: Timer },
   { path: '/costs', label: t('common.nav.costDashboard'), icon: DollarSign },
+  { path: '/analytics', label: t('common.nav.analytics'), icon: BarChart3 },
   { path: '/system', label: t('common.nav.mySystem'), icon: Monitor },
   { path: '/settings', label: t('common.nav.settings'), icon: Settings },
 ])

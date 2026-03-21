@@ -59,6 +59,11 @@ export const router = createRouter({
           component: () => import('@/pages/CostDashboardPage.vue'),
         },
         {
+          path: 'analytics',
+          name: 'analytics',
+          component: () => import('@/pages/AnalyticsPage.vue'),
+        },
+        {
           path: 'system',
           name: 'system',
           component: () => import('@/pages/SystemPage.vue'),

@@ -119,7 +119,9 @@
     "truncatedWarning": "回复已被截断 — 请在设置中增加 num_predict 以获得更长的回复",
     "tokens": "tokens",
     "tokPerSec": "tok/s",
-    "ttft": "TTFT"
+    "ttft": "TTFT",
+    "cold": "冷启动",
+    "coldStart": "此请求需要从磁盘加载模型（加载时间 > 500ms）"
   },
   "export": {
     "title": "导出",

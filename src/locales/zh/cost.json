@@ -11,7 +11,8 @@
     "dailyUsage": "每日使用量",
     "promptTokens": "提示令牌",
     "completionTokens": "完成令牌",
-    "estimatedCost": "预估成本"
+    "estimatedCost": "预估成本",
+    "costTrend": "成本趋势"
   },
   "table": {
     "model": "模型",
@@ -21,6 +22,23 @@
     "totalTokens": "总计",
     "estimatedCost": "预估成本",
     "pricingSource": "来源"
+  },
+  "percentiles": {
+    "latencyTitle": "请求延迟 (P50 / P95 / P99)",
+    "ttftTitle": "首个令牌时间 (P50 / P95 / P99)",
+    "histogramTitle": "令牌间延迟分布",
+    "histogramHint": "桶边界遵循 OTel GenAI 规范。跨所有会话聚合。",
+    "noData": "会话数据不足，无法进行百分位分析。"
+  },
+  "errors": {
+    "title": "按模型的错误",
+    "noErrors": "未记录任何错误。"
+  },
+  "loadDuration": {
+    "title": "模型加载时长",
+    "coldStarts": "次冷启动",
+    "hint": "橙色圆点表示冷启动（模型从磁盘加载，> 500ms）。",
+    "noData": "暂无会话数据。"
   },
   "disclaimer": "这些成本是基于等效云API定价的估算值。Ollama在本地免费运行。",
   "noData": "暂无使用数据。开始聊天以查看令牌使用量和成本估算。"

@@ -40,6 +40,11 @@ const thinkingState = computed(() => {
 
 const isUser = computed(() => props.message.role === 'user')
 
+const isColdStart = computed(() => {
+  if (!sessionMetrics.value) return false
+  return sessionMetrics.value.loadDurationMs > 500
+})
+
 // For completed (non-streaming) assistant messages, strip think tags for display
 const displayContent = computed(() => {
   if (isUser.value) {
@@ -128,6 +133,10 @@ const formattedTime = computed(() => {
         <span>{{ sessionMetrics.tokensPerSecond.toFixed(1) }} {{ $t('dashboard.bubble.tokPerSec') }}</span>
         <span class="opacity-40">·</span>
         <span>{{ sessionMetrics.ttftMs < 1000 ? sessionMetrics.ttftMs.toFixed(0) + 'ms' : (sessionMetrics.ttftMs / 1000).toFixed(1) + 's' }} {{ $t('dashboard.bubble.ttft') }}</span>
+        <template v-if="isColdStart">
+          <span class="opacity-40">·</span>
+          <span class="text-warning" :title="$t('dashboard.bubble.coldStart')">{{ $t('dashboard.bubble.cold') }}</span>
+        </template>
         <span
           v-if="qualityReport && qualityReport.overall !== 'pass'"
           class="ml-1 inline-block h-1.5 w-1.5 rounded-full"

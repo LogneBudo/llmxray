@@ -9,6 +9,7 @@
     "models": "النماذج",
     "benchmark": "اختبار الأداء",
     "costDashboard": "التكاليف",
+    "analytics": "التحليلات",
     "mySystem": "نظامي",
     "settings": "الإعدادات",
     "tagline": "مرصد النماذج اللغوية المحلية"
@@ -23,6 +24,7 @@
     "benchmark": "اختبار الأداء",
     "toolWorkshop": "ورشة الأدوات",
     "costDashboard": "التكاليف",
+    "analytics": "التحليلات",
     "mySystem": "نظامي",
     "settings": "الإعدادات",
     "default": "LLMxRay"

@@ -3,6 +3,7 @@ import { useCostStore } from '@/stores/cost-store'
 import CostSummaryCards from '@/components/cost/CostSummaryCards.vue'
 import TokenUsageByModelChart from '@/components/cost/TokenUsageByModelChart.vue'
 import DailyUsageChart from '@/components/cost/DailyUsageChart.vue'
+import CostTrendChart from '@/components/cost/CostTrendChart.vue'
 import ModelBreakdownTable from '@/components/cost/ModelBreakdownTable.vue'
 import { Info } from 'lucide-vue-next'
 
@@ -24,6 +25,10 @@ const costStore = useCostStore()
       <div class="mt-6 grid gap-6 lg:grid-cols-2">
         <TokenUsageByModelChart :data="costStore.modelUsage" />
         <DailyUsageChart :data="costStore.dailyUsage" />
+      </div>
+
+      <div class="mt-6">
+        <CostTrendChart />
       </div>
 
       <div class="mt-6">

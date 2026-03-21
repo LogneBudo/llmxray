@@ -32,6 +32,7 @@ const pageTitle = computed(() => {
     models: t('common.header.models'),
     benchmark: t('common.header.benchmark'),
     costs: t('common.header.costDashboard'),
+    analytics: t('common.header.analytics'),
     tools: t('common.header.toolWorkshop'),
     system: t('common.header.mySystem'),
     settings: t('common.header.settings'),
