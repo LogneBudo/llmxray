@@ -243,12 +243,6 @@ Contributions welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for setup and guid
 
 ---
 
-## Coming Next
-
-LLMxRay is the observation layer. **[Sentinel](https://github.com/LogneBudo/llmxray-sentinel)** is the security and compliance layer — a transparent proxy that captures all LLM traffic with zero SDK integration. Prompt injection detection, PII scanning, agent trace reconstruction, and more. Currently in private beta.
-
----
-
 ## License
 
 [Apache License 2.0](LICENSE)
