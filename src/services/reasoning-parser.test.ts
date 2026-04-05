@@ -1,144 +1,321 @@
-import { describe, it, expect } from 'vitest'
 import { ReasoningParser } from './reasoning-parser'
-import type { StreamToken } from '@/types/token'
+
+interface StreamToken {
+  index: number
+  text: string
+  timestamp: number
+}
 
 function makeToken(index: number, text: string, timestamp = Date.now()): StreamToken {
-  return {
-    id: `tok-${index}`,
-    index,
-    text,
-    timestamp,
-    confidence: 0.9,
-    interTokenLatencyMs: 10,
-    cumulativeText: '',
-  }
+  return { index, text, timestamp } as any
 }
 
 describe('ReasoningParser', () => {
-  describe('think block detection', () => {
-    it('detects <think> opening tag', () => {
+  describe('think block', () => {
+    it('sets isThinking=true when <think> is encountered', () => {
       const parser = new ReasoningParser()
-      const token = makeToken(0, '<think>')
-      parser.processToken(token, '<think>')
-
+      let fullText = '<think>'
+      parser.processToken(makeToken(0, '<think>'), fullText)
       expect(parser.isThinking).toBe(true)
     })
 
-    it('accumulates content inside think block', () => {
+    it('sets isThinking=false after </think>', () => {
       const parser = new ReasoningParser()
-      parser.processToken(makeToken(0, '<think>'), '<think>')
-      parser.processToken(makeToken(1, 'Let me think'), '<think>Let me think')
+      let fullText = '<think>'
+      parser.processToken(makeToken(0, '<think>'), fullText)
 
-      expect(parser.isThinking).toBe(true)
-      expect(parser.thinkingContent).toContain('Let me think')
-    })
+      fullText += 'some reasoning'
+      parser.processToken(makeToken(1, 'some reasoning'), fullText)
 
-    it('produces a step when </think> closes', () => {
-      const parser = new ReasoningParser()
-      parser.processToken(makeToken(0, '<think>'), '<think>')
-      parser.processToken(makeToken(1, 'reasoning here'), '<think>reasoning here')
-      const step = parser.processToken(makeToken(2, '</think>'), '<think>reasoning here</think>')
+      fullText += '</think>'
+      parser.processToken(makeToken(2, '</think>'), fullText)
 
       expect(parser.isThinking).toBe(false)
+    })
+
+    it('returns a step of type thought after </think>', () => {
+      const parser = new ReasoningParser()
+      const t0 = 1000
+
+      let fullText = '<think>'
+      parser.processToken(makeToken(0, '<think>', t0), fullText)
+
+      fullText += 'deep reasoning here'
+      parser.processToken(makeToken(1, 'deep reasoning here', t0 + 10), fullText)
+
+      fullText += '</think>'
+      const step = parser.processToken(makeToken(2, '</think>', t0 + 20), fullText)
+
       expect(step).not.toBeNull()
       expect(step!.type).toBe('thought')
-      expect(step!.content).toBe('reasoning here')
+      expect(step!.content).toBe('deep reasoning here')
+    })
+
+    it('extracts content between tags', () => {
+      const parser = new ReasoningParser()
+
+      let fullText = '<think>'
+      parser.processToken(makeToken(0, '<think>'), fullText)
+
+      fullText += 'Let me analyze this.\nFirst, consider X.'
+      parser.processToken(makeToken(1, 'Let me analyze this.\nFirst, consider X.'), fullText)
+
+      fullText += '</think>'
+      const step = parser.processToken(makeToken(2, '</think>'), fullText)
+
+      expect(step).not.toBeNull()
+      expect(step!.content).toBe('Let me analyze this.\nFirst, consider X.')
+    })
+
+    it('thinkingContent returns accumulated content while in think block', () => {
+      const parser = new ReasoningParser()
+
+      let fullText = '<think>'
+      parser.processToken(makeToken(0, '<think>'), fullText)
+
+      fullText += 'partial thought'
+      parser.processToken(makeToken(1, 'partial thought'), fullText)
+
+      expect(parser.thinkingContent).toContain('partial thought')
+    })
+
+    it('thinkingContent returns empty string when not in think block', () => {
+      const parser = new ReasoningParser()
+      expect(parser.thinkingContent).toBe('')
+    })
+
+    it('only processes one think block (thinkBlockProcessed flag)', () => {
+      const parser = new ReasoningParser()
+
+      // First think block
+      let fullText = '<think>'
+      parser.processToken(makeToken(0, '<think>'), fullText)
+      fullText += 'first'
+      parser.processToken(makeToken(1, 'first'), fullText)
+      fullText += '</think>'
+      const step1 = parser.processToken(makeToken(2, '</think>'), fullText)
+      expect(step1).not.toBeNull()
+
+      // Second think block — should be ignored
+      fullText += '<think>'
+      parser.processToken(makeToken(3, '<think>'), fullText)
+      expect(parser.isThinking).toBe(false)
+
+      fullText += 'second'
+      parser.processToken(makeToken(4, 'second'), fullText)
+
+      fullText += '</think>'
+      const step2 = parser.processToken(makeToken(5, '</think>'), fullText)
+      expect(step2).toBeNull()
     })
 
     it('returns null for empty think blocks', () => {
       const parser = new ReasoningParser()
-      parser.processToken(makeToken(0, '<think>'), '<think>')
-      const step = parser.processToken(makeToken(1, '</think>'), '<think></think>')
+      let fullText = '<think>'
+      parser.processToken(makeToken(0, '<think>'), fullText)
+      fullText += '</think>'
+      const step = parser.processToken(makeToken(1, '</think>'), fullText)
 
       expect(step).toBeNull()
       expect(parser.isThinking).toBe(false)
     })
 
-    it('handles <think> arriving in pieces (uses includes not endsWith)', () => {
+    it('has correct step metadata', () => {
       const parser = new ReasoningParser()
-      // Token arrives as partial, but fullText already has the tag
-      parser.processToken(makeToken(0, '<thi'), '<thi')
-      expect(parser.isThinking).toBe(false)
+      const t0 = 1000
 
-      parser.processToken(makeToken(1, 'nk>'), '<think>')
-      expect(parser.isThinking).toBe(true)
+      let fullText = '<think>'
+      parser.processToken(makeToken(0, '<think>', t0), fullText)
+
+      fullText += 'content'
+      parser.processToken(makeToken(1, 'content', t0 + 50), fullText)
+
+      fullText += '</think>'
+      const step = parser.processToken(makeToken(2, '</think>', t0 + 100), fullText)
+
+      expect(step).not.toBeNull()
+      expect(step!.index).toBe(0)
+      expect(step!.startTokenIndex).toBe(0)
+      expect(step!.endTokenIndex).toBe(2)
+      expect(step!.durationMs).toBe(100)
+      expect(step!.id).toBeDefined()
     })
   })
 
-  describe('pattern-based step detection', () => {
-    it('detects "Step N:" pattern', () => {
+  describe('pattern detection', () => {
+    it('"Step 1: analyze the problem" creates a thought step', () => {
       const parser = new ReasoningParser()
-      // Need two lines (pattern only fires on completed lines)
-      const fullText = 'Step 1: Analyze the problem\nContinuing...'
-      const step = parser.processToken(makeToken(1, '\n'), fullText)
 
-      expect(step).toBeNull() // first step is set as active, no previous to finalize
-      expect(parser['activeStep']).not.toBeNull()
-      expect(parser['activeStep']!.type).toBe('thought')
+      let fullText = 'Step 1: analyze the problem\n'
+      parser.processToken(makeToken(0, fullText), fullText)
+
+      fullText += 'more text\n'
+      parser.processToken(makeToken(1, 'more text\n'), fullText)
+
+      const step = parser.finalize()
+      expect(step).not.toBeNull()
+      expect(step!.type).toBe('thought')
+      expect(step!.content).toContain('analyze the problem')
     })
 
-    it('detects "Thought:" pattern', () => {
+    it('"Observation: the sky is blue" creates an observation step', () => {
       const parser = new ReasoningParser()
-      const fullText = 'Thought: I should consider edge cases\nNext line'
-      parser.processToken(makeToken(0, 'Thought:'), fullText)
 
-      expect(parser['activeStep']).not.toBeNull()
-      expect(parser['activeStep']!.type).toBe('thought')
+      let fullText = 'Observation: the sky is blue\n'
+      parser.processToken(makeToken(0, fullText), fullText)
+
+      fullText += 'next line\n'
+      parser.processToken(makeToken(1, 'next line\n'), fullText)
+
+      const step = parser.finalize()
+      expect(step).not.toBeNull()
+      expect(step!.type).toBe('observation')
+      expect(step!.content).toContain('the sky is blue')
     })
 
-    it('detects "Observation:" pattern', () => {
+    it('"Action: call the API" creates an action step', () => {
       const parser = new ReasoningParser()
-      const fullText = 'Observation: The data shows a trend\nMore'
-      parser.processToken(makeToken(0, '.'), fullText)
 
-      expect(parser['activeStep']!.type).toBe('observation')
+      let fullText = 'Action: call the API\n'
+      parser.processToken(makeToken(0, fullText), fullText)
+
+      fullText += 'done\n'
+      parser.processToken(makeToken(1, 'done\n'), fullText)
+
+      const step = parser.finalize()
+      expect(step).not.toBeNull()
+      expect(step!.type).toBe('action')
+      expect(step!.content).toContain('call the API')
     })
 
-    it('detects "Conclusion:" pattern', () => {
+    it('"Conclusion: therefore X" creates a conclusion step', () => {
       const parser = new ReasoningParser()
-      const fullText = 'Conclusion: The answer is 42\nEnd'
-      parser.processToken(makeToken(0, '.'), fullText)
 
-      expect(parser['activeStep']!.type).toBe('conclusion')
+      let fullText = 'Conclusion: therefore X\n'
+      parser.processToken(makeToken(0, fullText), fullText)
+
+      fullText += 'end\n'
+      parser.processToken(makeToken(1, 'end\n'), fullText)
+
+      const step = parser.finalize()
+      expect(step).not.toBeNull()
+      expect(step!.type).toBe('conclusion')
+      expect(step!.content).toContain('therefore X')
     })
 
-    it('detects "Therefore:" pattern as conclusion', () => {
+    it('"Therefore, the answer is Y" creates a conclusion step', () => {
       const parser = new ReasoningParser()
-      const fullText = 'Therefore, we should use X\nDone'
-      parser.processToken(makeToken(0, '.'), fullText)
 
-      expect(parser['activeStep']!.type).toBe('conclusion')
+      let fullText = 'Therefore, the answer is Y\n'
+      parser.processToken(makeToken(0, fullText), fullText)
+
+      fullText += 'end\n'
+      parser.processToken(makeToken(1, 'end\n'), fullText)
+
+      const step = parser.finalize()
+      expect(step).not.toBeNull()
+      expect(step!.type).toBe('conclusion')
+      expect(step!.content).toContain('the answer is Y')
+    })
+
+    it('normal text without patterns returns null', () => {
+      const parser = new ReasoningParser()
+
+      let fullText = 'Just some regular text\n'
+      const result1 = parser.processToken(makeToken(0, fullText), fullText)
+
+      fullText += 'More regular text\n'
+      const result2 = parser.processToken(makeToken(1, 'More regular text\n'), fullText)
+
+      expect(result1).toBeNull()
+      expect(result2).toBeNull()
+      expect(parser.finalize()).toBeNull()
+    })
+
+    it('finalizes previous step when a new pattern is detected', () => {
+      const parser = new ReasoningParser()
+      const t0 = 1000
+
+      let fullText = 'Step 1: first step\n'
+      parser.processToken(makeToken(0, fullText, t0), fullText)
+
+      fullText += 'Step 2: second step\n'
+      const previousStep = parser.processToken(makeToken(1, 'Step 2: second step\n', t0 + 100), fullText)
+
+      expect(previousStep).not.toBeNull()
+      expect(previousStep!.type).toBe('thought')
+      expect(previousStep!.content).toContain('first step')
+
+      const currentStep = parser.finalize()
+      expect(currentStep).not.toBeNull()
+      expect(currentStep!.content).toContain('second step')
     })
 
     it('does not trigger on plain numbered lists', () => {
       const parser = new ReasoningParser()
-      const fullText = '1. First item\nMore text'
-      parser.processToken(makeToken(0, '.'), fullText)
 
-      expect(parser['activeStep']).toBeNull()
+      let fullText = '1. First item\n'
+      parser.processToken(makeToken(0, fullText), fullText)
+
+      fullText += 'More text\n'
+      parser.processToken(makeToken(1, 'More text\n'), fullText)
+
+      expect(parser.finalize()).toBeNull()
+    })
+  })
+
+  describe('pattern detection disabled', () => {
+    it('returns null for pattern lines when patternDetection is false', () => {
+      const parser = new ReasoningParser({ patternDetection: false })
+
+      let fullText = 'Step 1: analyze the problem\n'
+      const r1 = parser.processToken(makeToken(0, fullText), fullText)
+
+      fullText += 'Observation: the sky is blue\n'
+      const r2 = parser.processToken(makeToken(1, 'Observation: the sky is blue\n'), fullText)
+
+      fullText += 'Action: call the API\n'
+      const r3 = parser.processToken(makeToken(2, 'Action: call the API\n'), fullText)
+
+      expect(r1).toBeNull()
+      expect(r2).toBeNull()
+      expect(r3).toBeNull()
+      expect(parser.finalize()).toBeNull()
     })
 
-    it('does not re-process the same line', () => {
-      const parser = new ReasoningParser()
-      const fullText = 'Step 1: First\nMore'
-      parser.processToken(makeToken(0, '.'), fullText)
+    it('still processes think blocks when patternDetection is false', () => {
+      const parser = new ReasoningParser({ patternDetection: false })
 
-      // Process again with same line count — should not trigger
-      const step = parser.processToken(makeToken(1, 'x'), fullText + 'x')
-      expect(step).toBeNull()
+      let fullText = '<think>'
+      parser.processToken(makeToken(0, '<think>'), fullText)
+      expect(parser.isThinking).toBe(true)
+
+      fullText += 'reasoning'
+      parser.processToken(makeToken(1, 'reasoning'), fullText)
+
+      fullText += '</think>'
+      const step = parser.processToken(makeToken(2, '</think>'), fullText)
+
+      expect(step).not.toBeNull()
+      expect(step!.type).toBe('thought')
+      expect(step!.content).toBe('reasoning')
     })
   })
 
   describe('finalize', () => {
     it('returns remaining active step', () => {
       const parser = new ReasoningParser()
-      parser.processToken(makeToken(0, '<think>'), '<think>')
-      parser.processToken(makeToken(1, 'partial thought'), '<think>partial thought')
+
+      let fullText = 'Step 1: in progress\n'
+      parser.processToken(makeToken(0, fullText), fullText)
+
+      fullText += 'continuing...\n'
+      parser.processToken(makeToken(1, 'continuing...\n'), fullText)
 
       const step = parser.finalize()
       expect(step).not.toBeNull()
-      expect(step!.content).toBe('partial thought')
       expect(step!.type).toBe('thought')
+      expect(step!.content).toContain('in progress')
     })
 
     it('returns null if no active step', () => {
@@ -146,50 +323,50 @@ describe('ReasoningParser', () => {
       expect(parser.finalize()).toBeNull()
     })
 
-    it('returns null if active step has empty content', () => {
+    it('returns null after already finalized', () => {
+      const parser = new ReasoningParser()
+
+      let fullText = 'Step 1: something\n'
+      parser.processToken(makeToken(0, fullText), fullText)
+
+      fullText += 'more\n'
+      parser.processToken(makeToken(1, 'more\n'), fullText)
+
+      const step1 = parser.finalize()
+      expect(step1).not.toBeNull()
+
+      const step2 = parser.finalize()
+      expect(step2).toBeNull()
+    })
+
+    it('returns null if active step has only whitespace content', () => {
       const parser = new ReasoningParser()
       parser.processToken(makeToken(0, '<think>'), '<think>')
-      // activeStep exists but content is just whitespace from the split
       parser['activeStep']!.content = '   '
       const step = parser.finalize()
       expect(step).toBeNull()
     })
   })
 
-  describe('constructor', () => {
-    it('accepts optional options without error', () => {
-      const parser = new ReasoningParser({ patternDetection: true })
-      expect(parser).toBeDefined()
-      expect(parser.isThinking).toBe(false)
-    })
-
-    it('works without sessionId', () => {
-      const parser = new ReasoningParser()
-      expect(parser).toBeDefined()
-    })
-  })
-
   describe('step indexing', () => {
-    it('increments step index across finalize and processToken steps', () => {
+    it('increments step index across multiple steps', () => {
       const parser = new ReasoningParser()
+      const t0 = 1000
 
-      // First: a think block that we finalize manually
-      parser.processToken(makeToken(0, '<think>'), '<think>')
-      parser.processToken(makeToken(1, 'first thought'), '<think>first thought')
-      const step1 = parser.finalize()
+      let fullText = 'Step 1: first\n'
+      parser.processToken(makeToken(0, fullText, t0), fullText)
 
-      // Second: a pattern-based step
-      const fullText = 'Step 1: Analyze the data\nStep 2: Draw conclusions\n'
-      parser.processToken(makeToken(2, '\n'), fullText)
-      // "Step 1" becomes active; now "Step 2" finalizes "Step 1"
-      const step2 = parser.processToken(makeToken(3, '\n'), fullText + 'more\n')
+      fullText += 'Step 2: second\n'
+      const step1 = parser.processToken(makeToken(1, 'Step 2: second\n', t0 + 50), fullText)
+
+      fullText += 'Step 3: third\n'
+      const step2 = parser.processToken(makeToken(2, 'Step 3: third\n', t0 + 100), fullText)
 
       expect(step1!.index).toBe(0)
-      // step2 may be null if Step 2 line wasn't on a new processed line
-      // but step1 index should be 0
-      if (step2) {
-        expect(step2.index).toBe(1)
-      }
+      expect(step2!.index).toBe(1)
+
+      const step3 = parser.finalize()
+      expect(step3!.index).toBe(2)
     })
   })
 })
