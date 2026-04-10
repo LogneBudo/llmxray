@@ -76,6 +76,7 @@ const phaseColors: Record<string, string> = {
         </button>
         <button
           class="text-text-muted hover:text-text-primary transition-colors text-xs"
+          aria-label="Close panel"
           @click="emit('close')"
         >
           ✕

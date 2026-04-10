@@ -63,6 +63,7 @@ async function doImport() {
         <h3 class="text-sm font-medium text-text-primary">{{ $t('benchmark.import.importCustomBenchmarkSuite') }}</h3>
         <button
           class="text-text-muted hover:text-text-primary transition-colors"
+          aria-label="Close dialog"
           @click="$emit('close')"
         >
           ✕

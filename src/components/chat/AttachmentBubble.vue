@@ -63,11 +63,13 @@ function closeLightbox() {
         >
           <img
             :src="lightboxSrc"
+            alt="Enlarged attachment preview"
             class="max-h-[90vh] max-w-[90vw] rounded-lg object-contain shadow-2xl"
             @click.stop
           />
           <button
             class="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
+            aria-label="Close lightbox"
             @click="closeLightbox"
           >
             <X class="h-5 w-5" />

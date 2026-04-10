@@ -41,6 +41,7 @@ defineEmits<{
       <!-- Remove button -->
       <button
         class="text-text-muted hover:text-error transition-colors"
+        aria-label="Remove attachment"
         @click="$emit('remove', att.id)"
       >
         <X class="h-3.5 w-3.5" />

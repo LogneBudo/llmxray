@@ -223,6 +223,7 @@ function close() {
                     <span class="truncate text-text-secondary" :title="path">{{ path }}</span>
                     <button
                       class="ms-2 flex-shrink-0 text-text-muted hover:text-error transition-colors"
+                      aria-label="Remove path"
                       @click="removePath(path)"
                     >
                       &times;

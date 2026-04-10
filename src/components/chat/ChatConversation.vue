@@ -640,6 +640,7 @@ async function handleCommand(name: string, args: string) {
           <p class="max-w-md whitespace-pre-wrap text-sm text-text-primary">{{ notificationMessage }}</p>
           <button
             class="shrink-0 text-text-muted hover:text-text-primary transition-colors text-xs"
+            aria-label="Dismiss notification"
             @click="dismissNotification"
           >
             ✕
@@ -769,6 +770,7 @@ async function handleCommand(name: string, args: string) {
           <span class="text-xs font-medium text-text-secondary">{{ $t('dashboard.conversation.chatHistory') }}</span>
           <button
             class="text-text-muted hover:text-text-primary transition-colors text-xs"
+            aria-label="Close history"
             @click="showHistory = false"
           >
             ✕

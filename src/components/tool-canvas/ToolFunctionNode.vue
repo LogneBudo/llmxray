@@ -689,7 +689,7 @@ function applySelection() {
           @change="(e: Event) => updateParam(i, 'type', (e.target as HTMLInputElement).value)"
           :placeholder="$t('tools.node.paramTypePlaceholder')"
         />
-        <button class="param-remove-btn" @click="removeParam(i)">&times;</button>
+        <button class="param-remove-btn" aria-label="Remove parameter" @click="removeParam(i)">&times;</button>
       </div>
       <div v-if="data.parameters.length === 0" class="param-empty">{{ $t('tools.node.noParameters') }}</div>
     </div>
@@ -771,7 +771,7 @@ function applySelection() {
             >
               &#x1F512;
             </button>
-            <button class="param-remove-btn" @click="removeHeader(i)">&times;</button>
+            <button class="param-remove-btn" aria-label="Remove header" @click="removeHeader(i)">&times;</button>
           </div>
         </div>
 
