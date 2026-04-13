@@ -510,7 +510,7 @@ const defaultSettings: ChatSettings = {
 async function handleCommand(name: string, args: string) {
   const cmd = findCommand(name)
   if (!cmd) {
-    showNotification(`Unknown command: /${name}. Type /help for available commands.`)
+    showNotification(t('dashboard.slashCommands.notifications.unknownCommand', { name }))
     return
   }
 
@@ -523,15 +523,15 @@ async function handleCommand(name: string, args: string) {
       const last = assistantMsgs[assistantMsgs.length - 1]
       if (last?.content) {
         navigator.clipboard.writeText(last.content)
-        showNotification('Copied to clipboard.')
+        showNotification(t('dashboard.slashCommands.notifications.copiedToClipboard'))
       } else {
-        showNotification('No assistant response to copy.')
+        showNotification(t('dashboard.slashCommands.notifications.noAssistantResponseToCopy'))
       }
     },
     exportConversation: (format: 'json' | 'text') => {
       const conv = conversation.value
       if (!conv || conv.messages.length === 0) {
-        showNotification('No conversation to export.')
+        showNotification(t('dashboard.slashCommands.notifications.noConversationToExport'))
         return
       }
       let content: string
@@ -567,8 +567,7 @@ async function handleCommand(name: string, args: string) {
     },
     setJsonFormat: (_enabled: boolean) => {
       // Ollama format option is on the request, not chatSettings.options
-      // For now, show notification
-      showNotification('JSON format toggled. This affects the next request.')
+      showNotification(t('dashboard.slashCommands.notifications.jsonFormatToggled'))
     },
     switchModel: (name: string) => {
       selectedModel.value = name
@@ -588,7 +587,7 @@ async function handleCommand(name: string, args: string) {
       if (sid) {
         router.push({ name: 'session', params: { id: sid } })
       } else {
-        showNotification('No active session.')
+        showNotification(t('dashboard.slashCommands.notifications.noActiveSession'))
       }
     },
     addFact: (content: string) => memoryStore.addFact(content),
@@ -617,6 +616,7 @@ async function handleCommand(name: string, args: string) {
         return { connected: false, model: selectedModel.value }
       }
     },
+    t: (key: string, args?: Record<string, unknown>) => t(key, args ?? {}),
   }
 
   await cmd.execute(args, ctx)

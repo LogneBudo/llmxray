@@ -5,7 +5,10 @@ import type { Ref } from 'vue'
 
 export interface SlashCommand {
   name: string
+  /** English fallback used by the registry and `/help` output. UI surfaces should prefer `descriptionKey` via i18n. */
   description: string
+  /** vue-i18n key resolving to the localized description (e.g. `dashboard.slashCommands.descriptions.help`). */
+  descriptionKey?: string
   usage: string
   category: 'chat' | 'settings' | 'navigation' | 'memory'
   execute: (args: string, ctx: SlashCommandContext) => void | Promise<void>
@@ -54,4 +57,8 @@ export interface SlashCommandContext {
   getSessionTokenCount: () => { prompt: number; completion: number } | null
   getAverageSpeed: () => number | null
   getOllamaStatus: () => Promise<{ connected: boolean; model: string }>
+
+  // i18n — bound to vue-i18n's `t` from the consuming component.
+  // Used by command execute() callbacks to localize notification messages.
+  t: (key: string, args?: Record<string, unknown>) => string
 }

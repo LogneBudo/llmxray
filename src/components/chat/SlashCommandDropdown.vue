@@ -64,7 +64,12 @@ const categoryLabel = computed<Record<string, string>>(() => ({
   chat: t('dashboard.slashCommands.chatConversation'),
   settings: t('dashboard.slashCommands.modelSettings'),
   navigation: t('dashboard.slashCommands.featuresNavigation'),
+  memory: t('dashboard.slashCommands.memory'),
 }))
+
+function describe(cmd: { description: string; descriptionKey?: string }): string {
+  return cmd.descriptionKey ? t(cmd.descriptionKey) : cmd.description
+}
 </script>
 
 <template>
@@ -82,7 +87,7 @@ const categoryLabel = computed<Record<string, string>>(() => ({
         @click="$emit('select', cmd)"
       >
         <span class="shrink-0 font-mono text-xs text-accent">/{{ cmd.name }}</span>
-        <span class="truncate text-xs text-text-muted">{{ cmd.description }}</span>
+        <span class="truncate text-xs text-text-muted">{{ describe(cmd) }}</span>
         <span class="ms-auto shrink-0 rounded bg-surface-overlay px-1.5 py-0.5 text-[10px] text-text-muted">
           {{ categoryLabel[cmd.category] ?? cmd.category }}
         </span>

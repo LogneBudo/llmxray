@@ -5,6 +5,23 @@ All notable changes to LLMxRay are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.6] — 2026-04-13
+
+### Added
+
+- Slash command palette is now fully internationalized:
+  - All 29 command descriptions are translated via `dashboard.slashCommands.descriptions.*`
+  - All 50+ runtime notification messages from command `execute()` callbacks are translated via `dashboard.slashCommands.notifications.*`
+  - The previously-missing `memory` category label is now translated
+  - Full translations added for English, French, and Serbian (both Latin and Cyrillic)
+- `SlashCommandContext` now carries a `t` function so command callbacks can produce localized notifications. The `getCommandsByCategory` helper accepts an optional `t` argument and falls back to English labels when called without one (e.g. from tests).
+- New `descriptionKey` field on `SlashCommand` — vue-i18n key used by UI surfaces (the registry's literal `description` field is kept as an English fallback used by `/help`).
+
+### Notes
+
+- Arabic and Chinese slash command strings fall back to English (vue-i18n's intended behavior for missing keys). Native translations can be added in a future patch.
+- Help text placeholder syntax changed from `<value>` to `[value]` across all locales — vue-i18n's parser was treating `<…>` as inline HTML and refusing to compile the messages.
+
 ## [0.4.5] — 2026-04-13
 
 ### Fixed

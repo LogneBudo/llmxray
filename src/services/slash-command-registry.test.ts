@@ -32,6 +32,12 @@ function createMockContext(overrides: Partial<SlashCommandContext> = {}): SlashC
     addFact: vi.fn(() => ({ id: '1', content: 'test', createdAt: Date.now() })),
     removeFact: vi.fn(() => true),
     getFacts: vi.fn(() => []),
+    t: vi.fn((key: string, args?: Record<string, unknown>) => {
+      // Mock returns the key with arg values appended so existing `toContain`
+      // assertions on interpolated content (e.g. fact text) still pass.
+      if (!args || Object.keys(args).length === 0) return key
+      return key + ' ' + Object.values(args).join(' ')
+    }),
     ...overrides,
   }
 }
@@ -114,7 +120,7 @@ describe('slash-command-registry', () => {
       const ctx = createMockContext()
       findCommand('clear')!.execute('', ctx)
       expect(ctx.clearConversation).toHaveBeenCalled()
-      expect(ctx.showNotification).toHaveBeenCalledWith('Conversation cleared.')
+      expect(ctx.showNotification).toHaveBeenCalledWith('dashboard.slashCommands.notifications.conversationCleared')
     })
 
     it('/new calls newChat', () => {
