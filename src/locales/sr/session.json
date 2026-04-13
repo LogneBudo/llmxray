@@ -1,0 +1,45 @@
+{
+  "title": "Sesija",
+  "sessionId": "Sesija {id}",
+  "notFound": "Sesija nije pronađena.",
+  "tabs": {
+    "stream": "Strim",
+    "reasoning": "Razumevanje",
+    "introspection": "Introspekcija",
+    "tools": "Alati",
+    "agent": "Agent Grafikon",
+    "prompt": "Prompt"
+  },
+  "export": {
+    "title": "Eksportuj",
+    "downloadJson": "Preuzmi JSON",
+    "downloadMarkdown": "Preuzmi Markdovn",
+    "downloadTokenCsv": "Preuzmi Token Stream CSV"
+  },
+  "stream": {
+    "tokenStream": "Token Strim",
+    "metrics": "Mertriki"
+  },
+  "tokenStream": {
+    "promptPlaceholder": "Unesite svoj prompt..."
+  },
+  "reasoning": {
+    "title": "Razumevanje",
+    "noReasoning": "Nema podataka o razumevanju za ovu sesiju."
+  },
+  "introspection": {
+    "title": "Introspekcija",
+    "illustrative": "Ilustruj"
+  },
+  "toolCalls": {
+    "title": "Pozivi alata",
+    "timeline": "Vremenska linija",
+    "optimize": "Optimizuj"
+  },
+  "agentGraph": {
+    "title": "Agent Grafikon"
+  },
+  "promptInspector": {
+    "title": "Prompt Inspector"
+  }
+}

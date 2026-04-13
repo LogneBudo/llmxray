@@ -1,0 +1,127 @@
+{
+  "nav": {
+    "chatDiagnostics": "Ћаскање - диагностика",
+    "compare": "Пореди",
+    "embeddings": "Угњежђавања",
+    "knowledgeBase": "База знања",
+    "toolWorkshop": "Алатница",
+    "aiTraining": "AI обука",
+    "models": "Модели",
+    "benchmark": "Benchmark",
+    "costDashboard": "Трошкови",
+    "analytics": "Аналитика",
+    "mySystem": "Мој систем",
+    "settings": "Подешавања",
+    "tagline": "Локални LLM посматрач"
+  },
+  "header": {
+    "chatDiagnostics": "Ћаскање - диагностика",
+    "session": "Сесија",
+    "compareModels": "Пореди модела",
+    "embeddings": "Угњежђавања",
+    "knowledgeBase": "База знања",
+    "models": "Модели",
+    "benchmark": "Benchmark",
+    "toolWorkshop": "Алатница",
+    "costDashboard": "Трошкови",
+    "analytics": "Аналитика",
+    "mySystem": "Мој систем",
+    "settings": "Подешавања",
+    "default": "LLMxRay"
+  },
+  "status": {
+    "ollamaConnected": "Ollama повезана",
+    "ollamaDisconnected": "Ollama одспојена",
+    "loading": "Учитавање...",
+    "processing": "Обрада...",
+    "ready": "Спремно",
+    "error": "Грешка",
+    "success": "Успех",
+    "pending": "Чека",
+    "running": "Ради",
+    "completed": "Завршено",
+    "failed": "Неуспело",
+    "streaming": "Стримовање",
+    "idle": "Неактиван",
+    "connected": "Повезано",
+    "disconnected": "Одспојено"
+  },
+  "theme": {
+    "dark": "Тамно",
+    "light": "Светло",
+    "system": "Систем",
+    "themeLabel": "Тема"
+  },
+  "locale": {
+    "language": "Језик",
+    "english": "Енглески",
+    "french": "Француски"
+  },
+  "actions": {
+    "save": "Сачувај",
+    "cancel": "Откажи",
+    "delete": "Избриши",
+    "close": "Затвори",
+    "copy": "Копирај",
+    "edit": "Уреди",
+    "test": "Тестирај",
+    "refresh": "Ажурирај",
+    "clear": "Очисти",
+    "send": "Пошаљи",
+    "stop": "Застани",
+    "add": "Додај",
+    "remove": "Уклони",
+    "confirm": "Потврди",
+    "back": "Назад",
+    "next": "Следеће",
+    "submit": "Поднеси",
+    "reset": "Ресетуј",
+    "export": "Еxпорт",
+    "import": "Импорт"
+  },
+  "time": {
+    "justNow": "Само сада",
+    "minutesAgo": "{count} минута пре",
+    "hoursAgo": "{count} сати пре",
+    "daysAgo": "{count} дана пре",
+    "monthsAgo": "{count} месеци пре"
+  },
+  "units": {
+    "tokens": "Tokenи",
+    "tokensPerSec": "Tokenи/с",
+    "milliseconds": "мс",
+    "seconds": "с",
+    "bytes": "Б",
+    "kilobytes": "КБ",
+    "megabytes": "МБ",
+    "gigabytes": "ГБ",
+    "percent": "%",
+    "dimensions": "Димензије"
+  },
+  "model": {
+    "selectModel": "Одабери модел",
+    "noModels": "Нема доступних модела",
+    "loadingModels": "Учитавање модела...",
+    "pullModel": "Повуци модел"
+  },
+  "empty": {
+    "noData": "Нема података",
+    "noResults": "Нема резултата",
+    "nothingHere": "Још ништа овде"
+  },
+  "languages": {
+    "en": "Енглески",
+    "fr": "Француски",
+    "ar": "Арапски",
+    "zh": "Кинески",
+    "ja": "Јапански",
+    "he": "Хебрејски",
+    "de": "Немачки",
+    "es": "Шпански",
+    "pt": "Португалски",
+    "it": "Италијански",
+    "ru": "Руски",
+    "ko": "Корејски",
+    "hi": "Хинди"
+  }
+}

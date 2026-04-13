@@ -1,0 +1,25 @@
+{
+  "title": "Pošalji povratnu informaciju",
+  "thankYou": "Hvala vam na povratnoj informaciji!",
+  "thankYouDetail": "Vaše učešće pomaže da LLMxRay postane bolji.",
+  "typeQuestion": "Koje vrste povratnih informacija?",
+  "types": {
+    "bug": "Bug",
+    "idea": "Ideja",
+    "question": "Pitanje",
+    "other": "Drugo"
+  },
+  "message": {
+    "placeholder": "Recite nam šta je na vašem umu..."
+  },
+  "email": {
+    "label": "E-pošta",
+    "optional": "(opciono - samo ako želite odgovor)",
+    "placeholder": "vaš{'@'}email.com"
+  },
+  "submit": {
+    "send": "Pošalji povratnu informaciju",
+    "sending": "Slanje..."
+  },
+  "disclaimer": "Uključuje kontekst aplikacije (stranica, model, sistem) da bismo razumeli vaše povratne informacije."
+}

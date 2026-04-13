@@ -1,0 +1,135 @@
+{
+  "tabs": {
+    "general": "General",
+    "models": "Models",
+    "integrations": "Integrations",
+    "about": "About",
+    "history": "History"
+  },
+  "general": {
+    "ollamaConnection": "Ollama veza",
+    "ollamaUrl": "Ollama URL",
+    "testConnection": "Testiraj vezu",
+    "save": "Sačuvaj",
+    "connectionSuccess": "Veza uspješna",
+    "connectionFailed": "Veza nije uspjela",
+    "connectionConnected": "Povezivanje...",
+    "connectionTesting": "Odspojen",
+    "connectionDisconnected": "Podrazumijevani parametri",
+    "defaultParameters": "Temperatura",
+    "temperature": "Što je Temperatura?",
+    "temperatureTooltipTitle": "Kontroliše koliko \"kreativno\" ili \"slučajno\" odgovori modela su.",
+    "temperatureTooltipDesc": "Uvek bira najverovatniju reč. Dobar za činjenice, matematiku i kod.",
+    "temperatureTooltipZero": "Dobar balans. To je podrazumevano.",
+    "temperatureTooltipDefault": "Iznenađujuće i kreativnije.",
+    "temperatureTooltipHigh": "Deterministički",
+    "temperatureDeterministic": "Fokusiran",
+    "temperatureFocused": "Balansiran",
+    "temperatureBalanced": "Kreativan",
+    "temperatureCreative": "Veoma slučajan",
+    "temperatureVeryRandom": "Divlji",
+    "temperatureWild": "Duljina konteksta",
+    "contextLength": "Što je Duljina konteksta?",
+    "contextLengthTooltipTitle": "Koliko razgovora model može videti odjednom, izraženo u tokenima.",
+    "contextLengthTooltipDesc": "Veća dužina koristi više RAM/VRAM.",
+    "contextLengthTooltipNote": "≈ {count} reči",
+    "approximateWords": "Jezik",
+    "language": "Odaberi jezik",
+    "selectLanguage": "Select language"
+  },
+  "models": {
+    "installedModels": "Instalirani modeli",
+    "pullNewModel": "Povuci novi model",
+    "modelName": "Ime modela",
+    "pull": "Povuci",
+    "delete": "Brisanje",
+    "deleteConfirm": "Jesi li siguran da želiš da obrišeš ovaj model?",
+    "size": "Veličina",
+    "family": "Porodica",
+    "quantization": "Kvalifikacija",
+    "parameters": "Parametri",
+    "capabilities": "Sposobnosti",
+    "refresh": "Ažuriraj",
+    "downloadModels": "Preuzmi modele",
+    "searchModels": "Pretraži modele...",
+    "noModelsInstalled": "Nije instalirano nijedan model. Povuci jedan iz kataloga.",
+    "noModelsMatch": "Nema modela koji odgovaraju vašoj pretrazi.",
+    "pullByName": "Povuci bilo koji model po imenu",
+    "installed": "Instalirano",
+    "confirmDeletePrompt": "Potvrda brisanja?"
+  },
+  "integrations": {
+    "googleAccount": "Google račun",
+    "connect": "Poveži",
+    "disconnect": "Odspoji",
+    "connectedAs": "Povezan kao",
+    "googleIntegration": "Integracija LLM",
+    "googleIntegrationDesc": "Povežite svoj Google račun da omogućite kalendar i Gmail alate u Radionici. ",
+    "oauthClientId": "OAuth2 Client ID",
+    "authenticating": "Autentifikacija...",
+    "notConnected": "Nije povezan",
+    "connectGoogleAccount": "Povežite svoj Google račun",
+    "showSetup": "Prikaži postavke",
+    "hideSetup": "Skrij postavke"
+  },
+  "about": {
+    "version": "Verzija",
+    "license": "Licenca",
+    "repository": "Repoizitorijum",
+    "techStack": "Tech Stack",
+    "localLlmObservatory": "Lokalni LLM Posmatrač"
+  },
+  "history": {
+    "title": "Lokalna AI Istorija",
+    "subtitle": "Vaš istraživački arhiv — svi eksperimenti, pretraživi",
+    "storage": {
+      "title": "Kako se vaše podaci čuvaju",
+      "description": "Sva vaša data je skladištena lokalno u vašem pregledniku koristeći IndexedDB — trajni, preglednik-native bazu podataka. Vaša data preživi zatvaranje preglednika, ponovnu pokretanje računara i softverske ažuriranja. Ništa se šalje na server.",
+      "indexedDb": "Originalni podaci (benchmarkovi, razgovori, poređenja, obuka) su skladišteni u 6 odvojene IndexedDB baze podataka — jedna za svaku funkcionalnost. IndexedDB nije sesijska memorija — ona traje do sledećeg prelaska preglednika.",
+      "historyDb": "Istorijski indeks je moćni istraživački alat koji koristi Dexie.js za brzo pretraživanje i analizu svih LLMxRay aktivnosti. Misli na njega kao na pretragu unutar vašeg LLMxRay profila.",
+      "privacy": "Sve ostaje na vašem računaru. Jedini način da se podaci izbrišu je da obrišete preglednik site data ili koristite Clear dugmad u ovoj aplikaciji. Nema naloga, nema cloud sinkronizacije, nema telemetrije."
+    },
+    "filters": {
+      "type": "Tip",
+      "model": "Model",
+      "language": "Languaža",
+      "dateRange": "Datum raspon",
+      "tags": "Tagovi",
+      "all": "Sve",
+      "last7days": "Poslednjih 7 dana",
+      "last30days": "Poslednjih 30 dana",
+      "last90days": "Poslednjih 90 dana",
+      "allTime": "Svi vremena"
+    },
+    "results": {
+      "entries": "{count} ulazaka",
+      "noEntries": "Nema istorijskih unosa. Pokrenite eksperiment, poređenje ili razgovor da biste započeli svoju istraživačku arhivu."
+    },
+    "trends": {
+      "title": "Trendovi",
+      "activity": "Aktivnost (poslednjih 30 dana)",
+      "modelsUsed": "Modeli korišćeni"
+    },
+    "management": {
+      "title": "Baza podataka upravljanja",
+      "totalEntries": "Ukupan broj ulazaka",
+      "estimatedSize": "Procjenjena veličina",
+      "exportAll": "Izvozi sve (JSON)",
+      "exportFiltered": "Izvozi Filtrirano (CSV)",
+      "retention": "Zadržavanje",
+      "keepForever": "Zauvek",
+      "days30": "30 dana",
+      "days90": "90 dana",
+      "year1": "Godina",
+      "clearHistory": "Čisti Istoriju",
+      "confirmClear": "Ovo će izbrisati sve istorijske unose. Ostale podatke (benchmarkovi, razgovori, itd.) nije pogođeno."
+    },
+    "types": {
+      "benchmark": "Benchmark",
+      "comparison": "Poređenje",
+      "chat": "Razgovor",
+      "training": "Traing",
+      "session": "Sesija"
+    }
+  }
+}

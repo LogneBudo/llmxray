@@ -1,0 +1,36 @@
+{
+  "title": "Analitika",
+  "sections": {
+    "quality": "Kvalitet odgovora",
+    "latency": "Analiza latencije",
+    "reliability": "Pouzdanost",
+    "usage": "Obrasci korisničkog ponašanja",
+    "settings": "Uticaj postavki",
+    "modelMemory": "Memorija modela"
+  },
+  "quality": {
+    "title": "Kvalitet preko okretaja",
+    "hint": "Zelena = dobra (3,5+), žuta = srednja (2-3,5), crvena = loša (< 2). Ocena zasnovana na broju reči, raznolikosti leksike i nedopuštanju ponavljanja.",
+    "noData": "Pokrenite višeokretnu razgovor da biste videli trendove kvaliteta."
+  },
+  "errors": {
+    "timelineTitle": "Vremenski red grešaka",
+    "noErrors": "Nije zabeležena nijedna greška."
+  },
+  "usage": {
+    "requestVolume": "Volumen zahteva",
+    "modelDistribution": "Distribucija modela",
+    "activeHours": "Aktivne sate",
+    "noData": "Nema podataka sesije."
+  },
+  "settings": {
+    "title": "Temperatura vs. Brzina",
+    "hint": "Svaki tačka je sesija. Prikazuje kako temperatura utiče na generisanje brzine.",
+    "noData": "Treba najmanje 2 sesije sa eksplicitno postavljenim temperaturama."
+  },
+  "modelLoad": {
+    "title": "Istorija učitavanja modela",
+    "cold": "hladno",
+    "noData": "Nema podataka sesije."
+  }
+}

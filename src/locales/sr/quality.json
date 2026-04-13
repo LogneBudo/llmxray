@@ -1,0 +1,23 @@
+{
+  "issuesDetected": "Pronađene probleme sa kvalitetom",
+  "repetition": {
+    "label": "Repetiitivni",
+    "reason": "Odgovor sadrži previše ponavljanih fraza"
+  },
+  "refusal": {
+    "label": "Refuz",
+    "reason": "Odgovor izgleda kao odbijanje"
+  },
+  "gibberish": {
+    "label": "Giibleriš",
+    "reason": "Odgovor ima visok odnos nečitljivih znakova"
+  },
+  "empty": {
+    "label": "Prazan",
+    "reason": "Odgovor sadrži vrlo malo sadržaja"
+  },
+  "truncation": {
+    "label": "Prekinut",
+    "reason": "Odgovor može biti prekinut"
+  }
+}

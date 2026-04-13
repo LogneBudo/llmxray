@@ -1,0 +1,99 @@
+{
+  "title": "Moj sistem",
+  "subtitle": "Hardver, runtime i inferecija pregled",
+  "refresh": "Ažuriraj",
+  "detecting": "Detektovanje hardvera...",
+  "detectingDetail": "Upit CPU-a, memorije, GPU-a i skladišta",
+  "unavailable": "Nedostupno detektovanje hardvera. Ponovo pokrenite server za dev da omogućite plugin sistem informacija.",
+  "export": {
+    "title": "Eksporat",
+    "downloadMarkdown": "Preuzmi izveštaj o sistemu (Markdovn)",
+    "downloadJson": "Preuzmi sistem info (JSON)"
+  },
+  "os": {
+    "title": "Operativni sistem",
+    "os": "OS",
+    "version": "Verzija",
+    "build": "Build",
+    "architecture": "Architecture"
+  },
+  "device": {
+    "title": "Uređaj",
+    "name": "Ime",
+    "manufacturer": "Proizvođač",
+    "model": "Model",
+    "family": "Familija"
+  },
+  "cpu": {
+    "title": "Procesor",
+    "cpu": "CPU",
+    "physicalCores": "Fizički jezgro",
+    "logicalProcessors": "Logički procesori",
+    "maxClock": "Maksimalna frekvencija"
+  },
+  "memory": {
+    "title": "Memorija",
+    "totalRam": "Ukupan RAM",
+    "available": "Dostupno",
+    "inUse": "Korišćeno"
+  },
+  "gpu": {
+    "title": "Grafika",
+    "gpu": "GPU",
+    "adapterRam": "Adapter RAM",
+    "sharedNotReported": "Deljeno / Nije izvešteno",
+    "driver": "Vozač"
+  },
+  "storage": {
+    "title": "Skladište",
+    "drive": "Drive",
+    "total": "Ukupno",
+    "free": "Slobodno",
+    "used": "Korišćeno"
+  },
+  "browserStorage": {
+    "title": "Skladište u pregledaču",
+    "persistent": "Persistentno",
+    "bestEffort": "Najbolji napor",
+    "scanning": "Skeniranje...",
+    "indexedDbQuota": "Kvota IndexedDB",
+    "totalRecords": "{count} ukupnih zapisa preko {database} baza podataka",
+    "clearAll": "Obriši sve podatke",
+    "empty": "Prazno"
+  },
+  "ollama": {
+    "title": "Ollama Runtime",
+    "status": "Status",
+    "version": "Verzija",
+    "installedModels": "Instalirani modeli",
+    "totalModelStorage": "Ukupno skladištenje modela",
+    "modelsLoaded": "Modeli učitani"
+  },
+  "inference": {
+    "title": "Inferecija",
+    "thisSession": "Ova sesija",
+    "noSessions": "Nema inferecijskih sesija još. Pošalji poruku da biste učitali jedan.",
+    "sessions": "Sesije",
+    "avgSpeed": "Prosječna brzina",
+    "tokensGenerated": "Generisani tokeni",
+    "avgTtft": "Prosječno vrijeme odgovora",
+    "modelsUsed": "Koristeni modeli"
+  },
+  "activeModels": {
+    "title": "Aktivni modeli",
+    "noModels": "Nema trenutno učitani model u memoriji. Pošalji poruku da biste ga učitali.",
+    "vram": "VRAM",
+    "ram": "RAM",
+    "total": "Ukupno",
+    "ctx": "Kontekst"
+  },
+  "installedModels": {
+    "title": "Instalirani modeli",
+    "noModels": "Nema instaliranih modela.",
+    "model": "Model",
+    "family": "Familija",
+    "parameters": "Parametri",
+    "quantization": "Kvantizacija",
+    "size": "Veličina"
+  }
+}

@@ -5,6 +5,28 @@ All notable changes to LLMxRay are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.4] — 2026-04-13
+
+### Added
+
+- Serbian language support in two scripts: Latin/latinica (`sr`) and Cyrillic/ћирилица (`sr-Cyrl`) — full UI translation across all 15 locale sections
+- Language dropdown in the header redesigned as a proper menu (was a single cycling button) with real SVG flag icons via `flag-icons`
+- Settings → General → Language picker redesigned as a button grid with flags
+- `scripts/transliterate-sr.py` — deterministic Serbian Latin → Cyrillic transliterator that preserves brand names, English loanwords, and `{name}` template placeholders. Re-run after editing any `sr/*.json` file to keep `sr-Cyrl/` in sync.
+
+### Changed
+
+- `flag` field in `AVAILABLE_LOCALES` now uses ISO 3166-1 alpha-2 country codes (e.g. `'gb'`, `'rs'`) instead of emoji strings — required for proper flag rendering on platforms without flag emoji glyphs (notably Windows Chrome)
+- Browser language detection now defaults to Serbian Cyrillic (`sr-Cyrl`) when the browser locale is `sr`, and Serbian Latin (`sr`) when it is `sr-Latn`
+
+### Fixed
+
+- `tsconfig.json` `baseUrl` deprecation warning — removed `baseUrl: "."` since modern TypeScript resolves `paths` relative to the tsconfig location automatically
+
+### Security
+
+- `npm audit fix` reduced known vulnerabilities from 9 to 3; the remaining 3 are all in the `vitepress → vite → esbuild` dev-only chain (no runtime impact)
+
 ## [0.4.3] — 2026-04-05
 
 ### Added

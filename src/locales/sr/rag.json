@@ -1,0 +1,40 @@
+{
+  "title": "Baza znanja",
+  "subtitle": "Učitaj dokumente za RAG-pokrećene razgovore",
+  "modelSelector": {
+    "noEmbeddingModels": "Nema umetnutih modela"
+  },
+  "storage": {
+    "title": "Skladištenje znanja",
+    "documents": "dokumenti",
+    "chunks": "komadi",
+    "stored": "skladišteno",
+    "ragStorage": "RAZ Skladištenje"
+  },
+  "upload": {
+    "dropZone": "Povuci i odložite datoteke ovde",
+    "browse": "Brovs",
+    "dropText": "Odložite datoteke ovdje ili kliknite da biste pretražili",
+    "supportedFormats": "Podržava PDF, DOCX, TXT, Markdown, CSV"
+  },
+  "documents": {
+    "title": "Dokumenti",
+    "noDocuments": "Nema dokumenata učitano još",
+    "toggleContext": "Podesi RAG kontekst",
+    "removeDocument": "Ukloni dokument"
+  },
+  "search": {
+    "title": "Semantičko pretraživanje",
+    "placeholder": "Pretražite svoje dokumente...",
+    "noResults": "Nema rezultata pretrage",
+    "searching": "Pretražujem...",
+    "button": "Pretraži",
+    "results": "rezultati",
+    "showLess": "Pokaži manje",
+    "showFullChunk": "Prikaži cijeli komad"
+  },
+  "ingest": {
+    "progress": "Ingeštaj napredak",
+    "ingesting": "Ingeštajuće..."
+  }
+}

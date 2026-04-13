@@ -1,0 +1,110 @@
+{
+  "title": "Цомпаре Модел Ресултс",
+  "configurator": {
+    "title": "Цомпарисон Слотс",
+    "description": "Еацх слот ис а модел + сеттингс цомбинатион. Адд тхе саме модел мултипле тимес wитх дифферент сеттингс то цомпаре бехавиор.",
+    "addSlot": "Адд слот",
+    "removeSlot": "Ремове слот",
+    "clearAll": "Цлеар Алл",
+    "model": "Модел",
+    "systemPrompt": "Сyстем Промпт",
+    "optionalSystemPrompt": "Оптионал сyстем промпт...",
+    "options": "Оптионс",
+    "settings": "Сеттингс",
+    "temperature": "Темпереатуре",
+    "topP": "Топ-П",
+    "seed": "Сееед",
+    "seedPlaceholder": "Рандом (леаве емптy)",
+    "advanced": "Адванцед",
+    "topK": "Топ-К",
+    "repeatPenalty": "Репеат Пеналти",
+    "mirostat": "Миростаат",
+    "mirostatOff": "Офф",
+    "maxTokens": "Маx Tokenс",
+    "contextLength": "Цонтеxт Ленгхтх",
+    "defaultPlaceholder": "Дефаулт",
+    "slotsConfigured": "{count} слот(с) цонфигуред",
+    "emptyTitle": "Но слотс цонфигуред yет",
+    "emptyDescription": "Адд а слот то пицк а модел анд сеттингс, ор усе а qуицк-старт пресет абове то гет гоинг.",
+    "addFirstSlot": "+ Адд Фиирст Слот",
+    "addSlotCount": "+ Адд Слот ({current}/4)",
+    "presets": {
+      "quickStart": "Qуицк старт:",
+      "tempSweep": "Темпереатуре Сwееп",
+      "tempSweepDesc": "Цреаес 3 слотс оф тхе саме модел ат температурес 0.2 (фооцусед), 0.7 (баланцеед), анд 1.2 (цреативе). Сее хоw температуре цхангес тхе оутпут фор тхе еxацт саме промпт.",
+      "deterministicPair": "Детерминиситиц Пааир",
+      "deterministicPairDesc": "Цреаес 2 слотс оф тхе саме модел wитх тхе саме сееед бут дифферент температурес (0.3 анд 1.0). Тхе схаред сееед меанс анy дифференце ин тхе оутпут ис пурелy фром температуре, нот рандомнесс.",
+      "languageCompare": "Лангуае Цомпари",
+      "languageCompareTooltip": "Цомпаре хоw дифферент лангуаес аффецт token цост анд модел бехавиор"
+    }
+  },
+  "prompt": {
+    "placeholder": "Ентер промпт то цомпаре ацросс слотс...",
+    "compare": "Цомпаре",
+    "running": "Руннинг..."
+  },
+  "results": {
+    "title": "Ресултс",
+    "grid": "Грид",
+    "diff": "Дифф"
+  },
+  "diff": {
+    "needTwoResults": "Неед ат леаст 2 цомплетед ресултс то схоw а дифф.",
+    "compare": "Цомпаре:",
+    "vs": "вс",
+    "only": "{label} онлy"
+  },
+  "metrics": {
+    "performanceComparison": "Перформанце Цомпари",
+    "timeToFirstToken": "Тиме то Фиирст Token",
+    "lowerBetter": "лоwер ис беттер",
+    "tokensPerSec": "Tokenс/сец",
+    "higherBetter": "хигхер ис беттер",
+    "totalTokens": "Тотал Tokenс",
+    "speed": "Спеед",
+    "ttft": "ТТФТ",
+    "tokens": "Tokenс",
+    "duration": "Дуратио"
+  },
+  "column": {
+    "tokens": "Tokenс"
+  },
+  "language": {
+    "mismatchTitle": "Лангуае Мисматцх Детецтед",
+    "mismatchDescription": "Yоур промпт аппеарс то бе ин {detected}.",
+    "targetIs": "таргет ис {languae}",
+    "translateTo": "Транслате то {languae}",
+    "keepDetected": "Кееп {languae}",
+    "translateAll": "Транслате Алл",
+    "cancel": "Цанцел",
+    "tokenTaxTitle": "Token Таx",
+    "promptTokens": "Промпт Tokenс",
+    "promptText": "Транслатед Промпт",
+    "translated": "Транслатед",
+    "unsupported": "Лангуае нот суппортед yет",
+    "translating": "Транслатиинг... тхис маy таке а момент депендинг он модел сизе",
+    "qualityWarning": "Транслатион qуалитy депендс он yоур модел'с лангуае цапабилитиес. Ларгер моделс продуце беттер транслатион.",
+    "promptPlaceholder": "Тyпе ор пасте yоур промпт ин {lang}..."
+  },
+  "history": {
+    "title": "Савеед Цомпарисонс",
+    "load": "Лоад",
+    "noSavedRuns": "Но савед цомпарисон yет"
+  },
+  "export": {
+    "title": "Еxпорт",
+    "json": "Доwнлоад ас JSON",
+    "markdown": "Доwнлоад ас Маркдоwн"
+  },
+  "share": {
+    "toDiscussions": "Схаре то GitHub Дисцусиионс",
+    "dialogTitle": "Схаре Yоур Финдингс",
+    "commentaryLabel": "Адд yоур цомментарy",
+    "commentaryPlaceholder": "Wхат дид yоу дисцовер? Схаре yоур инсигхтс...",
+    "preview": "Репорт Превиеw",
+    "openGithub": "Опен GitHub Дисцусиионс",
+    "copyMarkdown": "Цопy Маркдоwн",
+    "copied": "Цопиед!",
+    "note": "Yоу'лл бе редирецтед то GitHub то ревиеw анд пост yоур финдингс."
+  }
+}

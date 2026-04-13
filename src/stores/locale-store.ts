@@ -2,17 +2,21 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { i18n } from '@/i18n'
 
-export type Locale = 'en' | 'fr' | 'ar' | 'he' | 'zh' | 'ja'
+export type Locale = 'en' | 'fr' | 'ar' | 'he' | 'zh' | 'ja' | 'sr' | 'sr-Cyrl'
 
 const RTL_LOCALES = new Set<string>(['ar', 'he', 'fa', 'ur'])
 
+// `flag` is an ISO 3166-1 alpha-2 country code (lowercase) used by the
+// flag-icons CSS package — rendered as `<span class="fi fi-${flag}">`.
 export const AVAILABLE_LOCALES: { code: Locale; label: string; flag: string }[] = [
-  { code: 'en', label: 'English', flag: '🇬🇧' },
-  { code: 'fr', label: 'Français', flag: '🇫🇷' },
-  { code: 'zh', label: '中文', flag: '🇨🇳' },
-  { code: 'ar', label: 'العربية', flag: '🇸🇦' },
-  // { code: 'he', label: 'עברית', flag: '🇮🇱' },
-  // { code: 'ja', label: '日本語', flag: '🇯🇵' },
+  { code: 'en', label: 'English', flag: 'gb' },
+  { code: 'fr', label: 'Français', flag: 'fr' },
+  { code: 'zh', label: '中文', flag: 'cn' },
+  { code: 'ar', label: 'العربية', flag: 'sa' },
+  { code: 'sr', label: 'Srpski', flag: 'rs' },
+  { code: 'sr-Cyrl', label: 'Српски', flag: 'rs' },
+  // { code: 'he', label: 'עברית', flag: 'il' },
+  // { code: 'ja', label: '日本語', flag: 'jp' },
 ]
 
 export const useLocaleStore = defineStore('locale', () => {

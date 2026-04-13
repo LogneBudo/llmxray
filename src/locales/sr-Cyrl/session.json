@@ -1,0 +1,45 @@
+{
+  "title": "Сесија",
+  "sessionId": "Сесија {id}",
+  "notFound": "Сесија није пронађена.",
+  "tabs": {
+    "stream": "Стрим",
+    "reasoning": "Разумевање",
+    "introspection": "Интроспекција",
+    "tools": "Алати",
+    "agent": "Агент Графикон",
+    "prompt": "Промпт"
+  },
+  "export": {
+    "title": "Експортуј",
+    "downloadJson": "Преузми JSON",
+    "downloadMarkdown": "Преузми Маркдовн",
+    "downloadTokenCsv": "Преузми Token Стреам CSV"
+  },
+  "stream": {
+    "tokenStream": "Token Стрим",
+    "metrics": "Мертрики"
+  },
+  "tokenStream": {
+    "promptPlaceholder": "Унесите свој промпт..."
+  },
+  "reasoning": {
+    "title": "Разумевање",
+    "noReasoning": "Нема података о разумевању за ову сесију."
+  },
+  "introspection": {
+    "title": "Интроспекција",
+    "illustrative": "Илуструј"
+  },
+  "toolCalls": {
+    "title": "Позиви алата",
+    "timeline": "Временска линија",
+    "optimize": "Оптимизуј"
+  },
+  "agentGraph": {
+    "title": "Агент Графикон"
+  },
+  "promptInspector": {
+    "title": "Промпт Инспецтор"
+  }
+}

@@ -1,0 +1,127 @@
+{
+  "nav": {
+    "chatDiagnostics": "Ćaskanje - diagnostika",
+    "compare": "Poredi",
+    "embeddings": "Ugnježđavanja",
+    "knowledgeBase": "Baza znanja",
+    "toolWorkshop": "Alatnica",
+    "aiTraining": "AI obuka",
+    "models": "Modeli",
+    "benchmark": "Benchmark",
+    "costDashboard": "Troškovi",
+    "analytics": "Analitika",
+    "mySystem": "Moj sistem",
+    "settings": "Podešavanja",
+    "tagline": "Lokalni LLM posmatrač"
+  },
+  "header": {
+    "chatDiagnostics": "Ćaskanje - diagnostika",
+    "session": "Sesija",
+    "compareModels": "Poredi modela",
+    "embeddings": "Ugnježđavanja",
+    "knowledgeBase": "Baza znanja",
+    "models": "Modeli",
+    "benchmark": "Benchmark",
+    "toolWorkshop": "Alatnica",
+    "costDashboard": "Troškovi",
+    "analytics": "Analitika",
+    "mySystem": "Moj sistem",
+    "settings": "Podešavanja",
+    "default": "LLMxRay"
+  },
+  "status": {
+    "ollamaConnected": "Ollama povezana",
+    "ollamaDisconnected": "Ollama odspojena",
+    "loading": "Učitavanje...",
+    "processing": "Obrada...",
+    "ready": "Spremno",
+    "error": "Greška",
+    "success": "Uspeh",
+    "pending": "Čeka",
+    "running": "Radi",
+    "completed": "Završeno",
+    "failed": "Neuspelo",
+    "streaming": "Strimovanje",
+    "idle": "Neaktivan",
+    "connected": "Povezano",
+    "disconnected": "Odspojeno"
+  },
+  "theme": {
+    "dark": "Tamno",
+    "light": "Svetlo",
+    "system": "Sistem",
+    "themeLabel": "Tema"
+  },
+  "locale": {
+    "language": "Jezik",
+    "english": "Engleski",
+    "french": "Francuski"
+  },
+  "actions": {
+    "save": "Sačuvaj",
+    "cancel": "Otkaži",
+    "delete": "Izbriši",
+    "close": "Zatvori",
+    "copy": "Kopiraj",
+    "edit": "Uredi",
+    "test": "Testiraj",
+    "refresh": "Ažuriraj",
+    "clear": "Očisti",
+    "send": "Pošalji",
+    "stop": "Zastani",
+    "add": "Dodaj",
+    "remove": "Ukloni",
+    "confirm": "Potvrdi",
+    "back": "Nazad",
+    "next": "Sledeće",
+    "submit": "Podnesi",
+    "reset": "Resetuj",
+    "export": "Export",
+    "import": "Import"
+  },
+  "time": {
+    "justNow": "Samo sada",
+    "minutesAgo": "{count} minuta pre",
+    "hoursAgo": "{count} sati pre",
+    "daysAgo": "{count} dana pre",
+    "monthsAgo": "{count} meseci pre"
+  },
+  "units": {
+    "tokens": "Tokeni",
+    "tokensPerSec": "Tokeni/s",
+    "milliseconds": "ms",
+    "seconds": "s",
+    "bytes": "B",
+    "kilobytes": "KB",
+    "megabytes": "MB",
+    "gigabytes": "GB",
+    "percent": "%",
+    "dimensions": "Dimenzije"
+  },
+  "model": {
+    "selectModel": "Odaberi model",
+    "noModels": "Nema dostupnih modela",
+    "loadingModels": "Učitavanje modela...",
+    "pullModel": "Povuci model"
+  },
+  "empty": {
+    "noData": "Nema podataka",
+    "noResults": "Nema rezultata",
+    "nothingHere": "Još ništa ovde"
+  },
+  "languages": {
+    "en": "Engleski",
+    "fr": "Francuski",
+    "ar": "Arapski",
+    "zh": "Kineski",
+    "ja": "Japanski",
+    "he": "Hebrejski",
+    "de": "Nemački",
+    "es": "Španski",
+    "pt": "Portugalski",
+    "it": "Italijanski",
+    "ru": "Ruski",
+    "ko": "Korejski",
+    "hi": "Hindi"
+  }
+}

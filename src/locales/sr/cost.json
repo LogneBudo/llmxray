@@ -1,0 +1,45 @@
+{
+  "title": "Troškovi kontrolne table",
+  "summary": {
+    "totalTokens": "Total Tokena",
+    "totalSessions": "Sesije",
+    "estimatedCost": "Procenjena Cena",
+    "avgCostPerSession": "Prosječna Cena/Sesija"
+  },
+  "charts": {
+    "tokensByModel": "Token Uporaba po Modelu",
+    "dailyUsage": "Dnevna Uporaba",
+    "promptTokens": "Prompt Tokena",
+    "completionTokens": "Completion Tokena",
+    "estimatedCost": "Procenjena Cena",
+    "costTrend": "Trend Cene"
+  },
+  "table": {
+    "model": "Model",
+    "sessions": "Sesije",
+    "promptTokens": "Prompt",
+    "completionTokens": "Completion",
+    "totalTokens": "Total",
+    "estimatedCost": "Procenjena Cena",
+    "pricingSource": "Izvor"
+  },
+  "percentiles": {
+    "latencyTitle": "Zahtev Latencija (P50 / P95 / P99)",
+    "ttftTitle": "Vreme do Prvi Token (P50 / P95 / P99)",
+    "histogramTitle": "Inter-Token Latencija Distribucija",
+    "histogramHint": "Buketi granica prate OTeL GenAI konvencije. Aggregirano preko svih sesija.",
+    "noData": "Nedovoljno podataka o sesijama za analizu percentila."
+  },
+  "errors": {
+    "title": "Greske po Modelu",
+    "noErrors": "Nema zabeleženih grešaka."
+  },
+  "loadDuration": {
+    "title": "Vreme Ucitavanja Modela",
+    "coldStarts": "Hladni Pokreti",
+    "hint": "Orange tačke označavaju hladne pokrete (model učitan sa diska, > 500ms).",
+    "noData": "Nema sesijskih podataka još."
+  },
+  "disclaimer": "Ove cene su procjene na osnovu ekvivalentnih cijena API-ja u oblaku. Olamma radi lokalno bez troškova.",
+  "noData": "Nema upotrebe podataka još. Počnite da razgovarate da biste vidjeli token upotrebu i procjenjene cijene."
+}

@@ -1,0 +1,54 @@
+{
+  "title": "Ugnježđenja",
+  "modelSelector": {
+    "noModels": "Nema dostupnih modela",
+    "noEmbeddingModels": "Ne mogu da pronađem nijedan model za ugnježđenje. Povucite jedan: olama povuci nomic-ugnjezdi-tekst"
+  },
+  "storage": {
+    "embeddingMemory": "Ugnježđena Memorija",
+    "records": "zapisi"
+  },
+  "playground": {
+    "title": "Igraj Ugnježdeno",
+    "description": "Unesite tekst da biste generisali njegov vektor ugnježđenja i pregledali dimenzije.",
+    "placeholder": "Unesite tekst za ugnježđivanje...",
+    "embed": "Ugnježdi",
+    "embedding": "Ugnježđeno...",
+    "showRawValues": "Prikaži si si vrednosti (prvi 50 od {ukupno})"
+  },
+  "similarity": {
+    "title": "Kalkulator Sličnosti",
+    "description": "Uporedite dva teksta da biste izmerili njihovu semantičku sličnost koristeći udaljenost kosina.",
+    "textA": "Tekst A",
+    "textB": "Tekst B",
+    "placeholderA": "Prvi tekst...",
+    "placeholderB": "Drugi tekst...",
+    "compare": "Poredi",
+    "comparing": "Poređenje..."
+  },
+  "modelComparison": {
+    "title": "Poređenje Modela",
+    "description": "Ugnježdi isti tekst sa dva modela da biste uporedili kako predstavljaju značenje.",
+    "modelA": "Model A",
+    "modelB": "Model B",
+    "placeholder": "Unesite tekst za ugnježđivanje sa oba modela...",
+    "compareModels": "Poredi Modeli",
+    "comparingModels": "Poređenje modela...",
+    "crossModelSimilarity": "Prekriženost značenja — ovi modeli predstavljaju značenje veoma različito.",
+    "veryDifferent": "Moderan dogovor — modeli dele neku semantičku strukturu.",
+    "moderateAgreement": "Visok dogovor — ovi modeli predstavljaju ovaj tekst slično.",
+    "highAgreement": "Dimenzije se razlikuju ({dimA} vs {dimB}) — direktna kosina sličnost nije moguća.",
+    "dimensionsMismatch": "Poredite statistiku iznad da biste procenili svaki modelovu predstavljanje kvalitet.",
+    "compareStats": "Compare stats above to evaluate each model's representation quality."
+  },
+  "stats": {
+    "dims": "Dimenzije",
+    "l2Norm": "L2 Norma",
+    "sparsity": "Sparzitet",
+    "time": "Vreme"
+  },
+  "history": {
+    "title": "Nedavni Ugnježdeni",
+    "clearAll": "Obriši sve"
+  }
+}

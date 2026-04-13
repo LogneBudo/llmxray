@@ -1,25 +1,34 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
-import { computed, ref, onMounted } from 'vue'
+import { computed, ref, onMounted, onBeforeUnmount } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useThemeStore } from '@/stores/theme-store'
-import { useLocaleStore, AVAILABLE_LOCALES } from '@/stores/locale-store'
-import { Sun, Moon } from 'lucide-vue-next'
+import { useLocaleStore, AVAILABLE_LOCALES, type Locale } from '@/stores/locale-store'
+import { Sun, Moon, ChevronDown } from 'lucide-vue-next'
 
 const route = useRoute()
 const { t } = useI18n()
 const themeStore = useThemeStore()
 const localeStore = useLocaleStore()
 
-function toggleLocale() {
-  const codes = AVAILABLE_LOCALES.map(l => l.code)
-  const idx = codes.indexOf(localeStore.locale)
-  localeStore.setLocale(codes[(idx + 1) % codes.length]!)
-}
+const localeMenuOpen = ref(false)
+const localeMenuRef = ref<HTMLElement | null>(null)
 
 const currentFlag = computed(() =>
-  AVAILABLE_LOCALES.find(l => l.code === localeStore.locale)?.flag ?? '🌐'
+  AVAILABLE_LOCALES.find(l => l.code === localeStore.locale)?.flag ?? 'xx'
 )
+
+function selectLocale(code: Locale) {
+  localeStore.setLocale(code)
+  localeMenuOpen.value = false
+}
+
+function onClickOutside(e: MouseEvent) {
+  if (!localeMenuOpen.value) return
+  if (localeMenuRef.value && !localeMenuRef.value.contains(e.target as Node)) {
+    localeMenuOpen.value = false
+  }
+}
 
 const pageTitle = computed(() => {
   const name = route.name as string | undefined
@@ -54,6 +63,11 @@ async function checkConnection() {
 onMounted(() => {
   checkConnection()
   setInterval(checkConnection, 15_000)
+  document.addEventListener('click', onClickOutside)
+})
+
+onBeforeUnmount(() => {
+  document.removeEventListener('click', onClickOutside)
 })
 </script>
 
@@ -78,14 +92,46 @@ onMounted(() => {
         <Moon v-else class="h-4 w-4" />
       </button>
 
-      <!-- Language toggle -->
-      <button
-        class="flex items-center justify-center rounded-lg px-1.5 py-1 text-xs font-medium text-text-secondary hover:bg-surface-overlay hover:text-text-primary transition-colors"
-        :title="$t('settings.general.language')"
-        @click="toggleLocale"
-      >
-        {{ currentFlag }}
-      </button>
+      <!-- Language dropdown -->
+      <div ref="localeMenuRef" class="relative">
+        <button
+          class="flex items-center gap-1.5 rounded-lg px-1.5 py-1 text-xs font-medium text-text-secondary hover:bg-surface-overlay hover:text-text-primary transition-colors"
+          :title="$t('settings.general.language')"
+          :aria-expanded="localeMenuOpen"
+          aria-haspopup="listbox"
+          @click.stop="localeMenuOpen = !localeMenuOpen"
+        >
+          <span :class="`fi fi-${currentFlag}`" class="!h-3.5 !w-5 rounded-sm" />
+          <ChevronDown class="h-3 w-3" :class="{ 'rotate-180': localeMenuOpen }" />
+        </button>
+        <Transition
+          enter-active-class="transition duration-150 ease-out"
+          enter-from-class="opacity-0 -translate-y-1"
+          enter-to-class="opacity-100 translate-y-0"
+          leave-active-class="transition duration-100 ease-in"
+          leave-from-class="opacity-100 translate-y-0"
+          leave-to-class="opacity-0 -translate-y-1"
+        >
+          <ul
+            v-if="localeMenuOpen"
+            role="listbox"
+            class="absolute right-0 top-full z-50 mt-1 min-w-[10rem] overflow-hidden rounded-lg border border-border-default bg-surface-raised py-1 shadow-lg"
+          >
+            <li
+              v-for="loc in AVAILABLE_LOCALES"
+              :key="loc.code"
+              role="option"
+              :aria-selected="loc.code === localeStore.locale"
+              class="flex cursor-pointer items-center gap-2.5 px-3 py-1.5 text-sm text-text-secondary hover:bg-surface-overlay hover:text-text-primary"
+              :class="{ 'bg-surface-overlay text-text-primary': loc.code === localeStore.locale }"
+              @click="selectLocale(loc.code)"
+            >
+              <span :class="`fi fi-${loc.flag}`" class="!h-3.5 !w-5 rounded-sm" />
+              <span>{{ loc.label }}</span>
+            </li>
+          </ul>
+        </Transition>
+      </div>
 
       <div class="flex items-center gap-2 text-sm text-text-secondary">
         <span

@@ -1,0 +1,63 @@
+{
+  "title": "AI Training",
+  "subtitle": "Brauzirajte, kurirajte i izvozite svoje podatke za obuku iz alata u radionici.",
+  "dashboard": {
+    "totalPairs": "Ukupan parovi",
+    "accepted": "prihvaćeno",
+    "rejected": "odbijeno",
+    "pending": "Očekuje se",
+    "trainingPairs": "Parovi za obuku",
+    "acceptanceRate": "Stopa prihvatanja",
+    "byPhase": "Po fazi",
+    "topModels": "Najbolji modeli"
+  },
+  "filters": {
+    "search": "Pretraga...",
+    "searchPrompts": "Pretražite prompte...",
+    "model": "Model",
+    "toolName": "Ime alata",
+    "tag": "Oznaka",
+    "status": "Status",
+    "allModels": "Svi modeli",
+    "allTools": "Svi alati",
+    "allTags": "Sve oznake",
+    "allStatuses": "Svi statusi"
+  },
+  "bulk": {
+    "selected": "{count} izabrano",
+    "export": "Izvoz",
+    "exportJsonl": "Izvoz JSONL",
+    "markAccepted": "Oznaci kao prihvaćeno",
+    "markRejected": "Oznaci kao odbijeno",
+    "addTag": "Dodaj oznaku",
+    "tagPlaceholder": "Ime oznake...",
+    "delete": "Obriši",
+    "confirm": "Potvrdi?",
+    "deselectAll": "Odaberi sve"
+  },
+  "tags": {
+    "addPlaceholder": "Dodaj oznaku..."
+  },
+  "table": {
+    "selectAll": "Izaberi sve",
+    "deselectAll": "Odaberi ništa",
+    "pairsShown": "{shown} od {total} parova prikazano",
+    "noResults": "Nema obučnih parova koji odgovaraju vašim filtrima."
+  },
+  "detail": {
+    "accepted": "Prihvaćeno",
+    "rejected": "Odbijeno",
+    "systemPrompt": "Sistemski prompt",
+    "userPrompt": "Korisnički prompt",
+    "reasoning": "Razumevanje",
+    "aiResponse": "AI odgovor",
+    "editResponse": "Uredi odgovor",
+    "tags": "Oznake",
+    "deletePair": "Obriši par",
+    "confirmDelete": "Potvrdi brisanje?"
+  },
+  "empty": {
+    "title": "Još nema prikupljenih podataka za obuku.",
+    "description": "Parovi za obuku se generišu automatski kada koristite AI funkcije u alatu (generisanje nacrta, analiza koda, automapiranje i popravka AI)."
+  }
+}

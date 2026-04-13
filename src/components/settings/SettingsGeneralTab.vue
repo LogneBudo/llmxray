@@ -211,16 +211,20 @@ onMounted(() => {
     <!-- Language -->
     <div class="rounded-lg border border-border-default bg-surface-raised p-4 space-y-4">
       <h3 class="text-sm font-medium text-text-primary">{{ $t('settings.general.language') }}</h3>
-      <div class="space-y-2">
-        <select
-          :value="localeStore.locale"
-          class="w-full rounded-lg border border-border-default bg-surface px-3 py-2 text-sm text-text-primary"
-          @change="localeStore.setLocale(($event.target as HTMLSelectElement).value as Locale)"
+      <div class="grid grid-cols-2 gap-2 sm:grid-cols-3">
+        <button
+          v-for="loc in AVAILABLE_LOCALES"
+          :key="loc.code"
+          type="button"
+          class="flex items-center gap-2 rounded-lg border px-3 py-2 text-sm transition-colors"
+          :class="loc.code === localeStore.locale
+            ? 'border-accent bg-accent/10 text-text-primary'
+            : 'border-border-default bg-surface text-text-secondary hover:bg-surface-overlay hover:text-text-primary'"
+          @click="localeStore.setLocale(loc.code as Locale)"
         >
-          <option v-for="loc in AVAILABLE_LOCALES" :key="loc.code" :value="loc.code">
-            {{ loc.flag }} {{ loc.label }}
-          </option>
-        </select>
+          <span :class="`fi fi-${loc.flag}`" class="!h-3.5 !w-5 rounded-sm shrink-0" />
+          <span class="truncate">{{ loc.label }}</span>
+        </button>
       </div>
     </div>
   </div>
