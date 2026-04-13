@@ -87,8 +87,8 @@
     "monthsAgo": "{count} месеци пре"
   },
   "units": {
-    "tokens": "Tokenи",
-    "tokensPerSec": "Tokenи/с",
+    "tokens": "Токени",
+    "tokensPerSec": "Токени/с",
     "milliseconds": "мс",
     "seconds": "с",
     "bytes": "Б",

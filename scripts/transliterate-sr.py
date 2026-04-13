@@ -28,10 +28,25 @@ PRESERVE_TOKENS = [
     "Benchmark", "benchmark", "Dashboard", "dashboard",
     "Embedding", "embedding", "Embeddings", "embeddings",
     "Token", "token", "Tokens", "tokens",
+    # LLM sampling parameters — industry-standard technical terms
+    "Top-P", "Top-K", "top-p", "top-k", "Top P", "Top K", "top",
+    "Mirostat", "mirostat", "Seed", "seed", "TTFT", "TTF",
+    "V1", "V2", "V3", "V4",  # version suffixes (e.g. "Mirostat V1")
+    # ML/chat technical terms that appear in technical hints and examples
+    "Nucleus", "nucleus", "sampling", "Sampling",
+    "Human", "Assistant", "System",
+    "num_predict", "num_ctx", "max_tokens",
+    # Ollama CLI commands and model names — must stay literal so users can copy/paste
+    "ollama", "ollama pull", "nomic-embed-text",
 ]
 
-# Build a regex that matches any preserve token as a whole word.
-PRESERVE_RE = re.compile("(" + "|".join(re.escape(t) for t in PRESERVE_TOKENS) + ")")
+# Build a regex that matches preserve tokens as STANDALONE words only.
+# Word boundaries (\b) prevent matching inside Serbian-inflected forms like
+# "tokena" (genitive of "token") — those should fully transliterate to "токена".
+# Tokens are sorted by length descending so longer phrases (e.g. "ollama pull")
+# match before their prefixes ("ollama") in regex alternation.
+_sorted_preserve = sorted(PRESERVE_TOKENS, key=len, reverse=True)
+PRESERVE_RE = re.compile(r"\b(" + "|".join(re.escape(t) for t in _sorted_preserve) + r")\b")
 
 # Digraphs: longest match first. Note dž uses U+017E (ž).
 DIGRAPHS = [
@@ -55,9 +70,11 @@ LAT2CYR = {
     "z": "з", "ž": "ж",
 }
 
-# Match both {{name}} (mustache) and {name} (vue-i18n single-brace) placeholders.
-# Longer match first so {{x}} takes precedence over {x}.
-TEMPLATE_RE = re.compile(r"(\{\{[^}]*\}\}|\{[^{}]*\})")
+# Match {{name}} mustache, {name} single-brace placeholders, and \-escapes
+# like \n \t \r \\ — the latter must be preserved so JSON escape sequences in
+# stop tokens etc. don't get their letter portion transliterated to Cyrillic
+# (e.g. \n -> \н would break the escape).
+TEMPLATE_RE = re.compile(r"(\{\{[^}]*\}\}|\{[^{}]*\}|\\.)")
 
 
 def translit_word(word: str) -> str:
@@ -73,9 +90,10 @@ def translit_string(s: str) -> str:
     if not isinstance(s, str):
         return s
     out_parts = []
-    # Split on {name} or {{name}} placeholders, leave them untouched.
+    # Split on {name} / {{name}} placeholders or \-escapes, leave them untouched.
     for tpl_part in TEMPLATE_RE.split(s):
-        if tpl_part.startswith("{") and tpl_part.endswith("}"):
+        if (tpl_part.startswith("{") and tpl_part.endswith("}")) or \
+           (len(tpl_part) == 2 and tpl_part.startswith("\\")):
             out_parts.append(tpl_part)
             continue
         # Split on preserve tokens, leave them in Latin.

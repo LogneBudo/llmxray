@@ -2,23 +2,23 @@
   "title": "Ugnježđenja",
   "modelSelector": {
     "noModels": "Nema dostupnih modela",
-    "noEmbeddingModels": "Ne mogu da pronađem nijedan model za ugnježđenje. Povucite jedan: olama povuci nomic-ugnjezdi-tekst"
+    "noEmbeddingModels": "Nije pronađen nijedan model za ugnježđivanje. Preuzmite jedan: ollama pull nomic-embed-text"
   },
   "storage": {
-    "embeddingMemory": "Ugnježđena Memorija",
+    "embeddingMemory": "Ugnježđena memorija",
     "records": "zapisi"
   },
   "playground": {
-    "title": "Igraj Ugnježdeno",
-    "description": "Unesite tekst da biste generisali njegov vektor ugnježđenja i pregledali dimenzije.",
+    "title": "Igraj sa ugnježđenjima",
+    "description": "Unesite tekst da biste generisali njegov vektor ugnježđivanja i pregledali dimenzije.",
     "placeholder": "Unesite tekst za ugnježđivanje...",
-    "embed": "Ugnježdi",
-    "embedding": "Ugnježđeno...",
-    "showRawValues": "Prikaži si si vrednosti (prvi 50 od {ukupno})"
+    "embed": "Ugnjezdi",
+    "embedding": "Ugnježđujem...",
+    "showRawValues": "Prikaži sirove vrednosti (prvih 50 od {ukupno})"
   },
   "similarity": {
-    "title": "Kalkulator Sličnosti",
-    "description": "Uporedite dva teksta da biste izmerili njihovu semantičku sličnost koristeći udaljenost kosina.",
+    "title": "Kalkulator sličnosti",
+    "description": "Uporedite dva teksta da biste izmerili njihovu semantičku sličnost koristeći kosinusnu udaljenost.",
     "textA": "Tekst A",
     "textB": "Tekst B",
     "placeholderA": "Prvi tekst...",
@@ -27,28 +27,28 @@
     "comparing": "Poređenje..."
   },
   "modelComparison": {
-    "title": "Poređenje Modela",
+    "title": "Poređenje modela",
     "description": "Ugnježdi isti tekst sa dva modela da biste uporedili kako predstavljaju značenje.",
     "modelA": "Model A",
     "modelB": "Model B",
     "placeholder": "Unesite tekst za ugnježđivanje sa oba modela...",
-    "compareModels": "Poredi Modeli",
+    "compareModels": "Poredi modele",
     "comparingModels": "Poređenje modela...",
-    "crossModelSimilarity": "Prekriženost značenja — ovi modeli predstavljaju značenje veoma različito.",
-    "veryDifferent": "Moderan dogovor — modeli dele neku semantičku strukturu.",
-    "moderateAgreement": "Visok dogovor — ovi modeli predstavljaju ovaj tekst slično.",
-    "highAgreement": "Dimenzije se razlikuju ({dimA} vs {dimB}) — direktna kosina sličnost nije moguća.",
-    "dimensionsMismatch": "Poredite statistiku iznad da biste procenili svaki modelovu predstavljanje kvalitet.",
-    "compareStats": "Compare stats above to evaluate each model's representation quality."
+    "crossModelSimilarity": "Unakrsna sličnost — ovi modeli predstavljaju značenje veoma različito.",
+    "veryDifferent": "Veoma različito — modeli dele samo minimalnu semantičku strukturu.",
+    "moderateAgreement": "Umereno slaganje — modeli dele deo semantičke strukture.",
+    "highAgreement": "Visoko slaganje — ovi modeli predstavljaju ovaj tekst slično.",
+    "dimensionsMismatch": "Dimenzije se razlikuju ({dimA} vs {dimB}) — direktna kosinusna sličnost nije moguća.",
+    "compareStats": "Uporedite statistiku iznad da biste procenili kvalitet reprezentacije svakog modela."
   },
   "stats": {
     "dims": "Dimenzije",
-    "l2Norm": "L2 Norma",
+    "l2Norm": "L2 norma",
     "sparsity": "Sparzitet",
     "time": "Vreme"
   },
   "history": {
-    "title": "Nedavni Ugnježdeni",
+    "title": "Nedavno ugnježđeno",
     "clearAll": "Obriši sve"
   }
 }

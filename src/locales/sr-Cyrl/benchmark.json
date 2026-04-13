@@ -22,7 +22,7 @@
   },
   "suites": {
     "arc": "АРЦ изазов",
-    "mmlupro": "МMLУ-Про",
+    "mmlupro": "ММЛУ-Про",
     "hellaswag": "ХелласСwаг",
     "gsm8k": "ГСМ-8К",
     "truthfulqa": "ТрутхфулQА"
@@ -45,8 +45,8 @@
     "waitingFirstAnswer": "Чекање први одговор...",
     "processingQuestion": "Обради питање...",
     "stopBenchmark": "Заустави Benchmark",
-    "benchmarkProgress": "Напредак benchmarkа",
-    "avgTtft": "Просјечно ТТФ",
+    "benchmarkProgress": "Напредак бенцхмарка",
+    "avgTtft": "Просјечно TTF",
     "avgTotal": "Просјечно укупно",
     "suites": "Скупови питања",
     "reasoning": "Размишљање",
@@ -65,7 +65,7 @@
     "lucky": "Категоријска разбијања",
     "perCategoryTotalTime": "Категорија",
     "contextPressure": "Тачно",
-    "categoryBreakdown": "Просјечно ТТФ",
+    "categoryBreakdown": "Просјечно TTF",
     "category": "Просјечно укупно",
     "correct": "Просјечна сигурност",
     "avgTtft": "Пер-Питање Детаљи",

@@ -5,6 +5,22 @@ All notable changes to LLMxRay are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.5] — 2026-04-13
+
+### Fixed
+
+- Serbian translations: `dashboard.json`, `comparison.json`, and `embeddings.json` had been shipped in v0.4.4 with mostly-untranslated English content because the LLM-based translation pipeline silently echoed source text on those three files. Replaced with full native Serbian translations (~165 strings across the three files).
+- Critical fix in `embeddings.json`: the literal CLI command `ollama pull nomic-embed-text` was previously translated to Serbian (`olama povuci nomic-ugnjezdi-tekst`), which would silently fail when copy-pasted into a terminal. Restored to literal command.
+- Chat input placeholder: `"Send a message... (Shift+Enter for new line)"` is now properly translated to `"Pošalji poruku... (Shift+Enter za novi red)"` (and Cyrillic equivalent).
+
+### Changed
+
+- `scripts/transliterate-sr.py` significantly improved:
+  - Word-boundary preserve regex: Serbian-inflected forms like `tokena` (genitive of `token`) now fully transliterate to `токена` instead of producing mixed-script `tokenа`.
+  - Escape sequence preservation: `\n`, `\t`, etc. are no longer broken by the transliterator (would have corrupted JSON stop sequences).
+  - Length-descending alternation order: multi-word patterns like `ollama pull` correctly match before their single-word prefixes.
+  - Expanded preserve list: sampling parameters (`Top-P`, `Top-K`, `Mirostat`, `Seed`, `TTFT`, `V1-V4`), ML technical terms (`Nucleus`, `sampling`, `Human`, `Assistant`, `System`, `num_predict`, `num_ctx`, `max_tokens`), Ollama CLI tokens (`ollama`, `ollama pull`, `nomic-embed-text`).
+
 ## [0.4.4] — 2026-04-13
 
 ### Added

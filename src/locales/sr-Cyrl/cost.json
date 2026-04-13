@@ -1,7 +1,7 @@
 {
   "title": "Трошкови контролне табле",
   "summary": {
-    "totalTokens": "Тотал Tokenа",
+    "totalTokens": "Тотал Токена",
     "totalSessions": "Сесије",
     "estimatedCost": "Процењена Цена",
     "avgCostPerSession": "Просјечна Цена/Сесија"
@@ -9,8 +9,8 @@
   "charts": {
     "tokensByModel": "Token Упораба по Моделу",
     "dailyUsage": "Дневна Упораба",
-    "promptTokens": "Промпт Tokenа",
-    "completionTokens": "Цомплетион Tokenа",
+    "promptTokens": "Промпт Токена",
+    "completionTokens": "Цомплетион Токена",
     "estimatedCost": "Процењена Цена",
     "costTrend": "Тренд Цене"
   },
@@ -27,7 +27,7 @@
     "latencyTitle": "Захтев Латенција (П50 / П95 / П99)",
     "ttftTitle": "Време до Први Token (П50 / П95 / П99)",
     "histogramTitle": "Интер-Token Латенција Дистрибуција",
-    "histogramHint": "Букети граница прате ОТеЛ ГенAI конвенције. Аггрегирано преко свих сесија.",
+    "histogramHint": "Букети граница прате ОТеЛ ГенАИ конвенције. Аггрегирано преко свих сесија.",
     "noData": "Недовољно података о сесијама за анализу перцентила."
   },
   "errors": {
