@@ -40,7 +40,7 @@ When generation finishes, four metric cards appear below the output:
 
 ## If the model doesn't support FIM
 
-If you pick a non-coding model, the page warns you up front. If you try anyway, Ollama returns a clear error: *"<model> does not support insert"*. The page surfaces this in the output area without crashing.
+If you pick a non-coding model, the page warns you up front. If you try anyway, Ollama returns a clear error: `qwen2.5:3b does not support insert` (or similar, with the model name in place). The page surfaces this in the output area without crashing.
 
 ## Behind the scenes
 

@@ -40,7 +40,7 @@ Quand la génération se termine, quatre cartes de métriques apparaissent sous 
 
 ## Si le modèle ne supporte pas FIM
 
-Si vous choisissez un modèle qui n'est pas de code, la page vous avertit en amont. Si vous essayez quand même, Ollama renvoie une erreur claire : *« <model> does not support insert »*. La page affiche ce message dans la zone de sortie sans planter.
+Si vous choisissez un modèle qui n'est pas de code, la page vous avertit en amont. Si vous essayez quand même, Ollama renvoie une erreur claire : `qwen2.5:3b does not support insert` (ou similaire, avec le nom du modèle à la place). La page affiche ce message dans la zone de sortie sans planter.
 
 ## Sous le capot
 
