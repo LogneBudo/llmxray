@@ -31,23 +31,26 @@ export interface OllamaModelInfo {
 export interface OllamaGenerateRequest {
   model: string
   prompt: string
+  suffix?: string
   system?: string
   template?: string
   context?: number[]
   stream?: boolean
   raw?: boolean
-  format?: 'json'
+  format?: 'json' | Record<string, unknown>
   options?: OllamaOptions
+  think?: boolean | 'max'
 }
 
 export interface OllamaChatRequest {
   model: string
   messages: OllamaChatMessage[]
   stream?: boolean
-  format?: 'json'
+  format?: 'json' | Record<string, unknown>
   options?: OllamaOptions
   tools?: OllamaToolDefinition[]
   logprobs?: boolean
+  think?: boolean | 'max'
 }
 
 export interface OllamaChatMessage {

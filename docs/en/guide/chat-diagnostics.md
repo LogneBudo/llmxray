@@ -40,6 +40,26 @@ Type `/` in the input to see available slash commands for quick actions.
 ### Multi-turn Conversation
 Each conversation maintains full message history. The model sees all previous messages for context.
 
+### Thinking Control (v0.4.7+)
+
+For models that report the `thinking` capability (DeepSeek-R1, QwQ, etc.), a **Thinking** chip appears in the Chat Settings panel with three modes:
+
+- **Off** — no `think` field sent, model behaves like a standard chat model
+- **On** — sends `think: true` on `/api/chat`, the model produces an internal reasoning trace before the response
+- **Max** — sends `think: "max"`, requesting the largest reasoning budget the model supports (added in Ollama v0.21.3)
+
+The reasoning trace appears in the **Reasoning tab** of the session deep-dive. This control is hidden for models that don't support thinking.
+
+### Response Format Control (v0.4.7+)
+
+A **Response format** picker in the Chat Settings panel forces structured output. Three modes:
+
+- **Free-form text** — no constraint, the default
+- **Valid JSON (any shape)** — sends `format: "json"`, the model must return parseable JSON
+- **JSON Schema (strict)** — sends a full JSON Schema object as `format`. A textarea appears where you can paste any valid schema; the page validates the JSON as you type. The model is constrained to match the schema exactly.
+
+JSON Schema mode is especially useful for benchmark answer enforcement, agent tool-input validation, and RAG citation extraction.
+
 ### Response Quality Gates
 
 Every completed assistant response is automatically analyzed by five client-side detectors. When issues are found, small colored badges appear below the response metrics:

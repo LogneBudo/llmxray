@@ -86,7 +86,25 @@
     "noToolsDefined": "No tools defined yet",
     "manageInToolWorkshop": "Manage in Tool Workshop...",
     "pulling": "Pulling...",
-    "pull": "Pull"
+    "pull": "Pull",
+    "thinking": {
+      "label": "Thinking",
+      "off": "Off",
+      "on": "On",
+      "max": "Max",
+      "hint": "Toggle the model's internal reasoning. Max requests the largest budget. Ignored if the model doesn't support thinking.",
+      "modelSupportsHint": "model-supported"
+    },
+    "responseFormat": {
+      "label": "Response format",
+      "none": "Free-form text",
+      "json": "Valid JSON (any shape)",
+      "schema": "JSON Schema (strict)",
+      "freeForm": "Free-form",
+      "hint": "Force the model to return structured output. JSON Schema constrains the shape — handy for parsing.",
+      "schemaPlaceholder": "Paste a JSON Schema object…",
+      "schemaHint": "Valid JSON Schema. Sent as the `format` field on /api/chat."
+    }
   },
   "memory": {
     "slidingWindow": "Sliding window",

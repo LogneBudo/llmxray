@@ -1,0 +1,23 @@
+{
+  "title": "Dopuna u sredini (FIM)",
+  "subtitle": "Testirajte dopunu koda sa prefiksom + sufiksom. Model popunjava prazninu.",
+  "explainer": "Neki Ollama modeli (Qwen-Coder, CodeLlama, Codestral, DeepSeek-Coder, StarCoder) podržavaju `suffix` polje na /api/generate. Unesite kod pre i posle kursora — model dopunjava sredinu.",
+  "model": "Model",
+  "codingModels": "Modeli za kod (FIM-kompatibilni)",
+  "otherModels": "Ostali modeli (možda ne podržavaju FIM)",
+  "notCodingModelWarning": "Ovaj model nije poznati model za kod — `suffix` može biti ignorisan.",
+  "prefix": "Prefiks (kod pre kursora)",
+  "suffix": "Sufiks (kod posle kursora)",
+  "prefixPlaceholder": "function fibonacci(n) {",
+  "suffixPlaceholder": "console.log(fibonacci(10));",
+  "generate": "Generiši",
+  "completion": "Dopuna",
+  "stitched": "Spojeni prikaz",
+  "streaming": "Strimovanje…",
+  "metrics": {
+    "totalDuration": "Ukupno",
+    "loadDuration": "Učitavanje",
+    "evalCount": "Generisani tokeni",
+    "tokensPerSecond": "Brzina"
+  }
+}

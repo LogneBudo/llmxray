@@ -27,4 +27,8 @@ export interface Conversation {
 export interface ChatSettings {
   systemPrompt: string
   options: OllamaOptions
+  /** Toggle reasoning on for thinking-capable models. `'max'` requests highest budget. */
+  think?: boolean | 'max'
+  /** Force structured output. Either the literal `'json'` (free-form JSON) or a JSON Schema object. */
+  format?: 'json' | Record<string, unknown>
 }

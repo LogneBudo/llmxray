@@ -43,6 +43,8 @@ const pageTitle = computed(() => {
     costs: t('common.header.costDashboard'),
     analytics: t('common.header.analytics'),
     tools: t('common.header.toolWorkshop'),
+    fim: t('common.header.fim'),
+    protocols: t('common.header.protocols'),
     system: t('common.header.mySystem'),
     settings: t('common.header.settings'),
   }

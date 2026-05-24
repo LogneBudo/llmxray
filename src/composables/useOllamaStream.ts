@@ -35,12 +35,13 @@ export function useOllamaStream() {
     messages: OllamaChatMessage[],
     options?: OllamaOptions,
     tools?: OllamaToolDefinition[],
+    extras?: { think?: boolean | 'max'; format?: 'json' | Record<string, unknown> },
   ): Promise<string> {
     isStreaming.value = true
     error.value = null
 
     try {
-      const result = await startChat({ model, messages, tools, options })
+      const result = await startChat({ model, messages, tools, options, think: extras?.think, format: extras?.format })
       currentSessionId.value = result.sessionId
       abortFn = result.abort
       return result.sessionId

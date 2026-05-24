@@ -31,6 +31,35 @@ const seed = ref(props.modelValue.options.seed ?? -1)
 const stopSequences = ref(props.modelValue.options.stop?.join(', ') ?? '')
 const mirostat = ref(props.modelValue.options.mirostat ?? 0)
 
+// Thinking control (Ollama `think` param — boolean or 'max')
+type ThinkMode = 'off' | 'on' | 'max'
+function thinkValueToMode(v: boolean | 'max' | undefined): ThinkMode {
+  if (v === 'max') return 'max'
+  if (v === true) return 'on'
+  return 'off'
+}
+function modeToThinkValue(m: ThinkMode): boolean | 'max' | undefined {
+  if (m === 'max') return 'max'
+  if (m === 'on') return true
+  return undefined
+}
+const thinkMode = ref<ThinkMode>(thinkValueToMode(props.modelValue.think))
+
+// Response format control (Ollama `format` param — 'json' or JSON Schema)
+type FormatMode = 'none' | 'json' | 'schema'
+function formatValueToMode(v: 'json' | Record<string, unknown> | undefined): FormatMode {
+  if (v === 'json') return 'json'
+  if (v && typeof v === 'object') return 'schema'
+  return 'none'
+}
+const formatMode = ref<FormatMode>(formatValueToMode(props.modelValue.format))
+const formatSchemaText = ref(
+  props.modelValue.format && typeof props.modelValue.format === 'object'
+    ? JSON.stringify(props.modelValue.format, null, 2)
+    : '{\n  "type": "object",\n  "properties": {\n    "answer": { "type": "string" }\n  },\n  "required": ["answer"]\n}',
+)
+const formatSchemaError = ref<string | null>(null)
+
 // Sync from parent when model defaults change
 watch(() => props.modelValue.options, (opts) => {
   temperature.value = opts.temperature ?? 0.7
@@ -46,12 +75,33 @@ watch(() => props.modelValue.options, (opts) => {
 
 // Emit on any change
 watch(
-  [systemPrompt, temperature, numPredict, numCtx, topP, topK, repeatPenalty, seed, stopSequences, mirostat],
+  [systemPrompt, temperature, numPredict, numCtx, topP, topK, repeatPenalty, seed, stopSequences, mirostat, thinkMode, formatMode, formatSchemaText],
   () => {
     const stops = stopSequences.value
       .split(',')
       .map((s) => s.trim())
       .filter(Boolean)
+
+    // Resolve format: parse schema if mode === 'schema'
+    let resolvedFormat: 'json' | Record<string, unknown> | undefined
+    if (formatMode.value === 'json') {
+      resolvedFormat = 'json'
+    } else if (formatMode.value === 'schema') {
+      try {
+        const parsed = JSON.parse(formatSchemaText.value)
+        if (typeof parsed === 'object' && parsed !== null) {
+          resolvedFormat = parsed
+          formatSchemaError.value = null
+        } else {
+          formatSchemaError.value = 'Schema must be a JSON object'
+        }
+      } catch (e) {
+        formatSchemaError.value = e instanceof Error ? e.message : 'Invalid JSON'
+      }
+    } else {
+      resolvedFormat = undefined
+      formatSchemaError.value = null
+    }
 
     emit('update:modelValue', {
       systemPrompt: systemPrompt.value,
@@ -66,6 +116,8 @@ watch(
         stop: stops.length > 0 ? stops : undefined,
         mirostat: mirostat.value,
       },
+      think: modeToThinkValue(thinkMode.value),
+      format: resolvedFormat,
     })
   },
   { deep: true },
@@ -84,6 +136,11 @@ watch(
     repeatPenalty.value = val.options.repeat_penalty ?? 1.1
     seed.value = val.options.seed ?? -1
     mirostat.value = val.options.mirostat ?? 0
+    thinkMode.value = thinkValueToMode(val.think)
+    formatMode.value = formatValueToMode(val.format)
+    if (val.format && typeof val.format === 'object') {
+      formatSchemaText.value = JSON.stringify(val.format, null, 2)
+    }
   },
 )
 
@@ -94,6 +151,7 @@ const modelStore = useModelStore()
 const ragStore = useRagStore()
 
 const modelSupportsTools = computed(() => modelStore.supportsTools(props.selectedModel))
+const modelIsThinking = computed(() => modelStore.isThinkingModel(props.selectedModel))
 
 // Auto-disable all tools when switching to a model that doesn't support them
 watch(() => props.selectedModel, (name) => {
@@ -161,6 +219,69 @@ async function pullEmbeddingModel(name: string) {
         <p class="mt-1 text-[10px] text-text-muted">
           {{ $t('dashboard.settings.systemPromptHint') }}
         </p>
+      </div>
+
+      <!-- Thinking control (only for thinking-capable models) -->
+      <div v-if="modelIsThinking">
+        <div class="mb-1.5 flex items-center justify-between">
+          <label class="text-xs font-medium text-text-secondary">{{ $t('dashboard.settings.thinking.label') }}</label>
+          <span class="text-[10px] text-text-muted">{{ $t('dashboard.settings.thinking.modelSupportsHint') }}</span>
+        </div>
+        <div class="flex gap-1 rounded-lg border border-border-default bg-surface p-1">
+          <button
+            type="button"
+            class="flex-1 rounded-md px-2 py-1 text-[11px] font-medium transition-colors"
+            :class="thinkMode === 'off' ? 'bg-accent text-surface' : 'text-text-secondary hover:bg-surface-overlay'"
+            @click="thinkMode = 'off'"
+          >
+            {{ $t('dashboard.settings.thinking.off') }}
+          </button>
+          <button
+            type="button"
+            class="flex-1 rounded-md px-2 py-1 text-[11px] font-medium transition-colors"
+            :class="thinkMode === 'on' ? 'bg-accent text-surface' : 'text-text-secondary hover:bg-surface-overlay'"
+            @click="thinkMode = 'on'"
+          >
+            {{ $t('dashboard.settings.thinking.on') }}
+          </button>
+          <button
+            type="button"
+            class="flex-1 rounded-md px-2 py-1 text-[11px] font-medium transition-colors"
+            :class="thinkMode === 'max' ? 'bg-accent text-surface' : 'text-text-secondary hover:bg-surface-overlay'"
+            @click="thinkMode = 'max'"
+          >
+            {{ $t('dashboard.settings.thinking.max') }}
+          </button>
+        </div>
+        <p class="mt-1 text-[10px] text-text-muted">{{ $t('dashboard.settings.thinking.hint') }}</p>
+      </div>
+
+      <!-- Response format (Ollama `format` param) -->
+      <div>
+        <div class="mb-1.5 flex items-center justify-between">
+          <label class="text-xs font-medium text-text-secondary">{{ $t('dashboard.settings.responseFormat.label') }}</label>
+          <span class="text-[10px] text-text-muted">{{ formatMode === 'none' ? $t('dashboard.settings.responseFormat.freeForm') : formatMode === 'json' ? 'JSON' : 'JSON Schema' }}</span>
+        </div>
+        <select
+          v-model="formatMode"
+          class="w-full rounded-lg border border-border-default bg-surface px-3 py-1.5 text-sm text-text-primary outline-none focus:border-accent"
+        >
+          <option value="none">{{ $t('dashboard.settings.responseFormat.none') }}</option>
+          <option value="json">{{ $t('dashboard.settings.responseFormat.json') }}</option>
+          <option value="schema">{{ $t('dashboard.settings.responseFormat.schema') }}</option>
+        </select>
+        <p class="mt-1 text-[10px] text-text-muted">{{ $t('dashboard.settings.responseFormat.hint') }}</p>
+        <div v-if="formatMode === 'schema'" class="mt-2">
+          <textarea
+            v-model="formatSchemaText"
+            rows="6"
+            spellcheck="false"
+            class="w-full resize-y rounded-lg border border-border-default bg-surface px-3 py-2 font-mono text-[11px] text-text-primary outline-none focus:border-accent"
+            :placeholder="$t('dashboard.settings.responseFormat.schemaPlaceholder')"
+          />
+          <p v-if="formatSchemaError" class="mt-1 text-[10px] text-error">{{ formatSchemaError }}</p>
+          <p v-else class="mt-1 text-[10px] text-text-muted">{{ $t('dashboard.settings.responseFormat.schemaHint') }}</p>
+        </div>
       </div>
 
       <!-- Knowledge Base toggle -->

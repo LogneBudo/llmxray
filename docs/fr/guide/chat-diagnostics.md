@@ -28,6 +28,26 @@ Comme le endpoint `/api/chat` d'Ollama n'expose pas les logprobs des tokens, LLM
 
 ## Fonctionnalités
 
+### Contrôle de Réflexion (v0.4.7+)
+
+Pour les modèles qui reportent la capacité `thinking` (DeepSeek-R1, QwQ, etc.), une puce **Réflexion** apparaît dans le panneau Paramètres de chat avec trois modes :
+
+- **Off** -- aucun champ `think` envoyé, le modèle se comporte comme un modèle de chat standard
+- **On** -- envoie `think: true` sur `/api/chat`, le modèle produit une trace de raisonnement interne avant la réponse
+- **Max** -- envoie `think: "max"`, demandant le plus grand budget de raisonnement que le modèle supporte (ajouté dans Ollama v0.21.3)
+
+La trace de raisonnement apparaît dans l'**onglet Raisonnement** du détail de session. Ce contrôle est caché pour les modèles qui ne supportent pas la réflexion.
+
+### Contrôle du Format de Réponse (v0.4.7+)
+
+Un sélecteur **Format de réponse** dans le panneau Paramètres de chat force une sortie structurée. Trois modes :
+
+- **Texte libre** -- aucune contrainte, défaut
+- **JSON valide (toute forme)** -- envoie `format: "json"`, le modèle doit renvoyer du JSON analysable
+- **JSON Schema (strict)** -- envoie un objet JSON Schema complet en tant que `format`. Une zone de texte apparaît pour coller n'importe quel schéma valide ; la page valide le JSON pendant que vous tapez. Le modèle est contraint à correspondre exactement au schéma.
+
+Le mode JSON Schema est particulièrement utile pour forcer les réponses de benchmark, valider les entrées d'outils agentiques et extraire des citations RAG.
+
 ### Rendu Markdown
 Les réponses du modèle sont rendues en Markdown enrichi avec coloration syntaxique des blocs de code.
 

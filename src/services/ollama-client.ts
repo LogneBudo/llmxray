@@ -97,6 +97,8 @@ class OllamaClient {
       logprobs?: boolean
       top_logprobs?: number
       num_ctx?: number
+      reasoning_effort?: 'low' | 'medium' | 'high'
+      response_format?: { type: 'json_object' } | { type: 'json_schema'; json_schema: { name: string; schema: Record<string, unknown>; strict?: boolean } }
     },
     signal?: AbortSignal,
   ): Promise<ReadableStream<Uint8Array>> {

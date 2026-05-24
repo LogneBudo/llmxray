@@ -1,0 +1,23 @@
+{
+  "title": "Complétion au milieu (FIM)",
+  "subtitle": "Tester la complétion de code avec préfixe + suffixe. Le modèle remplit le trou.",
+  "explainer": "Certains modèles Ollama (Qwen-Coder, CodeLlama, Codestral, DeepSeek-Coder, StarCoder) supportent le champ `suffix` sur /api/generate. Fournissez le code avant et après le curseur — le modèle complète le milieu.",
+  "model": "Modèle",
+  "codingModels": "Modèles de code (compatibles FIM)",
+  "otherModels": "Autres modèles (FIM peut-être non supporté)",
+  "notCodingModelWarning": "Ce modèle n'est pas un modèle de code connu — `suffix` pourrait être ignoré.",
+  "prefix": "Préfixe (code avant le curseur)",
+  "suffix": "Suffixe (code après le curseur)",
+  "prefixPlaceholder": "function fibonacci(n) {",
+  "suffixPlaceholder": "console.log(fibonacci(10));",
+  "generate": "Générer",
+  "completion": "Complétion",
+  "stitched": "Aperçu assemblé",
+  "streaming": "Streaming…",
+  "metrics": {
+    "totalDuration": "Total",
+    "loadDuration": "Chargement",
+    "evalCount": "Tokens générés",
+    "tokensPerSecond": "Vitesse"
+  }
+}

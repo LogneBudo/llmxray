@@ -1,0 +1,48 @@
+{
+  "title": "Opservatorija protokola",
+  "subtitle": "Pošaljite jedan prompt kroz tri protokola posluživanja. Isti model, isti Ollama demon — različiti žičani formati. Uporedite šta vam svaki protokol pruža.",
+  "explainer": "Ollama izlaže /api/chat (nativni NDJSON), /v1/chat/completions (OpenAI-kompatibilan SSE) i /v1/messages (Anthropic-kompatibilan SSE). Sva tri ciljaju isti lokalni model — bez oblaka, bez API ključeva. Ova stranica pokreće isti prompt na sva tri paralelno i pokazuje šta se razlikuje.",
+  "model": "Model",
+  "prompt": "Prompt",
+  "promptPlaceholder": "Unesite prompt na koji će sva tri protokola odgovoriti…",
+  "maxTokens": "Maks. tokena",
+  "runAll": "Pokreni sva 3 protokola",
+  "notRunYet": "Još nije pokrenuto.",
+  "waitingForFirstToken": "Čekanje prvog tokena…",
+  "inspectEnvelope": "Inspekcija envelope",
+  "firstChunk": "Prvi chunk / događaj",
+  "finalChunk": "Poslednji chunk / događaj",
+  "chars": "znak.",
+  "native": {
+    "label": "Nativni",
+    "badge": "Ollama nativni"
+  },
+  "openai": {
+    "label": "OpenAI-komp.",
+    "badge": "/v1 (komp)"
+  },
+  "anthropic": {
+    "label": "Anthropic-komp.",
+    "badge": "/v1 (komp)"
+  },
+  "metrics": {
+    "total": "Ukupno",
+    "tokens": "Tokeni",
+    "finish": "Kraj"
+  },
+  "tabs": {
+    "responseDiff": "Poređenje odgovora",
+    "envelopeDiff": "Diff envelope"
+  },
+  "envelopeDiff": {
+    "aspect": "Aspekt",
+    "streamWrapper": "Omotač strima",
+    "topLevelFields": "Ključevi vrha (opaženi)",
+    "finishField": "Nosač razloga završetka",
+    "finishValue": "Razlog završetka (ovaj run)",
+    "usageField": "Nosač broja tokena",
+    "tokensReported": "Generisani tokeni (ovaj run)",
+    "errorShape": "Oblik envelope greške",
+    "footnote": "Opažene vrednosti su iz ovog runa na vašem lokalnom Ollama. Neki nosači (npr. NDJSON nativni `done_reason`) pojavljuju se samo na poslednjem chunk-u, drugi (npr. Anthropic `message_stop`) su namenski događaji."
+  }
+}

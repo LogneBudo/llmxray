@@ -86,7 +86,25 @@
     "noToolsDefined": "Још нема дефинисаних алата",
     "manageInToolWorkshop": "Управљај у радионици алата...",
     "pulling": "Повлачење...",
-    "pull": "Повуци"
+    "pull": "Повуци",
+    "thinking": {
+      "label": "Размишљање",
+      "off": "Искључено",
+      "on": "Укључено",
+      "max": "Max",
+      "hint": "Укључите интерно резоновање модела. Max тражи највећи буџет. Игнорише се ако модел не подржава.",
+      "modelSupportsHint": "подржано у моделу"
+    },
+    "responseFormat": {
+      "label": "Формат одговора",
+      "none": "Слободан текст",
+      "json": "Валидан JSON (било који облик)",
+      "schema": "JSON Schema (строго)",
+      "freeForm": "Слободан",
+      "hint": "Принуди структурисан излаз. JSON Schema ограничава облик — корисно за парсирање.",
+      "schemaPlaceholder": "Налепи JSON Schema објекат…",
+      "schemaHint": "Валидан JSON Schema. Шаље се као `format` поље на /api/chat."
+    }
   },
   "memory": {
     "slidingWindow": "Клизни прозор",

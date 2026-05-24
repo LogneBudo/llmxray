@@ -398,6 +398,10 @@ async function handleSend(text: string, attachments: ChatAttachment[] = []) {
       finalMessages,
       mergedOptions,
       enabledTools.length > 0 ? enabledTools : undefined,
+      {
+        think: modelStore.isThinkingModel(selectedModel.value) ? chatSettings.value.think : undefined,
+        format: chatSettings.value.format,
+      },
     )
 
     // Link the assistant message to the session

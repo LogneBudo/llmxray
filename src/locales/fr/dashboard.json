@@ -86,7 +86,25 @@
     "noToolsDefined": "Aucun outil d\u00e9fini",
     "manageInToolWorkshop": "G\u00e9rer dans l'atelier d'outils...",
     "pulling": "T\u00e9l\u00e9chargement...",
-    "pull": "T\u00e9l\u00e9charger"
+    "pull": "T\u00e9l\u00e9charger",
+    "thinking": {
+      "label": "R\u00e9flexion",
+      "off": "Off",
+      "on": "On",
+      "max": "Max",
+      "hint": "Activer le raisonnement interne du mod\u00e8le. Max demande le budget maximal. Ignor\u00e9 si le mod\u00e8le ne le supporte pas.",
+      "modelSupportsHint": "support\u00e9 par le mod\u00e8le"
+    },
+    "responseFormat": {
+      "label": "Format de r\u00e9ponse",
+      "none": "Texte libre",
+      "json": "JSON valide (toute forme)",
+      "schema": "JSON Schema (strict)",
+      "freeForm": "Libre",
+      "hint": "Forcer une sortie structur\u00e9e. JSON Schema contraint la forme \u2014 utile pour l'analyse syntaxique.",
+      "schemaPlaceholder": "Coller un objet JSON Schema\u2026",
+      "schemaHint": "JSON Schema valide. Envoy\u00e9 dans le champ `format` de /api/chat."
+    }
   },
   "memory": {
     "slidingWindow": "Fen\u00eatre glissante",

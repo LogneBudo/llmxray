@@ -1,0 +1,23 @@
+{
+  "title": "Fill-in-the-Middle Playground",
+  "subtitle": "Test code completion with prefix + suffix. The model fills the gap.",
+  "explainer": "Some Ollama models (Qwen-Coder, CodeLlama, Codestral, DeepSeek-Coder, StarCoder) support the `suffix` field on /api/generate. Provide code before and after the cursor — the model completes the middle.",
+  "model": "Model",
+  "codingModels": "Coding models (FIM-capable)",
+  "otherModels": "Other models (may not support FIM)",
+  "notCodingModelWarning": "This model isn't a known coding model — `suffix` may be ignored.",
+  "prefix": "Prefix (code before the cursor)",
+  "suffix": "Suffix (code after the cursor)",
+  "prefixPlaceholder": "function fibonacci(n) {",
+  "suffixPlaceholder": "console.log(fibonacci(10));",
+  "generate": "Generate",
+  "completion": "Completion",
+  "stitched": "Stitched preview",
+  "streaming": "Streaming…",
+  "metrics": {
+    "totalDuration": "Total",
+    "loadDuration": "Model load",
+    "evalCount": "Generated tokens",
+    "tokensPerSecond": "Speed"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "title": "Protocol Observatory",
+  "subtitle": "Send one prompt through three serving protocols. Same model, same Ollama daemon — different wire formats. Compare what each protocol gives you.",
+  "explainer": "Ollama exposes /api/chat (native NDJSON), /v1/chat/completions (OpenAI-compatible SSE), and /v1/messages (Anthropic-compatible SSE). All three target the same local model — no cloud, no API keys. This page fires the same prompt through all three in parallel and shows what differs.",
+  "model": "Model",
+  "prompt": "Prompt",
+  "promptPlaceholder": "Type a prompt all three protocols will answer…",
+  "maxTokens": "Max tokens",
+  "runAll": "Run all 3 protocols",
+  "notRunYet": "Not yet run.",
+  "waitingForFirstToken": "Waiting for first token…",
+  "inspectEnvelope": "Inspect envelope",
+  "firstChunk": "First chunk / event",
+  "finalChunk": "Final chunk / event",
+  "chars": "chars",
+  "native": {
+    "label": "Native",
+    "badge": "Ollama-native"
+  },
+  "openai": {
+    "label": "OpenAI-compat",
+    "badge": "/v1 (compat)"
+  },
+  "anthropic": {
+    "label": "Anthropic-compat",
+    "badge": "/v1 (compat)"
+  },
+  "metrics": {
+    "total": "Total",
+    "tokens": "Tokens",
+    "finish": "Finish"
+  },
+  "tabs": {
+    "responseDiff": "Response comparison",
+    "envelopeDiff": "Envelope diff"
+  },
+  "envelopeDiff": {
+    "aspect": "Aspect",
+    "streamWrapper": "Stream framing",
+    "topLevelFields": "Top-level keys (observed)",
+    "finishField": "Finish-reason carrier",
+    "finishValue": "Finish-reason value (this run)",
+    "usageField": "Token-count carrier",
+    "tokensReported": "Completion tokens (this run)",
+    "errorShape": "Error envelope shape",
+    "footnote": "Observed values are from this run on your local Ollama. Some carriers (e.g. native NDJSON `done_reason`) only appear on the final chunk, while others (e.g. Anthropic `message_stop`) are dedicated events."
+  }
+}

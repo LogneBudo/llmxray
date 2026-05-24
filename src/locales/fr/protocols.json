@@ -1,0 +1,48 @@
+{
+  "title": "Observatoire des protocoles",
+  "subtitle": "Envoyez un prompt à travers trois protocoles de service. Même modèle, même démon Ollama — formats de fil différents. Comparez ce que chaque protocole donne.",
+  "explainer": "Ollama expose /api/chat (NDJSON natif), /v1/chat/completions (SSE compatible OpenAI) et /v1/messages (SSE compatible Anthropic). Les trois ciblent le même modèle local — aucun cloud, aucune clé API. Cette page lance le même prompt sur les trois en parallèle et montre ce qui diffère.",
+  "model": "Modèle",
+  "prompt": "Prompt",
+  "promptPlaceholder": "Tapez un prompt auquel les trois protocoles répondront…",
+  "maxTokens": "Tokens max",
+  "runAll": "Lancer les 3 protocoles",
+  "notRunYet": "Pas encore lancé.",
+  "waitingForFirstToken": "Attente du premier token…",
+  "inspectEnvelope": "Inspecter l'enveloppe",
+  "firstChunk": "Premier chunk / événement",
+  "finalChunk": "Dernier chunk / événement",
+  "chars": "car.",
+  "native": {
+    "label": "Natif",
+    "badge": "Ollama natif"
+  },
+  "openai": {
+    "label": "Compat. OpenAI",
+    "badge": "/v1 (compat)"
+  },
+  "anthropic": {
+    "label": "Compat. Anthropic",
+    "badge": "/v1 (compat)"
+  },
+  "metrics": {
+    "total": "Total",
+    "tokens": "Tokens",
+    "finish": "Fin"
+  },
+  "tabs": {
+    "responseDiff": "Comparaison des réponses",
+    "envelopeDiff": "Diff. d'enveloppe"
+  },
+  "envelopeDiff": {
+    "aspect": "Aspect",
+    "streamWrapper": "Encadrement du flux",
+    "topLevelFields": "Clés racine (observées)",
+    "finishField": "Porteur du motif de fin",
+    "finishValue": "Motif de fin (ce run)",
+    "usageField": "Porteur du compte de tokens",
+    "tokensReported": "Tokens générés (ce run)",
+    "errorShape": "Forme de l'enveloppe d'erreur",
+    "footnote": "Les valeurs observées proviennent de ce run sur votre Ollama local. Certains porteurs (ex. `done_reason` natif NDJSON) n'apparaissent que sur le chunk final, d'autres (ex. `message_stop` Anthropic) sont des événements dédiés."
+  }
+}

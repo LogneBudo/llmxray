@@ -16,6 +16,8 @@ import {
   MessageSquare,
   DollarSign,
   BarChart3,
+  Code2,
+  Network,
 } from 'lucide-vue-next'
 import FeedbackOverlay from './FeedbackOverlay.vue'
 
@@ -29,6 +31,8 @@ const navItems = computed<{ path: string; label: string; icon: Component }[]>(()
   { path: '/embeddings', label: t('common.nav.embeddings'), icon: Waypoints },
   { path: '/rag', label: t('common.nav.knowledgeBase'), icon: BookOpen },
   { path: '/tools', label: t('common.nav.toolWorkshop'), icon: Hammer },
+  { path: '/fim', label: t('common.nav.fim'), icon: Code2 },
+  { path: '/protocols', label: t('common.nav.protocols'), icon: Network },
   { path: '/training', label: t('common.nav.aiTraining'), icon: GraduationCap },
   { path: '/settings?tab=models', label: t('common.nav.models'), icon: Boxes },
   { path: '/benchmark', label: t('common.nav.benchmark'), icon: Timer },

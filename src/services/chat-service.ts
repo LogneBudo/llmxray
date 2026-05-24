@@ -17,6 +17,8 @@ export async function startChat(params: {
   messages: OllamaChatMessage[]
   tools?: OllamaToolDefinition[]
   options?: OllamaOptions
+  think?: boolean | 'max'
+  format?: 'json' | Record<string, unknown>
 }): Promise<{ sessionId: string; abort: () => void }> {
   const sessionStore = useSessionStore()
   const promptStore = usePromptStore()
@@ -45,6 +47,8 @@ export async function startChat(params: {
     params.tools,
     params.options,
     abortController.signal,
+    params.think,
+    params.format,
   ).catch((err) => {
     if (!abortController.signal.aborted) {
       sessionStore.setSessionError(
@@ -72,6 +76,8 @@ async function runChatWithToolLoop(
   tools: OllamaToolDefinition[] | undefined,
   options: OllamaOptions | undefined,
   signal: AbortSignal,
+  think: boolean | 'max' | undefined,
+  format: 'json' | Record<string, unknown> | undefined,
 ): Promise<void> {
   const toolCallStore = useToolCallStore()
   const workshopStore = useToolWorkshopStore()
@@ -84,7 +90,7 @@ async function runChatWithToolLoop(
     if (signal.aborted) return
 
     const stream = await ollamaClient.streamChat(
-      { model, messages, tools, options, logprobs: true },
+      { model, messages, tools, options, logprobs: true, think, format },
       signal,
     )
 

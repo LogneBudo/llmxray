@@ -15,7 +15,7 @@
 
 ## Navigating the App
 
-LLMxRay has a sidebar with 10 navigation items, each representing a major feature. This guide has one chapter per item, in the exact order they appear in the sidebar:
+LLMxRay has a sidebar with 12 navigation items, each representing a major feature. This guide has one chapter per item, in the exact order they appear in the sidebar:
 
 1. **[Chat Diagnostics](./chat-diagnostics)** — The main chat interface with streaming and session analysis
 2. **[Compare](./compare)** — Side-by-side model and settings comparison
@@ -23,11 +23,13 @@ LLMxRay has a sidebar with 10 navigation items, each representing a major featur
 3. **[Embeddings](./embeddings)** — Text embedding visualization and similarity
 4. **[Knowledge Base](./knowledge-base)** — Document upload, chunking, and RAG search
 5. **[Tool Workshop](./tool-workshop)** — Visual tool builder with code sync
-6. **[AI Training](./ai-training)** — Training data curation and export
-7. **[Models](./models)** — Model browser and capability detection
-8. **[Benchmark](./benchmark)** — Standardized model evaluation with logprobs
-9. **[My System](./system)** — Hardware detection and Ollama status
-10. **[Settings](./settings)** — Connection, parameters, and preferences
+6. **[Fill-in-the-Middle (FIM)](./fim)** — Code completion playground for FIM-capable models
+7. **[Protocol Observatory](./protocols)** — Run the same prompt through native, OpenAI-compat, and Anthropic-compat against your local model
+8. **[AI Training](./ai-training)** — Training data curation and export
+9. **[Models](./models)** — Model browser and capability detection
+10. **[Benchmark](./benchmark)** — Standardized model evaluation with logprobs
+11. **[My System](./system)** — Hardware detection and Ollama status
+12. **[Settings](./settings)** — Connection, parameters, and preferences
 
 ## Other Elements
 

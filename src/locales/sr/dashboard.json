@@ -86,7 +86,25 @@
     "noToolsDefined": "Još nema definisanih alata",
     "manageInToolWorkshop": "Upravljaj u radionici alata...",
     "pulling": "Povlačenje...",
-    "pull": "Povuci"
+    "pull": "Povuci",
+    "thinking": {
+      "label": "Razmišljanje",
+      "off": "Isključeno",
+      "on": "Uključeno",
+      "max": "Max",
+      "hint": "Uključite interno rezonovanje modela. Max traži najveći budžet. Ignoriše se ako model ne podržava.",
+      "modelSupportsHint": "podržano u modelu"
+    },
+    "responseFormat": {
+      "label": "Format odgovora",
+      "none": "Slobodan tekst",
+      "json": "Validan JSON (bilo koji oblik)",
+      "schema": "JSON Schema (strogo)",
+      "freeForm": "Slobodan",
+      "hint": "Prinudi strukturisan izlaz. JSON Schema ograničava oblik — korisno za parsiranje.",
+      "schemaPlaceholder": "Nalepi JSON Schema objekat…",
+      "schemaHint": "Validan JSON Schema. Šalje se kao `format` polje na /api/chat."
+    }
   },
   "memory": {
     "slidingWindow": "Klizni prozor",

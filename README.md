@@ -99,6 +99,12 @@ Embed text, visualize vectors, measure cosine similarity. Build a local knowledg
 ### Tool Workshop (Visual Canvas)
 Drag-and-drop node canvas for building tool definitions. Bidirectional code sync (edit nodes or TypeScript — both update). Probe APIs, auto-generate schemas, test with live execution.
 
+### Fill-in-the-Middle Playground *(new in v0.4.7)*
+Code completion for Qwen-Coder, CodeLlama, Codestral, DeepSeek-Coder, and StarCoder. Two textareas (prefix / suffix), the model fills the gap. Uses Ollama's `suffix` field on `/api/generate`. Stitched preview shows the result as it would appear in your editor.
+
+### Protocol Observatory *(new in v0.4.7)*
+Fire the same prompt through Ollama's three serving protocols — **native** `/api/chat`, **OpenAI-compat** `/v1/chat/completions`, and **Anthropic-compat** `/v1/messages` — in parallel against your local model. Side-by-side streaming, per-protocol metrics, and an envelope-diff tab that shows how each protocol frames finish reasons, token counts, and error envelopes. No cloud, no API keys — all three endpoints are local on `localhost:11434`.
+
 ### AI Training Pipeline
 Curate training data from your conversations. Tag, review, and export as JSONL for fine-tuning.
 
@@ -106,7 +112,25 @@ Curate training data from your conversations. Tag, review, and export as JSONL f
 Every experiment (benchmarks, comparisons, chats, training pairs) is automatically archived in a queryable IndexedDB database with filters, trends, exports, and retention policies.
 
 ### Multilingual
-Full translations in English, French, Chinese, and Arabic. RTL layout support. Community scaffolds for Hebrew and Japanese.
+Full translations in English, French, Serbian (Latin + Cyrillic), Chinese, and Arabic. RTL layout support. Community scaffolds for Hebrew and Japanese.
+
+---
+
+## Ollama Compatibility
+
+Tested and verified against **Ollama 0.24.0** (the current latest stable as of May 2026). LLMxRay uses these Ollama endpoints:
+
+| Endpoint | Used for |
+|---|---|
+| `/api/chat` | Streaming chat (NDJSON, with `tools`, `think`, `format` schema) |
+| `/api/generate` | Generation + Fill-in-the-Middle via `suffix` |
+| `/api/tags`, `/api/show` | Model list + capability detection (`thinking`, `tools`, `vision`) |
+| `/api/embed` | Vector embeddings for RAG |
+| `/api/pull`, `/api/delete`, `/api/ps`, `/api/version` | Model management + status |
+| `/v1/chat/completions` | OpenAI-compat path used by Surgical Benchmark for real logprobs |
+| `/v1/messages` | Anthropic-compat path used by Protocol Observatory |
+
+**Compatible with:** Ollama 0.20 and newer (older versions work for chat/generate but lack `think` and JSON-schema `format`). **Recommended:** Ollama 0.24+ for full feature parity including the Anthropic-compat endpoint (added in 0.23) and the `think: "max"` mode (added in 0.21.3).
 
 ---
 

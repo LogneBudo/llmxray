@@ -15,7 +15,7 @@
 
 ## Navigation dans l'application
 
-LLMxRay dispose d'une barre latérale avec 10 éléments de navigation, chacun représentant une fonctionnalité majeure. Ce guide comporte un chapitre par élément, dans l'ordre exact d'apparition dans la barre latérale :
+LLMxRay dispose d'une barre latérale avec 12 éléments de navigation, chacun représentant une fonctionnalité majeure. Ce guide comporte un chapitre par élément, dans l'ordre exact d'apparition dans la barre latérale :
 
 1. **[Diagnostics de Chat](./chat-diagnostics)** -- L'interface de chat principale avec streaming et analyse de session
 2. **[Comparer](./compare)** -- Comparaison côté à côté de modèles et de paramètres
@@ -23,11 +23,13 @@ LLMxRay dispose d'une barre latérale avec 10 éléments de navigation, chacun r
 3. **[Plongements](./embeddings)** -- Visualisation d'embeddings textuels et similarité
 4. **[Base de Connaissances](./knowledge-base)** -- Téléchargement de documents, découpage et recherche RAG
 5. **[Atelier d'Outils](./tool-workshop)** -- Constructeur visuel d'outils avec synchronisation du code
-6. **[Entraînement IA](./ai-training)** -- Curation et export de données d'entraînement
-7. **[Modèles](./models)** -- Navigateur de modèles et détection des capacités
-8. **[Benchmark](./benchmark)** -- Évaluation standardisée des modèles avec logprobs
-9. **[Mon Système](./system)** -- Détection du matériel et statut d'Ollama
-10. **[Paramètres](./settings)** -- Connexion, paramètres et préférences
+6. **[Complétion au Milieu (FIM)](./fim)** -- Terrain de jeu de complétion de code pour modèles compatibles FIM
+7. **[Observatoire des Protocoles](./protocols)** -- Lancez le même prompt sur natif, compat. OpenAI et compat. Anthropic contre votre modèle local
+8. **[Entraînement IA](./ai-training)** -- Curation et export de données d'entraînement
+9. **[Modèles](./models)** -- Navigateur de modèles et détection des capacités
+10. **[Benchmark](./benchmark)** -- Évaluation standardisée des modèles avec logprobs
+11. **[Mon Système](./system)** -- Détection du matériel et statut d'Ollama
+12. **[Paramètres](./settings)** -- Connexion, paramètres et préférences
 
 ## Autres éléments
 

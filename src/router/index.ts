@@ -49,6 +49,16 @@ export const router = createRouter({
           component: () => import('@/pages/ToolWorkshopPage.vue'),
         },
         {
+          path: 'fim',
+          name: 'fim',
+          component: () => import('@/pages/FimPlaygroundPage.vue'),
+        },
+        {
+          path: 'protocols',
+          name: 'protocols',
+          component: () => import('@/pages/ProtocolObservatoryPage.vue'),
+        },
+        {
           path: 'training',
           name: 'training',
           component: () => import('@/pages/AITrainingPage.vue'),
