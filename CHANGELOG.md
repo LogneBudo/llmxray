@@ -5,6 +5,54 @@ All notable changes to LLMxRay are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.8] — 2026-05-26
+
+### Added
+
+- Localized README files cross-linked by a language switcher at the top of each:
+  - `README.fr.md` (Français)
+  - `README.zh-CN.md` (简体中文)
+  - `README.ar.md` (العربية, wrapped in `<div dir="rtl">` for GitHub RTL render)
+  - `README.sr.md` (Srpski, Latin script)
+- Chinese and Arabic translations for the two namespaces added in v0.4.7:
+  - `src/locales/zh/fim.json` + `src/locales/ar/fim.json`
+  - `src/locales/zh/protocols.json` + `src/locales/ar/protocols.json`
+  - Wired into `src/locales/{zh,ar}/index.ts` so the new strings are no longer English-fallback for Chinese and Arabic users.
+
+### Notes
+
+- With this release, `zh` and `ar` reach 18/18 namespace coverage — fully on par with `en`, `fr`, `sr`, and `sr-Cyrl`.
+- No new features, no API changes, no UI changes beyond locale strings.
+- `package-lock.json` realigned from 0.4.3 (had drifted since v0.4.4).
+
+## [0.4.7] — 2026-05-24
+
+### Added
+
+- **Fill-in-the-Middle Playground** (`/fim`) — new page for testing code completion with prefix + suffix textareas. Uses Ollama's `suffix` field on `/api/generate`. Coding-model detection groups FIM-capable models (Qwen-Coder, CodeLlama, Codestral, DeepSeek-Coder, StarCoder) first in the picker and warns when a non-coding model is selected. Stitched preview shows the result as it would appear in an editor.
+- **Protocol Observatory** (`/protocols`) — new page that fires the same prompt through Ollama's three serving protocols in parallel: native `/api/chat` (NDJSON), OpenAI-compat `/v1/chat/completions` (SSE), and Anthropic-compat `/v1/messages` (SSE with `event:` tags). Per-protocol metrics, envelope inspector, and an Envelope Diff tab comparing wire-format differences. All local — no cloud, no API keys.
+- **Thinking control** in Chat Settings (Off / On / Max) — toggles Ollama's `think` parameter, visible only when the active model has the `thinking` capability. `Max` corresponds to `think: "max"` (added in Ollama 0.21.3).
+- **Response format control** in Chat Settings (Free-form / Valid JSON / JSON Schema strict) — exposes Ollama's `format` parameter now accepting a JSON Schema object. Live schema validation in textarea.
+- Wire-level types: `OllamaChatRequest` / `OllamaGenerateRequest` gained `think?: boolean | 'max'`, widened `format?: 'json' | Record<string, unknown>`, and `suffix?: string` on generate.
+- New `src/services/anthropic-client.ts` and `src/types/anthropic.ts` — Anthropic Messages API client and SSE event-tagged parser. Targets local `/v1/messages` (no cloud).
+- Two new feature cards on the public website home page (EN + FR): "Fill-in-the-Middle Playground" and "Protocol Observatory".
+- New VitePress pages: `docs/{en,fr}/guide/fim.md` and `docs/{en,fr}/guide/protocols.md`. Guide sidebars updated 10 → 12 items.
+- README "Ollama Compatibility" section enumerating every endpoint LLMxRay uses, with version-floor and version-recommended guidance.
+
+### Changed
+
+- `streamChatOpenAI` now passes `reasoning_effort` and `response_format` through to the OpenAI-compat endpoint.
+- README "Multilingual" line now explicitly mentions Serbian alongside English, French, Chinese, and Arabic.
+
+### Compatibility
+
+- Tested and verified against Ollama 0.24.0. Works with Ollama 0.20+ for chat/generate; full feature parity requires 0.24+ (Anthropic-compat endpoint added in 0.23, `think: "max"` added in 0.21.3).
+
+### Process
+
+- Self-hosted GitHub Actions release workflow disabled (renamed `.github/workflows/release.yml` → `release.yml.disabled`). All releases are now fully manual.
+- Pre-flight 7-surface audit (package.json, commits, local tags, origin tags, GitHub Releases, npm, Docker) added to the release dance — caught a tags/Releases drift accumulated during v0.4.4–v0.4.6 which was reconciled before cutting v0.4.7.
+
 ## [0.4.6] — 2026-04-13
 
 ### Added
