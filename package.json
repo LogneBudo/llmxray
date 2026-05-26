@@ -1,6 +1,6 @@
 {
   "name": "llmxray",
-  "version": "0.4.7",
+  "version": "0.4.8",
   "description": "Local LLM Observatory — See what your AI is actually doing, token by token.",
   "license": "Apache-2.0",
   "type": "module",
