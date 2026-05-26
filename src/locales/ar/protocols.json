@@ -1,0 +1,48 @@
+{
+  "title": "مرصد البروتوكولات",
+  "subtitle": "أرسل مطالبة واحدة عبر ثلاثة بروتوكولات تقديم. نفس النموذج، نفس خادم Ollama — صيغ نقل مختلفة. قارن ما يعطيك إيّاه كل بروتوكول.",
+  "explainer": "يكشف Ollama ثلاث نقاط: /api/chat (NDJSON أصلي)، و /v1/chat/completions (SSE متوافق مع OpenAI)، و /v1/messages (SSE متوافق مع Anthropic). كلها تستهدف نفس النموذج المحلي — بلا سحابة، بلا مفاتيح API. تطلق هذه الصفحة نفس المطالبة عبر الثلاثة بالتوازي وتُظهر ما يختلف.",
+  "model": "النموذج",
+  "prompt": "المطالبة",
+  "promptPlaceholder": "اكتب مطالبة سيُجيب عنها البروتوكولات الثلاثة…",
+  "maxTokens": "الحد الأقصى للرموز",
+  "runAll": "شغّل البروتوكولات الثلاثة",
+  "notRunYet": "لم تُشغَّل بعد.",
+  "waitingForFirstToken": "بانتظار أوّل رمز…",
+  "inspectEnvelope": "تفحّص الظرف",
+  "firstChunk": "أول chunk / event",
+  "finalChunk": "آخر chunk / event",
+  "chars": "حرف",
+  "native": {
+    "label": "أصلي",
+    "badge": "Ollama الأصلي"
+  },
+  "openai": {
+    "label": "متوافق مع OpenAI",
+    "badge": "/v1 (توافق)"
+  },
+  "anthropic": {
+    "label": "متوافق مع Anthropic",
+    "badge": "/v1 (توافق)"
+  },
+  "metrics": {
+    "total": "الإجمالي",
+    "tokens": "الرموز",
+    "finish": "الإنهاء"
+  },
+  "tabs": {
+    "responseDiff": "مقارنة الاستجابة",
+    "envelopeDiff": "فروق الظرف"
+  },
+  "envelopeDiff": {
+    "aspect": "الجانب",
+    "streamWrapper": "تأطير البث",
+    "topLevelFields": "المفاتيح العلوية (المرصودة)",
+    "finishField": "حقل سبب الإنهاء",
+    "finishValue": "قيمة سبب الإنهاء (هذه المرّة)",
+    "usageField": "حقل عدّ الرموز",
+    "tokensReported": "رموز الإكمال (هذه المرّة)",
+    "errorShape": "بنية ظرف الخطأ",
+    "footnote": "القيم المرصودة من هذا التشغيل على Ollama المحلي لديك. بعض الحقول (مثل `done_reason` في NDJSON الأصلي) لا تظهر إلا في الـ chunk الأخير، بينما تكون أخرى (مثل `message_stop` لدى Anthropic) أحداثاً مخصّصة."
+  }
+}

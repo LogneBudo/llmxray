@@ -1,0 +1,23 @@
+{
+  "title": "ساحة الإكمال في الوسط",
+  "subtitle": "اختبر إكمال الكود ببادئة + لاحقة. النموذج يملأ الفراغ.",
+  "explainer": "بعض نماذج Ollama (Qwen-Coder، CodeLlama، Codestral، DeepSeek-Coder، StarCoder) تدعم حقل `suffix` على /api/generate. زوّد الكود قبل المؤشّر وبعده — والنموذج يكمل ما بينهما.",
+  "model": "النموذج",
+  "codingModels": "نماذج الكود (تدعم FIM)",
+  "otherModels": "نماذج أخرى (قد لا تدعم FIM)",
+  "notCodingModelWarning": "هذا النموذج ليس من نماذج الكود المعروفة — قد يُتجاهَل حقل `suffix`.",
+  "prefix": "البادئة (الكود قبل المؤشّر)",
+  "suffix": "اللاحقة (الكود بعد المؤشّر)",
+  "prefixPlaceholder": "function fibonacci(n) {",
+  "suffixPlaceholder": "console.log(fibonacci(10));",
+  "generate": "توليد",
+  "completion": "الإكمال",
+  "stitched": "معاينة مدمجة",
+  "streaming": "بثّ جارٍ…",
+  "metrics": {
+    "totalDuration": "الإجمالي",
+    "loadDuration": "تحميل النموذج",
+    "evalCount": "الرموز المولَّدة",
+    "tokensPerSecond": "السرعة"
+  }
+}

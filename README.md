@@ -17,6 +17,14 @@
 </p>
 
 <p align="center">
+  🌐 <strong>English</strong> &bull;
+  <a href="README.fr.md">Français</a> &bull;
+  <a href="README.zh-CN.md">中文</a> &bull;
+  <a href="README.ar.md">العربية</a> &bull;
+  <a href="README.sr.md">Srpski</a>
+</p>
+
+<p align="center">
   <a href="#quick-start">Quick Start</a> &bull;
   <a href="#features">Features</a> &bull;
   <a href="#screenshots">Screenshots</a> &bull;

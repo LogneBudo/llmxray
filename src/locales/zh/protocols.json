@@ -1,0 +1,48 @@
+{
+  "title": "协议观察台",
+  "subtitle": "通过三种服务协议发送同一条提示。同一个模型、同一个 Ollama 守护进程 —— 不同的传输格式。比较各协议返回的内容。",
+  "explainer": "Ollama 暴露 /api/chat(原生 NDJSON)、/v1/chat/completions(OpenAI 兼容 SSE)与 /v1/messages(Anthropic 兼容 SSE)。三者均面向同一本地模型 —— 无云端、无 API 密钥。本页将同一提示并行发送到三者,并展示差异。",
+  "model": "模型",
+  "prompt": "提示词",
+  "promptPlaceholder": "输入一条让三种协议都回答的提示…",
+  "maxTokens": "最大词元数",
+  "runAll": "运行全部 3 个协议",
+  "notRunYet": "尚未运行。",
+  "waitingForFirstToken": "等待首个词元…",
+  "inspectEnvelope": "查看信封",
+  "firstChunk": "首个 chunk / event",
+  "finalChunk": "最后一个 chunk / event",
+  "chars": "字符",
+  "native": {
+    "label": "原生",
+    "badge": "Ollama 原生"
+  },
+  "openai": {
+    "label": "OpenAI 兼容",
+    "badge": "/v1(兼容)"
+  },
+  "anthropic": {
+    "label": "Anthropic 兼容",
+    "badge": "/v1(兼容)"
+  },
+  "metrics": {
+    "total": "总耗时",
+    "tokens": "词元数",
+    "finish": "结束原因"
+  },
+  "tabs": {
+    "responseDiff": "响应对比",
+    "envelopeDiff": "信封差异"
+  },
+  "envelopeDiff": {
+    "aspect": "对比项",
+    "streamWrapper": "流式封装",
+    "topLevelFields": "顶层字段(观测到的)",
+    "finishField": "结束原因所在字段",
+    "finishValue": "本次结束原因值",
+    "usageField": "词元计数所在字段",
+    "tokensReported": "本次生成词元数",
+    "errorShape": "错误信封结构",
+    "footnote": "观测值来自本次在您本地 Ollama 上的运行。部分载体(例如原生 NDJSON 的 `done_reason`)仅出现在最后一个 chunk 中,而另一些(例如 Anthropic 的 `message_stop`)则是专用事件。"
+  }
+}

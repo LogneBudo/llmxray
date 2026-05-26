@@ -1,0 +1,23 @@
+{
+  "title": "中段填充游乐场",
+  "subtitle": "用前缀 + 后缀测试代码补全。模型来填补中间。",
+  "explainer": "部分 Ollama 模型(Qwen-Coder、CodeLlama、Codestral、DeepSeek-Coder、StarCoder)在 /api/generate 上支持 `suffix` 字段。请提供光标前后的代码 —— 模型会补全中间部分。",
+  "model": "模型",
+  "codingModels": "代码模型(支持 FIM)",
+  "otherModels": "其他模型(可能不支持 FIM)",
+  "notCodingModelWarning": "该模型不是已知的代码模型 —— `suffix` 可能被忽略。",
+  "prefix": "前缀(光标之前的代码)",
+  "suffix": "后缀(光标之后的代码)",
+  "prefixPlaceholder": "function fibonacci(n) {",
+  "suffixPlaceholder": "console.log(fibonacci(10));",
+  "generate": "生成",
+  "completion": "补全结果",
+  "stitched": "拼接预览",
+  "streaming": "流式传输中…",
+  "metrics": {
+    "totalDuration": "总耗时",
+    "loadDuration": "模型加载",
+    "evalCount": "生成词元",
+    "tokensPerSecond": "速度"
+  }
+}

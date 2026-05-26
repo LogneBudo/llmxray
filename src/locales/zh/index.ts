@@ -13,6 +13,8 @@ import feedback from './feedback.json'
 import quality from './quality.json'
 import cost from './cost.json'
 import analytics from './analytics.json'
+import fim from './fim.json'
+import protocols from './protocols.json'
 
 export default {
   common,
@@ -30,4 +32,6 @@ export default {
   quality,
   cost,
   analytics,
+  fim,
+  protocols,
 }
