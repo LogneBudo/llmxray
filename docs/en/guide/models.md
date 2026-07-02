@@ -27,14 +27,16 @@ Click on a model to see an architecture diagram showing the model's internal str
 
 ## Capability Detection
 
-LLMxRay automatically detects what each model can do:
+LLMxRay automatically detects what each model can do. Capabilities are read **live from Ollama's `/api/show`**, so newly released models work without any update on LLMxRay's side. When a model doesn't self-report, LLMxRay falls back to name patterns.
 
 | Capability | How it's detected | UI effect |
 |---|---|---|
-| **Thinking** | Model name patterns (e.g., `deepseek-r1`) or Ollama capabilities | Enables reasoning tab in Chat Diagnostics |
-| **Vision** | Ollama capabilities or model family | Enables image attachment in chat |
-| **Embedding** | Ollama capabilities or model family | Appears in Embeddings and Knowledge Base model selectors |
-| **Tool use** | Ollama capabilities | Enables tool calling in chat |
+| **Thinking** | Ollama `capabilities`, else name patterns (`deepseek-r1`, `qwq`, `gpt-oss`, `magistral`, `nemotron`, …) | Enables reasoning tab in Chat Diagnostics |
+| **Vision** | Ollama `capabilities`, else name patterns (`llava`, `*-vl`, `moondream`, Llama-vision, …) | Enables image attachment in chat |
+| **Embedding** | Ollama `capabilities` or model family | Appears in Embeddings and Knowledge Base model selectors |
+| **Tool use** | Ollama `capabilities` | Enables tool calling in chat |
+
+Because capabilities come straight from Ollama, LLMxRay tracks new model families automatically; the name-pattern fallbacks — refreshed for families such as **gpt-oss**, **Magistral**, **Nemotron** (reasoning) and **Moondream** / Llama-vision — only apply when a model doesn't report its own capabilities.
 
 Models that support only embeddings are automatically filtered out of chat model selectors.
 

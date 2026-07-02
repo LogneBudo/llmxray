@@ -5,6 +5,25 @@ All notable changes to LLMxRay are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.9] — 2026-07-02
+
+### Changed
+
+- Verified compatibility with **Ollama 0.31.x** (current latest). No API changes were required:
+  LLMxRay already reads model capabilities live from `/api/show`, surfaces API error `detail`
+  (incl. the new "message exceeds context window" error from Ollama 0.30.9), and pins no minimum
+  Ollama version — so new releases and models work out of the box.
+- Extended the capability name-pattern **fallbacks** (used only when a model doesn't self-report
+  via `/api/show`) to recognize newer families:
+  - Reasoning/thinking: `gpt-oss`, `magistral`, `nemotron`.
+  - Vision: `moondream`, `mllama` (Llama vision).
+- Docs: the Models guide (EN/FR) now documents live `/api/show` capability detection and the
+  refreshed fallback families.
+
+### Notes
+
+- Maintenance release tracking the recent Ollama cadence; no UI changes.
+
 ## [0.4.8] — 2026-05-26
 
 ### Added

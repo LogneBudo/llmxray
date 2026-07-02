@@ -27,14 +27,16 @@ Cliquez sur un modèle pour voir un diagramme d'architecture montrant la structu
 
 ## Détection des capacités
 
-LLMxRay détecte automatiquement ce que chaque modèle peut faire :
+LLMxRay détecte automatiquement ce que chaque modèle peut faire. Les capacités sont lues **en direct depuis `/api/show` d'Ollama**, de sorte que les modèles récemment publiés fonctionnent sans aucune mise à jour côté LLMxRay. Lorsqu'un modèle ne les signale pas lui-même, LLMxRay se rabat sur des patterns de nom.
 
 | Capacité | Comment elle est détectée | Effet sur l'interface |
 |---|---|---|
-| **Raisonnement** | Patterns dans le nom du modèle (par ex., `deepseek-r1`) ou capacités Ollama | Active l'onglet raisonnement dans Diagnostics de Chat |
-| **Vision** | Capacités Ollama ou famille du modèle | Active les pièces jointes images dans le chat |
-| **Embedding** | Capacités Ollama ou famille du modèle | Apparaît dans les sélecteurs de modèles des pages Plongements et Base de Connaissances |
-| **Appel d'outils** | Capacités Ollama | Active l'appel d'outils dans le chat |
+| **Raisonnement** | `capabilities` Ollama, sinon patterns de nom (`deepseek-r1`, `qwq`, `gpt-oss`, `magistral`, `nemotron`, …) | Active l'onglet raisonnement dans Diagnostics de Chat |
+| **Vision** | `capabilities` Ollama, sinon patterns de nom (`llava`, `*-vl`, `moondream`, Llama-vision, …) | Active les pièces jointes images dans le chat |
+| **Embedding** | `capabilities` Ollama ou famille du modèle | Apparaît dans les sélecteurs de modèles des pages Plongements et Base de Connaissances |
+| **Appel d'outils** | `capabilities` Ollama | Active l'appel d'outils dans le chat |
+
+Comme les capacités proviennent directement d'Ollama, LLMxRay suit automatiquement les nouvelles familles de modèles ; les patterns de nom de repli — actualisés pour des familles telles que **gpt-oss**, **Magistral**, **Nemotron** (raisonnement) et **Moondream** / Llama-vision — ne s'appliquent que lorsqu'un modèle ne signale pas ses propres capacités.
 
 Les modèles ne prenant en charge que les embeddings sont automatiquement filtrés des sélecteurs de modèles de chat.
 

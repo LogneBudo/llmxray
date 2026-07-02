@@ -22,10 +22,13 @@ export const useModelStore = defineStore('models', () => {
     /\bo1\b/i,
     /\bo3\b/i,
     /thinking/i,
+    /gpt-oss/i, // OpenAI open-weight reasoning
+    /magistral/i, // Mistral reasoning
+    /nemotron/i, // NVIDIA Nemotron reasoning family
   ]
 
   // Vision model name patterns (fallback when Ollama doesn't report capabilities)
-  const VISION_NAME_PATTERNS = [/llava/i, /\bvl\b/i, /vision/i, /minicpm-v/i]
+  const VISION_NAME_PATTERNS = [/llava/i, /\bvl\b/i, /vision/i, /minicpm-v/i, /moondream/i, /\bmllama\b/i]
 
   // Embedding-only model families and name patterns
   const EMBEDDING_FAMILIES = new Set(['bert', 'nomic-bert'])
