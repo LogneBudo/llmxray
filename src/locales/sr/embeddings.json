@@ -4,6 +4,12 @@
     "noModels": "Nema dostupnih modela",
     "noEmbeddingModels": "Nije pronađen nijedan model za ugnježđivanje. Preuzmite jedan: ollama pull nomic-embed-text"
   },
+  "dimensions": {
+    "label": "Dimenzije",
+    "native": "izvorno",
+    "hint": "Prazno = izvorna širina modela",
+    "truncated": "Matrjoška skraćivanje"
+  },
   "storage": {
     "embeddingMemory": "Ugnježđena memorija",
     "records": "zapisi"

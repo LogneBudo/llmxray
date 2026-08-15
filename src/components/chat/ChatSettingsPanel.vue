@@ -2,6 +2,7 @@
 import { ref, computed, watch } from 'vue'
 import { X } from 'lucide-vue-next'
 import type { ChatSettings } from '@/types/conversation'
+import type { OllamaThink } from '@/types/ollama'
 import { useToolWorkshopStore } from '@/stores/tool-workshop-store'
 import { useMemoryStore } from '@/stores/memory-store'
 import { useModelStore } from '@/stores/model-store'
@@ -31,15 +32,20 @@ const seed = ref(props.modelValue.options.seed ?? -1)
 const stopSequences = ref(props.modelValue.options.stop?.join(', ') ?? '')
 const mirostat = ref(props.modelValue.options.mirostat ?? 0)
 
-// Thinking control (Ollama `think` param — boolean or 'max')
-type ThinkMode = 'off' | 'on' | 'max'
-function thinkValueToMode(v: boolean | 'max' | undefined): ThinkMode {
-  if (v === 'max') return 'max'
+// Thinking control (Ollama `think` param — boolean, or a named effort level).
+// 'low' | 'medium' | 'high' joined 'max' in Ollama 0.32; 'on' sends `true`,
+// which lets the model pick its own default effort.
+const THINK_MODES = ['off', 'on', 'low', 'medium', 'high', 'max'] as const
+type ThinkMode = (typeof THINK_MODES)[number]
+const THINK_LEVELS: ThinkMode[] = ['low', 'medium', 'high', 'max']
+
+function thinkValueToMode(v: OllamaThink | undefined): ThinkMode {
+  if (typeof v === 'string' && (THINK_LEVELS as string[]).includes(v)) return v as ThinkMode
   if (v === true) return 'on'
   return 'off'
 }
-function modeToThinkValue(m: ThinkMode): boolean | 'max' | undefined {
-  if (m === 'max') return 'max'
+function modeToThinkValue(m: ThinkMode): OllamaThink | undefined {
+  if ((THINK_LEVELS as string[]).includes(m)) return m as OllamaThink
   if (m === 'on') return true
   return undefined
 }
@@ -227,30 +233,16 @@ async function pullEmbeddingModel(name: string) {
           <label class="text-xs font-medium text-text-secondary">{{ $t('dashboard.settings.thinking.label') }}</label>
           <span class="text-[10px] text-text-muted">{{ $t('dashboard.settings.thinking.modelSupportsHint') }}</span>
         </div>
-        <div class="flex gap-1 rounded-lg border border-border-default bg-surface p-1">
+        <div class="grid grid-cols-3 gap-1 rounded-lg border border-border-default bg-surface p-1">
           <button
+            v-for="mode in THINK_MODES"
+            :key="mode"
             type="button"
-            class="flex-1 rounded-md px-2 py-1 text-[11px] font-medium transition-colors"
-            :class="thinkMode === 'off' ? 'bg-accent text-surface' : 'text-text-secondary hover:bg-surface-overlay'"
-            @click="thinkMode = 'off'"
+            class="rounded-md px-2 py-1 text-[11px] font-medium transition-colors"
+            :class="thinkMode === mode ? 'bg-accent text-surface' : 'text-text-secondary hover:bg-surface-overlay'"
+            @click="thinkMode = mode"
           >
-            {{ $t('dashboard.settings.thinking.off') }}
-          </button>
-          <button
-            type="button"
-            class="flex-1 rounded-md px-2 py-1 text-[11px] font-medium transition-colors"
-            :class="thinkMode === 'on' ? 'bg-accent text-surface' : 'text-text-secondary hover:bg-surface-overlay'"
-            @click="thinkMode = 'on'"
-          >
-            {{ $t('dashboard.settings.thinking.on') }}
-          </button>
-          <button
-            type="button"
-            class="flex-1 rounded-md px-2 py-1 text-[11px] font-medium transition-colors"
-            :class="thinkMode === 'max' ? 'bg-accent text-surface' : 'text-text-secondary hover:bg-surface-overlay'"
-            @click="thinkMode = 'max'"
-          >
-            {{ $t('dashboard.settings.thinking.max') }}
+            {{ $t(`dashboard.settings.thinking.${mode}`) }}
           </button>
         </div>
         <p class="mt-1 text-[10px] text-text-muted">{{ $t('dashboard.settings.thinking.hint') }}</p>

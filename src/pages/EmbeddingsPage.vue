@@ -22,6 +22,15 @@ const selectedModel = ref('')
 const inputText = ref('')
 const activeResult = ref<EmbeddingResult | null>(null)
 
+// Matryoshka output width (Ollama `dimensions`). 0 / empty = model's native width.
+const outputDimensions = ref(0)
+const nativeDimensions = computed(() =>
+  selectedModel.value ? modelStore.getEmbeddingLength(selectedModel.value) : undefined,
+)
+const requestedDimensions = computed(() =>
+  outputDimensions.value > 0 ? outputDimensions.value : undefined,
+)
+
 // Similarity comparison
 const compareTextA = ref('')
 const compareTextB = ref('')
@@ -48,8 +57,8 @@ async function compareModels() {
 
   try {
     const [resultA, resultB] = await Promise.all([
-      embeddingStore.embed(modelCompareA.value, modelCompareText.value.trim()),
-      embeddingStore.embed(modelCompareB.value, modelCompareText.value.trim()),
+      embeddingStore.embed(modelCompareA.value, modelCompareText.value.trim(), requestedDimensions.value),
+      embeddingStore.embed(modelCompareB.value, modelCompareText.value.trim(), requestedDimensions.value),
     ])
 
     modelCompareResultA.value = resultA
@@ -66,18 +75,13 @@ async function compareModels() {
   }
 }
 
-// Filter to embedding-capable models
-const embeddingModels = computed(() =>
-  modelStore.models.filter(
-    (m) =>
-      m.name.includes('embed') ||
-      m.name.includes('nomic') ||
-      m.name.includes('minilm') ||
-      m.name.includes('snowflake') ||
-      m.name.includes('mxbai') ||
-      m.name.includes('bge'),
-  ),
-)
+// Filter to embedding-capable models. The store resolves this from the
+// `embedding` capability Ollama reports in /api/tags, falling back to family
+// and name heuristics on older daemons.
+const embeddingModels = computed(() => {
+  const names = new Set(modelStore.embeddingModelNames)
+  return modelStore.models.filter((m) => names.has(m.name))
+})
 
 // If no embedding models found, show all models (user may have renamed one)
 const availableModels = computed(() =>
@@ -87,7 +91,11 @@ const availableModels = computed(() =>
 async function embedText() {
   if (!selectedModel.value || !inputText.value.trim()) return
   try {
-    activeResult.value = await embeddingStore.embed(selectedModel.value, inputText.value.trim())
+    activeResult.value = await embeddingStore.embed(
+      selectedModel.value,
+      inputText.value.trim(),
+      requestedDimensions.value,
+    )
   } catch {
     // Error is set in store
   }
@@ -100,8 +108,8 @@ async function compareSimilarity() {
 
   try {
     const [resultA, resultB] = await Promise.all([
-      embeddingStore.embed(selectedModel.value, compareTextA.value.trim()),
-      embeddingStore.embed(selectedModel.value, compareTextB.value.trim()),
+      embeddingStore.embed(selectedModel.value, compareTextA.value.trim(), requestedDimensions.value),
+      embeddingStore.embed(selectedModel.value, compareTextB.value.trim(), requestedDimensions.value),
     ])
 
     compareResultA.value = resultA
@@ -149,6 +157,25 @@ onMounted(async () => {
       <span v-if="embeddingModels.length === 0 && modelStore.models.length > 0" class="text-xs text-warning">
         {{ $t('embeddings.modelSelector.noEmbeddingModels') }}
       </span>
+
+      <!-- Matryoshka output width (Ollama `dimensions`) -->
+      <div class="flex items-center gap-2">
+        <label for="embed-dimensions" class="text-xs font-medium text-text-secondary">
+          {{ $t('embeddings.dimensions.label') }}
+        </label>
+        <input
+          id="embed-dimensions"
+          v-model.number="outputDimensions"
+          type="number"
+          min="0"
+          step="1"
+          class="w-24 rounded-lg border border-border-default bg-surface px-2 py-1.5 text-sm text-text-primary focus:border-accent focus:outline-none"
+          :placeholder="nativeDimensions ? String(nativeDimensions) : $t('embeddings.dimensions.native')"
+        />
+        <span class="text-[11px] text-text-muted">
+          {{ requestedDimensions ? $t('embeddings.dimensions.truncated') : $t('embeddings.dimensions.hint') }}
+        </span>
+      </div>
     </div>
 
     <!-- Embedding Memory gauge -->

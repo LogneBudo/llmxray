@@ -4,6 +4,12 @@
     "noModels": "لا توجد نماذج متاحة",
     "noEmbeddingModels": "لم يتم العثور على نماذج embedding. قم بتنزيل واحد: ollama pull nomic-embed-text"
   },
+  "dimensions": {
+    "label": "الأبعاد",
+    "native": "أصلي",
+    "hint": "اتركه فارغًا لاستخدام العرض الأصلي للنموذج",
+    "truncated": "اقتطاع ماتريوشكا"
+  },
   "storage": {
     "embeddingMemory": "ذاكرة embedding",
     "records": "سجلات"

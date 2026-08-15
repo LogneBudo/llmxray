@@ -1,5 +1,5 @@
 import { ref } from 'vue'
-import type { OllamaChatMessage, OllamaOptions, OllamaToolDefinition } from '@/types/ollama'
+import type { OllamaChatMessage, OllamaOptions, OllamaToolDefinition, OllamaThink } from '@/types/ollama'
 import { startGeneration } from '@/services/generate-service'
 import { startChat } from '@/services/chat-service'
 
@@ -35,7 +35,7 @@ export function useOllamaStream() {
     messages: OllamaChatMessage[],
     options?: OllamaOptions,
     tools?: OllamaToolDefinition[],
-    extras?: { think?: boolean | 'max'; format?: 'json' | Record<string, unknown> },
+    extras?: { think?: OllamaThink; format?: 'json' | Record<string, unknown> },
   ): Promise<string> {
     isStreaming.value = true
     error.value = null

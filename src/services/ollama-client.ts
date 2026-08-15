@@ -42,7 +42,9 @@ class OllamaClient {
     const res = await fetch(`${this.baseUrl}/show`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name }),
+      // `model` is the documented field; `name` is the legacy alias, kept so
+      // the call still resolves on older Ollama builds.
+      body: JSON.stringify({ model: name, name }),
     })
     if (!res.ok) throw new Error(`Failed to show model: ${res.statusText}`)
     return res.json() as Promise<OllamaModelInfo>
@@ -87,6 +89,11 @@ class OllamaClient {
   /**
    * Stream chat via the OpenAI-compatible endpoint (/v1/chat/completions).
    * Returns real token logprobs — used by the benchmark runner.
+   *
+   * Ollama 0.32.6 aligned this endpoint with OpenAI's wire format: the final
+   * `usage` totals are now only emitted when the request opts in via
+   * `stream_options.include_usage`. Without it no chunk carries usage at all,
+   * so we always ask for it — token counts and tokens/sec depend on it.
    */
   async streamChatOpenAI(
     params: {
@@ -105,7 +112,11 @@ class OllamaClient {
     const res = await fetch(`${this.openaiBaseUrl}/chat/completions`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...params, stream: true }),
+      body: JSON.stringify({
+        ...params,
+        stream: true,
+        stream_options: { include_usage: true },
+      }),
       signal,
     })
     if (!res.ok) {

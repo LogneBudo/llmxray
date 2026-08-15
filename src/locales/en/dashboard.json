@@ -91,8 +91,11 @@
       "label": "Thinking",
       "off": "Off",
       "on": "On",
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High",
       "max": "Max",
-      "hint": "Toggle the model's internal reasoning. Max requests the largest budget. Ignored if the model doesn't support thinking.",
+      "hint": "Toggle the model's internal reasoning. On lets the model choose its own effort; Low to Max request an explicit reasoning budget. Ignored if the model doesn't support thinking.",
       "modelSupportsHint": "model-supported"
     },
     "responseFormat": {

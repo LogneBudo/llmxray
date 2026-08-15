@@ -4,6 +4,12 @@
     "noModels": "Aucun mod\u00e8le disponible",
     "noEmbeddingModels": "Aucun mod\u00e8le d'embedding trouv\u00e9. T\u00e9l\u00e9chargez-en un : ollama pull nomic-embed-text"
   },
+  "dimensions": {
+    "label": "Dimensions",
+    "native": "natif",
+    "hint": "Vide = largeur native du mod\u00e8le",
+    "truncated": "Troncature Matryoshka"
+  },
   "storage": {
     "embeddingMemory": "M\u00e9moire d'embedding",
     "records": "enregistrements"

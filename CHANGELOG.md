@@ -5,6 +5,57 @@ All notable changes to LLMxRay are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0] — 2026-08-15
+
+### Fixed
+
+- **Benchmark and Protocol Observatory token counts read zero on Ollama 0.32.6+.** That release
+  aligned `/v1/chat/completions` with OpenAI's wire format, where the final `usage` totals are only
+  emitted when the request sends `stream_options.include_usage`. LLMxRay now sends it, and reads
+  the totals from the trailing chunk — which carries an **empty `choices` array**, so the read had
+  to move ahead of the per-choice guard. Restores `tokenCount` and `tokensPerSecond` in the
+  Surgical Benchmark, and the OpenAI lane's token count in the Protocol Observatory.
+
+### Added
+
+- **Reasoning effort levels.** The thinking control in Chat Diagnostics now offers Off, On,
+  Low, Medium, High and Max, mapping to Ollama's `think` parameter. On sends `true` and lets the
+  model pick its own effort; the named levels request an explicit reasoning budget.
+- **Embedding dimensions.** The Embeddings Lab can request a narrower output vector via Ollama's
+  `dimensions` parameter (Matryoshka truncation), with the model's native width shown as the
+  placeholder. Blank leaves the model's native width untouched.
+
+### Changed
+
+- **Capabilities now come from the model listing.** Ollama 0.32 reports each model's
+  `capabilities`, `context_length` and `embedding_length` in `/api/tags`. LLMxRay uses that as the
+  primary source, so capability icons and model filtering are correct as soon as the list loads
+  rather than after a per-model `/api/show` round-trip. `/api/show` still runs in the background
+  to enrich parameters, template, license and architecture metadata.
+- A reported capability set is treated as authoritative: when the daemon lists a model's
+  capabilities and omits `thinking`, that is believed rather than overridden by a name guess.
+  Name patterns now apply only to models that report nothing at all.
+- **`embedding` is a first-class capability.** Chat and embedding model selectors split on what
+  Ollama reports, falling back to family and name heuristics only on older daemons. The Embeddings
+  page no longer carries its own duplicate name-pattern filter.
+- Capability name-pattern fallbacks extended: `qwen3.x`, `muse-glimmer`, `glm-*`, `kimi-k*`
+  (reasoning) and `gemma3` (vision).
+- `/api/show` requests send the documented `model` field, keeping `name` as an alias for older
+  daemons.
+- Docs: the Models guide (EN/FR) documents listing-sourced capability detection, the reasoning
+  effort levels, and embedding dimensions. READMEs (EN/FR/ZH/AR/SR) updated for Ollama 0.32.x.
+
+### Fixed (i18n)
+
+- The thinking control's strings were missing entirely from the Chinese and Arabic catalogs;
+  both are now complete, alongside the new effort-level and embedding-dimension strings in all
+  six locales.
+
+### Notes
+
+- Tested against Ollama 0.32.9. Unit tests 190 → 203, covering the usage-chunk shape, the
+  capability resolution paths, and the request bodies that carry the fix.
+
 ## [0.4.9] — 2026-07-02
 
 ### Changed

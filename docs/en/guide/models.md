@@ -27,18 +27,37 @@ Click on a model to see an architecture diagram showing the model's internal str
 
 ## Capability Detection
 
-LLMxRay automatically detects what each model can do. Capabilities are read **live from Ollama's `/api/show`**, so newly released models work without any update on LLMxRay's side. When a model doesn't self-report, LLMxRay falls back to name patterns.
+LLMxRay automatically detects what each model can do. Capabilities are read **live from Ollama**, so newly released models work without any update on LLMxRay's side. When a model doesn't self-report, LLMxRay falls back to name patterns.
+
+Since **Ollama 0.32**, the model listing (`/api/tags`) reports each model's capabilities, context length and embedding width directly. LLMxRay uses that as the primary source, so capability icons and model filtering are correct the moment the list loads, rather than after a per-model `/api/show` round-trip. `/api/show` still runs in the background to enrich the cache with parameters, template and architecture metadata.
 
 | Capability | How it's detected | UI effect |
 |---|---|---|
-| **Thinking** | Ollama `capabilities`, else name patterns (`deepseek-r1`, `qwq`, `gpt-oss`, `magistral`, `nemotron`, …) | Enables reasoning tab in Chat Diagnostics |
-| **Vision** | Ollama `capabilities`, else name patterns (`llava`, `*-vl`, `moondream`, Llama-vision, …) | Enables image attachment in chat |
-| **Embedding** | Ollama `capabilities` or model family | Appears in Embeddings and Knowledge Base model selectors |
+| **Thinking** | Ollama `capabilities`, else name patterns (`deepseek-r1`, `qwq`, `gpt-oss`, `magistral`, `nemotron`, `qwen3.x`, `muse-glimmer`, `glm-*`, `kimi-k*`, …) | Enables reasoning tab in Chat Diagnostics |
+| **Vision** | Ollama `capabilities`, else name patterns (`llava`, `*-vl`, `moondream`, `gemma3`, Llama-vision, …) | Enables image attachment in chat |
+| **Embedding** | Ollama `capabilities`, else model family or name | Appears in Embeddings and Knowledge Base model selectors |
 | **Tool use** | Ollama `capabilities` | Enables tool calling in chat |
 
-Because capabilities come straight from Ollama, LLMxRay tracks new model families automatically; the name-pattern fallbacks — refreshed for families such as **gpt-oss**, **Magistral**, **Nemotron** (reasoning) and **Moondream** / Llama-vision — only apply when a model doesn't report its own capabilities.
+Because capabilities come straight from Ollama, LLMxRay tracks new model families automatically. A reported capability set is treated as authoritative — if the daemon lists a model's capabilities and *doesn't* include `thinking`, LLMxRay believes it rather than guessing from the name. The name patterns apply only when a model reports nothing at all.
 
 Models that support only embeddings are automatically filtered out of chat model selectors.
+
+## Reasoning Effort
+
+For thinking-capable models, Chat Diagnostics exposes Ollama's `think` parameter:
+
+| Setting | Sent as | Meaning |
+|---|---|---|
+| **Off** | *(omitted)* | No internal reasoning |
+| **On** | `true` | Thinking enabled; the model picks its own effort |
+| **Low / Medium / High** | `"low"` / `"medium"` / `"high"` | Explicit reasoning budget |
+| **Max** | `"max"` | Largest reasoning budget |
+
+Models that don't implement graded effort simply treat any level as "thinking on".
+
+## Embedding Dimensions
+
+The Embeddings page can request a narrower output vector via Ollama's `dimensions` parameter (Matryoshka truncation). Leave the field blank for the model's native width — shown as the placeholder, read from the model listing. Models not trained for Matryoshka truncation return their native width regardless.
 
 ## Model Catalog
 

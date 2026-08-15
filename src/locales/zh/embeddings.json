@@ -4,6 +4,12 @@
     "noModels": "没有可用的模型",
     "noEmbeddingModels": "未找到 embedding 模型。请拉取一个：ollama pull nomic-embed-text"
   },
+  "dimensions": {
+    "label": "维度",
+    "native": "原生",
+    "hint": "留空 = 模型原生维度",
+    "truncated": "套娃式截断"
+  },
   "storage": {
     "embeddingMemory": "Embedding 存储",
     "records": "条记录"

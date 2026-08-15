@@ -8,7 +8,7 @@
     "attachFilesVision": "Joindre des fichiers ou des images",
     "stopGenerating": "Arr\u00eater la g\u00e9n\u00e9ration",
     "sendMessage": "Envoyer le message",
-    "visionBadge": "Mod\u00e8le vision — peut traiter les images"
+    "visionBadge": "Mod\u00e8le vision \u2014 peut traiter les images"
   },
   "dropZone": "D\u00e9posez des fichiers \u00e0 joindre",
   "conversation": {
@@ -40,7 +40,7 @@
     "recentChats": "Chats r\u00e9cents"
   },
   "settings": {
-    "chatSettings": "Préférences du chat",
+    "chatSettings": "Pr\u00e9f\u00e9rences du chat",
     "temperature": "Temp\u00e9rature",
     "topP": "Top P",
     "topK": "Top K",
@@ -91,8 +91,11 @@
       "label": "R\u00e9flexion",
       "off": "Off",
       "on": "On",
+      "low": "Faible",
+      "medium": "Moyen",
+      "high": "\u00c9lev\u00e9",
       "max": "Max",
-      "hint": "Activer le raisonnement interne du mod\u00e8le. Max demande le budget maximal. Ignor\u00e9 si le mod\u00e8le ne le supporte pas.",
+      "hint": "Activer le raisonnement interne du mod\u00e8le. On laisse le mod\u00e8le choisir son effort ; de Faible \u00e0 Max demandent un budget de raisonnement explicite. Ignor\u00e9 si le mod\u00e8le ne le supporte pas.",
       "modelSupportsHint": "support\u00e9 par le mod\u00e8le"
     },
     "responseFormat": {
@@ -134,7 +137,7 @@
     "startConversation": "D\u00e9marrer une conversation avec un mod\u00e8le local"
   },
   "bubble": {
-    "truncatedWarning": "R\u00e9ponse tronqu\u00e9e — augmentez num_predict dans les param\u00e8tres pour des r\u00e9ponses plus longues",
+    "truncatedWarning": "R\u00e9ponse tronqu\u00e9e \u2014 augmentez num_predict dans les param\u00e8tres pour des r\u00e9ponses plus longues",
     "tokens": "tokens",
     "tokPerSec": "tok/s",
     "ttft": "TTFT",

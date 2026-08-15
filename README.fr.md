@@ -75,7 +75,7 @@ Vous lancez un LLM local. Vous discutez avec lui. Mais que s'est-il réellement 
 ## Fonctionnalités
 
 ### Chat en temps réel avec intelligence par token
-Discutez avec n'importe quel modèle Ollama et observez les tokens arriver avec une **coloration selon la confiance** — chaque token est teinté selon sa vitesse de génération. Supporte Markdown, conversations multi-tours, pièces jointes, modèles vision et commandes slash.
+Discutez avec n'importe quel modèle Ollama et observez les tokens arriver avec une **coloration selon la confiance** — chaque token est teinté selon sa vitesse de génération. Supporte Markdown, conversations multi-tours, pièces jointes, modèles vision et commandes slash. Pour les modèles de raisonnement, réglez le budget de réflexion par conversation — désactivé, au choix du modèle, ou un effort explicite faible / moyen / élevé / max.
 
 ### Filtres qualité des réponses
 Chaque réponse est analysée automatiquement. Des badges colorés n'apparaissent que lorsqu'il y a un problème :
@@ -102,7 +102,7 @@ Consommation de tokens par modèle/jour avec estimation du prix équivalent en c
 Testez les connaissances d'un modèle avec des suites de questions à choix multiples. Utilise les vrais logprobs via l'endpoint compatible OpenAI pour une mesure précise de la confiance. Créez des suites personnalisées visuellement ou laissez l'IA les générer à partir d'un sujet.
 
 ### Laboratoire d'embeddings et pipeline RAG
-Embeddez du texte, visualisez les vecteurs, mesurez la similarité cosinus. Construisez une base de connaissances locale à partir de PDF, DOCX et CSV — découpée, embeddée, recherchable. Stockée dans IndexedDB. Coût zéro.
+Embeddez du texte, visualisez les vecteurs, mesurez la similarité cosinus. Demandez un vecteur de sortie plus étroit pour voir ce que coûte la troncature Matryoshka en similarité. Construisez une base de connaissances locale à partir de PDF, DOCX et CSV — découpée, embeddée, recherchable. Stockée dans IndexedDB. Coût zéro.
 
 ### Atelier d'outils (canvas visuel)
 Canvas à nœuds en drag-and-drop pour construire des définitions d'outils. Synchronisation bidirectionnelle du code (modifiez les nœuds ou le TypeScript — les deux se mettent à jour). Sondez des APIs, générez des schémas automatiquement, testez avec exécution en direct.
@@ -126,19 +126,20 @@ Traductions complètes en anglais, français, serbe (latin + cyrillique), chinoi
 
 ## Compatibilité Ollama
 
-Testé et vérifié avec **Ollama 0.24.0** (la version stable la plus récente en mai 2026). LLMxRay utilise les endpoints Ollama suivants :
+Testé et vérifié avec **Ollama 0.32.x** (la version stable la plus récente en août 2026). LLMxRay utilise les endpoints Ollama suivants :
 
 | Endpoint | Utilisation |
 |---|---|
 | `/api/chat` | Chat streaming (NDJSON, avec `tools`, `think`, schema `format`) |
 | `/api/generate` | Génération + Fill-in-the-Middle via `suffix` |
-| `/api/tags`, `/api/show` | Liste des modèles + détection des capacités (`thinking`, `tools`, `vision`) |
+| `/api/tags` | Liste des modèles + capacités, longueur de contexte et largeur d'embedding |
+| `/api/show` | Paramètres, template, licence et métadonnées d'architecture |
 | `/api/embed` | Embeddings vectoriels pour RAG |
 | `/api/pull`, `/api/delete`, `/api/ps`, `/api/version` | Gestion et statut des modèles |
 | `/v1/chat/completions` | Chemin compatible OpenAI utilisé par le Benchmark chirurgical pour les vrais logprobs |
 | `/v1/messages` | Chemin compatible Anthropic utilisé par l'Observatoire de protocoles |
 
-**Compatible avec :** Ollama 0.20 et plus récent (les versions antérieures fonctionnent pour chat/generate mais sans `think` ni `format` JSON-schema). **Recommandé :** Ollama 0.24+ pour une parité fonctionnelle complète, y compris l'endpoint compatible Anthropic (ajouté en 0.23) et le mode `think: "max"` (ajouté en 0.21.3).
+**Compatible avec :** Ollama 0.20 et plus récent (les versions antérieures fonctionnent pour chat/generate mais sans `think` ni `format` JSON-schema). **Recommandé :** Ollama 0.32+ — les capacités et la longueur de contexte arrivent avec la liste des modèles, `think` accepte des niveaux d'effort gradués, et les embeddings acceptent une largeur `dimensions`.
 
 ---
 

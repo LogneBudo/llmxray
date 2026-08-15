@@ -91,8 +91,11 @@
       "label": "Razmišljanje",
       "off": "Isključeno",
       "on": "Uključeno",
+      "low": "Nisko",
+      "medium": "Srednje",
+      "high": "Visoko",
       "max": "Max",
-      "hint": "Uključite interno rezonovanje modela. Max traži najveći budžet. Ignoriše se ako model ne podržava.",
+      "hint": "Uključite interno rezonovanje modela. Uključeno prepušta modelu izbor napora; od Nisko do Max traže eksplicitan budžet rezonovanja. Ignoriše se ako model ne podržava.",
       "modelSupportsHint": "podržano u modelu"
     },
     "responseFormat": {

@@ -5,6 +5,11 @@ export interface OllamaModel {
   size: number
   digest: string
   details: OllamaModelDetails
+  /**
+   * Reported by /api/tags since Ollama 0.32 — previously only available via
+   * /api/show. When present it is authoritative and spares a per-model call.
+   */
+  capabilities?: OllamaCapability[]
 }
 
 export interface OllamaModelDetails {
@@ -14,7 +19,27 @@ export interface OllamaModelDetails {
   families: string[]
   parameter_size: string
   quantization_level: string
+  /** Added to /api/tags in Ollama 0.32 — training context window, in tokens. */
+  context_length?: number
+  /** Added to /api/tags in Ollama 0.32 — embedding vector width. */
+  embedding_length?: number
 }
+
+/** Capability strings Ollama reports; the list is open-ended, so string is allowed. */
+export type OllamaCapability =
+  | 'completion'
+  | 'tools'
+  | 'vision'
+  | 'thinking'
+  | 'embedding'
+  | 'insert'
+  | (string & {})
+
+/**
+ * The `think` parameter. Ollama accepts a boolean (model default effort) or a
+ * named effort level; 'low' | 'medium' | 'high' were added alongside 'max'.
+ */
+export type OllamaThink = boolean | 'low' | 'medium' | 'high' | 'max'
 
 export interface OllamaModelInfo {
   license: string
@@ -39,7 +64,7 @@ export interface OllamaGenerateRequest {
   raw?: boolean
   format?: 'json' | Record<string, unknown>
   options?: OllamaOptions
-  think?: boolean | 'max'
+  think?: OllamaThink
 }
 
 export interface OllamaChatRequest {
@@ -50,7 +75,7 @@ export interface OllamaChatRequest {
   options?: OllamaOptions
   tools?: OllamaToolDefinition[]
   logprobs?: boolean
-  think?: boolean | 'max'
+  think?: OllamaThink
 }
 
 export interface OllamaChatMessage {
@@ -153,6 +178,11 @@ export interface OpenAIChatChunk {
       content: OllamaLogprob[]
     } | null
   }>
+  /**
+   * Present only on the final chunk, and only when the request sent
+   * `stream_options.include_usage`. That chunk carries an EMPTY `choices`
+   * array, so read usage before any `choices[0]` guard.
+   */
   usage?: {
     prompt_tokens: number
     completion_tokens: number
@@ -174,6 +204,13 @@ export interface OllamaRunningModel {
 export interface OllamaEmbedRequest {
   model: string
   input: string | string[]
+  /**
+   * Truncate the output vector to this width (Matryoshka embeddings). Only
+   * meaningful for models trained for it; Ollama returns the full width otherwise.
+   */
+  dimensions?: number
+  /** Truncate input that exceeds the context window. Ollama defaults to true. */
+  truncate?: boolean
 }
 
 export interface OllamaEmbedResponse {

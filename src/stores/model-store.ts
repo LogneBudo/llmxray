@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import type { OllamaModel, OllamaModelInfo } from '@/types/ollama'
+import type { OllamaModel, OllamaModelInfo, OllamaCapability } from '@/types/ollama'
 import { ollamaClient } from '@/services/ollama-client'
 import { capabilityUnicodeIcons } from '@/utils/capability-defs'
 import { parseModelParameters } from '@/utils/parse-model-params'
@@ -25,68 +25,108 @@ export const useModelStore = defineStore('models', () => {
     /gpt-oss/i, // OpenAI open-weight reasoning
     /magistral/i, // Mistral reasoning
     /nemotron/i, // NVIDIA Nemotron reasoning family
+    /\bqwen3(\.\d+)?\b/i, // Qwen 3.x reasons by default
+    /muse-glimmer/i, // Meta Superintelligence Labs agent model
+    /\bglm-\d/i, // GLM reasoning line
+    /kimi-k\d/i, // Moonshot Kimi
   ]
 
   // Vision model name patterns (fallback when Ollama doesn't report capabilities)
-  const VISION_NAME_PATTERNS = [/llava/i, /\bvl\b/i, /vision/i, /minicpm-v/i, /moondream/i, /\bmllama\b/i]
+  const VISION_NAME_PATTERNS = [
+    /llava/i,
+    /\bvl\b/i,
+    /vision/i,
+    /minicpm-v/i,
+    /moondream/i,
+    /\bmllama\b/i,
+    /gemma3/i,
+    /muse-glimmer/i,
+  ]
 
   // Embedding-only model families and name patterns
   const EMBEDDING_FAMILIES = new Set(['bert', 'nomic-bert'])
   const EMBEDDING_NAME_PATTERNS = [/embed/i, /^nomic-/i, /^mxbai-/i, /^all-minilm/i, /^bge-/i, /^gte-/i, /^e5-/i, /^snowflake-arctic-embed/i]
 
+  /**
+   * True when a model is embedding-only. Ollama 0.32 reports an `embedding`
+   * capability directly in /api/tags; family and name heuristics remain as a
+   * fallback for older daemons that report nothing.
+   */
+  function isEmbeddingOnly(m: OllamaModel): boolean {
+    const caps = m.capabilities ?? modelInfoCache.value.get(m.name)?.capabilities
+    if (caps?.length) return caps.includes('embedding') && !caps.includes('completion')
+
+    const families = m.details?.families ?? []
+    if (families.length > 0 && families.every((f) => EMBEDDING_FAMILIES.has(f))) return true
+    return EMBEDDING_NAME_PATTERNS.some((p) => p.test(m.name))
+  }
+
   const chatModelNames = computed(() =>
-    models.value
-      .filter((m) => {
-        // Exclude if all families are embedding-only families
-        const families = m.details?.families ?? []
-        if (families.length > 0 && families.every((f) => EMBEDDING_FAMILIES.has(f))) {
-          return false
-        }
-        // Exclude by name pattern
-        return !EMBEDDING_NAME_PATTERNS.some((p) => p.test(m.name))
-      })
-      .map((m) => m.name),
+    models.value.filter((m) => !isEmbeddingOnly(m)).map((m) => m.name),
   )
 
   // Inverse of chatModelNames — only embedding-capable models
   const embeddingModelNames = computed(() =>
-    models.value
-      .filter((m) => {
-        const families = m.details?.families ?? []
-        if (families.length > 0 && families.every((f) => EMBEDDING_FAMILIES.has(f))) {
-          return true
-        }
-        return EMBEDDING_NAME_PATTERNS.some((p) => p.test(m.name))
-      })
-      .map((m) => m.name),
+    models.value.filter((m) => isEmbeddingOnly(m)).map((m) => m.name),
   )
 
   function getModelDetails(name: string): OllamaModelInfo | undefined {
     return modelInfoCache.value.get(name)
   }
 
-  function getCapabilities(name: string): string[] {
-    return modelInfoCache.value.get(name)?.capabilities ?? []
+  /**
+   * Capabilities for a model. Ollama 0.32 reports these in /api/tags, so they
+   * are known as soon as the model list lands — no longer gated on the
+   * per-model /api/show round-trip. /api/show wins when cached, since it is
+   * refreshed on demand; the tag listing is the immediate fallback.
+   */
+  function getCapabilities(name: string): OllamaCapability[] {
+    const fromShow = modelInfoCache.value.get(name)?.capabilities
+    if (fromShow?.length) return fromShow
+    return models.value.find((m) => m.name === name)?.capabilities ?? []
   }
 
   /** Detect thinking/reasoning models via Ollama capabilities or name pattern fallback */
   function isThinkingModel(name: string): boolean {
-    const caps = modelInfoCache.value.get(name)?.capabilities ?? []
+    const caps = getCapabilities(name)
     if (caps.includes('thinking')) return true
+    // Only guess when the daemon reported nothing — a reported capability set
+    // that omits 'thinking' is an authoritative "no".
+    if (caps.length > 0) return false
     return THINKING_NAME_PATTERNS.some((p) => p.test(name))
   }
 
   /** Detect vision-capable models via Ollama capabilities or name pattern fallback */
   function isVisionModel(name: string): boolean {
-    const caps = modelInfoCache.value.get(name)?.capabilities ?? []
+    const caps = getCapabilities(name)
     if (caps.includes('vision')) return true
+    if (caps.length > 0) return false
     return VISION_NAME_PATTERNS.some((p) => p.test(name))
   }
 
   /** Detect tool-calling support via Ollama capabilities */
   function supportsTools(name: string): boolean {
-    const caps = modelInfoCache.value.get(name)?.capabilities ?? []
-    return caps.includes('tools')
+    return getCapabilities(name).includes('tools')
+  }
+
+  /**
+   * Training context window in tokens, reported by /api/tags since Ollama 0.32.
+   * Falls back to the architecture key in /api/show's model_info.
+   */
+  function getContextLength(name: string): number | undefined {
+    const fromTags = models.value.find((m) => m.name === name)?.details?.context_length
+    if (fromTags) return fromTags
+
+    const info = modelInfoCache.value.get(name)?.model_info
+    if (!info) return undefined
+    const key = Object.keys(info).find((k) => k.endsWith('.context_length'))
+    const val = key ? info[key] : undefined
+    return typeof val === 'number' ? val : undefined
+  }
+
+  /** Embedding vector width, reported by /api/tags since Ollama 0.32. */
+  function getEmbeddingLength(name: string): number | undefined {
+    return models.value.find((m) => m.name === name)?.details?.embedding_length
   }
 
   /** Parse model's default parameters from /api/show into OllamaOptions */
@@ -119,7 +159,9 @@ export const useModelStore = defineStore('models', () => {
     error.value = null
     try {
       models.value = await ollamaClient.listModels()
-      // Fetch capabilities for all models in parallel (non-blocking)
+      // Capabilities and context length already arrived with the listing, so the
+      // UI is correct immediately. This enriches the cache with the rest of
+      // /api/show (parameters, template, license, model_info) in the background.
       fetchAllModelInfo()
     } catch (e) {
       error.value = e instanceof Error ? e.message : 'Failed to fetch models'
@@ -158,6 +200,8 @@ export const useModelStore = defineStore('models', () => {
     embeddingModelNames,
     getModelDetails,
     getCapabilities,
+    getContextLength,
+    getEmbeddingLength,
     getModelDefaults,
     isThinkingModel,
     isVisionModel,

@@ -1,4 +1,4 @@
-import type { OllamaOptions } from './ollama'
+import type { OllamaOptions, OllamaThink } from './ollama'
 import type { ChatAttachment } from './attachment'
 
 export interface ChatMessage {
@@ -28,7 +28,7 @@ export interface ChatSettings {
   systemPrompt: string
   options: OllamaOptions
   /** Toggle reasoning on for thinking-capable models. `'max'` requests highest budget. */
-  think?: boolean | 'max'
+  think?: OllamaThink
   /** Force structured output. Either the literal `'json'` (free-form JSON) or a JSON Schema object. */
   format?: 'json' | Record<string, unknown>
 }

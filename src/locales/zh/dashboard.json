@@ -86,7 +86,18 @@
     "noToolsDefined": "尚未定义工具",
     "manageInToolWorkshop": "在工具工坊中管理...",
     "pulling": "拉取中...",
-    "pull": "拉取"
+    "pull": "拉取",
+    "thinking": {
+      "label": "思考",
+      "off": "关闭",
+      "on": "开启",
+      "low": "低",
+      "medium": "中",
+      "high": "高",
+      "max": "最大",
+      "hint": "切换模型的内部推理。开启让模型自行决定推理强度；低到最大则明确指定推理预算。若模型不支持思考，此设置将被忽略。",
+      "modelSupportsHint": "模型支持"
+    }
   },
   "memory": {
     "slidingWindow": "滑动窗口",

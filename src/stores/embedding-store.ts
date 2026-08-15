@@ -13,13 +13,21 @@ export const useEmbeddingStore = defineStore('embeddings', () => {
     [...results.value].sort((a, b) => b.timestamp - a.timestamp),
   )
 
-  async function embed(model: string, input: string): Promise<EmbeddingResult> {
+  /**
+   * @param dimensions Optional Matryoshka truncation width (Ollama `dimensions`).
+   *                   Omit for the model's native vector width.
+   */
+  async function embed(
+    model: string,
+    input: string,
+    dimensions?: number,
+  ): Promise<EmbeddingResult> {
     loading.value = true
     error.value = null
 
     const startTime = Date.now()
     try {
-      const response = await ollamaClient.embed({ model, input })
+      const response = await ollamaClient.embed({ model, input, dimensions })
       const vector = response.embeddings[0]
       if (!vector) throw new Error('No embedding returned')
 

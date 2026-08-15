@@ -75,7 +75,7 @@ Pokrenuo si lokalni LLM. Razgovaraš sa njim. Ali šta se zaista desilo?
 ## Mogućnosti
 
 ### Razgovor u realnom vremenu sa inteligencijom tokena
-Pričaj sa bilo kojim Ollama modelom i posmatraj tokene kako pristižu sa **bojenjem prema poverenju** — svaki token je obojen prema brzini generisanja. Podržava Markdown, razgovore u više rundi, priloge datoteka, vision modele i slash komande.
+Pričaj sa bilo kojim Ollama modelom i posmatraj tokene kako pristižu sa **bojenjem prema poverenju** — svaki token je obojen prema brzini generisanja. Podržava Markdown, razgovore u više rundi, priloge datoteka, vision modele i slash komande. Za modele koji rezonuju, podesi budžet razmišljanja po razgovoru — isključeno, po izboru modela, ili eksplicitan napor nisko / srednje / visoko / max.
 
 ### Kapije kvaliteta odgovora
 Svaki odgovor se automatski analizira. Obojene oznake se pojavljuju samo kada nešto nije u redu:
@@ -102,7 +102,7 @@ Potrošnja tokena po modelu/danu sa procenom ekvivalentne cene u cloudu. Vidi ko
 Testiraj znanje modela skupovima pitanja sa višestrukim izborom. Koristi prave logprobs preko OpenAI-kompatibilnog endpointa za tačno merenje poverenja. Pravi custom skupove vizuelno ili pusti AI da ih generiše iz teme.
 
 ### Embeddings Lab i RAG pipeline
-Embeduj tekst, vizualizuj vektore, meri kosinusnu sličnost. Izgradi lokalnu bazu znanja iz PDF, DOCX i CSV fajlova — podeljeno na delove, embedovano i pretraživo. Sve smešteno u IndexedDB. Bez troškova.
+Embeduj tekst, vizualizuj vektore, meri kosinusnu sličnost. Zatraži uži izlazni vektor da vidiš koliko Matrjoška skraćivanje košta u sličnosti. Izgradi lokalnu bazu znanja iz PDF, DOCX i CSV fajlova — podeljeno na delove, embedovano i pretraživo. Sve smešteno u IndexedDB. Bez troškova.
 
 ### Tool Workshop (vizuelno platno)
 Drag-and-drop platno sa čvorovima za pravljenje definicija alata. Dvosmerna sinhronizacija koda (uređuj čvorove ili TypeScript — oba se ažuriraju). Sondiraj API-je, automatski generiši šeme, testiraj uživo.
@@ -126,19 +126,20 @@ Potpuni prevodi na engleskom, francuskom, srpskom (latinica + ćirilica), kinesk
 
 ## Ollama kompatibilnost
 
-Testirano i verifikovano sa **Ollama 0.24.0** (trenutno najnovija stabilna verzija u maju 2026). LLMxRay koristi sledeće Ollama endpointe:
+Testirano i verifikovano sa **Ollama 0.32.x** (trenutno najnovija stabilna verzija u avgustu 2026). LLMxRay koristi sledeće Ollama endpointe:
 
 | Endpoint | Za šta se koristi |
 |---|---|
 | `/api/chat` | Strimovan chat (NDJSON, sa `tools`, `think`, `format` schema) |
 | `/api/generate` | Generisanje + Fill-in-the-Middle preko `suffix` |
-| `/api/tags`, `/api/show` | Lista modela + detekcija sposobnosti (`thinking`, `tools`, `vision`) |
+| `/api/tags` | Lista modela + sposobnosti, dužina konteksta i širina embedinga |
+| `/api/show` | Parametri, template, licenca i metapodaci arhitekture |
 | `/api/embed` | Vektorski embeddings za RAG |
 | `/api/pull`, `/api/delete`, `/api/ps`, `/api/version` | Upravljanje modelima + status |
 | `/v1/chat/completions` | OpenAI-compat putanja koju Surgical Benchmark koristi za prave logprobs |
 | `/v1/messages` | Anthropic-compat putanja koju koristi Protocol Observatory |
 
-**Kompatibilno sa:** Ollama 0.20 i novijim (starije verzije rade za chat/generate, ali nemaju `think` i JSON-schema `format`). **Preporučeno:** Ollama 0.24+ za potpunu paritetnost funkcija, uključujući Anthropic-compat endpoint (dodat u 0.23) i `think: "max"` režim (dodat u 0.21.3).
+**Kompatibilno sa:** Ollama 0.20 i novijim (starije verzije rade za chat/generate, ali nemaju `think` i JSON-schema `format`). **Preporučeno:** Ollama 0.32+ — sposobnosti i dužina konteksta stižu sa listom modela, `think` prihvata stepenovane nivoe napora, a embedinzi prihvataju `dimensions` širinu.
 
 ---
 

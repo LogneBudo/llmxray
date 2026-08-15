@@ -75,7 +75,7 @@ You run a local LLM. You chat with it. But what actually happened?
 ## Features
 
 ### Real-Time Chat with Token Intelligence
-Chat with any Ollama model and watch tokens arrive with **confidence coloring** — each token is tinted based on generation speed. Supports markdown, multi-turn conversations, file attachments, vision models, and slash commands.
+Chat with any Ollama model and watch tokens arrive with **confidence coloring** — each token is tinted based on generation speed. Supports markdown, multi-turn conversations, file attachments, vision models, and slash commands. For reasoning models, set the thinking budget per conversation — off, model's choice, or an explicit low / medium / high / max effort.
 
 ### Response Quality Gates
 Every response is automatically analyzed. Colored badges appear only when something is wrong:
@@ -102,7 +102,7 @@ Token usage per model/day with estimated cloud-equivalent pricing. See what you'
 Test model knowledge with multi-choice question suites. Uses real logprobs via OpenAI-compatible endpoint for accurate confidence measurement. Build custom suites visually or let AI generate them from a topic.
 
 ### Embeddings Lab & RAG Pipeline
-Embed text, visualize vectors, measure cosine similarity. Build a local knowledge base from PDFs, DOCX, and CSV — chunked, embedded, and searchable. All stored in IndexedDB. Zero cost.
+Embed text, visualize vectors, measure cosine similarity. Request a narrower output vector to see what Matryoshka truncation costs in similarity. Build a local knowledge base from PDFs, DOCX, and CSV — chunked, embedded, and searchable. All stored in IndexedDB. Zero cost.
 
 ### Tool Workshop (Visual Canvas)
 Drag-and-drop node canvas for building tool definitions. Bidirectional code sync (edit nodes or TypeScript — both update). Probe APIs, auto-generate schemas, test with live execution.
@@ -126,19 +126,20 @@ Full translations in English, French, Serbian (Latin + Cyrillic), Chinese, and A
 
 ## Ollama Compatibility
 
-Tested and verified against **Ollama 0.24.0** (the current latest stable as of May 2026). LLMxRay uses these Ollama endpoints:
+Tested and verified against **Ollama 0.32.x** (the current latest stable as of August 2026). LLMxRay uses these Ollama endpoints:
 
 | Endpoint | Used for |
 |---|---|
-| `/api/chat` | Streaming chat (NDJSON, with `tools`, `think`, `format` schema) |
+| `/api/chat` | Streaming chat (NDJSON, with `tools`, `think` effort levels, `format` schema) |
 | `/api/generate` | Generation + Fill-in-the-Middle via `suffix` |
-| `/api/tags`, `/api/show` | Model list + capability detection (`thinking`, `tools`, `vision`) |
-| `/api/embed` | Vector embeddings for RAG |
+| `/api/tags` | Model list + capabilities, context length, and embedding width |
+| `/api/show` | Parameters, template, license, and architecture metadata |
+| `/api/embed` | Vector embeddings for RAG, with optional `dimensions` truncation |
 | `/api/pull`, `/api/delete`, `/api/ps`, `/api/version` | Model management + status |
-| `/v1/chat/completions` | OpenAI-compat path used by Surgical Benchmark for real logprobs |
+| `/v1/chat/completions` | OpenAI-compat path used by Surgical Benchmark for real logprobs and usage totals |
 | `/v1/messages` | Anthropic-compat path used by Protocol Observatory |
 
-**Compatible with:** Ollama 0.20 and newer (older versions work for chat/generate but lack `think` and JSON-schema `format`). **Recommended:** Ollama 0.24+ for full feature parity including the Anthropic-compat endpoint (added in 0.23) and the `think: "max"` mode (added in 0.21.3).
+**Compatible with:** Ollama 0.20 and newer (older versions work for chat/generate but lack `think` and JSON-schema `format`). **Recommended:** Ollama 0.32+ — capabilities and context length arrive with the model listing, `think` accepts graded effort levels, and embeddings accept a `dimensions` width.
 
 ---
 

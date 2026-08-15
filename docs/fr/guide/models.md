@@ -27,18 +27,37 @@ Cliquez sur un modèle pour voir un diagramme d'architecture montrant la structu
 
 ## Détection des capacités
 
-LLMxRay détecte automatiquement ce que chaque modèle peut faire. Les capacités sont lues **en direct depuis `/api/show` d'Ollama**, de sorte que les modèles récemment publiés fonctionnent sans aucune mise à jour côté LLMxRay. Lorsqu'un modèle ne les signale pas lui-même, LLMxRay se rabat sur des patterns de nom.
+LLMxRay détecte automatiquement ce que chaque modèle peut faire. Les capacités sont lues **en direct depuis Ollama**, de sorte que les modèles récemment publiés fonctionnent sans aucune mise à jour côté LLMxRay. Lorsqu'un modèle ne les signale pas lui-même, LLMxRay se rabat sur des patterns de nom.
+
+Depuis **Ollama 0.32**, la liste des modèles (`/api/tags`) indique directement les capacités, la longueur de contexte et la largeur d'embedding de chaque modèle. LLMxRay s'appuie sur cette source en priorité : les icônes de capacité et le filtrage des modèles sont donc corrects dès le chargement de la liste, sans attendre un appel `/api/show` par modèle. `/api/show` continue de s'exécuter en arrière-plan pour enrichir le cache (paramètres, template, métadonnées d'architecture).
 
 | Capacité | Comment elle est détectée | Effet sur l'interface |
 |---|---|---|
-| **Raisonnement** | `capabilities` Ollama, sinon patterns de nom (`deepseek-r1`, `qwq`, `gpt-oss`, `magistral`, `nemotron`, …) | Active l'onglet raisonnement dans Diagnostics de Chat |
-| **Vision** | `capabilities` Ollama, sinon patterns de nom (`llava`, `*-vl`, `moondream`, Llama-vision, …) | Active les pièces jointes images dans le chat |
-| **Embedding** | `capabilities` Ollama ou famille du modèle | Apparaît dans les sélecteurs de modèles des pages Plongements et Base de Connaissances |
+| **Raisonnement** | `capabilities` Ollama, sinon patterns de nom (`deepseek-r1`, `qwq`, `gpt-oss`, `magistral`, `nemotron`, `qwen3.x`, `muse-glimmer`, `glm-*`, `kimi-k*`, …) | Active l'onglet raisonnement dans Diagnostics de Chat |
+| **Vision** | `capabilities` Ollama, sinon patterns de nom (`llava`, `*-vl`, `moondream`, `gemma3`, Llama-vision, …) | Active les pièces jointes images dans le chat |
+| **Embedding** | `capabilities` Ollama, sinon famille ou nom du modèle | Apparaît dans les sélecteurs de modèles des pages Plongements et Base de Connaissances |
 | **Appel d'outils** | `capabilities` Ollama | Active l'appel d'outils dans le chat |
 
-Comme les capacités proviennent directement d'Ollama, LLMxRay suit automatiquement les nouvelles familles de modèles ; les patterns de nom de repli — actualisés pour des familles telles que **gpt-oss**, **Magistral**, **Nemotron** (raisonnement) et **Moondream** / Llama-vision — ne s'appliquent que lorsqu'un modèle ne signale pas ses propres capacités.
+Comme les capacités proviennent directement d'Ollama, LLMxRay suit automatiquement les nouvelles familles de modèles. Un ensemble de capacités signalé fait autorité : si le démon liste les capacités d'un modèle *sans* y inclure `thinking`, LLMxRay le croit plutôt que de deviner d'après le nom. Les patterns de nom ne s'appliquent que lorsqu'un modèle ne signale rien du tout.
 
 Les modèles ne prenant en charge que les embeddings sont automatiquement filtrés des sélecteurs de modèles de chat.
+
+## Effort de raisonnement
+
+Pour les modèles capables de raisonner, Diagnostics de Chat expose le paramètre `think` d'Ollama :
+
+| Réglage | Envoyé comme | Signification |
+|---|---|---|
+| **Off** | *(omis)* | Aucun raisonnement interne |
+| **On** | `true` | Raisonnement activé ; le modèle choisit lui-même son effort |
+| **Faible / Moyen / Élevé** | `"low"` / `"medium"` / `"high"` | Budget de raisonnement explicite |
+| **Max** | `"max"` | Budget de raisonnement maximal |
+
+Les modèles qui n'implémentent pas d'effort gradué traitent simplement tout niveau comme « raisonnement activé ».
+
+## Dimensions des embeddings
+
+La page Plongements peut demander un vecteur de sortie plus étroit via le paramètre `dimensions` d'Ollama (troncature Matryoshka). Laissez le champ vide pour la largeur native du modèle — affichée en placeholder, lue depuis la liste des modèles. Les modèles non entraînés pour la troncature Matryoshka renvoient leur largeur native quoi qu'il arrive.
 
 ## Catalogue de modèles
 

@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid'
-import type { OllamaChatMessage, OllamaOptions, OllamaToolDefinition } from '@/types/ollama'
+import type { OllamaChatMessage, OllamaOptions, OllamaToolDefinition, OllamaThink } from '@/types/ollama'
 import { useSessionStore } from '@/stores/session-store'
 import { usePromptStore } from '@/stores/prompt-store'
 import { useToolCallStore } from '@/stores/toolcall-store'
@@ -17,7 +17,7 @@ export async function startChat(params: {
   messages: OllamaChatMessage[]
   tools?: OllamaToolDefinition[]
   options?: OllamaOptions
-  think?: boolean | 'max'
+  think?: OllamaThink
   format?: 'json' | Record<string, unknown>
 }): Promise<{ sessionId: string; abort: () => void }> {
   const sessionStore = useSessionStore()
@@ -76,7 +76,7 @@ async function runChatWithToolLoop(
   tools: OllamaToolDefinition[] | undefined,
   options: OllamaOptions | undefined,
   signal: AbortSignal,
-  think: boolean | 'max' | undefined,
+  think: OllamaThink | undefined,
   format: 'json' | Record<string, unknown> | undefined,
 ): Promise<void> {
   const toolCallStore = useToolCallStore()

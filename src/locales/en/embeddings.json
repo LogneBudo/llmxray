@@ -4,6 +4,12 @@
     "noModels": "No models available",
     "noEmbeddingModels": "No embedding models found. Pull one: ollama pull nomic-embed-text"
   },
+  "dimensions": {
+    "label": "Dimensions",
+    "native": "native",
+    "hint": "Blank = model's native width",
+    "truncated": "Matryoshka truncation"
+  },
   "storage": {
     "embeddingMemory": "Embedding Memory",
     "records": "records"

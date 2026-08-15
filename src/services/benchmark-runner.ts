@@ -93,6 +93,12 @@ async function runQuestion(
   await readSSEStream<OpenAIChatChunk>(
     stream,
     (chunk) => {
+      // Usage arrives in its own trailing chunk with an EMPTY choices array
+      // (Ollama 0.32.6+, matching OpenAI). Read it before the choice guard.
+      if (chunk.usage) {
+        totalTokens = chunk.usage.completion_tokens
+      }
+
       const choice = chunk.choices[0]
       if (!choice) return
 
@@ -123,10 +129,6 @@ async function runQuestion(
         }
       }
 
-      // Track total tokens from usage on the final chunk
-      if (chunk.usage) {
-        totalTokens = chunk.usage.completion_tokens
-      }
     },
     signal,
   )

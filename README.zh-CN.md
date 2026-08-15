@@ -75,7 +75,7 @@ docker run -p 5174:5174 djovaneli/llmxray
 ## 功能特性
 
 ### 实时对话与词元智能
-与任何 Ollama 模型对话,观察词元到达时的**置信度着色** —— 每个词元根据生成速度被染色。支持 Markdown、多轮对话、文件附件、视觉模型与斜杠命令。
+与任何 Ollama 模型对话,观察词元到达时的**置信度着色** —— 每个词元根据生成速度被染色。支持 Markdown、多轮对话、文件附件、视觉模型与斜杠命令。对于推理模型,可按对话设置思考预算 —— 关闭、由模型自选,或显式指定低 / 中 / 高 / 最大推理强度。
 
 ### 响应质量门禁
 每条响应都会被自动分析。仅在出现问题时才显示彩色徽章:
@@ -102,7 +102,7 @@ docker run -p 5174:5174 djovaneli/llmxray
 用多选题套件测试模型知识。通过 OpenAI 兼容端点使用真实 logprobs 进行准确的置信度测量。可视化构建自定义题组,或让 AI 根据主题自动生成。
 
 ### 嵌入实验室与 RAG 流水线
-嵌入文本、可视化向量、测量余弦相似度。从 PDF、DOCX 与 CSV 构建本地知识库 —— 分块、嵌入、可搜索。全部存储在 IndexedDB。零成本。
+嵌入文本、可视化向量、测量余弦相似度。可请求更窄的输出向量,直观看到套娃式截断在相似度上的代价。从 PDF、DOCX 与 CSV 构建本地知识库 —— 分块、嵌入、可搜索。全部存储在 IndexedDB。零成本。
 
 ### 工具工坊(可视化画布)
 拖拽式节点画布用于构建工具定义。双向代码同步(编辑节点或 TypeScript —— 两边同步更新)。探测 API、自动生成 schema、实时执行测试。
@@ -126,19 +126,20 @@ docker run -p 5174:5174 djovaneli/llmxray
 
 ## Ollama 兼容性
 
-针对 **Ollama 0.24.0**(2026 年 5 月最新稳定版)进行了测试与验证。LLMxRay 使用以下 Ollama 端点:
+针对 **Ollama 0.32.x**(2026 年 8 月最新稳定版)进行了测试与验证。LLMxRay 使用以下 Ollama 端点:
 
 | 端点 | 用途 |
 |---|---|
 | `/api/chat` | 流式对话(NDJSON,支持 `tools`、`think`、`format` schema) |
 | `/api/generate` | 生成与中段填充(通过 `suffix`) |
-| `/api/tags`、`/api/show` | 模型列表与能力检测(`thinking`、`tools`、`vision`) |
+| `/api/tags` | 模型列表与能力、上下文长度、嵌入维度 |
+| `/api/show` | 参数、模板、许可证与架构元数据 |
 | `/api/embed` | RAG 的向量嵌入 |
 | `/api/pull`、`/api/delete`、`/api/ps`、`/api/version` | 模型管理与状态 |
 | `/v1/chat/completions` | OpenAI 兼容路径,外科手术式基准测试用于获取真实 logprobs |
 | `/v1/messages` | Anthropic 兼容路径,协议观察台使用 |
 
-**兼容版本:** Ollama 0.20 及更新版本(更早版本支持对话/生成但缺少 `think` 与 JSON-schema `format`)。**推荐版本:** Ollama 0.24+,可获得完整功能,包括 Anthropic 兼容端点(0.23 新增)与 `think: "max"` 模式(0.21.3 新增)。
+**兼容版本:** Ollama 0.20 及更新版本(更早版本支持对话/生成但缺少 `think` 与 JSON-schema `format`)。**推荐版本:** Ollama 0.32+ —— 能力与上下文长度随模型列表一并返回,`think` 支持分级推理强度,嵌入支持 `dimensions` 维度。
 
 ---
 
