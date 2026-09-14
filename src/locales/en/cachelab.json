@@ -1,0 +1,49 @@
+{
+  "title": "Cache Lab",
+  "subtitle": "Find out why your prompt misses the cache, and what that costs you every turn.",
+  "explainer": "A local model reuses its prompt cache only for as long as the prompt still matches from the very first token. Anything that changes between turns - a timestamp, a session id, a reordered chunk - forfeits the cache for everything after it. This lab sends each layout twice with a changed value and reports what the daemon actually kept.",
+  "model": "Model",
+  "userMessage": "User message",
+  "systemPrompt": "System prompt",
+  "systemPromptPlaceholder": "Paste the system prompt you send every turn.",
+  "measure": "Measure",
+  "cancel": "Stop",
+  "progress": "Measuring layout {done} of {total}...",
+  "diagnosis": {
+    "title": "Diagnosis",
+    "clean": "Nothing here looks like it changes between turns, so the whole prompt can stay cached.",
+    "found": "Found {count} value(s) that change between turns.",
+    "forfeits": "The earliest sits far enough forward that {share} of the prompt is re-evaluated every turn.",
+    "legend": "Green is the prefix the cache can keep. Red is the first value that changes. Grey is everything forfeited because it sits after that value."
+  },
+  "kinds": {
+    "timestamp": "timestamp",
+    "date": "date",
+    "time": "time",
+    "uuid": "id",
+    "number": "number"
+  },
+  "rows": {
+    "original": "Your prompt",
+    "rewritten": "Values moved to the end"
+  },
+  "results": {
+    "title": "Measured",
+    "layout": "Layout",
+    "promptTokens": "Prompt tokens",
+    "reused": "Reused",
+    "evaluated": "Evaluated",
+    "prefill": "Prefill",
+    "reuse": "Reuse",
+    "unreported": "not reported"
+  },
+  "verdict": {
+    "title": "Measured result",
+    "body": "Moving the changing values to the end saves {tokens} prompt tokens and {ms} of prefill every turn - {speedup}x faster.",
+    "footnote": "Measured on your own daemon, never estimated. Each layout was sent twice with a changed value, and the second send is what is reported. Requires Ollama 0.33.3 or newer to report cache reuse."
+  },
+  "rewrite": {
+    "title": "The rewrite that was measured",
+    "body": "{chars} characters of this layout stay identical when its values change - that is the prefix the cache holds on to."
+  }
+}

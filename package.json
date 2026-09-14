@@ -1,6 +1,14 @@
 {
   "name": "llmxray",
-  "version": "0.5.1",
+  "version": "0.6.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LogneBudo/llmxray.git"
+  },
+  "homepage": "https://lognebudo.github.io/llmxray/",
+  "bugs": {
+    "url": "https://github.com/LogneBudo/llmxray/issues"
+  },
   "description": "Local LLM Observatory — See what your AI is actually doing, token by token.",
   "license": "Apache-2.0",
   "type": "module",

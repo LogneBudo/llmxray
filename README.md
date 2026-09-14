@@ -33,7 +33,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/public/screenshots/demo.gif" alt="LLMxRay demo — real-time token streaming with confidence coloring" width="800" />
+  <img src="https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/demo.gif" alt="LLMxRay demo — real-time token streaming with confidence coloring" width="800" />
 </p>
 
 ---
@@ -110,6 +110,9 @@ Drag-and-drop node canvas for building tool definitions. Bidirectional code sync
 ### Fill-in-the-Middle Playground *(new in v0.4.7)*
 Code completion for Qwen-Coder, CodeLlama, Codestral, DeepSeek-Coder, and StarCoder. Two textareas (prefix / suffix), the model fills the gap. Uses Ollama's `suffix` field on `/api/generate`. Stitched preview shows the result as it would appear in your editor.
 
+### Cache Lab *(new in v0.6.0)*
+Find out why your prompt misses the model’s KV cache, and measure what it costs every turn. A local model reuses its cache only while the prompt still matches from the very first token, so a single timestamp near the top forfeits everything below it. The lab finds the values that change between turns, shows the exact point where reuse dies, and then **measures** — sending each layout twice with a changed value, against your own daemon — what moving them to the end actually saves. Measured on a real 324-token prompt: **4 tokens reused and 64.6 ms of prefill with the timestamp at the front, 290 reused and 18.6 ms with it at the back. 3.5x faster, same words.** Requires Ollama 0.33.3+.
+
 ### Protocol Observatory *(new in v0.4.7)*
 Fire the same prompt through Ollama's three serving protocols — **native** `/api/chat`, **OpenAI-compat** `/v1/chat/completions`, and **Anthropic-compat** `/v1/messages` — in parallel against your local model. Side-by-side streaming, per-protocol metrics, and an envelope-diff tab that shows how each protocol frames finish reasons, token counts, and error envelopes. No cloud, no API keys — all three endpoints are local on `localhost:11434`.
 
@@ -150,13 +153,13 @@ Tested and verified against **Ollama 0.33.x** (verified on 0.33.3, September 202
 <td width="50%">
 
 **Chat with token streaming and confidence**
-![Chat](docs/public/screenshots/chat-diagnostics.png)
+![Chat](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/chat-diagnostics.png)
 
 </td>
 <td width="50%">
 
 **Model comparison — side by side**
-![Compare](docs/public/screenshots/compare-sidebyside.png)
+![Compare](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/compare-sidebyside.png)
 
 </td>
 </tr>
@@ -164,13 +167,13 @@ Tested and verified against **Ollama 0.33.x** (verified on 0.33.3, September 202
 <td width="50%">
 
 **Session deep dive — metrics and timing**
-![Session](docs/public/screenshots/session-details.png)
+![Session](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/session-details.png)
 
 </td>
 <td width="50%">
 
 **Benchmark with confidence radar**
-![Benchmark](docs/public/screenshots/benchmark.png)
+![Benchmark](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/benchmark.png)
 
 </td>
 </tr>
@@ -178,13 +181,13 @@ Tested and verified against **Ollama 0.33.x** (verified on 0.33.3, September 202
 <td width="50%">
 
 **Embeddings — cosine similarity**
-![Embeddings](docs/public/screenshots/embed-similarity.png)
+![Embeddings](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/embed-similarity.png)
 
 </td>
 <td width="50%">
 
 **System monitor — hardware and Ollama status**
-![System](docs/public/screenshots/my-system.png)
+![System](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/my-system.png)
 
 </td>
 </tr>

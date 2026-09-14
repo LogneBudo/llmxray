@@ -24,12 +24,13 @@ LLMxRay dispose d'une barre latérale avec 12 éléments de navigation, chacun r
 4. **[Base de Connaissances](./knowledge-base)** -- Téléchargement de documents, découpage et recherche RAG
 5. **[Atelier d'Outils](./tool-workshop)** -- Constructeur visuel d'outils avec synchronisation du code
 6. **[Complétion au Milieu (FIM)](./fim)** -- Terrain de jeu de complétion de code pour modèles compatibles FIM
-7. **[Observatoire des Protocoles](./protocols)** -- Lancez le même prompt sur natif, compat. OpenAI et compat. Anthropic contre votre modèle local
-8. **[Entraînement IA](./ai-training)** -- Curation et export de données d'entraînement
-9. **[Modèles](./models)** -- Navigateur de modèles et détection des capacités
-10. **[Benchmark](./benchmark)** -- Évaluation standardisée des modèles avec logprobs
-11. **[Mon Système](./system)** -- Détection du matériel et statut d'Ollama
-12. **[Paramètres](./settings)** -- Connexion, paramètres et préférences
+7. **[Labo de cache](./cache-lab)** -- Mesurez pourquoi votre invite manque le cache KV, et ce que cela coûte à chaque tour
+8. **[Observatoire des Protocoles](./protocols)** -- Lancez le même prompt sur natif, compat. OpenAI et compat. Anthropic contre votre modèle local
+9. **[Entraînement IA](./ai-training)** -- Curation et export de données d'entraînement
+10. **[Modèles](./models)** -- Navigateur de modèles et détection des capacités
+11. **[Benchmark](./benchmark)** -- Évaluation standardisée des modèles avec logprobs
+12. **[Mon Système](./system)** -- Détection du matériel et statut d'Ollama
+13. **[Paramètres](./settings)** -- Connexion, paramètres et préférences
 
 ## Autres éléments
 

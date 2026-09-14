@@ -33,7 +33,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/public/screenshots/demo.gif" alt="LLMxRay 演示 — 带置信度着色的实时词元流" width="800" />
+  <img src="https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/demo.gif" alt="LLMxRay 演示 — 带置信度着色的实时词元流" width="800" />
 </p>
 
 ---
@@ -110,6 +110,9 @@ docker run -p 5174:5174 djovaneli/llmxray
 ### 中段填充游乐场 *(v0.4.7 新增)*
 为 Qwen-Coder、CodeLlama、Codestral、DeepSeek-Coder 与 StarCoder 提供代码补全。两个文本框(前缀 / 后缀),模型填补中间空缺。使用 Ollama 的 `/api/generate` 的 `suffix` 字段。拼接预览展示编辑器中的最终效果。
 
+### 缓存实验室 *(v0.6.0 新增)*
+查明提示为何未命中模型的 KV 缓存，并测量每轮为此付出的代价。本地模型只有在提示从第一个词元起仍然一致时才会复用缓存，因此顶部的一个时间戳会让其下的全部失效。本实验室会找出逐轮变化的值，标出复用中断的确切位置，然后在你自己的守护进程上对每种排布发送两次（其中一次改变该值）来**实测**将其移至末尾究竟能节省多少。在一个真实的 324 词元提示上实测：**时间戳在前时复用 4 个词元、预填充 64.6 毫秒；在后时复用 290 个、仅 18.6 毫秒。字句相同，快 3.5 倍。**需要 Ollama 0.33.3+。
+
 ### 协议观察台 *(v0.4.7 新增)*
 将同一提示并行发送至 Ollama 的三种服务协议 —— **原生** `/api/chat`、**OpenAI 兼容** `/v1/chat/completions`、**Anthropic 兼容** `/v1/messages` —— 全部针对您的本地模型运行。并排流式输出、各协议指标对比,以及信封差异标签页,展示各协议如何封装结束原因、词元计数与错误信封。无云端、无 API 密钥 —— 三个端点全部位于 `localhost:11434`。
 
@@ -150,13 +153,13 @@ docker run -p 5174:5174 djovaneli/llmxray
 <td width="50%">
 
 **带词元流与置信度的对话**
-![Chat](docs/public/screenshots/chat-diagnostics.png)
+![Chat](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/chat-diagnostics.png)
 
 </td>
 <td width="50%">
 
 **模型对比 — 并排**
-![Compare](docs/public/screenshots/compare-sidebyside.png)
+![Compare](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/compare-sidebyside.png)
 
 </td>
 </tr>
@@ -164,13 +167,13 @@ docker run -p 5174:5174 djovaneli/llmxray
 <td width="50%">
 
 **会话深度分析 — 指标与时序**
-![Session](docs/public/screenshots/session-details.png)
+![Session](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/session-details.png)
 
 </td>
 <td width="50%">
 
 **基准测试与置信度雷达**
-![Benchmark](docs/public/screenshots/benchmark.png)
+![Benchmark](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/benchmark.png)
 
 </td>
 </tr>
@@ -178,13 +181,13 @@ docker run -p 5174:5174 djovaneli/llmxray
 <td width="50%">
 
 **嵌入 — 余弦相似度**
-![Embeddings](docs/public/screenshots/embed-similarity.png)
+![Embeddings](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/embed-similarity.png)
 
 </td>
 <td width="50%">
 
 **系统监视器 — 硬件与 Ollama 状态**
-![System](docs/public/screenshots/my-system.png)
+![System](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/my-system.png)
 
 </td>
 </tr>

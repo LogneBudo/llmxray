@@ -1,0 +1,49 @@
+{
+  "title": "Laboratorija keša",
+  "subtitle": "Saznajte zašto vaš prompt promašuje keš i koliko vas to košta u svakom krugu.",
+  "explainer": "Lokalni model ponovo koristi keš prompta samo dok se prompt poklapa od prvog tokena. Sve što se menja između krugova - vremenska oznaka, ID sesije, prerađen fragment - poništava keš za sve što sledi. Ova laboratorija šalje svaki raspored dvaput sa izmenjenom vrednošću i prijavljuje šta je demon zaista zadržao.",
+  "model": "Model",
+  "userMessage": "Korisnička poruka",
+  "systemPrompt": "Sistemski prompt",
+  "systemPromptPlaceholder": "Nalepite sistemski prompt koji šaljete u svakom krugu.",
+  "measure": "Izmeri",
+  "cancel": "Zaustavi",
+  "progress": "Merenje rasporeda {done} od {total}...",
+  "diagnosis": {
+    "title": "Dijagnoza",
+    "clean": "Ovde se ništa ne menja između krugova, pa ceo prompt može ostati u kešu.",
+    "found": "Pronađeno {count} vrednosti koje se menjaju između krugova.",
+    "forfeits": "Prva je dovoljno napred da se {share} prompta ponovo računa u svakom krugu.",
+    "legend": "Zeleno je prefiks koji keš može zadržati, crveno prva vrednost koja se menja, sivo sve što je izgubljeno jer stoji iza nje."
+  },
+  "kinds": {
+    "timestamp": "vremenska oznaka",
+    "date": "datum",
+    "time": "vreme",
+    "uuid": "identifikator",
+    "number": "broj"
+  },
+  "rows": {
+    "original": "Vaš prompt",
+    "rewritten": "Vrednosti pomerene na kraj"
+  },
+  "results": {
+    "title": "Izmereno",
+    "layout": "Raspored",
+    "promptTokens": "Tokeni prompta",
+    "reused": "Ponovo upotrebljeni",
+    "evaluated": "Izračunati",
+    "prefill": "Prefil",
+    "reuse": "Ponovna upotreba",
+    "unreported": "nije prijavljeno"
+  },
+  "verdict": {
+    "title": "Izmereni rezultat",
+    "body": "Pomeranje promenljivih vrednosti na kraj štedi {tokens} tokena prompta i {ms} prefila u svakom krugu - {speedup}x brže.",
+    "footnote": "Izmereno na vašem demonu, nikada procenjeno. Svaki raspored je poslat dvaput sa izmenjenom vrednošću, a prijavljuje se drugo slanje. Zahteva Ollama 0.33.3 ili noviju za prijavu ponovne upotrebe keša."
+  },
+  "rewrite": {
+    "title": "Izmerena prerada",
+    "body": "{chars} znakova ovog rasporeda ostaje isto kada se vrednosti promene - to je prefiks koji keš zadržava."
+  }
+}

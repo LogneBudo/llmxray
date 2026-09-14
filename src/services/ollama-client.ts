@@ -140,11 +140,12 @@ class OllamaClient {
     return res.json() as Promise<OllamaGenerateChunk>
   }
 
-  async chat(req: OllamaChatRequest): Promise<OllamaChatChunk> {
+  async chat(req: OllamaChatRequest, signal?: AbortSignal): Promise<OllamaChatChunk> {
     const res = await fetch(`${this.baseUrl}/chat`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ ...req, stream: false }),
+      signal,
     })
     if (!res.ok) {
       const detail = await res.text().catch(() => '')

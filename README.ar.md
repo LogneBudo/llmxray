@@ -35,7 +35,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/public/screenshots/demo.gif" alt="عرض LLMxRay — بث الرموز في الوقت الفعلي مع تلوين الثقة" width="800" />
+  <img src="https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/demo.gif" alt="عرض LLMxRay — بث الرموز في الوقت الفعلي مع تلوين الثقة" width="800" />
 </p>
 
 ---
@@ -112,6 +112,9 @@ docker run -p 5174:5174 djovaneli/llmxray
 ### ساحة الإكمال في الوسط *(جديد في v0.4.7)*
 إكمال الكود لـ Qwen-Coder و CodeLlama و Codestral و DeepSeek-Coder و StarCoder. حقلا نص (بادئة / لاحقة)، والنموذج يملأ الفراغ. يستخدم حقل `suffix` في `/api/generate` من Ollama. معاينة مدمجة تُظهر النتيجة كما ستبدو في محرّرك.
 
+### مختبر الذاكرة المؤقتة *(جديد في v0.6.0)*
+اعرف لماذا يفوت مُوجّهك ذاكرة KV للنموذج، وقس كم يكلّف ذلك في كل دور. لا يعيد النموذج المحلّي استخدام الذاكرة إلا ما دام المُوجّه مطابقاً من أول رمز، فطابع زمني واحد في الأعلى يُفقد كل ما دونه. يجد المختبر القيم التي تتغيّر بين الأدوار، ويُظهر النقطة التي تموت عندها إعادة الاستخدام، ثم **يقيس** — بإرسال كل ترتيب مرّتين بقيمة مختلفة على خادمك أنت — ما يوفّره نقلها إلى النهاية. مقيس على مُوجّه حقيقي من 324 رمزاً: **4 رموز مُعادة وـ 64.6 ملّي ثانية تعبئة مسبقة مع الطابع في المقدّمة، و290 رمزاً وـ 18.6 ملّي ثانية معه في النهاية. أسرع بـ 3.5 مرّة، بالكلمات نفسها.** يتطلّب Ollama 0.33.3+.
+
 ### مرصد البروتوكولات *(جديد في v0.4.7)*
 أطلق نفس المطالبة عبر بروتوكولات Ollama الثلاثة للتقديم — **الأصلي** `/api/chat`، **المتوافق مع OpenAI** `/v1/chat/completions`، و **المتوافق مع Anthropic** `/v1/messages` — بالتوازي ضد نموذجك المحلي. بثّ جنباً إلى جنب، ومقاييس لكل بروتوكول، وعلامة تبويب لفروق الأظرف تُظهر كيف يصوغ كل بروتوكول أسباب الإنهاء وعدّ الرموز وأظرف الأخطاء. بلا سحابة، بلا مفاتيح API — النقاط الثلاث جميعها محلية على `localhost:11434`.
 
@@ -152,13 +155,13 @@ docker run -p 5174:5174 djovaneli/llmxray
 <td width="50%">
 
 **دردشة ببث الرموز ومؤشّر الثقة**
-![Chat](docs/public/screenshots/chat-diagnostics.png)
+![Chat](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/chat-diagnostics.png)
 
 </td>
 <td width="50%">
 
 **مقارنة النماذج — جنباً إلى جنب**
-![Compare](docs/public/screenshots/compare-sidebyside.png)
+![Compare](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/compare-sidebyside.png)
 
 </td>
 </tr>
@@ -166,13 +169,13 @@ docker run -p 5174:5174 djovaneli/llmxray
 <td width="50%">
 
 **تشريح الجلسة — مقاييس وتوقيت**
-![Session](docs/public/screenshots/session-details.png)
+![Session](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/session-details.png)
 
 </td>
 <td width="50%">
 
 **معيار مع رادار الثقة**
-![Benchmark](docs/public/screenshots/benchmark.png)
+![Benchmark](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/benchmark.png)
 
 </td>
 </tr>
@@ -180,13 +183,13 @@ docker run -p 5174:5174 djovaneli/llmxray
 <td width="50%">
 
 **التضمينات — تشابه جيب التمام**
-![Embeddings](docs/public/screenshots/embed-similarity.png)
+![Embeddings](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/embed-similarity.png)
 
 </td>
 <td width="50%">
 
 **مراقب النظام — العتاد وحالة Ollama**
-![System](docs/public/screenshots/my-system.png)
+![System](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/my-system.png)
 
 </td>
 </tr>

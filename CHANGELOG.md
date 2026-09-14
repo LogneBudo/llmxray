@@ -5,6 +5,34 @@ All notable changes to LLMxRay are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.0] — 2026-09-14
+
+### Added
+
+- **Cache Lab** — a new page that finds out why a prompt misses the model's KV cache, and
+  measures what that costs on every turn. A local model reuses its cache only while the prompt
+  still matches from the very first token, so one timestamp near the top forfeits everything
+  below it. The lab detects the values that change between turns, renders the exact point where
+  reuse dies, and then measures the alternative against the running daemon rather than estimating
+  it. Measured on a real 324-token prompt: 4 tokens reused and 64.6 ms of prefill with the
+  timestamp at the front, 290 reused and 18.6 ms with it at the back — 3.5x faster, same words.
+  Sidebar item **Cache Lab**, route `/cache-lab`. Requires Ollama 0.33.3 or newer, and reports
+  "not reported" rather than 0% on older daemons.
+- Guide pages for Cache Lab in English and French, and a feature entry on the website in both.
+- `AbortSignal` support on the client's non-streaming `chat()`, so a measurement run can be stopped.
+
+### Fixed
+
+- **README images were broken on npm.** Seven screenshots per README used repo-relative paths, and
+  npm could not resolve them because `package.json` declared no `repository`. All image URLs are now
+  absolute, and `repository`, `homepage` and `bugs` are declared.
+
+### Changed
+
+- Cache Lab measures each layout by sending it twice with a changed value, and reports the second
+  send. Measuring the first would only show how well a prompt matches itself — about 100% for any
+  layout, which says nothing about how it behaves in real traffic.
+
 ## [0.5.1] — 2026-09-14
 
 ### Fixed

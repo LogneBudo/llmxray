@@ -20,6 +20,7 @@ function guideNav(prefix: string) {
         { text: fr ? 'Base de Connaissances' : 'Knowledge Base', link: `${prefix}/guide/knowledge-base` },
         { text: fr ? "Atelier d'Outils" : 'Tool Workshop', link: `${prefix}/guide/tool-workshop` },
         { text: fr ? 'Complétion au Milieu (FIM)' : 'Fill-in-the-Middle (FIM)', link: `${prefix}/guide/fim` },
+        { text: fr ? 'Labo de cache' : 'Cache Lab', link: `${prefix}/guide/cache-lab` },
         { text: fr ? 'Observatoire des Protocoles' : 'Protocol Observatory', link: `${prefix}/guide/protocols` },
         { text: fr ? 'Entraînement IA' : 'AI Training', link: `${prefix}/guide/ai-training` },
         { text: fr ? 'Modèles' : 'Models', link: `${prefix}/guide/models` },

@@ -54,6 +54,11 @@ export const router = createRouter({
           component: () => import('@/pages/FimPlaygroundPage.vue'),
         },
         {
+          path: 'cache-lab',
+          name: 'cacheLab',
+          component: () => import('@/pages/CacheLabPage.vue'),
+        },
+        {
           path: 'protocols',
           name: 'protocols',
           component: () => import('@/pages/ProtocolObservatoryPage.vue'),

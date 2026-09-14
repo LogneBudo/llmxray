@@ -1,0 +1,49 @@
+{
+  "title": "Labo de cache",
+  "subtitle": "Comprenez pourquoi votre invite manque le cache, et ce que cela coûte à chaque tour.",
+  "explainer": "Un modèle local ne réutilise son cache d’invite que tant que l’invite correspond depuis le tout premier token. Tout ce qui change d’un tour à l’autre - un horodatage, un identifiant de session, un fragment réordonné - fait perdre le cache pour tout ce qui suit. Ce labo envoie chaque disposition deux fois avec une valeur modifiée et rapporte ce que le démon a réellement conservé.",
+  "model": "Modèle",
+  "userMessage": "Message utilisateur",
+  "systemPrompt": "Invite système",
+  "systemPromptPlaceholder": "Collez l’invite système que vous envoyez à chaque tour.",
+  "measure": "Mesurer",
+  "cancel": "Arrêter",
+  "progress": "Mesure de la disposition {done} sur {total}...",
+  "diagnosis": {
+    "title": "Diagnostic",
+    "clean": "Rien ici ne semble changer d’un tour à l’autre : l’invite entière peut rester en cache.",
+    "found": "{count} valeur(s) qui changent d’un tour à l’autre.",
+    "forfeits": "La première est assez en amont pour que {share} de l’invite soit réévaluée à chaque tour.",
+    "legend": "En vert, le préfixe que le cache peut garder. En rouge, la première valeur qui change. En gris, tout ce qui est perdu parce que placé après elle."
+  },
+  "kinds": {
+    "timestamp": "horodatage",
+    "date": "date",
+    "time": "heure",
+    "uuid": "identifiant",
+    "number": "nombre"
+  },
+  "rows": {
+    "original": "Votre invite",
+    "rewritten": "Valeurs déplacées à la fin"
+  },
+  "results": {
+    "title": "Mesuré",
+    "layout": "Disposition",
+    "promptTokens": "Tokens d’invite",
+    "reused": "Réutilisés",
+    "evaluated": "Évalués",
+    "prefill": "Préremplissage",
+    "reuse": "Réutilisation",
+    "unreported": "non rapporté"
+  },
+  "verdict": {
+    "title": "Résultat mesuré",
+    "body": "Déplacer les valeurs changeantes à la fin économise {tokens} tokens d’invite et {ms} de préremplissage à chaque tour - {speedup}x plus rapide.",
+    "footnote": "Mesuré sur votre propre démon, jamais estimé. Chaque disposition a été envoyée deux fois avec une valeur modifiée, et c’est le second envoi qui est rapporté. Nécessite Ollama 0.33.3 ou plus récent pour rapporter la réutilisation du cache."
+  },
+  "rewrite": {
+    "title": "La réécriture mesurée",
+    "body": "{chars} caractères de cette disposition restent identiques quand ses valeurs changent : c’est le préfixe que le cache conserve."
+  }
+}

@@ -24,12 +24,13 @@ LLMxRay has a sidebar with 12 navigation items, each representing a major featur
 4. **[Knowledge Base](./knowledge-base)** — Document upload, chunking, and RAG search
 5. **[Tool Workshop](./tool-workshop)** — Visual tool builder with code sync
 6. **[Fill-in-the-Middle (FIM)](./fim)** — Code completion playground for FIM-capable models
-7. **[Protocol Observatory](./protocols)** — Run the same prompt through native, OpenAI-compat, and Anthropic-compat against your local model
-8. **[AI Training](./ai-training)** — Training data curation and export
-9. **[Models](./models)** — Model browser and capability detection
-10. **[Benchmark](./benchmark)** — Standardized model evaluation with logprobs
-11. **[My System](./system)** — Hardware detection and Ollama status
-12. **[Settings](./settings)** — Connection, parameters, and preferences
+7. **[Cache Lab](./cache-lab)** — Measure why your prompt misses the KV cache, and what that costs every turn
+8. **[Protocol Observatory](./protocols)** — Run the same prompt through native, OpenAI-compat, and Anthropic-compat against your local model
+9. **[AI Training](./ai-training)** — Training data curation and export
+10. **[Models](./models)** — Model browser and capability detection
+11. **[Benchmark](./benchmark)** — Standardized model evaluation with logprobs
+12. **[My System](./system)** — Hardware detection and Ollama status
+13. **[Settings](./settings)** — Connection, parameters, and preferences
 
 ## Other Elements
 

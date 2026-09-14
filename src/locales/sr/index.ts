@@ -15,6 +15,7 @@ import cost from './cost.json'
 import analytics from './analytics.json'
 import fim from './fim.json'
 import protocols from './protocols.json'
+import cachelab from './cachelab.json'
 
 export default {
   common,
@@ -34,4 +35,5 @@ export default {
   analytics,
   fim,
   protocols,
+  cachelab,
 }

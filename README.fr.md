@@ -33,7 +33,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/public/screenshots/demo.gif" alt="Démo LLMxRay — streaming de tokens en temps réel avec coloration selon la confiance" width="800" />
+  <img src="https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/demo.gif" alt="Démo LLMxRay — streaming de tokens en temps réel avec coloration selon la confiance" width="800" />
 </p>
 
 ---
@@ -110,6 +110,9 @@ Canvas à nœuds en drag-and-drop pour construire des définitions d'outils. Syn
 ### Aire de jeu Fill-in-the-Middle *(nouveau en v0.4.7)*
 Complétion de code pour Qwen-Coder, CodeLlama, Codestral, DeepSeek-Coder et StarCoder. Deux zones de texte (préfixe / suffixe), le modèle remplit le trou. Utilise le champ `suffix` d'Ollama sur `/api/generate`. L'aperçu assemblé montre le résultat tel qu'il apparaîtrait dans votre éditeur.
 
+### Labo de cache *(nouveau en v0.6.0)*
+Comprenez pourquoi votre invite manque le cache KV du modèle, et mesurez ce que cela coûte à chaque tour. Un modèle local ne réutilise son cache que tant que l’invite correspond depuis le tout premier token : un seul horodatage en haut fait perdre tout ce qui suit. Le labo repère les valeurs qui changent d’un tour à l’autre, montre le point exact où la réutilisation meurt, puis **mesure** — en envoyant chaque disposition deux fois avec une valeur modifiée, sur votre propre démon — ce que rapporte leur déplacement à la fin. Mesuré sur une invite réelle de 324 tokens : **4 tokens réutilisés et 64,6 ms de préremplissage avec l’horodatage au début, 290 réutilisés et 18,6 ms à la fin. 3,5x plus rapide, à mots identiques.** Nécessite Ollama 0.33.3+.
+
 ### Observatoire de protocoles *(nouveau en v0.4.7)*
 Envoyez le même prompt à travers les trois protocoles de service d'Ollama — **natif** `/api/chat`, **compatible OpenAI** `/v1/chat/completions`, et **compatible Anthropic** `/v1/messages` — en parallèle contre votre modèle local. Streaming côte à côte, métriques par protocole, et onglet « envelope diff » qui montre comment chaque protocole encode les raisons de fin, le comptage de tokens et les enveloppes d'erreur. Pas de cloud, pas de clés API — les trois endpoints sont locaux sur `localhost:11434`.
 
@@ -150,13 +153,13 @@ Testé et vérifié avec **Ollama 0.33.x** (vérifié sur 0.33.3, septembre 2026
 <td width="50%">
 
 **Chat avec streaming de tokens et confiance**
-![Chat](docs/public/screenshots/chat-diagnostics.png)
+![Chat](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/chat-diagnostics.png)
 
 </td>
 <td width="50%">
 
 **Comparaison de modèles — côte à côte**
-![Compare](docs/public/screenshots/compare-sidebyside.png)
+![Compare](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/compare-sidebyside.png)
 
 </td>
 </tr>
@@ -164,13 +167,13 @@ Testé et vérifié avec **Ollama 0.33.x** (vérifié sur 0.33.3, septembre 2026
 <td width="50%">
 
 **Analyse approfondie d'une session — métriques et timing**
-![Session](docs/public/screenshots/session-details.png)
+![Session](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/session-details.png)
 
 </td>
 <td width="50%">
 
 **Benchmark avec radar de confiance**
-![Benchmark](docs/public/screenshots/benchmark.png)
+![Benchmark](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/benchmark.png)
 
 </td>
 </tr>
@@ -178,13 +181,13 @@ Testé et vérifié avec **Ollama 0.33.x** (vérifié sur 0.33.3, septembre 2026
 <td width="50%">
 
 **Embeddings — similarité cosinus**
-![Embeddings](docs/public/screenshots/embed-similarity.png)
+![Embeddings](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/embed-similarity.png)
 
 </td>
 <td width="50%">
 
 **Moniteur système — matériel et statut Ollama**
-![System](docs/public/screenshots/my-system.png)
+![System](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/my-system.png)
 
 </td>
 </tr>

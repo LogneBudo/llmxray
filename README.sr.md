@@ -33,7 +33,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/public/screenshots/demo.gif" alt="LLMxRay demo — strimovanje tokena u realnom vremenu sa bojenjem prema poverenju" width="800" />
+  <img src="https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/demo.gif" alt="LLMxRay demo — strimovanje tokena u realnom vremenu sa bojenjem prema poverenju" width="800" />
 </p>
 
 ---
@@ -110,6 +110,9 @@ Drag-and-drop platno sa čvorovima za pravljenje definicija alata. Dvosmerna sin
 ### Fill-in-the-Middle Playground *(novo u v0.4.7)*
 Dopuna koda za Qwen-Coder, CodeLlama, Codestral, DeepSeek-Coder i StarCoder. Dva polja (prefiks / sufiks), model popunjava prazninu. Koristi Ollama `suffix` polje na `/api/generate`. Spojeni pregled pokazuje rezultat kao što bi izgledao u tvom editoru.
 
+### Laboratorija keša *(novo u v0.6.0)*
+Saznajte zašto vaš prompt promašuje KV keš modela i izmerite koliko to košta u svakom krugu. Lokalni model ponovo koristi keš samo dok se prompt poklapa od prvog tokena, pa jedna vremenska oznaka pri vrhu poništava sve ispod nje. Laboratorija pronalazi vrednosti koje se menjaju između krugova, pokazuje tačku na kojoj ponovna upotreba umire, a zatim **meri** — šaljajući svaki raspored dvaput sa izmenjenom vrednošću, na vašem demonu — koliko donosi njihovo pomeranje na kraj. Izmereno na stvarnom promptu od 324 tokena: **4 tokena ponovo upotrebljena i 64,6 ms prefila sa oznakom na početku, 290 i 18,6 ms na kraju. 3,5x brže, uz iste reči.** Zahteva Ollama 0.33.3+.
+
 ### Protocol Observatory *(novo u v0.4.7)*
 Pošalji isti prompt kroz tri Ollama protokola posluživanja — **nativni** `/api/chat`, **OpenAI-compat** `/v1/chat/completions` i **Anthropic-compat** `/v1/messages` — paralelno protiv tvog lokalnog modela. Strimovanje uporedo, metrike po protokolu i tab za poređenje envelope-a koji pokazuje kako svaki protokol uobličava razloge završetka, brojeve tokena i envelope grešaka. Bez clouda, bez API ključeva — sva tri endpointa su lokalna na `localhost:11434`.
 
@@ -150,13 +153,13 @@ Testirano i verifikovano sa **Ollama 0.33.x** (verifikovano na 0.33.3, septembar
 <td width="50%">
 
 **Chat sa strimovanjem tokena i poverenjem**
-![Chat](docs/public/screenshots/chat-diagnostics.png)
+![Chat](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/chat-diagnostics.png)
 
 </td>
 <td width="50%">
 
 **Poređenje modela — uporedo**
-![Compare](docs/public/screenshots/compare-sidebyside.png)
+![Compare](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/compare-sidebyside.png)
 
 </td>
 </tr>
@@ -164,13 +167,13 @@ Testirano i verifikovano sa **Ollama 0.33.x** (verifikovano na 0.33.3, septembar
 <td width="50%">
 
 **Detaljni pregled sesije — metrike i tajming**
-![Session](docs/public/screenshots/session-details.png)
+![Session](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/session-details.png)
 
 </td>
 <td width="50%">
 
 **Benchmark sa radarom poverenja**
-![Benchmark](docs/public/screenshots/benchmark.png)
+![Benchmark](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/benchmark.png)
 
 </td>
 </tr>
@@ -178,13 +181,13 @@ Testirano i verifikovano sa **Ollama 0.33.x** (verifikovano na 0.33.3, septembar
 <td width="50%">
 
 **Embeddings — kosinusna sličnost**
-![Embeddings](docs/public/screenshots/embed-similarity.png)
+![Embeddings](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/embed-similarity.png)
 
 </td>
 <td width="50%">
 
 **Monitor sistema — hardver i Ollama status**
-![System](docs/public/screenshots/my-system.png)
+![System](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/my-system.png)
 
 </td>
 </tr>
