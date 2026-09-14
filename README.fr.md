@@ -13,7 +13,7 @@
   <a href="https://www.npmjs.com/package/llmxray"><img src="https://img.shields.io/npm/v/llmxray?color=cb3837&logo=npm&logoColor=white" alt="npm" /></a>
   <a href="https://hub.docker.com/r/djovaneli/llmxray"><img src="https://img.shields.io/docker/pulls/djovaneli/llmxray?color=2496ED&logo=docker&logoColor=white" alt="Docker" /></a>
   <img src="https://img.shields.io/badge/license-Apache%202.0-blue" alt="License" />
-  <img src="https://img.shields.io/badge/ollama-local-000?logo=ollama&logoColor=white" alt="Ollama" />
+  <img src="https://img.shields.io/badge/ollama-0.33.x-000?logo=ollama&logoColor=white" alt="Ollama" />
 </p>
 
 <p align="center">
@@ -35,6 +35,23 @@
 <p align="center">
   <img src="https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/demo.gif" alt="Démo LLMxRay — streaming de tokens en temps réel avec coloration selon la confiance" width="800" />
 </p>
+
+
+## Ce que vous obtenez
+
+**Diagnostics de chat** — Regardez les tokens arriver un par un, colorés selon leur vitesse. Voyez où le modèle hésite, et sur quoi.
+
+**Labo de cache** *(nouveau en 0.6.0)* — Votre invite système est probablement recalculée entièrement à chaque tour. Vérifiez-le en 30 secondes, et mesurez le gain. *(Préremplissage 3,5x plus rapide dans notre test.)*
+
+**Comparer** — La même invite sur deux modèles, ou deux températures, côte à côte. Arrêtez de deviner quel réglage était le meilleur.
+
+**Benchmark chirurgical** — Évaluez les modèles sur les vrais logprobs des tokens, pas sur l'apparence de la réponse.
+
+**Observatoire de protocoles** — Voyez comment le même modèle local répond via les API native, compatible OpenAI et compatible Anthropic d'Ollama, et où elles divergent.
+
+**Base de connaissances** — Déposez des PDF et des documents, découpez-les, et voyez ce que le RAG récupère vraiment avant que le modèle ne le voie.
+
+Plus les plongements, le suivi des coûts, l'analytique, un constructeur d'outils et une base d'historique locale. [Liste complète des fonctionnalités ci-dessous.](#features)
 
 ---
 

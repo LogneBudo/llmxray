@@ -13,7 +13,7 @@
   <a href="https://www.npmjs.com/package/llmxray"><img src="https://img.shields.io/npm/v/llmxray?color=cb3837&logo=npm&logoColor=white" alt="npm" /></a>
   <a href="https://hub.docker.com/r/djovaneli/llmxray"><img src="https://img.shields.io/docker/pulls/djovaneli/llmxray?color=2496ED&logo=docker&logoColor=white" alt="Docker" /></a>
   <img src="https://img.shields.io/badge/license-Apache%202.0-blue" alt="License" />
-  <img src="https://img.shields.io/badge/ollama-local-000?logo=ollama&logoColor=white" alt="Ollama" />
+  <img src="https://img.shields.io/badge/ollama-0.33.x-000?logo=ollama&logoColor=white" alt="Ollama" />
 </p>
 
 <p align="center">
@@ -35,6 +35,23 @@
 <p align="center">
   <img src="https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/demo.gif" alt="LLMxRay demo — real-time token streaming with confidence coloring" width="800" />
 </p>
+
+
+## What you get
+
+**Chat Diagnostics** — Watch tokens arrive one by one, coloured by speed. See where the model hesitates, and what it was unsure about.
+
+**Cache Lab** *(new in 0.6.0)* — Your system prompt is probably being recomputed from scratch every turn. Find out in 30 seconds, and measure the fix. *(3.5x faster prefill in our test.)*
+
+**Compare** — The same prompt against two models, or two temperatures, side by side. Stop guessing which setting was actually better.
+
+**Surgical Benchmark** — Score models on real token logprobs, not on whether the answer happened to look right.
+
+**Protocol Observatory** — See how the same local model replies through Ollama's native, OpenAI-compatible and Anthropic-compatible APIs, and exactly where they disagree.
+
+**Knowledge Base** — Drop in PDFs and documents, chunk them, and see what RAG actually retrieves before the model ever sees it.
+
+Plus embeddings, cost tracking, analytics, a tool builder, and a local history database. [Full feature list below.](#features)
 
 ---
 

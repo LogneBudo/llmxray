@@ -15,7 +15,7 @@
   <a href="https://www.npmjs.com/package/llmxray"><img src="https://img.shields.io/npm/v/llmxray?color=cb3837&logo=npm&logoColor=white" alt="npm" /></a>
   <a href="https://hub.docker.com/r/djovaneli/llmxray"><img src="https://img.shields.io/docker/pulls/djovaneli/llmxray?color=2496ED&logo=docker&logoColor=white" alt="Docker" /></a>
   <img src="https://img.shields.io/badge/license-Apache%202.0-blue" alt="License" />
-  <img src="https://img.shields.io/badge/ollama-local-000?logo=ollama&logoColor=white" alt="Ollama" />
+  <img src="https://img.shields.io/badge/ollama-0.33.x-000?logo=ollama&logoColor=white" alt="Ollama" />
 </p>
 
 <p align="center">
@@ -37,6 +37,23 @@
 <p align="center">
   <img src="https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/demo.gif" alt="عرض LLMxRay — بث الرموز في الوقت الفعلي مع تلوين الثقة" width="800" />
 </p>
+
+
+## ما الذي تحصل عليه
+
+**تشخيص المحادثة** — راقب وصول الرموز واحداً تلو الآخر، ملوّنة حسب السرعة. انظر أين يتردّد النموذج وفي ماذا.
+
+**مختبر الذاكرة المؤقتة** *(جديد في 0.6.0)* — على الأرجح يُعاد حساب مُوجّه النظام لديك من الصفر في كل دور. تحقّق من ذلك في 30 ثانية، وقِس المكسب. *(تعبئة مسبقة أسرع بـ 3.5 مرّة في اختبارنا.)*
+
+**المقارنة** — المُوجّه نفسه على نموذجين، أو درجتي حرارة، جنباً إلى جنب. توقّف عن تخمين أيّ إعداد كان أفضل.
+
+**اختبار الأداء الدقيق** — قيّم النماذج بناءً على logprobs الحقيقية للرموز، لا على ما إذا كانت الإجابة تبدو صحيحة.
+
+**مرصد البروتوكولات** — انظر كيف يجيب النموذج المحلّي نفسه عبر واجهات Ollama الأصلية والمتوافقة مع OpenAI والمتوافقة مع Anthropic، وأين تختلف.
+
+**قاعدة المعرفة** — أضف ملفات PDF والمستندات، قسّمها، وانظر ما الذي يسترجعه RAG فعلياً قبل أن يراه النموذج.
+
+بالإضافة إلى التضمينات وتتبّع التكاليف والتحليلات وباني الأدوات وقاعدة بيانات السجل المحلّية. [قائمة الميزات الكاملة أدناه.](#features)
 
 ---
 

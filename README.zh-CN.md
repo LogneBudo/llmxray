@@ -13,7 +13,7 @@
   <a href="https://www.npmjs.com/package/llmxray"><img src="https://img.shields.io/npm/v/llmxray?color=cb3837&logo=npm&logoColor=white" alt="npm" /></a>
   <a href="https://hub.docker.com/r/djovaneli/llmxray"><img src="https://img.shields.io/docker/pulls/djovaneli/llmxray?color=2496ED&logo=docker&logoColor=white" alt="Docker" /></a>
   <img src="https://img.shields.io/badge/license-Apache%202.0-blue" alt="License" />
-  <img src="https://img.shields.io/badge/ollama-local-000?logo=ollama&logoColor=white" alt="Ollama" />
+  <img src="https://img.shields.io/badge/ollama-0.33.x-000?logo=ollama&logoColor=white" alt="Ollama" />
 </p>
 
 <p align="center">
@@ -35,6 +35,23 @@
 <p align="center">
   <img src="https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/demo.gif" alt="LLMxRay 演示 — 带置信度着色的实时词元流" width="800" />
 </p>
+
+
+## 你能得到什么
+
+**对话诊断** —— 逐个观察 token 的到达，按生成速度着色。看清模型在哪里犹豫、对什么不确定。
+
+**缓存实验室** *(0.6.0 新增)* —— 你的系统提示很可能每轮都在从头重算。30 秒查明，并实测改进效果。*(我们的测试中预填充快了 3.5 倍。)*
+
+**对比** —— 同一个提示在两个模型、或两个温度下并排运行。不用再猜哪个设置更好。
+
+**精准基准测试** —— 用真实的 token logprobs 给模型打分，而不是看答案「像不像对的」。
+
+**协议观察台** —— 看同一个本地模型通过 Ollama 原生、OpenAI 兼容和 Anthropic 兼容三个 API 的回答，以及它们在哪里不一致。
+
+**知识库** —— 放入 PDF 和文档，切分它们，在模型看到之前就先看清 RAG 到底检索出了什么。
+
+此外还有嵌入、成本跟踪、分析、工具构建器和本地历史数据库。[完整功能列表见下方。](#features)
 
 ---
 

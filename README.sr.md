@@ -13,7 +13,7 @@
   <a href="https://www.npmjs.com/package/llmxray"><img src="https://img.shields.io/npm/v/llmxray?color=cb3837&logo=npm&logoColor=white" alt="npm" /></a>
   <a href="https://hub.docker.com/r/djovaneli/llmxray"><img src="https://img.shields.io/docker/pulls/djovaneli/llmxray?color=2496ED&logo=docker&logoColor=white" alt="Docker" /></a>
   <img src="https://img.shields.io/badge/license-Apache%202.0-blue" alt="License" />
-  <img src="https://img.shields.io/badge/ollama-local-000?logo=ollama&logoColor=white" alt="Ollama" />
+  <img src="https://img.shields.io/badge/ollama-0.33.x-000?logo=ollama&logoColor=white" alt="Ollama" />
 </p>
 
 <p align="center">
@@ -35,6 +35,23 @@
 <p align="center">
   <img src="https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/demo.gif" alt="LLMxRay demo — strimovanje tokena u realnom vremenu sa bojenjem prema poverenju" width="800" />
 </p>
+
+
+## Šta dobijate
+
+**Dijagnostika ćaskanja** — Gledajte kako tokeni stižu jedan po jedan, obojeni po brzini. Vidite gde model okleva i oko čega.
+
+**Laboratorija keša** *(novo u 0.6.0)* — Vaš sistemski prompt se verovatno iznova računa u svakom krugu. Proverite za 30 sekundi i izmerite dobitak. *(Prefil 3,5x brži u našem testu.)*
+
+**Poređenje** — Isti prompt na dva modela ili dve temperature, jedan pored drugog. Prestanite da nagađate koje je podešavanje bilo bolje.
+
+**Hirurški benchmark** — Ocenjujte modele po stvarnim logprobs tokena, a ne po tome kako odgovor izgleda.
+
+**Protocol Observatory** — Vidite kako isti lokalni model odgovara kroz Ollama native, OpenAI-kompatibilni i Anthropic-kompatibilni API, i gde se razilaze.
+
+**Baza znanja** — Ubacite PDF-ove i dokumente, isecite ih na delove i vidite šta RAG zaista pronalazi pre nego što model to uopšte vidi.
+
+Uz to: embedinzi, praćenje troškova, analitika, graditelj alata i lokalna baza istorije. [Puna lista funkcija ispod.](#features)
 
 ---
 
