@@ -173,6 +173,14 @@ export default defineConfig({
       lang: 'fr',
       link: '/fr/',
       themeConfig: {
+        outline: { label: 'Sur cette page' },
+        docFooter: { prev: 'Page pr\u00e9c\u00e9dente', next: 'Page suivante' },
+        sidebarMenuLabel: 'Menu',
+        returnToTopLabel: 'Retour en haut',
+        darkModeSwitchLabel: 'Apparence',
+        lightModeSwitchTitle: 'Passer au th\u00e8me clair',
+        darkModeSwitchTitle: 'Passer au th\u00e8me sombre',
+        langMenuLabel: 'Changer de langue',
         nav: [
           { text: 'Guide', link: '/fr/guide/' },
           { text: 'Référence', link: '/fr/reference/' },
@@ -191,6 +199,14 @@ export default defineConfig({
       lang: 'zh-CN',
       link: '/zh/',
       themeConfig: {
+        outline: { label: '\u672c\u9875\u76ee\u5f55' },
+        docFooter: { prev: '\u4e0a\u4e00\u9875', next: '\u4e0b\u4e00\u9875' },
+        sidebarMenuLabel: '\u83dc\u5355',
+        returnToTopLabel: '\u56de\u5230\u9876\u90e8',
+        darkModeSwitchLabel: '\u5916\u89c2',
+        lightModeSwitchTitle: '\u5207\u6362\u5230\u6d45\u8272\u6a21\u5f0f',
+        darkModeSwitchTitle: '\u5207\u6362\u5230\u6df1\u8272\u6a21\u5f0f',
+        langMenuLabel: '\u5207\u6362\u8bed\u8a00',
         nav: [
           { text: '\u6307\u5357', link: '/zh/guide/' },
           { text: '\u5f00\u53d1\u8005\u53c2\u8003', link: '/en/reference/' },
