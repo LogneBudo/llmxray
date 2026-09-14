@@ -23,7 +23,7 @@
 Token 会逐个流式到达，并带有**置信度着色**：每个 token 的颜色取决于模型生成它的速度。越快的 token 置信度越高（偏绿），越慢的 token 置信度越低（偏橙或偏红）。
 
 ::: info 置信度是一个近似值
-由于 Ollama 的 `/api/chat` 接口不暴露 token 的 logprobs，LLMxRay 用 token 之间的延迟来近似置信度。界面中对此有明确标注。如果需要真实的 logprobs，请使用[基准测试](/en/guide/benchmark)功能。
+由于 Ollama 的 `/api/chat` 接口不暴露 token 的 logprobs，LLMxRay 用 token 之间的延迟来近似置信度。界面中对此有明确标注。如果需要真实的 logprobs，请使用[基准测试](./benchmark)功能。
 :::
 
 ## 功能
