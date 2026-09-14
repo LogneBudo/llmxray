@@ -37,6 +37,40 @@ function guideNav(prefix: string) {
   ]
 }
 
+function guideNavZh() {
+  return [
+    {
+      text: '\u5165\u95e8',
+      items: [
+        { text: '\u7b80\u4ecb', link: '/zh/guide/' },
+        { text: '\u5b89\u88c5', link: '/zh/guide/installation' },
+      ],
+    },
+    {
+      text: '\u7ae0\u8282',
+      items: [
+        { text: '\u5bf9\u8bdd\u8bca\u65ad', link: '/zh/guide/chat-diagnostics' },
+        { text: '\u7f13\u5b58\u5b9e\u9a8c\u5ba4', link: '/zh/guide/cache-lab' },
+      ],
+    },
+    {
+      // Not yet translated - point at the English guide rather than a dead link
+      text: '\u5c1a\u672a\u7ffb\u8bd1\uff08\u82f1\u6587\uff09',
+      items: [
+        { text: 'Compare', link: '/en/guide/compare' },
+        { text: 'Embeddings', link: '/en/guide/embeddings' },
+        { text: 'Knowledge Base', link: '/en/guide/knowledge-base' },
+        { text: 'Tool Workshop', link: '/en/guide/tool-workshop' },
+        { text: 'Fill-in-the-Middle (FIM)', link: '/en/guide/fim' },
+        { text: 'Protocol Observatory', link: '/en/guide/protocols' },
+        { text: 'Benchmark', link: '/en/guide/benchmark' },
+        { text: 'Models', link: '/en/guide/models' },
+        { text: 'Settings', link: '/en/guide/settings' },
+      ],
+    },
+  ]
+}
+
 function referenceNav(prefix: string) {
   const fr = prefix === '/fr'
   return [
@@ -147,6 +181,21 @@ export default defineConfig({
           '/fr/guide/': guideNav('/fr'),
           '/fr/reference/': referenceNav('/fr'),
           '/fr/community/': communityNav('/fr'),
+        },
+      },
+    },
+    zh: {
+      label: '\u7b80\u4f53\u4e2d\u6587',
+      lang: 'zh-CN',
+      link: '/zh/',
+      themeConfig: {
+        nav: [
+          { text: '\u6307\u5357', link: '/zh/guide/' },
+          { text: '\u5f00\u53d1\u8005\u53c2\u8003', link: '/en/reference/' },
+          { text: '\u5b98\u7f51', link: 'https://lognebudo.github.io/llmxray/' },
+        ],
+        sidebar: {
+          '/zh/guide/': guideNavZh(),
         },
       },
     },
