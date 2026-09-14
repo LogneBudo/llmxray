@@ -13,7 +13,7 @@
   <a href="https://www.npmjs.com/package/llmxray"><img src="https://img.shields.io/npm/v/llmxray?color=cb3837&logo=npm&logoColor=white" alt="npm" /></a>
   <a href="https://hub.docker.com/r/djovaneli/llmxray"><img src="https://img.shields.io/docker/pulls/djovaneli/llmxray?color=2496ED&logo=docker&logoColor=white" alt="Docker" /></a>
   <img src="https://img.shields.io/badge/license-Apache%202.0-blue" alt="License" />
-  <img src="https://img.shields.io/badge/ollama-0.33.x-000?logo=ollama&logoColor=white" alt="Ollama" />
+  <img src="https://img.shields.io/badge/ollama-0.34.x-000?logo=ollama&logoColor=white" alt="Ollama" />
 </p>
 
 <p align="center">
@@ -146,7 +146,7 @@ Full translations in English, French, Serbian (Latin + Cyrillic), Chinese, and A
 
 ## Ollama Compatibility
 
-Tested and verified against **Ollama 0.33.x** (verified on 0.33.3, September 2026). LLMxRay uses these Ollama endpoints:
+Tested and verified against **Ollama 0.34.x** (verified on 0.34.0, September 2026). LLMxRay uses these Ollama endpoints:
 
 | Endpoint | Used for |
 |---|---|

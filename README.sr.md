@@ -13,7 +13,7 @@
   <a href="https://www.npmjs.com/package/llmxray"><img src="https://img.shields.io/npm/v/llmxray?color=cb3837&logo=npm&logoColor=white" alt="npm" /></a>
   <a href="https://hub.docker.com/r/djovaneli/llmxray"><img src="https://img.shields.io/docker/pulls/djovaneli/llmxray?color=2496ED&logo=docker&logoColor=white" alt="Docker" /></a>
   <img src="https://img.shields.io/badge/license-Apache%202.0-blue" alt="License" />
-  <img src="https://img.shields.io/badge/ollama-0.33.x-000?logo=ollama&logoColor=white" alt="Ollama" />
+  <img src="https://img.shields.io/badge/ollama-0.34.x-000?logo=ollama&logoColor=white" alt="Ollama" />
 </p>
 
 <p align="center">
@@ -146,7 +146,7 @@ Potpuni prevodi na engleskom, francuskom, srpskom (latinica + ćirilica), kinesk
 
 ## Ollama kompatibilnost
 
-Testirano i verifikovano sa **Ollama 0.33.x** (verifikovano na 0.33.3, septembar 2026). LLMxRay koristi sledeće Ollama endpointe:
+Testirano i verifikovano sa **Ollama 0.34.x** (verifikovano na 0.34.0, septembar 2026). LLMxRay koristi sledeće Ollama endpointe:
 
 | Endpoint | Za šta se koristi |
 |---|---|
