@@ -121,6 +121,7 @@ export default defineConfig({
         nav: [
           { text: 'Guide', link: '/en/guide/' },
           { text: 'Reference', link: '/en/reference/' },
+          { text: 'Articles', link: '/en/articles/ollama-prefill-metrics' },
           { text: 'Community', link: '/en/community/' },
           { text: 'Website', link: 'https://lognebudo.github.io/llmxray/' },
         ],
