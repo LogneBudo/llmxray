@@ -28,7 +28,8 @@
   "metrics": {
     "total": "Укупно",
     "tokens": "Токени",
-    "finish": "Крај"
+    "finish": "Крај",
+    "cachedPrompt": "Кеширани промпт"
   },
   "tabs": {
     "responseDiff": "Поређење одговора",
@@ -42,6 +43,9 @@
     "finishValue": "Разлог завршетка (овај run)",
     "usageField": "Носач броја токена",
     "tokensReported": "Генерисани токени (овај run)",
+    "cacheField": "Носач кеша промпта",
+    "cachedReported": "Кеширани токени промпта (овај run)",
+    "promptTotal": "Токени промпта, укупно (овај run)",
     "errorShape": "Облик envelope грешке",
     "footnote": "Опажене вредности су из овог рана на вашем локалном Ollama. Неки носачи (нпр. NDJSON нативни `done_reason`) појављују се само на последњем chunk-у, други (нпр. Anthropic `message_stop`) су наменски догађаји."
   }

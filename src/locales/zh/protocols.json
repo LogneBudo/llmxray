@@ -28,7 +28,8 @@
   "metrics": {
     "total": "总耗时",
     "tokens": "词元数",
-    "finish": "结束原因"
+    "finish": "结束原因",
+    "cachedPrompt": "缓存的提示"
   },
   "tabs": {
     "responseDiff": "响应对比",
@@ -42,6 +43,9 @@
     "finishValue": "本次结束原因值",
     "usageField": "词元计数所在字段",
     "tokensReported": "本次生成词元数",
+    "cacheField": "提示缓存所在字段",
+    "cachedReported": "本次缓存提示词元数",
+    "promptTotal": "本次提示词元总数",
     "errorShape": "错误信封结构",
     "footnote": "观测值来自本次在您本地 Ollama 上的运行。部分载体(例如原生 NDJSON 的 `done_reason`)仅出现在最后一个 chunk 中,而另一些(例如 Anthropic 的 `message_stop`)则是专用事件。"
   }

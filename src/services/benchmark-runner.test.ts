@@ -22,7 +22,11 @@ import { ollamaClient } from './ollama-client'
  * `stream_options.include_usage` — a trailing usage chunk whose `choices`
  * array is EMPTY.
  */
-function makeOllamaStream(tokens: string[], usageTokens: number | null): ReadableStream<Uint8Array> {
+function makeOllamaStream(
+  tokens: string[],
+  usageTokens: number | null,
+  cachedPromptTokens?: number,
+): ReadableStream<Uint8Array> {
   const encoder = new TextEncoder()
   const lines: string[] = []
 
@@ -64,7 +68,15 @@ function makeOllamaStream(tokens: string[], usageTokens: number | null): Readabl
         created: 0,
         model: 'test-model',
         choices: [], // <- the trap: no choices[0] on the usage chunk
-        usage: { prompt_tokens: 30, completion_tokens: usageTokens, total_tokens: 30 + usageTokens },
+        usage: {
+          prompt_tokens: 30,
+          completion_tokens: usageTokens,
+          total_tokens: 30 + usageTokens,
+          // Ollama 0.33.3+ adds the cache breakdown; prompt_tokens stays the total
+          ...(cachedPromptTokens === undefined
+            ? {}
+            : { prompt_tokens_details: { cached_tokens: cachedPromptTokens } }),
+        },
       }),
     )
   }
@@ -141,5 +153,27 @@ describe('benchmark-runner — Ollama 0.32 OpenAI-compat wire format', () => {
     expect(q.fullResponse).toBe('The answer is B')
     expect(q.modelAnswer).toBe('B')
     expect(q.tokenCount).toBe(4)
+  })
+
+  // Ollama 0.33.3 added usage.prompt_tokens_details.cached_tokens
+  it('records the cached prompt tokens reported in the usage chunk', async () => {
+    vi.mocked(ollamaClient.streamChatOpenAI).mockResolvedValue(makeOllamaStream(['B'], 7, 22))
+
+    const result = await runBenchmark('test-model', [SUITE], 4096, false, new AbortController().signal, noopCallbacks())
+
+    const q = result.questionResults[0]!
+    expect(q.cachedPromptTokenCount).toBe(22)
+    // prompt_tokens remains the TOTAL, cached included
+    expect(q.promptTokenCount).toBe(30)
+  })
+
+  it('leaves cached prompt tokens undefined on a daemon that omits them', async () => {
+    vi.mocked(ollamaClient.streamChatOpenAI).mockResolvedValue(makeOllamaStream(['B'], 7))
+
+    const result = await runBenchmark('test-model', [SUITE], 4096, false, new AbortController().signal, noopCallbacks())
+
+    const q = result.questionResults[0]!
+    expect(q.cachedPromptTokenCount).toBeUndefined()
+    expect(q.promptTokenCount).toBe(30)
   })
 })

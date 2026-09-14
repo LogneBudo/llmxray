@@ -5,6 +5,36 @@ All notable changes to LLMxRay are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.1] — 2026-09-14
+
+### Fixed
+
+- **Prefill speed over-reported whenever the prompt cache was warm.** Ollama 0.33.3 redefined
+  `prompt_eval_duration` to cover only the *uncached* prompt tokens, while `prompt_eval_count`
+  still counts the whole prompt. Dividing one by the other inflated the prompt tokens/second
+  figure by the cache hit ratio — a prompt with 37 of 38 tokens served from cache read 4375 tok/s
+  instead of 115. The rate is now taken over the tokens actually evaluated.
+- Component tests mounted without the i18n plugin, so every `SlashCommandDropdown` test failed
+  with `Need to install with app.use function`. Tests now install the real English catalog
+  globally, and assert against the shipped strings.
+
+### Added
+
+- **Prompt cache reuse is now visible.** Session metrics show a Cached Prompt card and split the
+  token distribution bar into cached and evaluated halves; the Protocol Observatory reports the
+  cached share per protocol and names the three different fields the same fact arrives under —
+  `prompt_eval_cached_count` (native), `usage.prompt_tokens_details.cached_tokens` (OpenAI) and
+  `usage.cache_read_input_tokens` (Anthropic). Benchmark question results record it too.
+- `audio` capability, which Ollama 0.33.3 began reporting for models carrying an audio tower.
+- Cached and total prompt token rows in the Protocol Observatory envelope diff, in all six locales.
+
+### Changed
+
+- Verified against Ollama 0.33.x; READMEs updated in all five languages.
+- Anthropic-compatible `input_tokens` now means the prompt total *minus* cached tokens on Ollama
+  0.33.3. The Observatory reconciles it back to the prompt size so the three protocols compare
+  like for like.
+
 ## [0.5.0] — 2026-08-15
 
 ### Fixed

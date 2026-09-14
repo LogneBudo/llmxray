@@ -33,6 +33,7 @@ export type OllamaCapability =
   | 'thinking'
   | 'embedding'
   | 'insert'
+  | 'audio'
   | (string & {})
 
 /**
@@ -134,6 +135,14 @@ export interface OllamaGenerateChunk {
   total_duration?: number
   load_duration?: number
   prompt_eval_count?: number
+  /**
+   * Prompt tokens served from the KV cache, added in Ollama 0.33.3. The
+   * sibling `prompt_eval_duration` covers ONLY the uncached tokens, while
+   * `prompt_eval_count` remains the total — so a prefill rate must divide by
+   * `prompt_eval_count - prompt_eval_cached_count`, never by the raw count.
+   * Omitted by daemons older than 0.33.3 and by runners that do not report it.
+   */
+  prompt_eval_cached_count?: number
   prompt_eval_duration?: number
   eval_count?: number
   eval_duration?: number
@@ -154,6 +163,14 @@ export interface OllamaChatChunk {
   total_duration?: number
   load_duration?: number
   prompt_eval_count?: number
+  /**
+   * Prompt tokens served from the KV cache, added in Ollama 0.33.3. The
+   * sibling `prompt_eval_duration` covers ONLY the uncached tokens, while
+   * `prompt_eval_count` remains the total — so a prefill rate must divide by
+   * `prompt_eval_count - prompt_eval_cached_count`, never by the raw count.
+   * Omitted by daemons older than 0.33.3 and by runners that do not report it.
+   */
+  prompt_eval_cached_count?: number
   prompt_eval_duration?: number
   eval_count?: number
   eval_duration?: number
@@ -187,6 +204,11 @@ export interface OpenAIChatChunk {
     prompt_tokens: number
     completion_tokens: number
     total_tokens: number
+    /** Cache breakdown of `prompt_tokens`, added in Ollama 0.33.3. */
+    prompt_tokens_details?: {
+      /** Prompt tokens served from the KV cache. `prompt_tokens` stays the total. */
+      cached_tokens?: number
+    }
   }
 }
 

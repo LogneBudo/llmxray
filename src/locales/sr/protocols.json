@@ -28,7 +28,8 @@
   "metrics": {
     "total": "Ukupno",
     "tokens": "Tokeni",
-    "finish": "Kraj"
+    "finish": "Kraj",
+    "cachedPrompt": "Keširani prompt"
   },
   "tabs": {
     "responseDiff": "Poređenje odgovora",
@@ -42,6 +43,9 @@
     "finishValue": "Razlog završetka (ovaj run)",
     "usageField": "Nosač broja tokena",
     "tokensReported": "Generisani tokeni (ovaj run)",
+    "cacheField": "Nosač keša prompta",
+    "cachedReported": "Keširani tokeni prompta (ovaj run)",
+    "promptTotal": "Tokeni prompta, ukupno (ovaj run)",
     "errorShape": "Oblik envelope greške",
     "footnote": "Opažene vrednosti su iz ovog runa na vašem lokalnom Ollama. Neki nosači (npr. NDJSON nativni `done_reason`) pojavljuju se samo na poslednjem chunk-u, drugi (npr. Anthropic `message_stop`) su namenski događaji."
   }

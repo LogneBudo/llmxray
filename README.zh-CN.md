@@ -126,7 +126,7 @@ docker run -p 5174:5174 djovaneli/llmxray
 
 ## Ollama 兼容性
 
-针对 **Ollama 0.32.x**(2026 年 8 月最新稳定版)进行了测试与验证。LLMxRay 使用以下 Ollama 端点:
+针对 **Ollama 0.33.x**(已在 0.33.3 上验证,2026 年 9 月)进行了测试与验证。LLMxRay 使用以下 Ollama 端点:
 
 | 端点 | 用途 |
 |---|---|
@@ -139,7 +139,7 @@ docker run -p 5174:5174 djovaneli/llmxray
 | `/v1/chat/completions` | OpenAI 兼容路径,外科手术式基准测试用于获取真实 logprobs |
 | `/v1/messages` | Anthropic 兼容路径,协议观察台使用 |
 
-**兼容版本:** Ollama 0.20 及更新版本(更早版本支持对话/生成但缺少 `think` 与 JSON-schema `format`)。**推荐版本:** Ollama 0.32+ —— 能力与上下文长度随模型列表一并返回,`think` 支持分级推理强度,嵌入支持 `dimensions` 维度。
+**兼容版本:** Ollama 0.20 及更新版本(更早版本支持对话/生成但缺少 `think` 与 JSON-schema `format`)。**推荐版本:** Ollama 0.33.3+ —— 会报告提示缓存复用(`prompt_eval_cached_count`,以及 OpenAI 兼容端点的 `usage.prompt_tokens_details.cached_tokens`),因此预填充吞吐率仅按实际计算的词元统计。0.32 起:能力与上下文长度随模型列表一并返回,`think` 支持分级推理强度,嵌入支持 `dimensions` 维度。
 
 ---
 

@@ -126,7 +126,7 @@ Traductions complètes en anglais, français, serbe (latin + cyrillique), chinoi
 
 ## Compatibilité Ollama
 
-Testé et vérifié avec **Ollama 0.32.x** (la version stable la plus récente en août 2026). LLMxRay utilise les endpoints Ollama suivants :
+Testé et vérifié avec **Ollama 0.33.x** (vérifié sur 0.33.3, septembre 2026). LLMxRay utilise les endpoints Ollama suivants :
 
 | Endpoint | Utilisation |
 |---|---|
@@ -139,7 +139,7 @@ Testé et vérifié avec **Ollama 0.32.x** (la version stable la plus récente e
 | `/v1/chat/completions` | Chemin compatible OpenAI utilisé par le Benchmark chirurgical pour les vrais logprobs |
 | `/v1/messages` | Chemin compatible Anthropic utilisé par l'Observatoire de protocoles |
 
-**Compatible avec :** Ollama 0.20 et plus récent (les versions antérieures fonctionnent pour chat/generate mais sans `think` ni `format` JSON-schema). **Recommandé :** Ollama 0.32+ — les capacités et la longueur de contexte arrivent avec la liste des modèles, `think` accepte des niveaux d'effort gradués, et les embeddings acceptent une largeur `dimensions`.
+**Compatible avec :** Ollama 0.20 et plus récent (les versions antérieures fonctionnent pour chat/generate mais sans `think` ni `format` JSON-schema). **Recommandé :** Ollama 0.33.3+ — la réutilisation du cache d'invite est rapportée (`prompt_eval_cached_count`, et `usage.prompt_tokens_details.cached_tokens` sur l'endpoint compatible OpenAI), donc le débit de préremplissage est mesuré sur les tokens réellement évalués. Depuis 0.32 : les capacités et la longueur de contexte arrivent avec la liste des modèles, `think` accepte des niveaux d'effort gradués, et les embeddings acceptent une largeur `dimensions`.
 
 ---
 

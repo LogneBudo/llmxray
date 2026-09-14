@@ -126,7 +126,7 @@ Potpuni prevodi na engleskom, francuskom, srpskom (latinica + ćirilica), kinesk
 
 ## Ollama kompatibilnost
 
-Testirano i verifikovano sa **Ollama 0.32.x** (trenutno najnovija stabilna verzija u avgustu 2026). LLMxRay koristi sledeće Ollama endpointe:
+Testirano i verifikovano sa **Ollama 0.33.x** (verifikovano na 0.33.3, septembar 2026). LLMxRay koristi sledeće Ollama endpointe:
 
 | Endpoint | Za šta se koristi |
 |---|---|
@@ -139,7 +139,7 @@ Testirano i verifikovano sa **Ollama 0.32.x** (trenutno najnovija stabilna verzi
 | `/v1/chat/completions` | OpenAI-compat putanja koju Surgical Benchmark koristi za prave logprobs |
 | `/v1/messages` | Anthropic-compat putanja koju koristi Protocol Observatory |
 
-**Kompatibilno sa:** Ollama 0.20 i novijim (starije verzije rade za chat/generate, ali nemaju `think` i JSON-schema `format`). **Preporučeno:** Ollama 0.32+ — sposobnosti i dužina konteksta stižu sa listom modela, `think` prihvata stepenovane nivoe napora, a embedinzi prihvataju `dimensions` širinu.
+**Kompatibilno sa:** Ollama 0.20 i novijim (starije verzije rade za chat/generate, ali nemaju `think` i JSON-schema `format`). **Preporučeno:** Ollama 0.33.3+ — ponovna upotreba keša prompta se prijavljuje (`prompt_eval_cached_count`, i `usage.prompt_tokens_details.cached_tokens` na OpenAI-kompatibilnom endpointu), pa se propusnost prefila meri nad tokenima koji su zaista evaluirani. Od 0.32: sposobnosti i dužina konteksta stižu sa listom modela, `think` prihvata stepenovane nivoe napora, a embedinzi prihvataju `dimensions` širinu.
 
 ---
 

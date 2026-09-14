@@ -40,6 +40,18 @@ function tokensPerSecond(state: ProtocolRunState): string {
   return tps.toFixed(1)
 }
 
+/**
+ * Cached prompt tokens as "n (p%)". Null means the protocol never reported the
+ * field — a pre-0.33.3 daemon — which is shown as an em dash rather than as 0,
+ * because "not reported" and "nothing cached" are different claims.
+ */
+function cachedPrompt(state: ProtocolRunState): string {
+  if (state.cachedPromptTokens === null) return '—'
+  if (!state.promptTokens) return String(state.cachedPromptTokens)
+  const pct = Math.round((state.cachedPromptTokens / state.promptTokens) * 100)
+  return `${state.cachedPromptTokens} (${pct}%)`
+}
+
 function fmt(value: number | null, unit = 'ms'): string {
   if (value === null) return '—'
   return `${value} ${unit}`
@@ -201,6 +213,10 @@ function jsonPretty(obj: unknown): string {
               <span class="font-mono text-text-primary">{{ tokensPerSecond(p.state) }}</span>
             </div>
             <div class="col-span-2 flex justify-between">
+              <span class="text-text-muted">{{ $t('protocols.metrics.cachedPrompt') }}</span>
+              <span class="font-mono text-text-primary">{{ cachedPrompt(p.state) }}</span>
+            </div>
+            <div class="col-span-2 flex justify-between">
               <span class="text-text-muted">{{ $t('protocols.metrics.finish') }}</span>
               <span class="font-mono text-text-primary truncate ms-2">{{ p.state.finishReason ?? '—' }}</span>
             </div>
@@ -294,6 +310,20 @@ function jsonPretty(obj: unknown): string {
               <tr>
                 <td class="py-2 ps-2 font-medium text-text-secondary">{{ $t('protocols.envelopeDiff.tokensReported') }}</td>
                 <td v-for="p in protocols" :key="p.key" class="py-2 font-mono text-text-primary">{{ p.state.outputTokens || '—' }}</td>
+              </tr>
+              <tr>
+                <td class="py-2 ps-2 font-medium text-text-secondary">{{ $t('protocols.envelopeDiff.cacheField') }}</td>
+                <td class="py-2 font-mono text-text-primary"><code>prompt_eval_cached_count</code></td>
+                <td class="py-2 font-mono text-text-primary"><code>usage.prompt_tokens_details.cached_tokens</code></td>
+                <td class="py-2 font-mono text-text-primary"><code>usage.cache_read_input_tokens</code></td>
+              </tr>
+              <tr>
+                <td class="py-2 ps-2 font-medium text-text-secondary">{{ $t('protocols.envelopeDiff.cachedReported') }}</td>
+                <td v-for="p in protocols" :key="p.key" class="py-2 font-mono text-text-primary">{{ cachedPrompt(p.state) }}</td>
+              </tr>
+              <tr>
+                <td class="py-2 ps-2 font-medium text-text-secondary">{{ $t('protocols.envelopeDiff.promptTotal') }}</td>
+                <td v-for="p in protocols" :key="p.key" class="py-2 font-mono text-text-primary">{{ p.state.promptTokens || '—' }}</td>
               </tr>
               <tr>
                 <td class="py-2 ps-2 font-medium text-text-secondary">{{ $t('protocols.envelopeDiff.errorShape') }}</td>

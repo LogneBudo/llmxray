@@ -19,6 +19,16 @@ export interface ProtocolRunState {
   totalMs: number | null
   outputText: string
   outputTokens: number
+  /** Total prompt tokens, cached ones included, however the protocol names them */
+  promptTokens: number
+  /**
+   * Prompt tokens served from the KV cache. Ollama 0.33.3 reports this in all
+   * three protocols under three different names — `prompt_eval_cached_count`,
+   * `usage.prompt_tokens_details.cached_tokens` and `usage.cache_read_input_tokens` —
+   * which is precisely the kind of divergence this page exists to show.
+   * Null while no protocol has reported it.
+   */
+  cachedPromptTokens: number | null
   /** Whatever each protocol uses to signal end-of-turn (different field names per protocol) */
   finishReason: string | null
   error: string | null
@@ -43,6 +53,8 @@ function emptyRun(protocol: ProtocolKind, endpoint: string): ProtocolRunState {
     totalMs: null,
     outputText: '',
     outputTokens: 0,
+    promptTokens: 0,
+    cachedPromptTokens: null,
     finishReason: null,
     error: null,
     firstChunkRaw: null,
@@ -101,6 +113,10 @@ export const useProtocolObservatoryStore = defineStore('protocolObservatory', ()
           }
           state.outputText += text
           if (chunk.eval_count) state.outputTokens = chunk.eval_count
+          if (chunk.prompt_eval_count) state.promptTokens = chunk.prompt_eval_count
+          if (chunk.prompt_eval_cached_count !== undefined) {
+            state.cachedPromptTokens = chunk.prompt_eval_cached_count
+          }
           if (chunk.done) {
             state.completedAt = Date.now()
             state.totalMs = state.completedAt - (state.startedAt ?? state.completedAt)
@@ -144,6 +160,9 @@ export const useProtocolObservatoryStore = defineStore('protocolObservatory', ()
           }
           state.outputText += text
           if (chunk.usage?.completion_tokens) state.outputTokens = chunk.usage.completion_tokens
+          if (chunk.usage?.prompt_tokens) state.promptTokens = chunk.usage.prompt_tokens
+          const cachedTokens = chunk.usage?.prompt_tokens_details?.cached_tokens
+          if (cachedTokens !== undefined) state.cachedPromptTokens = cachedTokens
           if (choice?.finish_reason) {
             state.finishReason = choice.finish_reason
             state.completedAt = Date.now()
@@ -192,6 +211,14 @@ export const useProtocolObservatoryStore = defineStore('protocolObservatory', ()
             state.outputText += event.delta.text
           } else if (event.type === 'message_delta') {
             if (event.usage?.output_tokens) state.outputTokens = event.usage.output_tokens
+            // Ollama 0.33.3 makes `input_tokens` the EVALUATED count, not the
+            // total — the prompt size is input + cache_read. The other two
+            // protocols keep reporting the total, so they are reconciled here.
+            const cacheRead = event.usage?.cache_read_input_tokens
+            if (cacheRead !== undefined) state.cachedPromptTokens = cacheRead
+            if (event.usage?.input_tokens !== undefined) {
+              state.promptTokens = event.usage.input_tokens + (cacheRead ?? 0)
+            }
             if (event.delta?.stop_reason) state.finishReason = event.delta.stop_reason
           } else if (event.type === 'message_stop') {
             state.completedAt = Date.now()

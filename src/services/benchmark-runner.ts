@@ -72,6 +72,8 @@ async function runQuestion(
   let thinkingCumulative = ''
   const contentLogprobs: number[] = []
   let totalTokens = 0
+  let promptTokens: number | undefined
+  let cachedPromptTokens: number | undefined
 
   // Dynamic token budget: thinking models need 2048+ for reasoning chains,
   // standard models answer MC in 1-5 tokens so 64 is generous.
@@ -97,6 +99,11 @@ async function runQuestion(
       // (Ollama 0.32.6+, matching OpenAI). Read it before the choice guard.
       if (chunk.usage) {
         totalTokens = chunk.usage.completion_tokens
+        promptTokens = chunk.usage.prompt_tokens
+        // Ollama 0.33.3+ breaks the prompt down into cached and evaluated
+        // tokens. `prompt_tokens` stays the total, so the cached share is
+        // additional information, not a subtotal to deduct.
+        cachedPromptTokens = chunk.usage.prompt_tokens_details?.cached_tokens
       }
 
       const choice = chunk.choices[0]
@@ -183,6 +190,8 @@ async function runQuestion(
     fullResponse: cumulative,
     thinkingResponse: thinkingCumulative,
     tokenCount: totalTokens,
+    promptTokenCount: promptTokens,
+    cachedPromptTokenCount: cachedPromptTokens,
   }
 
   callbacks.onQuestionComplete(result)

@@ -32,6 +32,13 @@ export interface QuestionResult {
   fullResponse: string
   thinkingResponse: string
   tokenCount: number
+  /** Prompt tokens for this question (Ollama reports these as usage.prompt_tokens). */
+  promptTokenCount?: number
+  /**
+   * Prompt tokens served from the KV cache — `usage.prompt_tokens_details.cached_tokens`,
+   * added in Ollama 0.33.3. Undefined on older daemons and on results stored before it.
+   */
+  cachedPromptTokenCount?: number
 }
 
 export interface CategoryResult {

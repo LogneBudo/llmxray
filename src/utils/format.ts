@@ -18,6 +18,13 @@ export function formatNumber(n: number): string {
 }
 
 /**
+ * Format a 0..1 ratio as a percentage.
+ */
+export function formatPercent(ratio: number): string {
+  return `${(ratio * 100).toFixed(0)}%`
+}
+
+/**
  * Format tokens per second.
  */
 export function formatTps(tps: number): string {

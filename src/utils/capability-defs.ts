@@ -1,5 +1,5 @@
 import type { Component } from 'vue'
-import { PenLine, Wrench, Lightbulb, Eye, Compass } from 'lucide-vue-next'
+import { PenLine, Wrench, Lightbulb, Eye, Compass, AudioLines } from 'lucide-vue-next'
 
 export interface CapabilityDef {
   key: string
@@ -42,6 +42,14 @@ const CAPABILITY_DEFS: Record<string, CapabilityDef> = {
     color: 'text-success',
     icon: Eye,
     unicode: '\u{1F441}', // 👁
+  },
+  audio: {
+    key: 'audio',
+    label: 'Audio',
+    desc: 'Can process spoken audio alongside text. Reported from Ollama 0.33.3, which stopped suppressing the capability for models carrying an audio tower.',
+    color: 'text-accent-hover',
+    icon: AudioLines,
+    unicode: '\u{1F3A7}', // headphones
   },
   embedding: {
     key: 'embedding',

@@ -28,7 +28,8 @@
   "metrics": {
     "total": "Total",
     "tokens": "Tokens",
-    "finish": "Finish"
+    "finish": "Finish",
+    "cachedPrompt": "Cached prompt"
   },
   "tabs": {
     "responseDiff": "Response comparison",
@@ -42,6 +43,9 @@
     "finishValue": "Finish-reason value (this run)",
     "usageField": "Token-count carrier",
     "tokensReported": "Completion tokens (this run)",
+    "cacheField": "Prompt-cache carrier",
+    "cachedReported": "Cached prompt tokens (this run)",
+    "promptTotal": "Prompt tokens, total (this run)",
     "errorShape": "Error envelope shape",
     "footnote": "Observed values are from this run on your local Ollama. Some carriers (e.g. native NDJSON `done_reason`) only appear on the final chunk, while others (e.g. Anthropic `message_stop`) are dedicated events."
   }

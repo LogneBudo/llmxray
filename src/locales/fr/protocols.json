@@ -28,7 +28,8 @@
   "metrics": {
     "total": "Total",
     "tokens": "Tokens",
-    "finish": "Fin"
+    "finish": "Fin",
+    "cachedPrompt": "Invite en cache"
   },
   "tabs": {
     "responseDiff": "Comparaison des réponses",
@@ -42,6 +43,9 @@
     "finishValue": "Motif de fin (ce run)",
     "usageField": "Porteur du compte de tokens",
     "tokensReported": "Tokens générés (ce run)",
+    "cacheField": "Porteur du cache d'invite",
+    "cachedReported": "Tokens d'invite en cache (ce run)",
+    "promptTotal": "Tokens d'invite, total (ce run)",
     "errorShape": "Forme de l'enveloppe d'erreur",
     "footnote": "Les valeurs observées proviennent de ce run sur votre Ollama local. Certains porteurs (ex. `done_reason` natif NDJSON) n'apparaissent que sur le chunk final, d'autres (ex. `message_stop` Anthropic) sont des événements dédiés."
   }
