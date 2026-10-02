@@ -1,4 +1,4 @@
-[ English | [简体中文](README_CN.md) | [繁體中文](README_TW.md) ]
+[ English | [简体中文](README_CN.md)]
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/LogneBudo/llmxray/master/public/favicon.svg" alt="LLMxRay" width="80" />
