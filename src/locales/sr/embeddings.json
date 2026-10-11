@@ -56,5 +56,11 @@
   "history": {
     "title": "Nedavno ugnježđeno",
     "clearAll": "Obriši sve"
+  },
+  "image": {
+    "attach": "Priloži sliku",
+    "remove": "Ukloni sliku",
+    "hint": "Ovaj model ugrađuje i slike. Slika košta fiksan blok tokena upita uz tekst.",
+    "promptTokens": "{n} tokena upita"
   }
 }

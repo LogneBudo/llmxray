@@ -34,6 +34,26 @@ ollama pull nomic-embed-text
    - **0.3–0.7** —— 有一定关联
    - **低于 0.3** —— 不相关
 
+## 为图片生成嵌入
+
+自 Ollama 0.40 起，`/api/embed` 在同时声明 `embedding` 和 `vision` 能力的模型上可以接受图片与文本一起输入。所选模型支持时，实验台文本框下方和相似度计算器的两侧都会出现**附加图片**控件。纯文本模型不会显示任何图片控件，因为守护进程对媒体输入返回 501。
+
+你可以这样用：
+
+- 嵌入一张照片和一句描述它的话，然后比较两者。同一个向量空间，因此余弦相似度是有意义的。
+- 比较两张照片。
+- 只嵌入一张图片，不带文本。
+
+每个结果都会显示它消耗的**提示词 token**。图片在文本之外是一块固定的 token：在 embeddinggemma-2 上实测，一句短句消耗 7 个 token，同一句加一张极小的图片消耗 265 个。无论图片多大，这一块都要付。
+
+**目前唯一支持此功能的模型 embeddinggemma-2 运行在 Ollama 的 MLX 运行时上，而 MLX 仅存在于 Apple Silicon。** 在 Windows 或 Linux 上，`ollama pull embeddinggemma-2` 会失败并提示 "this model requires MLX support"。要从另一台机器使用它，请通过 SSH 转发 Mac 上的守护进程，并在设置中把 LLMxRay 指向它：
+
+```
+ssh -L 11435:localhost:11434 user@your-mac
+```
+
+然后把 Ollama URL 设为 `http://localhost:11435/api`。
+
 ## 使用场景
 
 - **理解嵌入** —— 看清这些数字究竟代表什么

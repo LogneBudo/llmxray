@@ -56,5 +56,11 @@
   "history": {
     "title": "最近的 Embeddings",
     "clearAll": "全部清除"
+  },
+  "image": {
+    "attach": "附加图片",
+    "remove": "移除图片",
+    "hint": "该模型也能嵌入图片。一张图片在文本之外会固定消耗一块提示词 token。",
+    "promptTokens": "{n} 个提示词 token"
   }
 }

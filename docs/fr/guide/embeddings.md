@@ -34,6 +34,26 @@ ollama pull nomic-embed-text
    - **0.3-0.7** -- Partiellement liés
    - **< 0.3** -- Sans rapport
 
+## Encoder des images
+
+Depuis Ollama 0.40, `/api/embed` accepte une image en plus du texte, sur les modèles qui déclarent à la fois les capacités `embedding` et `vision`. Quand le modèle sélectionné le fait, un contrôle **Joindre une image** apparaît sous la zone de texte du bac à sable et sous chaque côté du Calculateur de similarité. Un modèle texte seul n'affiche aucun contrôle d'image, parce que le démon répond aux médias par un 501.
+
+Ce que vous pouvez en faire :
+
+- Encoder une photo et une phrase qui la décrit, puis les comparer. Même espace vectoriel, donc la similarité cosinus a un sens.
+- Comparer deux photos.
+- Encoder une image seule, sans texte.
+
+Chaque résultat affiche les **tokens d'invite** qu'il a coûtés. Une image est un bloc fixe de tokens en plus du texte — mesuré sur embeddinggemma-2 : une phrase courte a coûté 7 tokens, la même phrase avec une image minuscule 265. Ce bloc se paie quelle que soit la taille de l'image.
+
+**Le seul modèle qui le fait aujourd'hui, embeddinggemma-2, tourne sur le moteur MLX d'Ollama, qui n'existe que sur Apple Silicon.** Sous Windows ou Linux, `ollama pull embeddinggemma-2` échoue avec « this model requires MLX support ». Pour l'utiliser depuis une autre machine, redirigez le démon du Mac via SSH et pointez LLMxRay dessus dans les Paramètres :
+
+```
+ssh -L 11435:localhost:11434 utilisateur@votre-mac
+```
+
+puis réglez l'URL Ollama sur `http://localhost:11435/api`.
+
 ## Cas d'utilisation
 
 - **Comprendre les embeddings** -- Voir ce que ces nombres représentent concrètement

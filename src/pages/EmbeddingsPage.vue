@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import { useModelStore } from '@/stores/model-store'
 import { useEmbeddingStore } from '@/stores/embedding-store'
 import type { EmbeddingResult } from '@/types/embedding'
@@ -11,6 +11,7 @@ import EmbeddingVectorViz from '@/components/embeddings/EmbeddingVectorViz.vue'
 import EmbeddingStats from '@/components/embeddings/EmbeddingStats.vue'
 import EmbeddingTransformViz from '@/components/embeddings/EmbeddingTransformViz.vue'
 import SimilarityMeter from '@/components/embeddings/SimilarityMeter.vue'
+import ImageAttach from '@/components/embeddings/ImageAttach.vue'
 
 const modelStore = useModelStore()
 const embeddingStore = useEmbeddingStore()
@@ -21,6 +22,27 @@ const memoryDb = computed(() => storageStore.getDatabaseById('message-memory'))
 const selectedModel = ref('')
 const inputText = ref('')
 const activeResult = ref<EmbeddingResult | null>(null)
+
+// Image input (Ollama 0.40 `/api/embed` object form). Offered only when the
+// selected model reports both `embedding` and `vision`; a text-only model
+// answers 501 to media, so the controls simply do not exist for it.
+const canAttachImage = computed(() => !!selectedModel.value && modelStore.supportsImageEmbedding(selectedModel.value))
+const playgroundImage = ref<string | undefined>()
+const compareImageA = ref<string | undefined>()
+const compareImageB = ref<string | undefined>()
+watch(canAttachImage, (ok) => {
+  if (ok) return
+  playgroundImage.value = undefined
+  compareImageA.value = undefined
+  compareImageB.value = undefined
+})
+const canEmbedPlayground = computed(() => !!selectedModel.value && (inputText.value.trim().length > 0 || !!playgroundImage.value))
+const canCompare = computed(
+  () =>
+    !!selectedModel.value &&
+    (compareTextA.value.trim().length > 0 || !!compareImageA.value) &&
+    (compareTextB.value.trim().length > 0 || !!compareImageB.value),
+)
 
 // Matryoshka output width (Ollama `dimensions`). 0 / empty = model's native width.
 const outputDimensions = ref(0)
@@ -89,11 +111,11 @@ const availableModels = computed(() =>
 )
 
 async function embedText() {
-  if (!selectedModel.value || !inputText.value.trim()) return
+  if (!canEmbedPlayground.value) return
   try {
     activeResult.value = await embeddingStore.embed(
       selectedModel.value,
-      inputText.value.trim(),
+      { text: inputText.value.trim(), image: playgroundImage.value },
       requestedDimensions.value,
     )
   } catch {
@@ -102,14 +124,14 @@ async function embedText() {
 }
 
 async function compareSimilarity() {
-  if (!selectedModel.value || !compareTextA.value.trim() || !compareTextB.value.trim()) return
+  if (!canCompare.value) return
   comparing.value = true
   similarityScore.value = null
 
   try {
     const [resultA, resultB] = await Promise.all([
-      embeddingStore.embed(selectedModel.value, compareTextA.value.trim(), requestedDimensions.value),
-      embeddingStore.embed(selectedModel.value, compareTextB.value.trim(), requestedDimensions.value),
+      embeddingStore.embed(selectedModel.value, { text: compareTextA.value.trim(), image: compareImageA.value }, requestedDimensions.value),
+      embeddingStore.embed(selectedModel.value, { text: compareTextB.value.trim(), image: compareImageB.value }, requestedDimensions.value),
     ])
 
     compareResultA.value = resultA
@@ -201,10 +223,20 @@ onMounted(async () => {
         @keydown.ctrl.enter="embedText"
       />
 
+      <div v-if="canAttachImage" class="flex flex-wrap items-center gap-3">
+        <ImageAttach
+          v-model="playgroundImage"
+          :disabled="embeddingStore.loading"
+          :label="$t('embeddings.image.attach')"
+          :remove-label="$t('embeddings.image.remove')"
+        />
+        <span class="text-[11px] text-text-muted">{{ $t('embeddings.image.hint') }}</span>
+      </div>
+
       <div class="flex items-center gap-3">
         <button
           class="rounded-lg bg-accent px-4 py-2 text-sm font-medium text-surface hover:bg-accent-hover transition-colors disabled:opacity-50"
-          :disabled="embeddingStore.loading || !selectedModel || !inputText.trim()"
+          :disabled="embeddingStore.loading || !canEmbedPlayground"
           @click="embedText"
         >
           <span v-if="embeddingStore.loading" class="flex items-center gap-2">
@@ -225,6 +257,10 @@ onMounted(async () => {
       <!-- Active result -->
       <template v-if="activeResult">
         <EmbeddingStats :result="activeResult" />
+        <p v-if="activeResult.promptTokens !== undefined" class="flex items-center gap-2 text-xs text-text-muted">
+          <img v-if="activeResult.image" :src="`data:image/png;base64,${activeResult.image}`" alt="" class="h-8 w-8 rounded border border-border-default object-cover" />
+          <span>{{ $t('embeddings.image.promptTokens', { n: activeResult.promptTokens }) }}</span>
+        </p>
 
         <!-- Raw values (first 50) -->
         <details class="text-xs">
@@ -260,6 +296,14 @@ onMounted(async () => {
             :placeholder="$t('embeddings.similarity.placeholderA')"
             :disabled="comparing"
           />
+          <ImageAttach
+            v-if="canAttachImage"
+            v-model="compareImageA"
+            class="mt-2"
+            :disabled="comparing"
+            :label="$t('embeddings.image.attach')"
+            :remove-label="$t('embeddings.image.remove')"
+          />
         </div>
         <div>
           <label class="block text-xs font-medium text-text-muted mb-1">{{ $t('embeddings.similarity.textB') }}</label>
@@ -270,12 +314,20 @@ onMounted(async () => {
             :placeholder="$t('embeddings.similarity.placeholderB')"
             :disabled="comparing"
           />
+          <ImageAttach
+            v-if="canAttachImage"
+            v-model="compareImageB"
+            class="mt-2"
+            :disabled="comparing"
+            :label="$t('embeddings.image.attach')"
+            :remove-label="$t('embeddings.image.remove')"
+          />
         </div>
       </div>
 
       <button
         class="rounded-lg bg-accent px-4 py-2 text-sm font-medium text-surface hover:bg-accent-hover transition-colors disabled:opacity-50"
-        :disabled="comparing || !selectedModel || !compareTextA.trim() || !compareTextB.trim()"
+        :disabled="comparing || !canCompare"
         @click="compareSimilarity"
       >
         <span v-if="comparing" class="flex items-center gap-2">
@@ -289,9 +341,11 @@ onMounted(async () => {
         <div class="flex flex-col items-center gap-6 py-4 lg:flex-row lg:items-start lg:justify-center">
           <div class="flex-1 space-y-2">
             <div class="text-xs font-medium text-text-muted">{{ $t('embeddings.similarity.textA') }}</div>
-            <div class="rounded-lg bg-surface p-3 text-sm text-text-secondary">
-              {{ compareResultA.input }}
+            <div class="flex items-start gap-3 rounded-lg bg-surface p-3 text-sm text-text-secondary">
+              <img v-if="compareResultA.image" :src="`data:image/png;base64,${compareResultA.image}`" alt="" class="h-16 w-16 shrink-0 rounded border border-border-default object-cover" />
+              <span>{{ compareResultA.input }}</span>
             </div>
+            <p v-if="compareResultA.promptTokens !== undefined" class="text-[11px] text-text-muted">{{ $t('embeddings.image.promptTokens', { n: compareResultA.promptTokens }) }}</p>
             <EmbeddingVectorViz :vector="compareResultA.vector" :height="80" />
           </div>
 
@@ -299,9 +353,11 @@ onMounted(async () => {
 
           <div class="flex-1 space-y-2">
             <div class="text-xs font-medium text-text-muted">{{ $t('embeddings.similarity.textB') }}</div>
-            <div class="rounded-lg bg-surface p-3 text-sm text-text-secondary">
-              {{ compareResultB.input }}
+            <div class="flex items-start gap-3 rounded-lg bg-surface p-3 text-sm text-text-secondary">
+              <img v-if="compareResultB.image" :src="`data:image/png;base64,${compareResultB.image}`" alt="" class="h-16 w-16 shrink-0 rounded border border-border-default object-cover" />
+              <span>{{ compareResultB.input }}</span>
             </div>
+            <p v-if="compareResultB.promptTokens !== undefined" class="text-[11px] text-text-muted">{{ $t('embeddings.image.promptTokens', { n: compareResultB.promptTokens }) }}</p>
             <EmbeddingVectorViz :vector="compareResultB.vector" :height="80" />
           </div>
         </div>

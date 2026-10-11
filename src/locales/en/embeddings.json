@@ -56,5 +56,11 @@
   "history": {
     "title": "Recent Embeddings",
     "clearAll": "Clear all"
+  },
+  "image": {
+    "attach": "Attach an image",
+    "remove": "Remove image",
+    "hint": "This model embeds images too. An image costs a fixed block of prompt tokens on top of the text.",
+    "promptTokens": "{n} prompt tokens"
   }
 }

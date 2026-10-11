@@ -5,6 +5,18 @@ All notable changes to LLMxRay are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.1] — 2026-10-11
+
+### Added
+
+- **Image embeddings** on the Embeddings page (Ollama 0.40 `/api/embed` object input). When the
+  selected model reports both `embedding` and `vision`, an image can be attached in the playground
+  and on each side of the Similarity Calculator: photo against sentence, photo against photo, or an
+  image alone. Every result shows the prompt tokens it cost; an image is a fixed block on top of the
+  text (7 tokens for a short sentence, 265 with a tiny image, measured on embeddinggemma-2). Text-only
+  models show no image controls. The only such model today runs on MLX, Apple Silicon only; the guide
+  explains the SSH forward.
+
 ## [0.7.0] — 2026-10-11
 
 Verified against Ollama 0.40.3 (October 2026). Everything LLMxRay reads is unchanged from 0.33.3,

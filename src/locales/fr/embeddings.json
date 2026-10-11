@@ -56,5 +56,11 @@
   "history": {
     "title": "Embeddings r\u00e9cents",
     "clearAll": "Tout effacer"
+  },
+  "image": {
+    "attach": "Joindre une image",
+    "remove": "Retirer l’image",
+    "hint": "Ce modèle encode aussi les images. Une image coûte un bloc fixe de tokens d’invite en plus du texte.",
+    "promptTokens": "{n} tokens d’invite"
   }
 }

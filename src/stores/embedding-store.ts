@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { nanoid } from 'nanoid'
-import type { EmbeddingResult, SimilarityResult } from '@/types/embedding'
+import type { EmbeddingInput, EmbeddingResult, SimilarityResult } from '@/types/embedding'
 import { ollamaClient } from '@/services/ollama-client'
 
 export const useEmbeddingStore = defineStore('embeddings', () => {
@@ -14,31 +14,43 @@ export const useEmbeddingStore = defineStore('embeddings', () => {
   )
 
   /**
+   * @param input      Text, or `{ text?, image? }` for a model that embeds images
+   *                   (Ollama 0.40). A plain string is sent as-is; an object is
+   *                   sent as the daemon's object form, so a text-only model
+   *                   answers 501 "model does not support media embeddings".
    * @param dimensions Optional Matryoshka truncation width (Ollama `dimensions`).
    *                   Omit for the model's native vector width.
    */
   async function embed(
     model: string,
-    input: string,
+    input: string | EmbeddingInput,
     dimensions?: number,
   ): Promise<EmbeddingResult> {
+    const text = (typeof input === 'string' ? input : (input.text ?? '')).trim()
+    const image = typeof input === 'string' ? undefined : input.image
+    if (!text && !image) throw new Error('Nothing to embed')
+    // Plain text keeps the plain wire shape; only an image forces the object form.
+    const wireInput = image ? { ...(text ? { text } : {}), image } : text
+
     loading.value = true
     error.value = null
 
     const startTime = Date.now()
     try {
-      const response = await ollamaClient.embed({ model, input, dimensions })
+      const response = await ollamaClient.embed({ model, input: wireInput, dimensions })
       const vector = response.embeddings[0]
       if (!vector) throw new Error('No embedding returned')
 
       const result: EmbeddingResult = {
         id: nanoid(),
         model,
-        input,
+        input: text,
+        ...(image ? { image } : {}),
         vector,
         dimensions: vector.length,
         timestamp: Date.now(),
         durationMs: Date.now() - startTime,
+        ...(response.prompt_eval_count !== undefined ? { promptTokens: response.prompt_eval_count } : {}),
       }
 
       results.value.push(result)

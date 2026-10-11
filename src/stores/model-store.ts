@@ -126,6 +126,18 @@ export const useModelStore = defineStore('models', () => {
   }
 
   /**
+   * True for an embedding model that also accepts images (`/api/embed` object
+   * input, Ollama 0.40): it reports BOTH `embedding` and `vision`. Verified
+   * live on embeddinggemma-2, which reports embedding, vision and audio. No
+   * name heuristic — a text-only model answers 501 to media, so guessing
+   * would only produce errors.
+   */
+  function supportsImageEmbedding(name: string): boolean {
+    const caps = getCapabilities(name)
+    return caps.includes('embedding') && caps.includes('vision')
+  }
+
+  /**
    * The thinking levels a model advertises via /api/show (Ollama 0.34.3+), or
    * undefined when the daemon reports none — in which case the legacy
    * low/medium/high/max names apply. Only models whose metadata declares the
@@ -253,6 +265,7 @@ export const useModelStore = defineStore('models', () => {
     isThinkingModel,
     isVisionModel,
     supportsTools,
+    supportsImageEmbedding,
     capabilityIcons,
     fetchModels,
     fetchModelInfo,
