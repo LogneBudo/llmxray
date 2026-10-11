@@ -25,6 +25,12 @@ features:
     details: "Évaluez les modèles avec de vrais logprobs sur des suites de tests standardisées. Graphiques radar, détails par catégorie."
   - title: Base de Connaissances (RAG)
     details: "Téléversez des documents, découpez-les et générez leurs embeddings localement, puis recherchez en langage naturel. Le tout dans IndexedDB."
+  - title: Labo de cache
+    details: "Mesurez quelle part de votre invite le cache KV réutilise, trouvez où la réutilisation casse, et mesurez ce que la réécriture économise à chaque tour."
+  - title: Labo de décision
+    details: "Posez à un modèle de décision des questions typées sur un ticket ou un message, et voyez la probabilité derrière chaque réponse, dessinée en barres."
+    link: /fr/guide/decision-lab
+    linkText: Nouveau en 0.7.0
   - title: Atelier d'Outils
     details: "Créez, modifiez et testez des définitions d'outils sur un canevas visuel à base de nœuds avec synchronisation bidirectionnelle du code."
   - title: "100 % Local & Gratuit"

@@ -9,6 +9,9 @@ import { useModelStore } from '@/stores/model-store'
 import { useRagStore } from '@/stores/rag-store'
 import { ollamaClient } from '@/services/ollama-client'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+
+const { t, te } = useI18n()
 
 const props = defineProps<{
   modelValue: ChatSettings
@@ -33,21 +36,23 @@ const stopSequences = ref(props.modelValue.options.stop?.join(', ') ?? '')
 const mirostat = ref(props.modelValue.options.mirostat ?? 0)
 
 // Thinking control (Ollama `think` param — boolean, or a named effort level).
-// 'low' | 'medium' | 'high' joined 'max' in Ollama 0.32; 'on' sends `true`,
-// which lets the model pick its own default effort.
-const THINK_MODES = ['off', 'on', 'low', 'medium', 'high', 'max'] as const
-type ThinkMode = (typeof THINK_MODES)[number]
-const THINK_LEVELS: ThinkMode[] = ['low', 'medium', 'high', 'max']
+// 'off' omits the field, 'on' sends `true` (the model picks its own effort),
+// anything else is sent verbatim as a level name. The legacy names below are
+// what Ollama validates for a model that carries no thinking metadata; since
+// 0.34.3 a model may advertise its own levels via /api/show, and when it does
+// those replace the legacy list (see `thinkModes`).
+const LEGACY_THINK_MODES = ['off', 'on', 'low', 'medium', 'high', 'max']
+type ThinkMode = string
 
 function thinkValueToMode(v: OllamaThink | undefined): ThinkMode {
-  if (typeof v === 'string' && (THINK_LEVELS as string[]).includes(v)) return v as ThinkMode
+  if (typeof v === 'string') return v
   if (v === true) return 'on'
   return 'off'
 }
 function modeToThinkValue(m: ThinkMode): OllamaThink | undefined {
-  if ((THINK_LEVELS as string[]).includes(m)) return m as OllamaThink
   if (m === 'on') return true
-  return undefined
+  if (m === 'off') return undefined
+  return m
 }
 const thinkMode = ref<ThinkMode>(thinkValueToMode(props.modelValue.think))
 
@@ -159,6 +164,32 @@ const ragStore = useRagStore()
 const modelSupportsTools = computed(() => modelStore.supportsTools(props.selectedModel))
 const modelIsThinking = computed(() => modelStore.isThinkingModel(props.selectedModel))
 
+/**
+ * The modes to offer. A model that advertises its controls (Ollama 0.34.3+)
+ * defines them: `true` becomes 'on', `false` becomes 'off', strings are its own
+ * level names. 'off' is always offered, since omitting `think` is always valid.
+ */
+const thinkModes = computed<ThinkMode[]>(() => {
+  const advertised = modelStore.getThinkingControls(props.selectedModel)
+  if (!advertised) return LEGACY_THINK_MODES
+  const modes = advertised.values.map((v) => (v === true ? 'on' : v === false ? 'off' : String(v)))
+  return ['off', ...modes.filter((m) => m !== 'off')]
+})
+
+// A level the previous model offered may not exist on this one; fall back to
+// the model's default when it names one, else to 'off'.
+watch(thinkModes, (modes) => {
+  if (modes.includes(thinkMode.value)) return
+  const fallback = modelStore.getThinkingControls(props.selectedModel)?.default
+  thinkMode.value = thinkValueToMode(typeof fallback === 'boolean' || typeof fallback === 'string' ? fallback : undefined)
+})
+
+/** Translated label when one exists (legacy names); the model's own names are shown as-is. */
+function thinkModeLabel(mode: ThinkMode): string {
+  const key = `dashboard.settings.thinking.${mode}`
+  return te(key) ? t(key) : mode
+}
+
 // Auto-disable all tools when switching to a model that doesn't support them
 watch(() => props.selectedModel, (name) => {
   if (name && !modelStore.supportsTools(name) && toolStore.enabledTools.length > 0) {
@@ -235,14 +266,14 @@ async function pullEmbeddingModel(name: string) {
         </div>
         <div class="grid grid-cols-3 gap-1 rounded-lg border border-border-default bg-surface p-1">
           <button
-            v-for="mode in THINK_MODES"
+            v-for="mode in thinkModes"
             :key="mode"
             type="button"
             class="rounded-md px-2 py-1 text-[11px] font-medium transition-colors"
             :class="thinkMode === mode ? 'bg-accent text-surface' : 'text-text-secondary hover:bg-surface-overlay'"
             @click="thinkMode = mode"
           >
-            {{ $t(`dashboard.settings.thinking.${mode}`) }}
+            {{ thinkModeLabel(mode) }}
           </button>
         </div>
         <p class="mt-1 text-[10px] text-text-muted">{{ $t('dashboard.settings.thinking.hint') }}</p>

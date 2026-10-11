@@ -54,6 +54,8 @@ Run the same suite on multiple models to compare:
 
 Results are stored in IndexedDB so you can compare across sessions.
 
+Since Ollama 0.40, each new result is stamped with the **runner** that served the model (`llamacpp` or `mlx`), shown next to the context size in the ledger. On Apple Silicon the same model can now run on either, so two results under one model name are only comparable when their runner matches. Results recorded before 0.7.0 carry no runner.
+
 ## Custom Suites
 
 Click **Import** to load a custom benchmark suite. The expected format is a JSON file with:

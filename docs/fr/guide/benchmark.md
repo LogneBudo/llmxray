@@ -54,6 +54,8 @@ Lancez la même suite sur plusieurs modèles pour comparer :
 
 Les résultats sont stockés dans IndexedDB, ce qui vous permet de comparer entre les sessions.
 
+Depuis Ollama 0.40, chaque nouveau résultat porte le **moteur** qui a servi le modèle (`llamacpp` ou `mlx`), affiché à côté de la taille de contexte dans le registre. Sur Apple Silicon, le même modèle peut désormais tourner sur l'un ou l'autre, donc deux résultats sous un même nom de modèle ne sont comparables que si leur moteur correspond. Les résultats enregistrés avant la 0.7.0 n'en portent aucun.
+
 ## Suites personnalisées
 
 Cliquez sur **Importer** pour charger une suite de benchmark personnalisée. Le format attendu est un fichier JSON contenant :

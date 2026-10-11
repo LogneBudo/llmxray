@@ -8,7 +8,9 @@ import type {
   OllamaChatChunk,
   OllamaEmbedRequest,
   OllamaEmbedResponse,
+  OllamaShowManifestsResponse,
 } from '@/types/ollama'
+import type { DecisionRequest, DecisionResponse } from '@/types/decision'
 
 const DEFAULT_BASE_URL = '/api'
 
@@ -202,13 +204,63 @@ class OllamaClient {
     return data.models ?? []
   }
 
-  async deleteModel(name: string): Promise<void> {
+  /**
+   * Every child manifest behind a model tag (Ollama 0.40 manifest lists). A
+   * model upgraded in the background by 0.40.2 keeps its original `ggml`
+   * manifest next to the new `llamacpp` one; the old one is the backup.
+   */
+  async showManifests(name: string): Promise<OllamaShowManifestsResponse> {
+    const res = await fetch(`${this.baseUrl}/show`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: name, all_manifests: true }),
+    })
+    if (!res.ok) throw new Error(`Failed to show manifests: ${res.statusText}`)
+    return res.json() as Promise<OllamaShowManifestsResponse>
+  }
+
+  /**
+   * Delete a model by tag, or a single manifest by its digest — which is what
+   * `ollama rm <digest>` does, and how Ollama's own notes remove the backups
+   * kept by 0.40.2 upgrades. `model` is the documented field; `name` is the
+   * legacy alias, kept for older daemons.
+   */
+  async deleteModel(nameOrDigest: string): Promise<void> {
     const res = await fetch(`${this.baseUrl}/delete`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name }),
+      body: JSON.stringify({ model: nameOrDigest, name: nameOrDigest }),
     })
-    if (!res.ok) throw new Error(`Delete failed: ${res.statusText}`)
+    if (!res.ok) {
+      const detail = await res.text().catch(() => '')
+      throw new Error(detail || `Delete failed: ${res.statusText}`)
+    }
+  }
+
+  /**
+   * Ask a decision model (Ollama 0.35.1, `/v1/systemone`) one or more questions
+   * about a state. Returns choices, probabilities and scores rather than text;
+   * never streams. A model without the `decision` capability answers 400.
+   */
+  async decide(req: DecisionRequest, signal?: AbortSignal): Promise<DecisionResponse> {
+    const res = await fetch(`${this.openaiBaseUrl}/systemone`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(req),
+      signal,
+    })
+    if (!res.ok) {
+      const detail = await res.text().catch(() => '')
+      let message = detail || `Decision failed: ${res.statusText}`
+      try {
+        const parsed = JSON.parse(detail) as { error?: string }
+        if (parsed.error) message = parsed.error
+      } catch {
+        // plain-text error body
+      }
+      throw new Error(message)
+    }
+    return res.json() as Promise<DecisionResponse>
   }
 
   async embed(req: OllamaEmbedRequest): Promise<OllamaEmbedResponse> {

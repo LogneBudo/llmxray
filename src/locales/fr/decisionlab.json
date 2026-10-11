@@ -1,0 +1,46 @@
+{
+  "title": "Labo de décision",
+  "subtitle": "Posez à un modèle de décision des questions typées sur une situation, et voyez la probabilité derrière chaque réponse.",
+  "explainer": "Un modèle de décision n’écrit pas de texte. À partir d’un état et d’un ensemble de questions, il renvoie un choix avec une probabilité pour chaque candidat, la probabilité qu’une condition soit vraie, ou un score sur une échelle ordonnée. Ces probabilités sont la distribution de sortie du modèle lui-même, pas une lecture de prose. Ollama les sert sur /v1/systemone ; les modèles qui ne déclarent que la capacité decision ont leur place ici et nulle part ailleurs.",
+  "model": "Modèle de décision",
+  "noModels": "Aucun modèle de décision n’est installé.",
+  "noModelsHint": "Téléchargez nimble, tev1, clef ou clef-flash depuis la page Modèles ; ils déclarent la capacité decision et apparaissent ici.",
+  "state": "État",
+  "statePlaceholder": "Décrivez la situation sur laquelle portent toutes les questions : un ticket, un message, une ligne de log, un document.",
+  "questions": "Questions",
+  "addQuestion": "Ajouter une question",
+  "remove": "Supprimer",
+  "key": "Clé de réponse",
+  "type": "Type",
+  "instructions": "Consigne",
+  "instructionsPlaceholder": "Que doit décider le modèle ?",
+  "criteria": "Candidats",
+  "criteriaHint": {
+    "choice": "Un par ligne, sous la forme nom : description. De 2 à 26 candidats.",
+    "score": "Un par ligne, du plus bas au plus haut. L’ordre est l’échelle. De 2 à 26 échelons."
+  },
+  "types": {
+    "choice": "Choix",
+    "noul": "Probabilité oui / non",
+    "score": "Score sur une échelle"
+  },
+  "problems": {
+    "key": "Il manque une clé de réponse.",
+    "duplicateKey": "Une autre question utilise déjà cette clé.",
+    "instructions": "Il manque la consigne.",
+    "candidates": "Il faut entre 2 et 26 candidats."
+  },
+  "run": "Décider",
+  "cancel": "Arrêter",
+  "running": "Interrogation du modèle…",
+  "results": {
+    "title": "Réponses",
+    "chosen": "retenu",
+    "confidence": "confiance",
+    "score": "score",
+    "yes": "oui",
+    "no": "non",
+    "usage": "{input} tokens en entrée · {output} tokens en sortie · {ms}",
+    "footnote": "Les probabilités sont celles renvoyées par le modèle, arrondies seulement pour l’affichage. Le candidat retenu est le plus probable ; un score est la position attendue sur votre échelle, il peut donc tomber entre deux échelons."
+  }
+}

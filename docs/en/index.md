@@ -25,6 +25,12 @@ features:
     details: Evaluate models with real logprobs on standardized test suites. Radar charts, per-category breakdowns.
   - title: Knowledge Base (RAG)
     details: Upload documents, chunk and embed them locally, then search with natural language. All in IndexedDB.
+  - title: Cache Lab
+    details: Measure how much of your prompt the KV cache reuses, find where reuse breaks, and measure what the rewrite saves every turn.
+  - title: Decision Lab
+    details: Ask a decision model typed questions about a ticket or a message, and see the probability behind every answer, drawn as bars.
+    link: /en/guide/decision-lab
+    linkText: New in 0.7.0
   - title: Tool Workshop
     details: Build, edit, and test tool definitions on a visual node-based canvas with bidirectional code sync.
   - title: 100% Local & Free

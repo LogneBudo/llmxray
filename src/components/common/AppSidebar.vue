@@ -19,6 +19,7 @@ import {
   Code2,
   Network,
   DatabaseZap,
+  Scale,
 } from 'lucide-vue-next'
 import FeedbackOverlay from './FeedbackOverlay.vue'
 
@@ -34,6 +35,7 @@ const navItems = computed<{ path: string; label: string; icon: Component }[]>(()
   { path: '/tools', label: t('common.nav.toolWorkshop'), icon: Hammer },
   { path: '/fim', label: t('common.nav.fim'), icon: Code2 },
   { path: '/cache-lab', label: t('common.nav.cacheLab'), icon: DatabaseZap },
+  { path: '/decision-lab', label: t('common.nav.decisionLab'), icon: Scale },
   { path: '/protocols', label: t('common.nav.protocols'), icon: Network },
   { path: '/training', label: t('common.nav.aiTraining'), icon: GraduationCap },
   { path: '/settings?tab=models', label: t('common.nav.models'), icon: Boxes },

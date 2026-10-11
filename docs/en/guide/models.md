@@ -20,6 +20,7 @@ Each model card shows:
 | **Quantization** | Compression level (e.g., Q4_0, Q8_0, F16) |
 | **Family** | Model family (e.g., llama, mistral, gemma) |
 | **Format** | Model format (e.g., gguf) |
+| **Runner** | Runtime that serves the model since Ollama 0.40 (`llamacpp`, `mlx`, or `ggml` for a model pulled before 0.40) |
 
 ## Architecture Diagrams
 
@@ -37,6 +38,7 @@ Since **Ollama 0.32**, the model listing (`/api/tags`) reports each model's capa
 | **Vision** | Ollama `capabilities`, else name patterns (`llava`, `*-vl`, `moondream`, `gemma3`, Llama-vision, …) | Enables image attachment in chat |
 | **Embedding** | Ollama `capabilities`, else model family or name | Appears in Embeddings and Knowledge Base model selectors |
 | **Tool use** | Ollama `capabilities` | Enables tool calling in chat |
+| **Decision** | Ollama `capabilities` only (Ollama 0.35.1+) | Shown on the Models page; kept out of the chat and embedding selectors, since these models answer on `/v1/systemone` with choices and probabilities, not text |
 
 Because capabilities come straight from Ollama, LLMxRay tracks new model families automatically. A reported capability set is treated as authoritative — if the daemon lists a model's capabilities and *doesn't* include `thinking`, LLMxRay believes it rather than guessing from the name. The name patterns apply only when a model reports nothing at all.
 
@@ -52,6 +54,8 @@ For thinking-capable models, Chat Diagnostics exposes Ollama's `think` parameter
 | **On** | `true` | Thinking enabled; the model picks its own effort |
 | **Low / Medium / High** | `"low"` / `"medium"` / `"high"` | Explicit reasoning budget |
 | **Max** | `"max"` | Largest reasoning budget |
+
+Since **Ollama 0.34.3**, a model can advertise the exact `think` values it honours, and its default, through `/api/show`. When a model does, the control offers those levels under the model's own names instead of the list above; when it does not, the list above applies. Switching to a model that lacks the selected level falls back to that model's advertised default.
 
 Models that don't implement graded effort simply treat any level as "thinking on".
 

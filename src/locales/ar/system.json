@@ -85,7 +85,8 @@
     "vram": "VRAM",
     "ram": "RAM",
     "total": "الإجمالي",
-    "ctx": "السياق"
+    "ctx": "السياق",
+    "runner": "المشغّل"
   },
   "installedModels": {
     "title": "النماذج المثبّتة",

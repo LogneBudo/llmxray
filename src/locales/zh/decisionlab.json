@@ -1,0 +1,46 @@
+{
+  "title": "决策实验室",
+  "subtitle": "向决策模型提出关于某个情境的类型化问题，查看每个答案背后的概率。",
+  "explainer": "决策模型不生成文本。给定一个状态和一组问题，它返回带有各候选项概率的选择、某个条件成立的概率，或者在有序刻度上的评分。这些概率是模型自身的输出分布，而不是从文字里解析出来的。Ollama 通过 /v1/systemone 提供这类模型；只声明 decision 能力的模型属于这里，不属于其他任何页面。",
+  "model": "决策模型",
+  "noModels": "尚未安装决策模型。",
+  "noModelsHint": "在模型页拉取 nimble、tev1、clef 或 clef-flash；它们声明 decision 能力后会出现在这里。",
+  "state": "状态",
+  "statePlaceholder": "描述所有问题所针对的情境：一张工单、一条消息、一行日志、一份文档。",
+  "questions": "问题",
+  "addQuestion": "添加问题",
+  "remove": "删除",
+  "key": "答案键",
+  "type": "类型",
+  "instructions": "指令",
+  "instructionsPlaceholder": "要让模型判断什么？",
+  "criteria": "候选项",
+  "criteriaHint": {
+    "choice": "每行一个，格式为 名称: 描述。2 到 26 个候选项。",
+    "score": "每行一个，从低到高。顺序即刻度。2 到 26 档。"
+  },
+  "types": {
+    "choice": "选择",
+    "noul": "是 / 否概率",
+    "score": "刻度评分"
+  },
+  "problems": {
+    "key": "需要一个答案键。",
+    "duplicateKey": "另一个问题已使用此键。",
+    "instructions": "需要指令。",
+    "candidates": "需要 2 到 26 个候选项。"
+  },
+  "run": "判断",
+  "cancel": "停止",
+  "running": "正在询问模型…",
+  "results": {
+    "title": "答案",
+    "chosen": "选中",
+    "confidence": "置信度",
+    "score": "评分",
+    "yes": "是",
+    "no": "否",
+    "usage": "输入 {input} 个 token · 输出 {output} 个 token · {ms}",
+    "footnote": "概率即模型返回的原值，仅为显示而四舍五入。选中项是概率最高的候选；评分是在你的刻度上的期望位置，因此可能落在两档之间。"
+  }
+}

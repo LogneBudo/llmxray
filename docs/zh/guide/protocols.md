@@ -42,9 +42,17 @@ Ollama 并不只说一种协议。它实际上通过三种不同的传输格式�
 | 流式封装 | NDJSON | SSE | 带 `event:` 标签的 SSE |
 | 结束原因所在字段 | `done` + `done_reason` | `choices[].finish_reason` | `message_stop` 事件 |
 | token 计数所在字段 | `eval_count` + `prompt_eval_count` | `usage.{prompt,completion,total}_tokens` | `usage.{input,output}_tokens` |
+| 提示词缓存所在字段 | `prompt_eval_cached_count` | `usage.prompt_tokens_details.cached_tokens` | `usage.cache_read_input_tokens` |
+| 预填充时间所在字段 | `prompt_eval_duration`（纳秒） | `timings.prompt_ms` | — |
 | 错误报文结构 | `{"error": "string"}` | `{"error": {"message", "type", "code"}}` | `{"type": "error", "error": {...}, "request_id"}` |
 
 标着「本次运行」的行会填入你这次运行中实际观察到的值 —— 于是你可以看到，比如原生协议返回了 `done_reason: "stop"`，而 Anthropic 协议把同一个结果称为 `stop_reason: "end_turn"`。
+
+### 两个预填充速率
+
+自 Ollama 0.35.1 起，OpenAI 兼容端点会附带一个 `timings` 块，其中有现成的 `prompt_per_second`。表格把它显示为**「预填充速率（守护进程自报）」**，旁边是**「预填充速率（按实际评估的 token）」**，后者由 LLMxRay 根据同一个 chunk 计算：`(prompt_tokens − cached_tokens) / prompt_ms`。
+
+只要缓存是热的，两者就会不一致。守护进程的数字用提示词*总* token 数除以仅处理*未缓存* token 的时间，因此会按缓存命中率被放大；同一提示词运行两次，自报那一格就会变成琥珀色。在 0.40.3 上实测，31 个 token 中 30 个命中缓存：自报 3875 tok/s，按评估 token 计算为 125 tok/s。只有后者描述了模型真正做的工作。原生协议从不自报速率，Anthropic 兼容协议则完全不报告预填充时间，所以那些格子显示为破折号。
 
 ## 为什么是三种协议？
 

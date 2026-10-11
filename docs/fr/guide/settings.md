@@ -38,10 +38,11 @@ Les deux paramètres incluent des échelles visuelles et des explications en lan
 ## Catalogue de modèles
 
 L'onglet Modèles (également accessible comme élément de la barre latérale) fournit :
-- Un catalogue consultable des modèles installés
-- Des badges de détection des capacités (raisonnement, vision, embedding, appel d'outils)
+- Un catalogue consultable des modèles installés, chacun avec son badge de **moteur** (`llamacpp`, `mlx`, ou `ggml` pour un modèle téléchargé avant Ollama 0.40)
+- Des badges de détection des capacités (raisonnement, vision, embedding, appel d'outils, audio, décision)
 - Détails d'architecture et nombre de paramètres
-- Fonctionnalités de comparaison pour évaluer les modèles côté à côté
+- Un catalogue de téléchargement par catégorie, dont les modèles de **Décision** (nimble, tev1, clef-flash, clef) pour le Labo de décision
+- **Sauvegardes conservées par les mises à niveau de modèles** -- Ollama 0.40.2 met à niveau les modèles en arrière-plan et garde la copie d'origine sur le disque. Quand il en existe, cette section les liste avec leur taille et en supprime une à la demande. Elle est absente quand le démon n'en a aucune.
 
 Consultez le chapitre [Modèles](./models) pour tous les détails.
 

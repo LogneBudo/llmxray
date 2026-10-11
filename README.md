@@ -15,7 +15,7 @@
   <a href="https://www.npmjs.com/package/llmxray"><img src="https://img.shields.io/npm/v/llmxray?color=cb3837&logo=npm&logoColor=white" alt="npm" /></a>
   <a href="https://hub.docker.com/r/djovaneli/llmxray"><img src="https://img.shields.io/docker/pulls/djovaneli/llmxray?color=2496ED&logo=docker&logoColor=white" alt="Docker" /></a>
   <img src="https://img.shields.io/badge/license-Apache%202.0-blue" alt="License" />
-  <img src="https://img.shields.io/badge/ollama-0.34.x-000?logo=ollama&logoColor=white" alt="Ollama" />
+  <img src="https://img.shields.io/badge/ollama-0.40.x-000?logo=ollama&logoColor=white" alt="Ollama" />
 </p>
 
 <p align="center">
@@ -44,6 +44,8 @@
 **Chat Diagnostics** — Watch tokens arrive one by one, coloured by speed. See where the model hesitates, and what it was unsure about.
 
 **Cache Lab** *(new in 0.6.0)* — Your system prompt is probably being recomputed from scratch every turn. Find out in 30 seconds, and measure the fix. *(3.5x faster prefill in our test.)*
+
+**Decision Lab** — Ask a decision model (nimble, tev1, clef) typed questions about a ticket or a message, and see the probability behind every answer instead of a yes.
 
 **Compare** — The same prompt against two models, or two temperatures, side by side. Stop guessing which setting was actually better.
 
@@ -132,6 +134,9 @@ Code completion for Qwen-Coder, CodeLlama, Codestral, DeepSeek-Coder, and StarCo
 ### Cache Lab *(new in v0.6.0)*
 Find out why your prompt misses the model’s KV cache, and measure what it costs every turn. A local model reuses its cache only while the prompt still matches from the very first token, so a single timestamp near the top forfeits everything below it. The lab finds the values that change between turns, shows the exact point where reuse dies, and then **measures** — sending each layout twice with a changed value, against your own daemon — what moving them to the end actually saves. Measured on a real 324-token prompt: **4 tokens reused and 64.6 ms of prefill with the timestamp at the front, 290 reused and 18.6 ms with it at the back. 3.5x faster, same words.** Requires Ollama 0.33.3+.
 
+### Decision Lab
+Ollama 0.35.1 added **decision models** — nimble, tev1, clef, clef-flash — that answer on `/v1/systemone` with choices, probabilities and scores instead of text. Give the lab a state (a ticket, a message, a log line) and typed questions: a **choice** among named candidates, a **yes/no probability**, or a **score** on an ordered scale. Every answer comes back as the model's own probability distribution, drawn as bars with the chosen candidate highlighted. Decision models report `decision` as their only capability, so LLMxRay keeps them out of the chat selectors and lists them here.
+
 ### Protocol Observatory *(new in v0.4.7)*
 Fire the same prompt through Ollama's three serving protocols — **native** `/api/chat`, **OpenAI-compat** `/v1/chat/completions`, and **Anthropic-compat** `/v1/messages` — in parallel against your local model. Side-by-side streaming, per-protocol metrics, and an envelope-diff tab that shows how each protocol frames finish reasons, token counts, and error envelopes. No cloud, no API keys — all three endpoints are local on `localhost:11434`.
 
@@ -148,7 +153,7 @@ Full translations in English, French, Serbian (Latin + Cyrillic), Chinese, and A
 
 ## Ollama Compatibility
 
-Tested and verified against **Ollama 0.34.x** (verified on 0.34.0, September 2026). LLMxRay uses these Ollama endpoints:
+Tested and verified against **Ollama 0.40.x** (verified on 0.40.3, October 2026). LLMxRay uses these Ollama endpoints:
 
 | Endpoint | Used for |
 |---|---|

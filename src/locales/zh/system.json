@@ -85,7 +85,8 @@
     "vram": "VRAM",
     "ram": "RAM",
     "total": "总计",
-    "ctx": "上下文"
+    "ctx": "上下文",
+    "runner": "运行时"
   },
   "installedModels": {
     "title": "已安装模型",

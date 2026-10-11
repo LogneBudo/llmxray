@@ -61,6 +61,29 @@ the prompt total and started meaning **total minus cached**. Verified live on 0.
 prompt reported `input_tokens: 38` cold and `input_tokens: 1` warm. If you're summing that field
 for accounting, your totals dropped and nothing told you.
 
+## Update: Ollama now ships the wrong formula itself (0.35.1)
+
+Ollama 0.35.1 added a `timings` block to the OpenAI-compatible endpoints, on the final streamed
+chunk and on the non-streamed body, with ready-made rates: `prompt_per_second`,
+`prompt_per_token_ms`, `predicted_per_second`, `predicted_per_token_ms`.
+
+The prompt half is computed as `prompt_n / prompt_ms` — and `prompt_n` is the **total** prompt
+(cached tokens included) while `prompt_ms` is the time spent on the **uncached** ones. That is the
+old formula from the top of this article, now emitted by the server. Verified live on 0.40.3,
+qwen2.5:7b, second send of an identical prompt:
+
+```json
+"usage":   {"prompt_tokens": 31, "prompt_tokens_details": {"cached_tokens": 30}, ...},
+"timings": {"prompt_n": 31, "prompt_ms": 8, "prompt_per_second": 3875, ...}
+```
+
+One token was evaluated in 8 ms. The block says 3875 tok/s. The `usage` object right next to it
+carries the cached count that would have corrected it.
+
+The decode half (`predicted_*`) has no such flaw, since generated tokens are never cached. If you
+read `timings`, take the counts and the milliseconds and divide them yourself, with
+`cached_tokens` subtracted from `prompt_n`. Do not take the rates.
+
 ## Why the numbers move so much
 
 The reason a cache hit changes prefill by two orders of magnitude, rather than a few percent, is

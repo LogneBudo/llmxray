@@ -29,6 +29,21 @@ export interface ProtocolRunState {
    * Null while no protocol has reported it.
    */
   cachedPromptTokens: number | null
+  /**
+   * Time the daemon spent evaluating the UNCACHED prompt tokens, in ms. Native
+   * reports it as `prompt_eval_duration` (nanoseconds); OpenAI-compat as
+   * `timings.prompt_ms` since Ollama 0.35.1; Anthropic-compat not at all.
+   * Null when the protocol never said.
+   */
+  prefillMs: number | null
+  /**
+   * The prefill rate the daemon ITSELF states, in tok/s. Only the OpenAI-compat
+   * `timings.prompt_per_second` does this (Ollama 0.35.1+), and it divides the
+   * TOTAL prompt by the time spent on the UNCACHED part — so on a warm cache it
+   * is inflated by the hit ratio. Kept verbatim so the page can show it next to
+   * the honest figure; never used for anything else.
+   */
+  serverStatedPrefillRate: number | null
   /** Whatever each protocol uses to signal end-of-turn (different field names per protocol) */
   finishReason: string | null
   error: string | null
@@ -55,6 +70,8 @@ function emptyRun(protocol: ProtocolKind, endpoint: string): ProtocolRunState {
     outputTokens: 0,
     promptTokens: 0,
     cachedPromptTokens: null,
+    prefillMs: null,
+    serverStatedPrefillRate: null,
     finishReason: null,
     error: null,
     firstChunkRaw: null,
@@ -117,6 +134,9 @@ export const useProtocolObservatoryStore = defineStore('protocolObservatory', ()
           if (chunk.prompt_eval_cached_count !== undefined) {
             state.cachedPromptTokens = chunk.prompt_eval_cached_count
           }
+          if (chunk.prompt_eval_duration !== undefined) {
+            state.prefillMs = chunk.prompt_eval_duration / 1_000_000
+          }
           if (chunk.done) {
             state.completedAt = Date.now()
             state.totalMs = state.completedAt - (state.startedAt ?? state.completedAt)
@@ -163,6 +183,13 @@ export const useProtocolObservatoryStore = defineStore('protocolObservatory', ()
           if (chunk.usage?.prompt_tokens) state.promptTokens = chunk.usage.prompt_tokens
           const cachedTokens = chunk.usage?.prompt_tokens_details?.cached_tokens
           if (cachedTokens !== undefined) state.cachedPromptTokens = cachedTokens
+          // Ollama 0.35.1 attaches `timings` to the usage chunk. The ms figure
+          // is sound; the stated rate is the inflated one and is kept only so
+          // the envelope diff can show it beside the honest figure.
+          if (chunk.timings) {
+            state.prefillMs = chunk.timings.prompt_ms
+            state.serverStatedPrefillRate = chunk.timings.prompt_per_second
+          }
           if (choice?.finish_reason) {
             state.finishReason = choice.finish_reason
             state.completedAt = Date.now()

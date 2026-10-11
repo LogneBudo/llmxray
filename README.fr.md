@@ -13,7 +13,7 @@
   <a href="https://www.npmjs.com/package/llmxray"><img src="https://img.shields.io/npm/v/llmxray?color=cb3837&logo=npm&logoColor=white" alt="npm" /></a>
   <a href="https://hub.docker.com/r/djovaneli/llmxray"><img src="https://img.shields.io/docker/pulls/djovaneli/llmxray?color=2496ED&logo=docker&logoColor=white" alt="Docker" /></a>
   <img src="https://img.shields.io/badge/license-Apache%202.0-blue" alt="License" />
-  <img src="https://img.shields.io/badge/ollama-0.34.x-000?logo=ollama&logoColor=white" alt="Ollama" />
+  <img src="https://img.shields.io/badge/ollama-0.40.x-000?logo=ollama&logoColor=white" alt="Ollama" />
 </p>
 
 <p align="center">
@@ -42,6 +42,8 @@
 **Diagnostics de chat** — Regardez les tokens arriver un par un, colorés selon leur vitesse. Voyez où le modèle hésite, et sur quoi.
 
 **Labo de cache** *(nouveau en 0.6.0)* — Votre invite système est probablement recalculée entièrement à chaque tour. Vérifiez-le en 30 secondes, et mesurez le gain. *(Préremplissage 3,5x plus rapide dans notre test.)*
+
+**Labo de décision** — Posez à un modèle de décision (nimble, tev1, clef) des questions typées sur un ticket ou un message, et voyez la probabilité derrière chaque réponse plutôt qu’un simple oui.
 
 **Comparer** — La même invite sur deux modèles, ou deux températures, côte à côte. Arrêtez de deviner quel réglage était le meilleur.
 
@@ -130,6 +132,9 @@ Complétion de code pour Qwen-Coder, CodeLlama, Codestral, DeepSeek-Coder et Sta
 ### Labo de cache *(nouveau en v0.6.0)*
 Comprenez pourquoi votre invite manque le cache KV du modèle, et mesurez ce que cela coûte à chaque tour. Un modèle local ne réutilise son cache que tant que l’invite correspond depuis le tout premier token : un seul horodatage en haut fait perdre tout ce qui suit. Le labo repère les valeurs qui changent d’un tour à l’autre, montre le point exact où la réutilisation meurt, puis **mesure** — en envoyant chaque disposition deux fois avec une valeur modifiée, sur votre propre démon — ce que rapporte leur déplacement à la fin. Mesuré sur une invite réelle de 324 tokens : **4 tokens réutilisés et 64,6 ms de préremplissage avec l’horodatage au début, 290 réutilisés et 18,6 ms à la fin. 3,5x plus rapide, à mots identiques.** Nécessite Ollama 0.33.3+.
 
+### Labo de décision
+Ollama 0.35.1 a ajouté des **modèles de décision** — nimble, tev1, clef, clef-flash — qui répondent sur `/v1/systemone` par des choix, des probabilités et des scores plutôt que du texte. Donnez au labo un état (un ticket, un message, une ligne de log) et des questions typées : un **choix** parmi des candidats nommés, une **probabilité oui/non**, ou un **score** sur une échelle ordonnée. Chaque réponse revient comme la distribution de probabilité du modèle lui-même, dessinée en barres avec le candidat retenu mis en évidence. Les modèles de décision déclarent `decision` comme seule capacité, donc LLMxRay les tient hors des sélecteurs de chat et les liste ici.
+
 ### Observatoire de protocoles *(nouveau en v0.4.7)*
 Envoyez le même prompt à travers les trois protocoles de service d'Ollama — **natif** `/api/chat`, **compatible OpenAI** `/v1/chat/completions`, et **compatible Anthropic** `/v1/messages` — en parallèle contre votre modèle local. Streaming côte à côte, métriques par protocole, et onglet « envelope diff » qui montre comment chaque protocole encode les raisons de fin, le comptage de tokens et les enveloppes d'erreur. Pas de cloud, pas de clés API — les trois endpoints sont locaux sur `localhost:11434`.
 
@@ -146,7 +151,7 @@ Traductions complètes en anglais, français, serbe (latin + cyrillique), chinoi
 
 ## Compatibilité Ollama
 
-Testé et vérifié avec **Ollama 0.34.x** (vérifié sur 0.34.0, septembre 2026). LLMxRay utilise les endpoints Ollama suivants :
+Testé et vérifié avec **Ollama 0.40.x** (vérifié sur 0.40.3, octobre 2026). LLMxRay utilise les endpoints Ollama suivants :
 
 | Endpoint | Utilisation |
 |---|---|

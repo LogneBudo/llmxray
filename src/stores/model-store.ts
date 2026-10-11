@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import type { OllamaModel, OllamaModelInfo, OllamaCapability } from '@/types/ollama'
+import type { OllamaModel, OllamaModelInfo, OllamaCapability, OllamaThinkingControls } from '@/types/ollama'
 import { ollamaClient } from '@/services/ollama-client'
 import { capabilityUnicodeIcons } from '@/utils/capability-defs'
 import { parseModelParameters } from '@/utils/parse-model-params'
@@ -61,13 +61,29 @@ export const useModelStore = defineStore('models', () => {
     return EMBEDDING_NAME_PATTERNS.some((p) => p.test(m.name))
   }
 
+  /**
+   * True for a decision model (Ollama 0.35.1). These answer on /v1/systemone
+   * with choices and probabilities, report `decision` as their ONLY capability,
+   * and fail on /api/chat — so they belong in neither selector. There is no
+   * name heuristic: the capability is the sole signal, and it is authoritative.
+   */
+  function isDecisionOnly(m: OllamaModel): boolean {
+    const caps = m.capabilities ?? modelInfoCache.value.get(m.name)?.capabilities
+    return !!caps?.includes('decision') && !caps.includes('completion')
+  }
+
   const chatModelNames = computed(() =>
-    models.value.filter((m) => !isEmbeddingOnly(m)).map((m) => m.name),
+    models.value.filter((m) => !isEmbeddingOnly(m) && !isDecisionOnly(m)).map((m) => m.name),
   )
 
-  // Inverse of chatModelNames — only embedding-capable models
+  // Only embedding-capable models
   const embeddingModelNames = computed(() =>
     models.value.filter((m) => isEmbeddingOnly(m)).map((m) => m.name),
+  )
+
+  // Decision models — listed on the Models page, offered nowhere else
+  const decisionModelNames = computed(() =>
+    models.value.filter((m) => isDecisionOnly(m)).map((m) => m.name),
   )
 
   function getModelDetails(name: string): OllamaModelInfo | undefined {
@@ -110,6 +126,17 @@ export const useModelStore = defineStore('models', () => {
   }
 
   /**
+   * The thinking levels a model advertises via /api/show (Ollama 0.34.3+), or
+   * undefined when the daemon reports none — in which case the legacy
+   * low/medium/high/max names apply. Only models whose metadata declares the
+   * controls return them; a thinking model with no block is still a thinking model.
+   */
+  function getThinkingControls(name: string): OllamaThinkingControls | undefined {
+    const controls = modelInfoCache.value.get(name)?.thinking
+    return controls?.values?.length ? controls : undefined
+  }
+
+  /**
    * Training context window in tokens, reported by /api/tags since Ollama 0.32.
    * Falls back to the architecture key in /api/show's model_info.
    */
@@ -127,6 +154,15 @@ export const useModelStore = defineStore('models', () => {
   /** Embedding vector width, reported by /api/tags since Ollama 0.32. */
   function getEmbeddingLength(name: string): number | undefined {
     return models.value.find((m) => m.name === name)?.details?.embedding_length
+  }
+
+  /**
+   * Which runtime serves a model, as /api/tags reports it since Ollama 0.40:
+   * `llamacpp`, `mlx`, or `ggml` for a model pulled before 0.40. Shown as the
+   * daemon says it; undefined on older daemons.
+   */
+  function getRunner(name: string): string | undefined {
+    return models.value.find((m) => m.name === name)?.details?.runner
   }
 
   /** Parse model's default parameters from /api/show into OllamaOptions */
@@ -158,7 +194,10 @@ export const useModelStore = defineStore('models', () => {
     loading.value = true
     error.value = null
     try {
-      models.value = await ollamaClient.listModels()
+      // Ollama 0.40 lists a manifest-list model once PER child manifest (one
+      // row per runner, same name). Everything here is keyed by name, so keep
+      // the first row and let /api/show describe the selected variant.
+      models.value = dedupeByName(await ollamaClient.listModels())
       // Capabilities and context length already arrived with the listing, so the
       // UI is correct immediately. This enriches the cache with the rest of
       // /api/show (parameters, template, license, model_info) in the background.
@@ -168,6 +207,11 @@ export const useModelStore = defineStore('models', () => {
     } finally {
       loading.value = false
     }
+  }
+
+  function dedupeByName(list: OllamaModel[]): OllamaModel[] {
+    const seen = new Set<string>()
+    return list.filter((m) => (seen.has(m.name) ? false : (seen.add(m.name), true)))
   }
 
   async function fetchAllModelInfo() {
@@ -198,11 +242,14 @@ export const useModelStore = defineStore('models', () => {
     modelNames,
     chatModelNames,
     embeddingModelNames,
+    decisionModelNames,
     getModelDetails,
     getCapabilities,
     getContextLength,
     getEmbeddingLength,
+    getRunner,
     getModelDefaults,
+    getThinkingControls,
     isThinkingModel,
     isVisionModel,
     supportsTools,

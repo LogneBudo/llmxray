@@ -47,6 +47,11 @@
     "cachedReported": "Tokens d'invite en cache (ce run)",
     "promptTotal": "Tokens d'invite, total (ce run)",
     "errorShape": "Forme de l'enveloppe d'erreur",
-    "footnote": "Les valeurs observées proviennent de ce run sur votre Ollama local. Certains porteurs (ex. `done_reason` natif NDJSON) n'apparaissent que sur le chunk final, d'autres (ex. `message_stop` Anthropic) sont des événements dédiés."
+    "footnote": "Les valeurs observées proviennent de ce run sur votre Ollama local. Certains porteurs (ex. `done_reason` natif NDJSON) n'apparaissent que sur le chunk final, d'autres (ex. `message_stop` Anthropic) sont des événements dédiés.",
+    "prefillCarrier": "Porteur du temps de préremplissage",
+    "prefillMs": "Temps de préremplissage (cette exécution)",
+    "prefillRateStated": "Débit de préremplissage, tel que le démon l’annonce",
+    "prefillRateHonest": "Débit de préremplissage sur les tokens évalués",
+    "statedNote": "Le `timings.prompt_per_second` de l’endpoint compatible OpenAI (Ollama 0.35.1+) divise l’invite TOTALE par le temps passé sur les tokens NON mis en cache. Sur un cache chaud, il est gonflé du taux de réutilisation ; la ligne du dessous divise par les tokens réellement évalués."
   }
 }

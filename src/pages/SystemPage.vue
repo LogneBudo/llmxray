@@ -563,7 +563,7 @@ onUnmounted(() => {
           <div class="flex-1 min-w-0">
             <p class="text-sm font-medium text-text-primary truncate">{{ model.name }}</p>
             <p class="text-xs text-text-muted">
-              {{ model.details.parameter_size }} · {{ model.details.quantization_level }} · {{ model.details.family }}
+              {{ model.details.parameter_size }} · {{ model.details.quantization_level }} · {{ model.details.family }}<template v-if="model.runner"> · {{ $t('system.activeModels.runner') }} {{ model.runner }}</template>
             </p>
           </div>
           <div class="text-end text-xs space-y-0.5 shrink-0">

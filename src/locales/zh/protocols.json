@@ -47,6 +47,11 @@
     "cachedReported": "本次缓存提示词元数",
     "promptTotal": "本次提示词元总数",
     "errorShape": "错误信封结构",
-    "footnote": "观测值来自本次在您本地 Ollama 上的运行。部分载体(例如原生 NDJSON 的 `done_reason`)仅出现在最后一个 chunk 中,而另一些(例如 Anthropic 的 `message_stop`)则是专用事件。"
+    "footnote": "观测值来自本次在您本地 Ollama 上的运行。部分载体(例如原生 NDJSON 的 `done_reason`)仅出现在最后一个 chunk 中,而另一些(例如 Anthropic 的 `message_stop`)则是专用事件。",
+    "prefillCarrier": "预填充时间字段",
+    "prefillMs": "预填充时间（本次运行）",
+    "prefillRateStated": "预填充速率（守护进程自报）",
+    "prefillRateHonest": "预填充速率（按实际评估的 token）",
+    "statedNote": "OpenAI 兼容端点的 `timings.prompt_per_second`（Ollama 0.35.1+）用提示词的总 token 数除以仅处理未缓存 token 的时间。缓存命中时该值会按命中率被放大；下一行改为除以实际评估的 token 数。"
   }
 }

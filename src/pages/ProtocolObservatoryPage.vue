@@ -52,6 +52,39 @@ function cachedPrompt(state: ProtocolRunState): string {
   return `${state.cachedPromptTokens} (${pct}%)`
 }
 
+/** Prefill time as the protocol reported it; em dash when it never did. */
+function prefillMs(state: ProtocolRunState): string {
+  if (state.prefillMs === null) return '—'
+  return state.prefillMs >= 1000 ? `${(state.prefillMs / 1000).toFixed(2)} s` : `${state.prefillMs.toFixed(1)} ms`
+}
+
+/** The daemon's own prefill figure, verbatim — only OpenAI-compat states one. */
+function statedPrefillRate(state: ProtocolRunState): string {
+  if (state.serverStatedPrefillRate === null) return '—'
+  return `${Math.round(state.serverStatedPrefillRate)} tok/s`
+}
+
+/**
+ * Prefill rate over the tokens the model actually evaluated — total minus
+ * cached, divided by the reported prefill time. Needs the cache count AND the
+ * time from the same protocol, else there is nothing honest to compute.
+ */
+function honestPrefillRate(state: ProtocolRunState): string {
+  if (state.prefillMs === null || !state.promptTokens || state.cachedPromptTokens === null) return '—'
+  const evaluated = state.promptTokens - state.cachedPromptTokens
+  if (evaluated <= 0 || state.prefillMs <= 0) return '—'
+  return `${Math.round((evaluated / state.prefillMs) * 1000)} tok/s`
+}
+
+/** True when the daemon's stated rate disagrees with the honest one by more than rounding. */
+function statedRateInflated(state: ProtocolRunState): boolean {
+  if (state.serverStatedPrefillRate === null || state.prefillMs === null || state.cachedPromptTokens === null) return false
+  const evaluated = state.promptTokens - state.cachedPromptTokens
+  if (evaluated <= 0 || state.prefillMs <= 0) return false
+  const honest = (evaluated / state.prefillMs) * 1000
+  return state.serverStatedPrefillRate > honest * 1.05
+}
+
 function fmt(value: number | null, unit = 'ms'): string {
   if (value === null) return '—'
   return `${value} ${unit}`
@@ -324,6 +357,35 @@ function jsonPretty(obj: unknown): string {
               <tr>
                 <td class="py-2 ps-2 font-medium text-text-secondary">{{ $t('protocols.envelopeDiff.promptTotal') }}</td>
                 <td v-for="p in protocols" :key="p.key" class="py-2 font-mono text-text-primary">{{ p.state.promptTokens || '—' }}</td>
+              </tr>
+              <tr>
+                <td class="py-2 ps-2 font-medium text-text-secondary">{{ $t('protocols.envelopeDiff.prefillCarrier') }}</td>
+                <td class="py-2 font-mono text-text-primary"><code>prompt_eval_duration</code> (ns)</td>
+                <td class="py-2 font-mono text-text-primary"><code>timings.prompt_ms</code></td>
+                <td class="py-2 font-mono text-text-primary">—</td>
+              </tr>
+              <tr>
+                <td class="py-2 ps-2 font-medium text-text-secondary">{{ $t('protocols.envelopeDiff.prefillMs') }}</td>
+                <td v-for="p in protocols" :key="p.key" class="py-2 font-mono text-text-primary">{{ prefillMs(p.state) }}</td>
+              </tr>
+              <tr>
+                <td class="py-2 ps-2 font-medium text-text-secondary">
+                  {{ $t('protocols.envelopeDiff.prefillRateStated') }}
+                  <span class="ms-1 inline-flex align-middle text-text-muted" :title="$t('protocols.envelopeDiff.statedNote')"><Info class="h-3 w-3" /></span>
+                </td>
+                <td
+                  v-for="p in protocols"
+                  :key="p.key"
+                  class="py-2 font-mono"
+                  :class="statedRateInflated(p.state) ? 'text-warning' : 'text-text-primary'"
+                  :title="statedRateInflated(p.state) ? $t('protocols.envelopeDiff.statedNote') : undefined"
+                >
+                  {{ statedPrefillRate(p.state) }}
+                </td>
+              </tr>
+              <tr>
+                <td class="py-2 ps-2 font-medium text-text-secondary">{{ $t('protocols.envelopeDiff.prefillRateHonest') }}</td>
+                <td v-for="p in protocols" :key="p.key" class="py-2 font-mono text-text-primary">{{ honestPrefillRate(p.state) }}</td>
               </tr>
               <tr>
                 <td class="py-2 ps-2 font-medium text-text-secondary">{{ $t('protocols.envelopeDiff.errorShape') }}</td>

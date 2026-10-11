@@ -42,9 +42,17 @@ Once all three runs complete, a tabbed lower section appears. Switch to **Envelo
 | Stream framing | NDJSON | SSE | SSE with `event:` tags |
 | Finish-reason carrier | `done` + `done_reason` | `choices[].finish_reason` | `message_stop` event |
 | Token-count carrier | `eval_count` + `prompt_eval_count` | `usage.{prompt,completion,total}_tokens` | `usage.{input,output}_tokens` |
+| Prompt-cache carrier | `prompt_eval_cached_count` | `usage.prompt_tokens_details.cached_tokens` | `usage.cache_read_input_tokens` |
+| Prefill-time carrier | `prompt_eval_duration` (ns) | `timings.prompt_ms` | — |
 | Error envelope | `{"error": "string"}` | `{"error": {"message", "type", "code"}}` | `{"type": "error", "error": {...}, "request_id"}` |
 
 The "this run" rows fill in with the actual values observed during your run — so you can see, for example, that the native protocol returned `done_reason: "stop"` while the Anthropic protocol called the same outcome `stop_reason: "end_turn"`.
+
+### The two prefill rates
+
+Since Ollama 0.35.1 the OpenAI-compatible endpoint attaches a `timings` block with a ready-made `prompt_per_second`. The table shows it as **"Prefill rate, as the daemon states it"**, next to **"Prefill rate over evaluated tokens"**, which LLMxRay computes from the same chunk as `(prompt_tokens − cached_tokens) / prompt_ms`.
+
+They disagree on any warm cache. The daemon's figure divides the *total* prompt by the time spent on the *uncached* tokens, so it is inflated by the cache hit ratio; run the same prompt twice and the stated cell turns amber. Measured on 0.40.3 with 30 of 31 tokens cached: 3875 tok/s stated, 125 tok/s evaluated. Only the second number describes work the model did. The native protocol never states a rate, and the Anthropic-compatible one reports no prefill time at all, which is why those cells show a dash.
 
 ## Why three protocols?
 

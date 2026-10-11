@@ -85,7 +85,8 @@
     "vram": "VRAM",
     "ram": "RAM",
     "total": "Укупно",
-    "ctx": "Контекст"
+    "ctx": "Контекст",
+    "runner": "Извршилац"
   },
   "installedModels": {
     "title": "Инсталирани модели",

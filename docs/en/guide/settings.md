@@ -38,10 +38,11 @@ Both parameters include visual scales and plain-language explanations of what ea
 ## Model Catalog
 
 The Models tab (also accessible as a sidebar item) provides:
-- A browsable catalog of installed models
-- Capability detection badges (thinking, vision, embedding, tool-use)
+- A browsable catalog of installed models, each with its **runner** badge (`llamacpp`, `mlx`, or `ggml` for a model pulled before Ollama 0.40)
+- Capability detection badges (thinking, vision, embedding, tool-use, audio, decision)
 - Architecture details and parameter counts
-- Comparison features for evaluating models side by side
+- A download catalog by category, including **Decision** models (nimble, tev1, clef-flash, clef) for the Decision Lab
+- **Backups kept from model upgrades** — Ollama 0.40.2 upgrades models in the background and keeps the original copy on disk. When any exist, this section lists them with their size and removes one on request. It is absent when the daemon has none.
 
 See the [Models](./models) chapter for full details.
 

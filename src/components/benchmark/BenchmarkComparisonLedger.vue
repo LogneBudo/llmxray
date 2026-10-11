@@ -124,7 +124,7 @@ function formatDuration(r: BenchmarkResult): string {
                 </span>
               </div>
               <div class="mt-0.5 text-[10px] text-text-muted">
-                {{ formatDate(r.completedAt) }} · ctx {{ r.contextSize }} · {{ formatDuration(r) }}
+                {{ formatDate(r.completedAt) }} · ctx {{ r.contextSize }}<template v-if="r.runner"> · {{ r.runner }}</template> · {{ formatDuration(r) }}
               </div>
               <div v-if="isIncomplete(r)" class="mt-0.5 text-[10px] text-warning">
                 {{ $t('benchmark.comparison.incomplete') }} ({{ r.questionResults.length }}/{{ r.totalQuestions }})

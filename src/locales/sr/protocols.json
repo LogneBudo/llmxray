@@ -47,6 +47,11 @@
     "cachedReported": "Keširani tokeni prompta (ovaj run)",
     "promptTotal": "Tokeni prompta, ukupno (ovaj run)",
     "errorShape": "Oblik envelope greške",
-    "footnote": "Opažene vrednosti su iz ovog runa na vašem lokalnom Ollama. Neki nosači (npr. NDJSON nativni `done_reason`) pojavljuju se samo na poslednjem chunk-u, drugi (npr. Anthropic `message_stop`) su namenski događaji."
+    "footnote": "Opažene vrednosti su iz ovog runa na vašem lokalnom Ollama. Neki nosači (npr. NDJSON nativni `done_reason`) pojavljuju se samo na poslednjem chunk-u, drugi (npr. Anthropic `message_stop`) su namenski događaji.",
+    "prefillCarrier": "Nosilac vremena predpopune",
+    "prefillMs": "Vreme predpopune (ovo izvršavanje)",
+    "prefillRateStated": "Brzina predpopune, kako je demon navodi",
+    "prefillRateHonest": "Brzina predpopune po stvarno obrađenim tokenima",
+    "statedNote": "OpenAI-kompatibilni `timings.prompt_per_second` (Ollama 0.35.1+) deli UKUPAN upit vremenom utrošenim samo na NEKEŠIRANE tokene. Na toplom kešu je naduvan za odnos pogodaka; red ispod deli stvarno obrađenim tokenima."
   }
 }

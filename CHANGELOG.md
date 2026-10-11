@@ -5,6 +5,54 @@ All notable changes to LLMxRay are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.0] — 2026-10-11
+
+Verified against Ollama 0.40.3 (October 2026). Everything LLMxRay reads is unchanged from 0.33.3,
+including the prompt-cache fields on all three protocols.
+
+### Fixed
+
+- Decision models (Ollama 0.35.1 — nimble, tev1, clef) report `decision` as their only capability
+  and answer on `/v1/systemone`, not chat. They no longer appear in the chat or embedding model
+  selectors, and the Models page shows a Decision capability icon for them.
+- A manifest-list model (Ollama 0.40) is listed once per runner in `/api/tags`. The listing is
+  now collapsed by name, so a model never appears twice in a selector.
+
+### Changed
+
+- The Thinking control in chat settings now offers the levels a model advertises via `/api/show`
+  (Ollama 0.34.3+) when it does, and the legacy Low / Medium / High / Max names otherwise. The
+  model's own default is selected when a level the previous model offered does not exist on the new one.
+- Types for the new `details.runner`, running-model `runner`, `/api/show` `thinking` and
+  `manifests` blocks, multimodal `/api/embed` input, and the OpenAI-compatible `timings` block.
+  The `timings` prompt rates are documented as unusable for prefill throughput: `prompt_n` is the
+  total prompt while `prompt_ms` times only the uncached tokens, which inflates the rate by the
+  cache hit ratio (3875 tok/s measured for a 30-of-31 cached prompt). LLMxRay computes its own rate
+  and does not read them.
+- READMEs in all five languages and the website now state the Ollama version actually probed.
+
+### Added
+
+- **Decision Lab** — a page for Ollama's decision models (0.35.1: nimble, tev1, clef, clef-flash),
+  which answer on `/v1/systemone` with choices, probabilities and scores instead of text. Give it a
+  state and typed questions (choice among named candidates, yes/no probability, score on an ordered
+  scale) and the answers are drawn as probability bars with the chosen candidate highlighted, plus
+  token usage and round-trip time. Sidebar item **Decision Lab**, route `/decision-lab`. Guide in
+  English, French and Chinese. The Models catalog gained a Decision category.
+- **Protocol Observatory** envelope diff: prefill time, the prefill rate as the daemon states it,
+  and the prefill rate over evaluated tokens, side by side. The OpenAI-compatible `timings` block
+  (Ollama 0.35.1) states a rate that is inflated by the cache hit ratio; the row turns amber when it
+  disagrees with the honest figure from the same chunk.
+- **Runner awareness** (Ollama 0.40): the runtime that serves each model (`llamacpp`, `mlx`, or
+  `ggml` for a model pulled before 0.40) is shown on the Models tab and on running models on My
+  System, and every new benchmark result is stamped with it, so the same model on two runtimes
+  can be told apart.
+- **Upgrade backups** (Ollama 0.40.2): the Models tab lists the original copies Ollama keeps on
+  disk after upgrading a model in the background, with their size when the listing reports it, and
+  removes one on request by deleting that manifest — the same operation as Ollama's own `ollama rm
+  <digest>` recipe. The section is absent when the daemon has no backups.
+- Article: a section on the `timings` block in "Ollama 0.33.3 changed what `prompt_eval_duration` measures".
+
 ## [0.6.0] — 2026-09-14
 
 ### Added

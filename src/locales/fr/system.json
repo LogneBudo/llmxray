@@ -85,7 +85,8 @@
     "vram": "VRAM",
     "ram": "RAM",
     "total": "Total",
-    "ctx": "Ctx"
+    "ctx": "Ctx",
+    "runner": "Moteur"
   },
   "installedModels": {
     "title": "Mod\u00e8les install\u00e9s",

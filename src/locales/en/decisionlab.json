@@ -1,0 +1,46 @@
+{
+  "title": "Decision Lab",
+  "subtitle": "Ask a decision model typed questions about a situation, and see the probability behind every answer.",
+  "explainer": "A decision model does not write text. Given a state and a set of questions, it returns a choice with a probability for every candidate, the probability that a condition holds, or a score along an ordered scale. Those probabilities are the model's own output distribution, not a parse of prose. Ollama serves them on /v1/systemone; models that report only the decision capability belong here and nowhere else.",
+  "model": "Decision model",
+  "noModels": "No decision model is installed.",
+  "noModelsHint": "Pull nimble, tev1, clef or clef-flash from the Models page; they report the decision capability and appear here.",
+  "state": "State",
+  "statePlaceholder": "Describe the situation every question is about: a ticket, a message, a log line, a document.",
+  "questions": "Questions",
+  "addQuestion": "Add question",
+  "remove": "Remove",
+  "key": "Answer key",
+  "type": "Type",
+  "instructions": "Instructions",
+  "instructionsPlaceholder": "What should the model decide?",
+  "criteria": "Candidates",
+  "criteriaHint": {
+    "choice": "One per line, as name: description. 2 to 26 candidates.",
+    "score": "One per line, lowest first. The order is the scale. 2 to 26 steps."
+  },
+  "types": {
+    "choice": "Choice",
+    "noul": "Yes / no probability",
+    "score": "Score on a scale"
+  },
+  "problems": {
+    "key": "Needs an answer key.",
+    "duplicateKey": "Another question already uses this key.",
+    "instructions": "Needs instructions.",
+    "candidates": "Needs between 2 and 26 candidates."
+  },
+  "run": "Decide",
+  "cancel": "Stop",
+  "running": "Asking the model…",
+  "results": {
+    "title": "Answers",
+    "chosen": "chosen",
+    "confidence": "confidence",
+    "score": "score",
+    "yes": "yes",
+    "no": "no",
+    "usage": "{input} input tokens · {output} output tokens · {ms}",
+    "footnote": "Probabilities are what the model returned, unrounded except for display. The chosen candidate is the most probable one; a score is the expected position on your scale, so it can fall between two steps."
+  }
+}

@@ -54,6 +54,11 @@ export const router = createRouter({
           component: () => import('@/pages/FimPlaygroundPage.vue'),
         },
         {
+          path: 'decision-lab',
+          name: 'decision-lab',
+          component: () => import('@/pages/DecisionLabPage.vue'),
+        },
+        {
           path: 'cache-lab',
           name: 'cacheLab',
           component: () => import('@/pages/CacheLabPage.vue'),

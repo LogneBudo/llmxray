@@ -85,7 +85,8 @@
     "vram": "VRAM",
     "ram": "RAM",
     "total": "Total",
-    "ctx": "Ctx"
+    "ctx": "Ctx",
+    "runner": "Runner"
   },
   "installedModels": {
     "title": "Installed Models",

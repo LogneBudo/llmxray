@@ -27,6 +27,10 @@ features:
     details: 上传文档，在本地完成切分与嵌入，然后用自然语言检索。全部存放在 IndexedDB 中。
   - title: 缓存实验室
     details: 测量提示词缓存的复用情况，找出缓存断裂的位置，并实测改写后每轮能省下多少。
+  - title: 决策实验室
+    details: 向决策模型提出关于工单或消息的类型化问题，查看每个答案背后的概率，以条形图呈现。
+    link: /zh/guide/decision-lab
+    linkText: 0.7.0 新增
   - title: 工具工坊
     details: 在可视化节点画布上构建、编辑和测试工具定义，代码与节点双向同步。
   - title: 100% 本地，完全免费

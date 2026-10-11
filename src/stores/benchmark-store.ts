@@ -131,6 +131,10 @@ export const useBenchmarkStore = defineStore('benchmark', () => {
             runState.value.categoryProgress[cat] = progress
           },
           onComplete(benchmarkResult) {
+            // Stamp the runtime so two results for one model name on different
+            // runners (Ollama 0.40: llama.cpp vs MLX) are told apart.
+            const runner = modelStore.getRunner(modelName)
+            if (runner) benchmarkResult.runner = runner
             latestResult.value = benchmarkResult
             savedResults.value.push(benchmarkResult)
             benchmarkDB.saveResult(benchmarkResult)

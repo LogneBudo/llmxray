@@ -20,6 +20,7 @@ Chaque carte de modèle affiche :
 | **Quantification** | Niveau de compression (par ex., Q4_0, Q8_0, F16) |
 | **Famille** | Famille du modèle (par ex., llama, mistral, gemma) |
 | **Format** | Format du modèle (par ex., gguf) |
+| **Moteur** | Moteur qui sert le modèle depuis Ollama 0.40 (`llamacpp`, `mlx`, ou `ggml` pour un modèle téléchargé avant la 0.40) |
 
 ## Diagrammes d'architecture
 
@@ -37,6 +38,7 @@ Depuis **Ollama 0.32**, la liste des modèles (`/api/tags`) indique directement 
 | **Vision** | `capabilities` Ollama, sinon patterns de nom (`llava`, `*-vl`, `moondream`, `gemma3`, Llama-vision, …) | Active les pièces jointes images dans le chat |
 | **Embedding** | `capabilities` Ollama, sinon famille ou nom du modèle | Apparaît dans les sélecteurs de modèles des pages Plongements et Base de Connaissances |
 | **Appel d'outils** | `capabilities` Ollama | Active l'appel d'outils dans le chat |
+| **Décision** | `capabilities` Ollama uniquement (Ollama 0.35.1+) | Affiché sur la page Modèles ; exclu des sélecteurs de chat et de plongements, car ces modèles répondent sur `/v1/systemone` par des choix et des probabilités, pas par du texte |
 
 Comme les capacités proviennent directement d'Ollama, LLMxRay suit automatiquement les nouvelles familles de modèles. Un ensemble de capacités signalé fait autorité : si le démon liste les capacités d'un modèle *sans* y inclure `thinking`, LLMxRay le croit plutôt que de deviner d'après le nom. Les patterns de nom ne s'appliquent que lorsqu'un modèle ne signale rien du tout.
 
@@ -52,6 +54,8 @@ Pour les modèles capables de raisonner, Diagnostics de Chat expose le paramètr
 | **On** | `true` | Raisonnement activé ; le modèle choisit lui-même son effort |
 | **Faible / Moyen / Élevé** | `"low"` / `"medium"` / `"high"` | Budget de raisonnement explicite |
 | **Max** | `"max"` | Budget de raisonnement maximal |
+
+Depuis **Ollama 0.34.3**, un modèle peut annoncer via `/api/show` les valeurs exactes de `think` qu'il accepte, ainsi que sa valeur par défaut. Quand c'est le cas, le contrôle propose ces niveaux sous les noms propres au modèle à la place de la liste ci-dessus ; sinon, la liste ci-dessus s'applique. Passer à un modèle qui ne connaît pas le niveau sélectionné revient à la valeur par défaut annoncée par ce modèle.
 
 Les modèles qui n'implémentent pas d'effort gradué traitent simplement tout niveau comme « raisonnement activé ».
 

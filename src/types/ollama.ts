@@ -23,9 +23,21 @@ export interface OllamaModelDetails {
   context_length?: number
   /** Added to /api/tags in Ollama 0.32 — embedding vector width. */
   embedding_length?: number
+  /**
+   * Which runtime serves this model (`ggml`, `llamacpp`, `mlx`), added in
+   * Ollama 0.40. A model tag that is a manifest list is reported as one
+   * /api/tags row PER child manifest, and `runner` is what tells them apart,
+   * so two rows may share a `name`.
+   */
+  runner?: string
 }
 
-/** Capability strings Ollama reports; the list is open-ended, so string is allowed. */
+/**
+ * Capability strings Ollama reports; the list is open-ended, so string is allowed.
+ * `decision` (Ollama 0.35.1) marks models that answer on `/v1/systemone` with
+ * choices and probabilities instead of text — they report it as their ONLY
+ * capability and must not be offered for chat, tools or thinking.
+ */
 export type OllamaCapability =
   | 'completion'
   | 'tools'
@@ -34,13 +46,47 @@ export type OllamaCapability =
   | 'embedding'
   | 'insert'
   | 'audio'
+  | 'decision'
   | (string & {})
 
 /**
  * The `think` parameter. Ollama accepts a boolean (model default effort) or a
- * named effort level; 'low' | 'medium' | 'high' were added alongside 'max'.
+ * named effort level. 'low' | 'medium' | 'high' | 'max' are the legacy names,
+ * validated for models that carry no thinking metadata; since Ollama 0.34.3 a
+ * model may advertise its own level names via /api/show (`thinking.values`),
+ * and those are passed through as-is.
  */
-export type OllamaThink = boolean | 'low' | 'medium' | 'high' | 'max'
+export type OllamaThink = boolean | 'low' | 'medium' | 'high' | 'max' | (string & {})
+
+/**
+ * The thinking controls a model honours, advertised by /api/show since Ollama
+ * 0.34.3. Only present for models whose metadata declares them; absent means
+ * the daemon said nothing, not that the model cannot think.
+ */
+export interface OllamaThinkingControls {
+  /** Accepted `think` values: booleans for an on/off model, strings for named levels. */
+  values: Array<string | boolean>
+  /** The value used when `think` is omitted. */
+  default?: string | boolean
+}
+
+/** One child manifest of a manifest-list model, from /api/show (Ollama 0.40). */
+export interface OllamaManifestSummary {
+  digest?: string
+  runner?: string
+  format?: string
+  selected?: boolean
+}
+
+/**
+ * `/api/show` with `all_manifests: true` (Ollama 0.40): one entry per child
+ * manifest, each a full show response plus the `runner` that serves it. A
+ * plain model answers with a single entry whose `runner` may be absent.
+ */
+export interface OllamaShowManifestsResponse {
+  license?: string
+  manifests: Array<Partial<OllamaModelInfo> & { runner?: string; digest?: string }>
+}
 
 export interface OllamaModelInfo {
   license: string
@@ -51,6 +97,12 @@ export interface OllamaModelInfo {
   model_info: Record<string, string | number | null>
   tensors?: { count?: number; tensors?: unknown[] }
   capabilities?: string[]
+  /** Thinking levels and default, when the model declares them (Ollama 0.34.3+). */
+  thinking?: OllamaThinkingControls
+  /** Child manifests of a manifest-list model (Ollama 0.40+). */
+  manifests?: OllamaManifestSummary[]
+  /** Minimum Ollama version the model needs, when the manifest states one. */
+  requires?: string
   modified_at: string
 }
 
@@ -210,6 +262,28 @@ export interface OpenAIChatChunk {
       cached_tokens?: number
     }
   }
+  /**
+   * Server-side performance figures, added in Ollama 0.35.1 alongside `usage`.
+   * DO NOT use `prompt_per_second` or `prompt_per_token_ms` for prefill
+   * throughput: `prompt_n` is the TOTAL prompt (cached tokens included) while
+   * `prompt_ms` times only the UNCACHED tokens — the very formula that
+   * inflated prefill by the cache hit ratio in 0.33.3. Measured live on
+   * 0.40.3: 3875 tok/s reported for a prompt with 30 of 31 tokens cached.
+   * The decode half (`predicted_*`) has no such flaw.
+   */
+  timings?: OpenAITimings
+}
+
+/** The `timings` block Ollama's OpenAI-compatible endpoints attach (0.35.1+). */
+export interface OpenAITimings {
+  prompt_n: number
+  prompt_ms: number
+  prompt_per_token_ms: number
+  prompt_per_second: number
+  predicted_n: number
+  predicted_ms: number
+  predicted_per_token_ms: number
+  predicted_per_second: number
 }
 
 export interface OllamaRunningModel {
@@ -221,11 +295,25 @@ export interface OllamaRunningModel {
   expires_at: string
   size_vram: number
   context_length: number
+  /** Which runtime loaded the model (`llamacpp`, `mlx`), reported since Ollama 0.40. */
+  runner?: string
+}
+
+/**
+ * One item of a multimodal embedding request (Ollama 0.40+). Each object owns
+ * its own media; a batch may mix plain strings with these.
+ */
+export interface OllamaEmbedInputItem {
+  text?: string
+  /** Base64-encoded image bytes. */
+  image?: string
+  /** Base64-encoded audio bytes. */
+  audio?: string
 }
 
 export interface OllamaEmbedRequest {
   model: string
-  input: string | string[]
+  input: string | OllamaEmbedInputItem | Array<string | OllamaEmbedInputItem>
   /**
    * Truncate the output vector to this width (Matryoshka embeddings). Only
    * meaningful for models trained for it; Ollama returns the full width otherwise.

@@ -15,7 +15,7 @@
 
 ## Navigating the App
 
-LLMxRay has a sidebar with 12 navigation items, each representing a major feature. This guide has one chapter per item, in the exact order they appear in the sidebar:
+LLMxRay has a sidebar with one item per major feature. This guide has one chapter per item, in the exact order they appear in the sidebar:
 
 1. **[Chat Diagnostics](./chat-diagnostics)** — The main chat interface with streaming and session analysis
 2. **[Compare](./compare)** — Side-by-side model and settings comparison
@@ -25,12 +25,13 @@ LLMxRay has a sidebar with 12 navigation items, each representing a major featur
 5. **[Tool Workshop](./tool-workshop)** — Visual tool builder with code sync
 6. **[Fill-in-the-Middle (FIM)](./fim)** — Code completion playground for FIM-capable models
 7. **[Cache Lab](./cache-lab)** — Measure why your prompt misses the KV cache, and what that costs every turn
-8. **[Protocol Observatory](./protocols)** — Run the same prompt through native, OpenAI-compat, and Anthropic-compat against your local model
-9. **[AI Training](./ai-training)** — Training data curation and export
-10. **[Models](./models)** — Model browser and capability detection
-11. **[Benchmark](./benchmark)** — Standardized model evaluation with logprobs
-12. **[My System](./system)** — Hardware detection and Ollama status
-13. **[Settings](./settings)** — Connection, parameters, and preferences
+8. **[Decision Lab](./decision-lab)** — Ask a decision model typed questions and see the probability behind every answer
+9. **[Protocol Observatory](./protocols)** — Run the same prompt through native, OpenAI-compat, and Anthropic-compat against your local model
+10. **[AI Training](./ai-training)** — Training data curation and export
+11. **[Models](./models)** — Model browser and capability detection
+12. **[Benchmark](./benchmark)** — Standardized model evaluation with logprobs
+13. **[My System](./system)** — Hardware detection and Ollama status
+14. **[Settings](./settings)** — Connection, parameters, and preferences
 
 ## Other Elements
 

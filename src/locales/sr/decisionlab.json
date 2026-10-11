@@ -1,0 +1,46 @@
+{
+  "title": "Laboratorija odluka",
+  "subtitle": "Postavite modelu za odlučivanje tipizirana pitanja o nekoj situaciji i vidite verovatnoću iza svakog odgovora.",
+  "explainer": "Model za odlučivanje ne piše tekst. Na osnovu stanja i skupa pitanja vraća izbor sa verovatnoćom za svakog kandidata, verovatnoću da neki uslov važi, ili ocenu na uređenoj skali. Te verovatnoće su sopstvena izlazna raspodela modela, a ne čitanje iz proze. Ollama ih služi na /v1/systemone; modeli koji prijavljuju samo sposobnost decision pripadaju ovde i nigde drugde.",
+  "model": "Model za odlučivanje",
+  "noModels": "Nijedan model za odlučivanje nije instaliran.",
+  "noModelsHint": "Preuzmite nimble, tev1, clef ili clef-flash sa stranice Modeli; oni prijavljuju sposobnost decision i pojavljuju se ovde.",
+  "state": "Stanje",
+  "statePlaceholder": "Opišite situaciju na koju se odnose sva pitanja: tiket, poruku, red iz loga, dokument.",
+  "questions": "Pitanja",
+  "addQuestion": "Dodaj pitanje",
+  "remove": "Ukloni",
+  "key": "Ključ odgovora",
+  "type": "Tip",
+  "instructions": "Uputstvo",
+  "instructionsPlaceholder": "Šta model treba da odluči?",
+  "criteria": "Kandidati",
+  "criteriaHint": {
+    "choice": "Jedan po redu, u obliku ime: opis. Od 2 do 26 kandidata.",
+    "score": "Jedan po redu, od najnižeg. Redosled je skala. Od 2 do 26 stepeni."
+  },
+  "types": {
+    "choice": "Izbor",
+    "noul": "Verovatnoća da / ne",
+    "score": "Ocena na skali"
+  },
+  "problems": {
+    "key": "Potreban je ključ odgovora.",
+    "duplicateKey": "Drugo pitanje već koristi ovaj ključ.",
+    "instructions": "Potrebno je uputstvo.",
+    "candidates": "Potrebno je između 2 i 26 kandidata."
+  },
+  "run": "Odluči",
+  "cancel": "Zaustavi",
+  "running": "Pitam model…",
+  "results": {
+    "title": "Odgovori",
+    "chosen": "izabrano",
+    "confidence": "pouzdanost",
+    "score": "ocena",
+    "yes": "da",
+    "no": "ne",
+    "usage": "{input} ulaznih tokena · {output} izlaznih tokena · {ms}",
+    "footnote": "Verovatnoće su ono što je model vratio, zaokružene samo za prikaz. Izabrani kandidat je najverovatniji; ocena je očekivani položaj na vašoj skali, pa može pasti između dva stepena."
+  }
+}

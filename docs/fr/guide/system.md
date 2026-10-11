@@ -33,7 +33,7 @@ Les informations matérielles sont lues au démarrage du serveur de développeme
 La section Ollama affiche :
 
 - **Statut de connexion** -- Si Ollama est accessible
-- **Modèles en cours d'exécution** -- Quels modèles sont actuellement chargés en mémoire
+- **Modèles en cours d'exécution** -- Quels modèles sont actuellement chargés en mémoire et, depuis Ollama 0.40, le **moteur** qui sert chacun (`llamacpp` ou `mlx`)
 - **Allocation mémoire** -- Quantité de RAM/VRAM utilisée par chaque modèle chargé
 - **Paramètres d'inférence** -- Paramètres par défaut de l'instance en cours d'exécution
 

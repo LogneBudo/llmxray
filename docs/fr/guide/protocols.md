@@ -42,9 +42,17 @@ Une fois les trois runs terminés, une section inférieure à onglets apparaît.
 | Encadrement du flux | NDJSON | SSE | SSE avec tags `event:` |
 | Porteur du motif de fin | `done` + `done_reason` | `choices[].finish_reason` | événement `message_stop` |
 | Porteur du compte de tokens | `eval_count` + `prompt_eval_count` | `usage.{prompt,completion,total}_tokens` | `usage.{input,output}_tokens` |
+| Porteur du cache d'invite | `prompt_eval_cached_count` | `usage.prompt_tokens_details.cached_tokens` | `usage.cache_read_input_tokens` |
+| Porteur du temps de préremplissage | `prompt_eval_duration` (ns) | `timings.prompt_ms` | — |
 | Enveloppe d'erreur | `{"error": "string"}` | `{"error": {"message", "type", "code"}}` | `{"type": "error", "error": {...}, "request_id"}` |
 
 Les lignes « ce run » se remplissent avec les valeurs réellement observées pendant votre exécution — vous pouvez voir, par exemple, que le protocole natif a renvoyé `done_reason: "stop"` tandis que le protocole Anthropic a appelé le même résultat `stop_reason: "end_turn"`.
+
+### Les deux débits de préremplissage
+
+Depuis Ollama 0.35.1, l'endpoint compatible OpenAI joint un bloc `timings` avec un `prompt_per_second` tout calculé. Le tableau l'affiche comme **« Débit de préremplissage, tel que le démon l'annonce »**, à côté de **« Débit de préremplissage sur les tokens évalués »**, que LLMxRay calcule à partir du même chunk : `(prompt_tokens − cached_tokens) / prompt_ms`.
+
+Ils divergent dès que le cache est chaud. Le chiffre du démon divise l'invite *totale* par le temps passé sur les tokens *non mis en cache*, il est donc gonflé du taux de réutilisation ; lancez deux fois la même invite et la cellule annoncée passe en orange. Mesuré sur 0.40.3 avec 30 tokens sur 31 en cache : 3875 tok/s annoncés, 125 tok/s évalués. Seul le second chiffre décrit du travail réellement fait par le modèle. Le protocole natif n'annonce jamais de débit, et le protocole compatible Anthropic ne rapporte aucun temps de préremplissage, d'où les tirets.
 
 ## Pourquoi trois protocoles ?
 

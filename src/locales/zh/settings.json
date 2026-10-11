@@ -56,7 +56,14 @@
     "noModelsMatch": "没有匹配的模型。",
     "pullByName": "按名称拉取任意模型",
     "installed": "已安装",
-    "confirmDeletePrompt": "确认删除？"
+    "confirmDeletePrompt": "确认删除？",
+    "runner": "运行此模型的运行时",
+    "backupsTitle": "模型升级保留的备份",
+    "backupsBody": "Ollama 0.40 在后台升级了这些模型，并把原始副本留在磁盘上，以便安全降级。删除备份会释放其空间；只保留升级后的副本。",
+    "backupOf": "备份自",
+    "removeBackup": "删除备份",
+    "removingBackup": "正在删除…",
+    "backupSizeUnknown": "未报告大小"
   },
   "integrations": {
     "googleAccount": "Google 账户",

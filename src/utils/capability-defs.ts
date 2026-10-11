@@ -1,5 +1,5 @@
 import type { Component } from 'vue'
-import { PenLine, Wrench, Lightbulb, Eye, Compass, AudioLines } from 'lucide-vue-next'
+import { PenLine, Wrench, Lightbulb, Eye, Compass, AudioLines, Scale } from 'lucide-vue-next'
 
 export interface CapabilityDef {
   key: string
@@ -58,6 +58,14 @@ const CAPABILITY_DEFS: Record<string, CapabilityDef> = {
     color: 'text-text-muted',
     icon: Compass,
     unicode: '\u{1F4D0}', // 📐
+  },
+  decision: {
+    key: 'decision',
+    label: 'Decision',
+    desc: 'Answers a question about a given state with a choice, a probability or a score instead of text, on Ollama’s /v1/systemone endpoint (Ollama 0.35.1). Decision models report this as their only capability and cannot chat.',
+    color: 'text-warning',
+    icon: Scale,
+    unicode: '\u{2696}', // ⚖
   },
 }
 

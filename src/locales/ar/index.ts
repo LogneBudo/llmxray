@@ -16,6 +16,7 @@ import analytics from './analytics.json'
 import fim from './fim.json'
 import protocols from './protocols.json'
 import cachelab from './cachelab.json'
+import decisionlab from './decisionlab.json'
 
 export default {
   common,
@@ -36,4 +37,5 @@ export default {
   fim,
   protocols,
   cachelab,
+  decisionlab,
 }

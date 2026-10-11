@@ -56,7 +56,14 @@
     "noModelsMatch": "Nema modela koji odgovaraju vašoj pretrazi.",
     "pullByName": "Povuci bilo koji model po imenu",
     "installed": "Instalirano",
-    "confirmDeletePrompt": "Potvrda brisanja?"
+    "confirmDeletePrompt": "Potvrda brisanja?",
+    "runner": "Izvršilac koji služi ovaj model",
+    "backupsTitle": "Rezervne kopije sačuvane pri nadogradnji modela",
+    "backupsBody": "Ollama 0.40 je u pozadini nadogradio ove modele i zadržao originalnu kopiju na disku da bi vraćanje na stariju verziju ostalo bezbedno. Uklanjanje rezervne kopije oslobađa njen prostor; ostaje samo nadograđena kopija.",
+    "backupOf": "rezervna kopija za",
+    "removeBackup": "Ukloni rezervnu kopiju",
+    "removingBackup": "Uklanjanje…",
+    "backupSizeUnknown": "veličina nije prijavljena"
   },
   "integrations": {
     "googleAccount": "Google račun",

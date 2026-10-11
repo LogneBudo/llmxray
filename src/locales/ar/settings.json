@@ -56,7 +56,14 @@
     "noModelsMatch": "لا توجد نماذج تطابق بحثك.",
     "pullByName": "تنزيل أي نموذج بالاسم",
     "installed": "مثبّت",
-    "confirmDeletePrompt": "تأكيد الحذف؟"
+    "confirmDeletePrompt": "تأكيد الحذف؟",
+    "runner": "المشغّل الذي يخدم هذا النموذج",
+    "backupsTitle": "نسخ احتياطية محفوظة من ترقيات النماذج",
+    "backupsBody": "رقّى Ollama 0.40 هذه النماذج في الخلفية وأبقى النسخة الأصلية على القرص ليبقى الرجوع آمناً. حذف النسخة الاحتياطية يحرّر مساحتها؛ تبقى النسخة المرقّاة فقط.",
+    "backupOf": "نسخة احتياطية من",
+    "removeBackup": "حذف النسخة الاحتياطية",
+    "removingBackup": "جارٍ الحذف…",
+    "backupSizeUnknown": "الحجم غير مُبلَّغ"
   },
   "integrations": {
     "googleAccount": "حساب Google",

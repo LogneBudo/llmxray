@@ -33,7 +33,7 @@ Hardware information is read when the Vite dev server starts. If the System page
 The Ollama section shows:
 
 - **Connection status** — Whether Ollama is reachable
-- **Running models** — Which models are currently loaded in memory
+- **Running models** — Which models are currently loaded in memory, and since Ollama 0.40 the **runner** serving each (`llamacpp` or `mlx`)
 - **Memory allocation** — How much RAM/VRAM each loaded model is using
 - **Inference settings** — Default parameters for the running instance
 

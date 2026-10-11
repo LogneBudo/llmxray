@@ -47,6 +47,11 @@
     "cachedReported": "Cached prompt tokens (this run)",
     "promptTotal": "Prompt tokens, total (this run)",
     "errorShape": "Error envelope shape",
-    "footnote": "Observed values are from this run on your local Ollama. Some carriers (e.g. native NDJSON `done_reason`) only appear on the final chunk, while others (e.g. Anthropic `message_stop`) are dedicated events."
+    "footnote": "Observed values are from this run on your local Ollama. Some carriers (e.g. native NDJSON `done_reason`) only appear on the final chunk, while others (e.g. Anthropic `message_stop`) are dedicated events.",
+    "prefillCarrier": "Prefill-time carrier",
+    "prefillMs": "Prefill time (this run)",
+    "prefillRateStated": "Prefill rate, as the daemon states it",
+    "prefillRateHonest": "Prefill rate over evaluated tokens",
+    "statedNote": "OpenAI-compat `timings.prompt_per_second` (Ollama 0.35.1+) divides the TOTAL prompt by the time spent on the UNCACHED tokens. On a warm cache it is inflated by the hit ratio; the row below divides by the tokens actually evaluated."
   }
 }

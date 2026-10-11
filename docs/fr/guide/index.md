@@ -15,7 +15,7 @@
 
 ## Navigation dans l'application
 
-LLMxRay dispose d'une barre latérale avec 12 éléments de navigation, chacun représentant une fonctionnalité majeure. Ce guide comporte un chapitre par élément, dans l'ordre exact d'apparition dans la barre latérale :
+LLMxRay dispose d'une barre latérale avec un élément par fonctionnalité majeure. Ce guide comporte un chapitre par élément, dans l'ordre exact d'apparition dans la barre latérale :
 
 1. **[Diagnostics de Chat](./chat-diagnostics)** -- L'interface de chat principale avec streaming et analyse de session
 2. **[Comparer](./compare)** -- Comparaison côté à côté de modèles et de paramètres
@@ -25,12 +25,13 @@ LLMxRay dispose d'une barre latérale avec 12 éléments de navigation, chacun r
 5. **[Atelier d'Outils](./tool-workshop)** -- Constructeur visuel d'outils avec synchronisation du code
 6. **[Complétion au Milieu (FIM)](./fim)** -- Terrain de jeu de complétion de code pour modèles compatibles FIM
 7. **[Labo de cache](./cache-lab)** -- Mesurez pourquoi votre invite manque le cache KV, et ce que cela coûte à chaque tour
-8. **[Observatoire des Protocoles](./protocols)** -- Lancez le même prompt sur natif, compat. OpenAI et compat. Anthropic contre votre modèle local
-9. **[Entraînement IA](./ai-training)** -- Curation et export de données d'entraînement
-10. **[Modèles](./models)** -- Navigateur de modèles et détection des capacités
-11. **[Benchmark](./benchmark)** -- Évaluation standardisée des modèles avec logprobs
-12. **[Mon Système](./system)** -- Détection du matériel et statut d'Ollama
-13. **[Paramètres](./settings)** -- Connexion, paramètres et préférences
+8. **[Labo de décision](./decision-lab)** -- Posez des questions typées à un modèle de décision et voyez la probabilité derrière chaque réponse
+9. **[Observatoire des Protocoles](./protocols)** -- Lancez le même prompt sur natif, compat. OpenAI et compat. Anthropic contre votre modèle local
+10. **[Entraînement IA](./ai-training)** -- Curation et export de données d'entraînement
+11. **[Modèles](./models)** -- Navigateur de modèles et détection des capacités
+12. **[Benchmark](./benchmark)** -- Évaluation standardisée des modèles avec logprobs
+13. **[Mon Système](./system)** -- Détection du matériel et statut d'Ollama
+14. **[Paramètres](./settings)** -- Connexion, paramètres et préférences
 
 ## Autres éléments
 

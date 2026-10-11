@@ -56,7 +56,14 @@
     "noModelsMatch": "Aucun modèle ne correspond à votre recherche.",
     "pullByName": "Télécharger un modèle par nom",
     "installed": "Installé",
-    "confirmDeletePrompt": "Confirmer la suppression ?"
+    "confirmDeletePrompt": "Confirmer la suppression ?",
+    "runner": "Moteur qui sert ce modèle",
+    "backupsTitle": "Sauvegardes conservées par les mises à niveau de modèles",
+    "backupsBody": "Ollama 0.40 a mis à niveau ces modèles en arrière-plan et a gardé la copie d’origine sur le disque pour qu’un retour en arrière reste possible. Supprimer une sauvegarde libère son espace ; seule la copie mise à niveau reste.",
+    "backupOf": "sauvegarde de",
+    "removeBackup": "Supprimer la sauvegarde",
+    "removingBackup": "Suppression…",
+    "backupSizeUnknown": "taille non rapportée"
   },
   "integrations": {
     "googleAccount": "Compte Google",

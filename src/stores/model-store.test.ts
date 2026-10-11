@@ -110,6 +110,43 @@ describe('model-store — capabilities from /api/tags (Ollama 0.32)', () => {
     expect(store.chatModelNames).toEqual(['llama3.1:8b'])
   })
 
+  it('keeps a decision-only model out of both the chat and embedding selectors (Ollama 0.35.1)', async () => {
+    // nimble reports ["decision"] and answers only on /v1/systemone. Its name
+    // carries no hint, so the capability is the only thing that can catch it.
+    vi.mocked(ollamaClient.listModels).mockResolvedValue([
+      model('nimble:latest', { capabilities: ['decision'] }),
+      model('qwen2.5:7b', { capabilities: ['completion', 'tools'] }),
+    ])
+
+    const store = useModelStore()
+    await store.fetchModels()
+
+    expect(store.chatModelNames).toEqual(['qwen2.5:7b'])
+    expect(store.embeddingModelNames).toEqual([])
+    expect(store.decisionModelNames).toEqual(['nimble:latest'])
+    expect(store.modelNames).toContain('nimble:latest')
+  })
+
+  it('collapses the one-row-per-runner listing of a manifest-list model (Ollama 0.40)', async () => {
+    vi.mocked(ollamaClient.listModels).mockResolvedValue([
+      model('qwen3.8:latest', {
+        capabilities: ['completion', 'thinking'],
+        details: { ...model('x').details, runner: 'llamacpp' },
+      }),
+      model('qwen3.8:latest', {
+        capabilities: ['completion', 'thinking'],
+        details: { ...model('x').details, runner: 'mlx' },
+      }),
+      model('qwen2.5:7b', { capabilities: ['completion'] }),
+    ])
+
+    const store = useModelStore()
+    await store.fetchModels()
+
+    expect(store.modelNames).toEqual(['qwen3.8:latest', 'qwen2.5:7b'])
+    expect(store.chatModelNames).toEqual(['qwen3.8:latest', 'qwen2.5:7b'])
+  })
+
   it('does not misclassify a custom-named model the daemon reports as chat-capable', async () => {
     // "yugo60" carries no embedding hint in its name; the daemon settles it.
     vi.mocked(ollamaClient.listModels).mockResolvedValue([
@@ -121,5 +158,59 @@ describe('model-store — capabilities from /api/tags (Ollama 0.32)', () => {
 
     expect(store.chatModelNames).toEqual(['yugo60:latest'])
     expect(store.embeddingModelNames).toEqual([])
+  })
+})
+
+describe('model-store — thinking controls from /api/show (Ollama 0.34.3)', () => {
+  beforeEach(() => {
+    setActivePinia(createPinia())
+    vi.mocked(ollamaClient.listModels).mockReset()
+    vi.mocked(ollamaClient.showModel).mockReset()
+  })
+
+  function info(over: Record<string, unknown>) {
+    return {
+      license: '',
+      modelfile: '',
+      parameters: '',
+      template: '',
+      details: model('x').details,
+      model_info: {},
+      modified_at: '2026-10-11T00:00:00Z',
+      ...over,
+    }
+  }
+
+  it('returns the advertised levels and default once /api/show has landed', async () => {
+    vi.mocked(ollamaClient.listModels).mockResolvedValue([
+      model('glm-5.3-flash:cloud', { capabilities: ['completion', 'thinking'] }),
+    ])
+    vi.mocked(ollamaClient.showModel).mockResolvedValue(
+      info({ capabilities: ['completion', 'thinking'], thinking: { values: ['low', 'high', 'max'], default: 'max' } }),
+    )
+
+    const store = useModelStore()
+    await store.fetchModels()
+    await store.fetchModelInfo('glm-5.3-flash:cloud')
+
+    expect(store.getThinkingControls('glm-5.3-flash:cloud')).toEqual({
+      values: ['low', 'high', 'max'],
+      default: 'max',
+    })
+  })
+
+  it('returns undefined for a thinking model whose /api/show carries no block', async () => {
+    // deepseek-r1:8b on 0.40.3: capabilities include thinking, no `thinking` object.
+    vi.mocked(ollamaClient.listModels).mockResolvedValue([
+      model('deepseek-r1:8b', { capabilities: ['tools', 'thinking', 'completion'] }),
+    ])
+    vi.mocked(ollamaClient.showModel).mockResolvedValue(info({ capabilities: ['tools', 'thinking', 'completion'] }))
+
+    const store = useModelStore()
+    await store.fetchModels()
+    await store.fetchModelInfo('deepseek-r1:8b')
+
+    expect(store.isThinkingModel('deepseek-r1:8b')).toBe(true)
+    expect(store.getThinkingControls('deepseek-r1:8b')).toBeUndefined()
   })
 })

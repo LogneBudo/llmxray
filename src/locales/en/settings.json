@@ -56,7 +56,14 @@
     "noModelsMatch": "No models match your search.",
     "pullByName": "Pull any model by name",
     "installed": "Installed",
-    "confirmDeletePrompt": "Confirm delete?"
+    "confirmDeletePrompt": "Confirm delete?",
+    "runner": "Runtime that serves this model",
+    "backupsTitle": "Backups kept from model upgrades",
+    "backupsBody": "Ollama 0.40 upgraded these models in the background and kept the original copy on disk so a downgrade stays safe. Removing a backup frees its space; only the upgraded copy stays.",
+    "backupOf": "backup of",
+    "removeBackup": "Remove backup",
+    "removingBackup": "Removing…",
+    "backupSizeUnknown": "size not reported"
   },
   "integrations": {
     "googleAccount": "Google account",

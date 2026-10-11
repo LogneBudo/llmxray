@@ -245,4 +245,33 @@ export const MODEL_CATALOG: CatalogCategory[] = [
       },
     ],
   },
+  {
+    key: 'decision',
+    label: 'Decision',
+    entries: [
+      {
+        name: 'nimble',
+        description: 'Bespoke Labs Nimble -- typed classification with probabilities (decision model, not chat)',
+        variants: [{ tag: '9b', params: '9B', size: '9.5 GB' }],
+      },
+      {
+        name: 'tev1',
+        description: 'Together AI Tev1 -- fast decision model for classification (decision model, not chat)',
+        variants: [
+          { tag: '0.8b', params: '0.8B', size: '812 MB' },
+          { tag: '4b', params: '4B', size: '4.5 GB' },
+        ],
+      },
+      {
+        name: 'clef-flash',
+        description: 'Cloudflare Clef Flash -- multimodal decision model, accepts images with the state',
+        variants: [{ tag: '9b', params: '9B', size: '12 GB' }],
+      },
+      {
+        name: 'clef',
+        description: 'Cloudflare Clef -- larger multimodal decision model',
+        variants: [{ tag: '27b', params: '27B', size: '18 GB' }],
+      },
+    ],
+  },
 ]

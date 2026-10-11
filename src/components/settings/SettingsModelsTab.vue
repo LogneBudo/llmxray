@@ -6,6 +6,7 @@ import { ollamaClient } from '@/services/ollama-client'
 import { formatBytes } from '@/utils/format'
 import { MODEL_CATALOG, type CatalogEntry, type CatalogVariant } from '@/data/model-catalog'
 import ModelCapabilityIcons from '@/components/common/ModelCapabilityIcons.vue'
+import { findBackups, backupsKnownSize, shortDigest, type ModelBackup } from '@/services/model-backups'
 
 const modelStore = useModelStore()
 
@@ -29,6 +30,46 @@ async function handleDelete(name: string) {
     }, 3000)
   }
 }
+
+// ── Upgrade backups (Ollama 0.40.2) ──────────────────────────────
+// A model upgraded in the background keeps its original copy on disk under the
+// same tag. Found by asking /api/show for every manifest behind each tag; the
+// section only appears when at least one backup exists, so a daemon without
+// any (older than 0.40, or never upgraded) shows nothing here.
+const backups = ref<ModelBackup[]>([])
+const removingDigest = ref<string | null>(null)
+const backupError = ref<string | null>(null)
+const backupsKnownBytes = computed(() => backupsKnownSize(backups.value))
+
+async function scanBackups() {
+  const found: ModelBackup[] = []
+  await Promise.allSettled(
+    modelStore.models.map(async (m) => {
+      const shown = await ollamaClient.showManifests(m.name)
+      found.push(...findBackups(m.name, shown, modelStore.models))
+    }),
+  )
+  backups.value = found.sort((a, b) => a.model.localeCompare(b.model))
+}
+
+async function removeBackup(b: ModelBackup) {
+  removingDigest.value = b.digest
+  backupError.value = null
+  try {
+    await ollamaClient.deleteModel(b.digest)
+    await modelStore.fetchModels()
+    await scanBackups()
+  } catch (e) {
+    backupError.value = e instanceof Error ? e.message : 'Delete failed'
+  } finally {
+    removingDigest.value = null
+  }
+}
+
+onMounted(async () => {
+  if (modelStore.models.length === 0) await modelStore.fetchModels()
+  await scanBackups()
+})
 
 // ── Catalog ──────────────────────────────────────────────────────
 const activeCategory = ref('all')
@@ -178,6 +219,7 @@ onMounted(() => {
               <span v-if="model.details?.family">{{ model.details.family }}</span>
               <span v-if="model.details?.parameter_size">{{ model.details.parameter_size }}</span>
               <span v-if="model.details?.quantization_level">{{ model.details.quantization_level }}</span>
+              <span v-if="model.details?.runner" class="rounded bg-surface-overlay px-1 text-text-secondary" :title="$t('settings.models.runner')">{{ model.details.runner }}</span>
             </div>
           </div>
           <span class="shrink-0 text-[10px] text-text-muted">{{ formatBytes(model.size) }}</span>
@@ -195,6 +237,46 @@ onMounted(() => {
             @click="handleDelete(model.name)"
           >
             <Trash2 class="h-3.5 w-3.5" />
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Upgrade backups (only when the daemon has some) -->
+    <div v-if="backups.length > 0" class="rounded-lg border border-border-default bg-surface-raised p-4 space-y-3">
+      <div>
+        <h3 class="text-sm font-medium text-text-primary">
+          {{ $t('settings.models.backupsTitle') }}
+          <span class="ms-1 text-text-muted">({{ backups.length }}<template v-if="backupsKnownBytes > 0"> · {{ formatBytes(backupsKnownBytes) }}</template>)</span>
+        </h3>
+        <p class="mt-1 text-xs text-text-muted">{{ $t('settings.models.backupsBody') }}</p>
+      </div>
+      <p v-if="backupError" class="text-xs text-error">{{ backupError }}</p>
+      <div class="space-y-1">
+        <div
+          v-for="b in backups"
+          :key="b.digest"
+          class="flex items-center gap-3 rounded-lg bg-surface px-3 py-2.5 text-xs"
+        >
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2">
+              <span class="text-text-muted">{{ $t('settings.models.backupOf') }}</span>
+              <span class="font-medium text-text-primary truncate">{{ b.model }}</span>
+            </div>
+            <div class="flex gap-3 text-[10px] text-text-muted mt-0.5 font-mono">
+              <span>{{ shortDigest(b.digest) }}</span>
+              <span>{{ b.runner }} → {{ b.keptRunner }}</span>
+            </div>
+          </div>
+          <span class="shrink-0 text-[10px] text-text-muted">
+            {{ b.sizeBytes !== undefined ? formatBytes(b.sizeBytes) : $t('settings.models.backupSizeUnknown') }}
+          </span>
+          <button
+            class="shrink-0 rounded-lg border border-border-default px-2.5 py-1 text-[10px] text-text-secondary hover:border-error/50 hover:text-error transition-colors disabled:opacity-50"
+            :disabled="removingDigest !== null"
+            @click="removeBackup(b)"
+          >
+            {{ removingDigest === b.digest ? $t('settings.models.removingBackup') : $t('settings.models.removeBackup') }}
           </button>
         </div>
       </div>

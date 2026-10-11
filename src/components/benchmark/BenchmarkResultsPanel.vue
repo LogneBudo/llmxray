@@ -147,6 +147,7 @@ const pressureCategories = computed(() => {
           <h3 class="text-sm font-medium text-text-primary">{{ result.modelName }}</h3>
           <span class="text-xs text-text-muted">
             {{ result.totalQuestions }} questions · {{ Math.round(result.accuracy * 100) }}% accuracy · ctx {{ result.contextSize }}
+            <template v-if="result.runner"> · {{ result.runner }}</template>
             · {{ Math.round((result.completedAt - result.startedAt) / 1000) }}s total
           </span>
         </div>

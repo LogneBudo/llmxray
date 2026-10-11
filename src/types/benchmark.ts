@@ -54,6 +54,14 @@ export interface CategoryResult {
 export interface BenchmarkResult {
   id: string
   modelName: string
+  /**
+   * Which runtime served the model (`llamacpp`, `mlx`, or `ggml` for a model
+   * pulled before Ollama 0.40), as the model listing reported it when the run
+   * started. Since 0.40 the same model can run on two runtimes on Apple
+   * Silicon, so without this two results for one name are not comparable.
+   * Undefined on results stored before it, and on daemons older than 0.40.
+   */
+  runner?: string
   benchmarkIds: string[]
   contextSize: number
   startedAt: number
