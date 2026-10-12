@@ -16,8 +16,9 @@ COPY --from=build /app/package.json ./
 COPY --from=build /app/package-lock.json ./
 RUN npm ci --omit=dev
 
-EXPOSE 5174
+EXPOSE 5174 11435
 ENV OLLAMA_URL=http://host.docker.internal:11434
 ENV PORT=5174
+ENV OBSERVE_PORT=11435
 
 CMD ["node", "server/index.mjs"]

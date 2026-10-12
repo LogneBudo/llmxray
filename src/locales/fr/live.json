@@ -1,0 +1,154 @@
+{
+  "title": "En direct",
+  "subtitle": "Voyez ce que vos autres outils envoient réellement à Ollama. Rien à installer, rien à configurer : pointez-les ici plutôt que vers Ollama.",
+  "setup": {
+    "lead": "Utilisez cette adresse partout où un outil vous demande l'adresse d'Ollama :",
+    "copy": "Copier",
+    "copied": "Copié",
+    "note": "Elle se comporte exactement comme Ollama. Vos outils ne verront pas la différence ; vous, oui.",
+    "waiting": "En attente de la première requête… cette page s'active d'elle-même dès qu'une arrive.",
+    "offline": "Le port d'observation n'est pas ouvert. Lancez LLMxRay avec, ou choisissez un autre port avec --observe-port si {port} est déjà pris.",
+    "unreachable": "LLMxRay n'atteint pas son propre serveur. Rechargez la page une fois qu'il tourne.",
+    "retry": "Réessayer",
+    "tabs": {
+      "copilot": "VS Code Copilot",
+      "webui": "Open WebUI",
+      "continue": "Continue",
+      "n8n": "n8n",
+      "code": "Python / curl"
+    },
+    "steps": {
+      "copilot": [
+        "Dans VS Code, installez l'extension Ollama (éditeur : Ollama) depuis le Marketplace. L'ancien fournisseur intégré à Copilot est déprécié.",
+        "Ouvrez les Paramètres, cherchez ollama.endpoint et donnez-lui la valeur {address}. Ou dans Chat : Manage Language Models, ouvrez Ollama et changez son URL.",
+        "Lancez Ollama: Refresh Models depuis la palette de commandes, puis choisissez un modèle dans la section Ollama du sélecteur de modèles.",
+        "Envoyez un message. Il apparaît ici."
+      ],
+      "webui": [
+        "Panneau d'administration, Paramètres, Connexions.",
+        "Remplacez l'URL de l'API Ollama par {address}. Depuis un conteneur Docker, utilisez {dockerAddress}.",
+        "Enregistrez et envoyez un message."
+      ],
+      "continue": [
+        "Ouvrez config.yaml (ou config.json).",
+        "Sur chaque modèle Ollama, mettez apiBase à {address}.",
+        "Rechargez la fenêtre et envoyez un message."
+      ],
+      "n8n": [
+        "Identifiants, compte Ollama.",
+        "URL de base : {address}. Depuis un conteneur Docker, utilisez {dockerAddress}.",
+        "Exécutez le workflow une fois."
+      ],
+      "code": [
+        "Python : ollama.Client(host='{address}')",
+        "SDK OpenAI : base_url='{address}/v1'",
+        "Shell : export OLLAMA_HOST={hostPort}, puis n'importe quel ollama run ou curl.",
+        "PowerShell : $env:OLLAMA_HOST = \"{hostPort}\", puis ollama run sur la même ligne ou la suivante."
+      ]
+    }
+  },
+  "privacy": {
+    "toggle": "Conserver le texte des invites, pas seulement les chiffres",
+    "off": "Désactivé : seuls les comptes et les durées sont gardés, en mémoire, pour cette session.",
+    "on": "Activé : les invites sont enregistrées dans un fichier sur cette machine pour que vous puissiez lire ce qu'un outil a envoyé.",
+    "always": "Dans les deux cas, rien ne quitte cette machine.",
+    "where": "Enregistré sous {dir}"
+  },
+  "live": {
+    "listening": "À l'écoute sur {address}",
+    "disconnected": "Reconnexion au serveur…",
+    "clients": "{n} client | {n} clients",
+    "turns": "{n} tour | {n} tours",
+    "pause": "Pause",
+    "resume": "Reprendre ({n} en attente)",
+    "clear": "Effacer",
+    "lead": "Ce que vos outils envoient, tour par tour, avec ce que le cache a gardé et ce qu'il a jeté."
+  },
+  "findings": {
+    "title": "Ce qui ressort",
+    "none": "Rien ne ressort pour l'instant. Les constats apparaissent quand un client a envoyé quelques tours.",
+    "show": "voir le tour",
+    "context": {
+      "title": "{client} envoie des invites de {tokens} tokens, mais {model} est chargé avec un contexte de {context} tokens. {rejected} requête rejetée. | {client} envoie des invites de {tokens} tokens, mais {model} est chargé avec un contexte de {context} tokens. {rejected} requêtes rejetées.",
+      "body": "Ollama refuse une invite plus grande que le contexte avec lequel il a chargé le modèle : rien n'atteint le modèle. Augmentez la longueur de contexte dans les réglages d'Ollama (ou OLLAMA_CONTEXT_LENGTH) au-delà de la taille de l'invite ; les assistants de code demandent 32K à 64K. Ce contexte plus grand a aussi besoin de place en mémoire vidéo."
+    },
+    "prefix": {
+      "title": "{client} relit environ {tokens} tokens à chaque tour avec {model}.",
+      "body": "L'invite fait environ {promptTokens} tokens et le cache en garde {share} %. Quelque chose près du début change d'un tour à l'autre ; tout ce qui suit est recalculé chaque fois.",
+      "bodyWithBreak": "L'invite fait environ {promptTokens} tokens et le cache en garde {share} %. Elle cesse de correspondre au tour précédent vers le token {breakTokens} ; tout ce qui suit est recalculé chaque fois."
+    },
+    "cpu": {
+      "title": "{model} tourne à {cpu} % sur le processeur.",
+      "body": "Il est chargé avec un contexte de {context} tokens et ne tient plus dans la mémoire vidéo ; une partie tourne depuis la RAM système. Attendez-vous à un préremplissage et une génération plusieurs fois plus lents que sur le GPU seul. Un contexte plus petit, ou un cache KV quantifié (OLLAMA_KV_CACHE_TYPE=q8_0), est le remède habituel.",
+      "bodyNoContext": "Une partie tourne depuis la RAM système plutôt que la mémoire vidéo. Attendez-vous à un préremplissage et une génération plusieurs fois plus lents que sur le GPU seul. Un contexte plus petit, ou un cache KV quantifié, est le remède habituel."
+    },
+    "tools": {
+      "title": "Les schémas d'outils représentent {share} % de chaque invite de {client}.",
+      "body": "{offered} outils sont décrits à chaque tour ; {used} ont servi sur les {turns} tours observés. Les schémas sont dans le préfixe stable, donc en cache, mais ils occupent le contexte."
+    }
+  },
+  "table": {
+    "time": "Heure",
+    "client": "Client",
+    "model": "Modèle",
+    "prompt": "Invite",
+    "cache": "Depuis le cache",
+    "prefill": "Préremplissage",
+    "gen": "Génération",
+    "tools": "Outils",
+    "unreported": "non rapporté",
+    "unreportedHint": "Les flux compatibles OpenAI ne portent aucun compte sauf si le client les demande avec stream_options.include_usage. L'API native d'Ollama les rapporte toujours.",
+    "failed": "échec",
+    "showing": "Les {shown} derniers tours sur {total}. Les tours ne sont gardés que pour cette session.",
+    "mode": {
+      "agent": "agent",
+      "chat": "chat",
+      "completion": "complétion",
+      "embedding": "plongement"
+    }
+  },
+  "turn": {
+    "title": "Tour",
+    "anatomyTitle": "De quoi sont faits les {tokens} tokens",
+    "anatomyTitleChars": "De quoi est faite l'invite ({chars} caractères)",
+    "system": "Système",
+    "tools": "Schémas d'outils",
+    "history": "Historique et résultats d'outils",
+    "message": "Message",
+    "breakTitle": "Le cache a rompu vers le token {tokens}",
+    "breakTitleChars": "L'invite cesse de correspondre au tour précédent au caractère {chars}",
+    "breakBody": "C'est le premier point où cette invite diffère du tour précédent. Tout ce qui suit, environ {after} tokens, a été recalculé.",
+    "breakFix": "Si la partie changeante venait en dernier, le préremplissage passerait de {from} à environ {to}.",
+    "identical": "Identique au tour précédent de ce client : toute l'invite pouvait venir du cache.",
+    "first": "Premier tour de ce client avec ce modèle ; rien à comparer pour l'instant.",
+    "textHint": "Activez « Conserver le texte des invites » pour voir le texte à la rupture.",
+    "promptTokens": "Tokens d'invite",
+    "fromCache": "Depuis le cache",
+    "prefill": "Préremplissage",
+    "realRate": "{tps} tok/s réels",
+    "generation": "Génération",
+    "toolCalls": "Appels d'outils",
+    "noTools": "aucun",
+    "context": "Contexte chargé",
+    "onCpu": "{cpu} % sur le processeur",
+    "onGpu": "entièrement sur le GPU",
+    "runner": "Moteur",
+    "status": "Statut",
+    "error": "Erreur",
+    "protocol": "Protocole",
+    "userAgent": "User agent",
+    "keptText": "Requête telle qu'envoyée"
+  },
+  "clients": {
+    "title": "Par client",
+    "client": "Client",
+    "tokens": "Tokens",
+    "toolCalls": "Appels d'outils",
+    "prefill": "Préremplissage",
+    "saves": "Gain si cache corrigé",
+    "savesAbout": "environ {time}",
+    "nothing": "rien à corriger",
+    "unknown": "pas de comptes",
+    "savesHint": "Estimé à partir des chiffres de cette session : le préremplissage que ces tours auraient évité si leurs invites étaient restées en cache jusqu'au nouveau message. Le Labo de cache le mesure ; ici, on extrapole seulement."
+  }
+}

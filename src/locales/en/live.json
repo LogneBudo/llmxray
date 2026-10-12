@@ -1,0 +1,154 @@
+{
+  "title": "Live",
+  "subtitle": "See what your other tools are really sending to Ollama. Nothing to install, nothing to configure: point them here instead of at Ollama.",
+  "setup": {
+    "lead": "Use this address wherever a tool asks for your Ollama address:",
+    "copy": "Copy",
+    "copied": "Copied",
+    "note": "It behaves exactly like Ollama. Your tools will not notice the difference; you will.",
+    "waiting": "Waiting for the first request… this page switches on by itself when one arrives.",
+    "offline": "The observe port is not open. Start LLMxRay with it enabled, or pick another port with --observe-port if {port} is taken.",
+    "unreachable": "LLMxRay cannot reach its own server. Reload the page once it is running.",
+    "retry": "Try again",
+    "tabs": {
+      "copilot": "VS Code Copilot",
+      "webui": "Open WebUI",
+      "continue": "Continue",
+      "n8n": "n8n",
+      "code": "Python / curl"
+    },
+    "steps": {
+      "copilot": [
+        "In VS Code install the Ollama extension (publisher: Ollama) from the Marketplace. The older built-in Copilot provider is deprecated.",
+        "Open Settings, search for ollama.endpoint and set it to {address}. Or in Chat: Manage Language Models, open Ollama and set its URL.",
+        "Run Ollama: Refresh Models from the Command Palette, then pick a model from the Ollama section of the chat model picker.",
+        "Send a message. It appears here."
+      ],
+      "webui": [
+        "Admin Panel, Settings, Connections.",
+        "Change the Ollama API URL to {address}. From a Docker container use {dockerAddress}.",
+        "Save and send a message."
+      ],
+      "continue": [
+        "Open config.yaml (or config.json).",
+        "On each Ollama model set apiBase to {address}.",
+        "Reload the window and send a message."
+      ],
+      "n8n": [
+        "Credentials, Ollama account.",
+        "Base URL: {address}. From a Docker container use {dockerAddress}.",
+        "Run the workflow once."
+      ],
+      "code": [
+        "Python: ollama.Client(host='{address}')",
+        "OpenAI SDK: base_url='{address}/v1'",
+        "Shell: export OLLAMA_HOST={hostPort}, then any ollama run or curl.",
+        "PowerShell: $env:OLLAMA_HOST = \"{hostPort}\", then ollama run on the same line or the next."
+      ]
+    }
+  },
+  "privacy": {
+    "toggle": "Keep the prompt text, not just the numbers",
+    "off": "Off: only counts and timings are kept, in memory, for this session.",
+    "on": "On: prompts are saved to a file on this machine so you can read what a tool sent.",
+    "always": "Either way, nothing leaves this machine.",
+    "where": "Saved under {dir}"
+  },
+  "live": {
+    "listening": "Listening on {address}",
+    "disconnected": "Reconnecting to the server…",
+    "clients": "{n} client | {n} clients",
+    "turns": "{n} turn | {n} turns",
+    "pause": "Pause",
+    "resume": "Resume ({n} waiting)",
+    "clear": "Clear",
+    "lead": "What your tools are sending, turn by turn, with what the cache kept and what it threw away."
+  },
+  "findings": {
+    "title": "What stands out",
+    "none": "Nothing stands out yet. Findings appear once a client has sent a few turns.",
+    "show": "show the turn",
+    "context": {
+      "title": "{client} sends {tokens}-token prompts, but {model} is loaded with a {context}-token context. {rejected} request rejected. | {client} sends {tokens}-token prompts, but {model} is loaded with a {context}-token context. {rejected} requests rejected.",
+      "body": "Ollama refuses a prompt larger than the context it loaded the model with, so nothing reaches the model. Raise the context length in Ollama's settings (or OLLAMA_CONTEXT_LENGTH) to above the prompt size; coding assistants ask for 32K to 64K. The larger context also needs room in video memory."
+    },
+    "prefix": {
+      "title": "{client} re-reads about {tokens} tokens on every turn with {model}.",
+      "body": "The prompt is about {promptTokens} tokens and the cache keeps {share}% of it. Something near the start changes between turns; everything after it is recomputed each time.",
+      "bodyWithBreak": "The prompt is about {promptTokens} tokens and the cache keeps {share}%. It stops matching the previous turn around token {breakTokens}; everything after that point is recomputed each time."
+    },
+    "cpu": {
+      "title": "{model} runs {cpu}% on CPU.",
+      "body": "It is loaded with a {context}-token context and no longer fits in video memory, so part of it runs from system RAM. Expect prefill and generation several times slower than on the GPU alone. A smaller context window, or a quantised KV cache (OLLAMA_KV_CACHE_TYPE=q8_0), is the usual fix.",
+      "bodyNoContext": "Part of it runs from system RAM rather than video memory. Expect prefill and generation several times slower than on the GPU alone. A smaller context window, or a quantised KV cache, is the usual fix."
+    },
+    "tools": {
+      "title": "Tool schemas are {share}% of every {client} prompt.",
+      "body": "{offered} tools are described on each turn; {used} of them were used in the {turns} turns seen. The schemas sit in the stable prefix, so they are cached, but they still occupy context."
+    }
+  },
+  "table": {
+    "time": "Time",
+    "client": "Client",
+    "model": "Model",
+    "prompt": "Prompt",
+    "cache": "From cache",
+    "prefill": "Prefill",
+    "gen": "Gen",
+    "tools": "Tools",
+    "unreported": "not reported",
+    "unreportedHint": "OpenAI-compatible streams carry no counts unless the client asks for them with stream_options.include_usage. The native Ollama API always reports them.",
+    "failed": "failed",
+    "showing": "Showing the last {shown} of {total}. Turns are kept for this session only.",
+    "mode": {
+      "agent": "agent",
+      "chat": "chat",
+      "completion": "completion",
+      "embedding": "embedding"
+    }
+  },
+  "turn": {
+    "title": "Turn",
+    "anatomyTitle": "What the {tokens} tokens are made of",
+    "anatomyTitleChars": "What the prompt is made of ({chars} characters)",
+    "system": "System",
+    "tools": "Tool schemas",
+    "history": "History and tool results",
+    "message": "Message",
+    "breakTitle": "Cache broke around token {tokens}",
+    "breakTitleChars": "Prompt stopped matching the previous turn at character {chars}",
+    "breakBody": "That is the first point where this prompt differs from the previous turn. Everything after it, about {after} tokens, was recomputed.",
+    "breakFix": "If the changing part came last, prefill would drop from {from} to about {to}.",
+    "identical": "Identical to the previous turn from this client, so the whole prompt could be served from cache.",
+    "first": "First turn from this client with this model; nothing to compare against yet.",
+    "textHint": "Switch on \"Keep the prompt text\" to see the text at the break.",
+    "promptTokens": "Prompt tokens",
+    "fromCache": "From cache",
+    "prefill": "Prefill",
+    "realRate": "{tps} tok/s real",
+    "generation": "Generation",
+    "toolCalls": "Tool calls",
+    "noTools": "none",
+    "context": "Context loaded",
+    "onCpu": "{cpu}% on CPU",
+    "onGpu": "entirely on the GPU",
+    "runner": "Runner",
+    "status": "Status",
+    "error": "Error",
+    "protocol": "Protocol",
+    "userAgent": "User agent",
+    "keptText": "Request as sent"
+  },
+  "clients": {
+    "title": "Per client",
+    "client": "Client",
+    "tokens": "Tokens",
+    "toolCalls": "Tool calls",
+    "prefill": "Prefill",
+    "saves": "Cache fix saves",
+    "savesAbout": "about {time}",
+    "nothing": "nothing to fix",
+    "unknown": "no counts",
+    "savesHint": "Estimated from this session's own numbers: the prefill these turns would have skipped had their prompts stayed cached up to the new message. Cache Lab measures it; this only extrapolates."
+  }
+}

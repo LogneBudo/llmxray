@@ -5,6 +5,25 @@ All notable changes to LLMxRay are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.2] — 2026-10-12
+
+### Added
+
+- **Live page.** LLMxRay now opens a second port, 11435 by default, that behaves exactly like
+  Ollama and forwards everything to it. Point any other tool at that address (VS Code Copilot,
+  Open WebUI, Continue, n8n, a Python script) and every turn it sends appears on the Live page:
+  client, model, prompt tokens, how many came from the cache, prefill and generation speed, tool
+  calls. Selecting a turn shows what the prompt is made of (system, tool schemas, history, message)
+  and the exact point where it stopped matching the previous turn from the same client, which is
+  where the cache broke. Findings are written as plain sentences and each links to the turn that
+  proves it: a client that re-reads most of its prompt every turn, a model running partly on CPU
+  because its context no longer fits in VRAM, tool schemas that dominate the prompt. Per-client
+  cards total tokens, tool calls and prefill time, with an estimate of what a cache fix would save.
+  The page's empty state is the setup: one address to copy and the steps for each tool. Only counts
+  and timings are kept, in memory; prompt text is an opt-in that writes to a file under the user's
+  home directory. Nothing leaves the machine. `--observe-port` and `--no-observe` on the CLI,
+  `OBSERVE_PORT` and `OBSERVE=0` in Docker.
+
 ## [0.7.1] — 2026-10-11
 
 ### Added

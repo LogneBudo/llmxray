@@ -1,0 +1,125 @@
+import { computeFindings, summariseClients, cacheFixSavingMs, median } from './live-findings'
+import type { LiveTurn } from '@/types/live'
+
+let seq = 0
+function turn(over: Partial<LiveTurn> & { tokens?: number; cached?: number; prefillMs?: number }): LiveTurn {
+  const tokens = over.tokens ?? 10_000
+  const cached = over.cached ?? 2_000
+  const prefillMs = over.prefillMs ?? 3_000
+  seq++
+  return {
+    id: `t${seq}`,
+    seq,
+    at: 1_000 + seq,
+    durationMs: 4_000,
+    path: '/api/chat',
+    protocol: 'ollama-chat',
+    mode: 'agent',
+    client: { id: 'copilot', label: 'VS Code Copilot', userAgent: 'GitHubCopilotChat' },
+    model: 'qwen2.5-coder:14b',
+    stream: true,
+    status: 200,
+    error: null,
+    contextExceeded: null,
+    prompt: { tokens, cached, evaluated: tokens - cached, prefillMs, prefillTps: null, contextRequested: null },
+    gen: { tokens: 100, ms: 3_000, tps: 33, doneReason: 'stop' },
+    toolCalls: ['read_file'],
+    toolsOffered: 31,
+    toolNames: [],
+    anatomy: { systemChars: 1_500, toolsChars: 4_000, historyChars: 4_000, messageChars: 500, totalChars: 10_000, messages: 6 },
+    prefix: { breakChar: 2_000, breakShare: 0.2, breakTokensEst: 2_000, identical: false },
+    fit: { contextLength: 32_768, size: 1000, sizeVram: 590, cpuShare: 0.41, runner: 'llamacpp' },
+    textKept: false,
+    ...over,
+  }
+}
+
+describe('median', () => {
+  it('handles odd, even and empty inputs', () => {
+    expect(median([3, 1, 2])).toBe(2)
+    expect(median([1, 2, 3, 4])).toBe(2.5)
+    expect(median([])).toBeNull()
+    expect(median([NaN, 5])).toBe(5)
+  })
+})
+
+describe('computeFindings', () => {
+  it('needs three measured turns before it accuses a client of breaking the cache', () => {
+    expect(computeFindings([turn({}), turn({})]).filter((f) => f.kind === 'prefix')).toHaveLength(0)
+    const f = computeFindings([turn({}), turn({}), turn({})]).find((x) => x.kind === 'prefix')
+    expect(f).toBeDefined()
+    expect(f!.params).toMatchObject({ client: 'VS Code Copilot', tokens: 8_000, share: 20, breakTokens: 2_000 })
+    expect(f!.turnId).toBe('t5')
+  })
+
+  it('stays quiet for a well-cached client even with a large prompt', () => {
+    const turns = [turn({ cached: 9_600 }), turn({ cached: 9_700 }), turn({ cached: 9_500 })]
+    expect(computeFindings(turns).filter((f) => f.kind === 'prefix')).toHaveLength(0)
+  })
+
+  it('stays quiet for a small prompt even when the cache share is low', () => {
+    const turns = [turn({ tokens: 300, cached: 10 }), turn({ tokens: 300, cached: 10 }), turn({ tokens: 300, cached: 10 })]
+    expect(computeFindings(turns).filter((f) => f.kind === 'prefix')).toHaveLength(0)
+  })
+
+  it('reports a model running partly on CPU from the latest load facts', () => {
+    const f = computeFindings([turn({})]).find((x) => x.kind === 'cpu')
+    expect(f!.params).toMatchObject({ model: 'qwen2.5-coder:14b', cpu: 41, context: 32_768 })
+    const fits = computeFindings([turn({ fit: { contextLength: 8192, size: 1000, sizeVram: 1000, cpuShare: 0, runner: null } })])
+    expect(fits.filter((x) => x.kind === 'cpu')).toHaveLength(0)
+  })
+
+  it('reports tool schemas that dominate the prompt, with how many were used', () => {
+    const f = computeFindings([turn({ toolCalls: ['read_file'] }), turn({ toolCalls: ['edit_file'] })]).find((x) => x.kind === 'tools')
+    expect(f!.params).toMatchObject({ share: 40, offered: 31, used: 2, turns: 2 })
+  })
+
+  it('reports a prompt larger than the loaded context from a single rejected turn, and counts the rejections', () => {
+    const rejected = () =>
+      turn({
+        status: 400,
+        error: 'request (9415 tokens) exceeds the available context size (4096 tokens), try increasing it',
+        contextExceeded: { promptTokens: 9415, contextLength: 4096 },
+        prompt: { tokens: 9415, cached: null, evaluated: null, prefillMs: null, prefillTps: null, contextRequested: null },
+        anatomy: { systemChars: 40963, toolsChars: 148744, historyChars: 0, messageChars: 161, totalChars: 189868, messages: 2 },
+        toolsOffered: 108,
+        toolCalls: [],
+      })
+    const found = computeFindings([rejected(), rejected(), rejected()])
+    const ctx = found.find((f) => f.kind === 'context')!
+    expect(ctx.severity).toBe('error')
+    expect(ctx.params).toMatchObject({ client: 'VS Code Copilot', model: 'qwen2.5-coder:14b', tokens: 9415, context: 4096, rejected: 3 })
+    // Rejected turns still count for the tool-schema finding: the schemas are why the prompt is too big.
+    expect(found.find((f) => f.kind === 'tools')!.params).toMatchObject({ share: 78, offered: 108, used: 0 })
+    // But never for the cache finding, which needs measured turns.
+    expect(found.filter((f) => f.kind === 'prefix')).toHaveLength(0)
+  })
+
+  it('ignores failed turns and embeddings for prompt findings', () => {
+    const turns = [turn({ error: 'HTTP 500' }), turn({ mode: 'embedding' }), turn({}), turn({})]
+    const found = computeFindings(turns)
+    // Four turns, but only two count: not enough for the prefix finding, and the
+    // tools finding counts the two healthy ones only.
+    expect(found.filter((f) => f.kind === 'prefix')).toHaveLength(0)
+    expect(found.find((f) => f.kind === 'tools')!.params.turns).toBe(2)
+  })
+})
+
+describe('summariseClients', () => {
+  it('totals per client and estimates what a cache fix would have saved', () => {
+    const t = turn({})
+    // 8,000 evaluated of which 500 (5% of chars) are the new message: 93.75% of 3 s avoidable.
+    expect(cacheFixSavingMs(t)).toBeCloseTo(2_812.5)
+    const other = turn({ client: { id: 'open-webui', label: 'Open WebUI', userAgent: '' }, mode: 'chat', toolCalls: [] })
+    const s = summariseClients([t, turn({}), other])
+    expect(s[0]).toMatchObject({ label: 'VS Code Copilot', turns: 2, toolCalls: 2, prefillMs: 6_000, tokens: 20_200 })
+    expect(s[0]!.cacheFixSavesMs).toBeCloseTo(5_625)
+    expect(s[1]!.label).toBe('Open WebUI')
+  })
+
+  it('reports no saving when the daemon gave no counts', () => {
+    const t = turn({ prompt: { tokens: null, cached: null, evaluated: null, prefillMs: null, prefillTps: null, contextRequested: null } })
+    expect(cacheFixSavingMs(t)).toBeNull()
+    expect(summariseClients([t])[0]!.cacheFixSavesMs).toBeNull()
+  })
+})

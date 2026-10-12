@@ -59,6 +59,11 @@ export const router = createRouter({
           component: () => import('@/pages/DecisionLabPage.vue'),
         },
         {
+          path: 'live',
+          name: 'live',
+          component: () => import('@/pages/LivePage.vue'),
+        },
+        {
           path: 'cache-lab',
           name: 'cacheLab',
           component: () => import('@/pages/CacheLabPage.vue'),

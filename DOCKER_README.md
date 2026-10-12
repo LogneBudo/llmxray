@@ -7,10 +7,12 @@ No cloud. No API keys. No cost. Everything runs on your hardware.
 ## Quick Start
 
 ```bash
-docker run -p 5174:5174 djovaneli/llmxray
+docker run -p 5174:5174 -p 11435:11435 djovaneli/llmxray
 ```
 
 Open **http://localhost:5174** in your browser. Make sure [Ollama](https://ollama.com) is running on your machine.
+
+The second port is the **Live** page's observe port: point any other tool (VS Code Copilot, Open WebUI, Continue, n8n, your own scripts) at `http://localhost:11435` instead of Ollama and its traffic shows up on the Live page. Leave the mapping out if you do not need it.
 
 ## Configuration
 
@@ -18,6 +20,8 @@ Open **http://localhost:5174** in your browser. Make sure [Ollama](https://ollam
 |----------|---------|-------------|
 | `OLLAMA_URL` | `http://host.docker.internal:11434` | Ollama instance URL |
 | `PORT` | `5174` | Port to serve on |
+| `OBSERVE_PORT` | `11435` | Port other tools point at to appear on the Live page |
+| `OBSERVE` | `1` | Set to `0` to not open the observe port |
 
 ### Custom Ollama URL
 
@@ -41,6 +45,7 @@ services:
     image: djovaneli/llmxray
     ports:
       - "5174:5174"
+      - "11435:11435"
     environment:
       - OLLAMA_URL=http://host.docker.internal:11434
 ```
@@ -60,6 +65,7 @@ services:
     image: djovaneli/llmxray
     ports:
       - "5174:5174"
+      - "11435:11435"
     environment:
       - OLLAMA_URL=http://ollama:11434
     depends_on:
@@ -77,6 +83,7 @@ On Linux, `host.docker.internal` may not resolve by default. Either:
 
 ## Features
 
+- Live page: see what other tools send to Ollama, turn by turn, and where their prompts break the cache
 - Real-time token streaming with confidence coloring
 - Model comparison (up to 4 slots side by side)
 - Surgical Benchmark with real logprobs

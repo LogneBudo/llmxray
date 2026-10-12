@@ -1,0 +1,154 @@
+{
+  "title": "实时观测",
+  "subtitle": "看看你的其他工具到底在向 Ollama 发送什么。无需安装，无需配置：把它们指向这里，而不是 Ollama。",
+  "setup": {
+    "lead": "凡是工具要求填写 Ollama 地址的地方，都填这个地址：",
+    "copy": "复制",
+    "copied": "已复制",
+    "note": "它的行为与 Ollama 完全一样。你的工具察觉不到区别；你却看得到。",
+    "waiting": "等待第一个请求……有请求到达时，本页会自动切换。",
+    "offline": "观测端口未打开。请启用它后再启动 LLMxRay；若 {port} 已被占用，用 --observe-port 换一个端口。",
+    "unreachable": "LLMxRay 无法连接到自己的服务器。服务器运行后请刷新页面。",
+    "retry": "重试",
+    "tabs": {
+      "copilot": "VS Code Copilot",
+      "webui": "Open WebUI",
+      "continue": "Continue",
+      "n8n": "n8n",
+      "code": "Python / curl"
+    },
+    "steps": {
+      "copilot": [
+        "在 VS Code 中从 Marketplace 安装 Ollama 扩展（发布者：Ollama）。旧的 Copilot 内置提供方已弃用。",
+        "打开设置，搜索 ollama.endpoint，把它设为 {address}。或在 Chat: Manage Language Models 中打开 Ollama 并修改其 URL。",
+        "在命令面板运行 Ollama: Refresh Models，然后在聊天模型选择器的 Ollama 一栏中选择模型。",
+        "发送一条消息。它会出现在这里。"
+      ],
+      "webui": [
+        "管理面板，设置，连接。",
+        "把 Ollama API URL 改为 {address}。若在 Docker 容器中，用 {dockerAddress}。",
+        "保存并发送一条消息。"
+      ],
+      "continue": [
+        "打开 config.yaml（或 config.json）。",
+        "为每个 Ollama 模型设置 apiBase 为 {address}。",
+        "重新加载窗口并发送一条消息。"
+      ],
+      "n8n": [
+        "凭据，Ollama 账户。",
+        "Base URL：{address}。若在 Docker 容器中，用 {dockerAddress}。",
+        "运行一次工作流。"
+      ],
+      "code": [
+        "Python：ollama.Client(host='{address}')",
+        "OpenAI SDK：base_url='{address}/v1'",
+        "Shell：export OLLAMA_HOST={hostPort}，然后任意 ollama run 或 curl。",
+        "PowerShell：$env:OLLAMA_HOST = \"{hostPort}\"，然后在同一行或下一行运行 ollama run。"
+      ]
+    }
+  },
+  "privacy": {
+    "toggle": "保留提示词文本，而不只是数字",
+    "off": "关闭：只在内存中保留本次会话的计数和时间。",
+    "on": "开启：提示词保存到本机的一个文件中，以便查看工具发送了什么。",
+    "always": "无论哪种方式，数据都不会离开这台机器。",
+    "where": "保存于 {dir}"
+  },
+  "live": {
+    "listening": "正在监听 {address}",
+    "disconnected": "正在重新连接服务器……",
+    "clients": "{n} 个客户端",
+    "turns": "{n} 轮",
+    "pause": "暂停",
+    "resume": "继续（{n} 条等待中）",
+    "clear": "清空",
+    "lead": "你的工具逐轮发送的内容，以及缓存保留了什么、丢弃了什么。"
+  },
+  "findings": {
+    "title": "值得注意",
+    "none": "目前没有特别之处。客户端发送几轮后会显示发现。",
+    "show": "查看该轮",
+    "context": {
+      "title": "{client} 发送的提示词有 {tokens} 个 token，但 {model} 是以 {context} token 的上下文加载的。已拒绝 {rejected} 个请求。",
+      "body": "Ollama 会拒绝比加载模型时的上下文更大的提示词，因此什么都到不了模型。在 Ollama 设置中（或通过 OLLAMA_CONTEXT_LENGTH）把上下文长度调到提示词大小以上；编程助手通常需要 32K 到 64K。更大的上下文也需要更多显存。"
+    },
+    "prefix": {
+      "title": "{client} 使用 {model} 时每轮重读约 {tokens} 个 token。",
+      "body": "提示词约 {promptTokens} 个 token，缓存保留了 {share}%。开头附近有内容在每轮之间变化；其后的一切每次都被重新计算。",
+      "bodyWithBreak": "提示词约 {promptTokens} 个 token，缓存保留了 {share}%。它在第 {breakTokens} 个 token 附近开始与上一轮不同；其后的一切每次都被重新计算。"
+    },
+    "cpu": {
+      "title": "{model} 有 {cpu}% 在 CPU 上运行。",
+      "body": "它以 {context} token 的上下文加载，已无法完全放入显存，一部分从系统内存运行。预填充和生成会比仅用 GPU 慢好几倍。通常的解决办法是更小的上下文窗口，或量化的 KV 缓存（OLLAMA_KV_CACHE_TYPE=q8_0）。",
+      "bodyNoContext": "一部分从系统内存而非显存运行。预填充和生成会比仅用 GPU 慢好几倍。通常的解决办法是更小的上下文窗口，或量化的 KV 缓存。"
+    },
+    "tools": {
+      "title": "工具模式占 {client} 每条提示词的 {share}%。",
+      "body": "每轮描述 {offered} 个工具；在观测到的 {turns} 轮中用到了 {used} 个。模式位于稳定前缀中，因此会被缓存，但仍占用上下文。"
+    }
+  },
+  "table": {
+    "time": "时间",
+    "client": "客户端",
+    "model": "模型",
+    "prompt": "提示词",
+    "cache": "来自缓存",
+    "prefill": "预填充",
+    "gen": "生成",
+    "tools": "工具",
+    "unreported": "未报告",
+    "unreportedHint": "OpenAI 兼容的流式响应不带计数，除非客户端通过 stream_options.include_usage 请求。Ollama 原生 API 总是报告计数。",
+    "failed": "失败",
+    "showing": "显示最近 {shown} 轮，共 {total} 轮。轮次仅在本次会话中保留。",
+    "mode": {
+      "agent": "代理",
+      "chat": "对话",
+      "completion": "补全",
+      "embedding": "嵌入"
+    }
+  },
+  "turn": {
+    "title": "第",
+    "anatomyTitle": "这 {tokens} 个 token 的构成",
+    "anatomyTitleChars": "提示词的构成（{chars} 个字符）",
+    "system": "系统",
+    "tools": "工具模式",
+    "history": "历史与工具结果",
+    "message": "消息",
+    "breakTitle": "缓存在第 {tokens} 个 token 附近中断",
+    "breakTitleChars": "提示词在第 {chars} 个字符处开始与上一轮不同",
+    "breakBody": "这是本条提示词与上一轮第一个不同的位置。其后约 {after} 个 token 都被重新计算。",
+    "breakFix": "若变化的部分放在最后，预填充将从 {from} 降到约 {to}。",
+    "identical": "与该客户端的上一轮完全相同，整条提示词都可以来自缓存。",
+    "first": "该客户端使用此模型的第一轮；暂无可比对象。",
+    "textHint": "开启“保留提示词文本”即可查看中断处的文本。",
+    "promptTokens": "提示词 token",
+    "fromCache": "来自缓存",
+    "prefill": "预填充",
+    "realRate": "实际 {tps} tok/s",
+    "generation": "生成",
+    "toolCalls": "工具调用",
+    "noTools": "无",
+    "context": "已加载上下文",
+    "onCpu": "{cpu}% 在 CPU 上",
+    "onGpu": "完全在 GPU 上",
+    "runner": "运行时",
+    "status": "状态",
+    "error": "错误",
+    "protocol": "协议",
+    "userAgent": "User agent",
+    "keptText": "发送的原始请求"
+  },
+  "clients": {
+    "title": "按客户端",
+    "client": "客户端",
+    "tokens": "Token",
+    "toolCalls": "工具调用",
+    "prefill": "预填充",
+    "saves": "修复缓存可省",
+    "savesAbout": "约 {time}",
+    "nothing": "无需修复",
+    "unknown": "无计数",
+    "savesHint": "根据本次会话自身的数字估算：若提示词在新消息之前一直保持缓存，这些轮次本可跳过的预填充时间。缓存实验室负责实测；这里只是推算。"
+  }
+}

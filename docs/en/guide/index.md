@@ -24,14 +24,15 @@ LLMxRay has a sidebar with one item per major feature. This guide has one chapte
 4. **[Knowledge Base](./knowledge-base)** — Document upload, chunking, and RAG search
 5. **[Tool Workshop](./tool-workshop)** — Visual tool builder with code sync
 6. **[Fill-in-the-Middle (FIM)](./fim)** — Code completion playground for FIM-capable models
-7. **[Cache Lab](./cache-lab)** — Measure why your prompt misses the KV cache, and what that costs every turn
-8. **[Decision Lab](./decision-lab)** — Ask a decision model typed questions and see the probability behind every answer
-9. **[Protocol Observatory](./protocols)** — Run the same prompt through native, OpenAI-compat, and Anthropic-compat against your local model
-10. **[AI Training](./ai-training)** — Training data curation and export
-11. **[Models](./models)** — Model browser and capability detection
-12. **[Benchmark](./benchmark)** — Standardized model evaluation with logprobs
-13. **[My System](./system)** — Hardware detection and Ollama status
-14. **[Settings](./settings)** — Connection, parameters, and preferences
+7. **[Live](./live)** — Point your other tools at LLMxRay instead of Ollama and see every turn they send, and where their prompts break the cache
+8. **[Cache Lab](./cache-lab)** — Measure why your prompt misses the KV cache, and what that costs every turn
+9. **[Decision Lab](./decision-lab)** — Ask a decision model typed questions and see the probability behind every answer
+10. **[Protocol Observatory](./protocols)** — Run the same prompt through native, OpenAI-compat, and Anthropic-compat against your local model
+11. **[AI Training](./ai-training)** — Training data curation and export
+12. **[Models](./models)** — Model browser and capability detection
+13. **[Benchmark](./benchmark)** — Standardized model evaluation with logprobs
+14. **[My System](./system)** — Hardware detection and Ollama status
+15. **[Settings](./settings)** — Connection, parameters, and preferences
 
 ## Other Elements
 

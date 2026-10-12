@@ -20,12 +20,16 @@ if (args.includes('--help') || args.includes('-h')) {
   Options:
     --port <number>        Port to serve on (default: 5174, env: PORT)
     --ollama-url <url>     Ollama instance URL (default: http://localhost:11434, env: OLLAMA_URL)
+    --observe-port <n>     Port other tools point at to appear on the Live page
+                           (default: 11435, env: OBSERVE_PORT)
+    --no-observe           Do not open the observe port (env: OBSERVE=0)
     -h, --help             Show this help message
 
   Examples:
     npx llmxray
     npx llmxray --port 3000
     npx llmxray --ollama-url http://192.168.1.50:11434
+    npx llmxray --observe-port 11500
     OLLAMA_URL=http://myserver:11434 npx llmxray
 `)
   process.exit(0)
@@ -34,4 +38,6 @@ if (args.includes('--help') || args.includes('-h')) {
 startServer({
   port: getFlag('--port'),
   ollamaUrl: getFlag('--ollama-url'),
+  observePort: getFlag('--observe-port'),
+  observe: !args.includes('--no-observe'),
 })

@@ -45,6 +45,7 @@ const pageTitle = computed(() => {
     tools: t('common.header.toolWorkshop'),
     fim: t('common.header.fim'),
     protocols: t('common.header.protocols'),
+    live: t('common.header.live'),
     system: t('common.header.mySystem'),
     settings: t('common.header.settings'),
   }

@@ -3,5 +3,6 @@ services:
     build: .
     ports:
       - "5174:5174"
+      - "11435:11435" # Live page: point other tools at this port instead of Ollama
     environment:
       - OLLAMA_URL=http://host.docker.internal:11434

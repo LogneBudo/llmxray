@@ -43,6 +43,8 @@
 
 **Chat Diagnostics** — Watch tokens arrive one by one, coloured by speed. See where the model hesitates, and what it was unsure about.
 
+**Live** *(new in 0.7.2)* — Point VS Code Copilot, Open WebUI, Continue or your own scripts at LLMxRay instead of Ollama, and see every turn they send: prompt size, what the cache kept, where the prompt broke it, whether the model still fits on the GPU. One address to copy, nothing else to set up.
+
 **Cache Lab** *(new in 0.6.0)* — Your system prompt is probably being recomputed from scratch every turn. Find out in 30 seconds, and measure the fix. *(3.5x faster prefill in our test.)*
 
 **Decision Lab** — Ask a decision model (nimble, tev1, clef) typed questions about a ticket or a message, and see the probability behind every answer instead of a yes.
@@ -130,6 +132,9 @@ Drag-and-drop node canvas for building tool definitions. Bidirectional code sync
 
 ### Fill-in-the-Middle Playground *(new in v0.4.7)*
 Code completion for Qwen-Coder, CodeLlama, Codestral, DeepSeek-Coder, and StarCoder. Two textareas (prefix / suffix), the model fills the gap. Uses Ollama's `suffix` field on `/api/generate`. Stitched preview shows the result as it would appear in your editor.
+
+### Live *(new in v0.7.2)*
+LLMxRay opens a second port, **11435**, that behaves exactly like Ollama and forwards everything to it. Point any other tool at `http://localhost:11435` (the Ollama VS Code extension's `ollama.endpoint` for Copilot Chat, Open WebUI's connection URL, Continue's `apiBase`, n8n's Ollama credential, `OLLAMA_HOST` for scripts) and every turn it sends appears on the Live page: client, model, prompt tokens, how many came from the cache, prefill and generation speed, tool calls. Select a turn to see what the prompt is made of (system, tool schemas, history, your message) and the exact point where it stopped matching the previous turn, which is where the cache broke. Findings are plain sentences, each linked to the turn that proves it: a client re-reading most of its prompt every turn, a model running partly on CPU because its context no longer fits in VRAM, tool schemas that take 40% of every prompt. Only counts and timings are kept, in memory; prompt text is an opt-in that writes to a local file. Nothing leaves your machine.
 
 ### Cache Lab *(new in v0.6.0)*
 Find out why your prompt misses the model’s KV cache, and measure what it costs every turn. A local model reuses its cache only while the prompt still matches from the very first token, so a single timestamp near the top forfeits everything below it. The lab finds the values that change between turns, shows the exact point where reuse dies, and then **measures** — sending each layout twice with a changed value, against your own daemon — what moving them to the end actually saves. Measured on a real 324-token prompt: **4 tokens reused and 64.6 ms of prefill with the timestamp at the front, 290 reused and 18.6 ms with it at the back. 3.5x faster, same words.** Requires Ollama 0.33.3+.

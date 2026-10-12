@@ -24,14 +24,15 @@ LLMxRay dispose d'une barre latérale avec un élément par fonctionnalité maje
 4. **[Base de Connaissances](./knowledge-base)** -- Téléchargement de documents, découpage et recherche RAG
 5. **[Atelier d'Outils](./tool-workshop)** -- Constructeur visuel d'outils avec synchronisation du code
 6. **[Complétion au Milieu (FIM)](./fim)** -- Terrain de jeu de complétion de code pour modèles compatibles FIM
-7. **[Labo de cache](./cache-lab)** -- Mesurez pourquoi votre invite manque le cache KV, et ce que cela coûte à chaque tour
-8. **[Labo de décision](./decision-lab)** -- Posez des questions typées à un modèle de décision et voyez la probabilité derrière chaque réponse
-9. **[Observatoire des Protocoles](./protocols)** -- Lancez le même prompt sur natif, compat. OpenAI et compat. Anthropic contre votre modèle local
-10. **[Entraînement IA](./ai-training)** -- Curation et export de données d'entraînement
-11. **[Modèles](./models)** -- Navigateur de modèles et détection des capacités
-12. **[Benchmark](./benchmark)** -- Évaluation standardisée des modèles avec logprobs
-13. **[Mon Système](./system)** -- Détection du matériel et statut d'Ollama
-14. **[Paramètres](./settings)** -- Connexion, paramètres et préférences
+7. **[En direct](./live)** -- Pointez vos autres outils vers LLMxRay plutôt que vers Ollama et voyez chaque tour qu'ils envoient, et où leurs invites rompent le cache
+8. **[Labo de cache](./cache-lab)** -- Mesurez pourquoi votre invite manque le cache KV, et ce que cela coûte à chaque tour
+9. **[Labo de décision](./decision-lab)** -- Posez des questions typées à un modèle de décision et voyez la probabilité derrière chaque réponse
+10. **[Observatoire des Protocoles](./protocols)** -- Lancez le même prompt sur natif, compat. OpenAI et compat. Anthropic contre votre modèle local
+11. **[Entraînement IA](./ai-training)** -- Curation et export de données d'entraînement
+12. **[Modèles](./models)** -- Navigateur de modèles et détection des capacités
+13. **[Benchmark](./benchmark)** -- Évaluation standardisée des modèles avec logprobs
+14. **[Mon Système](./system)** -- Détection du matériel et statut d'Ollama
+15. **[Paramètres](./settings)** -- Connexion, paramètres et préférences
 
 ## Autres éléments
 

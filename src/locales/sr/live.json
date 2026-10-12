@@ -1,0 +1,154 @@
+{
+  "title": "Uživo",
+  "subtitle": "Pogledajte šta vaši drugi alati zaista šalju Ollami. Ništa se ne instalira i ništa ne podešava: usmerite ih ovde umesto na Ollamu.",
+  "setup": {
+    "lead": "Koristite ovu adresu gde god alat traži adresu Ollame:",
+    "copy": "Kopiraj",
+    "copied": "Kopirano",
+    "note": "Ponaša se tačno kao Ollama. Vaši alati neće primetiti razliku; vi hoćete.",
+    "waiting": "Čeka se prvi zahtev… ova strana se sama uključuje kad stigne.",
+    "offline": "Port za posmatranje nije otvoren. Pokrenite LLMxRay sa uključenim portom, ili izaberite drugi sa --observe-port ako je {port} zauzet.",
+    "unreachable": "LLMxRay ne može da dosegne sopstveni server. Osvežite stranu kad bude pokrenut.",
+    "retry": "Pokušaj ponovo",
+    "tabs": {
+      "copilot": "VS Code Copilot",
+      "webui": "Open WebUI",
+      "continue": "Continue",
+      "n8n": "n8n",
+      "code": "Python / curl"
+    },
+    "steps": {
+      "copilot": [
+        "U VS Code instalirajte Ollama proširenje (izdavač: Ollama) sa Marketplace-a. Stariji ugrađeni Copilot provajder je zastareo.",
+        "Otvorite Settings, potražite ollama.endpoint i postavite ga na {address}. Ili u Chat: Manage Language Models otvorite Ollama i promenite URL.",
+        "Pokrenite Ollama: Refresh Models iz palete komandi, pa izaberite model iz odeljka Ollama u izboru modela.",
+        "Pošaljite poruku. Pojavljuje se ovde."
+      ],
+      "webui": [
+        "Admin Panel, Settings, Connections.",
+        "Promenite Ollama API URL na {address}. Iz Docker kontejnera koristite {dockerAddress}.",
+        "Sačuvajte i pošaljite poruku."
+      ],
+      "continue": [
+        "Otvorite config.yaml (ili config.json).",
+        "Na svakom Ollama modelu postavite apiBase na {address}.",
+        "Ponovo učitajte prozor i pošaljite poruku."
+      ],
+      "n8n": [
+        "Credentials, Ollama account.",
+        "Base URL: {address}. Iz Docker kontejnera koristite {dockerAddress}.",
+        "Pokrenite tok rada jednom."
+      ],
+      "code": [
+        "Python: ollama.Client(host='{address}')",
+        "OpenAI SDK: base_url='{address}/v1'",
+        "Shell: export OLLAMA_HOST={hostPort}, zatim bilo koji ollama run ili curl.",
+        "PowerShell: $env:OLLAMA_HOST = \"{hostPort}\", zatim ollama run u istom ili sledećem redu."
+      ]
+    }
+  },
+  "privacy": {
+    "toggle": "Čuvaj tekst upita, ne samo brojeve",
+    "off": "Isključeno: čuvaju se samo brojevi i vremena, u memoriji, za ovu sesiju.",
+    "on": "Uključeno: upiti se čuvaju u datoteci na ovoj mašini da biste mogli da pročitate šta je alat poslao.",
+    "always": "U oba slučaja ništa ne napušta ovu mašinu.",
+    "where": "Sačuvano u {dir}"
+  },
+  "live": {
+    "listening": "Sluša na {address}",
+    "disconnected": "Ponovno povezivanje sa serverom…",
+    "clients": "Klijenata: {n}",
+    "turns": "Poteza: {n}",
+    "pause": "Pauza",
+    "resume": "Nastavi ({n} čeka)",
+    "clear": "Obriši",
+    "lead": "Šta vaši alati šalju, potez po potez, sa onim što je keš zadržao i onim što je odbacio."
+  },
+  "findings": {
+    "title": "Šta se ističe",
+    "none": "Ništa se još ne ističe. Nalazi se pojavljuju kad klijent pošalje nekoliko poteza.",
+    "show": "prikaži potez",
+    "context": {
+      "title": "{client} šalje upite od {tokens} tokena, ali {model} je učitan sa kontekstom od {context} tokena. Odbijenih zahteva: {rejected}.",
+      "body": "Ollama odbija upit veći od konteksta sa kojim je učitao model, pa ništa ne stiže do modela. Povećajte dužinu konteksta u podešavanjima Ollame (ili OLLAMA_CONTEXT_LENGTH) iznad veličine upita; asistenti za kod traže 32K do 64K. Veći kontekst traži i mesta u video memoriji."
+    },
+    "prefix": {
+      "title": "{client} ponovo čita oko {tokens} tokena u svakom potezu sa {model}.",
+      "body": "Upit ima oko {promptTokens} tokena i keš zadržava {share}%. Nešto blizu početka se menja između poteza; sve posle toga se svaki put ponovo računa.",
+      "bodyWithBreak": "Upit ima oko {promptTokens} tokena i keš zadržava {share}%. Prestaje da se poklapa sa prethodnim potezom oko tokena {breakTokens}; sve posle te tačke se svaki put ponovo računa."
+    },
+    "cpu": {
+      "title": "{model} radi {cpu}% na procesoru.",
+      "body": "Učitan je sa kontekstom od {context} tokena i više ne staje u video memoriju, pa deo radi iz sistemske RAM memorije. Očekujte nekoliko puta sporije predpunjenje i generisanje nego samo na GPU. Uobičajeno rešenje je manji kontekst ili kvantizovani KV keš (OLLAMA_KV_CACHE_TYPE=q8_0).",
+      "bodyNoContext": "Deo radi iz sistemske RAM memorije umesto iz video memorije. Očekujte nekoliko puta sporije predpunjenje i generisanje nego samo na GPU. Uobičajeno rešenje je manji kontekst ili kvantizovani KV keš."
+    },
+    "tools": {
+      "title": "Šeme alata čine {share}% svakog upita klijenta {client}.",
+      "body": "{offered} alata se opisuje u svakom potezu; {used} je korišćeno u {turns} viđenih poteza. Šeme su u stabilnom prefiksu, pa su keširane, ali i dalje zauzimaju kontekst."
+    }
+  },
+  "table": {
+    "time": "Vreme",
+    "client": "Klijent",
+    "model": "Model",
+    "prompt": "Upit",
+    "cache": "Iz keša",
+    "prefill": "Predpunjenje",
+    "gen": "Gen.",
+    "tools": "Alati",
+    "unreported": "nije prijavljeno",
+    "unreportedHint": "OpenAI-kompatibilni tokovi ne nose brojeve osim ako ih klijent zatraži sa stream_options.include_usage. Nativni Ollama API ih uvek prijavljuje.",
+    "failed": "neuspelo",
+    "showing": "Prikazano poslednjih {shown} od {total}. Potezi se čuvaju samo za ovu sesiju.",
+    "mode": {
+      "agent": "agent",
+      "chat": "čet",
+      "completion": "dopuna",
+      "embedding": "ugrađivanje"
+    }
+  },
+  "turn": {
+    "title": "Potez",
+    "anatomyTitle": "Od čega se sastoji {tokens} tokena",
+    "anatomyTitleChars": "Od čega se sastoji upit ({chars} znakova)",
+    "system": "Sistem",
+    "tools": "Šeme alata",
+    "history": "Istorija i rezultati alata",
+    "message": "Poruka",
+    "breakTitle": "Keš je prekinut oko tokena {tokens}",
+    "breakTitleChars": "Upit prestaje da se poklapa sa prethodnim potezom na znaku {chars}",
+    "breakBody": "To je prva tačka u kojoj se ovaj upit razlikuje od prethodnog poteza. Sve posle nje, oko {after} tokena, ponovo je računato.",
+    "breakFix": "Da je promenljivi deo došao poslednji, predpunjenje bi palo sa {from} na oko {to}.",
+    "identical": "Identično prethodnom potezu ovog klijenta, pa je ceo upit mogao doći iz keša.",
+    "first": "Prvi potez ovog klijenta sa ovim modelom; još nema sa čim da se poredi.",
+    "textHint": "Uključite „Čuvaj tekst upita“ da vidite tekst na mestu prekida.",
+    "promptTokens": "Tokeni upita",
+    "fromCache": "Iz keša",
+    "prefill": "Predpunjenje",
+    "realRate": "{tps} tok/s stvarno",
+    "generation": "Generisanje",
+    "toolCalls": "Pozivi alata",
+    "noTools": "nema",
+    "context": "Učitan kontekst",
+    "onCpu": "{cpu}% na procesoru",
+    "onGpu": "u celosti na GPU",
+    "runner": "Izvršilac",
+    "status": "Status",
+    "error": "Greška",
+    "protocol": "Protokol",
+    "userAgent": "User agent",
+    "keptText": "Zahtev kako je poslat"
+  },
+  "clients": {
+    "title": "Po klijentu",
+    "client": "Klijent",
+    "tokens": "Tokeni",
+    "toolCalls": "Pozivi alata",
+    "prefill": "Predpunjenje",
+    "saves": "Popravka keša štedi",
+    "savesAbout": "oko {time}",
+    "nothing": "nema šta da se popravi",
+    "unknown": "nema brojeva",
+    "savesHint": "Procenjeno iz brojeva ove sesije: predpunjenje koje bi ovi potezi preskočili da su im upiti ostali keširani do nove poruke. Laboratorija keša to meri; ovde se samo ekstrapolira."
+  }
+}

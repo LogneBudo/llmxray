@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url'
 import { resolve, dirname } from 'node:path'
 import { systemInfoPlugin } from './vite-plugin-system-info'
 import { apiProbePlugin } from './vite-plugin-api-probe'
+import { observePlugin } from './vite-plugin-observe'
 
 export default defineConfig({
   plugins: [
@@ -16,6 +17,7 @@ export default defineConfig({
     }),
     systemInfoPlugin(),
     apiProbePlugin(),
+    observePlugin(),
   ],
   resolve: {
     alias: {

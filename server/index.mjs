@@ -5,13 +5,16 @@ import express from 'express'
 import { createProxyMiddleware } from 'http-proxy-middleware'
 import { collectSystemInfo } from './system-info.mjs'
 import { mountProbeRoutes } from './api-probe.mjs'
+import { createObserver, createObserveHandler } from './observe.mjs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const DIST_DIR = join(__dirname, '..', 'dist')
 
-export function startServer(options = {}) {
+export async function startServer(options = {}) {
   const ollamaUrl = options.ollamaUrl || process.env.OLLAMA_URL || 'http://localhost:11434'
   const port = options.port || process.env.PORT || 5174
+  const observeEnabled = options.observe !== false && process.env.OBSERVE !== '0'
+  const observePort = Number(options.observePort || process.env.OBSERVE_PORT || 11435)
 
   if (!existsSync(DIST_DIR)) {
     console.error('Error: dist/ directory not found. Run "npm run build" first.')
@@ -50,6 +53,20 @@ export function startServer(options = {}) {
   // API probe endpoints
   mountProbeRoutes(app)
 
+  // Live page: the observe port (an Ollama look-alike that records what passes
+  // through) and the routes the page reads it from.
+  const observer = createObserver({ ollamaUrl, port: observePort })
+  const observeHandler = createObserveHandler(observer)
+  app.use('/__observe', (req, res) => observeHandler(req, res))
+  let observeError = null
+  if (observeEnabled) {
+    try {
+      await observer.listen()
+    } catch {
+      observeError = observer.state.error
+    }
+  }
+
   // Serve static files
   app.use(express.static(DIST_DIR))
 
@@ -64,8 +81,13 @@ export function startServer(options = {}) {
     console.log()
     console.log(`  LLMxRay v${pkg.version}`)
     console.log()
-    console.log(`  App:    http://localhost:${port}`)
-    console.log(`  Ollama: ${ollamaUrl}`)
+    console.log(`  App:     http://localhost:${port}`)
+    console.log(`  Ollama:  ${ollamaUrl}`)
+    if (observer.state.listening) {
+      console.log(`  Observe: http://localhost:${observer.state.port}  (point other tools here to see them on the Live page)`)
+    } else if (observeEnabled) {
+      console.log(`  Observe: off (${observeError}; use --observe-port to pick another)`)
+    }
     console.log()
   })
 }
