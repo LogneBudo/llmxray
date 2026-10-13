@@ -58,6 +58,9 @@ export function messageTokensEst(t: LiveTurn): number | null {
  * good approximation; still an estimate, and labelled as one in the UI.
  */
 export function cacheFixSavingMs(t: LiveTurn): number | null {
+  // A first turn (or a cold load) has no previous prompt to share a prefix with:
+  // nothing about its ordering could have been cached, so it is not a saving.
+  if (!t.prefix) return null
   const evaluated = t.prompt.evaluated
   const msgTokens = messageTokensEst(t)
   if (evaluated == null || msgTokens == null || t.prompt.prefillMs == null || evaluated <= 0) return null

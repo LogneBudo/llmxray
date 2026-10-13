@@ -3,6 +3,7 @@ import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { Radio, Copy, Check, Pause, Play, Trash2, TriangleAlert, Info } from 'lucide-vue-next'
 import { useLiveStore } from '@/stores/live-store'
+import RequestViewer from '@/components/live/RequestViewer.vue'
 import { cacheShare, cacheFixSavingMs, messageTokensEst } from '@/services/live-findings'
 import { formatDuration, formatNumber } from '@/utils/format'
 import type { LiveTurn } from '@/types/live'
@@ -451,10 +452,6 @@ function findingParams(f: { params: Record<string, string | number> }) {
                 </template>
               </dl>
 
-              <details v-if="live.selectedText" class="mt-3">
-                <summary class="cursor-pointer text-text-secondary">{{ $t('live.turn.keptText') }}</summary>
-                <pre class="mt-2 max-h-72 overflow-auto whitespace-pre-wrap break-all rounded border border-border-default bg-surface p-2 font-mono text-xs text-text-primary">{{ JSON.stringify(live.selectedText.request, null, 2) }}</pre>
-              </details>
             </div>
 
             <!-- Per client -->
@@ -508,6 +505,19 @@ function findingParams(f: { params: Record<string, string | number> }) {
               {{ $t('live.privacy.toggle') }}
             </label>
           </div>
+        </div>
+
+        <!-- The request itself, full width: a conversation and a tool list, not a JSON dump -->
+        <div v-if="selected && live.selectedText" class="rounded-lg border border-border-default bg-surface-raised p-4">
+          <h3 class="mb-3 text-base font-semibold text-text-primary">
+            {{ $t('live.viewer.title') }} · {{ $t('live.turn.title') }} {{ selected.seq }}
+          </h3>
+          <RequestViewer
+            :request="live.selectedText.request"
+            :protocol="selected.protocol"
+            :break-char="selected.prefix && !selected.prefix.identical ? selected.prefix.breakChar : null"
+            :prompt-tokens="selected.prompt.tokens"
+          />
         </div>
       </template>
     </div>

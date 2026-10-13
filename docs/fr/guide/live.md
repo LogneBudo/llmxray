@@ -83,7 +83,7 @@ Une carte par client : tours, tokens, appels d'outils, préremplissage total, et
 
 Désactivé par défaut : seuls les comptes et les durées sont gardés, en mémoire, pour la session. Rien n'est écrit sur le disque.
 
-**Conserver le texte des invites** enregistre les corps de requête dans un fichier sous votre dossier personnel (`~/.llmxray/observe/`, un fichier par jour) et affiche le texte autour de chaque rupture sur la page. Désactivez-le et le texte conservé est retiré de la mémoire ; les fichiers restent jusqu'à ce que vous les supprimiez.
+**Conserver le texte des invites** enregistre les corps de requête dans un fichier sous votre dossier personnel (`~/.llmxray/observe/`, un fichier par jour) et affiche le texte autour de chaque rupture sur la page. Cela débloque aussi la **vue de la requête** sous le tour : la requête rendue comme une conversation, un bloc par message avec de vrais retours à la ligne, les appels d'outils en cartes, les résultats d'outils repliés, et la liste des outils avec nom, description, nombre de paramètres et taille. La rupture du cache est dessinée dans le message où elle est tombée. Une recherche couvre messages et outils, et un onglet JSON brut avec Copier et Télécharger garde chaque octet accessible. Désactivez-le et le texte conservé est retiré de la mémoire ; les fichiers restent jusqu'à ce que vous les supprimiez.
 
 Dans les deux modes, rien ne quitte votre machine. Le port d'observation parle à l'adresse Ollama avec laquelle LLMxRay a été lancé, et à rien d'autre.
 

@@ -150,5 +150,36 @@
     "nothing": "nothing to fix",
     "unknown": "no counts",
     "savesHint": "Estimated from this session's own numbers: the prefill these turns would have skipped had their prompts stayed cached up to the new message. Cache Lab measures it; this only extrapolates."
-  }
+  },
+    "viewer": {
+      "title": "Request as sent",
+      "rendered": "Rendered",
+      "raw": "Raw JSON",
+      "searchPlaceholder": "Search in the request…",
+      "matches": "{n} matches",
+      "size": "{chars} characters",
+      "copy": "Copy",
+      "copied": "Copied",
+      "download": "Download",
+      "options": "Options",
+      "messages": "{n} messages",
+      "tools": "{n} tools",
+      "chars": "{n} characters",
+      "tokensEst": "about {n} tokens",
+      "params": "{n} parameters",
+      "noParams": "no parameters",
+      "expand": "Show all ({chars} characters)",
+      "collapse": "Collapse",
+      "breakHere": "Cache broke here",
+      "breakInTools": "The cache broke inside the tool schemas on this turn: the tool list changed since the previous turn.",
+      "toolCalls": "Tool calls",
+      "role": {
+        "system": "system",
+        "developer": "developer",
+        "user": "user",
+        "assistant": "assistant",
+        "tool": "tool result",
+        "other": "{role}"
+      }
+    }
 }

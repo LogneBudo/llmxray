@@ -83,7 +83,7 @@ One card per client: turns, tokens, tool calls, total prefill, and **Cache fix s
 
 Off by default, only counts and timings are kept, in memory, for the session. Nothing is written to disk.
 
-**Keep the prompt text** switches on saving the request bodies to a file under your home directory (`~/.llmxray/observe/`, one file per day) and shows the text around each break on the page. Switch it off and the kept text is dropped from memory; the files stay until you delete them.
+**Keep the prompt text** switches on saving the request bodies to a file under your home directory (`~/.llmxray/observe/`, one file per day) and shows the text around each break on the page. It also unlocks the **request viewer** under the turn: the request rendered as a conversation, one message per block with real line breaks, tool calls as cards, tool results collapsed, and the tool list with each tool's name, description, parameter count and size. The cache break is drawn inside the message where it fell. A search box covers messages and tools, and a Raw tab with Copy and Download keeps every byte reachable. Switch it off and the kept text is dropped from memory; the files stay until you delete them.
 
 In both modes nothing leaves your machine. The observe port talks to the Ollama address LLMxRay was started with and to nothing else.
 

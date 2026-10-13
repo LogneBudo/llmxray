@@ -5,6 +5,22 @@ All notable changes to LLMxRay are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.3] — 2026-10-13
+
+### Added
+
+- **Request viewer on the Live page.** With "Keep the prompt text" on, a selected turn's request is
+  rendered as what it is: the options, the conversation one message per block with real line
+  breaks, tool calls as cards, tool results collapsed, and the tool list with name, description,
+  parameter count and size per tool. The cache break the proxy computed is drawn inside the message
+  where it fell. A search box works across messages and tools; a Raw tab, Copy and Download keep
+  every byte reachable.
+
+### Fixed
+
+- The per-client "cache fix saves" estimate no longer counts a first turn or a cold load, which
+  have no previous prompt to share a prefix with.
+
 ## [0.7.2] — 2026-10-12
 
 ### Added

@@ -150,5 +150,36 @@
     "nothing": "rien à corriger",
     "unknown": "pas de comptes",
     "savesHint": "Estimé à partir des chiffres de cette session : le préremplissage que ces tours auraient évité si leurs invites étaient restées en cache jusqu'au nouveau message. Le Labo de cache le mesure ; ici, on extrapole seulement."
-  }
+  },
+    "viewer": {
+      "title": "Requête telle qu'envoyée",
+      "rendered": "Rendu",
+      "raw": "JSON brut",
+      "searchPlaceholder": "Chercher dans la requête…",
+      "matches": "{n} résultats",
+      "size": "{chars} caractères",
+      "copy": "Copier",
+      "copied": "Copié",
+      "download": "Télécharger",
+      "options": "Options",
+      "messages": "{n} messages",
+      "tools": "{n} outils",
+      "chars": "{n} caractères",
+      "tokensEst": "environ {n} tokens",
+      "params": "{n} paramètres",
+      "noParams": "aucun paramètre",
+      "expand": "Tout afficher ({chars} caractères)",
+      "collapse": "Replier",
+      "breakHere": "Le cache a rompu ici",
+      "breakInTools": "Le cache a rompu dans les schémas d'outils à ce tour : la liste d'outils a changé depuis le tour précédent.",
+      "toolCalls": "Appels d'outils",
+      "role": {
+        "system": "système",
+        "developer": "développeur",
+        "user": "utilisateur",
+        "assistant": "assistant",
+        "tool": "résultat d'outil",
+        "other": "{role}"
+      }
+    }
 }

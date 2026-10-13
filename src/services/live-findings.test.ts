@@ -117,6 +117,14 @@ describe('summariseClients', () => {
     expect(s[1]!.label).toBe('Open WebUI')
   })
 
+  it('does not count a first turn or a cold load as avoidable prefill', () => {
+    // Captured live: 46,806 tokens, 0 cached, 10.5 s, no previous turn. Not a cache problem.
+    const cold = turn({ cached: 0, prefillMs: 10_500, prefix: null })
+    expect(cacheFixSavingMs(cold)).toBeNull()
+    const s = summariseClients([cold, turn({})])
+    expect(s[0]!.cacheFixSavesMs).toBeCloseTo(2_812.5)
+  })
+
   it('reports no saving when the daemon gave no counts', () => {
     const t = turn({ prompt: { tokens: null, cached: null, evaluated: null, prefillMs: null, prefillTps: null, contextRequested: null } })
     expect(cacheFixSavingMs(t)).toBeNull()

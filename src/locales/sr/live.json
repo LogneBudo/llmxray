@@ -150,5 +150,36 @@
     "nothing": "nema šta da se popravi",
     "unknown": "nema brojeva",
     "savesHint": "Procenjeno iz brojeva ove sesije: predpunjenje koje bi ovi potezi preskočili da su im upiti ostali keširani do nove poruke. Laboratorija keša to meri; ovde se samo ekstrapolira."
-  }
+  },
+    "viewer": {
+      "title": "Zahtev kako je poslat",
+      "rendered": "Prikaz",
+      "raw": "Sirovi JSON",
+      "searchPlaceholder": "Pretraži zahtev…",
+      "matches": "Pogodaka: {n}",
+      "size": "Znakova: {chars}",
+      "copy": "Kopiraj",
+      "copied": "Kopirano",
+      "download": "Preuzmi",
+      "options": "Opcije",
+      "messages": "Poruka: {n}",
+      "tools": "Alata: {n}",
+      "chars": "Znakova: {n}",
+      "tokensEst": "oko {n} tokena",
+      "params": "Parametara: {n}",
+      "noParams": "bez parametara",
+      "expand": "Prikaži sve (znakova: {chars})",
+      "collapse": "Skupi",
+      "breakHere": "Keš je prekinut ovde",
+      "breakInTools": "Keš je prekinut unutar šema alata u ovom potezu: lista alata se promenila od prethodnog poteza.",
+      "toolCalls": "Pozivi alata",
+      "role": {
+        "system": "sistem",
+        "developer": "programer",
+        "user": "korisnik",
+        "assistant": "asistent",
+        "tool": "rezultat alata",
+        "other": "{role}"
+      }
+    }
 }
