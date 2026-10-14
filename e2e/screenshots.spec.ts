@@ -28,10 +28,10 @@ test.use({
 test.beforeAll(() => fs.mkdirSync(OUT, { recursive: true }))
 
 test.beforeEach(async ({ page }) => {
-  await page.addInitScript(() => {
+  await page.addInitScript((locale) => {
     localStorage.setItem('llmxray-theme', 'dark')
-    localStorage.setItem('llmxray-locale', 'en')
-  })
+    localStorage.setItem('llmxray-locale', locale)
+  }, process.env.SHOT_LOCALE ?? 'en')
 })
 
 // ---------------------------------------------------------------------------

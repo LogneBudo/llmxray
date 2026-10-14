@@ -15,10 +15,10 @@ test.use({
 })
 
 test.beforeEach(async ({ page }) => {
-  await page.addInitScript(() => {
+  await page.addInitScript((locale) => {
     localStorage.setItem('llmxray-theme', 'dark')
-    localStorage.setItem('llmxray-locale', 'en')
-  })
+    localStorage.setItem('llmxray-locale', locale)
+  }, process.env.SHOT_LOCALE ?? 'en')
 })
 
 test('record a chat turn', async ({ page }) => {
