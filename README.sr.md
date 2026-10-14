@@ -5,7 +5,7 @@
 <h1 align="center">LLMxRay</h1>
 <p align="center"><strong>Vidite šta vaša lokalna AI zaista radi.</strong></p>
 <p align="center">
-  Strimovanje token po token, dijagnostika keša, poređenje modela, benchmark i praćenje troškova<br/>
+  Jedna komanda, jedna kartica u pregledaču. Strimovanje token po token, dijagnostika keša, poređenje modela, benchmark i praćenje troškova<br/>
   za modele koji rade na vašoj mašini kroz Ollama. Bez clouda. Bez API ključeva. Bez troška.
 </p>
 
@@ -81,9 +81,18 @@ Otvorite bilo koji korak da ga vidite kao vremensku liniju: vreme do prvog token
 
 LLMxRay otvara drugi port, **11435**, koji se ponaša tačno kao Ollama i sve mu prosleđuje. Usmerite VS Code Copilot, Open WebUI, Continue, n8n ili sopstvenu skriptu na `http://localhost:11435` i svaki korak koji pošalju pojavljuje se ovde: klijent, model, veličina prompta, koliko je došlo iz keša, brzina prefill-a i generisanja, pozivi alata.
 
+```
+VS Code Copilot ─┐
+Open WebUI ──────┤                                   ┌─ Live stranica: svaki korak,
+Continue / n8n ──┼─► http://localhost:11435 ─► Ollama ┤  pogoci keša, brzina prefill-a,
+vaše skripte ────┘        (LLMxRay)                   └─ gde je keš pukao
+```
+
 ![Live: koraci od dva klijenta, sa nalazima](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/live.png)
 
 Izaberite korak da vidite od čega se prompt sastoji i tačno mesto gde je prestao da se poklapa sa prethodnim, a to je mesto gde je keš pukao. Nalazi su obične rečenice, svaka vezana za korak koji je dokazuje: klijent koji iznova čita ceo prompt u svakom koraku, model koji delom radi na CPU-u, šeme alata koje zauzimaju 40% svakog prompta. Čuvaju se samo brojevi i vremena, u memoriji. Tekst prompta je opcija koja piše u lokalni fajl. Ništa ne napušta vašu mašinu.
+
+Oba porta slušaju na vašoj mreži, ne samo na localhost-u, pa Live stranica može da radi preko celog ekrana na drugom monitoru ili drugoj mašini dok agenti rade.
 
 ### Laboratorija keša
 
@@ -204,7 +213,7 @@ Hardver, okruženje i inferencija na jednoj stranici: CPU, memorija, GPU, koji s
 | **Programer** | Debagujete promptove, profilišete latenciju, poredite modele, pregledate pozive alata, vidite šta vaš editor šalje |
 | **Istraživač** | Vodite kontrolisane eksperimente sa istim podešavanjima na više modela i temperatura |
 | **Student / Predavač** | Posmatrate ponašanje modela umesto da o njemu čitate, uz [kit za predavače](https://lognebudo.github.io/llmxray/docs/community/educators/) od devet modula |
-| **Vođa AI tima** | Razumete trendove kvaliteta, obrasce grešaka i korišćenje resursa na lokalnoj floti |
+| **Vođa AI tima** | Date svakom programeru isto lokalno okruženje, i prikupite rezultate benchmarka i parove za obuku koje izvezu |
 
 ---
 

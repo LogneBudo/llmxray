@@ -5,7 +5,7 @@
 <h1 align="center">LLMxRay</h1>
 <p align="center"><strong>Voyez ce que votre IA locale fait réellement.</strong></p>
 <p align="center">
-  Streaming token par token, diagnostic du cache, comparaison de modèles, benchmarks et suivi des coûts<br/>
+  Une commande, un onglet de navigateur. Streaming token par token, diagnostic du cache, comparaison de modèles, benchmarks et suivi des coûts<br/>
   pour les modèles qui tournent sur votre machine via Ollama. Pas de cloud. Pas de clé API. Pas de coût.
 </p>
 
@@ -81,9 +81,18 @@ Ouvrez n'importe quel tour pour le voir comme une chronologie : temps jusqu'au p
 
 LLMxRay ouvre un second port, **11435**, qui se comporte exactement comme Ollama et lui transmet tout. Pointez VS Code Copilot, Open WebUI, Continue, n8n ou votre propre script vers `http://localhost:11435` et chaque tour qu'ils envoient apparaît ici : client, modèle, taille de l'invite, part venue du cache, vitesse de préremplissage et de génération, appels d'outils.
 
+```
+VS Code Copilot ─┐
+Open WebUI ──────┤                                   ┌─ page Live : chaque tour,
+Continue / n8n ──┼─► http://localhost:11435 ─► Ollama ┤  cache réutilisé, préremplissage,
+vos scripts ─────┘        (LLMxRay)                   └─ là où le cache a cassé
+```
+
 ![Live : des tours venus de deux clients, avec les constats](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/live.png)
 
 Sélectionnez un tour pour voir de quoi l'invite est faite et le point exact où elle a cessé de correspondre à la précédente, c'est-à-dire là où le cache a cassé. Les constats sont des phrases simples, chacune liée au tour qui la prouve : un client qui relit toute son invite à chaque tour, un modèle qui tourne en partie sur CPU, des schémas d'outils qui occupent 40 % de chaque invite. Seuls les comptes et les durées sont conservés, en mémoire. Le texte des invites est une option qui écrit dans un fichier local. Rien ne quitte votre machine.
+
+Les deux ports écoutent sur votre réseau, pas seulement sur localhost : la page Live peut tourner en plein écran sur un second écran ou une autre machine pendant que les agents travaillent.
 
 ### Labo de cache
 
@@ -204,7 +213,7 @@ Matériel, exécution et inférence sur une seule page : CPU, mémoire, GPU, que
 | **Développeur** | Déboguer les invites, profiler la latence, comparer les modèles, inspecter les appels d'outils, voir ce que votre éditeur envoie |
 | **Chercheur** | Mener des expériences contrôlées avec les mêmes réglages sur plusieurs modèles et températures |
 | **Étudiant / Enseignant** | Observer le comportement des modèles plutôt que de le lire, avec le [kit pédagogique](https://lognebudo.github.io/llmxray/docs/fr/community/educators/) en neuf modules |
-| **Responsable d'équipe IA** | Comprendre les tendances de qualité, les motifs d'erreur et l'usage des ressources sur un parc local |
+| **Responsable d'équipe IA** | Donner à chaque développeur la même installation locale, et collecter les résultats de benchmark et les paires d'entraînement qu'ils exportent |
 
 ---
 

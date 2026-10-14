@@ -5,7 +5,7 @@
 <h1 align="center">LLMxRay</h1>
 <p align="center"><strong>看清你的本地 AI 到底在做什么。</strong></p>
 <p align="center">
-  逐 token 流式输出、缓存诊断、模型对比、基准测试与成本追踪，<br/>
+  一条命令，一个浏览器标签页。逐 token 流式输出、缓存诊断、模型对比、基准测试与成本追踪，<br/>
   面向通过 Ollama 在你自己机器上运行的模型。无云端。无 API 密钥。零成本。
 </p>
 
@@ -81,9 +81,18 @@ docker run -p 5174:5174 djovaneli/llmxray
 
 LLMxRay 会打开第二个端口 **11435**，它的行为与 Ollama 完全一致，并把一切转发过去。把 VS Code Copilot、Open WebUI、Continue、n8n 或你自己的脚本指向 `http://localhost:11435`，它们发送的每一轮都会出现在这里：客户端、模型、提示大小、来自缓存的比例、预填充与生成速度、工具调用。
 
+```
+VS Code Copilot ─┐
+Open WebUI ──────┤                                   ┌─ Live 页面：每一轮、
+Continue / n8n ──┼─► http://localhost:11435 ─► Ollama ┤  缓存命中、预填充速度、
+你的脚本 ────────┘        (LLMxRay)                   └─ 缓存在哪里断裂
+```
+
 ![Live：来自两个客户端的轮次，以及发现](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/live.png)
 
 选中一轮，就能看到提示由什么组成，以及它与上一轮在哪个确切位置开始不再匹配，那就是缓存断裂的地方。发现以平实的句子呈现，每一条都链接到证明它的那一轮：某个客户端每轮都重读整条提示，某个模型部分跑在 CPU 上，工具模式占了每条提示的 40%。只在内存里保留计数和时间。提示文本是可选项，写入本地文件。一切不离开你的机器。
+
+两个端口都监听你的局域网，而不只是 localhost，因此 Live 页面可以在第二块屏幕或另一台机器上全屏运行，看着智能体工作。
 
 ### 缓存实验室
 
@@ -204,7 +213,7 @@ LLMxRay 会打开第二个端口 **11435**，它的行为与 Ollama 完全一致
 | **开发者** | 调试提示、分析延迟、对比模型、检查工具调用、看清编辑器在发什么 |
 | **研究者** | 在多个模型和温度下用相同设置做受控实验 |
 | **学生 / 教育者** | 观察模型行为而不是读关于它的文字，配合九个模块的[教育者套件](https://lognebudo.github.io/llmxray/docs/community/educators/) |
-| **AI 团队负责人** | 理解本地集群的质量趋势、错误模式和资源使用 |
+| **AI 团队负责人** | 让每位开发者拥有相同的本地环境，并收集他们导出的基准结果和训练样本对 |
 
 ---
 

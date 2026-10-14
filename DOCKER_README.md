@@ -14,7 +14,7 @@ docker run -p 5174:5174 -p 11435:11435 djovaneli/llmxray
 
 Open **http://localhost:5174** in your browser. Make sure [Ollama](https://ollama.com) is running on your machine.
 
-The second port is the **Live** page's observe port: point any other tool (VS Code Copilot, Open WebUI, Continue, n8n, your own scripts) at `http://localhost:11435` instead of Ollama and its traffic shows up on the Live page. Leave the mapping out if you do not need it.
+The second port is the **Live** page's observe port: point any other tool (VS Code Copilot, Open WebUI, Continue, n8n, your own scripts) at `http://localhost:11435` instead of Ollama and its traffic shows up on the Live page. Leave the mapping out if you do not need it. Both ports are reachable from other machines on your network, so the Live page can run full-screen on a second screen while the agents work.
 
 ![Live: turns from two clients, how much of each prompt came from the cache, and where it broke](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/live.png)
 

@@ -5,8 +5,8 @@
 <h1 align="center">LLMxRay</h1>
 <p align="center"><strong>See what your local AI is actually doing.</strong></p>
 <p align="center">
-  Token-by-token streaming, cache diagnostics, model comparison, benchmarks and cost tracking<br/>
-  for models running on your own machine through Ollama. No cloud. No API keys. No cost.
+  One command, one browser tab. Token-by-token streaming, cache diagnostics, model comparison, benchmarks and cost tracking<br/>
+  for the models running on your own machine through Ollama. No cloud. No API keys. No cost.
 </p>
 
 <p align="center">
@@ -81,9 +81,18 @@ Open any turn to see it as a timeline: time to first token, inter-token gaps, th
 
 LLMxRay opens a second port, **11435**, that behaves exactly like Ollama and forwards everything to it. Point VS Code Copilot, Open WebUI, Continue, n8n or your own script at `http://localhost:11435` and every turn they send appears here: client, model, prompt size, how much came from the cache, prefill and generation speed, tool calls.
 
+```
+VS Code Copilot ─┐
+Open WebUI ──────┤                                   ┌─ Live page: every turn,
+Continue / n8n ──┼─► http://localhost:11435 ─► Ollama ┤  cache hits, prefill speed,
+your scripts ────┘        (LLMxRay)                   └─ where the cache broke
+```
+
 ![Live: turns from two clients, with findings](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/live.png)
 
 Select a turn to see what the prompt is made of and the exact point where it stopped matching the previous one, which is where the cache broke. Findings are plain sentences, each linked to the turn that proves it: a client re-reading its whole prompt every turn, a model running partly on CPU, tool schemas taking 40% of every prompt. Only counts and timings are kept, in memory. Prompt text is an opt-in that writes to a local file. Nothing leaves your machine.
+
+Both ports listen on your network, not just localhost, so the Live page can run full-screen on a second screen or another machine while the agents work.
 
 ### Cache Lab
 
@@ -204,7 +213,7 @@ Hardware, runtime and inference overview on one page: CPU, memory, GPU, which mo
 | **Developer** | Debug prompts, profile latency, compare models, inspect tool calls, see what your editor sends |
 | **Researcher** | Run controlled experiments with the same settings across models and temperatures |
 | **Student / Educator** | Watch model behaviour instead of reading about it, with the nine-module [Educators Kit](https://lognebudo.github.io/llmxray/docs/community/educators/) |
-| **AI team lead** | Understand quality trends, error patterns and resource usage across a local fleet |
+| **AI team lead** | Give every developer the same local setup, and collect the benchmark results and training pairs they export |
 
 ---
 
