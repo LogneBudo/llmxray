@@ -5,6 +5,44 @@ All notable changes to LLMxRay are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.4] — 2026-10-14
+
+### Added
+
+- **Reasoning on the Protocol Observatory.** Each column shows what the model thought before it
+  answered, as that protocol carries it: native `message.thinking`, OpenAI-compat `delta.reasoning`,
+  Anthropic-compat `thinking_delta`. The envelope diff gains a row for the carrier and a row for
+  this run. The native path only thinks when asked; the two compat paths let a thinking model think
+  by default, so on the same prompt and budget they can spend every output token on reasoning and
+  produce no answer. The column says so instead of showing an empty box.
+- **Text view on Compare.** Each slot renders its output as Markdown while it streams, every token
+  underlined in its confidence colour. The one-chip-per-token view with the numbers on hover is one
+  click away.
+
+### Changed
+
+- **Chat renders Markdown while streaming.** Headings, lists, bold and code appear as they stream,
+  with the confidence colour under every token, instead of raw `**` and `###` until the turn ends.
+- **Tool Workshop code panel emits valid TypeScript.** A tool is written as
+  `export async function name(args: { … }) { … }`, which is how its body reads its inputs and what
+  the executor runs. Pasting the panel back reproduces the same tools.
+- **Cost charts label their axes by magnitude.** Small local costs no longer collapse into a column
+  of identical `$0.0002` ticks.
+- **README** restructured with one screenshot per page, all retaken against Ollama 0.40.4, and the
+  French, Serbian, Chinese and Arabic editions brought back in line with it.
+
+### Fixed
+
+- **Chat history now survives a reload.** Conversations, messages, sessions and tokens are handed
+  to IndexedDB as plain objects. They were Vue proxies, which the browser's structured clone
+  refuses, so every write had been failing silently and the History panel came back empty after
+  a restart.
+- Knowledge Base chunks begin on a word boundary; the overlap no longer opens with the tail of a
+  word, and a chunk's recorded start matches where it actually starts.
+- My System no longer shows firmware placeholders such as "Default string" as device facts.
+
+Verified against Ollama 0.40.4 (October 2026).
+
 ## [0.7.3] — 2026-10-13
 
 ### Added

@@ -31,9 +31,11 @@ export function chunkDocument(
       // Emit current chunk
       chunks.push(createChunk(documentId, chunks.length, currentChunk, chunkStart))
 
-      // Start new chunk with overlap
-      const overlapText = currentChunk.slice(-opts.chunkOverlap)
-      chunkStart = charOffset - overlapText.length
+      // Start new chunk with overlap, beginning on a word boundary so the
+      // next chunk never opens with the tail of a word.
+      const overlapText = wordAlignedTail(currentChunk, opts.chunkOverlap)
+      // charOffset already points past the separator that follows currentChunk
+      chunkStart = charOffset - opts.separator.length - overlapText.length
       currentChunk = overlapText + opts.separator + section
     } else {
       currentChunk = potentialChunk
@@ -48,6 +50,20 @@ export function chunkDocument(
   }
 
   return chunks
+}
+
+/**
+ * The last `size` characters of `text`, moved forward to the first whitespace
+ * so the slice starts on a whole word. An empty string if no boundary fits.
+ */
+function wordAlignedTail(text: string, size: number): string {
+  if (size <= 0) return ''
+  const raw = text.slice(-size)
+  if (raw.length < text.length && /\S/.test(text.charAt(text.length - raw.length - 1))) {
+    const gap = raw.search(/\s/)
+    return gap === -1 ? '' : raw.slice(gap).replace(/^\s+/, '')
+  }
+  return raw
 }
 
 function createChunk(

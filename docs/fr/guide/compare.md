@@ -32,7 +32,7 @@ Chaque slot affiche ses paramètres sous forme de pastilles pour une référence
 
 ### Vue grille
 La vue par défaut. Tous les slots affichent leurs résultats en streaming dans une disposition en grille. Chaque slot montre :
-- La réponse du modèle
+- La réponse du modèle, rendue en Markdown pendant le streaming, chaque token souligné dans sa couleur de confiance. Un sélecteur **Texte / Tokens** au-dessus ouvre la vue à une puce par token, avec les chiffres au survol.
 - Une pastille de paramètres indiquant le nom du modèle et la température
 
 ### Vue diff

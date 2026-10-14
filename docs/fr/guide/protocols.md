@@ -44,9 +44,12 @@ Une fois les trois runs terminés, une section inférieure à onglets apparaît.
 | Porteur du compte de tokens | `eval_count` + `prompt_eval_count` | `usage.{prompt,completion,total}_tokens` | `usage.{input,output}_tokens` |
 | Porteur du cache d'invite | `prompt_eval_cached_count` | `usage.prompt_tokens_details.cached_tokens` | `usage.cache_read_input_tokens` |
 | Porteur du temps de préremplissage | `prompt_eval_duration` (ns) | `timings.prompt_ms` | — |
+| Porteur du raisonnement | `message.thinking` | `choices[].delta.reasoning` | événement `thinking_delta` |
 | Enveloppe d'erreur | `{"error": "string"}` | `{"error": {"message", "type", "code"}}` | `{"type": "error", "error": {...}, "request_id"}` |
 
 Les lignes « ce run » se remplissent avec les valeurs réellement observées pendant votre exécution — vous pouvez voir, par exemple, que le protocole natif a renvoyé `done_reason: "stop"` tandis que le protocole Anthropic a appelé le même résultat `stop_reason: "end_turn"`.
+
+Avec un modèle à raisonnement, la ligne du raisonnement est celle à surveiller. Le chemin natif ne réfléchit que si la requête le demande ; les deux chemins compatibles laissent le modèle réfléchir par défaut, et ce raisonnement partage le budget de sortie avec la réponse. Avec la même invite et le même `max_tokens`, une colonne compatible peut dépenser tous ses tokens en raisonnement et ne produire aucun texte de réponse. Chaque colonne montre ce que le modèle a pensé, et le dit quand le budget s'est épuisé avant le premier mot.
 
 ### Les deux débits de préremplissage
 

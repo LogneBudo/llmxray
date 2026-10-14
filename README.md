@@ -1,14 +1,12 @@
-[English](README.md) | [简体中文](README.zh-CN.md) | [Srpski](README.sr.md)
-
 <p align="center">
   <img src="https://raw.githubusercontent.com/LogneBudo/llmxray/master/public/favicon.svg" alt="LLMxRay" width="80" />
 </p>
 
 <h1 align="center">LLMxRay</h1>
-<p align="center"><strong>See what your AI is actually doing.</strong></p>
+<p align="center"><strong>See what your local AI is actually doing.</strong></p>
 <p align="center">
-  Real-time token streaming, quality analysis, performance profiling, and cost tracking<br/>
-  for local LLMs. No cloud. No API keys. No cost.
+  Token-by-token streaming, cache diagnostics, model comparison, benchmarks and cost tracking<br/>
+  for models running on your own machine through Ollama. No cloud. No API keys. No cost.
 </p>
 
 <p align="center">
@@ -28,42 +26,22 @@
 
 <p align="center">
   <a href="#quick-start">Quick Start</a> &bull;
-  <a href="#features">Features</a> &bull;
-  <a href="#screenshots">Screenshots</a> &bull;
-  <a href="#who-is-this-for">Who Is This For</a> &bull;
+  <a href="#what-llmxray-shows-you">What it shows you</a> &bull;
+  <a href="#who-is-this-for">Who is this for</a> &bull;
+  <a href="#install">Install</a> &bull;
+  <a href="#ollama-compatibility">Ollama compatibility</a> &bull;
   <a href="CHANGELOG.md">Changelog</a>
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/demo.gif" alt="LLMxRay demo — real-time token streaming with confidence coloring" width="800" />
+  <img src="https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/demo.gif" alt="LLMxRay demo: a chat turn streaming token by token, then the session metrics" width="800" />
 </p>
-
-
-## What you get
-
-**Chat Diagnostics** — Watch tokens arrive one by one, coloured by speed. See where the model hesitates, and what it was unsure about.
-
-**Live** *(new in 0.7.2)* — Point VS Code Copilot, Open WebUI, Continue or your own scripts at LLMxRay instead of Ollama, and see every turn they send: prompt size, what the cache kept, where the prompt broke it, whether the model still fits on the GPU. One address to copy, nothing else to set up.
-
-**Cache Lab** *(new in 0.6.0)* — Your system prompt is probably being recomputed from scratch every turn. Find out in 30 seconds, and measure the fix. *(3.5x faster prefill in our test.)*
-
-**Decision Lab** — Ask a decision model (nimble, tev1, clef) typed questions about a ticket or a message, and see the probability behind every answer instead of a yes.
-
-**Compare** — The same prompt against two models, or two temperatures, side by side. Stop guessing which setting was actually better.
-
-**Surgical Benchmark** — Score models on real token logprobs, not on whether the answer happened to look right.
-
-**Protocol Observatory** — See how the same local model replies through Ollama's native, OpenAI-compatible and Anthropic-compatible APIs, and exactly where they disagree.
-
-**Knowledge Base** — Drop in PDFs and documents, chunk them, and see what RAG actually retrieves before the model ever sees it.
-
-Plus embeddings, cost tracking, analytics, a tool builder, and a local history database. [Full feature list below.](#features)
 
 ---
 
 ## Quick Start
 
-**One command. 30 seconds.**
+You need [Ollama](https://ollama.com/download) running with at least one model pulled (`ollama pull llama3.2`). Then:
 
 ```bash
 npx llmxray
@@ -75,179 +53,175 @@ Or with Docker:
 docker run -p 5174:5174 djovaneli/llmxray
 ```
 
-Open **http://localhost:5174** and start chatting. That's it.
-
-> **Prerequisite:** [Ollama](https://ollama.com/download) running locally with at least one model pulled (`ollama pull llama3.2`).
+Open **http://localhost:5174**. Pick a model, send a message, and watch what happens. That's it.
 
 ---
 
-## Why LLMxRay?
+## What LLMxRay shows you
 
-You run a local LLM. You chat with it. But what actually happened?
+You run a local model. You chat with it. LLMxRay answers the questions that come next: how fast was each token, what did the prompt cost, did the cache help, which setting was actually better, and what are your *other* tools sending to the same model.
 
-- How fast was each token? Which ones was the model confident about?
-- Is the response quality degrading over long conversations?
-- What would this have cost if you ran it in the cloud?
-- Is the model repeating itself? Refusing? Generating gibberish?
-- How does temperature 0.3 compare to 0.9 on the *same* prompt?
+Every page below is one of those answers.
 
-**LLMxRay answers all of these, visually, in real time, for free.**
+### Chat, token by token
 
----
+Every token is drawn as it arrives, coloured by confidence. You see where the model hesitated and where it was sure. Markdown, multi-turn, file and image attachments, slash commands, and a thinking budget for reasoning models (off, model's choice, or low / medium / high / max).
 
-## Features
+![Chat: a response streaming with confidence colouring](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/chat-streaming.png)
 
-### Real-Time Chat with Token Intelligence
-Chat with any Ollama model and watch tokens arrive with **confidence coloring** — each token is tinted based on generation speed. Supports markdown, multi-turn conversations, file attachments, vision models, and slash commands. For reasoning models, set the thinking budget per conversation — off, model's choice, or an explicit low / medium / high / max effort.
+Each response is also checked as it lands. A badge appears only when something is wrong: repetition, a refusal, gibberish, an empty answer, or a reply cut off at the token limit.
 
-### Response Quality Gates
-Every response is automatically analyzed. Colored badges appear only when something is wrong:
-- **Repetition** — excessive repeated phrases (4-gram analysis)
-- **Refusal** — "as an AI language model" and 7 other patterns
-- **Gibberish** — high non-ASCII ratio
-- **Empty** — fewer than 10 words
-- **Truncation** — hit the token limit without finishing
+### Session deep dive
 
-### Model Comparison Workbench
-Up to **4 slots** with independent model, temperature, and system prompt. Features include side-by-side streaming, word-level diff highlighting, metrics comparison, and one-click presets (Temperature Sweep, Deterministic Pair, Language Compare with Token Tax visualization).
+Open any turn to see it as a timeline: time to first token, inter-token gaps, the reasoning block if there was one, tool calls, and the exact prompt that was sent.
 
-### Performance Analytics
-- **Latency percentiles** (P50/P95/P99) for duration and TTFT
-- **Error intelligence** — 7-category classifier with timeline
-- **Usage heatmap** — 7x24 grid of your active hours
-- **Settings impact** — temperature vs tokens/sec scatter plots
-- **Cold vs warm start** tracking with model load history
+![Session details: stream timeline and metrics](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/session.png)
 
-### Cost Dashboard
-Token usage per model/day with estimated cloud-equivalent pricing. See what you're *saving* by running locally.
+### Live: what your other tools send
+
+LLMxRay opens a second port, **11435**, that behaves exactly like Ollama and forwards everything to it. Point VS Code Copilot, Open WebUI, Continue, n8n or your own script at `http://localhost:11435` and every turn they send appears here: client, model, prompt size, how much came from the cache, prefill and generation speed, tool calls.
+
+![Live: turns from two clients, with findings](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/live.png)
+
+Select a turn to see what the prompt is made of and the exact point where it stopped matching the previous one, which is where the cache broke. Findings are plain sentences, each linked to the turn that proves it: a client re-reading its whole prompt every turn, a model running partly on CPU, tool schemas taking 40% of every prompt. Only counts and timings are kept, in memory. Prompt text is an opt-in that writes to a local file. Nothing leaves your machine.
+
+### Cache Lab
+
+A local model reuses its prompt cache only while the prompt matches from the very first token. One timestamp near the top forfeits everything below it. Cache Lab finds the values that change between turns, shows where reuse dies, and then **measures** against your own daemon what moving them to the end saves.
+
+![Cache Lab: diagnosis and measured result](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/cache-lab.png)
+
+Measured on a real 324-token prompt: 4 tokens reused and 64.6 ms of prefill with the timestamp at the front, 290 reused and 18.6 ms with it at the back. **3.5x faster, same words.**
+
+### Compare
+
+The same prompt against up to four slots, each with its own model, temperature and system prompt, streaming side by side. One-click presets: Temperature Sweep, Deterministic Pair, Language Compare. A word-level diff shows exactly what changed between two answers.
+
+![Compare: temperature sweep on one model](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/compare.png)
 
 ### Surgical Benchmark
-Test model knowledge with multi-choice question suites. Uses real logprobs via OpenAI-compatible endpoint for accurate confidence measurement. Build custom suites visually or let AI generate them from a topic.
 
-### Embeddings Lab & RAG Pipeline
-Embed text, visualize vectors, measure cosine similarity. Request a narrower output vector to see what Matryoshka truncation costs in similarity. Build a local knowledge base from PDFs, DOCX, and CSV — chunked, embedded, and searchable. All stored in IndexedDB. Zero cost.
+Score models on curated question suites (MMLU-Pro, ARC-Challenge, HellaSwag, GSM8K, TruthfulQA) using the model's **real token logprobs**, not whether the answer happened to look right. Confidence versus accuracy per category, so you see where a model is confidently wrong. Import your own suites as JSON.
 
-### Tool Workshop (Visual Canvas)
-Drag-and-drop node canvas for building tool definitions. Bidirectional code sync (edit nodes or TypeScript — both update). Probe APIs, auto-generate schemas, test with live execution.
-
-### Fill-in-the-Middle Playground *(new in v0.4.7)*
-Code completion for Qwen-Coder, CodeLlama, Codestral, DeepSeek-Coder, and StarCoder. Two textareas (prefix / suffix), the model fills the gap. Uses Ollama's `suffix` field on `/api/generate`. Stitched preview shows the result as it would appear in your editor.
-
-### Live *(new in v0.7.2)*
-LLMxRay opens a second port, **11435**, that behaves exactly like Ollama and forwards everything to it. Point any other tool at `http://localhost:11435` (the Ollama VS Code extension's `ollama.endpoint` for Copilot Chat, Open WebUI's connection URL, Continue's `apiBase`, n8n's Ollama credential, `OLLAMA_HOST` for scripts) and every turn it sends appears on the Live page: client, model, prompt tokens, how many came from the cache, prefill and generation speed, tool calls. Select a turn to see what the prompt is made of (system, tool schemas, history, your message) and the exact point where it stopped matching the previous turn, which is where the cache broke. Findings are plain sentences, each linked to the turn that proves it: a client re-reading most of its prompt every turn, a model running partly on CPU because its context no longer fits in VRAM, tool schemas that take 40% of every prompt. Only counts and timings are kept, in memory; prompt text is an opt-in that writes to a local file. Nothing leaves your machine.
-
-### Cache Lab *(new in v0.6.0)*
-Find out why your prompt misses the model’s KV cache, and measure what it costs every turn. A local model reuses its cache only while the prompt still matches from the very first token, so a single timestamp near the top forfeits everything below it. The lab finds the values that change between turns, shows the exact point where reuse dies, and then **measures** — sending each layout twice with a changed value, against your own daemon — what moving them to the end actually saves. Measured on a real 324-token prompt: **4 tokens reused and 64.6 ms of prefill with the timestamp at the front, 290 reused and 18.6 ms with it at the back. 3.5x faster, same words.** Requires Ollama 0.33.3+.
+![Benchmark: confidence versus accuracy](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/benchmark.png)
 
 ### Decision Lab
-Ollama 0.35.1 added **decision models** — nimble, tev1, clef, clef-flash — that answer on `/v1/systemone` with choices, probabilities and scores instead of text. Give the lab a state (a ticket, a message, a log line) and typed questions: a **choice** among named candidates, a **yes/no probability**, or a **score** on an ordered scale. Every answer comes back as the model's own probability distribution, drawn as bars with the chosen candidate highlighted. Decision models report `decision` as their only capability, so LLMxRay keeps them out of the chat selectors and lists them here.
 
-### Protocol Observatory *(new in v0.4.7)*
-Fire the same prompt through Ollama's three serving protocols — **native** `/api/chat`, **OpenAI-compat** `/v1/chat/completions`, and **Anthropic-compat** `/v1/messages` — in parallel against your local model. Side-by-side streaming, per-protocol metrics, and an envelope-diff tab that shows how each protocol frames finish reasons, token counts, and error envelopes. No cloud, no API keys — all three endpoints are local on `localhost:11434`.
+Decision models (nimble, tev1, clef) answer typed questions with probabilities instead of prose. Give the lab a situation and ask for a choice among candidates, a yes/no probability, or a score on a scale. Every answer comes back as the model's own distribution, drawn as bars.
 
-### AI Training Pipeline
-Curate training data from your conversations. Tag, review, and export as JSONL for fine-tuning.
+![Decision Lab: probability bars behind each answer](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/decision-lab.png)
 
-### Local AI History Database
-Every experiment (benchmarks, comparisons, chats, training pairs) is automatically archived in a queryable IndexedDB database with filters, trends, exports, and retention policies.
+### Protocol Observatory
 
-### Multilingual
-Full translations in English, French, Serbian (Latin + Cyrillic), Chinese, and Arabic. RTL layout support. Community scaffolds for Hebrew and Japanese.
+The same prompt through Ollama's three serving protocols in parallel: native `/api/chat`, OpenAI-compatible `/v1/chat/completions`, and Anthropic-compatible `/v1/messages`. Side-by-side streaming, per-protocol metrics, and an envelope diff that shows how each one frames finish reasons, token counts and errors.
 
----
+![Protocol Observatory: three protocols side by side](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/protocols.png)
 
-## Ollama Compatibility
+### Knowledge Base and Embeddings
 
-Tested and verified against **Ollama 0.40.x** (verified on 0.40.3, October 2026). LLMxRay uses these Ollama endpoints:
-
-| Endpoint | Used for |
-|---|---|
-| `/api/chat` | Streaming chat (NDJSON, with `tools`, `think` effort levels, `format` schema) |
-| `/api/generate` | Generation + Fill-in-the-Middle via `suffix` |
-| `/api/tags` | Model list + capabilities, context length, and embedding width |
-| `/api/show` | Parameters, template, license, and architecture metadata |
-| `/api/embed` | Vector embeddings for RAG, with optional `dimensions` truncation |
-| `/api/pull`, `/api/delete`, `/api/ps`, `/api/version` | Model management + status |
-| `/v1/chat/completions` | OpenAI-compat path used by Surgical Benchmark for real logprobs and usage totals |
-| `/v1/messages` | Anthropic-compat path used by Protocol Observatory |
-
-**Compatible with:** Ollama 0.20 and newer (older versions work for chat/generate but lack `think` and JSON-schema `format`). **Recommended:** Ollama 0.33.3+ — prompt-cache reuse is reported (`prompt_eval_cached_count`, and `usage.prompt_tokens_details.cached_tokens` on the OpenAI-compatible endpoint), so prefill throughput is measured over the tokens actually evaluated. From 0.32: capabilities and context length arrive with the model listing, `think` accepts graded effort levels, and embeddings accept a `dimensions` width.
-
----
-
-## Screenshots
+Drop in PDF, DOCX, Markdown or CSV files. They are chunked, embedded and searchable, so you see what retrieval actually returns before a model ever sees it. The Embeddings page lets you compare any two texts by cosine similarity, visualise the vectors, and see what Matryoshka truncation costs.
 
 <table>
 <tr>
 <td width="50%">
 
-**Chat with token streaming and confidence**
-![Chat](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/chat-diagnostics.png)
+![Knowledge Base: search results with scores](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/knowledge-base.png)
 
 </td>
 <td width="50%">
 
-**Model comparison — side by side**
-![Compare](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/compare-sidebyside.png)
-
-</td>
-</tr>
-<tr>
-<td width="50%">
-
-**Session deep dive — metrics and timing**
-![Session](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/session-details.png)
-
-</td>
-<td width="50%">
-
-**Benchmark with confidence radar**
-![Benchmark](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/benchmark.png)
-
-</td>
-</tr>
-<tr>
-<td width="50%">
-
-**Embeddings — cosine similarity**
-![Embeddings](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/embed-similarity.png)
-
-</td>
-<td width="50%">
-
-**System monitor — hardware and Ollama status**
-![System](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/my-system.png)
+![Embeddings: cosine similarity between two texts](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/embeddings.png)
 
 </td>
 </tr>
 </table>
 
+Everything stays in your browser's IndexedDB.
+
+### Code Completion
+
+Fill-in-the-middle for Qwen-Coder, CodeLlama, Codestral, DeepSeek-Coder and StarCoder: a prefix, a suffix, and the model fills the gap. The stitched preview shows the result as your editor would.
+
+![Code Completion: prefix, suffix and stitched preview](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/fim.png)
+
+### Tool Workshop
+
+A node canvas for building tool definitions, with the TypeScript kept in sync both ways: edit the nodes or edit the code. Probe an API, generate the schema, and test the tool with a live call.
+
+![Tool Workshop: node canvas with the code panel open](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/tools.png)
+
+### Analytics and Costs
+
+Latency percentiles (P50 / P95 / P99) for requests and first tokens, quality over turns, errors by model, a usage heatmap, and temperature against tokens per second. The cost page prices your local usage at cloud rates, so you see what running locally saves.
+
+<table>
+<tr>
+<td width="50%">
+
+![Analytics: latency percentiles and quality](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/analytics.png)
+
+</td>
+<td width="50%">
+
+![Costs: cloud-equivalent pricing per model](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/costs.png)
+
+</td>
+</tr>
+</table>
+
+### My System and Models
+
+Hardware, runtime and inference overview on one page: CPU, memory, GPU, which models are loaded and where. The Models tab lists every installed model with its parameters, template and runner, and pulls new ones from the catalog.
+
+<table>
+<tr>
+<td width="50%">
+
+![My System: hardware and Ollama status](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/system.png)
+
+</td>
+<td width="50%">
+
+![Models: installed models and catalog](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/models.png)
+
+</td>
+</tr>
+</table>
+
+### Also in the box
+
+- **AI Training Pipeline.** Curate pairs from your conversations, tag and review them, export JSONL for fine-tuning.
+- **Local history database.** Every chat, comparison and benchmark is archived in IndexedDB with filters, trends, exports and retention rules.
+- **Educators Kit.** Nine lesson modules on the [docs site](https://lognebudo.github.io/llmxray/docs/community/educators/), each built around an LLMxRay page.
+- **Five languages.** English, French, Serbian (Latin and Cyrillic), Chinese and Arabic, with RTL layout. Scaffolds ready for Hebrew and Japanese.
+
 ---
 
-## Who Is This For
+## Who is this for
 
 | You are... | LLMxRay helps you... |
 |---|---|
-| **Developer** | Debug prompts, profile latency, compare models, inspect tool calls, track costs |
-| **Researcher** | Run controlled experiments with consistent settings across models and temperatures |
-| **Student / Educator** | Explore model behavior visually — built-in Educators Kit with 9 interactive modules |
-| **AI team lead** | Understand quality trends, error patterns, and resource usage across your local fleet |
+| **Developer** | Debug prompts, profile latency, compare models, inspect tool calls, see what your editor sends |
+| **Researcher** | Run controlled experiments with the same settings across models and temperatures |
+| **Student / Educator** | Watch model behaviour instead of reading about it, with the nine-module [Educators Kit](https://lognebudo.github.io/llmxray/docs/community/educators/) |
+| **AI team lead** | Understand quality trends, error patterns and resource usage across a local fleet |
 
 ---
 
-## Install Options
+## Install
 
 ### npx (recommended)
 ```bash
 npx llmxray
 npx llmxray --port 3000
 npx llmxray --ollama-url http://192.168.1.50:11434
+npx llmxray --observe-port 11436     # the Live port, 11435 by default
 ```
 
 ### Docker
 ```bash
-docker run -p 5174:5174 djovaneli/llmxray
-docker run -p 5174:5174 -e OLLAMA_URL=http://host.docker.internal:11434 djovaneli/llmxray
+docker run -p 5174:5174 -p 11435:11435 djovaneli/llmxray
+docker run -p 5174:5174 -p 11435:11435 -e OLLAMA_URL=http://host.docker.internal:11434 djovaneli/llmxray
 ```
 
 ### From source
@@ -260,41 +234,33 @@ npm run dev     # http://localhost:5173
 
 ---
 
-## Tech Stack
+## Ollama compatibility
 
-| Layer | Technology |
+Tested against **Ollama 0.40.x** (verified on 0.40.4, October 2026). Works with 0.20 and newer; older versions chat but lack `think` and JSON-schema `format`. **Recommended: 0.33.3 or newer**, which reports prompt-cache reuse, so prefill speed is measured over the tokens actually evaluated.
+
+| Endpoint | Used for |
 |---|---|
-| Framework | Vue 3.5 + Composition API |
-| Language | TypeScript 5.9 (strict) |
-| Build | Vite 7.3 |
-| Styling | Tailwind CSS 4.2 |
-| State | Pinia 3 (store-per-concern) |
-| Charts | Chart.js 4, D3.js 7 |
-| Canvas | Vue Flow (visual node editor) |
-| Code Editor | CodeMirror 6 |
-| Storage | IndexedDB (browser-native) |
-| LLM Backend | Ollama (local) |
+| `/api/chat` | Streaming chat (NDJSON, with `tools`, `think` effort levels, `format` schema) |
+| `/api/generate` | Generation and Fill-in-the-Middle via `suffix` |
+| `/api/tags`, `/api/show` | Model list, capabilities, context length, parameters, template |
+| `/api/embed` | Vector embeddings for the Knowledge Base, with optional `dimensions` truncation |
+| `/api/pull`, `/api/delete`, `/api/ps`, `/api/version` | Model management and status |
+| `/v1/chat/completions` | OpenAI-compatible path, used by Surgical Benchmark for real logprobs |
+| `/v1/messages` | Anthropic-compatible path, used by Protocol Observatory |
+| `/v1/systemone` | Decision models, used by Decision Lab |
 
 ---
 
-## Architecture
+## Under the hood
 
-**Streaming** — Reads Ollama NDJSON via `fetch()` + `ReadableStream`. Tokens update the UI reactively through Pinia stores.
+Vue 3.5, TypeScript 5.9 (strict), Vite 7, Tailwind CSS 4, Pinia stores per concern, Chart.js and D3 for charts, Vue Flow for the tool canvas, CodeMirror 6 for code. Storage is the browser's IndexedDB. The backend is Ollama, local.
 
-**Token confidence** — Approximated from inter-token latency (faster = more confident). Clearly labeled as approximation. Benchmarks use real logprobs via OpenAI-compatible endpoint.
-
-**Store-per-concern** — Each domain has its own Pinia store: tokens, sessions, metrics, reasoning, comparison, embeddings, quality, cost, and more.
-
-**Hardware detection** — Custom Vite plugin queries the OS directly (PowerShell/proc/sysctl) for accurate hardware specs.
-
----
-
-## Development
+Streaming reads Ollama's NDJSON through `fetch()` and a `ReadableStream`, and tokens update the UI through Pinia. Chat confidence is approximated from inter-token latency and labelled as such; benchmarks use real logprobs. Hardware detection is a small Vite plugin that asks the OS directly. The Live port is a transparent proxy that keeps counts and timings in memory.
 
 | Command | What it does |
 |---|---|
 | `npm run dev` | Dev server (port 5173) |
-| `npm run build` | Type-check + production build |
+| `npm run build` | Type-check and production build |
 | `npm run test` | Unit tests (Vitest) |
 | `npm run test:e2e` | End-to-end (Playwright) |
 
@@ -302,11 +268,7 @@ npm run dev     # http://localhost:5173
 
 ## Contributing
 
-Contributions welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for setup and guidelines.
-
-**Community translations especially welcome** — scaffold files ready for Hebrew and Japanese.
-
----
+Contributions welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for setup and guidelines. Community translations are especially welcome: scaffold files are ready for Hebrew and Japanese.
 
 ## License
 

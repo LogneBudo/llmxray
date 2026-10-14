@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { formatUsd } from '@/utils/format'
 import { computed } from 'vue'
 import { Line } from 'vue-chartjs'
 import {
@@ -41,7 +42,7 @@ const chartOptions = {
     tooltip: {
       callbacks: {
         label: (ctx: { parsed: { y: number | null } }) =>
-          `$${(ctx.parsed.y ?? 0).toFixed(4)}`,
+          formatUsd(ctx.parsed.y ?? 0),
       },
     },
   },
@@ -51,7 +52,7 @@ const chartOptions = {
       grid: { color: 'rgba(71, 85, 105, 0.3)' },
     },
     y: {
-      ticks: { color: '#94a3b8', font: { size: 10 }, callback: (v: string | number) => `$${Number(v).toFixed(4)}` },
+      ticks: { color: '#94a3b8', font: { size: 10 }, callback: (v: string | number) => formatUsd(Number(v)) },
       grid: { color: 'rgba(71, 85, 105, 0.3)' },
     },
   },

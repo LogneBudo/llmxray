@@ -67,18 +67,20 @@
     "duration": "耗时"
   },
   "column": {
-    "tokens": "Tokens"
+    "tokens": "Tokens",
+    "viewText": "文本",
+    "viewTokens": "Token"
   },
   "language": {
-    "mismatchTitle": "\u68c0\u6d4b\u5230\u8bed\u8a00\u4e0d\u5339\u914d",
-    "mismatchDescription": "\u60a8\u7684\u63d0\u793a\u8bcd\u4f3c\u4e4e\u662f{detected}\u3002",
-    "targetIs": "\u76ee\u6807\u8bed\u8a00\uff1a{language}",
-    "translateTo": "\u7ffb\u8bd1\u4e3a{language}",
-    "keepDetected": "\u4fdd\u7559{language}",
-    "translateAll": "\u5168\u90e8\u7ffb\u8bd1",
-    "cancel": "\u53d6\u6d88",
-    "tokenTaxTitle": "Token \u7a0e",
-    "promptTokens": "\u63d0\u793a\u8bcd Tokens",
+    "mismatchTitle": "检测到语言不匹配",
+    "mismatchDescription": "您的提示词似乎是{detected}。",
+    "targetIs": "目标语言：{language}",
+    "translateTo": "翻译为{language}",
+    "keepDetected": "保留{language}",
+    "translateAll": "全部翻译",
+    "cancel": "取消",
+    "tokenTaxTitle": "Token 税",
+    "promptTokens": "提示词 Tokens",
     "promptText": "翻译后的提示词",
     "translated": "已翻译",
     "unsupported": "暂不支持该语言",

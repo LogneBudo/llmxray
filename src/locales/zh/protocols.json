@@ -52,6 +52,16 @@
     "prefillMs": "预填充时间（本次运行）",
     "prefillRateStated": "预填充速率（守护进程自报）",
     "prefillRateHonest": "预填充速率（按实际评估的 token）",
-    "statedNote": "OpenAI 兼容端点的 `timings.prompt_per_second`（Ollama 0.35.1+）用提示词的总 token 数除以仅处理未缓存 token 的时间。缓存命中时该值会按命中率被放大；下一行改为除以实际评估的 token 数。"
+    "statedNote": "OpenAI 兼容端点的 `timings.prompt_per_second`（Ollama 0.35.1+）用提示词的总 token 数除以仅处理未缓存 token 的时间。缓存命中时该值会按命中率被放大；下一行改为除以实际评估的 token 数。",
+    "reasoningCarrier": "推理载体",
+    "reasoningReported": "推理（本次运行）",
+    "reasoningNote": "思考与回答共用输出预算。原生路径只在请求要求时才思考；两条兼容路径默认让推理模型思考，因此在相同提示和相同预算下，可能在写出一个字之前就耗尽预算。"
+  },
+  "reasoning": {
+    "label": "推理（{chars} 字符）",
+    "budgetSpent": "全部 {tokens} 个输出 token 都用于推理，没有产生回答文本。",
+    "none": "无",
+    "chars": "{chars} 字符",
+    "noAnswer": "无回答"
   }
 }

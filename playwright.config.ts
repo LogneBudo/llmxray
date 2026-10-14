@@ -24,18 +24,28 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      testIgnore: /live-ollama/,
+      testIgnore: /live-ollama|screenshots|demo-video/,
       use: { browserName: 'chromium' },
     },
     {
       name: 'live-ollama',
       testMatch: /live-ollama\.spec\.ts/,
+      testIgnore: /screenshots|demo-video/,
       timeout: 120_000,
       expect: { timeout: 60_000 },
       use: {
         browserName: 'chromium',
         video: 'retain-on-failure',
       },
+    },
+    {
+      name: 'screenshots',
+      testMatch: /(screenshots|demo-video)\.spec\.ts/,
+      fullyParallel: false,
+      workers: 1,
+      timeout: 300_000,
+      expect: { timeout: 120_000 },
+      use: { browserName: 'chromium' },
     },
   ],
 })

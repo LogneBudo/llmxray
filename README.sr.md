@@ -3,10 +3,10 @@
 </p>
 
 <h1 align="center">LLMxRay</h1>
-<p align="center"><strong>Vidi šta tvoj AI zaista radi.</strong></p>
+<p align="center"><strong>Vidite šta vaša lokalna AI zaista radi.</strong></p>
 <p align="center">
-  Strimovanje tokena u realnom vremenu, analiza kvaliteta, profilisanje performansi i praćenje troškova<br/>
-  za lokalne LLM-ove. Bez clouda. Bez API ključeva. Bez troškova.
+  Strimovanje token po token, dijagnostika keša, poređenje modela, benchmark i praćenje troškova<br/>
+  za modele koji rade na vašoj mašini kroz Ollama. Bez clouda. Bez API ključeva. Bez troška.
 </p>
 
 <p align="center">
@@ -26,216 +26,202 @@
 
 <p align="center">
   <a href="#brzi-start">Brzi start</a> &bull;
-  <a href="#mogućnosti">Mogućnosti</a> &bull;
-  <a href="#snimci-ekrana">Snimci ekrana</a> &bull;
+  <a href="#šta-vam-llmxray-pokazuje">Šta vam pokazuje</a> &bull;
   <a href="#kome-je-namenjeno">Kome je namenjeno</a> &bull;
+  <a href="#instalacija">Instalacija</a> &bull;
+  <a href="#ollama-kompatibilnost">Ollama kompatibilnost</a> &bull;
   <a href="CHANGELOG.md">Changelog</a>
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/demo.gif" alt="LLMxRay demo — strimovanje tokena u realnom vremenu sa bojenjem prema poverenju" width="800" />
+  <img src="https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/demo.gif" alt="LLMxRay demo: odgovor u ćaskanju stiže token po token, zatim metrike sesije" width="800" />
 </p>
-
-
-## Šta dobijate
-
-**Dijagnostika ćaskanja** — Gledajte kako tokeni stižu jedan po jedan, obojeni po brzini. Vidite gde model okleva i oko čega.
-
-**Laboratorija keša** *(novo u 0.6.0)* — Vaš sistemski prompt se verovatno iznova računa u svakom krugu. Proverite za 30 sekundi i izmerite dobitak. *(Prefil 3,5x brži u našem testu.)*
-
-**Poređenje** — Isti prompt na dva modela ili dve temperature, jedan pored drugog. Prestanite da nagađate koje je podešavanje bilo bolje.
-
-**Hirurški benchmark** — Ocenjujte modele po stvarnim logprobs tokena, a ne po tome kako odgovor izgleda.
-
-**Protocol Observatory** — Vidite kako isti lokalni model odgovara kroz Ollama native, OpenAI-kompatibilni i Anthropic-kompatibilni API, i gde se razilaze.
-
-**Baza znanja** — Ubacite PDF-ove i dokumente, isecite ih na delove i vidite šta RAG zaista pronalazi pre nego što model to uopšte vidi.
-
-Uz to: embedinzi, praćenje troškova, analitika, graditelj alata i lokalna baza istorije. [Puna lista funkcija ispod.](#features)
 
 ---
 
 ## Brzi start
 
-**Jedna komanda. 30 sekundi.**
+Potreban vam je [Ollama](https://ollama.com/download) koji radi sa bar jednim preuzetim modelom (`ollama pull llama3.2`). Zatim:
 
 ```bash
 npx llmxray
 ```
 
-Ili sa Docker-om:
+Ili sa Dockerom:
 
 ```bash
 docker run -p 5174:5174 djovaneli/llmxray
 ```
 
-Otvori **http://localhost:5174** i počni razgovor. To je sve.
-
-> **Preduslov:** [Ollama](https://ollama.com/download) pokrenut lokalno sa bar jednim povučenim modelom (`ollama pull llama3.2`).
+Otvorite **http://localhost:5174**. Izaberite model, pošaljite poruku i gledajte šta se dešava. To je sve.
 
 ---
 
-## Zašto LLMxRay?
+## Šta vam LLMxRay pokazuje
 
-Pokrenuo si lokalni LLM. Razgovaraš sa njim. Ali šta se zaista desilo?
+Pokrećete lokalni model. Ćaskate sa njim. LLMxRay odgovara na pitanja koja slede: koliko je brzo stigao svaki token, koliko je prompt koštao, da li je keš pomogao, koje je podešavanje zaista bilo bolje, i šta vaši *drugi* alati šalju istom modelu.
 
-- Koliko je svaki token bio brz? U koje je model bio siguran?
-- Da li kvalitet odgovora opada tokom dugih razgovora?
-- Koliko bi ovo koštalo da si ga pokrenuo u cloudu?
-- Da li se model ponavlja? Odbija? Generiše besmislice?
-- Kako se temperatura 0.3 poredi sa 0.9 na *istom* promptu?
+Svaka stranica ispod je jedan od tih odgovora.
 
-**LLMxRay odgovara na sve ovo — vizuelno, u realnom vremenu, besplatno.**
+### Ćaskanje, token po token
 
----
+Svaki token se iscrtava čim stigne, obojen po poverenju. Vidite gde je model oklevao, a gde je bio siguran. Markdown, razgovori u više koraka, prilozi i slike, slash komande, i budžet za razmišljanje kod modela sa rezonovanjem (isključeno, po izboru modela, ili low / medium / high / max).
 
-## Mogućnosti
+![Ćaskanje: odgovor u strimovanju sa bojenjem po poverenju](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/chat-streaming.png)
 
-### Razgovor u realnom vremenu sa inteligencijom tokena
-Pričaj sa bilo kojim Ollama modelom i posmatraj tokene kako pristižu sa **bojenjem prema poverenju** — svaki token je obojen prema brzini generisanja. Podržava Markdown, razgovore u više rundi, priloge datoteka, vision modele i slash komande. Za modele koji rezonuju, podesi budžet razmišljanja po razgovoru — isključeno, po izboru modela, ili eksplicitan napor nisko / srednje / visoko / max.
+Svaki odgovor se proverava čim stigne. Oznaka se pojavljuje samo kada nešto nije u redu: ponavljanje, odbijanje, besmislice, prazan odgovor, ili odgovor odsečen na granici tokena.
 
-### Kapije kvaliteta odgovora
-Svaki odgovor se automatski analizira. Obojene oznake se pojavljuju samo kada nešto nije u redu:
-- **Ponavljanje** — preterano ponavljanje fraza (4-gram analiza)
-- **Odbijanje** — "kao AI jezički model" i još 7 obrazaca
-- **Besmislice** — visok udeo ne-ASCII karaktera
-- **Prazno** — manje od 10 reči
-- **Sečenje** — dostigao limit tokena bez završetka
+### Sesija do detalja
 
-### Radionica za poređenje modela
-Do **4 slota** sa nezavisnim modelom, temperaturom i sistemskim promptom. Mogućnosti uključuju strimovanje uporedo, isticanje razlika na nivou reči, poređenje metrika i jedno-klik preset-e (Temperature Sweep, Deterministic Pair, Language Compare sa vizualizacijom Token Tax-a).
+Otvorite bilo koji korak da ga vidite kao vremensku liniju: vreme do prvog tokena, razmaci između tokena, blok rezonovanja ako ga je bilo, pozivi alata, i tačan prompt koji je poslat.
 
-### Analitika performansi
-- **Percentili latencije** (P50/P95/P99) za trajanje i TTFT
-- **Inteligencija grešaka** — klasifikator sa 7 kategorija i vremenska osa
-- **Toplotna mapa korišćenja** — 7×24 mreža tvojih aktivnih sati
-- **Uticaj podešavanja** — scatter dijagrami temperature naspram tokena/sec
-- Praćenje **hladnog i toplog starta** sa istorijom učitavanja modela
+![Detalji sesije: vremenska linija strima i metrike](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/session.png)
 
-### Tabla troškova
-Potrošnja tokena po modelu/danu sa procenom ekvivalentne cene u cloudu. Vidi koliko *štediš* tako što pokrećeš lokalno.
+### Live: šta vaši drugi alati šalju
+
+LLMxRay otvara drugi port, **11435**, koji se ponaša tačno kao Ollama i sve mu prosleđuje. Usmerite VS Code Copilot, Open WebUI, Continue, n8n ili sopstvenu skriptu na `http://localhost:11435` i svaki korak koji pošalju pojavljuje se ovde: klijent, model, veličina prompta, koliko je došlo iz keša, brzina prefill-a i generisanja, pozivi alata.
+
+![Live: koraci od dva klijenta, sa nalazima](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/live.png)
+
+Izaberite korak da vidite od čega se prompt sastoji i tačno mesto gde je prestao da se poklapa sa prethodnim, a to je mesto gde je keš pukao. Nalazi su obične rečenice, svaka vezana za korak koji je dokazuje: klijent koji iznova čita ceo prompt u svakom koraku, model koji delom radi na CPU-u, šeme alata koje zauzimaju 40% svakog prompta. Čuvaju se samo brojevi i vremena, u memoriji. Tekst prompta je opcija koja piše u lokalni fajl. Ništa ne napušta vašu mašinu.
+
+### Laboratorija keša
+
+Lokalni model ponovo koristi keš prompta samo dok se prompt poklapa od prvog tokena. Jedan vremenski pečat pri vrhu baca sve ispod njega. Laboratorija pronalazi vrednosti koje se menjaju između koraka, pokazuje gde ponovna upotreba umire, a zatim **meri** na vašem sopstvenom demonu koliko se dobija njihovim premeštanjem na kraj.
+
+![Laboratorija keša: dijagnoza i izmereni rezultat](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/cache-lab.png)
+
+Izmereno na stvarnom promptu od 324 tokena: 4 tokena ponovo iskorišćena i 64,6 ms prefill-a sa pečatom napred, 290 ponovo iskorišćenih i 18,6 ms sa pečatom pozadi. **3,5x brže, iste reči.**
+
+### Poređenje
+
+Isti prompt na do četiri slota, svaki sa svojim modelom, temperaturom i sistemskim promptom, u strimovanju jedan pored drugog. Preseti na jedan klik: Temperature Sweep, Deterministic Pair, Language Compare. Diff na nivou reči pokazuje tačno šta se promenilo između dva odgovora.
+
+![Poređenje: pregled temperatura na jednom modelu](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/compare.png)
 
 ### Hirurški benchmark
-Testiraj znanje modela skupovima pitanja sa višestrukim izborom. Koristi prave logprobs preko OpenAI-kompatibilnog endpointa za tačno merenje poverenja. Pravi custom skupove vizuelno ili pusti AI da ih generiše iz teme.
 
-### Embeddings Lab i RAG pipeline
-Embeduj tekst, vizualizuj vektore, meri kosinusnu sličnost. Zatraži uži izlazni vektor da vidiš koliko Matrjoška skraćivanje košta u sličnosti. Izgradi lokalnu bazu znanja iz PDF, DOCX i CSV fajlova — podeljeno na delove, embedovano i pretraživo. Sve smešteno u IndexedDB. Bez troškova.
+Ocenite modele na odabranim skupovima pitanja (MMLU-Pro, ARC-Challenge, HellaSwag, GSM8K, TruthfulQA) pomoću **stvarnih logprobs tokena**, a ne po tome da li odgovor slučajno izgleda tačno. Poverenje naspram tačnosti po kategoriji, da vidite gde je model samouvereno pogrešio. Uvezite sopstvene skupove kao JSON.
 
-### Tool Workshop (vizuelno platno)
-Drag-and-drop platno sa čvorovima za pravljenje definicija alata. Dvosmerna sinhronizacija koda (uređuj čvorove ili TypeScript — oba se ažuriraju). Sondiraj API-je, automatski generiši šeme, testiraj uživo.
+![Benchmark: poverenje naspram tačnosti](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/benchmark.png)
 
-### Fill-in-the-Middle Playground *(novo u v0.4.7)*
-Dopuna koda za Qwen-Coder, CodeLlama, Codestral, DeepSeek-Coder i StarCoder. Dva polja (prefiks / sufiks), model popunjava prazninu. Koristi Ollama `suffix` polje na `/api/generate`. Spojeni pregled pokazuje rezultat kao što bi izgledao u tvom editoru.
+### Laboratorija odluka
 
-### Laboratorija keša *(novo u v0.6.0)*
-Saznajte zašto vaš prompt promašuje KV keš modela i izmerite koliko to košta u svakom krugu. Lokalni model ponovo koristi keš samo dok se prompt poklapa od prvog tokena, pa jedna vremenska oznaka pri vrhu poništava sve ispod nje. Laboratorija pronalazi vrednosti koje se menjaju između krugova, pokazuje tačku na kojoj ponovna upotreba umire, a zatim **meri** — šaljajući svaki raspored dvaput sa izmenjenom vrednošću, na vašem demonu — koliko donosi njihovo pomeranje na kraj. Izmereno na stvarnom promptu od 324 tokena: **4 tokena ponovo upotrebljena i 64,6 ms prefila sa oznakom na početku, 290 i 18,6 ms na kraju. 3,5x brže, uz iste reči.** Zahteva Ollama 0.33.3+.
+Modeli za odlučivanje (nimble, tev1, clef) odgovaraju na tipizirana pitanja verovatnoćama umesto tekstom. Dajte laboratoriji situaciju i tražite izbor među kandidatima, verovatnoću da/ne, ili ocenu na skali. Svaki odgovor stiže kao sopstvena raspodela modela, iscrtana kao trake.
 
-### Protocol Observatory *(novo u v0.4.7)*
-Pošalji isti prompt kroz tri Ollama protokola posluživanja — **nativni** `/api/chat`, **OpenAI-compat** `/v1/chat/completions` i **Anthropic-compat** `/v1/messages` — paralelno protiv tvog lokalnog modela. Strimovanje uporedo, metrike po protokolu i tab za poređenje envelope-a koji pokazuje kako svaki protokol uobličava razloge završetka, brojeve tokena i envelope grešaka. Bez clouda, bez API ključeva — sva tri endpointa su lokalna na `localhost:11434`.
+![Laboratorija odluka: trake verovatnoće iza svakog odgovora](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/decision-lab.png)
 
-### AI Training Pipeline
-Pripremi podatke za obuku iz svojih razgovora. Označavaj, pregledaj i izvozi kao JSONL za fine-tuning.
+### Protocol Observatory
 
-### Lokalna AI baza istorije
-Svaki eksperiment (benchmark-i, poređenja, razgovori, parovi za obuku) se automatski arhivira u pretraživu IndexedDB bazu sa filterima, trendovima, izvozom i pravilima zadržavanja.
+Isti prompt kroz tri Ollama protokola istovremeno: native `/api/chat`, OpenAI-kompatibilni `/v1/chat/completions` i Anthropic-kompatibilni `/v1/messages`. Strimovanje jedan pored drugog, metrike po protokolu, i diff omotača koji pokazuje kako svaki od njih uokviruje razloge završetka, broj tokena i greške.
 
-### Višejezičnost
-Potpuni prevodi na engleskom, francuskom, srpskom (latinica + ćirilica), kineskom i arapskom. Podrška za RTL raspored. Skele zajednice za hebrejski i japanski.
+![Protocol Observatory: tri protokola jedan pored drugog](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/protocols.png)
 
----
+### Baza znanja i embeddings
 
-## Ollama kompatibilnost
-
-Testirano i verifikovano sa **Ollama 0.40.x** (verifikovano na 0.40.3, oktobar 2026). LLMxRay koristi sledeće Ollama endpointe:
-
-| Endpoint | Za šta se koristi |
-|---|---|
-| `/api/chat` | Strimovan chat (NDJSON, sa `tools`, `think`, `format` schema) |
-| `/api/generate` | Generisanje + Fill-in-the-Middle preko `suffix` |
-| `/api/tags` | Lista modela + sposobnosti, dužina konteksta i širina embedinga |
-| `/api/show` | Parametri, template, licenca i metapodaci arhitekture |
-| `/api/embed` | Vektorski embeddings za RAG |
-| `/api/pull`, `/api/delete`, `/api/ps`, `/api/version` | Upravljanje modelima + status |
-| `/v1/chat/completions` | OpenAI-compat putanja koju Surgical Benchmark koristi za prave logprobs |
-| `/v1/messages` | Anthropic-compat putanja koju koristi Protocol Observatory |
-
-**Kompatibilno sa:** Ollama 0.20 i novijim (starije verzije rade za chat/generate, ali nemaju `think` i JSON-schema `format`). **Preporučeno:** Ollama 0.33.3+ — ponovna upotreba keša prompta se prijavljuje (`prompt_eval_cached_count`, i `usage.prompt_tokens_details.cached_tokens` na OpenAI-kompatibilnom endpointu), pa se propusnost prefila meri nad tokenima koji su zaista evaluirani. Od 0.32: sposobnosti i dužina konteksta stižu sa listom modela, `think` prihvata stepenovane nivoe napora, a embedinzi prihvataju `dimensions` širinu.
-
----
-
-## Snimci ekrana
+Ubacite PDF, DOCX, Markdown ili CSV fajlove. Seku se na delove, vektorizuju i pretražuju, pa vidite šta pretraga zaista vraća pre nego što model to uopšte vidi. Stranica Embeddings poredi bilo koja dva teksta kosinusnom sličnošću, vizualizuje vektore i pokazuje koliko košta Matryoshka skraćivanje.
 
 <table>
 <tr>
 <td width="50%">
 
-**Chat sa strimovanjem tokena i poverenjem**
-![Chat](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/chat-diagnostics.png)
+![Baza znanja: rezultati pretrage sa ocenama](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/knowledge-base.png)
 
 </td>
 <td width="50%">
 
-**Poređenje modela — uporedo**
-![Compare](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/compare-sidebyside.png)
-
-</td>
-</tr>
-<tr>
-<td width="50%">
-
-**Detaljni pregled sesije — metrike i tajming**
-![Session](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/session-details.png)
-
-</td>
-<td width="50%">
-
-**Benchmark sa radarom poverenja**
-![Benchmark](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/benchmark.png)
-
-</td>
-</tr>
-<tr>
-<td width="50%">
-
-**Embeddings — kosinusna sličnost**
-![Embeddings](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/embed-similarity.png)
-
-</td>
-<td width="50%">
-
-**Monitor sistema — hardver i Ollama status**
-![System](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/my-system.png)
+![Embeddings: kosinusna sličnost dva teksta](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/embeddings.png)
 
 </td>
 </tr>
 </table>
 
+Sve ostaje u IndexedDB-u vašeg pregledača.
+
+### Dopuna koda
+
+Fill-in-the-middle za Qwen-Coder, CodeLlama, Codestral, DeepSeek-Coder i StarCoder: prefiks, sufiks, a model popunjava prazninu. Sastavljeni pregled pokazuje rezultat onako kako bi ga prikazao vaš editor.
+
+![Dopuna koda: prefiks, sufiks i sastavljeni pregled](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/fim.png)
+
+### Tool Workshop
+
+Platno sa čvorovima za pravljenje definicija alata, sa TypeScript-om sinhronizovanim u oba smera: menjajte čvorove ili menjajte kod. Ispitajte API, generišite šemu i testirajte alat stvarnim pozivom.
+
+![Tool Workshop: platno sa čvorovima i otvorenim panelom koda](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/tools.png)
+
+### Analitika i troškovi
+
+Percentili latencije (P50 / P95 / P99) za zahteve i prve tokene, kvalitet kroz korake, greške po modelu, toplotna mapa korišćenja, i temperatura naspram tokena u sekundi. Stranica troškova vrednuje vašu lokalnu upotrebu po cloud cenama, pa vidite koliko štedite radeći lokalno.
+
+<table>
+<tr>
+<td width="50%">
+
+![Analitika: percentili latencije i kvalitet](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/analytics.png)
+
+</td>
+<td width="50%">
+
+![Troškovi: cloud ekvivalent po modelu](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/costs.png)
+
+</td>
+</tr>
+</table>
+
+### Moj sistem i modeli
+
+Hardver, okruženje i inferencija na jednoj stranici: CPU, memorija, GPU, koji su modeli učitani i gde. Kartica Modeli nabraja svaki instalirani model sa parametrima, šablonom i runner-om, i preuzima nove iz kataloga.
+
+<table>
+<tr>
+<td width="50%">
+
+![Moj sistem: hardver i status Ollame](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/system.png)
+
+</td>
+<td width="50%">
+
+![Modeli: instalirani modeli i katalog](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/models.png)
+
+</td>
+</tr>
+</table>
+
+### Takođe u paketu
+
+- **AI Training Pipeline.** Birajte parove iz svojih razgovora, označite ih, pregledajte, izvezite kao JSONL za fine-tuning.
+- **Lokalna baza istorije.** Svako ćaskanje, poređenje i benchmark se arhivira u IndexedDB sa filterima, trendovima, izvozom i pravilima čuvanja.
+- **Kit za predavače.** Devet lekcija na [sajtu dokumentacije](https://lognebudo.github.io/llmxray/docs/community/educators/), svaka oko jedne LLMxRay stranice.
+- **Pet jezika.** Engleski, francuski, srpski (latinica i ćirilica), kineski i arapski, sa RTL rasporedom. Skele su spremne za hebrejski i japanski.
+
 ---
 
 ## Kome je namenjeno
 
-| Ti si... | LLMxRay ti pomaže da... |
+| Vi ste... | LLMxRay vam pomaže da... |
 |---|---|
-| **Developer** | Debaguješ promptove, profilišeš latenciju, porediš modele, pregledaš tool pozive, pratiš troškove |
-| **Istraživač** | Pokrećeš kontrolisane eksperimente sa konzistentnim podešavanjima kroz modele i temperature |
-| **Student / Edukator** | Istražuješ ponašanje modela vizuelno — ugrađeni Educators Kit sa 9 interaktivnih modula |
-| **Vođa AI tima** | Razumeš trendove kvaliteta, obrasce grešaka i potrošnju resursa kroz svoju lokalnu flotu |
+| **Programer** | Debagujete promptove, profilišete latenciju, poredite modele, pregledate pozive alata, vidite šta vaš editor šalje |
+| **Istraživač** | Vodite kontrolisane eksperimente sa istim podešavanjima na više modela i temperatura |
+| **Student / Predavač** | Posmatrate ponašanje modela umesto da o njemu čitate, uz [kit za predavače](https://lognebudo.github.io/llmxray/docs/community/educators/) od devet modula |
+| **Vođa AI tima** | Razumete trendove kvaliteta, obrasce grešaka i korišćenje resursa na lokalnoj floti |
 
 ---
 
-## Opcije instalacije
+## Instalacija
 
 ### npx (preporučeno)
 ```bash
 npx llmxray
 npx llmxray --port 3000
 npx llmxray --ollama-url http://192.168.1.50:11434
+npx llmxray --observe-port 11436     # Live port, podrazumevano 11435
 ```
 
 ### Docker
 ```bash
-docker run -p 5174:5174 djovaneli/llmxray
-docker run -p 5174:5174 -e OLLAMA_URL=http://host.docker.internal:11434 djovaneli/llmxray
+docker run -p 5174:5174 -p 11435:11435 djovaneli/llmxray
+docker run -p 5174:5174 -p 11435:11435 -e OLLAMA_URL=http://host.docker.internal:11434 djovaneli/llmxray
 ```
 
 ### Iz izvornog koda
@@ -248,53 +234,41 @@ npm run dev     # http://localhost:5173
 
 ---
 
-## Tehnološki stek
+## Ollama kompatibilnost
 
-| Sloj | Tehnologija |
+Testirano sa **Ollama 0.40.x** (provereno na 0.40.4, oktobar 2026). Radi sa 0.20 i novijim; starije verzije ćaskaju, ali nemaju `think` ni `format` po JSON šemi. **Preporučeno: 0.33.3 ili novije**, koje prijavljuje ponovnu upotrebu keša prompta, pa se brzina prefill-a meri na tokenima koji su zaista obrađeni.
+
+| Endpoint | Koristi se za |
 |---|---|
-| Framework | Vue 3.5 + Composition API |
-| Jezik | TypeScript 5.9 (strict) |
-| Build | Vite 7.3 |
-| Stilizovanje | Tailwind CSS 4.2 |
-| State | Pinia 3 (store po domenu) |
-| Grafici | Chart.js 4, D3.js 7 |
-| Canvas | Vue Flow (vizuelni node editor) |
-| Editor koda | CodeMirror 6 |
-| Skladištenje | IndexedDB (nativan u browseru) |
-| LLM Backend | Ollama (lokalno) |
+| `/api/chat` | Ćaskanje u strimu (NDJSON, sa `tools`, nivoima napora `think`, šemom `format`) |
+| `/api/generate` | Generisanje i Fill-in-the-Middle preko `suffix` |
+| `/api/tags`, `/api/show` | Lista modela, mogućnosti, dužina konteksta, parametri, šablon |
+| `/api/embed` | Vektorski embeddings za bazu znanja, sa opcionim `dimensions` skraćivanjem |
+| `/api/pull`, `/api/delete`, `/api/ps`, `/api/version` | Upravljanje modelima i status |
+| `/v1/chat/completions` | OpenAI-kompatibilna putanja, koristi je hirurški benchmark za prave logprobs |
+| `/v1/messages` | Anthropic-kompatibilna putanja, koristi je Protocol Observatory |
+| `/v1/systemone` | Modeli za odlučivanje, koristi ih laboratorija odluka |
 
 ---
 
-## Arhitektura
+## Ispod haube
 
-**Strimovanje** — Čita Ollama NDJSON preko `fetch()` + `ReadableStream`. Tokeni reaktivno ažuriraju UI kroz Pinia store-ove.
+Vue 3.5, TypeScript 5.9 (strict), Vite 7, Tailwind CSS 4, Pinia store po domenu, Chart.js i D3 za grafikone, Vue Flow za platno alata, CodeMirror 6 za kod. Skladište je IndexedDB pregledača. Pozadina je Ollama, lokalno.
 
-**Poverenje tokena** — Aproksimirano iz latencije između tokena (brže = sigurnije). Jasno označeno kao aproksimacija. Benchmark-i koriste prave logprobs preko OpenAI-kompatibilnog endpointa.
-
-**Store po domenu** — Svaki domen ima svoj Pinia store: tokens, sessions, metrics, reasoning, comparison, embeddings, quality, cost i drugi.
-
-**Detekcija hardvera** — Custom Vite plugin direktno ispituje OS (PowerShell/proc/sysctl) za tačne hardverske specifikacije.
-
----
-
-## Razvoj
+Strimovanje čita Ollama NDJSON kroz `fetch()` i `ReadableStream`, a tokeni ažuriraju interfejs kroz Pinia. Poverenje u ćaskanju se aproksimira iz latencije između tokena i tako je i označeno; benchmark koristi prave logprobs. Detekcija hardvera je mali Vite plugin koji direktno pita OS. Live port je providni proksi koji brojeve i vremena drži u memoriji.
 
 | Komanda | Šta radi |
 |---|---|
-| `npm run dev` | Dev server (port 5173) |
-| `npm run build` | Provera tipova + production build |
-| `npm run test` | Unit testovi (Vitest) |
-| `npm run test:e2e` | End-to-end (Playwright) |
+| `npm run dev` | Razvojni server (port 5173) |
+| `npm run build` | Provera tipova i produkcioni build |
+| `npm run test` | Jedinični testovi (Vitest) |
+| `npm run test:e2e` | End-to-end testovi (Playwright) |
 
 ---
 
 ## Doprinosi
 
-Doprinosi su dobrodošli! Pogledaj [CONTRIBUTING.md](CONTRIBUTING.md) za podešavanje i smernice.
-
-**Prevodi zajednice su posebno dobrodošli** — skele su spremne za hebrejski i japanski.
-
----
+Doprinosi su dobrodošli. Pogledajte [CONTRIBUTING.md](CONTRIBUTING.md) za podešavanje i smernice. Prevodi zajednice su posebno dobrodošli: skele su spremne za hebrejski i japanski.
 
 ## Licenca
 
@@ -302,13 +276,13 @@ Doprinosi su dobrodošli! Pogledaj [CONTRIBUTING.md](CONTRIBUTING.md) za podeša
 
 ## Žig
 
-**LLMxRay** je žig Ivana Stankovića ([LogneBudo](https://github.com/LogneBudo)). Pogledaj [TRADEMARK.md](TRADEMARK.md).
+**LLMxRay** je žig Ivana Stankovića ([LogneBudo](https://github.com/LogneBudo)). Pogledajte [TRADEMARK.md](TRADEMARK.md).
 
 ---
 
 <p align="center">
-  <strong>Ako ti LLMxRay pomaže da bolje razumeš svoj AI, razmisli da daš zvezdicu.</strong><br/>
-  To pomaže drugima da otkriju projekat.
+  <strong>Ako vam LLMxRay pomaže da bolje razumete svoju AI, razmislite o zvezdici.</strong><br/>
+  Pomaže drugima da otkriju projekat.
 </p>
 
 <p align="center">

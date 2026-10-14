@@ -66,7 +66,7 @@ export function parseCodeToTools(code: string): ParseResult {
     if (node.type === 'ExportNamedDeclaration' && node.declaration) {
       const decl = node.declaration
       if (decl.type === 'FunctionDeclaration') {
-        tools.push(extractFunctionBlock(decl))
+        tools.push(extractFunctionBlock(decl, node))
         continue
       }
     }
@@ -84,7 +84,7 @@ export function parseCodeToTools(code: string): ParseResult {
         varDecl?.init?.type === 'ArrowFunctionExpression' ||
         varDecl?.init?.type === 'FunctionExpression'
       ) {
-        tools.push(extractArrowOrExprBlock(varDecl))
+        tools.push(extractArrowOrExprBlock(varDecl, node))
         continue
       }
     }
@@ -111,26 +111,54 @@ export function parseCodeToTools(code: string): ParseResult {
   return { tools, warnings }
 }
 
-function extractFunctionBlock(decl: any): ToolBlockData {
+/** `commentHolder` is the node the JSDoc is attached to: the `export` wrapper when there is one. */
+function extractFunctionBlock(decl: any, commentHolder: any = decl): ToolBlockData {
   const name = decl.id?.name ?? 'unnamed'
-  const parameters = extractParams(decl.params)
-  const body = recast.print(decl.body).code
-  const { description, uid } = extractCommentAndUid(decl, name)
+  const parameters = flattenArgsObject(extractParams(decl.params))
+  const body = blockStatements(decl.body)
+  const { description, uid } = extractCommentAndUid(commentHolder.leadingComments?.length ? commentHolder : decl, name)
 
   return { uid, name, description, parameters, body }
 }
 
-function extractArrowOrExprBlock(varDecl: any): ToolBlockData {
+function extractArrowOrExprBlock(varDecl: any, commentHolder: any = varDecl): ToolBlockData {
   const name = varDecl.id?.name ?? 'unnamed'
   const fn = varDecl.init
-  const parameters = extractParams(fn.params)
+  const parameters = flattenArgsObject(extractParams(fn.params))
   const body =
     fn.body.type === 'BlockStatement'
-      ? recast.print(fn.body).code
-      : `{ return ${recast.print(fn.body).code} }`
-  const { description, uid } = extractCommentAndUid(varDecl, name)
+      ? blockStatements(fn.body)
+      : `return ${recast.print(fn.body).code}`
+  const { description, uid } = extractCommentAndUid(commentHolder.leadingComments?.length ? commentHolder : varDecl, name)
 
   return { uid, name, description, parameters, body }
+}
+
+/**
+ * The statements inside a function body, without the surrounding braces and
+ * with the function's indentation removed. This is the shape the tool
+ * executor runs (`new AsyncFunction('args', ..., body)`) and the shape the
+ * canvas node edits, so it is the only shape a block ever stores.
+ */
+function blockStatements(blockNode: any): string {
+  const printed = recast.print(blockNode).code.trim()
+  const inner = printed.startsWith('{') && printed.endsWith('}') ? printed.slice(1, -1) : printed
+  const lines = inner.replace(/^\n+|\s+$/g, '').split('\n')
+  const indents = lines.filter((l) => l.trim()).map((l) => l.match(/^\s*/)![0].length)
+  const common = indents.length ? Math.min(...indents) : 0
+  return lines.map((l) => l.slice(Math.min(common, l.match(/^\s*/)![0].length))).join('\n')
+}
+
+/**
+ * A tool written as `name(args: { a: string, b: number })` has two parameters,
+ * a and b, not one parameter called args. The generated source uses that
+ * signature because the body reads `args.a`, so the parser accepts it back.
+ */
+function flattenArgsObject(params: ToolParam[]): ToolParam[] {
+  if (params.length === 1 && params[0]!.members && params[0]!.members.length > 0) {
+    return params[0]!.members
+  }
+  return params
 }
 
 function extractParams(params: any[]): ToolParam[] {
@@ -283,18 +311,37 @@ function extractCommentAndUid(
 export function toolsToCode(tools: ToolBlockData[]): string {
   return tools
     .map((tool) => {
-      const params = tool.parameters
-        .map((p) => (p.type && p.type !== 'any' ? `${p.name}: ${p.type}` : p.name))
-        .join(', ')
+      // The body reads its inputs as `args.<name>`, so the signature says so.
+      const members = tool.parameters.map((p) => `${p.name}: ${paramTsType(p)}`).join('; ')
+      const params = tool.parameters.length > 0 ? `args: { ${members} }` : ''
 
       const descText =
         tool.description && tool.description !== `Tool: ${tool.name}` ? tool.description : ''
       const idTag = tool.uid ? ` @id ${tool.uid}` : ''
       const comment = descText || idTag ? `/** ${descText}${idTag} */\n` : ''
 
-      return `${comment}export async function ${tool.name}(${params}) ${tool.body}`
+      return `${comment}export async function ${tool.name}(${params}) {\n${indentStatements(tool.body)}\n}`
     })
     .join('\n\n')
+}
+
+/** The TS type a parameter is declared with; enums become a string-literal union. */
+function paramTsType(p: ToolParam): string {
+  if (p.enumValues && p.enumValues.length > 0) {
+    return p.enumValues.map((v) => JSON.stringify(v)).join(' | ')
+  }
+  return p.type && p.type !== 'any' ? p.type : 'string'
+}
+
+/** Function-body statements indented one level, whether stored bare or still wrapped in braces. */
+function indentStatements(body: string): string {
+  const trimmed = body.trim()
+  const bare = trimmed.startsWith('{') && trimmed.endsWith('}') ? trimmed.slice(1, -1).trim() : trimmed
+  if (!bare) return '  // TODO'
+  return bare
+    .split('\n')
+    .map((l) => (l.trim() ? `  ${l}` : ''))
+    .join('\n')
 }
 
 // ---------------------------------------------------------------------------

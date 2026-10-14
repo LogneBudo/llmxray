@@ -2,6 +2,7 @@ import type { Conversation, ChatMessage } from '@/types/conversation'
 import type { OllamaOptions } from '@/types/ollama'
 import type { Session } from '@/types/session'
 import type { StreamToken } from '@/types/token'
+import { storable } from '@/utils/storable'
 
 const DB_NAME = 'llmxray-conversations'
 const DB_VERSION = 1
@@ -114,12 +115,12 @@ export const conversationDB = {
       createdAt: conv.createdAt,
       updatedAt: conv.updatedAt,
     }
-    tx.objectStore(STORE_CONVERSATIONS).put(stored)
+    tx.objectStore(STORE_CONVERSATIONS).put(storable(stored))
 
     // Store each message individually
     const msgStore = tx.objectStore(STORE_MESSAGES)
     for (const msg of conv.messages) {
-      msgStore.put(msg)
+      msgStore.put(storable(msg))
     }
 
     await txPromise(tx)
@@ -138,7 +139,7 @@ export const conversationDB = {
       createdAt: conv.createdAt,
       updatedAt: conv.updatedAt,
     }
-    tx.objectStore(STORE_CONVERSATIONS).put(stored)
+    tx.objectStore(STORE_CONVERSATIONS).put(storable(stored))
     await txPromise(tx)
     db.close()
   },
@@ -146,7 +147,7 @@ export const conversationDB = {
   async saveMessage(message: ChatMessage): Promise<void> {
     const db = await openDB()
     const tx = db.transaction(STORE_MESSAGES, 'readwrite')
-    tx.objectStore(STORE_MESSAGES).put(message)
+    tx.objectStore(STORE_MESSAGES).put(storable(message))
     await txPromise(tx)
     db.close()
   },
@@ -214,7 +215,7 @@ export const conversationDB = {
     const db = await openDB()
     const tx = db.transaction(STORE_SESSIONS, 'readwrite')
     const stored: StoredSession = { ...session, conversationId }
-    tx.objectStore(STORE_SESSIONS).put(stored)
+    tx.objectStore(STORE_SESSIONS).put(storable(stored))
     await txPromise(tx)
     db.close()
   },
@@ -245,7 +246,7 @@ export const conversationDB = {
     const db = await openDB()
     const tx = db.transaction(STORE_TOKENS, 'readwrite')
     const stored: StoredTokens = { sessionId, tokens }
-    tx.objectStore(STORE_TOKENS).put(stored)
+    tx.objectStore(STORE_TOKENS).put(storable(stored))
     await txPromise(tx)
     db.close()
   },

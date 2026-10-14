@@ -44,9 +44,12 @@ Ollama 并不只说一种协议。它实际上通过三种不同的传输格式�
 | token 计数所在字段 | `eval_count` + `prompt_eval_count` | `usage.{prompt,completion,total}_tokens` | `usage.{input,output}_tokens` |
 | 提示词缓存所在字段 | `prompt_eval_cached_count` | `usage.prompt_tokens_details.cached_tokens` | `usage.cache_read_input_tokens` |
 | 预填充时间所在字段 | `prompt_eval_duration`（纳秒） | `timings.prompt_ms` | — |
+| 推理所在字段 | `message.thinking` | `choices[].delta.reasoning` | `thinking_delta` 事件 |
 | 错误报文结构 | `{"error": "string"}` | `{"error": {"message", "type", "code"}}` | `{"type": "error", "error": {...}, "request_id"}` |
 
 标着「本次运行」的行会填入你这次运行中实际观察到的值 —— 于是你可以看到，比如原生协议返回了 `done_reason: "stop"`，而 Anthropic 协议把同一个结果称为 `stop_reason: "end_turn"`。
+
+使用推理模型时，推理这一行最值得留意。原生路径只在请求要求时才思考；两条兼容路径默认让模型思考，而思考与回答共用输出预算。在相同提示和相同 `max_tokens` 下，兼容列可能把全部 token 花在推理上，一个字的回答也没有。每一列都会显示模型的思考内容，并在预算于第一个字之前耗尽时明确说明。
 
 ### 两个预填充速率
 

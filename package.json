@@ -1,6 +1,6 @@
 {
   "name": "llmxray",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/LogneBudo/llmxray.git"
@@ -39,6 +39,7 @@
     "test:e2e:live": "playwright test --project=live-ollama",
     "test:e2e:live:headed": "playwright test --project=live-ollama --headed",
     "test:e2e:all": "playwright test",
+    "screenshots": "node scripts/readme-media.mjs",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",

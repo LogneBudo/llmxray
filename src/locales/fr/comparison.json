@@ -1,55 +1,55 @@
 {
-  "title": "Comparer les mod\u00e8les",
+  "title": "Comparer les modèles",
   "configurator": {
     "title": "Emplacements de comparaison",
-    "description": "Chaque emplacement est une combinaison mod\u00e8le + param\u00e8tres. Ajoutez le m\u00eame mod\u00e8le plusieurs fois avec des param\u00e8tres diff\u00e9rents pour comparer le comportement.",
+    "description": "Chaque emplacement est une combinaison modèle + paramètres. Ajoutez le même modèle plusieurs fois avec des paramètres différents pour comparer le comportement.",
     "addSlot": "Ajouter un emplacement",
     "removeSlot": "Retirer l'emplacement",
     "clearAll": "Tout effacer",
-    "model": "Mod\u00e8le",
-    "systemPrompt": "Prompt syst\u00e8me",
-    "optionalSystemPrompt": "Prompt syst\u00e8me optionnel...",
+    "model": "Modèle",
+    "systemPrompt": "Prompt système",
+    "optionalSystemPrompt": "Prompt système optionnel...",
     "options": "Options",
-    "settings": "Param\u00e8tres",
-    "temperature": "Temp\u00e9rature",
+    "settings": "Paramètres",
+    "temperature": "Température",
     "topP": "Top-P",
     "seed": "Seed",
-    "seedPlaceholder": "Al\u00e9atoire (laisser vide)",
-    "advanced": "Avanc\u00e9",
+    "seedPlaceholder": "Aléatoire (laisser vide)",
+    "advanced": "Avancé",
     "topK": "Top-K",
-    "repeatPenalty": "P\u00e9nalit\u00e9 de r\u00e9p\u00e9tition",
+    "repeatPenalty": "Pénalité de répétition",
     "mirostat": "Mirostat",
-    "mirostatOff": "D\u00e9sactiv\u00e9",
+    "mirostatOff": "Désactivé",
     "maxTokens": "Tokens max",
     "contextLength": "Longueur de contexte",
-    "defaultPlaceholder": "Par d\u00e9faut",
-    "slotsConfigured": "{count} emplacement(s) configur\u00e9(s)",
-    "emptyTitle": "Aucun emplacement configur\u00e9",
-    "emptyDescription": "Ajoutez un emplacement pour choisir un mod\u00e8le et des param\u00e8tres, ou utilisez un preset rapide ci-dessus pour commencer.",
+    "defaultPlaceholder": "Par défaut",
+    "slotsConfigured": "{count} emplacement(s) configuré(s)",
+    "emptyTitle": "Aucun emplacement configuré",
+    "emptyDescription": "Ajoutez un emplacement pour choisir un modèle et des paramètres, ou utilisez un preset rapide ci-dessus pour commencer.",
     "addFirstSlot": "+ Ajouter le premier emplacement",
     "addSlotCount": "+ Ajouter un emplacement ({current}/4)",
     "presets": {
-      "quickStart": "D\u00e9marrage rapide :",
-      "tempSweep": "Balayage de temp\u00e9rature",
-      "tempSweepDesc": "Cr\u00e9e 3 emplacements du m\u00eame mod\u00e8le aux temp\u00e9ratures 0.2 (focalis\u00e9), 0.7 (\u00e9quilibr\u00e9) et 1.2 (cr\u00e9atif). Observez comment la temp\u00e9rature modifie la sortie pour le m\u00eame prompt.",
-      "deterministicPair": "Paire d\u00e9terministe",
-      "deterministicPairDesc": "Cr\u00e9e 2 emplacements du m\u00eame mod\u00e8le avec le m\u00eame seed mais des temp\u00e9ratures diff\u00e9rentes (0.3 et 1.0). Le seed partag\u00e9 signifie que toute diff\u00e9rence dans la sortie provient uniquement de la temp\u00e9rature, pas de l'al\u00e9atoire.",
+      "quickStart": "Démarrage rapide :",
+      "tempSweep": "Balayage de température",
+      "tempSweepDesc": "Crée 3 emplacements du même modèle aux températures 0.2 (focalisé), 0.7 (équilibré) et 1.2 (créatif). Observez comment la température modifie la sortie pour le même prompt.",
+      "deterministicPair": "Paire déterministe",
+      "deterministicPairDesc": "Crée 2 emplacements du même modèle avec le même seed mais des températures différentes (0.3 et 1.0). Le seed partagé signifie que toute différence dans la sortie provient uniquement de la température, pas de l'aléatoire.",
       "languageCompare": "Comparaison linguistique",
-      "languageCompareTooltip": "Comparer comment diff\u00e9rentes langues affectent le co\u00fbt en tokens et le comportement du mod\u00e8le"
+      "languageCompareTooltip": "Comparer comment différentes langues affectent le coût en tokens et le comportement du modèle"
     }
   },
   "prompt": {
-    "placeholder": "Saisissez un prompt \u00e0 comparer entre les emplacements...",
+    "placeholder": "Saisissez un prompt à comparer entre les emplacements...",
     "compare": "Comparer",
     "running": "En cours..."
   },
   "results": {
-    "title": "R\u00e9sultats",
+    "title": "Résultats",
     "grid": "Grille",
     "diff": "Diff"
   },
   "diff": {
-    "needTwoResults": "Il faut au moins 2 r\u00e9sultats compl\u00e9t\u00e9s pour afficher un diff.",
+    "needTwoResults": "Il faut au moins 2 résultats complétés pour afficher un diff.",
     "compare": "Comparer :",
     "vs": "vs",
     "only": "{label} uniquement"
@@ -64,14 +64,16 @@
     "speed": "Vitesse",
     "ttft": "TTFT",
     "tokens": "Tokens",
-    "duration": "Dur\u00e9e"
+    "duration": "Durée"
   },
   "column": {
-    "tokens": "Tokens"
+    "tokens": "Tokens",
+    "viewText": "Texte",
+    "viewTokens": "Tokens"
   },
   "language": {
-    "mismatchTitle": "Incompatibilit\u00e9 de langue d\u00e9tect\u00e9e",
-    "mismatchDescription": "Votre prompt semble \u00eatre en {detected}.",
+    "mismatchTitle": "Incompatibilité de langue détectée",
+    "mismatchDescription": "Votre prompt semble être en {detected}.",
     "targetIs": "cible : {language}",
     "translateTo": "Traduire en {language}",
     "keepDetected": "Garder {language}",

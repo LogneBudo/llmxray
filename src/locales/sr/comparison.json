@@ -67,7 +67,9 @@
     "duration": "Trajanje"
   },
   "column": {
-    "tokens": "Tokeni"
+    "tokens": "Tokeni",
+    "viewText": "Tekst",
+    "viewTokens": "Tokeni"
   },
   "language": {
     "mismatchTitle": "Otkriven jezički nesklad",

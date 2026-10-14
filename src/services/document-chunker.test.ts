@@ -45,10 +45,27 @@ describe('document-chunker', () => {
       const text = paragraphs.join('\n\n')
 
       const chunks = chunkDocument('doc-5', text, { chunkSize: 200, chunkOverlap: 50 })
-      if (chunks.length >= 2) {
-        // Last part of chunk N should appear at start of chunk N+1
-        const endOfFirst = chunks[0]!.content.slice(-50)
-        expect(chunks[1]!.content).toContain(endOfFirst.trim())
+      expect(chunks.length).toBeGreaterThanOrEqual(2)
+      // Chunk N+1 opens with the tail of chunk N: up to 50 characters, whole words only
+      const overlap = chunks[1]!.content.split('\n\n')[0]!
+      expect(overlap.length).toBeGreaterThan(0)
+      expect(overlap.length).toBeLessThanOrEqual(50)
+      expect(chunks[0]!.content.endsWith(overlap)).toBe(true)
+    })
+
+    it('starts the overlap on a word boundary', () => {
+      const paragraphs = Array.from({ length: 12 }, (_, i) =>
+        `Section ${i} ${'recomputed timestamp '.repeat(12)}end.`,
+      )
+      const text = paragraphs.join('\n\n')
+
+      const chunks = chunkDocument('doc-5b', text, { chunkSize: 400, chunkOverlap: 37 })
+      expect(chunks.length).toBeGreaterThan(1)
+      for (const chunk of chunks.slice(1)) {
+        const firstWord = chunk.content.split(/\s+/)[0]!
+        expect(['Section', 'recomputed', 'timestamp', 'end.']).toContain(firstWord)
+        // The chunk still begins where the document says it does
+        expect(text.slice(chunk.metadata.startChar).startsWith(firstWord)).toBe(true)
       }
     })
 

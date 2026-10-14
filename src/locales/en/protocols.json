@@ -52,6 +52,16 @@
     "prefillMs": "Prefill time (this run)",
     "prefillRateStated": "Prefill rate, as the daemon states it",
     "prefillRateHonest": "Prefill rate over evaluated tokens",
-    "statedNote": "OpenAI-compat `timings.prompt_per_second` (Ollama 0.35.1+) divides the TOTAL prompt by the time spent on the UNCACHED tokens. On a warm cache it is inflated by the hit ratio; the row below divides by the tokens actually evaluated."
+    "statedNote": "OpenAI-compat `timings.prompt_per_second` (Ollama 0.35.1+) divides the TOTAL prompt by the time spent on the UNCACHED tokens. On a warm cache it is inflated by the hit ratio; the row below divides by the tokens actually evaluated.",
+    "reasoningCarrier": "Reasoning carrier",
+    "reasoningReported": "Reasoning (this run)",
+    "reasoningNote": "Thinking shares the output budget with the answer. The native path only thinks when the request asks; the two compat paths let a thinking model think by default, so on the same prompt and the same budget they can run out before writing a word."
+  },
+  "reasoning": {
+    "label": "Reasoning ({chars} chars)",
+    "budgetSpent": "All {tokens} output tokens went to reasoning; no answer text was produced.",
+    "none": "none",
+    "chars": "{chars} chars",
+    "noAnswer": "no answer"
   }
 }

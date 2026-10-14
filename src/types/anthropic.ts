@@ -63,7 +63,7 @@ export interface AnthropicMessagesResponse {
 export type AnthropicStreamEvent =
   | { type: 'message_start'; message: AnthropicMessagesResponse }
   | { type: 'content_block_start'; index: number; content_block: AnthropicContentBlock }
-  | { type: 'content_block_delta'; index: number; delta: { type: 'text_delta'; text: string } | { type: 'input_json_delta'; partial_json: string } }
+  | { type: 'content_block_delta'; index: number; delta: { type: 'text_delta'; text: string } | { type: 'thinking_delta'; thinking: string } | { type: 'input_json_delta'; partial_json: string } }
   | { type: 'content_block_stop'; index: number }
   // `message_delta` carries the full usage shape, not just output_tokens —
   // on Ollama 0.33.3 it is where the settled input/cache split arrives, while

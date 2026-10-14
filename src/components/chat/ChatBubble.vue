@@ -7,7 +7,7 @@ import { useMetricsStore } from '@/stores/metrics-store'
 import { useQualityStore } from '@/stores/quality-store'
 import { renderMarkdown } from '@/composables/useMarkdown'
 import InlineThinkingBlock from './InlineThinkingBlock.vue'
-import AssistantTokenStream from './AssistantTokenStream.vue'
+import MarkdownTokenStream from './MarkdownTokenStream.vue'
 import AttachmentBubble from './AttachmentBubble.vue'
 import QualityBadges from './QualityBadges.vue'
 
@@ -97,8 +97,8 @@ const formattedTime = computed(() => {
           :completed="!message.isStreaming"
         />
 
-        <!-- Streaming: show token stream -->
-        <AssistantTokenStream
+        <!-- Streaming: rendered Markdown, each token underlined in its confidence colour -->
+        <MarkdownTokenStream
           v-if="message.isStreaming && message.sessionId"
           :session-id="message.sessionId"
         />

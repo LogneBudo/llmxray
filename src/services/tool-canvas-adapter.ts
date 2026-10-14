@@ -33,7 +33,7 @@ export function workshopToolToBlock(tool: WorkshopTool): ToolBlockData {
     name: fn.name,
     description: fn.description,
     parameters,
-    body: tool.implementation.code || '{\n  // TODO\n}',
+    body: tool.implementation.code || '// TODO',
     mappings: tool.canvasMeta?.mappings,
     probeConfig: tool.canvasMeta?.probeConfig,
     returnSchema: tool.canvasMeta?.returnSchema,

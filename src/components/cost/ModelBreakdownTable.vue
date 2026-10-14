@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { formatUsd } from '@/utils/format'
 import type { ModelUsageSummary } from '@/types/cost'
 
 defineProps<{
@@ -6,9 +7,7 @@ defineProps<{
 }>()
 
 function formatCost(value: number): string {
-  if (value < 0.0001) return '< $0.0001'
-  if (value < 0.01) return `$${value.toFixed(4)}`
-  return `$${value.toFixed(2)}`
+  return formatUsd(value)
 }
 </script>
 

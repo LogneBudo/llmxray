@@ -52,6 +52,16 @@
     "prefillMs": "Temps de préremplissage (cette exécution)",
     "prefillRateStated": "Débit de préremplissage, tel que le démon l’annonce",
     "prefillRateHonest": "Débit de préremplissage sur les tokens évalués",
-    "statedNote": "Le `timings.prompt_per_second` de l’endpoint compatible OpenAI (Ollama 0.35.1+) divise l’invite TOTALE par le temps passé sur les tokens NON mis en cache. Sur un cache chaud, il est gonflé du taux de réutilisation ; la ligne du dessous divise par les tokens réellement évalués."
+    "statedNote": "Le `timings.prompt_per_second` de l’endpoint compatible OpenAI (Ollama 0.35.1+) divise l’invite TOTALE par le temps passé sur les tokens NON mis en cache. Sur un cache chaud, il est gonflé du taux de réutilisation ; la ligne du dessous divise par les tokens réellement évalués.",
+    "reasoningCarrier": "Porteur du raisonnement",
+    "reasoningReported": "Raisonnement (cette exécution)",
+    "reasoningNote": "Le raisonnement partage le budget de sortie avec la réponse. Le chemin natif ne réfléchit que si la requête le demande ; les deux chemins compatibles laissent un modèle à raisonnement réfléchir par défaut, et avec la même invite et le même budget ils peuvent épuiser le budget avant d’écrire un mot."
+  },
+  "reasoning": {
+    "label": "Raisonnement ({chars} car.)",
+    "budgetSpent": "Les {tokens} tokens de sortie sont tous partis dans le raisonnement ; aucun texte de réponse.",
+    "none": "aucun",
+    "chars": "{chars} car.",
+    "noAnswer": "pas de réponse"
   }
 }

@@ -18,6 +18,14 @@ export interface ProtocolRunState {
   ttftMs: number | null
   totalMs: number | null
   outputText: string
+  /**
+   * What the model thought before answering, as each protocol carries it:
+   * native `message.thinking`, OpenAI-compat `delta.reasoning`, Anthropic-compat
+   * `thinking_delta` events. Empty when the model did not think on that path.
+   * Thinking counts against the same token budget as the answer, so a path
+   * that thinks by default can run out of budget before it writes a word.
+   */
+  reasoningText: string
   outputTokens: number
   /** Total prompt tokens, cached ones included, however the protocol names them */
   promptTokens: number
@@ -67,6 +75,7 @@ function emptyRun(protocol: ProtocolKind, endpoint: string): ProtocolRunState {
     ttftMs: null,
     totalMs: null,
     outputText: '',
+    reasoningText: '',
     outputTokens: 0,
     promptTokens: 0,
     cachedPromptTokens: null,
@@ -124,6 +133,7 @@ export const useProtocolObservatoryStore = defineStore('protocolObservatory', ()
         stream,
         (chunk) => {
           recordChunk(state, chunk)
+          if (chunk.message?.thinking) state.reasoningText += chunk.message.thinking
           const text = chunk.message?.content ?? ''
           if (text && state.ttftMs === null && state.startedAt) {
             state.ttftMs = Date.now() - state.startedAt
@@ -174,6 +184,7 @@ export const useProtocolObservatoryStore = defineStore('protocolObservatory', ()
         (chunk) => {
           recordChunk(state, chunk)
           const choice = chunk.choices?.[0]
+          if (choice?.delta?.reasoning) state.reasoningText += choice.delta.reasoning
           const text = choice?.delta?.content ?? ''
           if (text && state.ttftMs === null && state.startedAt) {
             state.ttftMs = Date.now() - state.startedAt
@@ -231,7 +242,9 @@ export const useProtocolObservatoryStore = defineStore('protocolObservatory', ()
         stream,
         (event: AnthropicStreamEvent) => {
           recordChunk(state, event)
-          if (event.type === 'content_block_delta' && event.delta.type === 'text_delta') {
+          if (event.type === 'content_block_delta' && event.delta.type === 'thinking_delta') {
+            state.reasoningText += event.delta.thinking
+          } else if (event.type === 'content_block_delta' && event.delta.type === 'text_delta') {
             if (state.ttftMs === null && state.startedAt) {
               state.ttftMs = Date.now() - state.startedAt
             }

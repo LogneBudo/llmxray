@@ -24,6 +24,29 @@ function ensureArray(val) {
   return Array.isArray(val) ? val : [val]
 }
 
+/**
+ * Firmware fields that were never filled in. WMI and DMI return these literal
+ * placeholders instead of an empty string, and they are not information.
+ */
+const FIRMWARE_PLACEHOLDERS = new Set([
+  'default string',
+  'to be filled by o.e.m.',
+  'to be filled by oem',
+  'system product name',
+  'system manufacturer',
+  'system version',
+  'not specified',
+  'not applicable',
+  'none',
+  'n/a',
+  'unknown',
+])
+
+function firmwareValue(value) {
+  const text = typeof value === 'string' ? value.trim() : ''
+  return FIRMWARE_PLACEHOLDERS.has(text.toLowerCase()) ? '' : text
+}
+
 function getWindowsInfo() {
   const osInfo = psJson('Get-CimInstance Win32_OperatingSystem | Select-Object Caption,Version,BuildNumber')
   const csInfo = psJson('Get-CimInstance Win32_ComputerSystem | Select-Object Name,Manufacturer,Model,SystemFamily')
@@ -43,9 +66,9 @@ function getWindowsInfo() {
     },
     device: {
       name: csInfo?.Name ?? os.hostname(),
-      manufacturer: csInfo?.Manufacturer ?? '',
-      model: csInfo?.Model ?? '',
-      family: csInfo?.SystemFamily ?? '',
+      manufacturer: firmwareValue(csInfo?.Manufacturer),
+      model: firmwareValue(csInfo?.Model),
+      family: firmwareValue(csInfo?.SystemFamily),
     },
     cpu: {
       name: cpuInfo?.Name?.trim() ?? (os.cpus()[0]?.model ?? 'Unknown'),
@@ -82,7 +105,7 @@ function getLinuxInfo() {
       name: os.hostname(),
       manufacturer: exec('cat /sys/class/dmi/id/sys_vendor 2>/dev/null'),
       model: exec('cat /sys/class/dmi/id/product_name 2>/dev/null'),
-      family: exec('cat /sys/class/dmi/id/product_family 2>/dev/null'),
+      family: firmwareValue(exec('cat /sys/class/dmi/id/product_family 2>/dev/null')),
     },
     cpu: { name: cpuModel || (os.cpus()[0]?.model ?? 'Unknown'), cores: cpuCores, logicalProcessors: os.cpus().length, maxClockMhz: os.cpus()[0]?.speed ?? 0 },
     memory: { totalBytes: os.totalmem(), freeBytes: os.freemem() },

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { formatUsd } from '@/utils/format'
 import { computed } from 'vue'
 import { Line } from 'vue-chartjs'
 import {
@@ -62,7 +63,7 @@ const chartOptions = {
           const label = ctx.dataset.label ?? ''
           const val = ctx.parsed.y ?? 0
           if (label === 'Est. Cost ($)') {
-            return `${label}: $${val.toFixed(4)}`
+            return `${label}: ${formatUsd(val)}`
           }
           return `${label}: ${val.toLocaleString()}`
         },
@@ -92,7 +93,7 @@ const chartOptions = {
       ticks: {
         color: '#94a3b8',
         font: { size: 10 },
-        callback: (value: string | number) => `$${Number(value).toFixed(4)}`,
+        callback: (value: string | number) => formatUsd(Number(value)),
       },
       grid: { display: false },
       title: {

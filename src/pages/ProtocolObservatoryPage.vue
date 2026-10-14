@@ -52,6 +52,17 @@ function cachedPrompt(state: ProtocolRunState): string {
   return `${state.cachedPromptTokens} (${pct}%)`
 }
 
+/**
+ * Whether the model thought on this path, and how much. "none" is a fact about
+ * the protocol's default: the same model, same prompt, same daemon thought on
+ * one path and not on another.
+ */
+function reasoningSummary(state: ProtocolRunState): string {
+  if (!state.reasoningText) return t('protocols.reasoning.none')
+  const chars = t('protocols.reasoning.chars', { chars: state.reasoningText.length })
+  return state.outputText ? chars : `${chars} · ${t('protocols.reasoning.noAnswer')}`
+}
+
 /** Prefill time as the protocol reported it; em dash when it never did. */
 function prefillMs(state: ProtocolRunState): string {
   if (state.prefillMs === null) return '—'
@@ -224,7 +235,18 @@ function jsonPretty(obj: unknown): string {
               <span class="inline-block h-2 w-2 animate-pulse rounded-full bg-accent" />
               {{ $t('protocols.waitingForFirstToken') }}
             </p>
-            <p v-else class="whitespace-pre-wrap text-xs text-text-primary leading-relaxed">{{ p.state.outputText }}</p>
+            <template v-else>
+              <details v-if="p.state.reasoningText" class="mb-2 text-[11px]">
+                <summary class="cursor-pointer select-none text-text-muted hover:text-text-secondary">
+                  {{ $t('protocols.reasoning.label', { chars: p.state.reasoningText.length }) }}
+                </summary>
+                <p class="mt-1 whitespace-pre-wrap rounded-md bg-surface px-2 py-1.5 text-[11px] leading-relaxed text-text-muted">{{ p.state.reasoningText }}</p>
+              </details>
+              <p v-if="p.state.outputText" class="whitespace-pre-wrap text-xs text-text-primary leading-relaxed">{{ p.state.outputText }}</p>
+              <p v-else-if="p.state.reasoningText && p.state.status === 'completed'" class="text-[11px] text-warning">
+                {{ $t('protocols.reasoning.budgetSpent', { tokens: p.state.outputTokens }) }}
+              </p>
+            </template>
           </div>
 
           <!-- Metrics footer -->
@@ -275,7 +297,7 @@ function jsonPretty(obj: unknown): string {
       </div>
 
       <!-- Lower tabs: Response diff / Envelope diff -->
-      <div v-if="allCompleted && protocols.some(p => p.state.outputText)" class="rounded-lg border border-border-default bg-surface-raised">
+      <div v-if="allCompleted && protocols.some(p => p.state.outputText || p.state.reasoningText)" class="rounded-lg border border-border-default bg-surface-raised">
         <div class="flex gap-1 border-b border-border-default px-4 py-2">
           <button
             class="rounded-md px-3 py-1 text-xs font-medium transition-colors"
@@ -333,6 +355,21 @@ function jsonPretty(obj: unknown): string {
               <tr>
                 <td class="py-2 ps-2 font-medium text-text-secondary">{{ $t('protocols.envelopeDiff.finishValue') }}</td>
                 <td v-for="p in protocols" :key="p.key" class="py-2 font-mono text-text-primary">{{ p.state.finishReason ?? '—' }}</td>
+              </tr>
+              <tr>
+                <td class="py-2 ps-2 font-medium text-text-secondary">{{ $t('protocols.envelopeDiff.reasoningCarrier') }}</td>
+                <td class="py-2 font-mono text-text-primary"><code>message.thinking</code></td>
+                <td class="py-2 font-mono text-text-primary"><code>choices[].delta.reasoning</code></td>
+                <td class="py-2 font-mono text-text-primary"><code>thinking_delta</code> event</td>
+              </tr>
+              <tr>
+                <td class="py-2 ps-2 font-medium text-text-secondary">
+                  {{ $t('protocols.envelopeDiff.reasoningReported') }}
+                  <span class="ms-1 inline-flex align-middle text-text-muted" :title="$t('protocols.envelopeDiff.reasoningNote')"><Info class="h-3 w-3" /></span>
+                </td>
+                <td v-for="p in protocols" :key="p.key" class="py-2 font-mono" :class="p.state.reasoningText && !p.state.outputText ? 'text-warning' : 'text-text-primary'">
+                  {{ reasoningSummary(p.state) }}
+                </td>
               </tr>
               <tr>
                 <td class="py-2 ps-2 font-medium text-text-secondary">{{ $t('protocols.envelopeDiff.usageField') }}</td>

@@ -44,9 +44,12 @@ Once all three runs complete, a tabbed lower section appears. Switch to **Envelo
 | Token-count carrier | `eval_count` + `prompt_eval_count` | `usage.{prompt,completion,total}_tokens` | `usage.{input,output}_tokens` |
 | Prompt-cache carrier | `prompt_eval_cached_count` | `usage.prompt_tokens_details.cached_tokens` | `usage.cache_read_input_tokens` |
 | Prefill-time carrier | `prompt_eval_duration` (ns) | `timings.prompt_ms` | — |
+| Reasoning carrier | `message.thinking` | `choices[].delta.reasoning` | `thinking_delta` event |
 | Error envelope | `{"error": "string"}` | `{"error": {"message", "type", "code"}}` | `{"type": "error", "error": {...}, "request_id"}` |
 
 The "this run" rows fill in with the actual values observed during your run — so you can see, for example, that the native protocol returned `done_reason: "stop"` while the Anthropic protocol called the same outcome `stop_reason: "end_turn"`.
+
+With a thinking model the reasoning row is the one to watch. The native path only thinks when the request asks for it; the two compat paths let the model think by default, and that thinking shares the output budget with the answer. On the same prompt and the same `max_tokens`, a compat column can spend every token on reasoning and produce no answer text at all. Each column shows what the model thought, and says so when the budget ran out before the first word.
 
 ### The two prefill rates
 

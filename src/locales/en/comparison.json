@@ -67,7 +67,9 @@
     "duration": "Duration"
   },
   "column": {
-    "tokens": "Tokens"
+    "tokens": "Tokens",
+    "viewText": "Text",
+    "viewTokens": "Tokens"
   },
   "language": {
     "mismatchTitle": "Language Mismatch Detected",

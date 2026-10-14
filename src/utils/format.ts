@@ -62,3 +62,19 @@ export function formatRelativeTime(timestamp: number): string {
   if (diff < 86_400_000) return `${Math.floor(diff / 3_600_000)}h ago`
   return `${Math.floor(diff / 86_400_000)}d ago`
 }
+
+/**
+ * Format a dollar amount so that small local-inference costs stay readable:
+ * whole cents above a cent, otherwise enough significant digits to tell two
+ * neighbouring values apart. Chart ticks and tooltips share this so an axis
+ * never shows the same label five times.
+ */
+export function formatUsd(value: number): string {
+  if (!Number.isFinite(value) || value === 0) return '$0'
+  const abs = Math.abs(value)
+  const sign = value < 0 ? '-' : ''
+  if (abs >= 0.01) return `${sign}$${abs.toFixed(2)}`
+  // Three significant digits, trailing zeros dropped: 0.000234 -> $0.000234, 0.0002 -> $0.0002
+  const digits = Math.max(0, -Math.floor(Math.log10(abs)) + 2)
+  return `${sign}$${parseFloat(abs.toFixed(digits)).toString()}`
+}

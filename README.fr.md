@@ -3,10 +3,10 @@
 </p>
 
 <h1 align="center">LLMxRay</h1>
-<p align="center"><strong>Voyez ce que votre IA fait réellement.</strong></p>
+<p align="center"><strong>Voyez ce que votre IA locale fait réellement.</strong></p>
 <p align="center">
-  Streaming de tokens en temps réel, analyse de qualité, profilage des performances et suivi des coûts<br/>
-  pour les LLM locaux. Pas de cloud. Pas de clés API. Pas de coût.
+  Streaming token par token, diagnostic du cache, comparaison de modèles, benchmarks et suivi des coûts<br/>
+  pour les modèles qui tournent sur votre machine via Ollama. Pas de cloud. Pas de clé API. Pas de coût.
 </p>
 
 <p align="center">
@@ -26,40 +26,22 @@
 
 <p align="center">
   <a href="#démarrage-rapide">Démarrage rapide</a> &bull;
-  <a href="#fonctionnalités">Fonctionnalités</a> &bull;
-  <a href="#captures-décran">Captures d'écran</a> &bull;
+  <a href="#ce-que-llmxray-vous-montre">Ce qu'il vous montre</a> &bull;
   <a href="#à-qui-ça-sadresse">À qui ça s'adresse</a> &bull;
+  <a href="#installation">Installation</a> &bull;
+  <a href="#compatibilité-ollama">Compatibilité Ollama</a> &bull;
   <a href="CHANGELOG.md">Changelog</a>
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/demo.gif" alt="Démo LLMxRay — streaming de tokens en temps réel avec coloration selon la confiance" width="800" />
+  <img src="https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/demo.gif" alt="Démo LLMxRay : un tour de chat qui arrive token par token, puis les métriques de la session" width="800" />
 </p>
-
-
-## Ce que vous obtenez
-
-**Diagnostics de chat** — Regardez les tokens arriver un par un, colorés selon leur vitesse. Voyez où le modèle hésite, et sur quoi.
-
-**Labo de cache** *(nouveau en 0.6.0)* — Votre invite système est probablement recalculée entièrement à chaque tour. Vérifiez-le en 30 secondes, et mesurez le gain. *(Préremplissage 3,5x plus rapide dans notre test.)*
-
-**Labo de décision** — Posez à un modèle de décision (nimble, tev1, clef) des questions typées sur un ticket ou un message, et voyez la probabilité derrière chaque réponse plutôt qu’un simple oui.
-
-**Comparer** — La même invite sur deux modèles, ou deux températures, côte à côte. Arrêtez de deviner quel réglage était le meilleur.
-
-**Benchmark chirurgical** — Évaluez les modèles sur les vrais logprobs des tokens, pas sur l'apparence de la réponse.
-
-**Observatoire de protocoles** — Voyez comment le même modèle local répond via les API native, compatible OpenAI et compatible Anthropic d'Ollama, et où elles divergent.
-
-**Base de connaissances** — Déposez des PDF et des documents, découpez-les, et voyez ce que le RAG récupère vraiment avant que le modèle ne le voie.
-
-Plus les plongements, le suivi des coûts, l'analytique, un constructeur d'outils et une base d'historique locale. [Liste complète des fonctionnalités ci-dessous.](#features)
 
 ---
 
 ## Démarrage rapide
 
-**Une commande. 30 secondes.**
+Il vous faut [Ollama](https://ollama.com/download) en marche avec au moins un modèle téléchargé (`ollama pull llama3.2`). Ensuite :
 
 ```bash
 npx llmxray
@@ -71,149 +53,147 @@ Ou avec Docker :
 docker run -p 5174:5174 djovaneli/llmxray
 ```
 
-Ouvrez **http://localhost:5174** et commencez à discuter. C'est tout.
-
-> **Prérequis :** [Ollama](https://ollama.com/download) lancé localement avec au moins un modèle téléchargé (`ollama pull llama3.2`).
+Ouvrez **http://localhost:5174**. Choisissez un modèle, envoyez un message, et regardez ce qui se passe. C'est tout.
 
 ---
 
-## Pourquoi LLMxRay ?
+## Ce que LLMxRay vous montre
 
-Vous lancez un LLM local. Vous discutez avec lui. Mais que s'est-il réellement passé ?
+Vous faites tourner un modèle local. Vous discutez avec lui. LLMxRay répond aux questions qui viennent ensuite : chaque token a mis combien de temps, qu'a coûté l'invite, le cache a-t-il servi, quel réglage était vraiment le meilleur, et qu'envoient vos *autres* outils au même modèle.
 
-- À quelle vitesse chaque token a-t-il été généré ? Pour lesquels le modèle était-il confiant ?
-- La qualité des réponses se dégrade-t-elle au fil des longues conversations ?
-- Combien ça aurait coûté en cloud ?
-- Le modèle se répète-t-il ? Refuse-t-il ? Génère-t-il du charabia ?
-- Comment la température 0,3 se compare-t-elle à 0,9 sur *le même* prompt ?
+Chaque page ci-dessous est l'une de ces réponses.
 
-**LLMxRay répond à tout ça, visuellement, en temps réel, gratuitement.**
+### Le chat, token par token
 
----
+Chaque token est dessiné à son arrivée, coloré selon la confiance. Vous voyez où le modèle a hésité et où il était sûr. Markdown, conversations multi-tours, pièces jointes et images, commandes slash, et un budget de réflexion pour les modèles à raisonnement (désactivé, au choix du modèle, ou low / medium / high / max).
 
-## Fonctionnalités
+![Chat : une réponse en streaming avec coloration par confiance](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/chat-streaming.png)
 
-### Chat en temps réel avec intelligence par token
-Discutez avec n'importe quel modèle Ollama et observez les tokens arriver avec une **coloration selon la confiance** — chaque token est teinté selon sa vitesse de génération. Supporte Markdown, conversations multi-tours, pièces jointes, modèles vision et commandes slash. Pour les modèles de raisonnement, réglez le budget de réflexion par conversation — désactivé, au choix du modèle, ou un effort explicite faible / moyen / élevé / max.
+Chaque réponse est aussi vérifiée à l'arrivée. Un badge n'apparaît que si quelque chose cloche : répétition, refus, charabia, réponse vide, ou réponse coupée à la limite de tokens.
 
-### Filtres qualité des réponses
-Chaque réponse est analysée automatiquement. Des badges colorés n'apparaissent que lorsqu'il y a un problème :
-- **Répétition** — phrases répétées excessivement (analyse 4-gram)
-- **Refus** — "en tant que modèle de langage" et 7 autres motifs
-- **Charabia** — taux élevé de caractères non-ASCII
-- **Vide** — moins de 10 mots
-- **Tronqué** — limite de tokens atteinte sans conclusion
+### Session en détail
 
-### Atelier de comparaison de modèles
-Jusqu'à **4 emplacements** avec modèle, température et prompt système indépendants. Streaming côte à côte, surlignage des différences au niveau du mot, comparaison de métriques, et préréglages en un clic (Balayage de température, Paire déterministe, Comparaison de langues avec visualisation de la taxe sur les tokens).
+Ouvrez n'importe quel tour pour le voir comme une chronologie : temps jusqu'au premier token, écarts entre tokens, le bloc de raisonnement s'il y en a un, les appels d'outils, et l'invite exacte qui a été envoyée.
 
-### Analytiques de performance
-- **Percentiles de latence** (P50/P95/P99) pour la durée et le TTFT
-- **Intelligence des erreurs** — classificateur en 7 catégories avec timeline
-- **Heatmap d'utilisation** — grille 7×24 de vos heures actives
-- **Impact des paramètres** — nuages de points température vs tokens/sec
-- Suivi **démarrage à froid vs à chaud** avec historique de chargement des modèles
+![Détails de session : chronologie du flux et métriques](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/session.png)
 
-### Tableau de bord des coûts
-Consommation de tokens par modèle/jour avec estimation du prix équivalent en cloud. Voyez ce que vous *économisez* en restant local.
+### Live : ce que vos autres outils envoient
+
+LLMxRay ouvre un second port, **11435**, qui se comporte exactement comme Ollama et lui transmet tout. Pointez VS Code Copilot, Open WebUI, Continue, n8n ou votre propre script vers `http://localhost:11435` et chaque tour qu'ils envoient apparaît ici : client, modèle, taille de l'invite, part venue du cache, vitesse de préremplissage et de génération, appels d'outils.
+
+![Live : des tours venus de deux clients, avec les constats](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/live.png)
+
+Sélectionnez un tour pour voir de quoi l'invite est faite et le point exact où elle a cessé de correspondre à la précédente, c'est-à-dire là où le cache a cassé. Les constats sont des phrases simples, chacune liée au tour qui la prouve : un client qui relit toute son invite à chaque tour, un modèle qui tourne en partie sur CPU, des schémas d'outils qui occupent 40 % de chaque invite. Seuls les comptes et les durées sont conservés, en mémoire. Le texte des invites est une option qui écrit dans un fichier local. Rien ne quitte votre machine.
+
+### Labo de cache
+
+Un modèle local ne réutilise son cache d'invite que tant que l'invite correspond dès le tout premier token. Un seul horodatage en haut sacrifie tout ce qui suit. Le labo trouve les valeurs qui changent entre les tours, montre où la réutilisation meurt, puis **mesure** sur votre propre démon ce que rapporte leur déplacement à la fin.
+
+![Labo de cache : diagnostic et résultat mesuré](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/cache-lab.png)
+
+Mesuré sur une vraie invite de 324 tokens : 4 tokens réutilisés et 64,6 ms de préremplissage avec l'horodatage devant, 290 réutilisés et 18,6 ms avec l'horodatage derrière. **3,5x plus rapide, mêmes mots.**
+
+### Comparer
+
+La même invite contre jusqu'à quatre emplacements, chacun avec son modèle, sa température et son invite système, en streaming côte à côte. Préréglages en un clic : balayage de température, paire déterministe, comparaison de langues. Un diff mot à mot montre exactement ce qui change entre deux réponses.
+
+![Comparer : balayage de température sur un modèle](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/compare.png)
 
 ### Benchmark chirurgical
-Testez les connaissances d'un modèle avec des suites de questions à choix multiples. Utilise les vrais logprobs via l'endpoint compatible OpenAI pour une mesure précise de la confiance. Créez des suites personnalisées visuellement ou laissez l'IA les générer à partir d'un sujet.
 
-### Laboratoire d'embeddings et pipeline RAG
-Embeddez du texte, visualisez les vecteurs, mesurez la similarité cosinus. Demandez un vecteur de sortie plus étroit pour voir ce que coûte la troncature Matryoshka en similarité. Construisez une base de connaissances locale à partir de PDF, DOCX et CSV — découpée, embeddée, recherchable. Stockée dans IndexedDB. Coût zéro.
+Notez les modèles sur des jeux de questions sélectionnés (MMLU-Pro, ARC-Challenge, HellaSwag, GSM8K, TruthfulQA) à partir des **vrais logprobs des tokens**, pas de l'apparence de la réponse. Confiance contre exactitude par catégorie, pour voir où un modèle se trompe avec assurance. Importez vos propres jeux en JSON.
 
-### Atelier d'outils (canvas visuel)
-Canvas à nœuds en drag-and-drop pour construire des définitions d'outils. Synchronisation bidirectionnelle du code (modifiez les nœuds ou le TypeScript — les deux se mettent à jour). Sondez des APIs, générez des schémas automatiquement, testez avec exécution en direct.
-
-### Aire de jeu Fill-in-the-Middle *(nouveau en v0.4.7)*
-Complétion de code pour Qwen-Coder, CodeLlama, Codestral, DeepSeek-Coder et StarCoder. Deux zones de texte (préfixe / suffixe), le modèle remplit le trou. Utilise le champ `suffix` d'Ollama sur `/api/generate`. L'aperçu assemblé montre le résultat tel qu'il apparaîtrait dans votre éditeur.
-
-### Labo de cache *(nouveau en v0.6.0)*
-Comprenez pourquoi votre invite manque le cache KV du modèle, et mesurez ce que cela coûte à chaque tour. Un modèle local ne réutilise son cache que tant que l’invite correspond depuis le tout premier token : un seul horodatage en haut fait perdre tout ce qui suit. Le labo repère les valeurs qui changent d’un tour à l’autre, montre le point exact où la réutilisation meurt, puis **mesure** — en envoyant chaque disposition deux fois avec une valeur modifiée, sur votre propre démon — ce que rapporte leur déplacement à la fin. Mesuré sur une invite réelle de 324 tokens : **4 tokens réutilisés et 64,6 ms de préremplissage avec l’horodatage au début, 290 réutilisés et 18,6 ms à la fin. 3,5x plus rapide, à mots identiques.** Nécessite Ollama 0.33.3+.
+![Benchmark : confiance contre exactitude](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/benchmark.png)
 
 ### Labo de décision
-Ollama 0.35.1 a ajouté des **modèles de décision** — nimble, tev1, clef, clef-flash — qui répondent sur `/v1/systemone` par des choix, des probabilités et des scores plutôt que du texte. Donnez au labo un état (un ticket, un message, une ligne de log) et des questions typées : un **choix** parmi des candidats nommés, une **probabilité oui/non**, ou un **score** sur une échelle ordonnée. Chaque réponse revient comme la distribution de probabilité du modèle lui-même, dessinée en barres avec le candidat retenu mis en évidence. Les modèles de décision déclarent `decision` comme seule capacité, donc LLMxRay les tient hors des sélecteurs de chat et les liste ici.
 
-### Observatoire de protocoles *(nouveau en v0.4.7)*
-Envoyez le même prompt à travers les trois protocoles de service d'Ollama — **natif** `/api/chat`, **compatible OpenAI** `/v1/chat/completions`, et **compatible Anthropic** `/v1/messages` — en parallèle contre votre modèle local. Streaming côte à côte, métriques par protocole, et onglet « envelope diff » qui montre comment chaque protocole encode les raisons de fin, le comptage de tokens et les enveloppes d'erreur. Pas de cloud, pas de clés API — les trois endpoints sont locaux sur `localhost:11434`.
+Les modèles de décision (nimble, tev1, clef) répondent aux questions typées par des probabilités plutôt que par du texte. Donnez au labo une situation et demandez un choix parmi des candidats, une probabilité oui/non, ou un score sur une échelle. Chaque réponse revient sous forme de la distribution propre du modèle, dessinée en barres.
 
-### Pipeline d'entraînement IA
-Préparez des données d'entraînement à partir de vos conversations. Étiquetez, révisez et exportez en JSONL pour le fine-tuning.
+![Labo de décision : les barres de probabilité derrière chaque réponse](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/decision-lab.png)
 
-### Base de données d'historique IA locale
-Chaque expérience (benchmarks, comparaisons, chats, paires d'entraînement) est archivée automatiquement dans une base IndexedDB requêtable avec filtres, tendances, exports et politiques de rétention.
+### Observatoire des protocoles
 
-### Multilingue
-Traductions complètes en anglais, français, serbe (latin + cyrillique), chinois et arabe. Support du layout RTL. Scaffolds communautaires pour l'hébreu et le japonais.
+La même invite à travers les trois protocoles de service d'Ollama, en parallèle : natif `/api/chat`, compatible OpenAI `/v1/chat/completions`, et compatible Anthropic `/v1/messages`. Streaming côte à côte, métriques par protocole, et un diff d'enveloppe qui montre comment chacun encadre les raisons d'arrêt, les comptes de tokens et les erreurs.
 
----
+![Observatoire des protocoles : trois protocoles côte à côte](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/protocols.png)
 
-## Compatibilité Ollama
+### Base de connaissances et embeddings
 
-Testé et vérifié avec **Ollama 0.40.x** (vérifié sur 0.40.3, octobre 2026). LLMxRay utilise les endpoints Ollama suivants :
-
-| Endpoint | Utilisation |
-|---|---|
-| `/api/chat` | Chat streaming (NDJSON, avec `tools`, `think`, schema `format`) |
-| `/api/generate` | Génération + Fill-in-the-Middle via `suffix` |
-| `/api/tags` | Liste des modèles + capacités, longueur de contexte et largeur d'embedding |
-| `/api/show` | Paramètres, template, licence et métadonnées d'architecture |
-| `/api/embed` | Embeddings vectoriels pour RAG |
-| `/api/pull`, `/api/delete`, `/api/ps`, `/api/version` | Gestion et statut des modèles |
-| `/v1/chat/completions` | Chemin compatible OpenAI utilisé par le Benchmark chirurgical pour les vrais logprobs |
-| `/v1/messages` | Chemin compatible Anthropic utilisé par l'Observatoire de protocoles |
-
-**Compatible avec :** Ollama 0.20 et plus récent (les versions antérieures fonctionnent pour chat/generate mais sans `think` ni `format` JSON-schema). **Recommandé :** Ollama 0.33.3+ — la réutilisation du cache d'invite est rapportée (`prompt_eval_cached_count`, et `usage.prompt_tokens_details.cached_tokens` sur l'endpoint compatible OpenAI), donc le débit de préremplissage est mesuré sur les tokens réellement évalués. Depuis 0.32 : les capacités et la longueur de contexte arrivent avec la liste des modèles, `think` accepte des niveaux d'effort gradués, et les embeddings acceptent une largeur `dimensions`.
-
----
-
-## Captures d'écran
+Déposez des fichiers PDF, DOCX, Markdown ou CSV. Ils sont découpés, vectorisés et interrogeables, pour voir ce que la recherche renvoie vraiment avant qu'un modèle ne le lise. La page Embeddings compare deux textes par similarité cosinus, visualise les vecteurs, et montre ce que coûte la troncature Matryoshka.
 
 <table>
 <tr>
 <td width="50%">
 
-**Chat avec streaming de tokens et confiance**
-![Chat](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/chat-diagnostics.png)
+![Base de connaissances : résultats de recherche avec scores](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/knowledge-base.png)
 
 </td>
 <td width="50%">
 
-**Comparaison de modèles — côte à côte**
-![Compare](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/compare-sidebyside.png)
-
-</td>
-</tr>
-<tr>
-<td width="50%">
-
-**Analyse approfondie d'une session — métriques et timing**
-![Session](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/session-details.png)
-
-</td>
-<td width="50%">
-
-**Benchmark avec radar de confiance**
-![Benchmark](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/benchmark.png)
-
-</td>
-</tr>
-<tr>
-<td width="50%">
-
-**Embeddings — similarité cosinus**
-![Embeddings](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/embed-similarity.png)
-
-</td>
-<td width="50%">
-
-**Moniteur système — matériel et statut Ollama**
-![System](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/my-system.png)
+![Embeddings : similarité cosinus entre deux textes](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/embeddings.png)
 
 </td>
 </tr>
 </table>
+
+Tout reste dans l'IndexedDB de votre navigateur.
+
+### Complétion de code
+
+Fill-in-the-middle pour Qwen-Coder, CodeLlama, Codestral, DeepSeek-Coder et StarCoder : un préfixe, un suffixe, et le modèle comble le vide. L'aperçu assemblé montre le résultat tel que votre éditeur l'afficherait.
+
+![Complétion de code : préfixe, suffixe et aperçu assemblé](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/fim.png)
+
+### Atelier d'outils
+
+Un canevas de nœuds pour construire des définitions d'outils, avec le TypeScript synchronisé dans les deux sens : modifiez les nœuds ou modifiez le code. Sondez une API, générez le schéma, et testez l'outil par un appel réel.
+
+![Atelier d'outils : canevas de nœuds avec le panneau de code ouvert](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/tools.png)
+
+### Analytique et coûts
+
+Percentiles de latence (P50 / P95 / P99) pour les requêtes et les premiers tokens, qualité au fil des tours, erreurs par modèle, carte de chaleur d'utilisation, et température contre tokens par seconde. La page des coûts valorise votre usage local au tarif du cloud, pour voir ce que tourner en local vous fait économiser.
+
+<table>
+<tr>
+<td width="50%">
+
+![Analytique : percentiles de latence et qualité](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/analytics.png)
+
+</td>
+<td width="50%">
+
+![Coûts : équivalent cloud par modèle](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/costs.png)
+
+</td>
+</tr>
+</table>
+
+### Mon système et modèles
+
+Matériel, exécution et inférence sur une seule page : CPU, mémoire, GPU, quels modèles sont chargés et où. L'onglet Modèles liste chaque modèle installé avec ses paramètres, son gabarit et son moteur, et en télécharge de nouveaux depuis le catalogue.
+
+<table>
+<tr>
+<td width="50%">
+
+![Mon système : matériel et état d'Ollama](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/system.png)
+
+</td>
+<td width="50%">
+
+![Modèles : modèles installés et catalogue](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/models.png)
+
+</td>
+</tr>
+</table>
+
+### Aussi dans la boîte
+
+- **Pipeline d'entraînement.** Sélectionnez des paires dans vos conversations, étiquetez-les, relisez-les, exportez en JSONL pour le fine-tuning.
+- **Historique local.** Chaque chat, comparaison et benchmark est archivé dans IndexedDB avec filtres, tendances, exports et règles de rétention.
+- **Kit pédagogique.** Neuf modules de cours sur le [site de documentation](https://lognebudo.github.io/llmxray/docs/fr/community/educators/), chacun bâti autour d'une page de LLMxRay.
+- **Cinq langues.** Anglais, français, serbe (latin et cyrillique), chinois et arabe, avec mise en page RTL. Des squelettes sont prêts pour l'hébreu et le japonais.
 
 ---
 
@@ -221,26 +201,27 @@ Testé et vérifié avec **Ollama 0.40.x** (vérifié sur 0.40.3, octobre 2026).
 
 | Vous êtes... | LLMxRay vous aide à... |
 |---|---|
-| **Développeur** | Déboguer des prompts, profiler la latence, comparer des modèles, inspecter des appels d'outils, suivre les coûts |
-| **Chercheur** | Mener des expériences contrôlées avec des paramètres cohérents entre modèles et températures |
-| **Étudiant / Enseignant** | Explorer le comportement des modèles visuellement — Kit Éducateurs intégré avec 9 modules interactifs |
-| **Responsable d'équipe IA** | Comprendre les tendances de qualité, les motifs d'erreurs et l'utilisation des ressources sur votre parc local |
+| **Développeur** | Déboguer les invites, profiler la latence, comparer les modèles, inspecter les appels d'outils, voir ce que votre éditeur envoie |
+| **Chercheur** | Mener des expériences contrôlées avec les mêmes réglages sur plusieurs modèles et températures |
+| **Étudiant / Enseignant** | Observer le comportement des modèles plutôt que de le lire, avec le [kit pédagogique](https://lognebudo.github.io/llmxray/docs/fr/community/educators/) en neuf modules |
+| **Responsable d'équipe IA** | Comprendre les tendances de qualité, les motifs d'erreur et l'usage des ressources sur un parc local |
 
 ---
 
-## Options d'installation
+## Installation
 
 ### npx (recommandé)
 ```bash
 npx llmxray
 npx llmxray --port 3000
 npx llmxray --ollama-url http://192.168.1.50:11434
+npx llmxray --observe-port 11436     # le port Live, 11435 par défaut
 ```
 
 ### Docker
 ```bash
-docker run -p 5174:5174 djovaneli/llmxray
-docker run -p 5174:5174 -e OLLAMA_URL=http://host.docker.internal:11434 djovaneli/llmxray
+docker run -p 5174:5174 -p 11435:11435 djovaneli/llmxray
+docker run -p 5174:5174 -p 11435:11435 -e OLLAMA_URL=http://host.docker.internal:11434 djovaneli/llmxray
 ```
 
 ### Depuis les sources
@@ -253,53 +234,41 @@ npm run dev     # http://localhost:5173
 
 ---
 
-## Stack technique
+## Compatibilité Ollama
 
-| Couche | Technologie |
+Testé avec **Ollama 0.40.x** (vérifié sur 0.40.4, octobre 2026). Fonctionne à partir de 0.20 ; les versions plus anciennes discutent mais n'ont ni `think` ni `format` par schéma JSON. **Recommandé : 0.33.3 ou plus récent**, qui rapporte la réutilisation du cache d'invite, si bien que la vitesse de préremplissage est mesurée sur les tokens réellement évalués.
+
+| Point d'accès | Utilisé pour |
 |---|---|
-| Framework | Vue 3.5 + Composition API |
-| Langage | TypeScript 5.9 (strict) |
-| Build | Vite 7.3 |
-| Style | Tailwind CSS 4.2 |
-| État | Pinia 3 (store par domaine) |
-| Graphiques | Chart.js 4, D3.js 7 |
-| Canvas | Vue Flow (éditeur de nœuds visuel) |
-| Éditeur de code | CodeMirror 6 |
-| Stockage | IndexedDB (natif au navigateur) |
-| Backend LLM | Ollama (local) |
+| `/api/chat` | Chat en streaming (NDJSON, avec `tools`, niveaux d'effort `think`, schéma `format`) |
+| `/api/generate` | Génération et Fill-in-the-Middle via `suffix` |
+| `/api/tags`, `/api/show` | Liste des modèles, capacités, longueur de contexte, paramètres, gabarit |
+| `/api/embed` | Embeddings vectoriels pour la base de connaissances, avec troncature `dimensions` optionnelle |
+| `/api/pull`, `/api/delete`, `/api/ps`, `/api/version` | Gestion des modèles et état |
+| `/v1/chat/completions` | Chemin compatible OpenAI, utilisé par le benchmark chirurgical pour les vrais logprobs |
+| `/v1/messages` | Chemin compatible Anthropic, utilisé par l'observatoire des protocoles |
+| `/v1/systemone` | Modèles de décision, utilisés par le labo de décision |
 
 ---
 
-## Architecture
+## Sous le capot
 
-**Streaming** — Lit le NDJSON d'Ollama via `fetch()` + `ReadableStream`. Les tokens mettent à jour l'UI de manière réactive à travers les stores Pinia.
+Vue 3.5, TypeScript 5.9 (strict), Vite 7, Tailwind CSS 4, un store Pinia par domaine, Chart.js et D3 pour les graphiques, Vue Flow pour le canevas d'outils, CodeMirror 6 pour le code. Le stockage est l'IndexedDB du navigateur. Le backend est Ollama, en local.
 
-**Confiance des tokens** — Approximée à partir de la latence inter-tokens (plus rapide = plus confiant). Clairement étiquetée comme approximation. Les benchmarks utilisent les vrais logprobs via l'endpoint compatible OpenAI.
+Le streaming lit le NDJSON d'Ollama via `fetch()` et un `ReadableStream`, et les tokens mettent l'interface à jour à travers Pinia. La confiance du chat est approchée à partir de la latence entre tokens et étiquetée comme telle ; les benchmarks utilisent les vrais logprobs. La détection du matériel est un petit plugin Vite qui interroge directement l'OS. Le port Live est un proxy transparent qui garde comptes et durées en mémoire.
 
-**Store par domaine** — Chaque domaine a son propre store Pinia : tokens, sessions, métriques, raisonnement, comparaison, embeddings, qualité, coût et plus.
-
-**Détection matérielle** — Plugin Vite personnalisé qui interroge l'OS directement (PowerShell/proc/sysctl) pour des spécifications matérielles précises.
-
----
-
-## Développement
-
-| Commande | Ce qu'elle fait |
+| Commande | Effet |
 |---|---|
-| `npm run dev` | Serveur de dev (port 5173) |
-| `npm run build` | Vérification de types + build de production |
+| `npm run dev` | Serveur de développement (port 5173) |
+| `npm run build` | Vérification des types et build de production |
 | `npm run test` | Tests unitaires (Vitest) |
-| `npm run test:e2e` | End-to-end (Playwright) |
+| `npm run test:e2e` | Tests de bout en bout (Playwright) |
 
 ---
 
 ## Contribuer
 
-Les contributions sont les bienvenues ! Voir [CONTRIBUTING.md](CONTRIBUTING.md) pour la configuration et les directives.
-
-**Les traductions communautaires sont particulièrement bienvenues** — fichiers scaffolds prêts pour l'hébreu et le japonais.
-
----
+Les contributions sont bienvenues. Voir [CONTRIBUTING.md](CONTRIBUTING.md) pour l'installation et les règles. Les traductions communautaires sont particulièrement bienvenues : des squelettes sont prêts pour l'hébreu et le japonais.
 
 ## Licence
 
@@ -313,7 +282,7 @@ Les contributions sont les bienvenues ! Voir [CONTRIBUTING.md](CONTRIBUTING.md) 
 
 <p align="center">
   <strong>Si LLMxRay vous aide à mieux comprendre votre IA, pensez à lui donner une étoile.</strong><br/>
-  Ça aide d'autres personnes à découvrir le projet.
+  Cela aide les autres à découvrir le projet.
 </p>
 
 <p align="center">

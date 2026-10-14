@@ -6,6 +6,7 @@ import { formatDuration, formatTps } from '@/utils/format'
 import { LANGUAGE_NAMES } from '@/utils/slot-labels'
 import StatusBadge from '@/components/common/StatusBadge.vue'
 import TokenStreamDisplay from '@/components/token-stream/TokenStreamDisplay.vue'
+import MarkdownTokenStream from '@/components/chat/MarkdownTokenStream.vue'
 import MetricCard from '@/components/metrics/MetricCard.vue'
 import { ChevronDown } from 'lucide-vue-next'
 
@@ -17,6 +18,8 @@ const props = defineProps<{
 
 const metricsStore = useMetricsStore()
 const showPrompt = ref(false)
+/** 'text' reads as the model wrote it; 'tokens' is one chip per token with the numbers on hover. */
+const view = ref<'text' | 'tokens'>('text')
 
 const metrics = computed(() => {
   if (!props.execution.sessionId) return null
@@ -72,10 +75,26 @@ const settingsPills = computed(() => {
         </p>
       </div>
 
-      <TokenStreamDisplay
-        v-if="execution.sessionId"
-        :session-id="execution.sessionId"
-      />
+      <template v-if="execution.sessionId">
+        <div class="flex justify-end">
+          <div class="inline-flex rounded-md border border-border-default text-[10px]">
+            <button
+              class="px-2 py-0.5 rounded-s-md transition-colors"
+              :class="view === 'text' ? 'bg-accent/10 text-accent' : 'text-text-muted hover:text-text-secondary'"
+              @click="view = 'text'"
+            >{{ $t('comparison.column.viewText') }}</button>
+            <button
+              class="px-2 py-0.5 rounded-e-md transition-colors"
+              :class="view === 'tokens' ? 'bg-accent/10 text-accent' : 'text-text-muted hover:text-text-secondary'"
+              @click="view = 'tokens'"
+            >{{ $t('comparison.column.viewTokens') }}</button>
+          </div>
+        </div>
+        <div v-if="view === 'text'" class="min-h-[200px] max-h-[500px] overflow-auto rounded-lg border border-border-default bg-surface p-4 text-sm">
+          <MarkdownTokenStream :session-id="execution.sessionId" :completed="execution.status !== 'streaming'" />
+        </div>
+        <TokenStreamDisplay v-else :session-id="execution.sessionId" />
+      </template>
 
       <div v-if="metrics" class="grid gap-2" :class="execution.language ? 'grid-cols-4' : 'grid-cols-3'">
         <MetricCard :label="$t('comparison.metrics.ttft')" :value="formatDuration(metrics.ttftMs)" />
