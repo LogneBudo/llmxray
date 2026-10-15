@@ -47,6 +47,8 @@ const pageTitle = computed(() => {
     protocols: t('common.header.protocols'),
     live: t('common.header.live'),
     xray: t('common.header.xray'),
+    ledger: t('common.header.ledger'),
+    gpu: t('common.header.gpu'),
     system: t('common.header.mySystem'),
     settings: t('common.header.settings'),
   }

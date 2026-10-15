@@ -1,0 +1,48 @@
+{
+  "title": "Shared box",
+  "subtitle": "What each tool asked the daemon for, and what that cost the other tools. Measured from the requests that passed through the observe port; nothing is estimated unless it says so.",
+  "empty": "Nothing to show yet. This page reads the turns the Live page records: point your tools at the observe port and let them work for a while.",
+  "emptyLink": "Open Live to set that up",
+  "lead": {
+    "one": "One tool used {models} on this box in the last {span}. It cost nobody anything: there was nobody else.",
+    "fine": "{tools} tools used {models} on this box in the last {span}. None of their settings cost the others anything.",
+    "cost": "{tools} tools used {models} on this box in the last {span}. Their settings cost the others {cost} of waiting."
+  },
+  "models": "{n} model | {n} models",
+  "rows": {
+    "title": "Who cost whom",
+    "hint": "Sorted by the time taken from the others. A tool is named by the name it gave itself, or by its software when it gave none. What a tool costs itself is shown but not counted against it.",
+    "requests": "{n} request | {n} requests",
+    "costToOthers": "paid by the others",
+    "noCost": "no cost to others",
+    "keepAliveZero": "Sends keep_alive: 0, so the model is unloaded after each of its requests. The next tool to arrive paid the reload {n} time. | Sends keep_alive: 0, so the model is unloaded after each of its requests. The next tool to arrive paid the reload {n} times.",
+    "keepAliveZeroFix": "Fix: drop keep_alive from the request, or set it to cover the gap between runs, for example keep_alive: \"15m\".",
+    "context": "Asks for a {context}-token context on prompts of at most {prompt} tokens. The daemon reserves the whole window up front, for this tool alone.",
+    "contextFix": "Fix: ask for the context you use, for example num_ctx: {suggested}. Nothing else changes.",
+    "switches": "Brought in a different model {n} time, which unloaded the one the others were using. | Brought in a different model {n} times, which unloaded the one the others were using.",
+    "waited": "Waited {ms} in total, behind {who}.",
+    "waitedNobody": "Never waited.",
+    "paidReloads": "Paid {ms} of model loading itself.",
+    "fine": "Kept its prompt stable and its context sensible. Cost the others nothing."
+  },
+  "events": {
+    "title": "What happened to the model, in order",
+    "hint": "Every load and every wait, with who caused it when another tool did.",
+    "load": "{client} waited {ms} while {model} loaded",
+    "wait": "{client} waited {ms} for the daemon",
+    "causeKeepalive": "because {by} had unloaded it with keep_alive: 0",
+    "causeSwitch": "because {by} had switched the box to another model",
+    "causeIdle": "because it had sat idle longer than keep_alive; nobody's fault",
+    "causeFirst": "first load of the session",
+    "behind": "behind {by}",
+    "none": "No loads and no waits in this window. The model stayed in memory and nobody queued."
+  },
+  "slots": {
+    "title": "How many tools the box can serve at once",
+    "hint": "Ollama serves several requests at the same time only while they fit in video memory. When a tool reserves a large context, the daemon drops to fewer at a time. It does not say so anywhere; this is read from the context figure it reports against the context each request asked for.",
+    "steady": "{n} at a time, the whole window.",
+    "change": "Fell from {from} to {to} at {time}, when {client} ran with a {model} context.",
+    "unknown": "Not known: the daemon did not report a loaded context for these turns."
+  },
+  "foot": "What this page does not know: anything that did not pass through the observe port. A tool that talks to Ollama directly on 11434 is invisible here, which is itself worth knowing when the numbers do not add up. Queue wait is our wall time minus the daemon's own total, so it is an estimate."
+}

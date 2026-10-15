@@ -50,6 +50,12 @@ export interface LiveTurn {
   client: LiveClient
   model: string
   stream: boolean
+  /** What the request asked the daemon to do with the model afterwards: seconds, a duration string, 0 to unload, -1 to keep. */
+  keepAlive?: number | string | null
+  /** The daemon's own total for this request (load + prompt + generation), when it said. */
+  totalMs?: number | null
+  /** Time the request spent waiting before the daemon worked on it. An estimate: our wall time minus the daemon's. */
+  queueMs?: number | null
   status: number
   error: string | null
   /** Set when the daemon rejected the request because the prompt was larger than the loaded context. */

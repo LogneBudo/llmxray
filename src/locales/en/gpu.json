@@ -1,0 +1,27 @@
+{
+  "title": "GPU map",
+  "subtitle": "What sits in video memory right now, model by model, and what else would fit. Read from Ollama every few seconds.",
+  "noVram": "This machine's video memory size is not known, so the map shows what is loaded but not what is free. On NVIDIA it comes from the driver; on other cards from the system.",
+  "memory": "{used} of {total} in use · {free} free",
+  "memoryNoTotal": "{used} loaded",
+  "nothingLoaded": "Nothing is loaded. The first request will pay the model's load time.",
+  "block": {
+    "weights": "weights",
+    "context": "context and buffers (estimate)",
+    "spilled": "{bytes} did not fit and runs from system RAM, slower",
+    "context_length": "{n}-token context",
+    "expires": "unloads in {time} unless used",
+    "forever": "kept loaded",
+    "expired": "unloading"
+  },
+  "free": "free",
+  "fits": {
+    "title": "What else would fit",
+    "hint": "Each pulled model that is not loaded, against the free space. A model needs about 15% more than its file for a modest context.",
+    "fits-now": "fits now, next to what is loaded",
+    "fits-alone": "fits only if what is loaded unloads first",
+    "too-big": "larger than this card: would run partly from system RAM",
+    "none": "Every pulled model is loaded."
+  },
+  "foot": "What this page does not know: how the daemon splits one model's footprint between weights and context. The weights are the file on disk; the rest is the context's cache and working buffers, so that split is an estimate. Free space is video memory minus what Ollama reports loaded; other programs using the GPU are not counted."
+}

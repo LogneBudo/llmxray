@@ -121,6 +121,12 @@ export function createObserver({ ollamaUrl, port = 11435, host = '127.0.0.1', ke
       client,
       model,
       stream: body?.stream !== false,
+      /** What the request asked the daemon to do with the model afterwards; 0 unloads it for everyone. */
+      keepAlive: body?.keep_alive ?? null,
+      /** The daemon's own total for this request (load + prompt + generation), when it said. */
+      totalMs: parsed?.totalMs ?? null,
+      /** Time the request spent waiting before the daemon worked on it: ours minus the daemon's. An estimate. */
+      queueMs: parsed?.totalMs != null ? Math.max(0, Date.now() - startedAt - parsed.totalMs) : null,
       status,
       error: parsed?.error ?? (status === 499 ? 'cancelled by the client before the answer finished' : status >= 400 ? `HTTP ${status}` : null),
       contextExceeded: parsed?.contextExceeded ?? null,

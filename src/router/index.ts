@@ -69,6 +69,16 @@ export const router = createRouter({
           component: () => import('@/pages/XrayPage.vue'),
         },
         {
+          path: 'shared-box',
+          name: 'ledger',
+          component: () => import('@/pages/LedgerPage.vue'),
+        },
+        {
+          path: 'gpu',
+          name: 'gpu',
+          component: () => import('@/pages/GpuMapPage.vue'),
+        },
+        {
           path: 'cache-lab',
           name: 'cacheLab',
           component: () => import('@/pages/CacheLabPage.vue'),

@@ -22,6 +22,8 @@ import {
   Scale,
   Radio,
   ScanLine,
+  Users,
+  MemoryStick,
 } from 'lucide-vue-next'
 import FeedbackOverlay from './FeedbackOverlay.vue'
 
@@ -38,6 +40,8 @@ const navItems = computed<{ path: string; label: string; icon: Component }[]>(()
   { path: '/fim', label: t('common.nav.fim'), icon: Code2 },
   { path: '/live', label: t('common.nav.live'), icon: Radio },
   { path: '/xray', label: t('common.nav.xray'), icon: ScanLine },
+  { path: '/shared-box', label: t('common.nav.ledger'), icon: Users },
+  { path: '/gpu', label: t('common.nav.gpu'), icon: MemoryStick },
   { path: '/cache-lab', label: t('common.nav.cacheLab'), icon: DatabaseZap },
   { path: '/decision-lab', label: t('common.nav.decisionLab'), icon: Scale },
   { path: '/protocols', label: t('common.nav.protocols'), icon: Network },
