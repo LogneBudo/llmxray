@@ -1,6 +1,6 @@
 {
   "name": "llmxray",
-  "version": "0.7.5",
+  "version": "0.7.6",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/LogneBudo/llmxray.git"
@@ -13,7 +13,8 @@
   "license": "Apache-2.0",
   "type": "module",
   "bin": {
-    "llmxray": "./bin/cli.mjs"
+    "llmxray": "./bin/cli.mjs",
+    "llmxray-mcp": "./bin/mcp.mjs"
   },
   "files": [
     "dist/",
@@ -46,13 +47,15 @@
     "deploy": "bash scripts/deploy-site.sh"
   },
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.1",
     "dexie": "^4.3.0",
     "express": "^5.1.0",
     "flag-icons": "^7.5.0",
     "franc-min": "^6.2.0",
     "http-proxy-middleware": "^3.0.3",
     "lucide-vue-next": "^0.577.0",
-    "vue-i18n": "^10.0.8"
+    "vue-i18n": "^10.0.8",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@babel/parser": "^7.29.0",

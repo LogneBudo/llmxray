@@ -5,6 +5,25 @@ All notable changes to LLMxRay are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.6] — 2026-10-15
+
+### Added
+
+- **LLMxRay as tools for agents.** A second command, `llmxray-mcp`, serves three read-only tools over
+  the Model Context Protocol: `diagnose_my_turns` (the Live findings as sentences with the fix, for the
+  calls the agent sent through port 11435), `last_turn_metrics` (the last turn in numbers) and
+  `local_models` (what is pulled, what is loaded, what fits in video memory). The findings computation
+  moved to `server/findings.mjs` so the Live page and the MCP server share one source. README gains a
+  "For agents" section with the two-line setup.
+
+### Fixed
+
+- **My System showed 4 GB of video memory on any NVIDIA card above 4 GB.** Windows reports adapter
+  memory through a 32-bit field. The figure now comes from the NVIDIA driver where it exists, on
+  Windows and Linux; a 12 GB RTX 5070 reads 12 GB.
+
+Verified against Ollama 0.40.4.
+
 ## [0.7.5] — 2026-10-15
 
 ### Added

@@ -135,9 +135,39 @@ function getMacInfo() {
   }
 }
 
+/**
+ * Video memory as the NVIDIA driver reports it. Windows' Win32_VideoController.AdapterRAM
+ * is a 32-bit field and tops out at 4 GB whatever the card holds; lspci on Linux
+ * reports no size at all. nvidia-smi is exact where it exists; elsewhere this is empty.
+ */
+export function nvidiaGpus() {
+  const out = exec('nvidia-smi --query-gpu=name,memory.total --format=csv,noheader,nounits')
+  return out
+    .split('\n')
+    .map((line) => line.split(',').map((s) => s.trim()))
+    .filter(([name, mib]) => name && Number.isFinite(Number(mib)) && Number(mib) > 0)
+    .map(([name, mib]) => ({ name, adapterRamBytes: Number(mib) * 1024 * 1024 }))
+}
+
+/** Replace the memory figure of every GPU that nvidia-smi also knows; add the ones it knows and the OS did not list. */
+export function mergeGpuMemory(gpus, nvidia) {
+  if (!nvidia.length) return gpus
+  const used = new Set()
+  const merged = gpus.map((g) => {
+    const match = nvidia.find((n, i) => !used.has(i) && (n.name === g.name || g.name.includes(n.name) || n.name.includes(g.name)))
+    if (!match) return g
+    used.add(nvidia.indexOf(match))
+    return { ...g, adapterRamBytes: match.adapterRamBytes }
+  })
+  nvidia.forEach((n, i) => {
+    if (!used.has(i)) merged.push({ name: n.name, adapterRamBytes: n.adapterRamBytes, driverVersion: '' })
+  })
+  return merged.filter((g) => g.name !== 'Not detected' || merged.length === 1)
+}
+
 export function collectSystemInfo() {
   const platform = os.platform()
-  if (platform === 'win32') return getWindowsInfo()
-  if (platform === 'darwin') return getMacInfo()
-  return getLinuxInfo()
+  const info = platform === 'win32' ? getWindowsInfo() : platform === 'darwin' ? getMacInfo() : getLinuxInfo()
+  if (platform !== 'darwin') info.gpu = mergeGpuMemory(info.gpu, nvidiaGpus())
+  return info
 }
