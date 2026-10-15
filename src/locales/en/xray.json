@@ -1,0 +1,59 @@
+{
+  "title": "Prompt X-ray",
+  "subtitle": "Each line is one message a tool sent, drawn to scale. Dim parts were already in the model's memory and cost nothing. Bright parts had to be read again. Striped parts never reached the model.",
+  "empty": "Nothing to draw yet. The X-ray reads the turns the Live page records: point a tool at the observe port and send a few messages.",
+  "emptyLink": "Open Live to set that up",
+  "pick": "Conversation",
+  "pickOption": "{client} · {model} · {turns} turns",
+  "scale": "{tokens} tokens",
+  "turn": "turn {n}",
+  "cost": {
+    "first": "first turn, nothing in memory yet",
+    "cached": "{share}% in memory",
+    "unknown": "the daemon did not report a count",
+    "cut": "{lost} tokens cut"
+  },
+  "legend": {
+    "what": "What it is:",
+    "system": "system prompt",
+    "tools": "tool schemas",
+    "history": "earlier turns",
+    "message": "the new message",
+    "happened": "What happened to it:",
+    "cached": "already in the model's memory, cost nothing",
+    "recomputed": "read again this turn",
+    "cut": "cut by the daemon, never seen"
+  },
+  "note": {
+    "first": "First turn from this tool with this model. Everything had to be read.",
+    "reloaded": "The model was loaded again for this turn ({seconds} s), so nothing was in memory. The prompt is not at fault.",
+    "break": "Everything from the {part} onward was read again. The prompt stopped matching the previous turn about {tokens} tokens in (an estimate from characters). One changed byte there empties the rest of the memory. Click that part of the bar to see the text.",
+    "breakNoTokens": "Everything from the {part} onward was read again. The prompt stopped matching the previous turn inside it. One changed byte there empties the rest of the memory. Click that part of the bar to see the text.",
+    "breakCost": "That reading cost about {seconds} s that a stable prompt would have skipped (an estimate).",
+    "toolsAdded": "Tools were switched on: {tools} schemas, about {tokens} tokens, now sit in every prompt. They are kept in memory from here on, but they take room in the context.",
+    "cut": "The prompt outgrew the {context}-token context. The daemon kept the first few tokens and the end and silently dropped about {lost} tokens from the start. The model answered without them. Raise num_ctx or shorten the conversation.",
+    "cutSystem": "The system prompt was among what was dropped.",
+    "cutTools": "The tool schemas were among what was dropped: the model could not call them."
+  },
+  "part": {
+    "system": "system prompt",
+    "tools": "tool schemas",
+    "history": "earlier turns",
+    "message": "new message"
+  },
+  "totals": {
+    "title": "What this conversation cost, and what it did not have to",
+    "line": "Reading the prompt took {total} s over {turns} turns.",
+    "avoidable": "About {avoidable} s of that would not have happened with a stable prompt (an estimate).",
+    "cut": "{n} turn answered a prompt that was not fully sent. | {n} turns answered prompts that were not fully sent.",
+    "noPrefill": "The daemon did not report prompt reading times for these turns."
+  },
+  "request": {
+    "title": "Request as sent",
+    "hint": "Click any part of a bar and that turn's request appears here, with the part you clicked first. Keeping the prompt text is a switch on the Live page; without it, only the sizes are known.",
+    "none": "Nothing selected yet. Try a bright segment on a turn that was read again, or a striped one.",
+    "noText": "The prompt text was not kept for this turn. The sizes above are exact; switch on \"Keep the prompt text\" on the Live page to see the text of the next turns.",
+    "selected": "turn {n} · {part} · {state}"
+  },
+  "foot": "What this page does not know: the model's own tokenizer. The widths are the daemon's token counts; where a line is split into parts, the split is scaled from characters. The striped part is sized from the difference between what was sent and what the daemon counted."
+}

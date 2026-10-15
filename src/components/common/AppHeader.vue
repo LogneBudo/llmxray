@@ -46,6 +46,7 @@ const pageTitle = computed(() => {
     fim: t('common.header.fim'),
     protocols: t('common.header.protocols'),
     live: t('common.header.live'),
+    xray: t('common.header.xray'),
     system: t('common.header.mySystem'),
     settings: t('common.header.settings'),
   }

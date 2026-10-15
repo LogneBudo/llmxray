@@ -11,5 +11,9 @@ export {
   computeFindings,
   summariseClients,
   renderFinding,
+  reloaded,
+  silentlyTruncated,
+  estimateTokens,
+  requestContext,
 } from '../../server/findings.mjs'
 export type { LiveFinding, LiveFindingKind, LiveClientSummary } from '../../server/findings.mjs'

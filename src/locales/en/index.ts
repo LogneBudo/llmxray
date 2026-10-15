@@ -18,6 +18,7 @@ import protocols from './protocols.json'
 import cachelab from './cachelab.json'
 import decisionlab from './decisionlab.json'
 import live from './live.json'
+import xray from './xray.json'
 
 export default {
   common,
@@ -40,4 +41,5 @@ export default {
   cachelab,
   decisionlab,
   live,
+  xray,
 }

@@ -64,6 +64,11 @@ export const router = createRouter({
           component: () => import('@/pages/LivePage.vue'),
         },
         {
+          path: 'xray',
+          name: 'xray',
+          component: () => import('@/pages/XrayPage.vue'),
+        },
+        {
           path: 'cache-lab',
           name: 'cacheLab',
           component: () => import('@/pages/CacheLabPage.vue'),
