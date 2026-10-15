@@ -72,6 +72,11 @@
       "title": "{client} sends {tokens}-token prompts, but {model} is loaded with a {context}-token context. {rejected} request rejected. | {client} sends {tokens}-token prompts, but {model} is loaded with a {context}-token context. {rejected} requests rejected.",
       "body": "Ollama refuses a prompt larger than the context it loaded the model with, so nothing reaches the model. Raise the context length in Ollama's settings (or OLLAMA_CONTEXT_LENGTH) to above the prompt size; coding assistants ask for 32K to 64K. The larger context also needs room in video memory."
     },
+    "truncated": {
+      "title": "{client} sends about {tokens}-token prompts to {model}, loaded with a {context}-token context, and the daemon silently cut them.",
+      "body": "Ollama answered as if nothing was wrong. It kept the first few tokens and the end and dropped about {lost} tokens from the start, the system prompt included. Nothing in the response says so; the prompt count sitting exactly at the context size is the only trace. Raise num_ctx (or OLLAMA_CONTEXT_LENGTH) above the prompt size, or shorten the prompt: the answer was to a prompt you did not send.",
+      "bodyNoSystem": "Ollama answered as if nothing was wrong. It kept the first few tokens and the end and dropped about {lost} tokens from the start. Nothing in the response says so; the prompt count sitting exactly at the context size is the only trace. Raise num_ctx (or OLLAMA_CONTEXT_LENGTH) above the prompt size, or shorten the prompt: the answer was to a prompt you did not send."
+    },
     "prefix": {
       "title": "{client} re-reads about {tokens} tokens on every turn with {model}.",
       "body": "The prompt is about {promptTokens} tokens and the cache keeps {share}% of it. Something near the start changes between turns; everything after it is recomputed each time.",

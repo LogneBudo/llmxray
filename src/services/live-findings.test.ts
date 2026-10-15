@@ -174,3 +174,31 @@ describe('what does not count as a cache problem', () => {
     expect(computeFindings(turns).find((x) => x.kind === 'cpu')).toBeUndefined()
   })
 })
+
+describe('silent truncation', () => {
+  it('fires when the daemon reports a context-full prompt that was clearly larger, and names the lost part', () => {
+    // Measured on Ollama 0.40.4: num_ctx 1024, a ~4900-token prompt, HTTP 200, prompt_eval_count 1027.
+    const t = turn({ tokens: 1027, cached: 0 })
+    // /api/ps says 2048 (num_ctx times two parallel slots); the request asked for 1024, and that is the ceiling.
+    t.prompt.contextRequested = 1024
+    t.fit = { contextLength: 2048, size: 6e9, sizeVram: 6e9, cpuShare: 0, runner: 'llamacpp' }
+    t.anatomy = { systemChars: 80, toolsChars: 0, historyChars: 0, messageChars: 17_000, totalChars: 17_080, messages: 2 }
+    const f = computeFindings([t]).find((x) => x.kind === 'truncated')
+    expect(f).toBeTruthy()
+    expect(f!.severity).toBe('error')
+    expect(f!.params.context).toBe(1024)
+    expect(Number(f!.params.lost)).toBeGreaterThan(3_000)
+    expect(f!.params.systemChars).toBe(80)
+  })
+
+  it('does not fire on a prompt that merely fills the context, nor on a rejected one', () => {
+    const full = turn({ tokens: 1020, cached: 0 })
+    full.fit = { contextLength: 1024, size: 6e9, sizeVram: 6e9, cpuShare: 0, runner: 'llamacpp' }
+    full.anatomy = { systemChars: 80, toolsChars: 0, historyChars: 0, messageChars: 3_400, totalChars: 3_480, messages: 2 }
+    expect(computeFindings([full]).find((x) => x.kind === 'truncated')).toBeUndefined()
+    const rejected = turn({ tokens: 1027, cached: 0, contextExceeded: { promptTokens: 4939, contextLength: 1024 } })
+    rejected.fit = full.fit
+    rejected.anatomy = { ...full.anatomy, messageChars: 17_000, totalChars: 17_080 }
+    expect(computeFindings([rejected]).find((x) => x.kind === 'truncated')).toBeUndefined()
+  })
+})

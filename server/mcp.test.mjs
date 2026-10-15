@@ -141,6 +141,7 @@ describe('renderFinding', () => {
   it('renders every kind as a sentence, never as JSON', () => {
     const kinds = [
       { kind: 'context', severity: 'error', turnId: 't', params: { client: 'c', model: 'm', tokens: 1, context: 2, rejected: 2 } },
+      { kind: 'truncated', severity: 'error', turnId: 't', params: { client: 'c', model: 'm', context: 1024, tokens: 4900, lost: 3876, systemChars: 80, turns: 3 } },
       { kind: 'prefix', severity: 'error', turnId: 't', params: { client: 'c', model: 'm', tokens: 1, promptTokens: 2, share: 3, breakTokens: -1 } },
       { kind: 'drop', severity: 'warning', turnId: 't', params: { client: 'c', model: 'm', from: 90, to: 10, promptTokens: 2, breakTokens: 5 } },
       { kind: 'cpu', severity: 'warning', turnId: 't', params: { model: 'm', cpu: 30, context: -1, runner: '' } },

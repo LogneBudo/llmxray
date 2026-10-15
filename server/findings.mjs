@@ -57,6 +57,28 @@ export function cacheFixSavingMs(t) {
   return (avoidable / evaluated) * t.prompt.prefillMs
 }
 
+/** Tokens a prompt most likely had, from its characters: ~3.5 chars per token plus template overhead. */
+export function estimateTokens(t) {
+  return t.anatomy.totalChars / 3.5 + 20
+}
+
+/** The daemon answered, reported exactly a context-full prompt, and the prompt was clearly larger than that. */
+/**
+ * The context one request can use. The request's own num_ctx when it set one; otherwise the
+ * loaded figure, which /api/ps reports as num_ctx times the parallel slots (measured 2026-10-16:
+ * num_ctx 1024 loaded as context_length 2048 with two slots), so it can overstate the ceiling.
+ */
+export function requestContext(t) {
+  return t.prompt.contextRequested ?? t.fit?.contextLength ?? null
+}
+
+export function silentlyTruncated(t) {
+  const ctx = requestContext(t)
+  if (!ctx || t.prompt.tokens == null || t.contextExceeded || t.error) return false
+  if (t.prompt.tokens < ctx - 8) return false
+  return estimateTokens(t) > ctx * 1.15
+}
+
 function groupBy(items, key) {
   const m = new Map()
   for (const it of items) {
@@ -86,6 +108,29 @@ export function computeFindings(turns) {
         tokens: latest.contextExceeded.promptTokens,
         context: latest.contextExceeded.contextLength,
         rejected: group.length,
+      },
+    })
+  }
+
+  // 0b. Prompts the daemon silently cut to fit the loaded context. Measured on Ollama 0.40.4:
+  //     HTTP 200, prompt_eval_count equal to the context (plus a few), only the first handful of
+  //     tokens kept, the system prompt gone, no field in the response. The count at the ceiling
+  //     while the prompt's characters say it was far larger is the signature.
+  for (const [, group] of groupBy(turns.filter(silentlyTruncated), (t) => `${t.client.id}|${t.model}`)) {
+    const latest = group[group.length - 1]
+    const est = estimateTokens(latest)
+    findings.push({
+      kind: 'truncated',
+      severity: 'error',
+      turnId: latest.id,
+      params: {
+        client: latest.client.label,
+        model: latest.model,
+        context: requestContext(latest),
+        tokens: Math.round(est),
+        lost: Math.round(est - requestContext(latest)),
+        systemChars: latest.anatomy.systemChars,
+        turns: group.length,
       },
     })
   }
@@ -247,6 +292,13 @@ export function renderFinding(f) {
         `Ollama refuses a prompt larger than the context it loaded the model with, so nothing reaches the model. ` +
         `Raise the context length in Ollama's settings (or OLLAMA_CONTEXT_LENGTH) to above the prompt size; coding assistants ask for 32K to 64K. ` +
         `The larger context also needs room in video memory.`
+      )
+    case 'truncated':
+      return (
+        `${p.client} sent about ${p.tokens}-token prompts to ${p.model}, loaded with a ${p.context}-token context, and the daemon answered as if nothing was wrong. ` +
+        `It kept the first few tokens and the end, and dropped about ${p.lost} tokens from the start${p.systemChars > 0 ? ', the system prompt included' : ''}. ` +
+        `Nothing in the response says so; the prompt count sitting exactly at the context size is the only trace. ` +
+        `${p.turns === 1 ? 'Seen on 1 turn' : `Seen on ${p.turns} turns`}. Raise num_ctx (or OLLAMA_CONTEXT_LENGTH) above the prompt size, or shorten the prompt; the answer you got was to a prompt you did not send.`
       )
     case 'prefix':
       return (

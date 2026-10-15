@@ -255,6 +255,9 @@ function findingParams(f: { params: Record<string, string | number> }) {
                 <template v-if="f.kind === 'context'">
                   {{ $t('live.findings.context.body', findingParams(f)) }}
                 </template>
+                <template v-else-if="f.kind === 'truncated'">
+                  {{ $t(Number(f.params.systemChars) > 0 ? 'live.findings.truncated.body' : 'live.findings.truncated.bodyNoSystem', findingParams(f)) }}
+                </template>
                 <template v-else-if="f.kind === 'prefix'">
                   {{ $t(f.params.breakTokens === -1 ? 'live.findings.prefix.body' : 'live.findings.prefix.bodyWithBreak', findingParams(f)) }}
                 </template>
