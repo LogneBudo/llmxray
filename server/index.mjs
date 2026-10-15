@@ -12,9 +12,10 @@ const DIST_DIR = join(__dirname, '..', 'dist')
 
 export async function startServer(options = {}) {
   const ollamaUrl = options.ollamaUrl || process.env.OLLAMA_URL || 'http://localhost:11434'
-  const port = options.port || process.env.PORT || 5174
+  // 0 is a real value here (any free port, used by the release gate), so ?? not ||.
+  const port = Number(options.port ?? process.env.PORT ?? 5174)
   const observeEnabled = options.observe !== false && process.env.OBSERVE !== '0'
-  const observePort = Number(options.observePort || process.env.OBSERVE_PORT || 11435)
+  const observePort = Number(options.observePort ?? process.env.OBSERVE_PORT ?? 11435)
 
   if (!existsSync(DIST_DIR)) {
     console.error('Error: dist/ directory not found. Run "npm run build" first.')
@@ -22,21 +23,26 @@ export async function startServer(options = {}) {
   }
 
   const app = express()
+
+  // Proxy /api/* and /v1/* to Ollama, untouched. This sits BEFORE any body parser and is
+  // mounted without a path prefix: Express strips a mount prefix before the proxy sees the
+  // URL, and a parsed body never reaches the upstream. Both broke every npx/Docker install
+  // from v0.2.0 to v0.7.7; see server/index.test.mjs, which runs this file for real.
+  app.use(createProxyMiddleware({
+    pathFilter: (path) => /^\/(api|v1)\//.test(path),
+    target: ollamaUrl,
+    changeOrigin: true,
+    on: {
+      error: (err, _req, res) => {
+        if (res && 'writeHead' in res && !res.headersSent) {
+          res.writeHead(502, { 'content-type': 'application/json' })
+          res.end(JSON.stringify({ error: `LLMxRay could not reach Ollama at ${ollamaUrl}: ${err.message}` }))
+        }
+      },
+    },
+  }))
+
   app.use(express.json())
-
-  // Proxy /api/* to Ollama
-  app.use('/api', createProxyMiddleware({
-    target: ollamaUrl,
-    changeOrigin: true,
-    pathRewrite: { '^/api': '/api' },
-  }))
-
-  // Proxy /v1/* to Ollama (OpenAI-compat endpoint)
-  app.use('/v1', createProxyMiddleware({
-    target: ollamaUrl,
-    changeOrigin: true,
-    pathRewrite: { '^/v1': '/v1' },
-  }))
 
   // System info endpoint
   let cachedInfo = null
@@ -77,11 +83,19 @@ export async function startServer(options = {}) {
 
   const pkg = JSON.parse(readFileSync(join(__dirname, '..', 'package.json'), 'utf8'))
 
-  app.listen(port, () => {
+  const server = await new Promise((resolve, reject) => {
+    const s = app.listen(port, () => resolve(s))
+    s.once('error', (err) => {
+      if (err.code === 'EADDRINUSE') reject(new Error(`port ${port} is already in use; pick another with --port`))
+      else reject(err)
+    })
+  })
+  const boundPort = server.address().port
+  if (!options.quiet) {
     console.log()
     console.log(`  LLMxRay v${pkg.version}`)
     console.log()
-    console.log(`  App:     http://localhost:${port}`)
+    console.log(`  App:     http://localhost:${boundPort}`)
     console.log(`  Ollama:  ${ollamaUrl}`)
     if (observer.state.listening) {
       console.log(`  Observe: http://localhost:${observer.state.port}  (point other tools here to see them on the Live page)`)
@@ -89,7 +103,12 @@ export async function startServer(options = {}) {
       console.log(`  Observe: off (${observeError}; use --observe-port to pick another)`)
     }
     console.log()
-  })
+  }
+  return {
+    port: boundPort,
+    observePort: observer.state.listening ? observer.state.port : null,
+    close: () => new Promise((r) => { observer.close?.(); server.close(() => r()) }),
+  }
 }
 
 // Run directly: node server/index.mjs

@@ -5,6 +5,32 @@ All notable changes to LLMxRay are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.8] — 2026-10-15
+
+### Fixed
+
+- **`npx llmxray` and the Docker image could not talk to Ollama.** Every `/api` and `/v1` call from
+  the app answered 404, and every JSON POST hung: the proxy was mounted on a path prefix that Express
+  strips before the proxy library sees it, and the JSON body parser sat in front of the proxy and
+  drained the request. Present since v0.2.0. Only the Live page, which has its own port, worked.
+  The dev server has its own proxy, which is why no screenshot or test ever showed it.
+- **The Live page's "keep prompt text" switch was ignored in production.** Same body-parser order.
+- **An `https://` Ollama URL crashed the whole process** on the first observed request.
+- **A client that stopped a generation mid-stream was recorded as a clean stop**, and Ollama kept
+  generating. The turn is now recorded as cancelled, with what the daemon had produced, and the
+  upstream request is closed.
+- **The MCP tools answered a bare "fetch failed" when LLMxRay was not running.** They now say what
+  to start.
+- A port already in use is reported as a sentence instead of a stack trace.
+
+### Added
+
+- **A release gate.** `server/index.test.mjs` starts the shipped server for real against a stand-in
+  Ollama and checks the proxy path, the POST body, the Live routes, the cancel path and the https
+  failure. It runs with the unit tests.
+
+Verified against Ollama 0.40.4.
+
 ## [0.7.7] — 2026-10-15
 
 ### Added

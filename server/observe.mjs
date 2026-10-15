@@ -7,6 +7,7 @@
  * under the user's home directory. Metrics live in memory for the session.
  */
 import http from 'node:http'
+import https from 'node:https'
 import { URL } from 'node:url'
 import { appendFile, mkdir } from 'node:fs/promises'
 import { join } from 'node:path'
@@ -121,7 +122,7 @@ export function createObserver({ ollamaUrl, port = 11435, host = '0.0.0.0', keep
       model,
       stream: body?.stream !== false,
       status,
-      error: parsed?.error ?? (status >= 400 ? `HTTP ${status}` : null),
+      error: parsed?.error ?? (status === 499 ? 'cancelled by the client before the answer finished' : status >= 400 ? `HTTP ${status}` : null),
       contextExceeded: parsed?.contextExceeded ?? null,
       prompt: {
         tokens: parsed?.promptTokens ?? null,
@@ -173,47 +174,78 @@ export function createObserver({ ollamaUrl, port = 11435, host = '0.0.0.0', keep
     const upstreamHeaders = { ...req.headers, host: target.host }
 
     const forward = (bodyBuffer) => {
+      const secure = target.protocol === 'https:'
       const options = {
         protocol: target.protocol,
         hostname: target.hostname,
-        port: target.port || 80,
+        port: target.port || (secure ? 443 : 80),
         method: req.method,
         path: req.url,
         headers: upstreamHeaders,
       }
-      const upstream = http.request(options, (up) => {
-        res.writeHead(up.statusCode ?? 502, up.headers)
-        if (!cls) {
-          up.pipe(res)
-          return
-        }
-        const chunks = []
-        let collected = 0
-        up.on('data', (chunk) => {
-          res.write(chunk)
-          if (collected < MAX_RECORDED_RESPONSE) {
-            chunks.push(chunk)
-            collected += chunk.length
-          }
-        })
-        up.on('end', () => {
-          res.end()
-          const responseText = Buffer.concat(chunks).toString('utf8')
-          try {
-            record({ cls, headers: req.headers, bodyText: bodyBuffer.toString('utf8'), responseText, status: up.statusCode ?? 0, startedAt, path: req.url })
-          } catch {
-            /* recording must never affect the client */
-          }
-        })
-        up.on('error', () => res.destroy())
-      })
-      upstream.on('error', (err) => {
+      const failUpstream = (err) => {
         if (!res.headersSent) {
           res.writeHead(502, { 'content-type': 'application/json' })
         }
         res.end(JSON.stringify({ error: `LLMxRay could not reach Ollama at ${target.origin}: ${err.message}` }))
+      }
+      const chunks = []
+      let collected = 0
+      let finished = false
+      let cancelled = false
+      const recordTurn = (status) => {
+        if (!cls || finished) return
+        finished = true
+        const responseText = Buffer.concat(chunks).toString('utf8')
+        try {
+          record({ cls, headers: req.headers, bodyText: bodyBuffer.toString('utf8'), responseText, status, startedAt, path: req.url })
+        } catch {
+          /* recording must never affect the client */
+        }
+      }
+      let upstream
+      try {
+        // https targets go through the https module; http.request refuses them outright.
+        upstream = (secure ? https : http).request(options, (up) => {
+          res.writeHead(up.statusCode ?? 502, up.headers)
+          if (!cls) {
+            up.pipe(res)
+            return
+          }
+          up.on('data', (chunk) => {
+            res.write(chunk)
+            if (collected < MAX_RECORDED_RESPONSE) {
+              chunks.push(chunk)
+              collected += chunk.length
+            }
+          })
+          up.on('end', () => {
+            res.end()
+            recordTurn(up.statusCode ?? 0)
+          })
+          up.on('close', () => {
+            // The client went away mid-stream: the turn is recorded as cancelled, with what
+            // the daemon had produced so far, never as a clean stop.
+            if (cancelled) recordTurn(499)
+          })
+          up.on('error', () => res.destroy())
+        })
+      } catch (err) {
+        failUpstream(err)
+        return
+      }
+      upstream.on('error', failUpstream)
+      // 'aborted' only fires for an incomplete request body. A client that disconnects while
+      // the answer streams shows up as 'close' on the response before it is finished.
+      res.on('close', () => {
+        if (res.writableFinished) return
+        cancelled = true
+        upstream.destroy()
       })
-      req.on('aborted', () => upstream.destroy())
+      req.on('aborted', () => {
+        cancelled = true
+        upstream.destroy()
+      })
       if (bodyBuffer) upstream.end(bodyBuffer)
       else req.pipe(upstream)
     }
@@ -291,6 +323,8 @@ export function createObserver({ ollamaUrl, port = 11435, host = '0.0.0.0', keep
 
 /** Read a JSON body from a raw Node request. */
 async function readJson(req) {
+  // Behind Express the body parser has already read the stream; take its result.
+  if (req.body && typeof req.body === 'object') return req.body
   const chunks = []
   for await (const c of req) chunks.push(c)
   const text = Buffer.concat(chunks).toString('utf8')

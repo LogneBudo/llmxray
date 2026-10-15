@@ -94,6 +94,14 @@ describe('diagnose_my_turns', () => {
   })
 })
 
+describe('when LLMxRay is not running', () => {
+  it('says what to start instead of "fetch failed"', async () => {
+    const tools = createTools({ ...base, fetchImpl: async () => { throw new TypeError('fetch failed') } })
+    await expect(tools.diagnose_my_turns({})).rejects.toThrow(/LLMxRay is not running at http:\/\/x:5174.*npx llmxray/)
+    await expect(tools.local_models()).rejects.toThrow(/Ollama is not reachable at http:\/\/x:11434/)
+  })
+})
+
 describe('last_turn_metrics', () => {
   it('describes the newest turn in numbers', async () => {
     const turns = [turn({ tokens: 5_000, cached: 4_000 }), turn({ tokens: 12_000, cached: 11_000, prefillMs: 800 })]

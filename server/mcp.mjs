@@ -34,7 +34,17 @@ export function createTools({ serverUrl, ollamaUrl, fetchImpl = fetch }) {
   const ollama = ollamaUrl.replace(/\/+$/, '')
 
   async function getJson(url) {
-    const res = await fetchImpl(url)
+    let res
+    try {
+      res = await fetchImpl(url)
+    } catch (e) {
+      const isOllama = url.startsWith(ollama)
+      throw new Error(
+        isOllama
+          ? `Ollama is not reachable at ${ollama} (${e.message}). Start it, or set OLLAMA_URL.`
+          : `LLMxRay is not running at ${base} (${e.message}). Start it with "npx llmxray" in another terminal, or set LLMXRAY_URL to where it runs. The MCP server only reads from it.`,
+      )
+    }
     if (!res.ok) throw new Error(`${url} answered ${res.status}`)
     return res.json()
   }
@@ -171,7 +181,7 @@ export async function startMcpServer({ serverUrl, ollamaUrl }) {
         since_minutes: z.number().int().positive().optional().describe('Only turns from the last N minutes.'),
       },
     },
-    async (args) => text(await tools.diagnose_my_turns(args)),
+    async (args) => guarded(() => tools.diagnose_my_turns(args)),
   )
 
   server.registerTool(
@@ -186,7 +196,7 @@ export async function startMcpServer({ serverUrl, ollamaUrl }) {
         client: z.string().optional().describe('Part of the client label or id. Omit for the latest turn from any client.'),
       },
     },
-    async (args) => text(await tools.last_turn_metrics(args)),
+    async (args) => guarded(() => tools.last_turn_metrics(args)),
   )
 
   server.registerTool(
@@ -198,7 +208,7 @@ export async function startMcpServer({ serverUrl, ollamaUrl }) {
         'and whether each fits in video memory. Use it before choosing a model or a context length.',
       inputSchema: {},
     },
-    async () => text(await tools.local_models()),
+    async () => guarded(() => tools.local_models()),
   )
 
   const transport = new StdioServerTransport()
@@ -207,4 +217,13 @@ export async function startMcpServer({ serverUrl, ollamaUrl }) {
 
 function text(s) {
   return { content: [{ type: 'text', text: s }] }
+}
+
+/** A tool never surfaces a bare transport error: the sentence says what to start. */
+async function guarded(run) {
+  try {
+    return text(await run())
+  } catch (e) {
+    return { content: [{ type: 'text', text: e.message }], isError: true }
+  }
 }

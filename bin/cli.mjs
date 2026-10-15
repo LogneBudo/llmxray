@@ -40,4 +40,7 @@ startServer({
   ollamaUrl: getFlag('--ollama-url'),
   observePort: getFlag('--observe-port'),
   observe: !args.includes('--no-observe'),
+}).catch((e) => {
+  console.error(`Error: ${e.message}`)
+  process.exit(1)
 })
