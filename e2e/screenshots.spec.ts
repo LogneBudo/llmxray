@@ -177,7 +177,16 @@ test('live', async ({ page }) => {
     options: { num_predict: 40 },
   })
 
-  await expect(page.locator('main')).toContainText('4 turns', { timeout: 60_000 })
+  // Client C: an editor that was cached for three turns, then a session id slipped in at the front.
+  // Unique per run: Ollama keeps several cache slots and would serve a variant seen in an earlier run.
+  const run = Date.now().toString(36)
+  const stable = `You are a careful assistant ${run}. ${style}`
+  const editor = (sys: string, q: string) =>
+    post('Continue/1.2.0', { model: MODELS.fast, messages: [{ role: 'system', content: sys }, { role: 'user', content: q }], options: { num_predict: 20 } })
+  for (const q of ['Rename the helper.', 'Now the test.', 'And the docs.']) await editor(stable, q)
+  await editor(`[session ${run}] ${stable}`, 'Run it.')
+
+  await expect(page.locator('main')).toContainText('8 turns', { timeout: 60_000 })
   // Select the latest Python turn, so the card shows where its prompt stopped matching the previous one.
   await page.locator('tr', { hasText: 'Ollama Python SDK' }).first().click()
   await page.waitForTimeout(1500)

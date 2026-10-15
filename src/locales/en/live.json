@@ -77,6 +77,11 @@
       "body": "The prompt is about {promptTokens} tokens and the cache keeps {share}% of it. Something near the start changes between turns; everything after it is recomputed each time.",
       "bodyWithBreak": "The prompt is about {promptTokens} tokens and the cache keeps {share}%. It stops matching the previous turn around token {breakTokens}; everything after that point is recomputed each time."
     },
+    "drop": {
+      "title": "{client} lost the cache on this turn with {model}: {from}% kept on the previous turn, {to}% on this one.",
+      "body": "The prompt is about {promptTokens} tokens. Something before the new message changed between the two turns, so everything after that point was recomputed. The turns before it were fine, which is why this one stands out.",
+      "bodyWithBreak": "The prompt is about {promptTokens} tokens and stopped matching the previous turn around token {breakTokens}; everything after that point was recomputed. The turns before it were fine, which is why this one stands out."
+    },
     "cpu": {
       "title": "{model} runs {cpu}% on CPU.",
       "body": "It is loaded with a {context}-token context and no longer fits in video memory, so part of it runs from system RAM. Expect prefill and generation several times slower than on the GPU alone. A smaller context window, or a quantised KV cache (OLLAMA_KV_CACHE_TYPE=q8_0), is the usual fix.",
@@ -151,35 +156,35 @@
     "unknown": "no counts",
     "savesHint": "Estimated from this session's own numbers: the prefill these turns would have skipped had their prompts stayed cached up to the new message. Cache Lab measures it; this only extrapolates."
   },
-    "viewer": {
-      "title": "Request as sent",
-      "rendered": "Rendered",
-      "raw": "Raw JSON",
-      "searchPlaceholder": "Search in the request…",
-      "matches": "{n} matches",
-      "size": "{chars} characters",
-      "copy": "Copy",
-      "copied": "Copied",
-      "download": "Download",
-      "options": "Options",
-      "messages": "{n} messages",
-      "tools": "{n} tools",
-      "chars": "{n} characters",
-      "tokensEst": "about {n} tokens",
-      "params": "{n} parameters",
-      "noParams": "no parameters",
-      "expand": "Show all ({chars} characters)",
-      "collapse": "Collapse",
-      "breakHere": "Cache broke here",
-      "breakInTools": "The cache broke inside the tool schemas on this turn: the tool list changed since the previous turn.",
-      "toolCalls": "Tool calls",
-      "role": {
-        "system": "system",
-        "developer": "developer",
-        "user": "user",
-        "assistant": "assistant",
-        "tool": "tool result",
-        "other": "{role}"
-      }
+  "viewer": {
+    "title": "Request as sent",
+    "rendered": "Rendered",
+    "raw": "Raw JSON",
+    "searchPlaceholder": "Search in the request…",
+    "matches": "{n} matches",
+    "size": "{chars} characters",
+    "copy": "Copy",
+    "copied": "Copied",
+    "download": "Download",
+    "options": "Options",
+    "messages": "{n} messages",
+    "tools": "{n} tools",
+    "chars": "{n} characters",
+    "tokensEst": "about {n} tokens",
+    "params": "{n} parameters",
+    "noParams": "no parameters",
+    "expand": "Show all ({chars} characters)",
+    "collapse": "Collapse",
+    "breakHere": "Cache broke here",
+    "breakInTools": "The cache broke inside the tool schemas on this turn: the tool list changed since the previous turn.",
+    "toolCalls": "Tool calls",
+    "role": {
+      "system": "system",
+      "developer": "developer",
+      "user": "user",
+      "assistant": "assistant",
+      "tool": "tool result",
+      "other": "{role}"
     }
+  }
 }

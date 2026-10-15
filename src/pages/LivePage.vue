@@ -258,6 +258,9 @@ function findingParams(f: { params: Record<string, string | number> }) {
                 <template v-else-if="f.kind === 'prefix'">
                   {{ $t(f.params.breakTokens === -1 ? 'live.findings.prefix.body' : 'live.findings.prefix.bodyWithBreak', findingParams(f)) }}
                 </template>
+                <template v-else-if="f.kind === 'drop'">
+                  {{ $t(f.params.breakTokens === -1 ? 'live.findings.drop.body' : 'live.findings.drop.bodyWithBreak', findingParams(f)) }}
+                </template>
                 <template v-else-if="f.kind === 'cpu'">
                   {{ $t(f.params.context === -1 ? 'live.findings.cpu.bodyNoContext' : 'live.findings.cpu.body', findingParams(f)) }}
                 </template>

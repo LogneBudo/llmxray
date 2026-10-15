@@ -77,6 +77,11 @@
       "body": "Upit ima oko {promptTokens} tokena i keš zadržava {share}%. Nešto blizu početka se menja između poteza; sve posle toga se svaki put ponovo računa.",
       "bodyWithBreak": "Upit ima oko {promptTokens} tokena i keš zadržava {share}%. Prestaje da se poklapa sa prethodnim potezom oko tokena {breakTokens}; sve posle te tačke se svaki put ponovo računa."
     },
+    "drop": {
+      "title": "{client} je izgubio keš u ovom koraku sa {model}: {from}% zadržano u prethodnom koraku, {to}% u ovom.",
+      "body": "Prompt ima oko {promptTokens} tokena. Nešto pre nove poruke se promenilo između dva koraka, pa je sve posle te tačke ponovo izračunato. Prethodni koraci su bili u redu, zato se ovaj ističe.",
+      "bodyWithBreak": "Prompt ima oko {promptTokens} tokena i prestao je da se poklapa sa prethodnim korakom oko tokena {breakTokens}; sve posle te tačke je ponovo izračunato. Prethodni koraci su bili u redu, zato se ovaj ističe."
+    },
     "cpu": {
       "title": "{model} radi {cpu}% na procesoru.",
       "body": "Učitan je sa kontekstom od {context} tokena i više ne staje u video memoriju, pa deo radi iz sistemske RAM memorije. Očekujte nekoliko puta sporije predpunjenje i generisanje nego samo na GPU. Uobičajeno rešenje je manji kontekst ili kvantizovani KV keš (OLLAMA_KV_CACHE_TYPE=q8_0).",
@@ -151,35 +156,35 @@
     "unknown": "nema brojeva",
     "savesHint": "Procenjeno iz brojeva ove sesije: predpunjenje koje bi ovi potezi preskočili da su im upiti ostali keširani do nove poruke. Laboratorija keša to meri; ovde se samo ekstrapolira."
   },
-    "viewer": {
-      "title": "Zahtev kako je poslat",
-      "rendered": "Prikaz",
-      "raw": "Sirovi JSON",
-      "searchPlaceholder": "Pretraži zahtev…",
-      "matches": "Pogodaka: {n}",
-      "size": "Znakova: {chars}",
-      "copy": "Kopiraj",
-      "copied": "Kopirano",
-      "download": "Preuzmi",
-      "options": "Opcije",
-      "messages": "Poruka: {n}",
-      "tools": "Alata: {n}",
-      "chars": "Znakova: {n}",
-      "tokensEst": "oko {n} tokena",
-      "params": "Parametara: {n}",
-      "noParams": "bez parametara",
-      "expand": "Prikaži sve (znakova: {chars})",
-      "collapse": "Skupi",
-      "breakHere": "Keš je prekinut ovde",
-      "breakInTools": "Keš je prekinut unutar šema alata u ovom potezu: lista alata se promenila od prethodnog poteza.",
-      "toolCalls": "Pozivi alata",
-      "role": {
-        "system": "sistem",
-        "developer": "programer",
-        "user": "korisnik",
-        "assistant": "asistent",
-        "tool": "rezultat alata",
-        "other": "{role}"
-      }
+  "viewer": {
+    "title": "Zahtev kako je poslat",
+    "rendered": "Prikaz",
+    "raw": "Sirovi JSON",
+    "searchPlaceholder": "Pretraži zahtev…",
+    "matches": "Pogodaka: {n}",
+    "size": "Znakova: {chars}",
+    "copy": "Kopiraj",
+    "copied": "Kopirano",
+    "download": "Preuzmi",
+    "options": "Opcije",
+    "messages": "Poruka: {n}",
+    "tools": "Alata: {n}",
+    "chars": "Znakova: {n}",
+    "tokensEst": "oko {n} tokena",
+    "params": "Parametara: {n}",
+    "noParams": "bez parametara",
+    "expand": "Prikaži sve (znakova: {chars})",
+    "collapse": "Skupi",
+    "breakHere": "Keš je prekinut ovde",
+    "breakInTools": "Keš je prekinut unutar šema alata u ovom potezu: lista alata se promenila od prethodnog poteza.",
+    "toolCalls": "Pozivi alata",
+    "role": {
+      "system": "sistem",
+      "developer": "programer",
+      "user": "korisnik",
+      "assistant": "asistent",
+      "tool": "rezultat alata",
+      "other": "{role}"
     }
+  }
 }

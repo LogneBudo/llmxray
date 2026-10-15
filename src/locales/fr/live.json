@@ -77,6 +77,11 @@
       "body": "L'invite fait environ {promptTokens} tokens et le cache en garde {share} %. Quelque chose près du début change d'un tour à l'autre ; tout ce qui suit est recalculé chaque fois.",
       "bodyWithBreak": "L'invite fait environ {promptTokens} tokens et le cache en garde {share} %. Elle cesse de correspondre au tour précédent vers le token {breakTokens} ; tout ce qui suit est recalculé chaque fois."
     },
+    "drop": {
+      "title": "{client} a perdu le cache à ce tour avec {model} : {from} % conservés au tour précédent, {to} % à celui-ci.",
+      "body": "L’invite fait environ {promptTokens} tokens. Quelque chose avant le nouveau message a changé entre les deux tours, donc tout ce qui suit a été recalculé. Les tours précédents allaient bien, c’est pourquoi celui-ci ressort.",
+      "bodyWithBreak": "L’invite fait environ {promptTokens} tokens et a cessé de correspondre au tour précédent vers le token {breakTokens} ; tout ce qui suit a été recalculé. Les tours précédents allaient bien, c’est pourquoi celui-ci ressort."
+    },
     "cpu": {
       "title": "{model} tourne à {cpu} % sur le processeur.",
       "body": "Il est chargé avec un contexte de {context} tokens et ne tient plus dans la mémoire vidéo ; une partie tourne depuis la RAM système. Attendez-vous à un préremplissage et une génération plusieurs fois plus lents que sur le GPU seul. Un contexte plus petit, ou un cache KV quantifié (OLLAMA_KV_CACHE_TYPE=q8_0), est le remède habituel.",
@@ -151,35 +156,35 @@
     "unknown": "pas de comptes",
     "savesHint": "Estimé à partir des chiffres de cette session : le préremplissage que ces tours auraient évité si leurs invites étaient restées en cache jusqu'au nouveau message. Le Labo de cache le mesure ; ici, on extrapole seulement."
   },
-    "viewer": {
-      "title": "Requête telle qu'envoyée",
-      "rendered": "Rendu",
-      "raw": "JSON brut",
-      "searchPlaceholder": "Chercher dans la requête…",
-      "matches": "{n} résultats",
-      "size": "{chars} caractères",
-      "copy": "Copier",
-      "copied": "Copié",
-      "download": "Télécharger",
-      "options": "Options",
-      "messages": "{n} messages",
-      "tools": "{n} outils",
-      "chars": "{n} caractères",
-      "tokensEst": "environ {n} tokens",
-      "params": "{n} paramètres",
-      "noParams": "aucun paramètre",
-      "expand": "Tout afficher ({chars} caractères)",
-      "collapse": "Replier",
-      "breakHere": "Le cache a rompu ici",
-      "breakInTools": "Le cache a rompu dans les schémas d'outils à ce tour : la liste d'outils a changé depuis le tour précédent.",
-      "toolCalls": "Appels d'outils",
-      "role": {
-        "system": "système",
-        "developer": "développeur",
-        "user": "utilisateur",
-        "assistant": "assistant",
-        "tool": "résultat d'outil",
-        "other": "{role}"
-      }
+  "viewer": {
+    "title": "Requête telle qu'envoyée",
+    "rendered": "Rendu",
+    "raw": "JSON brut",
+    "searchPlaceholder": "Chercher dans la requête…",
+    "matches": "{n} résultats",
+    "size": "{chars} caractères",
+    "copy": "Copier",
+    "copied": "Copié",
+    "download": "Télécharger",
+    "options": "Options",
+    "messages": "{n} messages",
+    "tools": "{n} outils",
+    "chars": "{n} caractères",
+    "tokensEst": "environ {n} tokens",
+    "params": "{n} paramètres",
+    "noParams": "aucun paramètre",
+    "expand": "Tout afficher ({chars} caractères)",
+    "collapse": "Replier",
+    "breakHere": "Le cache a rompu ici",
+    "breakInTools": "Le cache a rompu dans les schémas d'outils à ce tour : la liste d'outils a changé depuis le tour précédent.",
+    "toolCalls": "Appels d'outils",
+    "role": {
+      "system": "système",
+      "developer": "développeur",
+      "user": "utilisateur",
+      "assistant": "assistant",
+      "tool": "résultat d'outil",
+      "other": "{role}"
     }
+  }
 }

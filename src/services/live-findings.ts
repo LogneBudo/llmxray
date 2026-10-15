@@ -5,7 +5,7 @@ import type { LiveTurn } from '@/types/live'
  * specific turn the page can jump to. Thresholds are deliberately conservative:
  * a finding that fires on one noisy turn is worse than none.
  */
-export type LiveFindingKind = 'context' | 'prefix' | 'cpu' | 'tools'
+export type LiveFindingKind = 'context' | 'prefix' | 'drop' | 'cpu' | 'tools'
 
 export interface LiveFinding {
   kind: LiveFindingKind
@@ -30,6 +30,8 @@ export interface LiveClientSummary {
 const MIN_TURNS = 3
 const LOW_CACHE_SHARE = 0.5
 const MIN_WASTED_TOKENS = 500
+/** A turn's cached share must fall this far below the previous turn's to count as a drop. */
+const DROP_POINTS = 0.4
 const CPU_SHARE_FLOOR = 0.05
 const TOOLS_SHARE_FLOOR = 0.25
 
@@ -121,6 +123,39 @@ export function computeFindings(turns: LiveTurn[]): LiveFinding[] {
         tokens: Math.round(wasted),
         promptTokens: Math.round(promptTokens),
         share: Math.round(share * 100),
+        breakTokens: breakTokens == null ? -1 : Math.round(breakTokens),
+      },
+    })
+  }
+
+  // 1b. The one turn where a client that was cached stopped being cached.
+  //     Per turn, not a median: a session average hides exactly this turn.
+  //     Only the latest drop per client+model is reported, so a client that
+  //     breaks every turn is covered by the prefix finding above, not by a
+  //     flag on each of them.
+  for (const [, group] of groupBy(chatTurns, (t) => `${t.client.id}|${t.model}`)) {
+    const measured = group.filter((t) => cacheShare(t) != null && t.prompt.tokens != null)
+    let drop: { turn: LiveTurn; from: number; to: number } | null = null
+    for (let i = 1; i < measured.length; i++) {
+      const prev = cacheShare(measured[i - 1]!)!
+      const cur = cacheShare(measured[i]!)!
+      const t = measured[i]!
+      if (prev >= LOW_CACHE_SHARE && prev - cur >= DROP_POINTS && t.prompt.tokens! >= MIN_WASTED_TOKENS) {
+        drop = { turn: t, from: prev, to: cur }
+      }
+    }
+    if (!drop) continue
+    const breakTokens = drop.turn.prefix?.breakTokensEst ?? null
+    findings.push({
+      kind: 'drop',
+      severity: 'warning',
+      turnId: drop.turn.id,
+      params: {
+        client: drop.turn.client.label,
+        model: drop.turn.model,
+        from: Math.round(drop.from * 100),
+        to: Math.round(drop.to * 100),
+        promptTokens: Math.round(drop.turn.prompt.tokens!),
         breakTokens: breakTokens == null ? -1 : Math.round(breakTokens),
       },
     })

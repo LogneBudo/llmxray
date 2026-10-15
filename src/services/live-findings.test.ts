@@ -52,6 +52,31 @@ describe('computeFindings', () => {
     expect(f!.turnId).toBe('t5')
   })
 
+  it('flags the one turn where a cached client lost the cache, and points at the break', () => {
+    const turns = [
+      turn({ tokens: 10_000, cached: 9_000 }),
+      turn({ tokens: 10_000, cached: 9_200 }),
+      turn({ tokens: 10_000, cached: 300, prefix: { breakChar: 120, breakShare: 0.01, breakTokensEst: 120, identical: false } }),
+      turn({ tokens: 10_000, cached: 9_100 }),
+    ]
+    const drops = computeFindings(turns).filter((f) => f.kind === 'drop')
+    expect(drops).toHaveLength(1)
+    expect(drops[0]!.turnId).toBe(turns[2]!.id)
+    expect(drops[0]!.params).toMatchObject({ from: 92, to: 3, breakTokens: 120, promptTokens: 10_000 })
+  })
+
+  it('does not call a drop what the prefix finding already covers: a client that is never cached', () => {
+    const turns = [turn({ cached: 500 }), turn({ cached: 400 }), turn({ cached: 600 })]
+    const kinds = computeFindings(turns).map((f) => f.kind)
+    expect(kinds).toContain('prefix')
+    expect(kinds).not.toContain('drop')
+  })
+
+  it('ignores a drop on a prompt too small to matter', () => {
+    const turns = [turn({ tokens: 200, cached: 190 }), turn({ tokens: 200, cached: 10 })]
+    expect(computeFindings(turns).filter((f) => f.kind === 'drop')).toHaveLength(0)
+  })
+
   it('stays quiet for a well-cached client even with a large prompt', () => {
     const turns = [turn({ cached: 9_600 }), turn({ cached: 9_700 }), turn({ cached: 9_500 })]
     expect(computeFindings(turns).filter((f) => f.kind === 'prefix')).toHaveLength(0)

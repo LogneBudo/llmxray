@@ -77,6 +77,11 @@
       "body": "提示词约 {promptTokens} 个 token，缓存保留了 {share}%。开头附近有内容在每轮之间变化；其后的一切每次都被重新计算。",
       "bodyWithBreak": "提示词约 {promptTokens} 个 token，缓存保留了 {share}%。它在第 {breakTokens} 个 token 附近开始与上一轮不同；其后的一切每次都被重新计算。"
     },
+    "drop": {
+      "title": "{client} 在这一轮与 {model} 的对话中丢掉了缓存：上一轮保留 {from}%，这一轮 {to}%。",
+      "body": "提示约 {promptTokens} 个 token。新消息之前的某处在两轮之间发生了变化，因此该点之后的内容全部重新计算。之前的轮次都正常，所以这一轮才显眼。",
+      "bodyWithBreak": "提示约 {promptTokens} 个 token，在约第 {breakTokens} 个 token 处与上一轮不再匹配；该点之后的内容全部重新计算。之前的轮次都正常，所以这一轮才显眼。"
+    },
     "cpu": {
       "title": "{model} 有 {cpu}% 在 CPU 上运行。",
       "body": "它以 {context} token 的上下文加载，已无法完全放入显存，一部分从系统内存运行。预填充和生成会比仅用 GPU 慢好几倍。通常的解决办法是更小的上下文窗口，或量化的 KV 缓存（OLLAMA_KV_CACHE_TYPE=q8_0）。",
@@ -151,35 +156,35 @@
     "unknown": "无计数",
     "savesHint": "根据本次会话自身的数字估算：若提示词在新消息之前一直保持缓存，这些轮次本可跳过的预填充时间。缓存实验室负责实测；这里只是推算。"
   },
-    "viewer": {
-      "title": "发送的原始请求",
-      "rendered": "渲染视图",
-      "raw": "原始 JSON",
-      "searchPlaceholder": "在请求中搜索…",
-      "matches": "{n} 处匹配",
-      "size": "{chars} 个字符",
-      "copy": "复制",
-      "copied": "已复制",
-      "download": "下载",
-      "options": "选项",
-      "messages": "{n} 条消息",
-      "tools": "{n} 个工具",
-      "chars": "{n} 个字符",
-      "tokensEst": "约 {n} 个 token",
-      "params": "{n} 个参数",
-      "noParams": "无参数",
-      "expand": "显示全部（{chars} 个字符）",
-      "collapse": "收起",
-      "breakHere": "缓存在此中断",
-      "breakInTools": "本轮缓存在工具模式内部中断：工具列表与上一轮不同。",
-      "toolCalls": "工具调用",
-      "role": {
-        "system": "系统",
-        "developer": "开发者",
-        "user": "用户",
-        "assistant": "助手",
-        "tool": "工具结果",
-        "other": "{role}"
-      }
+  "viewer": {
+    "title": "发送的原始请求",
+    "rendered": "渲染视图",
+    "raw": "原始 JSON",
+    "searchPlaceholder": "在请求中搜索…",
+    "matches": "{n} 处匹配",
+    "size": "{chars} 个字符",
+    "copy": "复制",
+    "copied": "已复制",
+    "download": "下载",
+    "options": "选项",
+    "messages": "{n} 条消息",
+    "tools": "{n} 个工具",
+    "chars": "{n} 个字符",
+    "tokensEst": "约 {n} 个 token",
+    "params": "{n} 个参数",
+    "noParams": "无参数",
+    "expand": "显示全部（{chars} 个字符）",
+    "collapse": "收起",
+    "breakHere": "缓存在此中断",
+    "breakInTools": "本轮缓存在工具模式内部中断：工具列表与上一轮不同。",
+    "toolCalls": "工具调用",
+    "role": {
+      "system": "系统",
+      "developer": "开发者",
+      "user": "用户",
+      "assistant": "助手",
+      "tool": "工具结果",
+      "other": "{role}"
     }
+  }
 }

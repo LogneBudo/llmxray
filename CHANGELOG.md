@@ -5,6 +5,18 @@ All notable changes to LLMxRay are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.5] — 2026-10-15
+
+### Added
+
+- **Live flags the turn where a client lost the cache.** A client that was cached and then was not,
+  for one turn, gets a finding on that turn: cached share before and after, the prompt size, and the
+  token where the prompt stopped matching. The existing finding for a client that is never cached is
+  a median over several turns, which hides exactly this case; asked for on r/selfhosted.
+  Measured on Gemma 4: a new prefix drops the cached share from 99% to 0%.
+
+Verified against Ollama 0.40.4.
+
 ## [0.7.4] — 2026-10-14
 
 ### Added
