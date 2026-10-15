@@ -16,6 +16,8 @@ Open **http://localhost:5174** in your browser. Make sure [Ollama](https://ollam
 
 The second port is the **Live** page's observe port: point any other tool (VS Code Copilot, Open WebUI, Continue, n8n, your own scripts) at `http://localhost:11435` instead of Ollama and its traffic shows up on the Live page. Leave the mapping out if you do not need it. Both ports are reachable from other machines on your network, so the Live page can run full-screen on a second screen while the agents work.
 
+An agent that sends its calls through 11435 can also ask LLMxRay what went wrong with them: the image ships `llmxray-mcp`, a read-only MCP server (`docker exec -i <container> node bin/mcp.mjs`, or `npx -y -p llmxray llmxray-mcp` on the host with `LLMXRAY_URL` pointing at this container). See "For agents" in the main README.
+
 ![Live: turns from two clients, how much of each prompt came from the cache, and where it broke](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/live.png)
 
 ## Configuration

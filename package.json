@@ -1,6 +1,7 @@
 {
   "name": "llmxray",
-  "version": "0.7.6",
+  "version": "0.7.7",
+  "mcpName": "io.github.LogneBudo/llmxray",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/LogneBudo/llmxray.git"

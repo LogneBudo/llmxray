@@ -1,0 +1,46 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.LogneBudo/llmxray",
+  "description": "What went wrong with your own Ollama calls, in sentences with the fix. Local, read-only.",
+  "repository": {
+    "url": "https://github.com/LogneBudo/llmxray",
+    "source": "github"
+  },
+  "websiteUrl": "https://lognebudo.github.io/llmxray/",
+  "version": "0.7.7",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "llmxray",
+      "version": "0.7.7",
+      "transport": {
+        "type": "stdio"
+      },
+      "runtimeHint": "npx",
+      "runtimeArguments": [
+        { "type": "positional", "value": "-y", "isRepeated": false },
+        { "type": "positional", "value": "-p", "isRepeated": false },
+        { "type": "positional", "value": "llmxray", "isRepeated": false },
+        { "type": "positional", "value": "llmxray-mcp", "isRepeated": false }
+      ],
+      "environmentVariables": [
+        {
+          "name": "LLMXRAY_URL",
+          "description": "The running LLMxRay server the tools read from (start it with `npx llmxray`).",
+          "isRequired": false,
+          "isSecret": false,
+          "format": "string",
+          "default": "http://localhost:5174"
+        },
+        {
+          "name": "OLLAMA_URL",
+          "description": "The Ollama daemon, for the local_models tool.",
+          "isRequired": false,
+          "isSecret": false,
+          "format": "string",
+          "default": "http://localhost:11434"
+        }
+      ]
+    }
+  ]
+}

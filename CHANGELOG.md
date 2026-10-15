@@ -5,6 +5,16 @@ All notable changes to LLMxRay are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.7] — 2026-10-15
+
+### Added
+
+- **Listed in the MCP Registry.** `package.json` carries the registry's `mcpName` marker
+  (`io.github.LogneBudo/llmxray`) and the repo carries `server.json`, so `llmxray-mcp` can be found
+  from any client that reads the registry. No change to what the package does.
+
+Verified against Ollama 0.40.4.
+
 ## [0.7.6] — 2026-10-15
 
 ### Added
