@@ -1,3 +1,9 @@
+/**
+ * Protocol Observatory probes: the browser cannot call Ollama's bare endpoints
+ * cross-origin, so the server fetches on its behalf. Only Ollama and this
+ * machine may be probed: a relay that fetched any URL would let a page or a LAN
+ * peer read the user's internal network through LLMxRay.
+ */
 const INTERESTING_HEADERS = [
   'content-type', 'www-authenticate', 'server',
   'x-ratelimit-limit', 'x-ratelimit-remaining', 'x-ratelimit-reset',
@@ -13,11 +19,30 @@ function pickHeaders(response) {
   return picked
 }
 
-export function mountProbeRoutes(app) {
+const LOCAL_HOSTS = new Set(['localhost', '127.0.0.1', '[::1]', '::1'])
+
+/** True when the URL points at Ollama or at this machine. Anything else is refused. */
+export function probeAllowed(target, allowedOrigins = []) {
+  let u
+  try {
+    u = new URL(String(target))
+  } catch {
+    return false
+  }
+  if (u.protocol !== 'http:' && u.protocol !== 'https:') return false
+  if (allowedOrigins.includes(u.origin)) return true
+  return LOCAL_HOSTS.has(u.hostname)
+}
+
+export function mountProbeRoutes(app, { allowedOrigins = [] } = {}) {
+  const refuse = (res, target) =>
+    res.status(403).json({ error: `LLMxRay only probes Ollama and this machine, not ${String(target).slice(0, 200)}` })
+
   // Single URL probe
   app.post('/api-probe', async (req, res) => {
     const { url: target, method = 'GET', headers = {}, body } = req.body ?? {}
     if (!target) return res.status(400).json({ error: 'Missing url parameter' })
+    if (!probeAllowed(target, allowedOrigins)) return refuse(res, target)
 
     try {
       const response = await fetch(target, {
@@ -35,6 +60,7 @@ export function mountProbeRoutes(app) {
   app.get('/api-probe', async (req, res) => {
     const target = req.query.url
     if (!target) return res.status(400).json({ error: 'Missing url parameter' })
+    if (!probeAllowed(target, allowedOrigins)) return refuse(res, target)
 
     try {
       const response = await fetch(target)
@@ -47,7 +73,7 @@ export function mountProbeRoutes(app) {
 
   // Multi-URL probe
   app.post('/api-probe-multi', async (req, res) => {
-    const urls = req.body?.urls ?? []
+    const urls = (req.body?.urls ?? []).filter((u) => probeAllowed(u, allowedOrigins))
     const results = await Promise.allSettled(
       urls.map(async (url) => {
         const controller = new AbortController()

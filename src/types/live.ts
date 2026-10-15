@@ -18,6 +18,7 @@ export type LiveProtocol =
   | 'openai-chat'
   | 'openai-completions'
   | 'openai-embeddings'
+  | 'anthropic-messages'
 
 export interface LivePrefixBreak {
   /** Character offset in the canonical prompt where this turn stopped matching the previous one. */
@@ -53,6 +54,8 @@ export interface LiveTurn {
   error: string | null
   /** Set when the daemon rejected the request because the prompt was larger than the loaded context. */
   contextExceeded: { promptTokens: number; contextLength: number } | null
+  /** Time the daemon spent loading the model for this turn, when it said. A reload explains an empty cache. */
+  loadMs?: number | null
   prompt: {
     tokens: number | null
     cached: number | null

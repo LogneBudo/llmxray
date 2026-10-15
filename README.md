@@ -92,7 +92,7 @@ your scripts ────┘        (LLMxRay)                   └─ where the
 
 Select a turn to see what the prompt is made of and the exact point where it stopped matching the previous one, which is where the cache broke. Findings are plain sentences, each linked to the turn that proves it: a client re-reading its whole prompt every turn, a model running partly on CPU, tool schemas taking 40% of every prompt. Only counts and timings are kept, in memory. Prompt text is an opt-in that writes to a local file. Nothing leaves your machine.
 
-Both ports listen on your network, not just localhost, so the Live page can run full-screen on a second screen or another machine while the agents work.
+Both ports answer only this machine by default, because the Live log holds whatever your tools sent. Start with `npx llmxray --host 0.0.0.0` to let other machines on your network reach them, for a Live page on a second screen or a shared GPU box.
 
 ### Cache Lab
 
@@ -226,6 +226,8 @@ Three tools, all read-only, nothing leaves the machine:
 | `local_models` | Which models are pulled, their size and quantisation, which are loaded now and with what context, and whether each fits in video memory. |
 
 LLMxRay itself must be running (`npx llmxray`). The MCP server reads from it over localhost.
+
+Name yourself so your turns are yours: send the header `X-LLMxRay-Client: my-agent`, or use `http://localhost:11435/?client=my-agent` as the base URL, and pass `my-agent` as `client` to the tools. Where to set the base URL: Ollama SDKs and CLI `OLLAMA_HOST=127.0.0.1:11435`; OpenAI-compatible clients `base_url=http://localhost:11435/v1`; Claude Code `ANTHROPIC_BASE_URL=http://localhost:11435`; Continue `apiBase`; Open WebUI `OLLAMA_BASE_URL`.
 
 ---
 

@@ -21,7 +21,8 @@
     "completionTokens": "Completion",
     "totalTokens": "Total",
     "estimatedCost": "Est. Cost",
-    "pricingSource": "Source"
+    "pricingSource": "Source",
+    "noRate": "no rate for this model"
   },
   "percentiles": {
     "latencyTitle": "Request Latency (P50 / P95 / P99)",

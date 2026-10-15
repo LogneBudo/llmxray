@@ -16,6 +16,9 @@ export async function startServer(options = {}) {
   const port = Number(options.port ?? process.env.PORT ?? 5174)
   const observeEnabled = options.observe !== false && process.env.OBSERVE !== '0'
   const observePort = Number(options.observePort ?? process.env.OBSERVE_PORT ?? 11435)
+  // Both ports answer only this machine unless asked: the Live log holds other tools' prompts,
+  // and the proxy reaches Ollama's admin routes. --host 0.0.0.0 opens them to the network.
+  const host = options.host ?? process.env.HOST ?? '127.0.0.1'
 
   if (!existsSync(DIST_DIR)) {
     console.error('Error: dist/ directory not found. Run "npm run build" first.')
@@ -56,12 +59,12 @@ export async function startServer(options = {}) {
     res.json(cachedInfo)
   })
 
-  // API probe endpoints
-  mountProbeRoutes(app)
+  // API probe endpoints: they fetch on the user's behalf, so only Ollama and this machine.
+  mountProbeRoutes(app, { allowedOrigins: [new URL(ollamaUrl).origin] })
 
   // Live page: the observe port (an Ollama look-alike that records what passes
   // through) and the routes the page reads it from.
-  const observer = createObserver({ ollamaUrl, port: observePort })
+  const observer = createObserver({ ollamaUrl, port: observePort, host })
   const observeHandler = createObserveHandler(observer)
   app.use('/__observe', (req, res) => observeHandler(req, res))
   let observeError = null
@@ -84,7 +87,7 @@ export async function startServer(options = {}) {
   const pkg = JSON.parse(readFileSync(join(__dirname, '..', 'package.json'), 'utf8'))
 
   const server = await new Promise((resolve, reject) => {
-    const s = app.listen(port, () => resolve(s))
+    const s = app.listen(port, host, () => resolve(s))
     s.once('error', (err) => {
       if (err.code === 'EADDRINUSE') reject(new Error(`port ${port} is already in use; pick another with --port`))
       else reject(err)
@@ -95,10 +98,10 @@ export async function startServer(options = {}) {
     console.log()
     console.log(`  LLMxRay v${pkg.version}`)
     console.log()
-    console.log(`  App:     http://localhost:${boundPort}`)
+    console.log(`  App:     http://localhost:${boundPort}${host === '127.0.0.1' ? '' : `  (listening on ${host})`}`)
     console.log(`  Ollama:  ${ollamaUrl}`)
     if (observer.state.listening) {
-      console.log(`  Observe: http://localhost:${observer.state.port}  (point other tools here to see them on the Live page)`)
+      console.log(`  Observe: http://localhost:${observer.state.port}  (point other tools here to see them on the Live page${host === '127.0.0.1' ? '; --host 0.0.0.0 for other machines' : ''})`)
     } else if (observeEnabled) {
       console.log(`  Observe: off (${observeError}; use --observe-port to pick another)`)
     }

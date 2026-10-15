@@ -81,6 +81,17 @@ describe('the shipped server reaches Ollama', () => {
     expect(seen[0].url).toBe('/v1/models')
   })
 
+  it('probes Ollama and this machine, and refuses any other URL', async () => {
+    const ok = await call(`/api-probe?url=${encodeURIComponent(`http://127.0.0.1:${fake.address().port}/api/tags`)}`)
+    expect(ok.status).toBe(200)
+    expect(JSON.parse(ok.text).status).toBe(200)
+    const no = await call(`/api-probe?url=${encodeURIComponent('http://169.254.169.254/latest/meta-data/')}`)
+    expect(no.status).toBe(403)
+    expect(no.text).toMatch(/only probes Ollama and this machine/)
+    const multi = await call('/api-probe-multi', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ urls: ['http://10.0.0.1/admin', `http://127.0.0.1:${fake.address().port}/api/tags`] }) })
+    expect(JSON.parse(multi.text).results).toHaveLength(1)
+  })
+
   it('does not proxy the app routes that merely start with /api', async () => {
     seen = []
     const r = await call('/api-probe/health')
@@ -109,6 +120,23 @@ describe('the observe port', () => {
     expect(mine).toBeTruthy()
     expect(mine.prompt.tokens).toBe(12)
     expect(mine.prompt.cached).toBe(10)
+  })
+
+  it('lets a client name itself with a header or ?client=, and keeps that name off the wire to Ollama', async () => {
+    seen = []
+    const body = JSON.stringify({ model: 'fake:latest', messages: [{ role: 'user', content: 'hello' }], stream: false })
+    await (await fetch(`http://127.0.0.1:${app.observePort}/api/chat`, { method: 'POST', headers: { 'content-type': 'application/json', 'x-llmxray-client': 'my-agent' }, body })).text()
+    await (await fetch(`http://127.0.0.1:${app.observePort}/api/chat?client=other-agent`, { method: 'POST', headers: { 'content-type': 'application/json' }, body })).text()
+    const turns = JSON.parse((await call('/__observe/turns?since=0')).text).turns
+    expect(turns.find((t) => t.client.label === 'my-agent')?.client.id).toBe('tag:my-agent')
+    expect(turns.find((t) => t.client.label === 'other-agent')?.client.id).toBe('tag:other-agent')
+    expect(seen.map((s) => s.url)).toEqual(['/api/chat', '/api/chat'])
+  })
+
+  it('ignores a settings POST that is not JSON, the kind a cross-site page can send', async () => {
+    const r = await call('/__observe/settings', { method: 'POST', headers: { 'content-type': 'text/plain' }, body: '{"keepText":true}' })
+    expect(r.status).toBe(200)
+    expect(JSON.parse(r.text).keepText).toBe(false)
   })
 
   it('records a client that disconnects mid-stream as cancelled, not as a clean stop', async () => {

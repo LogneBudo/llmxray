@@ -5,6 +5,42 @@ All notable changes to LLMxRay are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.9] — 2026-10-15
+
+### Changed
+
+- **Both ports answer only this machine by default.** The Live log holds whatever your tools sent,
+  and the proxy reaches Ollama's admin routes, so they are no longer open to the network unless you
+  start with `--host 0.0.0.0` (env `HOST`). The Docker image keeps binding every interface inside
+  the container; publish the port on `127.0.0.1` if you do not want it reachable.
+- **The Protocol Observatory's probe only fetches Ollama and this machine.** It fetched any URL on
+  the caller's behalf before, which let a page or a network peer read your internal network through
+  LLMxRay. The dev server's probe no longer sends a wildcard CORS header either.
+- **Settings posts on the Live routes must be JSON.** A cross-site form or text/plain post, the kind a
+  browser sends without asking, can no longer flip prompt recording or clear the log.
+- **Estimates say so.** "Around token N" is scaled from characters and is now labelled as an
+  estimate on the Live page and in the MCP tools. The CPU finding no longer promises "several times
+  slower" at a 5% share.
+- **A model that was (re)loaded no longer reads as a lost cache.** The turn carries the load time;
+  the prefix and drop findings skip it, and the MCP metrics say why nothing was cached.
+- **A model entirely off the GPU is not a "partly on CPU" finding.** On a machine without a GPU the
+  finding and its "smaller context" advice were wrong.
+- **An unknown model has no cost.** It was priced at $0.10 per million; the table now says "no rate
+  for this model" and the totals count only known rates.
+- **The Empty badge no longer flags a short answer.** "Hello! How can I help you today?" was Empty.
+
+### Added
+
+- **A client can name itself.** Send `X-LLMxRay-Client: my-agent`, or put `?client=my-agent` on the
+  base URL, and the Live page and the MCP tools show that name instead of a User-Agent guess. The
+  name never reaches Ollama. Two agents on the same SDK stay apart, and an agent can find its own turns.
+- **Claude Code's traffic is recorded.** Ollama's Anthropic-compatible `/v1/messages` is now a
+  captured protocol: system prompt, content blocks, tools, cached and uncached tokens, stop reason.
+  Set `ANTHROPIC_BASE_URL=http://localhost:11435`.
+- `--host` on the CLI, and the base-URL setting per client in the "For agents" section.
+
+Verified against Ollama 0.40.4.
+
 ## [0.7.8] — 2026-10-15
 
 ### Fixed

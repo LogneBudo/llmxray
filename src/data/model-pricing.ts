@@ -31,14 +31,8 @@ export const MODEL_PRICING: ModelPricing[] = [
   { family: 'starcoder', inputPer1M: 0.10, outputPer1M: 0.10, source: 'Estimated' },
 ]
 
-const DEFAULT_PRICING: ModelPricing = {
-  family: 'unknown',
-  inputPer1M: 0.10,
-  outputPer1M: 0.10,
-  source: 'Estimated',
-}
-
-export function findPricing(modelName: string): ModelPricing {
+/** The rate for a model, or null when there is none: a cost from a made-up rate is not a cost. */
+export function findPricing(modelName: string): ModelPricing | null {
   const name = modelName.toLowerCase().split(':')[0]!
   // Try exact match first
   const exact = MODEL_PRICING.find((p) => name === p.family)
@@ -46,13 +40,14 @@ export function findPricing(modelName: string): ModelPricing {
   // Try prefix match (e.g. "llama3.1" matches "llama3.1-8b-instruct")
   const prefix = MODEL_PRICING.find((p) => name.startsWith(p.family))
   if (prefix) return prefix
-  return { ...DEFAULT_PRICING, family: name }
+  return null
 }
 
 export function calculateCost(
   promptTokens: number,
   completionTokens: number,
-  pricing: ModelPricing,
-): number {
+  pricing: ModelPricing | null,
+): number | null {
+  if (!pricing) return null
   return (promptTokens * pricing.inputPer1M + completionTokens * pricing.outputPer1M) / 1_000_000
 }

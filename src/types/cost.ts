@@ -6,8 +6,9 @@ export interface ModelUsageSummary {
   completionTokens: number
   totalTokens: number
   sessionCount: number
-  estimatedCost: number
-  pricing: ModelPricing
+  /** null when the model has no known rate. */
+  estimatedCost: number | null
+  pricing: ModelPricing | null
 }
 
 export interface DailyUsageSummary {

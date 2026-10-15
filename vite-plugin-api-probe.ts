@@ -1,4 +1,5 @@
 import type { Plugin } from 'vite'
+import { probeAllowed } from './server/api-probe.mjs'
 import type { IncomingMessage } from 'node:http'
 
 /** Read the full body from a Node IncomingMessage stream */
@@ -34,15 +35,14 @@ function pickHeaders(response: Response): Record<string, string> {
  * - /api-probe-multi — parallel URL probing with 2s timeout each
  */
 export function apiProbePlugin(): Plugin {
+  // Same allowlist as the shipped server: Ollama's origin and this machine.
+  const allowed = [new URL(process.env.OLLAMA_URL ?? 'http://localhost:11434').origin]
   return {
     name: 'api-probe-proxy',
     configureServer(server) {
       // --- Multi-URL probe ---
       server.middlewares.use('/api-probe-multi', async (req, res) => {
         res.setHeader('Content-Type', 'application/json')
-        res.setHeader('Access-Control-Allow-Origin', '*')
-        res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS')
-        res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
 
         if (req.method === 'OPTIONS') {
           res.statusCode = 204
@@ -52,7 +52,7 @@ export function apiProbePlugin(): Plugin {
 
         try {
           const payload = JSON.parse(await readBody(req))
-          const urls: string[] = payload.urls ?? []
+          const urls: string[] = (payload.urls ?? []).filter((u: string) => probeAllowed(u, allowed))
           const results = await Promise.allSettled(
             urls.map(async (url: string) => {
               const controller = new AbortController()
@@ -82,9 +82,6 @@ export function apiProbePlugin(): Plugin {
       // --- Single URL probe ---
       server.middlewares.use('/api-probe', async (req, res) => {
         res.setHeader('Content-Type', 'application/json')
-        res.setHeader('Access-Control-Allow-Origin', '*')
-        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
-        res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
 
         if (req.method === 'OPTIONS') {
           res.statusCode = 204
@@ -117,6 +114,11 @@ export function apiProbePlugin(): Plugin {
         if (!target) {
           res.statusCode = 400
           res.end(JSON.stringify({ error: 'Missing url parameter' }))
+          return
+        }
+        if (!probeAllowed(target, allowed)) {
+          res.statusCode = 403
+          res.end(JSON.stringify({ error: `LLMxRay only probes Ollama and this machine, not ${target.slice(0, 200)}` }))
           return
         }
 

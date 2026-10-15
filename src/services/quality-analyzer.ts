@@ -108,7 +108,9 @@ export function detectEmpty(text: string): QualityCheckResult {
       detail: '0 words',
     }
   }
-  if (words.length < 10) {
+  // One or two words is a non-answer worth a flag. A short sentence is an answer:
+  // "Hello! How can I help you today?" was badged Empty before this line.
+  if (words.length < 3) {
     return {
       detector: 'empty',
       status: 'warn',

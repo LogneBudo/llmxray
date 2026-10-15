@@ -6,8 +6,8 @@ defineProps<{
   data: ModelUsageSummary[]
 }>()
 
-function formatCost(value: number): string {
-  return formatUsd(value)
+function formatCost(value: number | null): string {
+  return value == null ? '—' : formatUsd(value)
 }
 </script>
 
@@ -39,7 +39,7 @@ function formatCost(value: number): string {
             <td class="px-2 py-2 text-end">{{ row.completionTokens.toLocaleString() }}</td>
             <td class="px-2 py-2 text-end">{{ row.totalTokens.toLocaleString() }}</td>
             <td class="px-2 py-2 text-end text-accent">{{ formatCost(row.estimatedCost) }}</td>
-            <td class="px-2 py-2 text-end text-text-muted">{{ row.pricing.source }}</td>
+            <td class="px-2 py-2 text-end text-text-muted">{{ row.pricing ? row.pricing.source : $t('cost.table.noRate') }}</td>
           </tr>
         </tbody>
       </table>

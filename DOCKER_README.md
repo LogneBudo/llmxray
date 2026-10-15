@@ -14,7 +14,7 @@ docker run -p 5174:5174 -p 11435:11435 djovaneli/llmxray
 
 Open **http://localhost:5174** in your browser. Make sure [Ollama](https://ollama.com) is running on your machine.
 
-The second port is the **Live** page's observe port: point any other tool (VS Code Copilot, Open WebUI, Continue, n8n, your own scripts) at `http://localhost:11435` instead of Ollama and its traffic shows up on the Live page. Leave the mapping out if you do not need it. Both ports are reachable from other machines on your network, so the Live page can run full-screen on a second screen while the agents work.
+The second port is the **Live** page's observe port: point any other tool (VS Code Copilot, Open WebUI, Continue, n8n, your own scripts) at `http://localhost:11435` instead of Ollama and its traffic shows up on the Live page. Leave the mapping out if you do not need it. A published port is reachable from other machines on your network, so the Live page can run full-screen on a second screen while the agents work; bind it to `127.0.0.1:5174:5174` if you do not want that.
 
 An agent that sends its calls through 11435 can also ask LLMxRay what went wrong with them: the image ships `llmxray-mcp`, a read-only MCP server (`docker exec -i <container> node bin/mcp.mjs`, or `npx -y -p llmxray llmxray-mcp` on the host with `LLMXRAY_URL` pointing at this container). See "For agents" in the main README.
 

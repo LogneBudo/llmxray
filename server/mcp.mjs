@@ -27,7 +27,8 @@ function packageVersion() {
 const HOW_TO_ROUTE =
   'No turns have been seen yet. Point your Ollama client at the observe port instead of Ollama itself: ' +
   'http://localhost:11435 (OLLAMA_HOST=127.0.0.1:11435, or the base URL of your client). It behaves exactly like Ollama ' +
-  'and forwards everything; LLMxRay only records what passes. Then call this tool again.'
+  'and forwards everything; LLMxRay only records what passes. Name yourself with the header X-LLMxRay-Client: <your name> ' +
+  '(or ?client=<your name> on the base URL) and pass that name as "client" here. Claude Code: ANTHROPIC_BASE_URL=http://localhost:11435. Then call this tool again.'
 
 export function createTools({ serverUrl, ollamaUrl, fetchImpl = fetch }) {
   const base = serverUrl.replace(/\/+$/, '')
@@ -80,9 +81,10 @@ export function createTools({ serverUrl, ollamaUrl, fetchImpl = fetch }) {
     ]
     if (t.prompt.contextRequested != null) lines.push(`context requested: ${t.prompt.contextRequested}`)
     if (t.contextExceeded) lines.push(`REJECTED: prompt ${t.contextExceeded.promptTokens} tokens > loaded context ${t.contextExceeded.contextLength}`)
+    if (t.loadMs != null && t.loadMs > 500) lines.push(`model was (re)loaded for this turn: ${Math.round(t.loadMs)} ms, which is why nothing was cached`)
     if (t.toolsOffered) lines.push(`tools offered: ${t.toolsOffered}${t.toolCalls.length ? `, called: ${t.toolCalls.join(', ')}` : ', none called'}`)
     if (t.fit) lines.push(`model fit: context ${t.fit.contextLength ?? '?'}, ${t.fit.cpuShare == null ? 'VRAM share unknown' : `${Math.round((1 - t.fit.cpuShare) * 100)}% in VRAM`}${t.fit.runner ? `, runner ${t.fit.runner}` : ''}`)
-    if (t.prefix && !t.prefix.identical) lines.push(`prefix: stopped matching the previous turn at ${Math.round(t.prefix.breakShare * 100)}% of the prompt${t.prefix.breakTokensEst != null ? ` (about token ${t.prefix.breakTokensEst})` : ''}`)
+    if (t.prefix && !t.prefix.identical) lines.push(`prefix: stopped matching the previous turn at ${Math.round(t.prefix.breakShare * 100)}% of the prompt${t.prefix.breakTokensEst != null ? ` (about token ${t.prefix.breakTokensEst}, an estimate from characters)` : ''}`)
     return lines.join('\n')
   }
 

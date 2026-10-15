@@ -20,5 +20,7 @@ EXPOSE 5174 11435
 ENV OLLAMA_URL=http://host.docker.internal:11434
 ENV PORT=5174
 ENV OBSERVE_PORT=11435
+# Inside a container the ports must bind every interface to be published at all.
+ENV HOST=0.0.0.0
 
 CMD ["node", "server/index.mjs"]

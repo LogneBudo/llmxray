@@ -14,6 +14,13 @@ const MIN_WASTED_TOKENS = 500
 const DROP_POINTS = 0.4
 const CPU_SHARE_FLOOR = 0.05
 const TOOLS_SHARE_FLOOR = 0.25
+/** A turn whose model took this long to load had no cache to keep; it proves nothing about the prompt. */
+const RELOAD_MS = 500
+
+/** True when the daemon (re)loaded the model for this turn. */
+export function reloaded(t) {
+  return t.loadMs != null && t.loadMs > RELOAD_MS
+}
 
 export function median(values) {
   const v = values.filter((n) => Number.isFinite(n)).sort((a, b) => a - b)
@@ -85,7 +92,7 @@ export function computeFindings(turns) {
 
   // 1. A client whose prompts keep breaking the cache early.
   for (const [, group] of groupBy(chatTurns, (t) => `${t.client.id}|${t.model}`)) {
-    const measured = group.filter((t) => cacheShare(t) != null && t.prompt.evaluated != null)
+    const measured = group.filter((t) => cacheShare(t) != null && t.prompt.evaluated != null && !reloaded(t))
     if (measured.length < MIN_TURNS) continue
     const share = median(measured.map((t) => cacheShare(t)))
     const wasted = median(measured.map((t) => t.prompt.evaluated))
@@ -120,7 +127,8 @@ export function computeFindings(turns) {
       const prev = cacheShare(measured[i - 1])
       const cur = cacheShare(measured[i])
       const t = measured[i]
-      if (prev >= LOW_CACHE_SHARE && prev - cur >= DROP_POINTS && t.prompt.tokens >= MIN_WASTED_TOKENS) {
+      // A reload explains the empty cache, so a reloaded turn is never a drop.
+      if (prev >= LOW_CACHE_SHARE && prev - cur >= DROP_POINTS && t.prompt.tokens >= MIN_WASTED_TOKENS && !reloaded(t)) {
         drop = { turn: t, from: prev, to: cur }
       }
     }
@@ -149,7 +157,7 @@ export function computeFindings(turns) {
   for (const [model, group] of byModel) {
     const latest = group[group.length - 1]
     const cpu = latest.fit.cpuShare
-    if (cpu < CPU_SHARE_FLOOR) continue
+    if (cpu < CPU_SHARE_FLOOR || cpu >= 0.999) continue
     findings.push({
       kind: 'cpu',
       severity: 'warning',
@@ -244,22 +252,22 @@ export function renderFinding(f) {
       return (
         `${p.client} re-reads about ${p.tokens} tokens on every turn with ${p.model}. ` +
         (p.breakTokens >= 0
-          ? `The prompt is about ${p.promptTokens} tokens and the cache keeps ${p.share}%. It stops matching the previous turn around token ${p.breakTokens}; everything after that point is recomputed each time.`
+          ? `The prompt is about ${p.promptTokens} tokens and the cache keeps ${p.share}%. It stops matching the previous turn around token ${p.breakTokens} (an estimate from characters); everything after that point is recomputed each time.`
           : `The prompt is about ${p.promptTokens} tokens and the cache keeps ${p.share}% of it. Something near the start changes between turns; everything after it is recomputed each time.`)
       )
     case 'drop':
       return (
         `${p.client} lost the cache on this turn with ${p.model}: ${p.from}% kept on the previous turn, ${p.to}% on this one. ` +
         (p.breakTokens >= 0
-          ? `The prompt is about ${p.promptTokens} tokens and stopped matching the previous turn around token ${p.breakTokens}; everything after that point was recomputed. The turns before it were fine, which is why this one stands out.`
+          ? `The prompt is about ${p.promptTokens} tokens and stopped matching the previous turn around token ${p.breakTokens} (an estimate from characters); everything after that point was recomputed. The turns before it were fine, which is why this one stands out.`
           : `The prompt is about ${p.promptTokens} tokens. Something before the new message changed between the two turns, so everything after that point was recomputed. The turns before it were fine, which is why this one stands out.`)
       )
     case 'cpu':
       return (
         `${p.model} runs ${p.cpu}% on CPU. ` +
         (p.context >= 0
-          ? `It is loaded with a ${p.context}-token context and no longer fits in video memory, so part of it runs from system RAM. Expect prefill and generation several times slower than on the GPU alone. A smaller context window, or a quantised KV cache (OLLAMA_KV_CACHE_TYPE=q8_0), is the usual fix.`
-          : `Part of it runs from system RAM rather than video memory. Expect prefill and generation several times slower than on the GPU alone. A smaller context window, or a quantised KV cache, is the usual fix.`)
+          ? `It is loaded with a ${p.context}-token context and no longer fits in video memory, so part of it runs from system RAM. Prefill and generation slow down with that share, from a little at 5% to several times at half. A smaller context window, or a quantised KV cache (OLLAMA_KV_CACHE_TYPE=q8_0), is the usual fix.`
+          : `Part of it runs from system RAM rather than video memory. Prefill and generation slow down with that share, from a little at 5% to several times at half. A smaller context window, or a quantised KV cache, is the usual fix.`)
       )
     case 'tools':
       return (

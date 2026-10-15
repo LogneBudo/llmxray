@@ -18,11 +18,17 @@ export interface LiveClientSummary {
   tokens: number
   toolCalls: number
   prefillMs: number
-  /** Prefill time the turns would have skipped had their prompts stayed cached up to the new message. */
+  /**
+   * Prefill time the turns would have skipped had their prompts stayed cached up to the new
+   * message. An ESTIMATE: the message size is scaled from characters onto the daemon's token
+   * count and prefill is taken as linear in the uncached tokens. Label it as such wherever shown.
+   */
   cacheFixSavesMs: number | null
 }
 
 export function median(values: number[]): number | null
+/** True when the daemon (re)loaded the model for this turn; such a turn proves nothing about the prompt. */
+export function reloaded(t: LiveTurn): boolean
 export function cacheShare(t: LiveTurn): number | null
 export function messageTokensEst(t: LiveTurn): number | null
 export function cacheFixSavingMs(t: LiveTurn): number | null

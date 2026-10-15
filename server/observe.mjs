@@ -27,7 +27,7 @@ import {
 const MAX_RECORDED_RESPONSE = 16 * 1024 * 1024
 const TEXT_DIR = join(os.homedir(), '.llmxray', 'observe')
 
-export function createObserver({ ollamaUrl, port = 11435, host = '0.0.0.0', keepText = false, capacity = 500 } = {}) {
+export function createObserver({ ollamaUrl, port = 11435, host = '127.0.0.1', keepText = false, capacity = 500 } = {}) {
   const target = new URL(ollamaUrl ?? 'http://localhost:11434')
   const log = createTurnLog(capacity)
   const state = { keepText: Boolean(keepText), port, host, listening: false, error: null, ollamaUrl: target.origin, startedAt: Date.now() }
@@ -124,6 +124,8 @@ export function createObserver({ ollamaUrl, port = 11435, host = '0.0.0.0', keep
       status,
       error: parsed?.error ?? (status === 499 ? 'cancelled by the client before the answer finished' : status >= 400 ? `HTTP ${status}` : null),
       contextExceeded: parsed?.contextExceeded ?? null,
+      /** Time the daemon spent loading the model for this turn; a reload explains an empty cache. */
+      loadMs: parsed?.loadMs ?? null,
       prompt: {
         tokens: parsed?.promptTokens ?? null,
         cached: parsed?.cachedTokens ?? null,
@@ -169,9 +171,18 @@ export function createObserver({ ollamaUrl, port = 11435, host = '0.0.0.0', keep
   }
 
   const server = http.createServer((req, res) => {
+    // ?client=name on the URL is ours, not Ollama's: lift it into the header and drop it.
+    const reqUrl = new URL(req.url ?? '/', 'http://local')
+    const clientParam = reqUrl.searchParams.get('client')
+    if (clientParam) {
+      reqUrl.searchParams.delete('client')
+      req.url = reqUrl.pathname + (reqUrl.searchParams.size ? `?${reqUrl.searchParams}` : '')
+      if (!req.headers['x-llmxray-client']) req.headers['x-llmxray-client'] = clientParam
+    }
     const cls = classifyPath(req.method, req.url ?? '/')
     const startedAt = Date.now()
     const upstreamHeaders = { ...req.headers, host: target.host }
+    delete upstreamHeaders['x-llmxray-client']
 
     const forward = (bodyBuffer) => {
       const secure = target.protocol === 'https:'
@@ -323,6 +334,9 @@ export function createObserver({ ollamaUrl, port = 11435, host = '0.0.0.0', keep
 
 /** Read a JSON body from a raw Node request. */
 async function readJson(req) {
+  // Only a JSON body counts. A cross-site form or text/plain POST, which browsers send
+  // without a preflight, must not be able to flip settings or clear the log.
+  if (!/^application\/json\b/i.test(String(req.headers['content-type'] ?? ''))) return {}
   // Behind Express the body parser has already read the stream; take its result.
   if (req.body && typeof req.body === 'object') return req.body
   const chunks = []

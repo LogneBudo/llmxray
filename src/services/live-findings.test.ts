@@ -156,3 +156,21 @@ describe('summariseClients', () => {
     expect(summariseClients([t])[0]!.cacheFixSavesMs).toBeNull()
   })
 })
+
+describe('what does not count as a cache problem', () => {
+  it('a turn whose model was (re)loaded is not a drop and not a prefix break', () => {
+    const turns = [
+      turn({ cached: 9_500 }),
+      turn({ cached: 9_500 }),
+      turn({ cached: 0, loadMs: 4_200 } as Partial<LiveTurn> & { cached: number }),
+    ]
+    const f = computeFindings(turns)
+    expect(f.find((x) => x.kind === 'drop')).toBeUndefined()
+    expect(f.find((x) => x.kind === 'prefix')).toBeUndefined()
+  })
+
+  it('a model entirely off the GPU is not a "partly on CPU" finding', () => {
+    const turns = [turn({ fit: { contextLength: 8192, size: 4e9, sizeVram: 0, cpuShare: 1, runner: 'llamacpp' } })]
+    expect(computeFindings(turns).find((x) => x.kind === 'cpu')).toBeUndefined()
+  })
+})

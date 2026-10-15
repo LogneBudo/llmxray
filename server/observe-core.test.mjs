@@ -1,6 +1,7 @@
 // @vitest-environment node
 import { describe, it, expect } from 'vitest'
 import {
+  parseAnthropicResponse,
   classifyPath,
   identifyClient,
   anatomy,
@@ -222,5 +223,70 @@ describe('createTurnLog', () => {
     log.clear()
     expect(log.size).toBe(0)
     expect(log.previousCanonical('k')).toBeNull()
+  })
+})
+
+describe('anthropic-messages (Claude Code through Ollama)', () => {
+  it('classifies /v1/messages as a chat turn', () => {
+    expect(classifyPath('POST', '/v1/messages')).toEqual({ protocol: 'anthropic-messages', kind: 'chat' })
+  })
+
+  it('reads the prompt as cached plus uncached tokens from a plain JSON answer', () => {
+    // Measured on Ollama 0.40.4: the second identical prompt reports input_tokens 5, cache_read 30.
+    const r = parseAnthropicResponse(JSON.stringify({ type: 'message', role: 'assistant', content: [{ type: 'text', text: 'Blue.' }], stop_reason: 'end_turn', usage: { input_tokens: 5, cache_read_input_tokens: 30, output_tokens: 2 } }))
+    expect(r.promptTokens).toBe(35)
+    expect(r.cachedTokens).toBe(30)
+    expect(r.evalTokens).toBe(2)
+    expect(r.doneReason).toBe('end_turn')
+    expect(r.generatedChars).toBe(5)
+  })
+
+  it('reads the SSE stream: usage from message_start and message_delta, tool names, text length', () => {
+    const sse = [
+      'event: message_start',
+      'data: {"type":"message_start","message":{"role":"assistant","content":[],"usage":{"input_tokens":19,"output_tokens":0}}}',
+      'event: content_block_start',
+      'data: {"type":"content_block_start","index":0,"content_block":{"type":"tool_use","name":"read_file","input":{}}}',
+      'event: content_block_delta',
+      'data: {"type":"content_block_delta","index":1,"delta":{"type":"text_delta","text":"Hello"}}',
+      'event: message_delta',
+      'data: {"type":"message_delta","delta":{"stop_reason":"tool_use"},"usage":{"output_tokens":7}}',
+      '',
+    ].join('\n')
+    const r = parseAnthropicResponse(sse)
+    expect(r.promptTokens).toBe(19)
+    expect(r.cachedTokens).toBeNull()
+    expect(r.evalTokens).toBe(7)
+    expect(r.doneReason).toBe('tool_use')
+    expect(r.toolCalls).toEqual(['read_file'])
+    expect(r.generatedChars).toBe(5)
+  })
+
+  it('takes the system prompt from the top level and reads content blocks', () => {
+    const a = anatomy(
+      {
+        system: 'You are terse.',
+        tools: [{ name: 'read_file', input_schema: { type: 'object' } }],
+        messages: [
+          { role: 'user', content: [{ type: 'text', text: 'first' }] },
+          { role: 'assistant', content: [{ type: 'tool_use', name: 'read_file', input: { path: 'a' } }] },
+          { role: 'user', content: [{ type: 'tool_result', content: 'data' }, { type: 'text', text: 'now?' }] },
+        ],
+      },
+      'anthropic-messages',
+    )
+    expect(a.systemChars).toBe('You are terse.'.length)
+    expect(a.toolsOffered).toBe(1)
+    expect(a.toolNames).toEqual(['read_file'])
+    expect(a.messageChars).toBe('[tool_result]data'.length + 'now?'.length)
+    expect(a.historyChars).toBeGreaterThan(0)
+    expect(a.canonical.startsWith('<system>You are terse.\n<tools>')).toBe(true)
+  })
+})
+
+describe('a client that names itself', () => {
+  it('wins over the User-Agent guess through X-LLMxRay-Client', () => {
+    const c = identifyClient({ 'user-agent': 'ollama-python/0.4', 'x-llmxray-client': 'swarm-watch' })
+    expect(c).toEqual({ id: 'tag:swarm-watch', label: 'swarm-watch', userAgent: 'ollama-python/0.4' })
   })
 })

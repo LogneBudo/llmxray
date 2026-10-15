@@ -23,6 +23,8 @@ if (args.includes('--help') || args.includes('-h')) {
     --observe-port <n>     Port other tools point at to appear on the Live page
                            (default: 11435, env: OBSERVE_PORT)
     --no-observe           Do not open the observe port (env: OBSERVE=0)
+    --host <address>       Interface to listen on (default: 127.0.0.1, env: HOST);
+                           0.0.0.0 opens both ports to other machines on your network
     -h, --help             Show this help message
 
   Examples:
@@ -40,6 +42,7 @@ startServer({
   ollamaUrl: getFlag('--ollama-url'),
   observePort: getFlag('--observe-port'),
   observe: !args.includes('--no-observe'),
+  host: getFlag('--host'),
 }).catch((e) => {
   console.error(`Error: ${e.message}`)
   process.exit(1)

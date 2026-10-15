@@ -158,7 +158,7 @@ describe('observe port', () => {
 
   it('keeps prompt text only when asked, and serves it per turn', async () => {
     expect((await text(`${uiUrl}/turns/anything/text`)).status).toBe(404)
-    await text(`${uiUrl}/settings`, { method: 'POST', body: JSON.stringify({ keepText: true }) })
+    await text(`${uiUrl}/settings`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ keepText: true }) })
     expect(JSON.parse((await text(`${uiUrl}/status`)).body).keepText).toBe(true)
     await text(`${observeUrl}/api/chat`, {
       method: 'POST',
@@ -169,7 +169,7 @@ describe('observe port', () => {
     expect(last.textKept).toBe(true)
     const kept = JSON.parse((await text(`${uiUrl}/turns/${last.id}/text`)).body)
     expect(kept.request.messages[0].content).toBe('secret words')
-    await text(`${uiUrl}/settings`, { method: 'POST', body: JSON.stringify({ keepText: false }) })
+    await text(`${uiUrl}/settings`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ keepText: false }) })
     expect((await text(`${uiUrl}/turns/${last.id}/text`)).status).toBe(404)
   })
 

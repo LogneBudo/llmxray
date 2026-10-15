@@ -15,6 +15,8 @@ const CAPTURED = new Map([
   ['/v1/chat/completions', { protocol: 'openai-chat', kind: 'chat' }],
   ['/v1/completions', { protocol: 'openai-completions', kind: 'completion' }],
   ['/v1/embeddings', { protocol: 'openai-embeddings', kind: 'embedding' }],
+  // Ollama's Anthropic-compatible endpoint: what Claude Code sends when ANTHROPIC_BASE_URL points here.
+  ['/v1/messages', { protocol: 'anthropic-messages', kind: 'chat' }],
 ])
 
 /** Classify a request path. Returns null for traffic that is passed through unrecorded. */
@@ -70,6 +72,11 @@ function fingerprintClient(body) {
 
 export function identifyClient(headers, body = null) {
   const ua = String(headers['user-agent'] ?? '').trim()
+  // A client may name itself with the X-LLMxRay-Client header (or ?client= on the URL,
+  // which the proxy turns into this header). That beats any guess from the User-Agent, so
+  // two agents on the same SDK stay apart and an agent can find its own turns.
+  const tag = String(headers['x-llmxray-client'] ?? '').trim().slice(0, 64)
+  if (tag) return { id: `tag:${tag.toLowerCase()}`, label: tag, userAgent: ua }
   const fingerprint = fingerprintClient(body)
   if (fingerprint) return { ...fingerprint, userAgent: ua }
   for (const rule of CLIENT_RULES) {
@@ -79,6 +86,22 @@ export function identifyClient(headers, body = null) {
   // Unknown UA: use its product token as the label so two unknowns stay distinct.
   const token = ua.split(/[\s/]/)[0] || 'Unknown client'
   return { id: `ua:${token.toLowerCase()}`, label: token, userAgent: ua }
+}
+
+/** Anthropic content: a string, or blocks of text / tool_use / tool_result / image. */
+function anthropicBlocksText(content) {
+  if (content == null) return ''
+  if (typeof content === 'string') return content
+  if (!Array.isArray(content)) return JSON.stringify(content)
+  return content
+    .map((b) => {
+      if (typeof b === 'string') return b
+      if (b?.type === 'text') return b.text ?? ''
+      if (b?.type === 'tool_use') return `[tool_use ${b.name ?? ''}]${JSON.stringify(b.input ?? {})}`
+      if (b?.type === 'tool_result') return `[tool_result]${anthropicBlocksText(b.content)}`
+      return b?.type ? `[${b.type}]` : ''
+    })
+    .join('')
 }
 
 /** Stringify any content shape (string, array of parts, null) to its text. */
@@ -117,7 +140,30 @@ export function anatomy(body, protocol) {
   out.toolsOffered = tools.length
   out.toolNames = tools.map((t) => t?.function?.name ?? t?.name ?? '').filter(Boolean)
 
-  if (protocol === 'ollama-chat' || protocol === 'openai-chat') {
+  if (protocol === 'anthropic-messages') {
+    // system is top-level (string or blocks); messages carry content blocks; tools are {name, input_schema}.
+    const system = contentText(body.system)
+    const messages = Array.isArray(body.messages) ? body.messages : []
+    out.messages = messages.length + (system ? 1 : 0)
+    out.systemChars = system.length
+    if (system) parts.push(`<system>${system}`)
+    if (tools.length) {
+      const toolsText = JSON.stringify(tools)
+      out.toolsChars = toolsText.length
+      parts.push(`<tools>${toolsText}`)
+    }
+    const lastUserIdx = (() => {
+      for (let i = messages.length - 1; i >= 0; i--) if (messages[i]?.role === 'user') return i
+      return -1
+    })()
+    messages.forEach((m, i) => {
+      const role = m?.role ?? ''
+      const text = anthropicBlocksText(m?.content)
+      parts.push(`<${role}>${text}`)
+      if (i === lastUserIdx) out.messageChars += text.length
+      else out.historyChars += text.length
+    })
+  } else if (protocol === 'ollama-chat' || protocol === 'openai-chat') {
     const messages = Array.isArray(body.messages) ? body.messages : []
     out.messages = messages.length
     const lastUserIdx = (() => {
@@ -325,7 +371,85 @@ export function parseOpenAIResponse(text) {
   }
 }
 
+/**
+ * Anthropic Messages, as Ollama serves it: one JSON object, or SSE events
+ * (message_start, content_block_start, content_block_delta, message_delta).
+ * Verified on Ollama 0.40.4 (2026-10-15): usage.input_tokens is the UNCACHED part
+ * and usage.cache_read_input_tokens the cached part, Anthropic's own semantics,
+ * so the prompt is their sum. No timings are reported on this path.
+ */
+export function parseAnthropicResponse(text) {
+  const objects = []
+  const trimmed = text.trim()
+  if (trimmed.startsWith('{')) {
+    try {
+      objects.push(JSON.parse(trimmed))
+    } catch {
+      return null
+    }
+  } else {
+    for (const raw of trimmed.split('\n')) {
+      const line = raw.trim()
+      if (!line.startsWith('data:')) continue
+      try {
+        objects.push(JSON.parse(line.slice(5).trim()))
+      } catch {
+        /* partial line */
+      }
+    }
+  }
+  if (objects.length === 0) return null
+
+  let input = null
+  let cached = null
+  let output = null
+  let stop = null
+  let error = null
+  const toolCalls = []
+  let generated = 0
+  const takeUsage = (u) => {
+    if (!u) return
+    if (u.input_tokens != null) input = u.input_tokens
+    if (u.cache_read_input_tokens != null) cached = u.cache_read_input_tokens
+    if (u.output_tokens != null) output = u.output_tokens
+  }
+  for (const o of objects) {
+    if (o.type === 'error' || o.error) error = typeof o.error === 'string' ? o.error : (o.error?.message ?? JSON.stringify(o.error ?? o))
+    if (o.type === 'message' || o.role === 'assistant') {
+      takeUsage(o.usage)
+      stop = o.stop_reason ?? stop
+      for (const b of o.content ?? []) {
+        if (b?.type === 'text') generated += (b.text ?? '').length
+        if (b?.type === 'tool_use' && b.name) toolCalls.push(b.name)
+      }
+    }
+    if (o.type === 'message_start') takeUsage(o.message?.usage)
+    if (o.type === 'content_block_start' && o.content_block?.type === 'tool_use' && o.content_block.name) toolCalls.push(o.content_block.name)
+    if (o.type === 'content_block_delta' && o.delta?.type === 'text_delta') generated += (o.delta.text ?? '').length
+    if (o.type === 'message_delta') {
+      takeUsage(o.usage)
+      stop = o.delta?.stop_reason ?? stop
+    }
+  }
+  const promptTokens = input == null && cached == null ? null : (input ?? 0) + (cached ?? 0)
+  return {
+    promptTokens,
+    cachedTokens: cached,
+    prefillMs: null,
+    evalTokens: output,
+    evalMs: null,
+    loadMs: null,
+    totalMs: null,
+    doneReason: stop,
+    toolCalls: [...new Set(toolCalls)],
+    generatedChars: generated,
+    error,
+    contextExceeded: normaliseError(error).contextExceeded,
+  }
+}
+
 export function parseResponse(protocol, text) {
+  if (protocol === 'anthropic-messages') return parseAnthropicResponse(text)
   return protocol.startsWith('openai') ? parseOpenAIResponse(text) : parseOllamaResponse(text)
 }
 

@@ -25,7 +25,7 @@ export const useCostStore = defineStore('cost', () => {
           completionTokens: m.completionTokenCount,
           totalTokens: m.totalTokenCount,
           sessionCount: 1,
-          estimatedCost: 0,
+          estimatedCost: null,
           pricing,
         })
       }
@@ -52,7 +52,7 @@ export const useCostStore = defineStore('cost', () => {
         existing.completionTokens += m.completionTokenCount
         existing.totalTokens += m.totalTokenCount
         existing.sessionCount++
-        existing.estimatedCost += cost
+        existing.estimatedCost += cost ?? 0
       } else {
         byDay.set(date, {
           date,
@@ -60,7 +60,7 @@ export const useCostStore = defineStore('cost', () => {
           completionTokens: m.completionTokenCount,
           totalTokens: m.totalTokenCount,
           sessionCount: 1,
-          estimatedCost: cost,
+          estimatedCost: cost ?? 0,
         })
       }
     }
@@ -69,7 +69,7 @@ export const useCostStore = defineStore('cost', () => {
   })
 
   const totalEstimatedCost = computed(() =>
-    modelUsage.value.reduce((sum, m) => sum + m.estimatedCost, 0),
+    modelUsage.value.reduce((sum, m) => sum + (m.estimatedCost ?? 0), 0),
   )
 
   const totalTokens = computed(() =>
