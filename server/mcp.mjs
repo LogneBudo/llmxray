@@ -394,7 +394,7 @@ export function buildServer({ serverUrl, ollamaUrl, fetchImpl }) {
     {
       title: 'Estimate my prompt',
       description:
-        'Before sending a prompt: does a prompt of N tokens fit the context the model is loaded with, how much headroom is left for the answer, does the model sit in video memory, and how much of the prompt the cache would reuse, from this client\'s last turn on that model.\n' +
+        'Before sending a prompt of N tokens: whether it fits the context the model is loaded with and the headroom left for the answer. Also whether the model sits in video memory, and how much of the prompt the cache would reuse, from this client\'s last turn on that model.\n' +
         'Use it when a prompt grows, before raising num_ctx, or before switching model. For what is installed use list_local_models; for what actually happened use read_my_last_turn.\n' +
         'model: a pulled model name, "gemma4" or "gemma4:latest"; unknown names get the list of pulled ones. prompt_tokens: 1 to 2000000, your estimate of the prompt size. client: your X-LLMxRay-Client name, so the cache estimate uses your own last turn.\n' +
         'Needs Ollama reachable; the cache line needs LLMxRay running (npx llmxray). Under a second. No model is loaded or called.',
@@ -415,7 +415,7 @@ export function buildServer({ serverUrl, ollamaUrl, fetchImpl }) {
       description:
         'Where LLMxRay runs and what it holds: the observe port and whether it listens, the Ollama it forwards to and its version, how many turns are kept of the 500 it holds, whether request text is kept on disk, and when it started.\n' +
         'Use it first when diagnose_my_turns or read_my_last_turn answers that nothing was seen, or to confirm which Ollama your calls reach. Those tools read the turns; this one reads the server itself.\n' +
-        'Takes no arguments. Nothing can be changed through MCP; settings live on the Live page. Needs LLMxRay running (npx llmxray). Under a second.',
+        'Takes no arguments. Nothing can be changed through MCP; settings live on the Live page. Needs LLMxRay running (npx llmxray); if it is not reachable the answer says so and names the URL tried. Under a second.',
       inputSchema: {},
       annotations: { ...READ_ONLY, title: 'Read LLMxRay status' },
     },

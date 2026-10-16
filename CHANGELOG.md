@@ -5,6 +5,13 @@ All notable changes to LLMxRay are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+
+- `read_llmxray_status` says what happens when LLMxRay is unreachable; the opening sentence of
+  `estimate_my_prompt` is two sentences. The two notes in Glama's review of 0.8.6 (TDQS 4.8 over seven tools).
+
 ## [0.8.6] — 2026-10-17
 
 ### Added
