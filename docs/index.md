@@ -1,4 +1,6 @@
 ---
+title: LLMxRay documentation
+titleTemplate: false
 layout: home
 ---
 

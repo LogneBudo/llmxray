@@ -1,4 +1,6 @@
 ---
+title: Documentation LLMxRay
+titleTemplate: false
 layout: home
 
 hero:

@@ -137,7 +137,10 @@ function communityNav(prefix: string) {
 
 export default defineConfig({
   title: 'LLMxRay',
-  description: 'Local LLM Observatory — Documentation',
+  titleTemplate: ':title · LLMxRay docs',
+  description: 'LLMxRay documentation: a local observatory for Ollama. Prompt X-ray, prompt-cache and context diagnostics, Live view of every tool on the machine, GPU map, logprob benchmarks, and the MCP server agents query about their own calls.',
+  lastUpdated: true,
+  sitemap: { hostname: 'https://lognebudo.github.io/llmxray/docs/' },
 
   base: '/llmxray/docs/',
 
