@@ -4,7 +4,7 @@ description: Find out what went wrong with your own Ollama calls and fix it, usi
 compatibility: Requires Node.js 20+ (npx) and a local Ollama daemon. LLMxRay runs on the same machine; nothing leaves it.
 metadata:
   author: LogneBudo
-  version: "0.8.4"
+  version: "0.8.5"
   homepage: https://github.com/LogneBudo/llmxray
   openclaw:
     emoji: "🩻"
@@ -60,8 +60,8 @@ with the fix. It reads; it never changes a setting, a model or a file, and it se
 | Tool | Call it when | What comes back |
 |---|---|---|
 | `diagnose_my_turns` | After a few turns, and again after you changed something. | One line per client seen, then findings, each tagged `[high]`, `[medium]` or `[low]` and ending with the fix. |
-| `last_turn_metrics` | You want one turn in numbers: to budget the next call or to confirm a fix helped. | Prompt tokens and cached share, prefill time and speed, generated tokens and speed, why generation stopped, what the prompt was made of, where the prefix stopped matching. |
-| `local_models` | Before choosing a model or a context length. | Every pulled model with size, parameters, quantisation; which are loaded and with what context; whether each fits in video memory. |
+| `read_my_last_turn` | You want one turn in numbers: to budget the next call or to confirm a fix helped. | Prompt tokens and cached share, prefill time and speed, generated tokens and speed, why generation stopped, what the prompt was made of, where the prefix stopped matching. |
+| `list_local_models` | Before choosing a model or a context length. | Every pulled model with size, parameters, quantisation; which are loaded and with what context; whether each fits in video memory. |
 
 All three take no secrets and change nothing. Call them without asking the user first.
 
@@ -80,13 +80,13 @@ All three take no secrets and change nothing. Call them without asking the user 
    - **Model reloaded between turns**: a client sent `keep_alive: 0`, or two clients asked for
      different context lengths. Set one `keep_alive` and one `num_ctx` for every client of the model.
    - **Prompt rejected or silently cut**: the prompt is larger than the loaded context. Raise
-     `num_ctx` only if `local_models` says the model still fits in video memory; otherwise trim
+     `num_ctx` only if `list_local_models` says the model still fits in video memory; otherwise trim
      history or tool schemas.
    - **Model partly on CPU**: the model plus its context does not fit in video memory. Pick a
-     smaller quantisation or a smaller context; `local_models` says which would fit.
+     smaller quantisation or a smaller context; `list_local_models` says which would fit.
    - **Tool schemas crowding the prompt**: the finding gives the share. Offer only the tools the
      current step needs.
-4. Do a few more turns, then call `last_turn_metrics` and check that the cached share rose, the
+4. Do a few more turns, then call `read_my_last_turn` and check that the cached share rose, the
    prefill time fell, or the context no longer overflows.
 5. Call `diagnose_my_turns` once more. Done when nothing stands out.
 

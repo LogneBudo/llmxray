@@ -7,12 +7,12 @@
     "source": "github"
   },
   "websiteUrl": "https://lognebudo.github.io/llmxray/",
-  "version": "0.8.4",
+  "version": "0.8.5",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "llmxray",
-      "version": "0.8.4",
+      "version": "0.8.5",
       "transport": {
         "type": "stdio"
       },
@@ -34,7 +34,7 @@
         },
         {
           "name": "OLLAMA_URL",
-          "description": "The Ollama daemon, for the local_models tool.",
+          "description": "The Ollama daemon, for the list_local_models tool.",
           "isRequired": false,
           "isSecret": false,
           "format": "string",

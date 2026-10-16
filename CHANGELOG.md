@@ -5,6 +5,17 @@ All notable changes to LLMxRay are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.5] — 2026-10-17
+
+### Changed
+
+- **Two tools renamed, so all three read as verbs:** `last_turn_metrics` is now `read_my_last_turn`,
+  `local_models` is now `list_local_models`; `diagnose_my_turns` is unchanged. Clients discover tools
+  by listing them, so nothing breaks unless the old name was written into a prompt. From Glama's
+  server-level review, which marked the mixed noun and verb forms.
+- **Descriptions in plain sentences.** The semicolon chains are split, `since_minutes` carries its
+  range (1 to 10080) and the two parameters are said to combine.
+
 ## [0.8.4] — 2026-10-17
 
 ### Changed

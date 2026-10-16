@@ -98,22 +98,22 @@ describe('when LLMxRay is not running', () => {
   it('says what to start instead of "fetch failed"', async () => {
     const tools = createTools({ ...base, fetchImpl: async () => { throw new TypeError('fetch failed') } })
     await expect(tools.diagnose_my_turns({})).rejects.toThrow(/LLMxRay is not running at http:\/\/x:5174.*npx llmxray/)
-    await expect(tools.local_models()).rejects.toThrow(/Ollama is not reachable at http:\/\/x:11434/)
+    await expect(tools.list_local_models()).rejects.toThrow(/Ollama is not reachable at http:\/\/x:11434/)
   })
 })
 
-describe('last_turn_metrics', () => {
+describe('read_my_last_turn', () => {
   it('describes the newest turn in numbers', async () => {
     const turns = [turn({ tokens: 5_000, cached: 4_000 }), turn({ tokens: 12_000, cached: 11_000, prefillMs: 800 })]
     const tools = createTools({ ...base, fetchImpl: fakeFetch({ '/__observe/turns': { turns } }) })
-    const out = await tools.last_turn_metrics({})
+    const out = await tools.read_my_last_turn({})
     expect(out).toMatch(/prompt: 12000 tokens, 11000 from cache \(92%\), 1000 evaluated in 800 ms/)
     expect(out).toMatch(/generation: 120 tokens in 2400 ms \(50\.0 tok\/s\), stopped: stop/)
     expect(out).toMatch(/model fit: context 32768, 100% in VRAM/)
   })
 })
 
-describe('local_models', () => {
+describe('list_local_models', () => {
   it('lists pulled models, marks the loaded one, and judges fit against video memory', async () => {
     const tools = createTools({
       ...base,
@@ -129,7 +129,7 @@ describe('local_models', () => {
         '/__system-info': { gpu: [{ name: 'RTX 5070', adapterRamBytes: 12 * 1024 ** 3 }], memory: { totalBytes: 64 * 1024 ** 3 } },
       }),
     })
-    const out = await tools.local_models()
+    const out = await tools.list_local_models()
     expect(out).toMatch(/RTX 5070, 12\.0 GB video memory/)
     expect(out).toMatch(/gemma4:latest: 6\.6 GB on disk, 7\.5B parameters, Q4_K_M, gemma4\.\s+LOADED now with a 32768-token context, fully in VRAM/)
     expect(out).toMatch(/qwen2\.5:14b.*fits in VRAM with room for context/)
@@ -191,7 +191,7 @@ describe('what a client sees in tools/list', () => {
 
   it('declares every tool read-only, idempotent and closed-world through annotations', async () => {
     const { tools } = await listed()
-    expect(tools.map((t) => t.name).sort()).toEqual(['diagnose_my_turns', 'last_turn_metrics', 'local_models'])
+    expect(tools.map((t) => t.name).sort()).toEqual(['diagnose_my_turns', 'list_local_models', 'read_my_last_turn'])
     for (const t of tools) {
       expect(t.annotations, t.name).toMatchObject({ readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false })
       expect(t.annotations.title).toBeTruthy()

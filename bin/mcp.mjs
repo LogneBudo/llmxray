@@ -22,7 +22,7 @@ if (args.includes('--help') || args.includes('-h')) {
     --ollama-url <url>     Ollama instance (default: http://localhost:11434, env: OLLAMA_URL)
     -h, --help             Show this help message
 
-  Tools: diagnose_my_turns, last_turn_metrics, local_models.
+  Tools: diagnose_my_turns, read_my_last_turn, list_local_models.
   Route your Ollama client through http://localhost:11435 so LLMxRay sees its turns.
 `)
   process.exit(0)

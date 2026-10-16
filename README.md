@@ -246,8 +246,8 @@ Three tools, all read-only, nothing leaves the machine:
 | Tool | Answers |
 |---|---|
 | `diagnose_my_turns` | What stands out in your recent turns, as sentences with the fix: a prompt rejected for exceeding the loaded context, the prompt cache lost on every turn or on one turn, a model running partly on CPU, tool schemas crowding the prompt. |
-| `last_turn_metrics` | Your last turn in numbers: prompt tokens and cached share, prefill time and speed, generated tokens and speed, why generation stopped, what the prompt was made of, whether the model fit in video memory. |
-| `local_models` | Which models are pulled, their size and quantisation, which are loaded now and with what context, and whether each fits in video memory. |
+| `read_my_last_turn` | Your last turn in numbers: prompt tokens and cached share, prefill time and speed, generated tokens and speed, why generation stopped, what the prompt was made of, whether the model fit in video memory. |
+| `list_local_models` | Which models are pulled, their size and quantisation, which are loaded now and with what context, and whether each fits in video memory. |
 
 LLMxRay itself must be running (`npx llmxray`). The MCP server reads from it over localhost.
 
