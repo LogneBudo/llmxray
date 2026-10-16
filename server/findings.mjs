@@ -190,6 +190,9 @@ export function computeFindings(turns) {
         to: Math.round(drop.to * 100),
         promptTokens: Math.round(drop.turn.prompt.tokens),
         breakTokens: breakTokens == null ? -1 : Math.round(breakTokens),
+        // The model's load time on that turn: a few ms means it stayed resident, so the
+        // KV cache was there and the daemon reused none of it. A reload is excluded above.
+        loadMs: drop.turn.loadMs == null ? -1 : Math.round(drop.turn.loadMs),
       },
     })
   }
@@ -302,7 +305,7 @@ export function renderFinding(f) {
       )
     case 'prefix':
       return (
-        `${p.client} re-reads about ${p.tokens} tokens on every turn with ${p.model}. ` +
+        `${p.client} re-reads about ${p.tokens} tokens on every turn with ${p.model}; the prompt cache (the KV cache) is not helping. ` +
         (p.breakTokens >= 0
           ? `The prompt is about ${p.promptTokens} tokens and the cache keeps ${p.share}%. It stops matching the previous turn around token ${p.breakTokens} (an estimate from characters); everything after that point is recomputed each time.`
           : `The prompt is about ${p.promptTokens} tokens and the cache keeps ${p.share}% of it. Something near the start changes between turns; everything after it is recomputed each time.`)
@@ -310,6 +313,9 @@ export function renderFinding(f) {
     case 'drop':
       return (
         `${p.client} lost the cache on this turn with ${p.model}: ${p.from}% kept on the previous turn, ${p.to}% on this one. ` +
+        (p.loadMs != null && p.loadMs >= 0
+          ? `The model stayed loaded (load ${p.loadMs} ms), so its KV cache was still there and the daemon reused none of it: not an eviction, a prefix that no longer matched. `
+          : `The daemon did not report a reload, so this is a prefix that no longer matched rather than an eviction. `) +
         (p.breakTokens >= 0
           ? `The prompt is about ${p.promptTokens} tokens and stopped matching the previous turn around token ${p.breakTokens} (an estimate from characters); everything after that point was recomputed. The turns before it were fine, which is why this one stands out.`
           : `The prompt is about ${p.promptTokens} tokens. Something before the new message changed between the two turns, so everything after that point was recomputed. The turns before it were fine, which is why this one stands out.`)

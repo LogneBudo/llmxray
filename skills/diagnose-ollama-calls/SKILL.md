@@ -74,8 +74,10 @@ All three take no secrets and change nothing. Call them without asking the user 
    - **Prompt cache lost on every turn**: something at the head of the prompt changes each call,
      often a timestamp or a per-request id in the system prompt. Keep the system prompt and the
      tool list byte-identical between turns; put anything that changes at the end.
-   - **Cache lost on one turn**: the prefix stopped matching at the token the finding names. Look
-     at what you changed there, usually an edited earlier message or a reordered tool.
+   - **Cache lost on one turn**: the finding says whether the model stayed loaded. If it did, the
+     KV cache was there and none of it was reused, so the prefix stopped matching at the token the
+     finding names. Look at what you changed there, usually an edited earlier message or a
+     reordered tool. If the model was reloaded instead, see the next item.
    - **Model reloaded between turns**: a client sent `keep_alive: 0`, or two clients asked for
      different context lengths. Set one `keep_alive` and one `num_ctx` for every client of the model.
    - **Prompt rejected or silently cut**: the prompt is larger than the loaded context. Raise

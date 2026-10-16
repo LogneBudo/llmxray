@@ -85,7 +85,8 @@
     "drop": {
       "title": "{client} lost the cache on this turn with {model}: {from}% kept on the previous turn, {to}% on this one.",
       "body": "The prompt is about {promptTokens} tokens. Something before the new message changed between the two turns, so everything after that point was recomputed. The turns before it were fine, which is why this one stands out.",
-      "bodyWithBreak": "The prompt is about {promptTokens} tokens and stopped matching the previous turn around token {breakTokens} (an estimate from characters); everything after that point was recomputed. The turns before it were fine, which is why this one stands out."
+      "bodyWithBreak": "The prompt is about {promptTokens} tokens and stopped matching the previous turn around token {breakTokens} (an estimate from characters); everything after that point was recomputed. The turns before it were fine, which is why this one stands out.",
+      "resident": "The model stayed loaded (load {loadMs} ms), so its KV cache was still there and the daemon reused none of it: not an eviction, a prefix that no longer matched."
     },
     "cpu": {
       "title": "{model} runs {cpu}% on CPU.",

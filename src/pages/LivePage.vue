@@ -262,7 +262,7 @@ function findingParams(f: { params: Record<string, string | number> }) {
                   {{ $t(f.params.breakTokens === -1 ? 'live.findings.prefix.body' : 'live.findings.prefix.bodyWithBreak', findingParams(f)) }}
                 </template>
                 <template v-else-if="f.kind === 'drop'">
-                  {{ $t(f.params.breakTokens === -1 ? 'live.findings.drop.body' : 'live.findings.drop.bodyWithBreak', findingParams(f)) }}
+                  <template v-if="Number(f.params.loadMs) >= 0">{{ $t('live.findings.drop.resident', findingParams(f)) }} </template>{{ $t(f.params.breakTokens === -1 ? 'live.findings.drop.body' : 'live.findings.drop.bodyWithBreak', findingParams(f)) }}
                 </template>
                 <template v-else-if="f.kind === 'cpu'">
                   {{ $t(f.params.context === -1 ? 'live.findings.cpu.bodyNoContext' : 'live.findings.cpu.body', findingParams(f)) }}

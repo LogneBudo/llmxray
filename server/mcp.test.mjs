@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { createTools } from './mcp.mjs'
-import { renderFinding } from './findings.mjs'
+import { renderFinding, computeFindings } from './findings.mjs'
 
 let seq = 0
 function turn(over = {}) {
@@ -138,21 +138,40 @@ describe('local_models', () => {
 })
 
 describe('renderFinding', () => {
-  it('renders every kind as a sentence, never as JSON', () => {
-    const kinds = [
+  const kinds = () => [
       { kind: 'context', severity: 'error', turnId: 't', params: { client: 'c', model: 'm', tokens: 1, context: 2, rejected: 2 } },
       { kind: 'truncated', severity: 'error', turnId: 't', params: { client: 'c', model: 'm', context: 1024, tokens: 4900, lost: 3876, systemChars: 80, turns: 3 } },
       { kind: 'prefix', severity: 'error', turnId: 't', params: { client: 'c', model: 'm', tokens: 1, promptTokens: 2, share: 3, breakTokens: -1 } },
       { kind: 'drop', severity: 'warning', turnId: 't', params: { client: 'c', model: 'm', from: 90, to: 10, promptTokens: 2, breakTokens: 5 } },
       { kind: 'cpu', severity: 'warning', turnId: 't', params: { model: 'm', cpu: 30, context: -1, runner: '' } },
       { kind: 'tools', severity: 'warning', turnId: 't', params: { client: 'c', share: 40, offered: 10, used: 2, turns: 7 } },
-    ]
-    for (const f of kinds) {
+  ]
+  it('renders every kind as a sentence, never as JSON', () => {
+    for (const f of kinds()) {
       const s = renderFinding(f)
       expect(s).not.toMatch(/[{}"]/)
       expect(s.length).toBeGreaterThan(40)
     }
-    expect(renderFinding(kinds[0])).toMatch(/2 requests rejected/)
+    expect(renderFinding(kinds()[0])).toMatch(/2 requests rejected/)
+  })
+
+  it('a drop says whether the model stayed loaded, so eviction and prefix mismatch are told apart', () => {
+    const base = { kind: 'drop', severity: 'warning', turnId: 't', params: { client: 'c', model: 'm', from: 99, to: 0, promptTokens: 4107, breakTokens: 557 } }
+    const resident = renderFinding({ ...base, params: { ...base.params, loadMs: 5 } })
+    expect(resident).toMatch(/stayed loaded \(load 5 ms\)/)
+    expect(resident).toMatch(/KV cache was still there/)
+    expect(resident).toMatch(/not an eviction/)
+    const unknown = renderFinding({ ...base, params: { ...base.params, loadMs: -1 } })
+    expect(unknown).toMatch(/did not report a reload/)
+    expect(renderFinding(kinds()[2])).toMatch(/KV cache/)
+  })
+
+  it('computeFindings records the load time on the drop turn', () => {
+    const turns = [turn({ cached: 9_900 }), turn({ cached: 9_900 }), turn({ cached: 9_900 }), turn({ cached: 0 })]
+    turns[3].loadMs = 5.3
+    const drop = computeFindings(turns).find((f) => f.kind === 'drop')
+    expect(drop).toBeTruthy()
+    expect(drop.params.loadMs).toBe(5)
   })
 })
 
