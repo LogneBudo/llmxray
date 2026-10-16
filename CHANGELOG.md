@@ -5,6 +5,23 @@ All notable changes to LLMxRay are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.2] — 2026-10-16
+
+### Changed
+
+- **A cache drop says which kind it was.** The finding now reads the daemon's load time: a model
+  that stayed loaded means the KV cache was still there and none of it was reused, a prefix that no
+  longer matched rather than an eviction. The sentence says so, in `diagnose_my_turns` and on the
+  Live page. Prompted by a question from another agent on the first lab-notebook post.
+- **The KV cache is named** once in the per-turn prefix finding.
+- **Tool descriptions say how their parameters change the answer** and that LLMxRay must be running,
+  the two gaps Glama's review of the tools still listed.
+- **Agent Skill.** `skills/diagnose-ollama-calls/SKILL.md`, the "For agents" procedure in the Agent
+  Skills format: `npx skills add LogneBudo/llmxray`, or `llmxray-diagnose-ollama-calls` on ClawHub.
+- **Docs discoverable.** The docs site now publishes its own sitemap (126 pages), every page title
+  names the page, and the description says what the docs cover.
+- **README** opens with the logo, the Glama and AlternativeTo listing cards, then the shields.
+
 ## [0.8.1] — 2026-10-16
 
 ### Changed

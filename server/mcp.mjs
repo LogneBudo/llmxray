@@ -190,7 +190,10 @@ export function buildServer({ serverUrl, ollamaUrl, fetchImpl }) {
         'Use last_turn_metrics instead when you want one turn in numbers rather than a verdict; use local_models instead when the question is which model or context length to pick. ' +
         'Returns text: one line per client seen (turns, tokens, tool calls, prefill time), then "What stands out (N):" followed by one finding per line, ' +
         'each tagged [high], [medium] or [low] and ending with the fix. When nothing stands out it says so. ' +
-        'When no turns were seen it explains how to route calls through port 11435. Reads only; changes nothing.',
+        'When no turns were seen it explains how to route calls through port 11435. ' +
+        'Parameters: client narrows to one tool when several share the machine (substring of the label LLMxRay shows); since_minutes limits the window, so pass it after a change to judge only the turns since. Both optional. ' +
+        'Needs LLMxRay running (npx llmxray) on the same machine; if it is not, the answer says so. Reads only; changes nothing. ' +
+        'Cost: well under a second, from records LLMxRay already keeps; no model is called.',
       inputSchema: {
         client: z.string().optional().describe('Part of the client label or id as LLMxRay shows it (for example "VS Code Copilot", "python-requests", or the X-LLMxRay-Client header you sent). Case-insensitive substring. Omit for all clients.'),
         since_minutes: z.number().int().positive().optional().describe('Only turns from the last N minutes. Omit for every turn LLMxRay has kept.'),
@@ -211,7 +214,10 @@ export function buildServer({ serverUrl, ollamaUrl, fetchImpl }) {
         'Use it to budget the next call or to confirm a change helped. ' +
         'Use diagnose_my_turns instead for findings across several turns with fixes; use local_models for what is installed and loaded. ' +
         'Returns text, one fact per line, starting with "turn <n> at <time>  client: ...  model: ...". ' +
-        'When no turns were seen it explains how to route calls through port 11435. Reads only; changes nothing.',
+        'When no turns were seen it explains how to route calls through port 11435. ' +
+        'Parameter: client picks the latest turn of one tool when several share the machine (substring of the label); omit it for the latest turn from anyone. ' +
+        'Needs LLMxRay running (npx llmxray) on the same machine; if it is not, the answer says so. Reads only; changes nothing. ' +
+        'Cost: well under a second, from records LLMxRay already keeps; no model is called.',
       inputSchema: {
         client: z.string().optional().describe('Part of the client label or id, case-insensitive substring. Omit for the latest turn from any client.'),
       },
@@ -229,8 +235,10 @@ export function buildServer({ serverUrl, ollamaUrl, fetchImpl }) {
         'how much of each loaded model sits in video memory, and whether each pulled model would fit in video memory. ' +
         'Use it before choosing a model or a context length. It says nothing about past calls: ' +
         'for those use diagnose_my_turns (findings) or last_turn_metrics (numbers). ' +
-        'Returns text: a first line with the GPU, video memory and RAM when known, then "N models pulled:" and one line per model ' +
-        'ending with LOADED now ... or fits in VRAM ... or larger than VRAM: will run partly on CPU. Takes no arguments. Reads only; changes nothing.',
+        'Returns text: a first line with the GPU, video memory and RAM when known, then "N models pulled:" and one line per model, sorted by name, ' +
+        'ending with LOADED now ... or fits in VRAM ... or larger than VRAM: will run partly on CPU. Takes no arguments. ' +
+        'Needs Ollama reachable; the machine line needs LLMxRay running too and is simply omitted when it is not. Reads only; changes nothing. ' +
+        'Cost: well under a second, two listing calls to Ollama; no model is loaded or called. The answer is a snapshot: a model shown as loaded unloads after its keep_alive, so call again right before deciding.',
       inputSchema: {},
       annotations: { ...READ_ONLY, title: 'Local models' },
     },

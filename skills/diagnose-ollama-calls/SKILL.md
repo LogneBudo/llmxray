@@ -5,7 +5,7 @@ license: Apache-2.0
 compatibility: Requires Node.js 20+ (npx) and a local Ollama daemon. LLMxRay runs on the same machine; nothing leaves it.
 metadata:
   author: LogneBudo
-  version: "0.8.1"
+  version: "0.8.2"
   homepage: https://github.com/LogneBudo/llmxray
   openclaw:
     emoji: "🩻"

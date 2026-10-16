@@ -205,6 +205,9 @@ describe('what a client sees in tools/list', () => {
       for (const o of others) expect(t.description, `${t.name} should name ${o}`).toContain(o)
       expect(t.description, t.name).toMatch(/Returns text/)
       expect(t.description, t.name).toMatch(/Reads only; changes nothing/)
+      expect(t.description, `${t.name} names its prerequisite`).toMatch(/Needs (LLMxRay|Ollama)/)
+      expect(t.description, `${t.name} states its cost`).toMatch(/Cost: well under a second/)
+      if (t.inputSchema?.properties && Object.keys(t.inputSchema.properties).length) expect(t.description, `${t.name} explains its parameters`).toMatch(/Parameters?: client/)
     }
   })
 
