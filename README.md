@@ -5,8 +5,10 @@
 <h1 align="center">LLMxRay</h1>
 
 <p align="center">
-  <a href="https://glama.ai/mcp/servers/LogneBudo/llmxray"><img src="https://glama.ai/mcp/servers/LogneBudo/llmxray/badges/card.svg" alt="LLMxRay MCP server: quality and maintenance score on Glama" height="77" /></a>
-  <a href="https://alternativeto.net/software/llmxray/about/?utm_source=badge&utm_medium=referral"><img src="https://alternativeto.net/static/badges/badge-wide-dark.svg" alt="LLMxRay on AlternativeTo" height="77" /></a>
+  <a href="https://glama.ai/mcp/servers/LogneBudo/llmxray"><img src="https://glama.ai/mcp/servers/LogneBudo/llmxray/badges/card.svg" alt="LLMxRay MCP server: quality and maintenance score on Glama" width="380" height="200" /></a>
+</p>
+<p align="center">
+  <a href="https://alternativeto.net/software/llmxray/about/?utm_source=badge&utm_medium=referral"><img src="https://alternativeto.net/static/badges/badge-wide-dark.svg" alt="LLMxRay on AlternativeTo" width="406" height="77" /></a>
 </p>
 <p align="center"><strong>See what your local AI is actually doing.</strong></p>
 <p align="center">
