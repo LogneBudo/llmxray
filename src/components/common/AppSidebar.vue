@@ -24,6 +24,7 @@ import {
   ScanLine,
   Users,
   MemoryStick,
+  Wrench,
 } from 'lucide-vue-next'
 import FeedbackOverlay from './FeedbackOverlay.vue'
 
@@ -42,6 +43,7 @@ const navItems = computed<{ path: string; label: string; icon: Component }[]>(()
   { path: '/xray', label: t('common.nav.xray'), icon: ScanLine },
   { path: '/shared-box', label: t('common.nav.ledger'), icon: Users },
   { path: '/gpu', label: t('common.nav.gpu'), icon: MemoryStick },
+  { path: '/tool-calls', label: t('common.nav.toolcalls'), icon: Wrench },
   { path: '/cache-lab', label: t('common.nav.cacheLab'), icon: DatabaseZap },
   { path: '/decision-lab', label: t('common.nav.decisionLab'), icon: Scale },
   { path: '/protocols', label: t('common.nav.protocols'), icon: Network },

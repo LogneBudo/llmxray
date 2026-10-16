@@ -1,0 +1,44 @@
+{
+  "title": "Tool calls",
+  "subtitle": "Can a local model call a tool the way an agent needs? Thirteen request shapes agents send all day, scored on what the daemon returned: the right tool, the right arguments, the right number of calls, and no call when none is needed.",
+  "models": "Models to test",
+  "modelsHint": "Only models that report tool support are listed first; others can be ticked too.",
+  "run": "Run {n} cases on {m} model | Run {n} cases on {m} models",
+  "running": "Running… {done} of {total}",
+  "stop": "Stop",
+  "noModels": "Pick at least one model.",
+  "results": {
+    "title": "Results",
+    "score": "{n}% of cases right",
+    "cases": "{n} cases",
+    "legend": "Each cell is one case for one model. Hover for the sentence; click for what the model returned.",
+    "working": "working…",
+    "queued": "queued"
+  },
+  "outcome": {
+    "valid": "right",
+    "wrong-tool": "wrong tool",
+    "hallucinated-tool": "tool that does not exist",
+    "missing-args": "argument missing",
+    "bad-args": "argument wrong",
+    "in-prose": "call written as text",
+    "no-call": "did not call",
+    "unneeded-call": "called when not needed",
+    "wrong-count": "wrong number of calls",
+    "error": "error"
+  },
+  "detail": {
+    "title": "What the model returned",
+    "calls": "Calls",
+    "noCalls": "no tool calls",
+    "content": "Answer text",
+    "noContent": "no answer text",
+    "ms": "{ms} ms",
+    "close": "Close",
+    "noContentCall": "no answer text: the model answered with the call, which is what a correct tool call looks like",
+    "thinking": "What the model thought first (returned by the daemon)"
+  },
+  "why": "Why this case matters",
+  "saved": "Last run kept in this browser. Running again replaces it.",
+  "foot": "What this page does not know: whether a tool call would have worked once executed. It judges the call itself, against the schema the model was given, the way a framework does before running anything. Temperature 0, non-streaming, through /api/chat."
+}

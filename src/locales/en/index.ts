@@ -21,6 +21,7 @@ import live from './live.json'
 import xray from './xray.json'
 import ledger from './ledger.json'
 import gpu from './gpu.json'
+import toolcalls from './toolcalls.json'
 
 export default {
   common,
@@ -46,4 +47,5 @@ export default {
   xray,
   ledger,
   gpu,
+  toolcalls,
 }

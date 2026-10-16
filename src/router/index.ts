@@ -79,6 +79,11 @@ export const router = createRouter({
           component: () => import('@/pages/GpuMapPage.vue'),
         },
         {
+          path: 'tool-calls',
+          name: 'toolcalls',
+          component: () => import('@/pages/ToolCallsPage.vue'),
+        },
+        {
           path: 'cache-lab',
           name: 'cacheLab',
           component: () => import('@/pages/CacheLabPage.vue'),
