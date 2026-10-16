@@ -247,6 +247,8 @@ Three tools, all read-only, nothing leaves the machine:
 
 LLMxRay itself must be running (`npx llmxray`). The MCP server reads from it over localhost.
 
+The same procedure, as an [Agent Skill](https://agentskills.io) your agent can load: `npx skills add LogneBudo/llmxray` (skills.sh) or `clawhub install llmxray-diagnose-ollama-calls` (ClawHub). Source: [skills/diagnose-ollama-calls/SKILL.md](skills/diagnose-ollama-calls/SKILL.md).
+
 Name yourself so your turns are yours: send the header `X-LLMxRay-Client: my-agent`, or use `http://localhost:11435/?client=my-agent` as the base URL, and pass `my-agent` as `client` to the tools. Where to set the base URL: Ollama SDKs and CLI `OLLAMA_HOST=127.0.0.1:11435`; OpenAI-compatible clients `base_url=http://localhost:11435/v1`; Claude Code `ANTHROPIC_BASE_URL=http://localhost:11435`; Continue `apiBase`; Open WebUI `OLLAMA_BASE_URL`.
 
 ---
