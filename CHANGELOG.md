@@ -5,6 +5,23 @@ All notable changes to LLMxRay are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.1] — 2026-10-16
+
+### Changed
+
+- **MCP tools declare what they are.** Every `llmxray-mcp` tool now carries MCP annotations: read-only,
+  not destructive, idempotent, closed-world. A client that honours annotations can call them without
+  asking the user first.
+- **Each tool description says when to pick the other two** and what the returned text looks like, line
+  by line, so an agent reading `tools/list` can choose without trying. Prompted by Glama's tool-definition
+  review of 0.8.0.
+- **`glama.json`** at the repo root with the maintainer and listing metadata.
+
+### Tests
+
+- Three tests connect a real MCP client to the server in memory and check the annotations, the
+  descriptions and a call over the wire.
+
 ## [0.8.0] — 2026-10-16
 
 ### Added

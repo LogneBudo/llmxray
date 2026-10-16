@@ -155,3 +155,44 @@ describe('renderFinding', () => {
     expect(renderFinding(kinds[0])).toMatch(/2 requests rejected/)
   })
 })
+
+describe('what a client sees in tools/list', () => {
+  async function listed() {
+    const { buildServer } = await import('./mcp.mjs')
+    const { Client } = await import('@modelcontextprotocol/sdk/client/index.js')
+    const { InMemoryTransport } = await import('@modelcontextprotocol/sdk/inMemory.js')
+    const server = buildServer({ ...base, fetchImpl: fakeFetch({ '/__observe/turns': { turns: [] } }) })
+    const [clientSide, serverSide] = InMemoryTransport.createLinkedPair()
+    await server.connect(serverSide)
+    const client = new Client({ name: 'probe', version: '0' })
+    await client.connect(clientSide)
+    const { tools } = await client.listTools()
+    return { tools, client }
+  }
+
+  it('declares every tool read-only, idempotent and closed-world through annotations', async () => {
+    const { tools } = await listed()
+    expect(tools.map((t) => t.name).sort()).toEqual(['diagnose_my_turns', 'last_turn_metrics', 'local_models'])
+    for (const t of tools) {
+      expect(t.annotations, t.name).toMatchObject({ readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false })
+      expect(t.annotations.title).toBeTruthy()
+    }
+  })
+
+  it('tells the agent in each description when to use the other two and what the text that comes back looks like', async () => {
+    const { tools } = await listed()
+    for (const t of tools) {
+      const others = tools.filter((o) => o !== t).map((o) => o.name)
+      for (const o of others) expect(t.description, `${t.name} should name ${o}`).toContain(o)
+      expect(t.description, t.name).toMatch(/Returns text/)
+      expect(t.description, t.name).toMatch(/Reads only; changes nothing/)
+    }
+  })
+
+  it('answers a call over the wire with text, not a transport error, when nothing was seen', async () => {
+    const { client } = await listed()
+    const r = await client.callTool({ name: 'diagnose_my_turns', arguments: {} })
+    expect(r.isError).toBeFalsy()
+    expect(r.content[0].text).toMatch(/11435/)
+  })
+})

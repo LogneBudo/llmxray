@@ -165,8 +165,17 @@ function gb(bytes) {
   return (bytes / 1024 ** 3).toFixed(1)
 }
 
-export async function startMcpServer({ serverUrl, ollamaUrl }) {
-  const tools = createTools({ serverUrl, ollamaUrl })
+/**
+ * Every tool only reads: from the LLMxRay server's records and from Ollama's
+ * listings. Nothing is written, started, stopped or sent anywhere, and calling
+ * a tool twice gives the same answer for the same state. Clients that honour
+ * annotations can therefore call them without asking the user first.
+ */
+const READ_ONLY = { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false }
+
+/** The server with its three tools registered, not yet connected to a transport. Tests connect it in memory. */
+export function buildServer({ serverUrl, ollamaUrl, fetchImpl }) {
+  const tools = createTools({ serverUrl, ollamaUrl, ...(fetchImpl ? { fetchImpl } : {}) })
   const server = new McpServer({ name: 'llmxray', version: packageVersion() })
 
   server.registerTool(
@@ -174,14 +183,19 @@ export async function startMcpServer({ serverUrl, ollamaUrl }) {
     {
       title: 'Diagnose my turns',
       description:
-        'What went wrong, if anything, with the calls your Ollama client sent through LLMxRay (port 11435): ' +
-        'prompts rejected for exceeding the loaded context, prompt-cache lost on every turn or on one turn, a model running partly on CPU, ' +
-        'tool schemas crowding the prompt. Each finding is a plain sentence with the fix. Call it after a few turns; ' +
-        'optionally narrow to your client label and a time window.',
+        'What went wrong, if anything, with the calls your Ollama client sent through LLMxRay (port 11435), over several turns: ' +
+        'prompts rejected for exceeding the loaded context, a prompt silently cut to fit it, the prompt cache lost on every turn or on one turn, ' +
+        'a model running partly on CPU, tool schemas crowding the prompt. ' +
+        'Call it after a few turns, and again after you changed something. ' +
+        'Use last_turn_metrics instead when you want one turn in numbers rather than a verdict; use local_models instead when the question is which model or context length to pick. ' +
+        'Returns text: one line per client seen (turns, tokens, tool calls, prefill time), then "What stands out (N):" followed by one finding per line, ' +
+        'each tagged [high], [medium] or [low] and ending with the fix. When nothing stands out it says so. ' +
+        'When no turns were seen it explains how to route calls through port 11435. Reads only; changes nothing.',
       inputSchema: {
-        client: z.string().optional().describe('Part of the client label or id as LLMxRay shows it (for example "VS Code Copilot", "python-requests"). Omit for all clients.'),
-        since_minutes: z.number().int().positive().optional().describe('Only turns from the last N minutes.'),
+        client: z.string().optional().describe('Part of the client label or id as LLMxRay shows it (for example "VS Code Copilot", "python-requests", or the X-LLMxRay-Client header you sent). Case-insensitive substring. Omit for all clients.'),
+        since_minutes: z.number().int().positive().optional().describe('Only turns from the last N minutes. Omit for every turn LLMxRay has kept.'),
       },
+      annotations: { ...READ_ONLY, title: 'Diagnose my turns' },
     },
     async (args) => guarded(() => tools.diagnose_my_turns(args)),
   )
@@ -191,12 +205,17 @@ export async function startMcpServer({ serverUrl, ollamaUrl }) {
     {
       title: 'Last turn metrics',
       description:
-        'The most recent turn seen through LLMxRay, in numbers: prompt tokens and how many came from cache, prefill time and speed, ' +
-        'generated tokens and speed, why generation stopped, what the prompt was made of, whether the model fit in video memory. ' +
-        'Use it to budget your next call or to confirm a change helped.',
+        'The most recent turn seen through LLMxRay, as numbers, no judgement: prompt tokens and how many came from cache, ' +
+        'prefill time and speed, generated tokens and speed, why generation stopped, what the prompt was made of (system, tools, history, new message, in characters), ' +
+        'the context requested, whether the model fit in video memory, and where the prompt stopped matching the previous turn. ' +
+        'Use it to budget the next call or to confirm a change helped. ' +
+        'Use diagnose_my_turns instead for findings across several turns with fixes; use local_models for what is installed and loaded. ' +
+        'Returns text, one fact per line, starting with "turn <n> at <time>  client: ...  model: ...". ' +
+        'When no turns were seen it explains how to route calls through port 11435. Reads only; changes nothing.',
       inputSchema: {
-        client: z.string().optional().describe('Part of the client label or id. Omit for the latest turn from any client.'),
+        client: z.string().optional().describe('Part of the client label or id, case-insensitive substring. Omit for the latest turn from any client.'),
       },
+      annotations: { ...READ_ONLY, title: 'Last turn metrics' },
     },
     async (args) => guarded(() => tools.last_turn_metrics(args)),
   )
@@ -206,13 +225,23 @@ export async function startMcpServer({ serverUrl, ollamaUrl }) {
     {
       title: 'Local models',
       description:
-        'Which models Ollama has on this machine, their size, parameters and quantisation, which are loaded now and with what context, ' +
-        'and whether each fits in video memory. Use it before choosing a model or a context length.',
+        'Which models Ollama has pulled on this machine (size on disk, parameters, quantisation, family), which are loaded right now and with what context length, ' +
+        'how much of each loaded model sits in video memory, and whether each pulled model would fit in video memory. ' +
+        'Use it before choosing a model or a context length. It says nothing about past calls: ' +
+        'for those use diagnose_my_turns (findings) or last_turn_metrics (numbers). ' +
+        'Returns text: a first line with the GPU, video memory and RAM when known, then "N models pulled:" and one line per model ' +
+        'ending with LOADED now ... or fits in VRAM ... or larger than VRAM: will run partly on CPU. Takes no arguments. Reads only; changes nothing.',
       inputSchema: {},
+      annotations: { ...READ_ONLY, title: 'Local models' },
     },
     async () => guarded(() => tools.local_models()),
   )
 
+  return server
+}
+
+export async function startMcpServer({ serverUrl, ollamaUrl }) {
+  const server = buildServer({ serverUrl, ollamaUrl })
   const transport = new StdioServerTransport()
   await server.connect(transport)
 }
