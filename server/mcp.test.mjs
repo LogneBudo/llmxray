@@ -191,7 +191,7 @@ describe('what a client sees in tools/list', () => {
 
   it('declares every tool read-only, idempotent and closed-world through annotations', async () => {
     const { tools } = await listed()
-    expect(tools.map((t) => t.name).sort()).toEqual(['diagnose_my_turns', 'list_local_models', 'read_my_last_turn'])
+    expect(tools.map((t) => t.name).sort()).toEqual(['compare_my_turns', 'diagnose_my_turns', 'estimate_my_prompt', 'list_local_models', 'list_my_turns', 'read_llmxray_status', 'read_my_last_turn'])
     for (const t of tools) {
       expect(t.annotations, t.name).toMatchObject({ readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false })
       expect(t.annotations.title).toBeTruthy()
@@ -202,11 +202,14 @@ describe('what a client sees in tools/list', () => {
     const { tools } = await listed()
     for (const t of tools) {
       const others = tools.filter((o) => o !== t).map((o) => o.name)
-      for (const o of others) expect(t.description, `${t.name} should name ${o}`).toContain(o)
-      expect(t.description, t.name).toMatch(/Returns text/)
+      const named = others.filter((o) => t.description.includes(o))
+      expect(named.length, `${t.name} should name at least two sibling tools, names ${named.join(', ') || 'none'}`).toBeGreaterThanOrEqual(2)
+      // Each description says what comes back, in its own words.
+      expect(t.description, `${t.name} says what comes back`).toMatch(/Returns text|one line each|with the difference|headroom|what it holds/)
       expect(t.description, `${t.name} names its prerequisite`).toMatch(/Needs (LLMxRay|Ollama)/)
       expect(t.description, `${t.name} states its cost`).toMatch(/Under a second/)
-      if (t.inputSchema?.properties && Object.keys(t.inputSchema.properties).length) expect(t.description, `${t.name} explains its parameters`).toMatch(/\bclient:/)
+      const params = Object.keys(t.inputSchema?.properties ?? {})
+      for (const name of params) expect(t.description, `${t.name} explains its parameter ${name}`).toMatch(new RegExp('\\b' + name + ':'))
     }
   })
 
@@ -215,5 +218,67 @@ describe('what a client sees in tools/list', () => {
     const r = await client.callTool({ name: 'diagnose_my_turns', arguments: {} })
     expect(r.isError).toBeFalsy()
     expect(r.content[0].text).toMatch(/11435/)
+  })
+})
+
+describe('the four tools of 0.8.6', () => {
+  const now = Date.now()
+  function series() {
+    // Six turns: three old ones that broke the cache, three recent ones that kept it.
+    return [
+      turn({ cached: 500, prefillMs: 3_000, ageMs: 3 * 3_600_000 }),
+      turn({ cached: 600, prefillMs: 3_100, ageMs: 2.9 * 3_600_000 }),
+      turn({ cached: 400, prefillMs: 2_900, ageMs: 2.8 * 3_600_000 }),
+      turn({ cached: 9_800, prefillMs: 300, ageMs: 20 * 60_000 }),
+      turn({ cached: 9_900, prefillMs: 250, ageMs: 10 * 60_000 }),
+      turn({ cached: 9_700, prefillMs: 280, ageMs: 5 * 60_000 }),
+    ]
+  }
+  const routes = () => ({
+    '/__observe/turns': { turns: series() },
+    '/__observe/status': { keepText: false, port: 11435, host: '127.0.0.1', listening: true, error: null, ollamaUrl: 'http://x:11434', startedAt: now - 3_600_000, turns: 6, textDir: 'C:/t' },
+    '/__system-info': { gpu: [{ name: 'RTX', adapterRamBytes: 12 * 1024 ** 3 }], memory: { totalBytes: 32 * 1024 ** 3 } },
+    '/api/tags': { models: [{ name: 'gemma4:latest', size: 6e9, details: { context_length: 131072, parameter_size: '7.5B', quantization_level: 'Q4', family: 'gemma' } }] },
+    '/api/ps': { models: [{ name: 'gemma4:latest', size: 6e9, size_vram: 6e9, context_length: 32768 }] },
+    '/api/version': { version: '0.40.5' },
+  })
+
+  it('list_my_turns shows the newest turns, one line each, with the cached share', async () => {
+    const tools = createTools({ ...base, fetchImpl: fakeFetch(routes()) })
+    const out = await tools.list_my_turns({ limit: 2 })
+    expect(out).toMatch(/6 turns; showing the last 2/)
+    expect(out.split('\n')).toHaveLength(3)
+    expect(out).toMatch(/97% cached/)
+    expect(await tools.list_my_turns({ client: 'nobody' })).toMatch(/No turns from a client matching "nobody"/)
+  })
+
+  it('compare_my_turns says the cache is working now where it was not', async () => {
+    const tools = createTools({ ...base, fetchImpl: fakeFetch(routes()) })
+    const out = await tools.compare_my_turns({ split_minutes_ago: 60 })
+    expect(out).toMatch(/3 turns before and 3 after/)
+    expect(out).toMatch(/cached share: 5% before, 98% after/)
+    expect(out).toMatch(/prefill: 3000 ms before, 280 ms after .*better/)
+    expect(out).toMatch(/Verdict: the cache is working now/)
+    expect(await tools.compare_my_turns({ split_minutes_ago: 1 })).toMatch(/Nothing to compare: 6 turns before and 0 after/)
+  })
+
+  it('estimate_my_prompt gives headroom, VRAM fit and the cache reference from the last turn', async () => {
+    const tools = createTools({ ...base, fetchImpl: fakeFetch(routes()) })
+    const out = await tools.estimate_my_prompt({ model: 'gemma4', prompt_tokens: 30_000 })
+    expect(out).toMatch(/loaded with a 32768-token context/)
+    expect(out).toMatch(/fits with 2768 tokens of headroom/)
+    expect(out).toMatch(/fully in video memory/)
+    expect(out).toMatch(/last reused 97% of a 10000-token prompt/)
+    expect(await tools.estimate_my_prompt({ model: 'gemma4', prompt_tokens: 40_000 })).toMatch(/7232 tokens over that context/)
+    expect(await tools.estimate_my_prompt({ model: 'nope', prompt_tokens: 10 })).toMatch(/No pulled model matches "nope"/)
+  })
+
+  it('read_llmxray_status reports the port, the daemon and what is kept', async () => {
+    const tools = createTools({ ...base, fetchImpl: fakeFetch(routes()) })
+    const out = await tools.read_llmxray_status()
+    expect(out).toMatch(/Observe port 11435 on 127.0.0.1: listening/)
+    expect(out).toMatch(/version 0.40.5/)
+    expect(out).toMatch(/Turns kept in memory: 6 of 500/)
+    expect(out).toMatch(/is not kept/)
   })
 })

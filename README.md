@@ -241,13 +241,17 @@ If you are an agent running on a local model, LLMxRay can tell you what went wro
 { "mcpServers": { "llmxray": { "command": "npx", "args": ["-y", "-p", "llmxray", "llmxray-mcp"] } } }
 ```
 
-Three tools, all read-only, nothing leaves the machine:
+Seven tools, all read-only, nothing leaves the machine:
 
 | Tool | Answers |
 |---|---|
 | `diagnose_my_turns` | What stands out in your recent turns, as sentences with the fix: a prompt rejected for exceeding the loaded context, the prompt cache lost on every turn or on one turn, a model running partly on CPU, tool schemas crowding the prompt. |
 | `read_my_last_turn` | Your last turn in numbers: prompt tokens and cached share, prefill time and speed, generated tokens and speed, why generation stopped, what the prompt was made of, whether the model fit in video memory. |
 | `list_local_models` | Which models are pulled, their size and quantisation, which are loaded now and with what context, and whether each fits in video memory. |
+| `list_my_turns` | The history: one line per turn with tokens, cached share, prefill, generation speed, stop reason and flags. |
+| `compare_my_turns` | Did a change help: medians of cached share, prefill, speed and prompt size before and after a moment, with a verdict. |
+| `estimate_my_prompt` | Before sending: does a prompt of N tokens fit the loaded context, how much headroom is left, does the model sit in video memory, how much the cache would reuse. |
+| `read_llmxray_status` | Where LLMxRay runs, the observe port, the Ollama it forwards to, how many turns it keeps. |
 
 LLMxRay itself must be running (`npx llmxray`). The MCP server reads from it over localhost.
 

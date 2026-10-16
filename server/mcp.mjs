@@ -14,7 +14,7 @@ import { fileURLToPath } from 'node:url'
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { z } from 'zod'
-import { computeFindings, summariseClients, cacheShare, renderFinding } from './findings.mjs'
+import { computeFindings, summariseClients, cacheShare, renderFinding, reloaded, median } from './findings.mjs'
 
 function packageVersion() {
   try {
@@ -123,6 +123,128 @@ export function createTools({ serverUrl, ollamaUrl, fetchImpl = fetch }) {
       return describeTurn(turns[turns.length - 1])
     },
 
+    /** The missing history view: one line per turn, newest last. */
+    async list_my_turns({ client, since_minutes, limit } = {}) {
+      const { matching, seen } = await turnsFor(client, since_minutes)
+      if (!matching.length) return nothingFor(client, seen)
+      const n = Math.min(Math.max(Number(limit) || 20, 1), 100)
+      const shown = matching.slice(-n)
+      const lines = [`${matching.length} turn${matching.length === 1 ? '' : 's'}${client ? ` for "${client}"` : ''}${since_minutes ? ` in the last ${since_minutes} min` : ''}; showing the last ${shown.length}. One line each: turn, time, client, model, prompt tokens (cached share), prefill ms, generation tok/s, stop reason, flags.`]
+      for (const t of shown) {
+        const share = cacheShare(t)
+        const flags = []
+        if (reloaded(t)) flags.push('reloaded')
+        if (t.contextExceeded) flags.push('rejected: over context')
+        if (t.fit?.contextLength != null && t.prompt.tokens != null && t.prompt.tokens >= t.fit.contextLength && !t.contextExceeded) flags.push('cut to context')
+        if (t.error) flags.push(`error: ${t.error}`)
+        lines.push(
+          `${t.seq}  ${new Date(t.at).toISOString().slice(0, 19)}Z  ${t.client.label}  ${t.model}  ${t.prompt.tokens ?? '?'} tok` +
+            `${share == null ? '' : ` (${Math.round(share * 100)}% cached)`}  prefill ${t.prompt.prefillMs == null ? '?' : Math.round(t.prompt.prefillMs)} ms  ` +
+            `gen ${t.gen.tps == null ? '?' : t.gen.tps.toFixed(1)} tok/s  ${t.gen.doneReason ?? '?'}${flags.length ? `  [${flags.join(', ')}]` : ''}`,
+        )
+      }
+      return lines.join('\n')
+    },
+
+    /** Before and after a moment: the medians of what a change is supposed to move, and whether it did. */
+    async compare_my_turns({ client, split_minutes_ago } = {}) {
+      const { matching, seen } = await turnsFor(client)
+      if (!matching.length) return nothingFor(client, seen)
+      const split = Date.now() - Math.min(Math.max(Number(split_minutes_ago) || 60, 1), 10080) * 60_000
+      const before = matching.filter((t) => t.at < split)
+      const after = matching.filter((t) => t.at >= split)
+      if (!before.length || !after.length) {
+        return `Nothing to compare: ${before.length} turn${before.length === 1 ? '' : 's'} before and ${after.length} after the split ${split_minutes_ago ?? 60} minutes ago${client ? ` for "${client}"` : ''}. Move split_minutes_ago so both sides have turns; the oldest turn kept is ${matching.length ? new Date(matching[0].at).toISOString().slice(0, 16) + 'Z' : 'none'}.`
+      }
+      const m = (turns, f) => median(turns.map(f).filter((v) => v != null && Number.isFinite(v)))
+      const row = (name, a, b, fmt, higherIsBetter) => {
+        if (a == null || b == null) return `${name}: not measured on one side`
+        const d = b - a
+        const arrow = d === 0 ? 'unchanged' : (d > 0) === higherIsBetter ? 'better' : 'worse'
+        return `${name}: ${fmt(a)} before, ${fmt(b)} after (${d > 0 ? '+' : ''}${fmt(d)}, ${arrow})`
+      }
+      const pct = (v) => `${Math.round(v * 100)}%`
+      const ms = (v) => `${Math.round(v)} ms`
+      const tps = (v) => `${v.toFixed(1)} tok/s`
+      const tok = (v) => `${Math.round(v)} tokens`
+      const out = [
+        `${before.length} turn${before.length === 1 ? '' : 's'} before and ${after.length} after the split ${split_minutes_ago ?? 60} minutes ago${client ? ` for "${client}"` : ''}. Medians, after against before:`,
+        row('cached share', m(before, cacheShare), m(after, cacheShare), pct, true),
+        row('prefill', m(before, (t) => t.prompt.prefillMs), m(after, (t) => t.prompt.prefillMs), ms, false),
+        row('generation speed', m(before, (t) => t.gen.tps), m(after, (t) => t.gen.tps), tps, true),
+        row('prompt size', m(before, (t) => t.prompt.tokens), m(after, (t) => t.prompt.tokens), tok, false),
+        `reloads: ${before.filter(reloaded).length} before, ${after.filter(reloaded).length} after`,
+        `rejected or cut by the context: ${before.filter((t) => t.contextExceeded).length} before, ${after.filter((t) => t.contextExceeded).length} after`,
+      ]
+      const ca = m(before, cacheShare), cb = m(after, cacheShare)
+      if (ca != null && cb != null) {
+        const diff = cb - ca
+        out.push('')
+        out.push(
+          diff >= 0.2 ? `Verdict: the cache is working now where it was not (${pct(ca)} to ${pct(cb)}).`
+          : diff <= -0.2 ? `Verdict: the cache got worse (${pct(ca)} to ${pct(cb)}); something near the start of the prompt changed.`
+          : `Verdict: no real change in cache reuse (${pct(ca)} to ${pct(cb)}); look at prefill and speed above for what did move.`,
+        )
+      }
+      return out.join('\n')
+    },
+
+    /** Context headroom for a prompt you have not sent yet, from what is loaded and what this client last reused. */
+    async estimate_my_prompt({ model, prompt_tokens, client } = {}) {
+      const tokens = Math.min(Math.max(Number(prompt_tokens) || 0, 1), 2_000_000)
+      const [tags, ps, info] = await Promise.all([
+        getJson(`${ollama}/api/tags`),
+        getJson(`${ollama}/api/ps`).catch(() => ({ models: [] })),
+        getJson(`${base}/__system-info`).catch(() => null),
+      ])
+      const want = String(model ?? '').trim()
+      const pulled = (tags.models ?? []).find((m) => m.name === want || m.name === `${want}:latest` || m.name.startsWith(want + ':'))
+      if (!pulled) return `No pulled model matches "${want}". Pulled: ${(tags.models ?? []).map((m) => m.name).join(', ') || 'none'}.`
+      const loaded = (ps.models ?? []).find((m) => m.name === pulled.name)
+      const vram = info?.gpu?.[0]?.adapterRamBytes || 0
+      const lines = [`${pulled.name}: ${loaded ? `loaded with a ${loaded.context_length}-token context` : `not loaded; its model file allows up to ${pulled.details?.context_length ?? '?'} tokens`}.`]
+      const ctx = loaded?.context_length ?? pulled.details?.context_length ?? null
+      if (ctx != null) {
+        const room = ctx - tokens
+        lines.push(
+          room >= 0
+            ? `A ${tokens}-token prompt fits with ${room} tokens of headroom for the answer${room < 512 ? ' (tight: under 512)' : ''}.`
+            : `A ${tokens}-token prompt is ${-room} tokens over that context: Ollama will reject it or cut it silently. Raise num_ctx or shorten the prompt.`,
+        )
+      }
+      if (loaded) {
+        const inVram = loaded.size ? loaded.size_vram / loaded.size : null
+        lines.push(inVram == null ? 'VRAM share unknown.' : inVram >= 0.99 ? 'The loaded model sits fully in video memory.' : `${Math.round(inVram * 100)}% of the loaded model is in video memory; the rest runs from RAM, slower.`)
+      } else if (vram) {
+        lines.push(pulled.size <= vram * 0.85 ? `Its weights (${gb(pulled.size)} GB) fit in video memory (${gb(vram)} GB) with room for context.` : pulled.size <= vram ? `Its weights (${gb(pulled.size)} GB) fit in video memory (${gb(vram)} GB) only with a small context.` : `Its weights (${gb(pulled.size)} GB) are larger than video memory (${gb(vram)} GB): it will run partly on CPU.`)
+      }
+      const { matching } = await turnsFor(client).catch(() => ({ matching: [] }))
+      const last = [...matching].reverse().find((t) => t.model === pulled.name)
+      if (last) {
+        const share = cacheShare(last)
+        lines.push(
+          `Cache: ${client ? `"${client}"` : 'the last caller'} last reused ${share == null ? 'an unknown share' : `${Math.round(share * 100)}%`} of a ${last.prompt.tokens}-token prompt on this model` +
+            (last.prefix && !last.prefix.identical && last.prefix.breakTokensEst != null ? `; the prefix stopped matching around token ${last.prefix.breakTokensEst}. Keep the first ${last.prefix.breakTokensEst} tokens identical and about that much is reused.` : '.'),
+        )
+      } else lines.push('Cache: no recorded turn on this model yet, so reuse cannot be estimated.')
+      return lines.join('\n')
+    },
+
+    /** Where LLMxRay runs and what it holds. Read-only; nothing here can be changed through MCP. */
+    async read_llmxray_status() {
+      const [st, ver] = await Promise.all([
+        getJson(`${base}/__observe/status`),
+        getJson(`${ollama}/api/version`).catch(() => null),
+      ])
+      return [
+        `LLMxRay at ${base}, started ${st.startedAt ? new Date(st.startedAt).toISOString().slice(0, 16) + 'Z' : '?'}.`,
+        `Observe port ${st.port} on ${st.host}: ${st.listening ? 'listening' : `NOT listening${st.error ? ` (${st.error})` : ''}`}. Clients point at http://${st.host === '0.0.0.0' ? 'localhost' : st.host}:${st.port} instead of Ollama.`,
+        `Forwards to Ollama at ${st.ollamaUrl}${ver?.version ? ` (version ${ver.version})` : ' (not reachable right now)'}.`,
+        `Turns kept in memory: ${st.turns} of 500; older ones are dropped. Request text ${st.keepText ? `is kept on disk under ${st.textDir}` : 'is not kept'}, only the measurements.`,
+        'Nothing here can be changed through MCP; settings are changed on the Live page.',
+      ].join('\n')
+    },
+
     async list_local_models() {
       const [tags, ps, info] = await Promise.all([
         getJson(`${ollama}/api/tags`),
@@ -186,7 +308,7 @@ export function buildServer({ serverUrl, ollamaUrl, fetchImpl }) {
         'What went wrong, if anything, in the Ollama calls your client sent through LLMxRay on port 11435, judged over several turns. It looks for a prompt rejected or silently cut by the context, the cache lost on every turn or on one turn, a model partly on CPU, and tool schemas crowding the prompt.\n' +
         'Call it after a few turns, and again after a change. For one turn in numbers use read_my_last_turn. For which model or context fits use list_local_models.\n' +
         'Returns text. First one line per client seen, then one finding per line tagged [high], [medium] or [low], each ending with the fix. It says so when nothing stands out, and explains how to route through 11435 when no turn was seen.\n' +
-        'client: a substring of the label LLMxRay shows, which is the name you set in X-LLMxRay-Client. On a shared machine, without it you read every tool\'s turns. since_minutes: 1 to 10080, the minutes since your change, so older turns do not dilute the verdict. Omit it for every turn kept. The two combine.\n' +
+        'client: your X-LLMxRay-Client name; without it on a shared machine you read every tool\'s turns. since_minutes: 1 to 10080, minutes since your change. They combine.\n' +
         'Needs LLMxRay running (npx llmxray) and says so if not. Under a second, from records already kept. No model is called.',
       inputSchema: {
         client: z.string().optional().describe('Part of the client label or id as LLMxRay shows it (for example "VS Code Copilot", "python-requests", or the X-LLMxRay-Client header you sent). Case-insensitive substring. Omit for all clients.'),
@@ -204,7 +326,7 @@ export function buildServer({ serverUrl, ollamaUrl, fetchImpl }) {
       description:
         'The most recent turn seen through LLMxRay, as numbers: prompt tokens and cached share, prefill time and speed, generated tokens and speed, stop reason, prompt make-up (system, tools, history, new message), context requested, VRAM fit, and where the prompt stopped matching the previous turn.\n' +
         'Use it to budget the next call or to confirm a change helped. For a verdict across turns use diagnose_my_turns. For what is installed and loaded use list_local_models.\n' +
-        'Returns text, one fact per line, starting "turn <n> at <time>  client: ...  model: ...". It explains how to route through 11435 when no turn was seen.\n' +
+        'Returns text, one fact per line. Explains how to route through 11435 when no turn was seen.\n' +
         'client: a substring of the label LLMxRay shows, which is the name you set in X-LLMxRay-Client. On a shared machine the latest turn may be another tool\'s, so pass your own name. Omit it when you are the only caller.\n' +
         'Needs LLMxRay running (npx llmxray) and says so if not. Under a second, from records already kept. No model is called.',
       inputSchema: {
@@ -228,6 +350,76 @@ export function buildServer({ serverUrl, ollamaUrl, fetchImpl }) {
       annotations: { ...READ_ONLY, title: 'List local models' },
     },
     async () => guarded(() => tools.list_local_models()),
+  )
+
+  server.registerTool(
+    'list_my_turns',
+    {
+      title: 'List my turns',
+      description:
+        'The turns your client sent through LLMxRay on port 11435, newest last, one line each: turn number, time, client, model, prompt tokens with cached share, prefill ms, generation speed, stop reason, and flags (reloaded, rejected or cut by the context, error).\n' +
+        'Use it to see the sequence behind a finding, or to pick the turn numbers for compare_my_turns. For a verdict use diagnose_my_turns; for one turn in full use read_my_last_turn.\n' +
+        'client: your X-LLMxRay-Client name; without it on a shared machine you read every tool\'s turns. since_minutes: 1 to 10080. limit: 1 to 100, default 20, the newest kept. The three combine.\n' +
+        'Needs LLMxRay running (npx llmxray). Under a second. No model is called.',
+      inputSchema: {
+        client: z.string().optional().describe('Substring of the client label, case-insensitive. Omit for all clients.'),
+        since_minutes: z.number().int().min(1).max(10080).optional().describe('Only turns from the last N minutes, 1 to 10080.'),
+        limit: z.number().int().min(1).max(100).optional().describe('How many of the newest turns to show, 1 to 100. Default 20.'),
+      },
+      annotations: { ...READ_ONLY, title: 'List my turns' },
+    },
+    async (args) => guarded(() => tools.list_my_turns(args)),
+  )
+
+  server.registerTool(
+    'compare_my_turns',
+    {
+      title: 'Compare my turns',
+      description:
+        'Did a change help? Medians of cached share, prefill time, generation speed and prompt size for the turns before and after a moment, with the difference and a one-line verdict on the cache.\n' +
+        'Use it after you changed a system prompt, keep_alive, num_ctx or the tool list. For the finding that prompted the change use diagnose_my_turns; for the raw sequence use list_my_turns.\n' +
+        'split_minutes_ago: 1 to 10080, default 60: turns older than that are "before", newer are "after"; set it to the minutes since your change. client: your X-LLMxRay-Client name, so another tool\'s turns do not mix in. Both sides need at least one turn, else it says what to move.\n' +
+        'Needs LLMxRay running (npx llmxray). Under a second. No model is called.',
+      inputSchema: {
+        split_minutes_ago: z.number().int().min(1).max(10080).optional().describe('Minutes ago that separate before from after, 1 to 10080. Default 60.'),
+        client: z.string().optional().describe('Substring of the client label, case-insensitive. Omit for all clients.'),
+      },
+      annotations: { ...READ_ONLY, title: 'Compare my turns' },
+    },
+    async (args) => guarded(() => tools.compare_my_turns(args)),
+  )
+
+  server.registerTool(
+    'estimate_my_prompt',
+    {
+      title: 'Estimate my prompt',
+      description:
+        'Before sending a prompt: does a prompt of N tokens fit the context the model is loaded with, how much headroom is left for the answer, does the model sit in video memory, and how much of the prompt the cache would reuse, from this client\'s last turn on that model.\n' +
+        'Use it when a prompt grows, before raising num_ctx, or before switching model. For what is installed use list_local_models; for what actually happened use read_my_last_turn.\n' +
+        'model: a pulled model name, "gemma4" or "gemma4:latest"; unknown names get the list of pulled ones. prompt_tokens: 1 to 2000000, your estimate of the prompt size. client: your X-LLMxRay-Client name, so the cache estimate uses your own last turn.\n' +
+        'Needs Ollama reachable; the cache line needs LLMxRay running (npx llmxray). Under a second. No model is loaded or called.',
+      inputSchema: {
+        model: z.string().describe('A pulled model name, with or without the tag.'),
+        prompt_tokens: z.number().int().min(1).max(2_000_000).describe('Size of the prompt you intend to send, in tokens, 1 to 2000000.'),
+        client: z.string().optional().describe('Substring of the client label, for the cache estimate. Omit for the last caller.'),
+      },
+      annotations: { ...READ_ONLY, title: 'Estimate my prompt' },
+    },
+    async (args) => guarded(() => tools.estimate_my_prompt(args)),
+  )
+
+  server.registerTool(
+    'read_llmxray_status',
+    {
+      title: 'Read LLMxRay status',
+      description:
+        'Where LLMxRay runs and what it holds: the observe port and whether it listens, the Ollama it forwards to and its version, how many turns are kept of the 500 it holds, whether request text is kept on disk, and when it started.\n' +
+        'Use it first when diagnose_my_turns or read_my_last_turn answers that nothing was seen, or to confirm which Ollama your calls reach. Those tools read the turns; this one reads the server itself.\n' +
+        'Takes no arguments. Nothing can be changed through MCP; settings live on the Live page. Needs LLMxRay running (npx llmxray). Under a second.',
+      inputSchema: {},
+      annotations: { ...READ_ONLY, title: 'Read LLMxRay status' },
+    },
+    async () => guarded(() => tools.read_llmxray_status()),
   )
 
   return server

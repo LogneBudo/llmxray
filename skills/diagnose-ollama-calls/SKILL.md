@@ -4,7 +4,7 @@ description: Find out what went wrong with your own Ollama calls and fix it, usi
 compatibility: Requires Node.js 20+ (npx) and a local Ollama daemon. LLMxRay runs on the same machine; nothing leaves it.
 metadata:
   author: LogneBudo
-  version: "0.8.5"
+  version: "0.8.6"
   homepage: https://github.com/LogneBudo/llmxray
   openclaw:
     emoji: "🩻"
@@ -55,15 +55,19 @@ with the fix. It reads; it never changes a setting, a model or a file, and it se
 
    If LLMxRay runs elsewhere than `http://localhost:5174`, set `LLMXRAY_URL` in the server's env.
 
-## The three tools and when to call which
+## The seven tools and when to call which
 
 | Tool | Call it when | What comes back |
 |---|---|---|
 | `diagnose_my_turns` | After a few turns, and again after you changed something. | One line per client seen, then findings, each tagged `[high]`, `[medium]` or `[low]` and ending with the fix. |
 | `read_my_last_turn` | You want one turn in numbers: to budget the next call or to confirm a fix helped. | Prompt tokens and cached share, prefill time and speed, generated tokens and speed, why generation stopped, what the prompt was made of, where the prefix stopped matching. |
 | `list_local_models` | Before choosing a model or a context length. | Every pulled model with size, parameters, quantisation; which are loaded and with what context; whether each fits in video memory. |
+| `list_my_turns` | You want the sequence behind a finding. | One line per turn: tokens, cached share, prefill, speed, stop reason, flags. |
+| `compare_my_turns` | You changed something and want to know if it helped. | Medians before and after a moment, the difference, a verdict on the cache. |
+| `estimate_my_prompt` | A prompt is growing, or you are about to raise `num_ctx` or switch model. | Fit and headroom against the loaded context, VRAM fit, likely cache reuse. |
+| `read_llmxray_status` | Another tool says nothing was seen. | The observe port, the Ollama behind it, turns kept. |
 
-All three take no secrets and change nothing. Call them without asking the user first.
+All seven take no secrets and change nothing. Call them without asking the user first.
 
 ## Procedure
 
@@ -86,8 +90,8 @@ All three take no secrets and change nothing. Call them without asking the user 
      smaller quantisation or a smaller context; `list_local_models` says which would fit.
    - **Tool schemas crowding the prompt**: the finding gives the share. Offer only the tools the
      current step needs.
-4. Do a few more turns, then call `read_my_last_turn` and check that the cached share rose, the
-   prefill time fell, or the context no longer overflows.
+4. Do a few more turns, then call `compare_my_turns` with `split_minutes_ago` set to the minutes
+   since your change. It says whether the cached share rose and the prefill time fell.
 5. Call `diagnose_my_turns` once more. Done when nothing stands out.
 
 ## Edge cases

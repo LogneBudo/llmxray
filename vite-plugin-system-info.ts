@@ -1,6 +1,8 @@
 import { execSync } from 'node:child_process'
 import os from 'node:os'
 import type { Plugin } from 'vite'
+// The shipped server already corrects Windows' 32-bit AdapterRAM (4 GB cap) with nvidia-smi; the dev server reads the same two functions.
+import { nvidiaGpus, mergeGpuMemory } from './server/system-info.mjs'
 
 interface SystemHardwareInfo {
   os: {
@@ -246,9 +248,9 @@ function getMacInfo(): SystemHardwareInfo {
 
 function collectSystemInfo(): SystemHardwareInfo {
   const platform = os.platform()
-  if (platform === 'win32') return getWindowsInfo()
-  if (platform === 'darwin') return getMacInfo()
-  return getLinuxInfo()
+  const info = platform === 'win32' ? getWindowsInfo() : platform === 'darwin' ? getMacInfo() : getLinuxInfo()
+  if (platform !== 'darwin') info.gpu = mergeGpuMemory(info.gpu, nvidiaGpus())
+  return info
 }
 
 export function systemInfoPlugin(): Plugin {

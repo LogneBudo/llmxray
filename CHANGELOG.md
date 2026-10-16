@@ -5,6 +5,29 @@ All notable changes to LLMxRay are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.6] — 2026-10-17
+
+### Added
+
+- **Four MCP tools, seven in all.** `list_my_turns`: the history, one line per turn with tokens,
+  cached share, prefill, speed, stop reason and flags. `compare_my_turns`: did a change help, the
+  medians of cached share, prefill, speed and prompt size before and after a moment, with a verdict.
+  `estimate_my_prompt`: before sending, does a prompt of N tokens fit the loaded context, the headroom
+  left, the VRAM fit, and the cache reuse to expect from this client's last turn. `read_llmxray_status`:
+  where LLMxRay runs, the observe port, the Ollama behind it, turns kept. All read-only, all from
+  records the server already holds. Glama's server-level review had marked the three-tool surface as
+  thin and without a history, a trend view or a status view.
+
+### Fixed
+
+- **The dev server reported a 12 GB card as 4 GB.** Windows' AdapterRAM is a 32-bit field; the shipped
+  server has corrected it with nvidia-smi since 0.7.6, the dev plugin never did. Same merge now.
+
+### Changed
+
+- The parameter line of `diagnose_my_turns` and the return line of `read_my_last_turn` are shorter,
+  the two places Glama named.
+
 ## [0.8.5] — 2026-10-17
 
 ### Changed
