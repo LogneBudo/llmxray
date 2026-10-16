@@ -60,3 +60,36 @@ class HistoryDatabase extends Dexie {
 }
 
 export const historyDB = new HistoryDatabase()
+
+export const RETENTION_KEY = 'llmxray-history-retention'
+export type Retention = 'forever' | '30d' | '90d' | '1y'
+
+/** The oldest timestamp a setting keeps, or null for keep everything. */
+export function retentionCutoff(retention: string | null | undefined, now = Date.now()): number | null {
+  const day = 86_400_000
+  switch (retention) {
+    case '30d':
+      return now - 30 * day
+    case '90d':
+      return now - 90 * day
+    case '1y':
+      return now - 365 * day
+    default:
+      return null
+  }
+}
+
+/** Delete entries older than the retention setting. Returns how many went. */
+export async function pruneHistory(retention?: string | null, now = Date.now()): Promise<number> {
+  let setting = retention
+  if (setting === undefined) {
+    try {
+      setting = localStorage.getItem(RETENTION_KEY)
+    } catch {
+      setting = null
+    }
+  }
+  const cutoff = retentionCutoff(setting, now)
+  if (cutoff == null) return 0
+  return historyDB.entries.where('timestamp').below(cutoff).delete()
+}

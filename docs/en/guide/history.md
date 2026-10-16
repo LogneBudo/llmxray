@@ -1,6 +1,6 @@
 # Local AI History
 
-LLMxRay automatically records every experiment you run — benchmarks, comparisons, chats, training. Your research archive, queryable and exportable.
+LLMxRay records the experiments you run — benchmarks, comparisons, chats — in your browser. The archive lives under **Settings > History**: filters, an activity chart, and export.
 
 ## What Gets Recorded
 
@@ -12,7 +12,7 @@ Every interaction with a model produces a history entry. The table below shows w
 | Compare | Prompt, models compared, outputs, Token Tax, latency, confidence scores |
 | Language Compare | Prompt, languages tested, model, outputs per language, quality metrics |
 | Chat Session | Full conversation (all turns), model, timestamps, token counts, latency per token |
-| Training | Dataset name, model, training parameters, loss curve, epoch count, duration |
+| Training pairs | Prompt and answer pairs curated from the Tool Workshop canvas, with the model and timestamps |
 | Embedding | Input text, model, vector dimensions, similarity scores |
 | Tool Workshop | Tool definitions, test inputs, model responses, execution results |
 
@@ -20,7 +20,7 @@ Entries are timestamped and tagged with the model name automatically.
 
 ## Finding Your Data
 
-The History page provides filters to narrow down your archive.
+The History tab under Settings provides filters to narrow down your archive.
 
 - **Type** — Show only benchmarks, chats, comparisons, or any other entry type.
 - **Model** — Filter by the model used (e.g., `llama3`, `deepseek-r1`, `phi4`).
@@ -32,7 +32,7 @@ Filters combine with AND logic — selecting both a model and a type shows only 
 
 ## Trend Analysis
 
-The History page includes an activity chart that visualizes your experimentation over time.
+The History tab includes an activity chart that visualizes your experimentation over time.
 
 - **Activity over time** — A timeline showing how many experiments you ran per day or week. Spot gaps or bursts in your research.
 - **Models used** — A breakdown of which models you tested most. Useful for seeing whether you are over-relying on a single model or exploring broadly.
@@ -40,7 +40,6 @@ The History page includes an activity chart that visualizes your experimentation
   - Accuracy improvements across successive benchmark runs on the same model.
   - Latency changes after model updates or parameter adjustments.
   - Which model consistently wins comparisons for your use case.
-  - Training loss curves flattening — a sign that more epochs will not help.
 
 ## Exporting
 

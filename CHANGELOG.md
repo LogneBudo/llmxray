@@ -5,6 +5,45 @@ All notable changes to LLMxRay are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.0] — 2026-10-16
+
+### Added
+
+- **Prompt X-ray.** Each turn's prompt drawn to scale: colour is what each part was (system prompt,
+  tool schemas, earlier turns, the new message), brightness is what happened to it (already in the
+  model's memory, read again, or cut by the daemon and never seen). Turns stack into a waterfall;
+  notes appear only where something happened; click a part and the request opens at that place.
+- **Live finds the prompt Ollama silently cut.** Measured on Ollama 0.40.4: a prompt larger than
+  `num_ctx` is answered with HTTP 200, the first few tokens and the end kept, the rest dropped,
+  the system prompt included, and nothing in the response says so. The prompt count sitting at
+  the context ceiling is the only trace; Live and the MCP tool now report it, with what was lost.
+- **Shared box.** What each tool asked the daemon for and what that cost the other tools: a tool
+  sending `keep_alive: 0` and the reloads the others paid, a context far larger than the prompts and
+  the slot count it dropped, who waited behind whom. Each with the setting to change. Attribution
+  rules are stated on the page. Every turn now records `keep_alive`, the daemon's total time and the
+  derived queue wait.
+- **GPU map.** What is in video memory now, model by model, weights and context, what is free, and
+  which pulled models would fit: now, only alone, or never.
+- **Tool calls.** Thirteen request shapes agents send, scored per model on what the daemon returned:
+  right tool, right arguments, right count, no call when none is needed. One sentence per cell, the
+  model's calls, text and reasoning on click. Born from a 7.5B model dropping a required argument next
+  to a long one; that case is in the suite in the shape that broke it.
+- Docs: guide pages for the four new pages; the installation page now starts with `npx llmxray` and
+  Docker; the history page describes the Settings tab that exists.
+
+### Changed
+
+- `/api/ps` reports the loaded context times the parallel slots, so the per-request ceiling used by
+  findings is the request's own `num_ctx` when it set one.
+
+### Fixed
+
+- **The history retention setting now prunes.** It was a dropdown that wrote to local storage and
+  was read by nothing. Entries older than the chosen window are deleted when the setting changes
+  and whenever the History tab loads.
+
+Verified against Ollama 0.40.4.
+
 ## [0.7.9] — 2026-10-15
 
 ### Changed

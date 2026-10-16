@@ -63,6 +63,22 @@ You run a local model. You chat with it. LLMxRay answers the questions that come
 
 Every page below is one of those answers.
 
+### Prompt X-ray: the prompt itself, drawn to scale
+
+Each turn your tool sent, as a bar. Colour is what each part of the prompt was: system prompt, tool schemas, earlier turns, the new message. Brightness is what happened to it: dim was already in the model's memory and cost nothing, bright had to be read again, striped was cut by the daemon and never seen. Stack the turns of a conversation and you watch the cache grow, see the turn where a timestamp in the system prompt emptied it, and the turn where the prompt outgrew the context and Ollama silently dropped the start, system prompt included, and answered anyway. Click a part and the request opens at that place in the text.
+
+### Shared box: why Ollama is slow right now, and which tool did it
+
+One line per tool, sorted by what it cost the others, in seconds: the one that sends `keep_alive: 0` and unloads the model after every run, the one that asks for a 128K context on 4K prompts and drops the daemon to one request at a time, the one that waited 22 seconds behind them. Each with the setting to change. A tool that cost nothing is listed too, so you can see what good looks like.
+
+### GPU map: what is in video memory, and what else would fit
+
+One bar the width of your card: each loaded model as a block split into its weights and what its context costs on top, then the free space. Under it, every pulled model with one of three verdicts: fits now, fits only if what is loaded unloads first, larger than the card.
+
+### Tool calls: can this model drive an agent?
+
+Thirteen request shapes agents send all day, scored on what the daemon returned: the right tool, the right arguments, the right number of calls, no call when none is needed. Each cell is one sentence: "the path argument is missing", "wrote the call into the answer text", "called search_web when no tool was needed". Click it for what the model returned.
+
 ### Chat, token by token
 
 Every token is drawn as it arrives, coloured by confidence. You see where the model hesitated and where it was sure. Markdown, multi-turn, file and image attachments, slash commands, and a thinking budget for reasoning models (off, model's choice, or low / medium / high / max).
@@ -90,7 +106,7 @@ your scripts ────┘        (LLMxRay)                   └─ where the
 
 ![Live: turns from two clients, with findings](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/live.png)
 
-Select a turn to see what the prompt is made of and the exact point where it stopped matching the previous one, which is where the cache broke. Findings are plain sentences, each linked to the turn that proves it: a client re-reading its whole prompt every turn, a model running partly on CPU, tool schemas taking 40% of every prompt. Only counts and timings are kept, in memory. Prompt text is an opt-in that writes to a local file. Nothing leaves your machine.
+Select a turn to see what the prompt is made of and the exact point where it stopped matching the previous one, which is where the cache broke. Findings are plain sentences, each linked to the turn that proves it: a client re-reading its whole prompt every turn, a prompt the daemon silently cut to fit the context (Ollama keeps the first few tokens and the end, drops the rest, and says nothing), a model running partly on CPU, tool schemas taking 40% of every prompt. Only counts and timings are kept, in memory. Prompt text is an opt-in that writes to a local file. Nothing leaves your machine.
 
 Both ports answer only this machine by default, because the Live log holds whatever your tools sent. Start with `npx llmxray --host 0.0.0.0` to let other machines on your network reach them, for a Live page on a second screen or a shared GPU box.
 

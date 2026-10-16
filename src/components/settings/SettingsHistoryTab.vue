@@ -12,7 +12,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js'
-import { historyDB, type HistoryEntry } from '@/services/history-db'
+import { historyDB, pruneHistory, type HistoryEntry } from '@/services/history-db'
 import { downloadJson, downloadCsv } from '@/utils/download'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend)
@@ -203,9 +203,11 @@ function exportFilteredCsv() {
   downloadCsv(headers, rows, 'llmxray-history-filtered.csv')
 }
 
-function setRetention(value: string) {
+async function setRetention(value: string) {
   retention.value = value
   localStorage.setItem('llmxray-history-retention', value)
+  // The setting is only true if it prunes: do it now, and again on every load.
+  if ((await pruneHistory(value)) > 0) allEntries.value = await historyDB.entries.reverse().sortBy('timestamp')
 }
 
 async function clearHistory() {
@@ -215,6 +217,7 @@ async function clearHistory() {
 }
 
 onMounted(async () => {
+  await pruneHistory()
   allEntries.value = await historyDB.entries.reverse().sortBy('timestamp')
   loading.value = false
 })
