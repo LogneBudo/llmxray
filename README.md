@@ -1,19 +1,13 @@
-[![LLMxRay-MCP MCP server – quality and maintenance score on Glama](https://glama.ai/mcp/servers/LogneBudo/llmxray/badges/card.svg)](https://glama.ai/mcp/servers/LogneBudo/llmxray)
-
-[![LLMxRay-MCP MCP server – quality and maintenance score on Glama](https://glama.ai/mcp/servers/LogneBudo/llmxray/badges/score.svg)](https://glama.ai/mcp/servers/LogneBudo/llmxray)
-
-<a href="https://alternativeto.net/software/llmxray/about/?utm_source=badge&utm_medium=referral" target="_blank">
-  <img src="https://alternativeto.net/static/badges/badge-wide-dark.svg"
-       alt="LLMxRay | AlternativeTo"
-       width="406" height="77"
-       style="width: 406px; height: 77px;" />
-</a>
-
 <p align="center">
   <img src="https://raw.githubusercontent.com/LogneBudo/llmxray/master/public/favicon.svg" alt="LLMxRay" width="80" />
 </p>
 
 <h1 align="center">LLMxRay</h1>
+
+<p align="center">
+  <a href="https://glama.ai/mcp/servers/LogneBudo/llmxray"><img src="https://glama.ai/mcp/servers/LogneBudo/llmxray/badges/card.svg" alt="LLMxRay MCP server: quality and maintenance score on Glama" height="77" /></a>
+  <a href="https://alternativeto.net/software/llmxray/about/?utm_source=badge&utm_medium=referral"><img src="https://alternativeto.net/static/badges/badge-wide-dark.svg" alt="LLMxRay on AlternativeTo" height="77" /></a>
+</p>
 <p align="center"><strong>See what your local AI is actually doing.</strong></p>
 <p align="center">
   One command, one browser tab. Token-by-token streaming, cache diagnostics, model comparison, benchmarks and cost tracking<br/>
@@ -25,6 +19,7 @@
   <a href="https://hub.docker.com/r/djovaneli/llmxray"><img src="https://img.shields.io/docker/pulls/djovaneli/llmxray?color=2496ED&logo=docker&logoColor=white" alt="Docker" /></a>
   <img src="https://img.shields.io/badge/license-Apache%202.0-blue" alt="License" />
   <img src="https://img.shields.io/badge/ollama-0.40.x-000?logo=ollama&logoColor=white" alt="Ollama" />
+  <a href="https://glama.ai/mcp/servers/LogneBudo/llmxray"><img src="https://glama.ai/mcp/servers/LogneBudo/llmxray/badges/score.svg" alt="Glama score" /></a>
 </p>
 
 <p align="center">
