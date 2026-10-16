@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://lognebudo.github.io/llmxray/sitemap.xml
+Sitemap: https://lognebudo.github.io/llmxray/docs/sitemap.xml
