@@ -80,7 +80,8 @@
     "drop": {
       "title": "{client} a perdu le cache à ce tour avec {model} : {from} % conservés au tour précédent, {to} % à celui-ci.",
       "body": "L’invite fait environ {promptTokens} tokens. Quelque chose avant le nouveau message a changé entre les deux tours, donc tout ce qui suit a été recalculé. Les tours précédents allaient bien, c’est pourquoi celui-ci ressort.",
-      "bodyWithBreak": "L’invite fait environ {promptTokens} tokens et a cessé de correspondre au tour précédent vers le token {breakTokens} ; tout ce qui suit a été recalculé. Les tours précédents allaient bien, c’est pourquoi celui-ci ressort."
+      "bodyWithBreak": "L’invite fait environ {promptTokens} tokens et a cessé de correspondre au tour précédent vers le token {breakTokens} ; tout ce qui suit a été recalculé. Les tours précédents allaient bien, c’est pourquoi celui-ci ressort.",
+      "resident": "Le modèle est resté chargé (chargement {loadMs} ms) : son cache KV était encore là et le démon n’en a rien réutilisé. Ce n’est pas une éviction, c’est un préfixe qui ne correspondait plus."
     },
     "cpu": {
       "title": "{model} tourne à {cpu} % sur le processeur.",

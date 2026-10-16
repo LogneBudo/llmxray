@@ -5,6 +5,19 @@ All notable changes to LLMxRay are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.3] — 2026-10-17
+
+### Changed
+
+- **Dependencies.** Nine advisories closed in range, among them the critical `proxy-addr` IP-spoofing one
+  and the two in `http-proxy-middleware`. The three that remain are one advisory on `braces`, reached
+  only through `http-proxy-middleware`, with no patched release yet; the pattern it chokes on comes
+  from LLMxRay's own configuration, never from a request.
+- **Verified against Ollama 0.40.5.** Cache fields present on the native, OpenAI-compatible and
+  generate paths; tags and ps shapes unchanged; no documented API change between 0.40.4 and 0.40.5.
+- **French.** The "model stayed loaded" sentence on the Live page and in the Live guide.
+- **Agent Skill** ships its LICENSE and NOTICE, so registries read Apache-2.0 instead of a default.
+
 ## [0.8.2] — 2026-10-16
 
 ### Changed
