@@ -1,0 +1,14 @@
+{
+  "$schema": "https://glama.ai/mcp/schemas/glama.json",
+  "maintainers": ["LogneBudo"],
+  "name": "LLMxRay",
+  "description": "Tells an agent what went wrong with its own Ollama calls, in sentences with the fix: lost prompt cache and where the prompt stopped matching, context overflow, a model running partly on CPU, tool schemas crowding the prompt. Also the last turn in numbers and which local models fit in video memory. Local, read-only, nothing leaves the machine.",
+  "repository": { "url": "https://github.com/LogneBudo/llmxray", "type": "git" },
+  "homepage": "https://lognebudo.github.io/llmxray/",
+  "license": "Apache-2.0",
+  "tags": ["ollama", "local-llm", "observability", "prompt-cache", "logprobs", "diagnostics", "mcp-server"],
+  "categories": ["observability", "developer-tools"],
+  "features": { "tools": true, "resources": false, "prompts": false },
+  "tools": { "count": 3 },
+  "transport": { "type": "stdio" }
+}
