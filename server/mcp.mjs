@@ -183,17 +183,11 @@ export function buildServer({ serverUrl, ollamaUrl, fetchImpl }) {
     {
       title: 'Diagnose my turns',
       description:
-        'What went wrong, if anything, with the calls your Ollama client sent through LLMxRay (port 11435), over several turns: ' +
-        'prompts rejected for exceeding the loaded context, a prompt silently cut to fit it, the prompt cache lost on every turn or on one turn, ' +
-        'a model running partly on CPU, tool schemas crowding the prompt. ' +
-        'Call it after a few turns, and again after you changed something. ' +
-        'Use last_turn_metrics instead when you want one turn in numbers rather than a verdict; use local_models instead when the question is which model or context length to pick. ' +
-        'Returns text: one line per client seen (turns, tokens, tool calls, prefill time), then "What stands out (N):" followed by one finding per line, ' +
-        'each tagged [high], [medium] or [low] and ending with the fix. When nothing stands out it says so. ' +
-        'When no turns were seen it explains how to route calls through port 11435. ' +
-        'Parameters: client narrows to one tool when several share the machine (substring of the label LLMxRay shows); since_minutes limits the window, so pass it after a change to judge only the turns since. Both optional. ' +
-        'Needs LLMxRay running (npx llmxray) on the same machine; if it is not, the answer says so. Reads only; changes nothing. ' +
-        'Cost: well under a second, from records LLMxRay already keeps; no model is called.',
+        'What went wrong, if anything, in the Ollama calls your client sent through LLMxRay (port 11435), judged over several turns: a prompt rejected or silently cut by the context, the cache lost on every turn or on one turn, a model partly on CPU, tool schemas crowding the prompt.\n' +
+        'Call it after a few turns, and again after a change. For one turn in numbers use last_turn_metrics; for which model or context fits use local_models.\n' +
+        'Returns text: one line per client seen, then one finding per line tagged [high], [medium] or [low], each ending with the fix. Says so when nothing stands out, and how to route through 11435 when no turn was seen.\n' +
+        'client: on a shared machine, without it you read every tool\'s turns; pass the name you set in X-LLMxRay-Client. since_minutes: after a change, pass the minutes since it, so old turns do not dilute the verdict.\n' +
+        'Needs LLMxRay running (npx llmxray); says so if not. Under a second, from records already kept; no model is called.',
       inputSchema: {
         client: z.string().optional().describe('Part of the client label or id as LLMxRay shows it (for example "VS Code Copilot", "python-requests", or the X-LLMxRay-Client header you sent). Case-insensitive substring. Omit for all clients.'),
         since_minutes: z.number().int().positive().optional().describe('Only turns from the last N minutes. Omit for every turn LLMxRay has kept.'),
@@ -208,16 +202,11 @@ export function buildServer({ serverUrl, ollamaUrl, fetchImpl }) {
     {
       title: 'Last turn metrics',
       description:
-        'The most recent turn seen through LLMxRay, as numbers, no judgement: prompt tokens and how many came from cache, ' +
-        'prefill time and speed, generated tokens and speed, why generation stopped, what the prompt was made of (system, tools, history, new message, in characters), ' +
-        'the context requested, whether the model fit in video memory, and where the prompt stopped matching the previous turn. ' +
-        'Use it to budget the next call or to confirm a change helped. ' +
-        'Use diagnose_my_turns instead for findings across several turns with fixes; use local_models for what is installed and loaded. ' +
-        'Returns text, one fact per line, starting with "turn <n> at <time>  client: ...  model: ...". ' +
-        'When no turns were seen it explains how to route calls through port 11435. ' +
-        'Parameter: client picks the latest turn of one tool when several share the machine (substring of the label); omit it for the latest turn from anyone. ' +
-        'Needs LLMxRay running (npx llmxray) on the same machine; if it is not, the answer says so. Reads only; changes nothing. ' +
-        'Cost: well under a second, from records LLMxRay already keeps; no model is called.',
+        'The most recent turn seen through LLMxRay, as numbers: prompt tokens and cached share, prefill time and speed, generated tokens and speed, stop reason, prompt make-up (system, tools, history, new message), context requested, VRAM fit, and where the prompt stopped matching the previous turn.\n' +
+        'Use it to budget the next call or to confirm a change helped. For a verdict across turns use diagnose_my_turns; for what is installed and loaded use local_models.\n' +
+        'Returns text, one fact per line, starting "turn <n> at <time>  client: ...  model: ...". Explains how to route through 11435 when no turn was seen.\n' +
+        'client: on a shared machine the latest turn may be another tool\'s; pass the name you set in X-LLMxRay-Client to get your own. Omit it on a machine where you are the only caller.\n' +
+        'Needs LLMxRay running (npx llmxray); says so if not. Under a second, from records already kept; no model is called.',
       inputSchema: {
         client: z.string().optional().describe('Part of the client label or id, case-insensitive substring. Omit for the latest turn from any client.'),
       },
@@ -231,14 +220,10 @@ export function buildServer({ serverUrl, ollamaUrl, fetchImpl }) {
     {
       title: 'Local models',
       description:
-        'Which models Ollama has pulled on this machine (size on disk, parameters, quantisation, family), which are loaded right now and with what context length, ' +
-        'how much of each loaded model sits in video memory, and whether each pulled model would fit in video memory. ' +
-        'Use it before choosing a model or a context length. It says nothing about past calls: ' +
-        'for those use diagnose_my_turns (findings) or last_turn_metrics (numbers). ' +
-        'Returns text: a first line with the GPU, video memory and RAM when known, then "N models pulled:" and one line per model, sorted by name, ' +
-        'ending with LOADED now ... or fits in VRAM ... or larger than VRAM: will run partly on CPU. Takes no arguments. ' +
-        'Needs Ollama reachable; the machine line needs LLMxRay running too and is simply omitted when it is not. Reads only; changes nothing. ' +
-        'Cost: well under a second, two listing calls to Ollama; no model is loaded or called. The answer is a snapshot: a model shown as loaded unloads after its keep_alive, so call again right before deciding.',
+        'Which models Ollama has pulled on this machine, with size, parameters and quantisation; which are loaded now and with what context; how much of each sits in video memory; and whether each pulled model would fit.\n' +
+        'Use it before choosing a model or a context length. It knows nothing about past calls: use diagnose_my_turns or last_turn_metrics for those.\n' +
+        'Returns text: a machine line (GPU, video memory, RAM) when LLMxRay is running, then "N models pulled:" and one line per model, sorted by name, ending in LOADED now, fits in VRAM, or larger than VRAM.\n' +
+        'Takes no arguments: no model name, no filter. Needs Ollama reachable. Under a second, two listing calls; no model is loaded. A snapshot: a loaded model unloads after its keep_alive, so call it right before deciding.',
       inputSchema: {},
       annotations: { ...READ_ONLY, title: 'Local models' },
     },

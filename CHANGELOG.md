@@ -5,6 +5,14 @@ All notable changes to LLMxRay are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+
+- **Tool descriptions, shorter and in lines.** One idea per line, a quarter fewer characters, the read-only
+  sentence left to the annotations, and the `client` parameter explained by what goes wrong without it
+  on a shared machine. From Glama's review of 0.8.3 (TDQS 4.7/5).
+
 ## [0.8.3] — 2026-10-17
 
 ### Changed
