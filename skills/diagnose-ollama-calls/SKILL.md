@@ -1,7 +1,6 @@
 ---
 name: diagnose-ollama-calls
 description: Find out what went wrong with your own Ollama calls and fix it, using LLMxRay's local, read-only MCP tools. Use when a local model is slow, a prompt is rejected or silently cut for exceeding the context, the prompt cache seems lost between turns, a model runs partly on CPU, tool schemas crowd the prompt, or you must choose which local model and context length fit in video memory. Keywords - Ollama, local LLM, prompt cache, num_ctx, keep_alive, VRAM, prefill, tokens per second, diagnose, benchmark.
-license: Apache-2.0
 compatibility: Requires Node.js 20+ (npx) and a local Ollama daemon. LLMxRay runs on the same machine; nothing leaves it.
 metadata:
   author: LogneBudo
