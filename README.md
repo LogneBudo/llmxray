@@ -2,7 +2,7 @@
 
 [![LLMxRay-MCP MCP server – quality and maintenance score on Glama](https://glama.ai/mcp/servers/LogneBudo/llmxray/badges/score.svg)](https://glama.ai/mcp/servers/LogneBudo/llmxray)
 
-[https://alternativeto.net/software/llmxray/](https://alternativeto.net/software/llmxray/)
+[[https://alternativeto.net/software/llmxray/](https://alternativeto.net/software/llmxray/)](https://alternativeto.net/software/llmxray/)
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/LogneBudo/llmxray/master/public/favicon.svg" alt="LLMxRay" width="80" />
