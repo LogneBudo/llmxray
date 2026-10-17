@@ -22,6 +22,7 @@
   <img src="https://img.shields.io/badge/license-Apache%202.0-blue" alt="License" />
   <img src="https://img.shields.io/badge/ollama-0.40.x-000?logo=ollama&logoColor=white" alt="Ollama" />
   <a href="https://glama.ai/mcp/servers/LogneBudo/llmxray"><img src="https://glama.ai/mcp/servers/LogneBudo/llmxray/badges/score.svg" alt="Glama score" /></a>
+  <a href="https://tensorblock.co/mcp/servers/github-lognebudo-llmxray-eb15540c"><img src="https://mcp-index.tensorblock.co/v1/servers/github-lognebudo-llmxray-eb15540c/badge.svg" alt="Indexed on TensorBlock MCP Index" /></a>
 </p>
 
 <p align="center">
