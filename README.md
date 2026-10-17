@@ -107,7 +107,7 @@ LLMxRay opens a second port, **11435**, that behaves exactly like Ollama and for
 
 ```
 VS Code Copilot ─┐
-Open WebUI ──────┤                                   ┌─ Live page: every turn,
+Open WebUI ──────┤                                    ┌─ Live page: every turn,
 Continue / n8n ──┼─► http://localhost:11435 ─► Ollama ┤  cache hits, prefill speed,
 your scripts ────┘        (LLMxRay)                   └─ where the cache broke
 ```
