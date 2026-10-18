@@ -1,5 +1,7 @@
 # LLMxRay
 
+**If LLMxRay helps you understand your AI better, [consider giving it a star on GitHub](https://github.com/LogneBudo/llmxray).**
+
 **Local LLM Observatory** — See what your AI is actually doing, token by token, layer by layer.
 
 No cloud. No API keys. No cost. Everything runs on your hardware.
