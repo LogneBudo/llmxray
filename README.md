@@ -6,6 +6,7 @@
 
 <p align="center">
   <a href="https://glama.ai/mcp/servers/LogneBudo/llmxray"><img src="https://glama.ai/mcp/servers/LogneBudo/llmxray/badges/card.svg" alt="LLMxRay MCP server: quality and maintenance score on Glama" width="380" height="200" /></a>
+  <a href="https://trendshift.io/repositories/271331?utm_source=trendshift-badge&amp;utm_medium=badge&amp;utm_campaign=badge-trendshift-271331" target="_blank" rel="noopener noreferrer"><img src="https://trendshift.io/api/badge/trendshift/repositories/271331/daily?language=Vue" alt="LogneBudo%2Fllmxray | Trendshift" width="250" height="55"/></a>
 </p>
 <p align="center">
   <a href="https://alternativeto.net/software/llmxray/about/?utm_source=badge&utm_medium=referral"><img src="https://alternativeto.net/static/badges/badge-wide-dark.svg" alt="LLMxRay on AlternativeTo" width="406" height="77" /></a>
