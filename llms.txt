@@ -1,0 +1,38 @@
+# LLMxRay
+
+> A free, local observatory for Ollama. It shows what your local models actually do with each prompt: what was cached, what was recomputed, what the daemon silently cut to fit the context, which tool on the machine evicted which model, and how each model fits in video memory. Agents can query it about their own calls through a read-only MCP server. Everything runs on your machine: no account, no API key, nothing sent anywhere. Apache-2.0.
+
+## Install
+
+- Ollama must be running with at least one model pulled (`ollama pull llama3.2`).
+- `npx llmxray`, or `docker run -p 5174:5174 djovaneli/llmxray`, then open http://localhost:5174
+- To observe other tools: point them at port 11435 instead of 11434. It behaves exactly like Ollama and forwards everything; LLMxRay only records what passes.
+
+## For agents
+
+- MCP server: `{ "mcpServers": { "llmxray": { "command": "npx", "args": ["-y", "-p", "llmxray", "llmxray-mcp"] } } }` (LLMxRay itself must be running).
+- Seven read-only tools: `diagnose_my_turns`, `read_my_last_turn`, `list_local_models`, `list_my_turns`, `compare_my_turns`, `estimate_my_prompt`, `read_llmxray_status`.
+- Name yourself with the header `X-LLMxRay-Client: <name>` and pass the same name as `client`.
+- Agent Skill: `npx skills add LogneBudo/llmxray` or `clawhub install llmxray-diagnose-ollama-calls`.
+- Listed in the official MCP Registry as `io.github.LogneBudo/llmxray`.
+
+## Docs
+
+- [Installation](https://lognebudo.github.io/llmxray/docs/en/guide/installation.html)
+- [Prompt X-ray](https://lognebudo.github.io/llmxray/docs/en/guide/xray.html): each turn's prompt drawn to scale, cached, recomputed or cut
+- [Live](https://lognebudo.github.io/llmxray/docs/en/guide/live.html): every tool on the machine that talks to Ollama, turn by turn
+- [Shared box](https://lognebudo.github.io/llmxray/docs/en/guide/shared-box.html): why Ollama is slow right now, and which tool did it
+- [GPU map](https://lognebudo.github.io/llmxray/docs/en/guide/gpu-map.html): what sits in video memory now
+- [Tool calls](https://lognebudo.github.io/llmxray/docs/en/guide/tool-calls.html): how reliably a model calls tools
+- [Cache Lab](https://lognebudo.github.io/llmxray/docs/en/guide/cache-lab.html): measure prompt-cache reuse by prompt layout
+- [Decision Lab](https://lognebudo.github.io/llmxray/docs/en/guide/decision-lab.html)
+- [Benchmarks](https://lognebudo.github.io/llmxray/docs/en/guide/benchmark.html)
+- [Chat diagnostics](https://lognebudo.github.io/llmxray/docs/en/guide/chat-diagnostics.html)
+- [Protocols](https://lognebudo.github.io/llmxray/docs/en/guide/protocols.html): Ollama native, OpenAI-compatible and Anthropic-compatible side by side
+- [Compare](https://lognebudo.github.io/llmxray/docs/en/guide/compare.html)
+
+## Source
+
+- Code: https://github.com/LogneBudo/llmxray
+- npm: https://www.npmjs.com/package/llmxray
+- Docker: https://hub.docker.com/r/djovaneli/llmxray
