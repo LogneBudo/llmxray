@@ -142,6 +142,13 @@ export default defineConfig({
   lastUpdated: true,
   sitemap: { hostname: 'https://lognebudo.github.io/llmxray/docs/' },
 
+  // One canonical URL per page, the same form the sitemap lists (x.md -> x.html, index.md -> folder).
+  transformPageData(pageData) {
+    const href = `https://lognebudo.github.io/llmxray/docs/${pageData.relativePath}`.replace(/index\.md$/, '').replace(/\.md$/, '.html')
+    pageData.frontmatter.head ??= []
+    pageData.frontmatter.head.push(['link', { rel: 'canonical', href }])
+  },
+
   base: '/llmxray/docs/',
 
   head: [
