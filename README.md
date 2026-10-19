@@ -77,6 +77,12 @@ Every page below is one of those answers.
 
 Each turn your tool sent, as a bar. Colour is what each part of the prompt was: system prompt, tool schemas, earlier turns, the new message. Brightness is what happened to it: dim was already in the model's memory and cost nothing, bright had to be read again, striped was cut by the daemon and never seen. Stack the turns of a conversation and you watch the cache grow, see the turn where a timestamp in the system prompt emptied it, and the turn where the prompt outgrew the context and Ollama silently dropped the start, system prompt included, and answered anyway. Click a part and the request opens at that place in the text.
 
+### Runs: one tool's work, end to end
+
+One tool's calls to the model laid out in time, as a waterfall. Each call is split into what Ollama reports: waiting, loading the model, reading the prompt, writing the answer. Between calls, the tool's own time, named after the tools the model asked for. Steps start where the tool began a fresh conversation, so an agent that throws its cache away at every step shows it at a glance, and so does a model that was not in memory when the run began. Click any row for what that call sent and what came back, the model's thinking and its tool calls with their arguments included, or for what a tool was asked and what it returned. Every row has its own link. Switch on *Keep the prompt text* on the Live page to see the text; the timings need nothing.
+
+![Runs: a 36-call agent run as a waterfall, with a tool's input and result](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/runs.png)
+
 ### Shared box: why Ollama is slow right now, and which tool did it
 
 One line per tool, sorted by what it cost the others, in seconds: the one that sends `keep_alive: 0` and unloads the model after every run, the one that asks for a 128K context on 4K prompts and drops the daemon to one request at a time, the one that waited 22 seconds behind them. Each with the setting to change. A tool that cost nothing is listed too, so you can see what good looks like.
@@ -302,7 +308,7 @@ npm run dev     # http://localhost:5173
 
 ## Ollama compatibility
 
-Tested against **Ollama 0.40.x** (verified on 0.40.4, October 2026). Works with 0.20 and newer; older versions chat but lack `think` and JSON-schema `format`. **Recommended: 0.33.3 or newer**, which reports prompt-cache reuse, so prefill speed is measured over the tokens actually evaluated.
+Tested against **Ollama 0.40.x** (verified on 0.40.6, October 2026). Works with 0.20 and newer; older versions chat but lack `think` and JSON-schema `format`. **Recommended: 0.33.3 or newer**, which reports prompt-cache reuse, so prefill speed is measured over the tokens actually evaluated.
 
 | Endpoint | Used for |
 |---|---|

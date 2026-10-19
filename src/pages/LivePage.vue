@@ -347,7 +347,14 @@ function findingParams(f: { params: Record<string, string | number> }) {
                 <span class="text-base font-semibold text-text-primary">
                   {{ $t('live.turn.title') }} {{ selected.seq }} · {{ selected.client.label }} · {{ $t(`live.table.mode.${selected.mode}`) }}
                 </span>
-                <span class="rounded bg-surface-overlay px-1.5 py-0.5 font-mono text-text-secondary">{{ fmtTime(selected.at) }}</span>
+                <span class="flex items-center gap-2">
+                  <router-link
+                    v-if="selected.mode !== 'embedding'"
+                    :to="{ name: 'runs', query: { turn: selected.id } }"
+                    class="whitespace-nowrap text-sm text-accent hover:underline"
+                  >{{ $t('live.turn.openRun') }}</router-link>
+                  <span class="rounded bg-surface-overlay px-1.5 py-0.5 font-mono text-text-secondary">{{ fmtTime(selected.at) }}</span>
+                </span>
               </div>
 
               <!-- Anatomy -->

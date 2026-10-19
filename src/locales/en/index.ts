@@ -19,6 +19,7 @@ import cachelab from './cachelab.json'
 import decisionlab from './decisionlab.json'
 import live from './live.json'
 import xray from './xray.json'
+import runs from './runs.json'
 import ledger from './ledger.json'
 import gpu from './gpu.json'
 import toolcalls from './toolcalls.json'
@@ -45,6 +46,7 @@ export default {
   decisionlab,
   live,
   xray,
+  runs,
   ledger,
   gpu,
   toolcalls,

@@ -92,6 +92,7 @@ On Linux, `host.docker.internal` may not resolve by default. Either:
 ## What you get
 
 - **Prompt X-ray**: each turn's prompt drawn to scale, showing what was already cached, what was read again, and what Ollama silently cut when the prompt outgrew the context, system prompt included
+- **Runs**: one tool's calls to the model, end to end, as a waterfall: waiting, loading, reading the prompt and writing the answer for each call, tool time between calls, and what every call sent and got back
 - **Shared box**: why Ollama is slow right now and which tool did it, in seconds, with the setting to change (a `keep_alive: 0` that unloads the model after every run, a 128K context on 4K prompts)
 - **GPU map**: what is in video memory, model by model, and which pulled models would fit
 - **Tool calls**: thirteen request shapes agents send, scored per model on what the daemon returned

@@ -5,6 +5,7 @@
  * the Live page records; the arithmetic is in services/xray.ts.
  */
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import { ScanLine } from 'lucide-vue-next'
 import { useLiveStore } from '@/stores/live-store'
 import { xrayConversations, type XrayConversation, type XraySegment, type XrayTurn } from '@/services/xray'
@@ -63,6 +64,25 @@ async function pick(x: XrayTurn, seg: XraySegment) {
 }
 
 const pickedState = computed(() => (picked.value ? `xray.legend.${picked.value.seg.state}` : ''))
+
+// ---- opened from a run: /xray?turn=<id> lands on that turn's conversation and request --------
+
+const route = useRoute()
+const wanted = ref<string | null>((route.query.turn as string | undefined) ?? null)
+watch(
+  conversations,
+  (list) => {
+    if (!wanted.value) return
+    const c = list.find((x) => x.turns.some((y) => y.turn.id === wanted.value))
+    const x = c?.turns.find((y) => y.turn.id === wanted.value)
+    if (!c || !x) return
+    wanted.value = null
+    pickedKey.value = c.key
+    const seg = x.segments.find((s) => s.state === 'recomputed') ?? x.segments[0]
+    if (seg) void pick(x, seg)
+  },
+  { immediate: true },
+)
 </script>
 
 <template>
@@ -173,8 +193,9 @@ const pickedState = computed(() => (picked.value ? `xray.legend.${picked.value.s
           <h3 class="text-sm font-medium text-text-secondary">{{ $t('xray.request.title') }}</h3>
           <p class="mt-1 text-sm text-text-muted">{{ $t('xray.request.hint') }}</p>
           <template v-if="picked">
-            <p class="mt-3 text-sm text-text-secondary">
+            <p class="mt-3 flex flex-wrap items-center gap-x-3 text-sm text-text-secondary">
               {{ $t('xray.request.selected', { n: conversation.turns.indexOf(picked.x) + 1, part: $t(`xray.part.${picked.seg.part}`), state: $t(pickedState) }) }}
+              <router-link :to="{ name: 'runs', query: { turn: picked.x.turn.id } }" class="text-accent hover:underline">{{ $t('xray.request.openRun') }}</router-link>
             </p>
             <RequestViewer
               v-if="live.selectedText"

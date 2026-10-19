@@ -1,0 +1,1601 @@
+[
+ {
+  "id": "17f0e308-cc3b-45d4-9d15-24214910ddf2",
+  "seq": 1,
+  "at": 1792358291068,
+  "durationMs": 9330,
+  "path": "/api/chat",
+  "protocol": "ollama-chat",
+  "mode": "agent",
+  "client": {
+   "id": "ua:swarm-funnel-baseline",
+   "label": "swarm-funnel-baseline",
+   "userAgent": "swarm-funnel-baseline/0.1"
+  },
+  "model": "gemma4:latest",
+  "stream": false,
+  "keepAlive": null,
+  "totalMs": 9323.4951,
+  "queueMs": 6.504899999999907,
+  "status": 200,
+  "error": null,
+  "contextExceeded": null,
+  "loadMs": 8467.0644,
+  "prompt": {
+   "tokens": 3460,
+   "cached": 0,
+   "evaluated": 3460,
+   "prefillMs": 777.885,
+   "prefillTps": 4448,
+   "contextRequested": 32768
+  },
+  "gen": {
+   "tokens": 9,
+   "ms": 64.950999,
+   "tps": 138.6,
+   "doneReason": "stop"
+  },
+  "toolCalls": [
+   "list_files"
+  ],
+  "toolsOffered": 15,
+  "toolNames": [
+   "read_file",
+   "write_file",
+   "append_file",
+   "list_files",
+   "prom_query",
+   "bundle_json",
+   "shell",
+   "moltbook_feed",
+   "moltbook_search",
+   "moltbook_read_post",
+   "moltbook_submolts",
+   "moltbook_verify",
+   "moltbook_me",
+   "moltbook_reply",
+   "moltbook_post"
+  ],
+  "anatomy": {
+   "systemChars": 1269,
+   "toolsChars": 8107,
+   "historyChars": 0,
+   "messageChars": 1812,
+   "totalChars": 11188,
+   "messages": 2
+  },
+  "prefix": null,
+  "fit": {
+   "contextLength": 32768,
+   "size": 398731508,
+   "sizeVram": 398731508,
+   "cpuShare": 0,
+   "runner": "llamacpp"
+  },
+  "textKept": true
+ },
+ {
+  "id": "e21b2280-d240-4cf4-b0be-9382a96d2298",
+  "seq": 2,
+  "at": 1792358300404,
+  "durationMs": 315,
+  "path": "/api/chat",
+  "protocol": "ollama-chat",
+  "mode": "agent",
+  "client": {
+   "id": "ua:swarm-funnel-baseline",
+   "label": "swarm-funnel-baseline",
+   "userAgent": "swarm-funnel-baseline/0.1"
+  },
+  "model": "gemma4:latest",
+  "stream": false,
+  "keepAlive": null,
+  "totalMs": 313.5415,
+  "queueMs": 1.458500000000015,
+  "status": 200,
+  "error": null,
+  "contextExceeded": null,
+  "loadMs": 10.1058,
+  "prompt": {
+   "tokens": 4538,
+   "cached": 3468,
+   "evaluated": 1070,
+   "prefillMs": 216.593,
+   "prefillTps": 4940,
+   "contextRequested": 32768
+  },
+  "gen": {
+   "tokens": 21,
+   "ms": 73.75,
+   "tps": 284.7,
+   "doneReason": "stop"
+  },
+  "toolCalls": [
+   "read_file"
+  ],
+  "toolsOffered": 15,
+  "toolNames": [
+   "read_file",
+   "write_file",
+   "append_file",
+   "list_files",
+   "prom_query",
+   "bundle_json",
+   "shell",
+   "moltbook_feed",
+   "moltbook_search",
+   "moltbook_read_post",
+   "moltbook_submolts",
+   "moltbook_verify",
+   "moltbook_me",
+   "moltbook_reply",
+   "moltbook_post"
+  ],
+  "anatomy": {
+   "systemChars": 1269,
+   "toolsChars": 8107,
+   "historyChars": 1757,
+   "messageChars": 1812,
+   "totalChars": 12945,
+   "messages": 4
+  },
+  "prefix": {
+   "breakChar": 11211,
+   "breakShare": 0.8632478632478633,
+   "breakTokensEst": 3917,
+   "identical": false
+  },
+  "fit": {
+   "contextLength": 32768,
+   "size": 398731508,
+   "sizeVram": 398731508,
+   "cpuShare": 0,
+   "runner": "llamacpp"
+  },
+  "textKept": true
+ },
+ {
+  "id": "78af3ea0-f574-4f10-b482-ebe3bc767e61",
+  "seq": 3,
+  "at": 1792358300721,
+  "durationMs": 145,
+  "path": "/api/chat",
+  "protocol": "ollama-chat",
+  "mode": "agent",
+  "client": {
+   "id": "ua:swarm-funnel-baseline",
+   "label": "swarm-funnel-baseline",
+   "userAgent": "swarm-funnel-baseline/0.1"
+  },
+  "model": "gemma4:latest",
+  "stream": false,
+  "keepAlive": null,
+  "totalMs": 143.6562,
+  "queueMs": 1.3437999999999874,
+  "status": 200,
+  "error": null,
+  "contextExceeded": null,
+  "loadMs": 8.5464,
+  "prompt": {
+   "tokens": 4584,
+   "cached": 4558,
+   "evaluated": 26,
+   "prefillMs": 52.445,
+   "prefillTps": 496,
+   "contextRequested": 32768
+  },
+  "gen": {
+   "tokens": 19,
+   "ms": 70.641,
+   "tps": 269,
+   "doneReason": "stop"
+  },
+  "toolCalls": [
+   "read_file"
+  ],
+  "toolsOffered": 15,
+  "toolNames": [
+   "read_file",
+   "write_file",
+   "append_file",
+   "list_files",
+   "prom_query",
+   "bundle_json",
+   "shell",
+   "moltbook_feed",
+   "moltbook_search",
+   "moltbook_read_post",
+   "moltbook_submolts",
+   "moltbook_verify",
+   "moltbook_me",
+   "moltbook_reply",
+   "moltbook_post"
+  ],
+  "anatomy": {
+   "systemChars": 1269,
+   "toolsChars": 8107,
+   "historyChars": 1924,
+   "messageChars": 1812,
+   "totalChars": 13112,
+   "messages": 6
+  },
+  "prefix": {
+   "breakChar": 12987,
+   "breakShare": 0.9858802095194716,
+   "breakTokensEst": 4519,
+   "identical": false
+  },
+  "fit": {
+   "contextLength": 32768,
+   "size": 398731508,
+   "sizeVram": 398731508,
+   "cpuShare": 0,
+   "runner": "llamacpp"
+  },
+  "textKept": true
+ },
+ {
+  "id": "c7e152c3-6538-486e-9202-dfaa308c2064",
+  "seq": 4,
+  "at": 1792358300867,
+  "durationMs": 149,
+  "path": "/api/chat",
+  "protocol": "ollama-chat",
+  "mode": "agent",
+  "client": {
+   "id": "ua:swarm-funnel-baseline",
+   "label": "swarm-funnel-baseline",
+   "userAgent": "swarm-funnel-baseline/0.1"
+  },
+  "model": "gemma4:latest",
+  "stream": false,
+  "keepAlive": null,
+  "totalMs": 147.557,
+  "queueMs": 1.443000000000012,
+  "status": 200,
+  "error": null,
+  "contextExceeded": null,
+  "loadMs": 8.0266,
+  "prompt": {
+   "tokens": 4626,
+   "cached": 4602,
+   "evaluated": 24,
+   "prefillMs": 51.426,
+   "prefillTps": 467,
+   "contextRequested": 32768
+  },
+  "gen": {
+   "tokens": 19,
+   "ms": 73.935,
+   "tps": 257,
+   "doneReason": "stop"
+  },
+  "toolCalls": [
+   "read_file"
+  ],
+  "toolsOffered": 15,
+  "toolNames": [
+   "read_file",
+   "write_file",
+   "append_file",
+   "list_files",
+   "prom_query",
+   "bundle_json",
+   "shell",
+   "moltbook_feed",
+   "moltbook_search",
+   "moltbook_read_post",
+   "moltbook_submolts",
+   "moltbook_verify",
+   "moltbook_me",
+   "moltbook_reply",
+   "moltbook_post"
+  ],
+  "anatomy": {
+   "systemChars": 1269,
+   "toolsChars": 8107,
+   "historyChars": 2073,
+   "messageChars": 1812,
+   "totalChars": 13261,
+   "messages": 8
+  },
+  "prefix": {
+   "breakChar": 13173,
+   "breakShare": 0.987407240836519,
+   "breakTokensEst": 4568,
+   "identical": false
+  },
+  "fit": {
+   "contextLength": 32768,
+   "size": 398731508,
+   "sizeVram": 398731508,
+   "cpuShare": 0,
+   "runner": "llamacpp"
+  },
+  "textKept": true
+ },
+ {
+  "id": "6fe81c70-d8f7-4e8c-80b3-48273b2f4c72",
+  "seq": 5,
+  "at": 1792358301017,
+  "durationMs": 155,
+  "path": "/api/chat",
+  "protocol": "ollama-chat",
+  "mode": "agent",
+  "client": {
+   "id": "ua:swarm-funnel-baseline",
+   "label": "swarm-funnel-baseline",
+   "userAgent": "swarm-funnel-baseline/0.1"
+  },
+  "model": "gemma4:latest",
+  "stream": false,
+  "keepAlive": null,
+  "totalMs": 153.1659,
+  "queueMs": 1.8341000000000065,
+  "status": 200,
+  "error": null,
+  "contextExceeded": null,
+  "loadMs": 8.4753,
+  "prompt": {
+   "tokens": 4668,
+   "cached": 4644,
+   "evaluated": 24,
+   "prefillMs": 55.952,
+   "prefillTps": 429,
+   "contextRequested": 32768
+  },
+  "gen": {
+   "tokens": 21,
+   "ms": 74.644,
+   "tps": 281.3,
+   "doneReason": "stop"
+  },
+  "toolCalls": [
+   "read_file"
+  ],
+  "toolsOffered": 15,
+  "toolNames": [
+   "read_file",
+   "write_file",
+   "append_file",
+   "list_files",
+   "prom_query",
+   "bundle_json",
+   "shell",
+   "moltbook_feed",
+   "moltbook_search",
+   "moltbook_read_post",
+   "moltbook_submolts",
+   "moltbook_verify",
+   "moltbook_me",
+   "moltbook_reply",
+   "moltbook_post"
+  ],
+  "anatomy": {
+   "systemChars": 1269,
+   "toolsChars": 8107,
+   "historyChars": 2218,
+   "messageChars": 1812,
+   "totalChars": 13406,
+   "messages": 10
+  },
+  "prefix": {
+   "breakChar": 13341,
+   "breakShare": 0.9878563495001851,
+   "breakTokensEst": 4611,
+   "identical": false
+  },
+  "fit": {
+   "contextLength": 32768,
+   "size": 398731508,
+   "sizeVram": 398731508,
+   "cpuShare": 0,
+   "runner": "llamacpp"
+  },
+  "textKept": true
+ },
+ {
+  "id": "19d68cd7-c006-47b6-9c77-7c2e59d2ca02",
+  "seq": 6,
+  "at": 1792358301173,
+  "durationMs": 204,
+  "path": "/api/chat",
+  "protocol": "ollama-chat",
+  "mode": "agent",
+  "client": {
+   "id": "ua:swarm-funnel-baseline",
+   "label": "swarm-funnel-baseline",
+   "userAgent": "swarm-funnel-baseline/0.1"
+  },
+  "model": "gemma4:latest",
+  "stream": false,
+  "keepAlive": null,
+  "totalMs": 202.7278,
+  "queueMs": 1.272199999999998,
+  "status": 200,
+  "error": null,
+  "contextExceeded": null,
+  "loadMs": 7.3521,
+  "prompt": {
+   "tokens": 4714,
+   "cached": 4688,
+   "evaluated": 26,
+   "prefillMs": 50.233,
+   "prefillTps": 518,
+   "contextRequested": 32768
+  },
+  "gen": {
+   "tokens": 24,
+   "ms": 131.735,
+   "tps": 182.2,
+   "doneReason": "stop"
+  },
+  "toolCalls": [],
+  "toolsOffered": 15,
+  "toolNames": [
+   "read_file",
+   "write_file",
+   "append_file",
+   "list_files",
+   "prom_query",
+   "bundle_json",
+   "shell",
+   "moltbook_feed",
+   "moltbook_search",
+   "moltbook_read_post",
+   "moltbook_submolts",
+   "moltbook_verify",
+   "moltbook_me",
+   "moltbook_reply",
+   "moltbook_post"
+  ],
+  "anatomy": {
+   "systemChars": 1269,
+   "toolsChars": 8107,
+   "historyChars": 2371,
+   "messageChars": 1812,
+   "totalChars": 13559,
+   "messages": 12
+  },
+  "prefix": {
+   "breakChar": 13505,
+   "breakShare": 0.987424142721357,
+   "breakTokensEst": 4655,
+   "identical": false
+  },
+  "fit": {
+   "contextLength": 32768,
+   "size": 398731508,
+   "sizeVram": 398731508,
+   "cpuShare": 0,
+   "runner": "llamacpp"
+  },
+  "textKept": true
+ },
+ {
+  "id": "db9e2187-5125-4b35-bb0a-a659f3a04cb7",
+  "seq": 7,
+  "at": 1792358301380,
+  "durationMs": 2732,
+  "path": "/api/chat",
+  "protocol": "ollama-chat",
+  "mode": "agent",
+  "client": {
+   "id": "ua:swarm-funnel-baseline",
+   "label": "swarm-funnel-baseline",
+   "userAgent": "swarm-funnel-baseline/0.1"
+  },
+  "model": "gemma4:latest",
+  "stream": false,
+  "keepAlive": null,
+  "totalMs": 2730.8305,
+  "queueMs": 1.169499999999971,
+  "status": 200,
+  "error": null,
+  "contextExceeded": null,
+  "loadMs": 8.1769,
+  "prompt": {
+   "tokens": 3783,
+   "cached": 0,
+   "evaluated": 3783,
+   "prefillMs": 649.915,
+   "prefillTps": 5821,
+   "contextRequested": 32768
+  },
+  "gen": {
+   "tokens": 603,
+   "ms": 1936.547,
+   "tps": 311.4,
+   "doneReason": "stop"
+  },
+  "toolCalls": [
+   "prom_query",
+   "prom_query",
+   "prom_query",
+   "prom_query",
+   "prom_query",
+   "prom_query",
+   "prom_query",
+   "prom_query",
+   "prom_query",
+   "prom_query",
+   "prom_query",
+   "prom_query",
+   "prom_query",
+   "prom_query",
+   "prom_query",
+   "read_file"
+  ],
+  "toolsOffered": 15,
+  "toolNames": [
+   "read_file",
+   "write_file",
+   "append_file",
+   "list_files",
+   "prom_query",
+   "bundle_json",
+   "shell",
+   "moltbook_feed",
+   "moltbook_search",
+   "moltbook_read_post",
+   "moltbook_submolts",
+   "moltbook_verify",
+   "moltbook_me",
+   "moltbook_reply",
+   "moltbook_post"
+  ],
+  "anatomy": {
+   "systemChars": 1269,
+   "toolsChars": 8107,
+   "historyChars": 0,
+   "messageChars": 2805,
+   "totalChars": 12181,
+   "messages": 2
+  },
+  "prefix": {
+   "breakChar": 9406,
+   "breakShare": 0.7707309078990495,
+   "breakTokensEst": 2916,
+   "identical": false
+  },
+  "fit": {
+   "contextLength": 32768,
+   "size": 398731508,
+   "sizeVram": 398731508,
+   "cpuShare": 0,
+   "runner": "llamacpp"
+  },
+  "textKept": true
+ },
+ {
+  "id": "e428373b-f863-4a59-9774-b3ea8769eb6e",
+  "seq": 8,
+  "at": 1792358304512,
+  "durationMs": 420,
+  "path": "/api/chat",
+  "protocol": "ollama-chat",
+  "mode": "agent",
+  "client": {
+   "id": "ua:swarm-funnel-baseline",
+   "label": "swarm-funnel-baseline",
+   "userAgent": "swarm-funnel-baseline/0.1"
+  },
+  "model": "gemma4:latest",
+  "stream": false,
+  "keepAlive": null,
+  "totalMs": 417.9377,
+  "queueMs": 2.0622999999999934,
+  "status": 200,
+  "error": null,
+  "contextExceeded": null,
+  "loadMs": 5.8478,
+  "prompt": {
+   "tokens": 5210,
+   "cached": 4385,
+   "evaluated": 825,
+   "prefillMs": 168.389,
+   "prefillTps": 4899,
+   "contextRequested": 32768
+  },
+  "gen": {
+   "tokens": 44,
+   "ms": 228.697,
+   "tps": 192.4,
+   "doneReason": "stop"
+  },
+  "toolCalls": [],
+  "toolsOffered": 15,
+  "toolNames": [
+   "read_file",
+   "write_file",
+   "append_file",
+   "list_files",
+   "prom_query",
+   "bundle_json",
+   "shell",
+   "moltbook_feed",
+   "moltbook_search",
+   "moltbook_read_post",
+   "moltbook_submolts",
+   "moltbook_verify",
+   "moltbook_me",
+   "moltbook_reply",
+   "moltbook_post"
+  ],
+  "anatomy": {
+   "systemChars": 1269,
+   "toolsChars": 8107,
+   "historyChars": 4184,
+   "messageChars": 2805,
+   "totalChars": 16365,
+   "messages": 19
+  },
+  "prefix": {
+   "breakChar": 12204,
+   "breakShare": 0.7390988372093024,
+   "breakTokensEst": 3851,
+   "identical": false
+  },
+  "fit": {
+   "contextLength": 32768,
+   "size": 398731508,
+   "sizeVram": 398731508,
+   "cpuShare": 0,
+   "runner": "llamacpp"
+  },
+  "textKept": true
+ },
+ {
+  "id": "b0afc6f2-ae58-4553-962d-21b683a29277",
+  "seq": 9,
+  "at": 1792358304934,
+  "durationMs": 817,
+  "path": "/api/chat",
+  "protocol": "ollama-chat",
+  "mode": "agent",
+  "client": {
+   "id": "ua:swarm-funnel-baseline",
+   "label": "swarm-funnel-baseline",
+   "userAgent": "swarm-funnel-baseline/0.1"
+  },
+  "model": "gemma4:latest",
+  "stream": false,
+  "keepAlive": null,
+  "totalMs": 815.9588,
+  "queueMs": 1.0412000000000035,
+  "status": 200,
+  "error": null,
+  "contextExceeded": null,
+  "loadMs": 5.4743,
+  "prompt": {
+   "tokens": 3579,
+   "cached": 0,
+   "evaluated": 3579,
+   "prefillMs": 584.588,
+   "prefillTps": 6122,
+   "contextRequested": 32768
+  },
+  "gen": {
+   "tokens": 42,
+   "ms": 154.596,
+   "tps": 271.7,
+   "doneReason": "stop"
+  },
+  "toolCalls": [
+   "prom_query"
+  ],
+  "toolsOffered": 15,
+  "toolNames": [
+   "read_file",
+   "write_file",
+   "append_file",
+   "list_files",
+   "prom_query",
+   "bundle_json",
+   "shell",
+   "moltbook_feed",
+   "moltbook_search",
+   "moltbook_read_post",
+   "moltbook_submolts",
+   "moltbook_verify",
+   "moltbook_me",
+   "moltbook_reply",
+   "moltbook_post"
+  ],
+  "anatomy": {
+   "systemChars": 1269,
+   "toolsChars": 8107,
+   "historyChars": 0,
+   "messageChars": 2217,
+   "totalChars": 11593,
+   "messages": 2
+  },
+  "prefix": {
+   "breakChar": 9406,
+   "breakShare": 0.8097451790633609,
+   "breakTokensEst": 2898,
+   "identical": false
+  },
+  "fit": {
+   "contextLength": 32768,
+   "size": 398731508,
+   "sizeVram": 398731508,
+   "cpuShare": 0,
+   "runner": "llamacpp"
+  },
+  "textKept": true
+ },
+ {
+  "id": "e9f8132e-ee22-4419-b6a9-a76c24a795e8",
+  "seq": 10,
+  "at": 1792358305777,
+  "durationMs": 151,
+  "path": "/api/chat",
+  "protocol": "ollama-chat",
+  "mode": "agent",
+  "client": {
+   "id": "ua:swarm-funnel-baseline",
+   "label": "swarm-funnel-baseline",
+   "userAgent": "swarm-funnel-baseline/0.1"
+  },
+  "model": "gemma4:latest",
+  "stream": false,
+  "keepAlive": null,
+  "totalMs": 149.7649,
+  "queueMs": 1.2350999999999885,
+  "status": 200,
+  "error": null,
+  "contextExceeded": null,
+  "loadMs": 5.4525,
+  "prompt": {
+   "tokens": 3743,
+   "cached": 3621,
+   "evaluated": 122,
+   "prefillMs": 60.707,
+   "prefillTps": 2010,
+   "contextRequested": 32768
+  },
+  "gen": {
+   "tokens": 21,
+   "ms": 71.315,
+   "tps": 294.5,
+   "doneReason": "stop"
+  },
+  "toolCalls": [
+   "read_file"
+  ],
+  "toolsOffered": 15,
+  "toolNames": [
+   "read_file",
+   "write_file",
+   "append_file",
+   "list_files",
+   "prom_query",
+   "bundle_json",
+   "shell",
+   "moltbook_feed",
+   "moltbook_search",
+   "moltbook_read_post",
+   "moltbook_submolts",
+   "moltbook_verify",
+   "moltbook_me",
+   "moltbook_reply",
+   "moltbook_post"
+  ],
+  "anatomy": {
+   "systemChars": 1269,
+   "toolsChars": 8107,
+   "historyChars": 409,
+   "messageChars": 2217,
+   "totalChars": 12002,
+   "messages": 4
+  },
+  "prefix": {
+   "breakChar": 11616,
+   "breakShare": 0.9644636333444039,
+   "breakTokensEst": 3610,
+   "identical": false
+  },
+  "fit": {
+   "contextLength": 32768,
+   "size": 398731508,
+   "sizeVram": 398731508,
+   "cpuShare": 0,
+   "runner": "llamacpp"
+  },
+  "textKept": true
+ },
+ {
+  "id": "9898edbc-4694-4961-af71-5d3cefeac42b",
+  "seq": 11,
+  "at": 1792358305930,
+  "durationMs": 350,
+  "path": "/api/chat",
+  "protocol": "ollama-chat",
+  "mode": "agent",
+  "client": {
+   "id": "ua:swarm-funnel-baseline",
+   "label": "swarm-funnel-baseline",
+   "userAgent": "swarm-funnel-baseline/0.1"
+  },
+  "model": "gemma4:latest",
+  "stream": false,
+  "keepAlive": null,
+  "totalMs": 348.9782,
+  "queueMs": 1.0217999999999847,
+  "status": 200,
+  "error": null,
+  "contextExceeded": null,
+  "loadMs": 5.3551,
+  "prompt": {
+   "tokens": 3906,
+   "cached": 3763,
+   "evaluated": 143,
+   "prefillMs": 68.647,
+   "prefillTps": 2083,
+   "contextRequested": 32768
+  },
+  "gen": {
+   "tokens": 53,
+   "ms": 262.494,
+   "tps": 201.9,
+   "doneReason": "stop"
+  },
+  "toolCalls": [],
+  "toolsOffered": 15,
+  "toolNames": [
+   "read_file",
+   "write_file",
+   "append_file",
+   "list_files",
+   "prom_query",
+   "bundle_json",
+   "shell",
+   "moltbook_feed",
+   "moltbook_search",
+   "moltbook_read_post",
+   "moltbook_submolts",
+   "moltbook_verify",
+   "moltbook_me",
+   "moltbook_reply",
+   "moltbook_post"
+  ],
+  "anatomy": {
+   "systemChars": 1269,
+   "toolsChars": 8107,
+   "historyChars": 769,
+   "messageChars": 2217,
+   "totalChars": 12362,
+   "messages": 6
+  },
+  "prefix": {
+   "breakChar": 12044,
+   "breakShare": 0.9694920711583354,
+   "breakTokensEst": 3787,
+   "identical": false
+  },
+  "fit": {
+   "contextLength": 32768,
+   "size": 398731508,
+   "sizeVram": 398731508,
+   "cpuShare": 0,
+   "runner": "llamacpp"
+  },
+  "textKept": true
+ },
+ {
+  "id": "8b00b1e3-d8ac-4da6-9bb8-5ad8be2beb0d",
+  "seq": 12,
+  "at": 1792358306282,
+  "durationMs": 728,
+  "path": "/api/chat",
+  "protocol": "ollama-chat",
+  "mode": "agent",
+  "client": {
+   "id": "ua:swarm-funnel-baseline",
+   "label": "swarm-funnel-baseline",
+   "userAgent": "swarm-funnel-baseline/0.1"
+  },
+  "model": "gemma4:latest",
+  "stream": false,
+  "keepAlive": null,
+  "totalMs": 726.7581,
+  "queueMs": 1.241899999999987,
+  "status": 200,
+  "error": null,
+  "contextExceeded": null,
+  "loadMs": 5.2015,
+  "prompt": {
+   "tokens": 3697,
+   "cached": 0,
+   "evaluated": 3697,
+   "prefillMs": 633.827,
+   "prefillTps": 5833,
+   "contextRequested": 32768
+  },
+  "gen": {
+   "tokens": 19,
+   "ms": 75.069,
+   "tps": 253.1,
+   "doneReason": "stop"
+  },
+  "toolCalls": [
+   "read_file"
+  ],
+  "toolsOffered": 15,
+  "toolNames": [
+   "read_file",
+   "write_file",
+   "append_file",
+   "list_files",
+   "prom_query",
+   "bundle_json",
+   "shell",
+   "moltbook_feed",
+   "moltbook_search",
+   "moltbook_read_post",
+   "moltbook_submolts",
+   "moltbook_verify",
+   "moltbook_me",
+   "moltbook_reply",
+   "moltbook_post"
+  ],
+  "anatomy": {
+   "systemChars": 1269,
+   "toolsChars": 8107,
+   "historyChars": 0,
+   "messageChars": 2604,
+   "totalChars": 11980,
+   "messages": 2
+  },
+  "prefix": {
+   "breakChar": 9406,
+   "breakShare": 0.783637423977339,
+   "breakTokensEst": 2897,
+   "identical": false
+  },
+  "fit": {
+   "contextLength": 32768,
+   "size": 398731508,
+   "sizeVram": 398731508,
+   "cpuShare": 0,
+   "runner": "llamacpp"
+  },
+  "textKept": true
+ },
+ {
+  "id": "c5dfd532-a170-48b8-9e8a-4ea758d6fc1c",
+  "seq": 13,
+  "at": 1792358307012,
+  "durationMs": 176,
+  "path": "/api/chat",
+  "protocol": "ollama-chat",
+  "mode": "agent",
+  "client": {
+   "id": "ua:swarm-funnel-baseline",
+   "label": "swarm-funnel-baseline",
+   "userAgent": "swarm-funnel-baseline/0.1"
+  },
+  "model": "gemma4:latest",
+  "stream": false,
+  "keepAlive": null,
+  "totalMs": 174.7529,
+  "queueMs": 1.247099999999989,
+  "status": 200,
+  "error": null,
+  "contextExceeded": null,
+  "loadMs": 5.929,
+  "prompt": {
+   "tokens": 3960,
+   "cached": 3715,
+   "evaluated": 245,
+   "prefillMs": 78.12,
+   "prefillTps": 3136,
+   "contextRequested": 32768
+  },
+  "gen": {
+   "tokens": 21,
+   "ms": 76.444,
+   "tps": 274.7,
+   "doneReason": "stop"
+  },
+  "toolCalls": [
+   "read_file"
+  ],
+  "toolsOffered": 15,
+  "toolNames": [
+   "read_file",
+   "write_file",
+   "append_file",
+   "list_files",
+   "prom_query",
+   "bundle_json",
+   "shell",
+   "moltbook_feed",
+   "moltbook_search",
+   "moltbook_read_post",
+   "moltbook_submolts",
+   "moltbook_verify",
+   "moltbook_me",
+   "moltbook_reply",
+   "moltbook_post"
+  ],
+  "anatomy": {
+   "systemChars": 1269,
+   "toolsChars": 8107,
+   "historyChars": 619,
+   "messageChars": 2604,
+   "totalChars": 12599,
+   "messages": 4
+  },
+  "prefix": {
+   "breakChar": 12003,
+   "breakShare": 0.9495293093900798,
+   "breakTokensEst": 3760,
+   "identical": false
+  },
+  "fit": {
+   "contextLength": 32768,
+   "size": 398731508,
+   "sizeVram": 398731508,
+   "cpuShare": 0,
+   "runner": "llamacpp"
+  },
+  "textKept": true
+ },
+ {
+  "id": "3a89ed03-281b-4521-a8f5-b4806aa5ec3b",
+  "seq": 14,
+  "at": 1792358307190,
+  "durationMs": 1676,
+  "path": "/api/chat",
+  "protocol": "ollama-chat",
+  "mode": "agent",
+  "client": {
+   "id": "ua:swarm-funnel-baseline",
+   "label": "swarm-funnel-baseline",
+   "userAgent": "swarm-funnel-baseline/0.1"
+  },
+  "model": "gemma4:latest",
+  "stream": false,
+  "keepAlive": null,
+  "totalMs": 1675.4977,
+  "queueMs": 0.5023000000001048,
+  "status": 200,
+  "error": null,
+  "contextExceeded": null,
+  "loadMs": 5.7803,
+  "prompt": {
+   "tokens": 4123,
+   "cached": 3980,
+   "evaluated": 143,
+   "prefillMs": 69.445,
+   "prefillTps": 2059,
+   "contextRequested": 32768
+  },
+  "gen": {
+   "tokens": 443,
+   "ms": 1586.507,
+   "tps": 279.2,
+   "doneReason": "stop"
+  },
+  "toolCalls": [
+   "write_file"
+  ],
+  "toolsOffered": 15,
+  "toolNames": [
+   "read_file",
+   "write_file",
+   "append_file",
+   "list_files",
+   "prom_query",
+   "bundle_json",
+   "shell",
+   "moltbook_feed",
+   "moltbook_search",
+   "moltbook_read_post",
+   "moltbook_submolts",
+   "moltbook_verify",
+   "moltbook_me",
+   "moltbook_reply",
+   "moltbook_post"
+  ],
+  "anatomy": {
+   "systemChars": 1269,
+   "toolsChars": 8107,
+   "historyChars": 979,
+   "messageChars": 2604,
+   "totalChars": 12959,
+   "messages": 6
+  },
+  "prefix": {
+   "breakChar": 12641,
+   "breakShare": 0.9708909370199693,
+   "breakTokensEst": 4003,
+   "identical": false
+  },
+  "fit": {
+   "contextLength": 32768,
+   "size": 398731508,
+   "sizeVram": 398731508,
+   "cpuShare": 0,
+   "runner": "llamacpp"
+  },
+  "textKept": true
+ },
+ {
+  "id": "00c0d616-7e33-45d8-a65b-b887afc19fdb",
+  "seq": 15,
+  "at": 1792358308868,
+  "durationMs": 270,
+  "path": "/api/chat",
+  "protocol": "ollama-chat",
+  "mode": "agent",
+  "client": {
+   "id": "ua:swarm-funnel-baseline",
+   "label": "swarm-funnel-baseline",
+   "userAgent": "swarm-funnel-baseline/0.1"
+  },
+  "model": "gemma4:latest",
+  "stream": false,
+  "keepAlive": null,
+  "totalMs": 268.3596,
+  "queueMs": 1.6403999999999996,
+  "status": 200,
+  "error": null,
+  "contextExceeded": null,
+  "loadMs": 6.079,
+  "prompt": {
+   "tokens": 4601,
+   "cached": 4565,
+   "evaluated": 36,
+   "prefillMs": 54.019,
+   "prefillTps": 666,
+   "contextRequested": 32768
+  },
+  "gen": {
+   "tokens": 42,
+   "ms": 194.135,
+   "tps": 216.3,
+   "doneReason": "stop"
+  },
+  "toolCalls": [],
+  "toolsOffered": 15,
+  "toolNames": [
+   "read_file",
+   "write_file",
+   "append_file",
+   "list_files",
+   "prom_query",
+   "bundle_json",
+   "shell",
+   "moltbook_feed",
+   "moltbook_search",
+   "moltbook_read_post",
+   "moltbook_submolts",
+   "moltbook_verify",
+   "moltbook_me",
+   "moltbook_reply",
+   "moltbook_post"
+  ],
+  "anatomy": {
+   "systemChars": 1269,
+   "toolsChars": 8107,
+   "historyChars": 2166,
+   "messageChars": 2604,
+   "totalChars": 14146,
+   "messages": 8
+  },
+  "prefix": {
+   "breakChar": 13020,
+   "breakShare": 0.9152256431885281,
+   "breakTokensEst": 4211,
+   "identical": false
+  },
+  "fit": {
+   "contextLength": 32768,
+   "size": 398731508,
+   "sizeVram": 398731508,
+   "cpuShare": 0,
+   "runner": "llamacpp"
+  },
+  "textKept": true
+ },
+ {
+  "id": "1f10aa1f-87cb-4c39-bee3-0317093172e4",
+  "seq": 16,
+  "at": 1792358309141,
+  "durationMs": 850,
+  "path": "/api/chat",
+  "protocol": "ollama-chat",
+  "mode": "agent",
+  "client": {
+   "id": "ua:swarm-funnel-baseline",
+   "label": "swarm-funnel-baseline",
+   "userAgent": "swarm-funnel-baseline/0.1"
+  },
+  "model": "gemma4:latest",
+  "stream": false,
+  "keepAlive": null,
+  "totalMs": 849.4283,
+  "queueMs": 0.5716999999999643,
+  "status": 200,
+  "error": null,
+  "contextExceeded": null,
+  "loadMs": 5.206,
+  "prompt": {
+   "tokens": 3678,
+   "cached": 0,
+   "evaluated": 3678,
+   "prefillMs": 621.317,
+   "prefillTps": 5920,
+   "contextRequested": 32768
+  },
+  "gen": {
+   "tokens": 55,
+   "ms": 209.791,
+   "tps": 262.2,
+   "doneReason": "stop"
+  },
+  "toolCalls": [
+   "bundle_json"
+  ],
+  "toolsOffered": 15,
+  "toolNames": [
+   "read_file",
+   "write_file",
+   "append_file",
+   "list_files",
+   "prom_query",
+   "bundle_json",
+   "shell",
+   "moltbook_feed",
+   "moltbook_search",
+   "moltbook_read_post",
+   "moltbook_submolts",
+   "moltbook_verify",
+   "moltbook_me",
+   "moltbook_reply",
+   "moltbook_post"
+  ],
+  "anatomy": {
+   "systemChars": 1269,
+   "toolsChars": 8107,
+   "historyChars": 0,
+   "messageChars": 2451,
+   "totalChars": 11827,
+   "messages": 2
+  },
+  "prefix": {
+   "breakChar": 9406,
+   "breakShare": 0.7937552742616034,
+   "breakTokensEst": 2919,
+   "identical": false
+  },
+  "fit": {
+   "contextLength": 32768,
+   "size": 398731508,
+   "sizeVram": 398731508,
+   "cpuShare": 0,
+   "runner": "llamacpp"
+  },
+  "textKept": true
+ },
+ {
+  "id": "e790f777-7412-4c32-a52b-61dc5fe8bcd9",
+  "seq": 17,
+  "at": 1792358309995,
+  "durationMs": 173,
+  "path": "/api/chat",
+  "protocol": "ollama-chat",
+  "mode": "agent",
+  "client": {
+   "id": "ua:swarm-funnel-baseline",
+   "label": "swarm-funnel-baseline",
+   "userAgent": "swarm-funnel-baseline/0.1"
+  },
+  "model": "gemma4:latest",
+  "stream": false,
+  "keepAlive": null,
+  "totalMs": 172.0667,
+  "queueMs": 0.9333000000000027,
+  "status": 200,
+  "error": null,
+  "contextExceeded": null,
+  "loadMs": 5.3868,
+  "prompt": {
+   "tokens": 3833,
+   "cached": 3732,
+   "evaluated": 101,
+   "prefillMs": 62.634,
+   "prefillTps": 1613,
+   "contextRequested": 32768
+  },
+  "gen": {
+   "tokens": 21,
+   "ms": 91.697,
+   "tps": 229,
+   "doneReason": "stop"
+  },
+  "toolCalls": [
+   "read_file"
+  ],
+  "toolsOffered": 15,
+  "toolNames": [
+   "read_file",
+   "write_file",
+   "append_file",
+   "list_files",
+   "prom_query",
+   "bundle_json",
+   "shell",
+   "moltbook_feed",
+   "moltbook_search",
+   "moltbook_read_post",
+   "moltbook_submolts",
+   "moltbook_verify",
+   "moltbook_me",
+   "moltbook_reply",
+   "moltbook_post"
+  ],
+  "anatomy": {
+   "systemChars": 1269,
+   "toolsChars": 8107,
+   "historyChars": 421,
+   "messageChars": 2451,
+   "totalChars": 12248,
+   "messages": 4
+  },
+  "prefix": {
+   "breakChar": 11850,
+   "breakShare": 0.9641985353946297,
+   "breakTokensEst": 3696,
+   "identical": false
+  },
+  "fit": {
+   "contextLength": 32768,
+   "size": 398731508,
+   "sizeVram": 398731508,
+   "cpuShare": 0,
+   "runner": "llamacpp"
+  },
+  "textKept": true
+ },
+ {
+  "id": "4ea8e305-9d92-4993-9fd8-4b1c5314fb3b",
+  "seq": 18,
+  "at": 1792358310170,
+  "durationMs": 359,
+  "path": "/api/chat",
+  "protocol": "ollama-chat",
+  "mode": "agent",
+  "client": {
+   "id": "ua:swarm-funnel-baseline",
+   "label": "swarm-funnel-baseline",
+   "userAgent": "swarm-funnel-baseline/0.1"
+  },
+  "model": "gemma4:latest",
+  "stream": false,
+  "keepAlive": null,
+  "totalMs": 358.0409,
+  "queueMs": 0.9590999999999781,
+  "status": 200,
+  "error": null,
+  "contextExceeded": null,
+  "loadMs": 5.9825,
+  "prompt": {
+   "tokens": 4260,
+   "cached": 3853,
+   "evaluated": 407,
+   "prefillMs": 105.012,
+   "prefillTps": 3876,
+   "contextRequested": 32768
+  },
+  "gen": {
+   "tokens": 43,
+   "ms": 233.625,
+   "tps": 184.1,
+   "doneReason": "stop"
+  },
+  "toolCalls": [],
+  "toolsOffered": 15,
+  "toolNames": [
+   "read_file",
+   "write_file",
+   "append_file",
+   "list_files",
+   "prom_query",
+   "bundle_json",
+   "shell",
+   "moltbook_feed",
+   "moltbook_search",
+   "moltbook_read_post",
+   "moltbook_submolts",
+   "moltbook_verify",
+   "moltbook_me",
+   "moltbook_reply",
+   "moltbook_post"
+  ],
+  "anatomy": {
+   "systemChars": 1269,
+   "toolsChars": 8107,
+   "historyChars": 1410,
+   "messageChars": 2451,
+   "totalChars": 13237,
+   "messages": 6
+  },
+  "prefix": {
+   "breakChar": 12290,
+   "breakShare": 0.9241991276883742,
+   "breakTokensEst": 3937,
+   "identical": false
+  },
+  "fit": {
+   "contextLength": 32768,
+   "size": 398731508,
+   "sizeVram": 398731508,
+   "cpuShare": 0,
+   "runner": "llamacpp"
+  },
+  "textKept": true
+ },
+ {
+  "id": "98e3043a-e66a-4cda-9cbd-9b7aa8972dfd",
+  "seq": 19,
+  "at": 1792358310638,
+  "durationMs": 1690,
+  "path": "/api/chat",
+  "protocol": "ollama-chat",
+  "mode": "agent",
+  "client": {
+   "id": "ua:swarm-funnel-baseline",
+   "label": "swarm-funnel-baseline",
+   "userAgent": "swarm-funnel-baseline/0.1"
+  },
+  "model": "gemma4:latest",
+  "stream": false,
+  "keepAlive": null,
+  "totalMs": 1688.9458,
+  "queueMs": 1.054200000000037,
+  "status": 200,
+  "error": null,
+  "contextExceeded": null,
+  "loadMs": 5.3066,
+  "prompt": {
+   "tokens": 2892,
+   "cached": 0,
+   "evaluated": 2892,
+   "prefillMs": 512.073,
+   "prefillTps": 5648,
+   "contextRequested": 32768
+  },
+  "gen": {
+   "tokens": 223,
+   "ms": 1159.237,
+   "tps": 192.4,
+   "doneReason": "stop"
+  },
+  "toolCalls": [
+   "write_file",
+   "write_file"
+  ],
+  "toolsOffered": 15,
+  "toolNames": [
+   "read_file",
+   "write_file",
+   "append_file",
+   "list_files",
+   "prom_query",
+   "bundle_json",
+   "shell",
+   "moltbook_feed",
+   "moltbook_search",
+   "moltbook_read_post",
+   "moltbook_submolts",
+   "moltbook_verify",
+   "moltbook_me",
+   "moltbook_reply",
+   "moltbook_post"
+  ],
+  "anatomy": {
+   "systemChars": 1269,
+   "toolsChars": 8107,
+   "historyChars": 0,
+   "messageChars": 1552,
+   "totalChars": 10928,
+   "messages": 2
+  },
+  "prefix": {
+   "breakChar": 9401,
+   "breakShare": 0.8584604145740115,
+   "breakTokensEst": 2483,
+   "identical": false
+  },
+  "fit": {
+   "contextLength": 32768,
+   "size": 398731508,
+   "sizeVram": 398731508,
+   "cpuShare": 0,
+   "runner": "llamacpp"
+  },
+  "textKept": true
+ },
+ {
+  "id": "e8c63323-d51a-4800-97c1-d1bc81551139",
+  "seq": 20,
+  "at": 1792358312330,
+  "durationMs": 201,
+  "path": "/api/chat",
+  "protocol": "ollama-chat",
+  "mode": "agent",
+  "client": {
+   "id": "ua:swarm-funnel-baseline",
+   "label": "swarm-funnel-baseline",
+   "userAgent": "swarm-funnel-baseline/0.1"
+  },
+  "model": "gemma4:latest",
+  "stream": false,
+  "keepAlive": null,
+  "totalMs": 199.1362,
+  "queueMs": 1.8637999999999977,
+  "status": 200,
+  "error": null,
+  "contextExceeded": null,
+  "loadMs": 5.7516,
+  "prompt": {
+   "tokens": 3175,
+   "cached": 3114,
+   "evaluated": 61,
+   "prefillMs": 55.765,
+   "prefillTps": 1094,
+   "contextRequested": 32768
+  },
+  "gen": {
+   "tokens": 26,
+   "ms": 124.277,
+   "tps": 209.2,
+   "doneReason": "stop"
+  },
+  "toolCalls": [],
+  "toolsOffered": 15,
+  "toolNames": [
+   "read_file",
+   "write_file",
+   "append_file",
+   "list_files",
+   "prom_query",
+   "bundle_json",
+   "shell",
+   "moltbook_feed",
+   "moltbook_search",
+   "moltbook_read_post",
+   "moltbook_submolts",
+   "moltbook_verify",
+   "moltbook_me",
+   "moltbook_reply",
+   "moltbook_post"
+  ],
+  "anatomy": {
+   "systemChars": 1269,
+   "toolsChars": 8107,
+   "historyChars": 1142,
+   "messageChars": 1552,
+   "totalChars": 12070,
+   "messages": 5
+  },
+  "prefix": {
+   "breakChar": 10951,
+   "breakShare": 0.903622411090024,
+   "breakTokensEst": 2869,
+   "identical": false
+  },
+  "fit": {
+   "contextLength": 32768,
+   "size": 398731508,
+   "sizeVram": 398731508,
+   "cpuShare": 0,
+   "runner": "llamacpp"
+  },
+  "textKept": true
+ }
+]

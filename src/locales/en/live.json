@@ -148,7 +148,8 @@
     "error": "Error",
     "protocol": "Protocol",
     "userAgent": "User agent",
-    "keptText": "Request as sent"
+    "keptText": "Request as sent",
+    "openRun": "See its run"
   },
   "clients": {
     "title": "Per client",

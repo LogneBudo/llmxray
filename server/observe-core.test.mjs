@@ -290,3 +290,66 @@ describe('a client that names itself', () => {
     expect(c).toEqual({ id: 'tag:swarm-watch', label: 'swarm-watch', userAgent: 'ollama-python/0.4' })
   })
 })
+
+describe('the answer: what came back, joined from the stream', () => {
+  it('Ollama native: text, thinking and tool calls with their arguments', () => {
+    const stream = [
+      { message: { role: 'assistant', content: '', thinking: 'Need the file. ' }, done: false },
+      { message: { role: 'assistant', content: '', thinking: 'Read it.' }, done: false },
+      { message: { role: 'assistant', content: '', tool_calls: [{ function: { name: 'read_file', arguments: { path: 'memory/x.md' } } }] }, done: false },
+      { message: { role: 'assistant', content: 'Done.' }, done: false },
+      { message: { role: 'assistant', content: '' }, done: true, done_reason: 'stop', prompt_eval_count: 10, eval_count: 3 },
+    ].map((o) => JSON.stringify(o)).join('\n')
+    expect(parseOllamaResponse(stream).answer).toEqual({
+      content: 'Done.',
+      thinking: 'Need the file. Read it.',
+      toolCalls: [{ name: 'read_file', arguments: { path: 'memory/x.md' } }],
+    })
+  })
+
+  it('OpenAI-compatible stream: arguments arrive as text pieces per tool call index', () => {
+    const chunks = [
+      { choices: [{ delta: { content: 'Let me check' } }] },
+      { choices: [{ delta: { tool_calls: [{ index: 0, function: { name: 'prom_query', arguments: '{"que' } }] } }] },
+      { choices: [{ delta: { tool_calls: [{ index: 0, function: { arguments: 'ry":"up"}' } }] } }] },
+      { choices: [{ delta: { tool_calls: [{ index: 1, function: { name: 'read_file', arguments: '{"path":"a"}' } }] } }] },
+      { choices: [{ delta: {}, finish_reason: 'tool_calls' }], usage: { prompt_tokens: 20, completion_tokens: 9 } },
+    ]
+    const sse = chunks.map((c) => `data: ${JSON.stringify(c)}`).join('\n\n') + '\n\ndata: [DONE]\n'
+    expect(parseOpenAIResponse(sse).answer).toEqual({
+      content: 'Let me check',
+      thinking: null,
+      toolCalls: [{ name: 'prom_query', arguments: { query: 'up' } }, { name: 'read_file', arguments: { path: 'a' } }],
+    })
+  })
+
+  it('OpenAI-compatible single body, and reasoning text kept as thinking', () => {
+    const body = JSON.stringify({ choices: [{ message: { content: 'Four.', reasoning: '2+2' }, finish_reason: 'stop' }], usage: { prompt_tokens: 5, completion_tokens: 2 } })
+    expect(parseOpenAIResponse(body).answer).toEqual({ content: 'Four.', thinking: '2+2', toolCalls: [] })
+  })
+
+  it('Anthropic stream: text deltas, thinking deltas and a tool_use built from partial JSON', () => {
+    const events = [
+      { type: 'message_start', message: { usage: { input_tokens: 10 } } },
+      { type: 'content_block_start', index: 0, content_block: { type: 'thinking', thinking: '' } },
+      { type: 'content_block_delta', index: 0, delta: { type: 'thinking_delta', thinking: 'Look it up.' } },
+      { type: 'content_block_start', index: 1, content_block: { type: 'text', text: '' } },
+      { type: 'content_block_delta', index: 1, delta: { type: 'text_delta', text: 'Checking.' } },
+      { type: 'content_block_start', index: 2, content_block: { type: 'tool_use', name: 'list_files' } },
+      { type: 'content_block_delta', index: 2, delta: { type: 'input_json_delta', partial_json: '{"dir":' } },
+      { type: 'content_block_delta', index: 2, delta: { type: 'input_json_delta', partial_json: '"runs"}' } },
+      { type: 'message_delta', delta: { stop_reason: 'tool_use' }, usage: { output_tokens: 12 } },
+    ]
+    const sse = events.map((e) => `event: ${e.type}\ndata: ${JSON.stringify(e)}`).join('\n\n')
+    expect(parseAnthropicResponse(sse).answer).toEqual({
+      content: 'Checking.',
+      thinking: 'Look it up.',
+      toolCalls: [{ name: 'list_files', arguments: { dir: 'runs' } }],
+    })
+  })
+
+  it('an argument fragment that never becomes valid JSON is kept as text, not dropped', () => {
+    const sse = `data: ${JSON.stringify({ choices: [{ delta: { tool_calls: [{ index: 0, function: { name: 'x', arguments: '{"cut' } }] } }] })}\n`
+    expect(parseOpenAIResponse(sse).answer.toolCalls).toEqual([{ name: 'x', arguments: '{"cut' }])
+  })
+})

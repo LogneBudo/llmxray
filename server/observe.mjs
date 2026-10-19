@@ -78,11 +78,11 @@ export function createObserver({ ollamaUrl, port = 11435, host = '127.0.0.1', ke
     for (const fn of listeners) fn({ type: 'turn', turn })
   })
 
-  async function persistText(turn, body, canonical, snippet) {
+  async function persistText(turn, body, canonical, snippet, answer) {
     try {
       await mkdir(TEXT_DIR, { recursive: true })
       const day = new Date(turn.at).toISOString().slice(0, 10)
-      const line = JSON.stringify({ id: turn.id, at: turn.at, client: turn.client.label, model: turn.model, protocol: turn.protocol, request: body, canonical, snippet })
+      const line = JSON.stringify({ id: turn.id, at: turn.at, client: turn.client.label, model: turn.model, protocol: turn.protocol, request: body, canonical, snippet, answer })
       await appendFile(join(TEXT_DIR, `${day}.jsonl`), line + '\n')
     } catch {
       /* a full disk must never break the proxy */
@@ -166,9 +166,11 @@ export function createObserver({ ollamaUrl, port = 11435, host = '127.0.0.1', ke
 
     if (state.keepText) {
       const snippet = brk && !brk.identical ? breakSnippet(shape.canonical, brk.breakChar) : null
-      textById.set(turn.id, { request: body, canonical: shape.canonical, snippet })
+      // The answer completes the round: what was sent and what came back, for the Runs page.
+      const answer = parsed?.answer ?? null
+      textById.set(turn.id, { request: body, canonical: shape.canonical, snippet, answer })
       if (textById.size > capacity) textById.delete(textById.keys().next().value)
-      void persistText(turn, body, shape.canonical, snippet)
+      void persistText(turn, body, shape.canonical, snippet, answer)
     }
 
     log.push(turn)

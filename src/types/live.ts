@@ -106,9 +106,18 @@ export interface LiveStatus {
   textDir?: string
 }
 
+/** What the model answered, joined from the stream: kept only when Keep text is on. */
+export interface LiveAnswer {
+  content: string
+  thinking: string | null
+  toolCalls: Array<{ name: string; arguments: unknown }>
+}
+
 /** Prompt text kept for a turn, only when the user switched it on. */
 export interface LiveTurnText {
   request: unknown
   canonical: string
   snippet: { before: string; after: string } | null
+  /** Missing on text kept before LiveTurnText carried answers. */
+  answer?: LiveAnswer | null
 }

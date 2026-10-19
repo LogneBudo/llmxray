@@ -64,6 +64,11 @@ export const router = createRouter({
           component: () => import('@/pages/LivePage.vue'),
         },
         {
+          path: 'runs',
+          name: 'runs',
+          component: () => import('@/pages/RunsPage.vue'),
+        },
+        {
           path: 'xray',
           name: 'xray',
           component: () => import('@/pages/XrayPage.vue'),

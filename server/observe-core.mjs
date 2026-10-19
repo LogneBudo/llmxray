@@ -246,11 +246,34 @@ export function breakSnippet(canonical, at, radius = 80) {
   }
 }
 
+/**
+ * The model's answer, assembled from a whole response (one body or a stream of pieces): its
+ * text, its thinking when the model shows it, and each tool call with its arguments. Kept only
+ * when Keep text is on; the turn record itself never holds it.
+ */
+function newAnswer() {
+  return { content: '', thinking: '', toolCalls: [] }
+}
+function doneAnswer(a) {
+  return { content: a.content, thinking: a.thinking || null, toolCalls: a.toolCalls }
+}
+/** Streamed arguments are JSON text; a fragment that does not parse is kept as text. */
+function parseArgs(args) {
+  if (typeof args !== 'string') return args ?? null
+  if (!args.trim()) return {}
+  try {
+    return JSON.parse(args)
+  } catch {
+    return args
+  }
+}
+
 /** Parse the last `done: true` object of an NDJSON stream (or a single JSON body). */
 export function parseOllamaResponse(text) {
   const lines = text.split('\n').filter((l) => l.trim().length > 0)
   let final = null
   const toolCalls = []
+  const answer = newAnswer()
   let generated = 0
   for (const line of lines) {
     let obj
@@ -260,8 +283,19 @@ export function parseOllamaResponse(text) {
       continue
     }
     const calls = obj?.message?.tool_calls
-    if (Array.isArray(calls)) for (const c of calls) toolCalls.push(c?.function?.name ?? 'tool')
-    if (typeof obj?.message?.content === 'string') generated += obj.message.content.length
+    if (Array.isArray(calls)) {
+      for (const c of calls) {
+        toolCalls.push(c?.function?.name ?? 'tool')
+        answer.toolCalls.push({ name: c?.function?.name ?? 'tool', arguments: c?.function?.arguments ?? null })
+      }
+    }
+    if (typeof obj?.message?.content === 'string') {
+      generated += obj.message.content.length
+      answer.content += obj.message.content
+    }
+    if (typeof obj?.message?.thinking === 'string') answer.thinking += obj.message.thinking
+    if (typeof obj?.response === 'string') answer.content += obj.response
+    if (typeof obj?.thinking === 'string') answer.thinking += obj.thinking
     if (obj && (obj.done === true || obj.prompt_eval_count !== undefined || obj.embeddings)) final = obj
     if (obj?.error) final = { ...(final ?? {}), error: obj.error }
   }
@@ -279,6 +313,7 @@ export function parseOllamaResponse(text) {
     doneReason: final.done_reason ?? null,
     toolCalls,
     generatedChars: generated,
+    answer: doneAnswer(answer),
     error: err.message,
     contextExceeded: err.contextExceeded,
   }
@@ -341,17 +376,38 @@ export function parseOpenAIResponse(text) {
   let usage = null
   let timings = null
   let error = null
+  const answer = newAnswer()
+  // Streamed tool calls arrive in pieces keyed by index: the name once, the arguments as text fragments.
+  const streamedCalls = new Map()
   for (const o of objects) {
     if (o.usage) usage = o.usage
     if (o.timings) timings = o.timings
     if (o.error) error = typeof o.error === 'string' ? o.error : (o.error.message ?? JSON.stringify(o.error))
     for (const ch of o.choices ?? []) {
       const msg = ch.delta ?? ch.message ?? {}
-      if (typeof msg.content === 'string') generated += msg.content.length
-      for (const tc of msg.tool_calls ?? []) if (tc?.function?.name) toolCalls.push(tc.function.name)
-      if (typeof ch.text === 'string') generated += ch.text.length
+      if (typeof msg.content === 'string') {
+        generated += msg.content.length
+        answer.content += msg.content
+      }
+      const thought = msg.reasoning_content ?? msg.reasoning
+      if (typeof thought === 'string') answer.thinking += thought
+      for (const tc of msg.tool_calls ?? []) {
+        if (tc?.function?.name) toolCalls.push(tc.function.name)
+        const key = tc?.index ?? streamedCalls.size
+        const call = streamedCalls.get(key) ?? { name: null, args: '' }
+        if (tc?.function?.name) call.name = tc.function.name
+        const a = tc?.function?.arguments
+        if (typeof a === 'string') call.args += a
+        else if (a != null) call.args = a
+        streamedCalls.set(key, call)
+      }
+      if (typeof ch.text === 'string') {
+        generated += ch.text.length
+        answer.content += ch.text
+      }
     }
   }
+  for (const c of streamedCalls.values()) answer.toolCalls.push({ name: c.name ?? 'tool', arguments: parseArgs(c.args) })
 
   const promptTokens = usage?.prompt_tokens ?? timings?.prompt_n ?? null
   const cached = usage?.prompt_tokens_details?.cached_tokens ?? timings?.prompt_cached_n ?? null
@@ -366,6 +422,7 @@ export function parseOpenAIResponse(text) {
     doneReason: objects.at(-1)?.choices?.[0]?.finish_reason ?? null,
     toolCalls: [...new Set(toolCalls)],
     generatedChars: generated,
+    answer: doneAnswer(answer),
     error,
     contextExceeded: normaliseError(error).contextExceeded,
   }
@@ -406,6 +463,9 @@ export function parseAnthropicResponse(text) {
   let stop = null
   let error = null
   const toolCalls = []
+  const answer = newAnswer()
+  // Streamed blocks: a tool_use block starts with its name; its input arrives as partial JSON text.
+  const blocks = new Map()
   let generated = 0
   const takeUsage = (u) => {
     if (!u) return
@@ -419,18 +479,34 @@ export function parseAnthropicResponse(text) {
       takeUsage(o.usage)
       stop = o.stop_reason ?? stop
       for (const b of o.content ?? []) {
-        if (b?.type === 'text') generated += (b.text ?? '').length
-        if (b?.type === 'tool_use' && b.name) toolCalls.push(b.name)
+        if (b?.type === 'text') {
+          generated += (b.text ?? '').length
+          answer.content += b.text ?? ''
+        }
+        if (b?.type === 'thinking') answer.thinking += b.thinking ?? ''
+        if (b?.type === 'tool_use' && b.name) {
+          toolCalls.push(b.name)
+          answer.toolCalls.push({ name: b.name, arguments: b.input ?? null })
+        }
       }
     }
     if (o.type === 'message_start') takeUsage(o.message?.usage)
-    if (o.type === 'content_block_start' && o.content_block?.type === 'tool_use' && o.content_block.name) toolCalls.push(o.content_block.name)
-    if (o.type === 'content_block_delta' && o.delta?.type === 'text_delta') generated += (o.delta.text ?? '').length
+    if (o.type === 'content_block_start' && o.content_block?.type === 'tool_use' && o.content_block.name) {
+      toolCalls.push(o.content_block.name)
+      blocks.set(o.index, { name: o.content_block.name, args: '' })
+    }
+    if (o.type === 'content_block_delta' && o.delta?.type === 'text_delta') {
+      generated += (o.delta.text ?? '').length
+      answer.content += o.delta.text ?? ''
+    }
+    if (o.type === 'content_block_delta' && o.delta?.type === 'thinking_delta') answer.thinking += o.delta.thinking ?? ''
+    if (o.type === 'content_block_delta' && o.delta?.type === 'input_json_delta' && blocks.has(o.index)) blocks.get(o.index).args += o.delta.partial_json ?? ''
     if (o.type === 'message_delta') {
       takeUsage(o.usage)
       stop = o.delta?.stop_reason ?? stop
     }
   }
+  for (const b of blocks.values()) answer.toolCalls.push({ name: b.name, arguments: parseArgs(b.args) })
   const promptTokens = input == null && cached == null ? null : (input ?? 0) + (cached ?? 0)
   return {
     promptTokens,
@@ -443,6 +519,7 @@ export function parseAnthropicResponse(text) {
     doneReason: stop,
     toolCalls: [...new Set(toolCalls)],
     generatedChars: generated,
+    answer: doneAnswer(answer),
     error,
     contextExceeded: normaliseError(error).contextExceeded,
   }

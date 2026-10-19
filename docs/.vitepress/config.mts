@@ -24,6 +24,7 @@ function guideNav(prefix: string) {
         ...(fr
           ? []
           : [
+              { text: 'Runs', link: `${prefix}/guide/runs` },
               { text: 'Prompt X-ray', link: `${prefix}/guide/xray` },
               { text: 'Shared box', link: `${prefix}/guide/shared-box` },
               { text: 'GPU map', link: `${prefix}/guide/gpu-map` },

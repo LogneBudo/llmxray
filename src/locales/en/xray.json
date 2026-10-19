@@ -53,7 +53,8 @@
     "hint": "Click any part of a bar and that turn's request appears here, with the part you clicked first. Keeping the prompt text is a switch on the Live page; without it, only the sizes are known.",
     "none": "Nothing selected yet. Try a bright segment on a turn that was read again, or a striped one.",
     "noText": "The prompt text was not kept for this turn. The sizes above are exact; switch on \"Keep the prompt text\" on the Live page to see the text of the next turns.",
-    "selected": "turn {n} · {part} · {state}"
+    "selected": "turn {n} · {part} · {state}",
+    "openRun": "See this call in its run"
   },
   "foot": "What this page does not know: the model's own tokenizer. The widths are the daemon's token counts; where a line is split into parts, the split is scaled from characters. The striped part is sized from the difference between what was sent and what the daemon counted."
 }

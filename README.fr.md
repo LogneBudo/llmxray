@@ -245,7 +245,7 @@ npm run dev     # http://localhost:5173
 
 ## Compatibilité Ollama
 
-Testé avec **Ollama 0.40.x** (vérifié sur 0.40.4, octobre 2026). Fonctionne à partir de 0.20 ; les versions plus anciennes discutent mais n'ont ni `think` ni `format` par schéma JSON. **Recommandé : 0.33.3 ou plus récent**, qui rapporte la réutilisation du cache d'invite, si bien que la vitesse de préremplissage est mesurée sur les tokens réellement évalués.
+Testé avec **Ollama 0.40.x** (vérifié sur 0.40.6, octobre 2026). Fonctionne à partir de 0.20 ; les versions plus anciennes discutent mais n'ont ni `think` ni `format` par schéma JSON. **Recommandé : 0.33.3 ou plus récent**, qui rapporte la réutilisation du cache d'invite, si bien que la vitesse de préremplissage est mesurée sur les tokens réellement évalués.
 
 | Point d'accès | Utilisé pour |
 |---|---|

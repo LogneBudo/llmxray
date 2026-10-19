@@ -7,10 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.7] — 2026-10-19
+
+### Added
+
+- **The whole round is kept.** With Keep text on, the observer now keeps each model's answer beside the
+  request: its text, its thinking when the model shows it, and every tool call with its arguments,
+  joined back together from the stream, on Ollama native, OpenAI-compatible and Anthropic-compatible
+  calls. `GET /__observe/turns/<id>/text` returns it as `answer`.
+- **Runs** (new page, below Live): one tool's calls to the model, end to end, as a waterfall. Each call is
+  split into waiting, loading the model, reading the prompt and writing the answer; the gaps between calls
+  are tool time, named after the tools the model asked for; steps start where the tool began a fresh
+  conversation. Click a row for what it sent and got back (Pretty and Raw), or for each tool's arguments
+  and result. Every row has its own link. Live links each call to its run; the Prompt X-ray opens a call
+  from a run and links back.
+
 ### Changed
 
 - `read_llmxray_status` says what happens when LLMxRay is unreachable; the opening sentence of
   `estimate_my_prompt` is two sentences. The two notes in Glama's review of 0.8.6 (TDQS 4.8 over seven tools).
+- Verified against Ollama 0.40.6 (released 2026-10-16): the prompt-cache counts on all three protocols, `/api/tags`
+  capabilities, and a full agent run through the observe port. 0.40.6 adds a cloud option for decision models and a cloud
+  usage API; LLMxRay uses neither.
 
 ## [0.8.6] — 2026-10-17
 

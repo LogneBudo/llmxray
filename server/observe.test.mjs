@@ -169,6 +169,8 @@ describe('observe port', () => {
     expect(last.textKept).toBe(true)
     const kept = JSON.parse((await text(`${uiUrl}/turns/${last.id}/text`)).body)
     expect(kept.request.messages[0].content).toBe('secret words')
+    // The whole round: the streamed answer is joined back together and kept beside the request.
+    expect(kept.answer).toEqual({ content: 'Hello', thinking: null, toolCalls: [] })
     await text(`${uiUrl}/settings`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ keepText: false }) })
     expect((await text(`${uiUrl}/turns/${last.id}/text`)).status).toBe(404)
   })
