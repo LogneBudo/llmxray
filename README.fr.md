@@ -394,9 +394,9 @@ Testé avec **Ollama 0.40.x** (vérifié sur 0.40.6, octobre 2026). Fonctionne �
 
 ## Sous le capot
 
-Vue 3.5, TypeScript 6 (strict), Vite 8, Tailwind CSS 4, un store Pinia par domaine, Chart.js et D3 pour les graphiques, Vue Flow pour le canevas d'outils, CodeMirror 6 pour le code. Le stockage est l'IndexedDB du navigateur. Le backend est Ollama, en local.
+Vue 3.5, TypeScript 6 (strict), Vite 8, Tailwind CSS 4, un store Pinia par domaine, Chart.js et D3 pour les graphiques, Vue Flow pour le canevas d'outils, CodeMirror 6 pour le code. L'application garde ses propres données (chats, comparaisons, benchmarks, base de connaissances) dans l'IndexedDB du navigateur ; les enregistrements du journal En direct vivent dans `~/.llmxray`, sur la machine qui fait tourner LLMxRay. Le backend est Ollama, en local.
 
-Le streaming lit le NDJSON d'Ollama via `fetch()` et un `ReadableStream`, et les tokens mettent l'interface à jour à travers Pinia. Le chat et la comparaison colorent les tokens selon les vrais logprobs renvoyés par Ollama ; sans eux, un token reste sans couleur, et la vue des tokens nomme le temps « rythme », jamais confiance. Les benchmarks utilisent aussi les vrais logprobs. La détection du matériel est un petit plugin Vite qui interroge directement l'OS. Le port Live est un proxy transparent qui garde comptes et durées en mémoire.
+Le streaming lit le NDJSON d'Ollama via `fetch()` et un `ReadableStream`, et les tokens mettent l'interface à jour à travers Pinia. Le chat et la comparaison colorent les tokens selon les vrais logprobs renvoyés par Ollama ; sans eux, un token reste sans couleur, et la vue des tokens nomme le temps « rythme », jamais confiance. Les benchmarks utilisent aussi les vrais logprobs. La détection du matériel est un petit plugin Vite qui interroge directement l'OS. Le port Live est un proxy transparent : il transmet chaque requête à Ollama sans la modifier, ne traduit rien (Ollama sert lui-même les routes compatibles OpenAI et Anthropic), et enregistre comptes et durées, gardés 30 jours.
 
 | Commande | Effet |
 |---|---|

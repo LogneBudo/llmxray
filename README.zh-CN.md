@@ -394,9 +394,9 @@ npm run dev     # http://localhost:5173
 
 ## 内部实现
 
-Vue 3.5、TypeScript 6（严格模式）、Vite 8、Tailwind CSS 4、按关注点拆分的 Pinia store、Chart.js 与 D3 绘图、Vue Flow 作为工具画布、CodeMirror 6 处理代码。存储使用浏览器的 IndexedDB。后端是本地的 Ollama。
+Vue 3.5、TypeScript 6（严格模式）、Vite 8、Tailwind CSS 4、按关注点拆分的 Pinia store、Chart.js 与 D3 绘图、Vue Flow 作为工具画布、CodeMirror 6 处理代码。应用自身的数据（对话、对比、基准测试、知识库）保存在浏览器的 IndexedDB 中；Live 日志的轮次记录保存在运行 LLMxRay 的机器上的 `~/.llmxray` 里。后端是本地的 Ollama。
 
-流式传输通过 `fetch()` 和 `ReadableStream` 读取 Ollama 的 NDJSON，token 经由 Pinia 更新界面。对话和对比页面按 Ollama 返回的真实 logprobs 为 token 着色；没有 logprobs 时 token 不着色，token 视图把时间称为“节奏”，从不称为置信度。基准测试同样使用真实 logprobs。硬件检测是一个直接询问操作系统的小型 Vite 插件。Live 端口是一个透明代理，只在内存中保留计数和时间。
+流式传输通过 `fetch()` 和 `ReadableStream` 读取 Ollama 的 NDJSON，token 经由 Pinia 更新界面。对话和对比页面按 Ollama 返回的真实 logprobs 为 token 着色；没有 logprobs 时 token 不着色，token 视图把时间称为“节奏”，从不称为置信度。基准测试同样使用真实 logprobs。硬件检测是一个直接询问操作系统的小型 Vite 插件。Live 端口是一个透明代理：它把每个请求原样转发给 Ollama，不做任何转换（兼容 OpenAI 和 Anthropic 的路由由 Ollama 自己提供），并记录计数和时间，保留 30 天。
 
 | 命令 | 作用 |
 |---|---|

@@ -411,9 +411,9 @@ Tested against **Ollama 0.40.x** (verified on 0.40.6, October 2026). Works with 
 
 ## Under the hood
 
-Vue 3.5, TypeScript 6 (strict), Vite 8, Tailwind CSS 4, Pinia stores per concern, Chart.js and D3 for charts, Vue Flow for the tool canvas, CodeMirror 6 for code. Storage is the browser's IndexedDB. The backend is Ollama, local.
+Vue 3.5, TypeScript 6 (strict), Vite 8, Tailwind CSS 4, Pinia stores per concern, Chart.js and D3 for charts, Vue Flow for the tool canvas, CodeMirror 6 for code. The app keeps its own data (chats, comparisons, benchmarks, the knowledge base) in the browser's IndexedDB; the Live log's turn records live in `~/.llmxray` on the machine that runs LLMxRay. The backend is Ollama, local.
 
-Streaming reads Ollama's NDJSON through `fetch()` and a `ReadableStream`, and tokens update the UI through Pinia. Chat and Compare colour tokens by the real logprobs Ollama returns; without them a token is left uncoloured, and the token view names timing as pace, never as confidence. Benchmarks use real logprobs too. Hardware detection is a small Vite plugin that asks the OS directly. The Live port is a transparent proxy that keeps counts and timings in memory.
+Streaming reads Ollama's NDJSON through `fetch()` and a `ReadableStream`, and tokens update the UI through Pinia. Chat and Compare colour tokens by the real logprobs Ollama returns; without them a token is left uncoloured, and the token view names timing as pace, never as confidence. Benchmarks use real logprobs too. Hardware detection is a small Vite plugin that asks the OS directly. The Live port is a transparent proxy: it forwards every request to Ollama untouched, translates nothing (Ollama itself serves the OpenAI- and Anthropic-compatible routes), and records counts and timings, kept for 30 days.
 
 | Command | What it does |
 |---|---|

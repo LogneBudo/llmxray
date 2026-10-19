@@ -394,9 +394,9 @@ Testirano sa **Ollama 0.40.x** (provereno na 0.40.6, oktobar 2026). Radi sa 0.20
 
 ## Ispod haube
 
-Vue 3.5, TypeScript 6 (strict), Vite 8, Tailwind CSS 4, Pinia store po domenu, Chart.js i D3 za grafikone, Vue Flow za platno alata, CodeMirror 6 za kod. Skladište je IndexedDB pregledača. Pozadina je Ollama, lokalno.
+Vue 3.5, TypeScript 6 (strict), Vite 8, Tailwind CSS 4, Pinia store po domenu, Chart.js i D3 za grafikone, Vue Flow za platno alata, CodeMirror 6 za kod. Aplikacija svoje podatke (ćaskanja, poređenja, benchmark, bazu znanja) čuva u IndexedDB-u pregledača; zapisi koraka Live dnevnika žive u `~/.llmxray`, na mašini na kojoj radi LLMxRay. Pozadina je Ollama, lokalno.
 
-Strimovanje čita Ollama NDJSON kroz `fetch()` i `ReadableStream`, a tokeni ažuriraju interfejs kroz Pinia. Ćaskanje i poređenje boje tokene po pravim logprobs koje Ollama vraća; bez njih token ostaje bez boje, a prikaz tokena vreme naziva „ritam”, nikada poverenje. Benchmark takođe koristi prave logprobs. Detekcija hardvera je mali Vite plugin koji direktno pita OS. Live port je providni proksi koji brojeve i vremena drži u memoriji.
+Strimovanje čita Ollama NDJSON kroz `fetch()` i `ReadableStream`, a tokeni ažuriraju interfejs kroz Pinia. Ćaskanje i poređenje boje tokene po pravim logprobs koje Ollama vraća; bez njih token ostaje bez boje, a prikaz tokena vreme naziva „ritam”, nikada poverenje. Benchmark takođe koristi prave logprobs. Detekcija hardvera je mali Vite plugin koji direktno pita OS. Live port je providni proksi: svaki zahtev prosleđuje Ollama nepromenjen, ništa ne prevodi (Ollama sam služi rute kompatibilne sa OpenAI i Anthropic), i beleži brojeve i vremena, koje čuva 30 dana.
 
 | Komanda | Šta radi |
 |---|---|
