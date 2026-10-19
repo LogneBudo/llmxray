@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { X } from 'lucide-vue-next'
+import { X } from '@lucide/vue'
 import { buildMarkdownReport } from '@/utils/share-comparison'
 import { useMetricsStore } from '@/stores/metrics-store'
 import type { ComparisonRun } from '@/types/comparison'

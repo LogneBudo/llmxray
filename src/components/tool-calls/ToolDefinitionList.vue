@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Trash2 } from 'lucide-vue-next'
+import { Trash2 } from '@lucide/vue'
 import { useToolDefinitionStore } from '@/stores/tool-definition-store'
 import type { OllamaToolDefinition } from '@/types/ollama'
 import ToolDefinitionBuilder from './ToolDefinitionBuilder.vue'

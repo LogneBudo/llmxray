@@ -8,7 +8,7 @@
 import { computed, onMounted, onUnmounted, reactive, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { ChartGantt, Link2, ScanLine } from 'lucide-vue-next'
+import { ChartGantt, Link2, ScanLine } from '@lucide/vue'
 import { useLiveStore } from '@/stores/live-store'
 import { fetchLiveTurnText } from '@/services/live-client'
 import { answerOf, buildRuns, rowKey, runOfTurn, toolExchanges, type Run, type RunCall, type RunRow } from '@/services/runs'

@@ -15,7 +15,7 @@ ollama pull llama3.2
 
 ## One command
 
-With Node.js 18 or newer:
+With Node.js 22 or newer:
 
 ```bash
 npx llmxray

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
-import { RefreshCw, Trash2 } from 'lucide-vue-next'
+import { RefreshCw, Trash2 } from '@lucide/vue'
 import { useModelStore } from '@/stores/model-store'
 import { ollamaClient } from '@/services/ollama-client'
 import { formatBytes } from '@/utils/format'

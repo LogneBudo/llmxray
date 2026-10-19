@@ -967,7 +967,7 @@ function applySelection() {
   text-transform: uppercase;
   letter-spacing: 0.8px;
   background: var(--color-accent);
-  color: var(--color-surface-base, #0f172a);
+  color: var(--color-surface);
   padding: 2px 6px;
   border-radius: 4px;
   font-weight: 700;
@@ -1021,7 +1021,7 @@ function applySelection() {
 .exec-result-panel {
   padding: 6px 12px;
   border-bottom: 1px solid var(--color-border-default);
-  background: var(--color-surface-base, #0f172a);
+  background: var(--color-surface);
   max-height: 200px;
   overflow: auto;
 }
@@ -1044,7 +1044,7 @@ function applySelection() {
 
 .block-input {
   width: 100%;
-  background: var(--color-surface-base, #0f172a);
+  background: var(--color-surface);
   border: 1px solid var(--color-border-default);
   color: var(--color-text-primary);
   padding: 4px 8px;
@@ -1091,7 +1091,7 @@ function applySelection() {
 .param-name,
 .param-type {
   flex: 1;
-  background: var(--color-surface-base, #0f172a);
+  background: var(--color-surface);
   border: 1px solid var(--color-border-default);
   color: var(--color-text-primary);
   padding: 3px 6px;
@@ -1167,7 +1167,7 @@ function applySelection() {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   background: var(--color-accent);
-  color: var(--color-surface-base, #0f172a);
+  color: var(--color-surface);
   padding: 1px 5px;
   border-radius: 3px;
   font-weight: 700;
@@ -1201,7 +1201,7 @@ function applySelection() {
   flex: 1;
 }
 .method-select {
-  background: var(--color-surface-base, #0f172a);
+  background: var(--color-surface);
   border: 1px solid var(--color-border-default);
   color: var(--color-accent);
   padding: 3px 4px;
@@ -1215,7 +1215,7 @@ function applySelection() {
 }
 .probe-btn {
   background: var(--color-accent);
-  color: var(--color-surface-base, #0f172a);
+  color: var(--color-surface);
   border: none;
   border-radius: 4px;
   padding: 4px 10px;
@@ -1242,7 +1242,7 @@ function applySelection() {
 .diag-status {
   font-size: 10px;
   font-weight: 700;
-  color: var(--color-surface-base, #0f172a);
+  color: var(--color-surface);
   padding: 1px 6px;
   border-radius: 3px;
   font-family: ui-monospace, Consolas, monospace;
@@ -1306,7 +1306,7 @@ function applySelection() {
 .ep-list {
   max-height: 180px;
   overflow-y: auto;
-  background: var(--color-surface-base, #0f172a);
+  background: var(--color-surface);
   border: 1px solid var(--color-border-default);
   border-radius: 4px;
 }
@@ -1330,7 +1330,7 @@ function applySelection() {
 .ep-method {
   font-size: 8px;
   font-weight: 700;
-  color: var(--color-surface-base, #0f172a);
+  color: var(--color-surface);
   padding: 1px 4px;
   border-radius: 2px;
   font-family: ui-monospace, Consolas, monospace;
@@ -1355,7 +1355,7 @@ function applySelection() {
 
 /* JSON tree */
 .probe-tree {
-  background: var(--color-surface-base, #0f172a);
+  background: var(--color-surface);
   border: 1px solid var(--color-border-default);
   border-radius: 4px;
   padding: 6px;
@@ -1374,7 +1374,7 @@ function applySelection() {
 }
 .probe-apply-btn {
   background: var(--color-success);
-  color: var(--color-surface-base, #0f172a);
+  color: var(--color-surface);
   border: none;
   border-radius: 4px;
   padding: 3px 12px;
@@ -1394,7 +1394,7 @@ function applySelection() {
 .probe-raw {
   font-size: 10px;
   color: var(--color-text-secondary);
-  background: var(--color-surface-base, #0f172a);
+  background: var(--color-surface);
   padding: 6px;
   border-radius: 4px;
   max-height: 80px;
@@ -1452,7 +1452,7 @@ function applySelection() {
 .block-body {
   width: 100%;
   min-height: 100px;
-  background: var(--color-surface-base, #0f172a);
+  background: var(--color-surface);
   border: 1px solid var(--color-border-default);
   color: var(--color-text-primary);
   padding: 8px;
@@ -1552,7 +1552,7 @@ function applySelection() {
 .insight-detail {
   padding: 8px 12px;
   border-bottom: 1px solid var(--color-border-default);
-  background: var(--color-surface-base, #0f172a);
+  background: var(--color-surface);
 }
 .insight-desc {
   font-size: 11px;
@@ -1633,7 +1633,7 @@ function applySelection() {
 /* Intent input */
 .intent-textarea {
   width: 100%;
-  background: var(--color-surface-base, #0f172a);
+  background: var(--color-surface);
   border: 1px solid var(--color-border-default);
   color: var(--color-text-primary);
   padding: 6px 8px;
@@ -1654,7 +1654,7 @@ function applySelection() {
 }
 .intent-generate-btn {
   background: var(--color-accent);
-  color: var(--color-surface-base, #0f172a);
+  color: var(--color-surface);
   border: none;
   border-radius: 4px;
   padding: 3px 12px;

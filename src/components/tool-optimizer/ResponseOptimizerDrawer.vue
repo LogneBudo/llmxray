@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
-import { X } from 'lucide-vue-next'
+import { X } from '@lucide/vue'
 import type { ToolCallEntry } from '@/types/toolcall'
 import { useToolWorkshopStore } from '@/stores/tool-workshop-store'
 import { optimizeToolCode } from '@/services/optimize-tool-code'

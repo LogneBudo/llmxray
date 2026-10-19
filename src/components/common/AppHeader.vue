@@ -4,7 +4,7 @@ import { computed, ref, onMounted, onBeforeUnmount } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useThemeStore } from '@/stores/theme-store'
 import { useLocaleStore, AVAILABLE_LOCALES, type Locale } from '@/stores/locale-store'
-import { Sun, Moon, ChevronDown } from 'lucide-vue-next'
+import { Sun, Moon, ChevronDown } from '@lucide/vue'
 
 const route = useRoute()
 const { t } = useI18n()

@@ -5,7 +5,7 @@ import TokenUsageByModelChart from '@/components/cost/TokenUsageByModelChart.vue
 import DailyUsageChart from '@/components/cost/DailyUsageChart.vue'
 import CostTrendChart from '@/components/cost/CostTrendChart.vue'
 import ModelBreakdownTable from '@/components/cost/ModelBreakdownTable.vue'
-import { Info } from 'lucide-vue-next'
+import { Info } from '@lucide/vue'
 
 const costStore = useCostStore()
 </script>

@@ -61,7 +61,7 @@ const diff = computed(() => diffLines(props.oldCode, props.newCode))
 }
 
 .diff-code {
-  background: var(--color-surface-base, #0f172a);
+  background: var(--color-surface);
   border: 1px solid var(--color-border-default);
   border-radius: 4px;
   padding: 6px 8px;
@@ -94,7 +94,7 @@ const diff = computed(() => diffLines(props.oldCode, props.newCode))
 }
 .diff-accept {
   background: var(--color-success);
-  color: var(--color-surface-base, #0f172a);
+  color: var(--color-surface);
   border: none;
   border-radius: 4px;
   padding: 3px 12px;

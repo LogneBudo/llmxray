@@ -6,7 +6,7 @@
  */
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import { ScanLine } from 'lucide-vue-next'
+import { ScanLine } from '@lucide/vue'
 import { useLiveStore } from '@/stores/live-store'
 import { xrayConversations, type XrayConversation, type XraySegment, type XrayTurn } from '@/services/xray'
 import RequestViewer from '@/components/live/RequestViewer.vue'

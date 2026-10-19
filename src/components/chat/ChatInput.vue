@@ -4,7 +4,7 @@ import { useModelStore } from '@/stores/model-store'
 import { useFileAttachment } from '@/composables/useFileAttachment'
 import { ACCEPTED_FILE_TYPES } from '@/types/attachment'
 import type { ChatAttachment } from '@/types/attachment'
-import { Paperclip, Eye, Slash, Send } from 'lucide-vue-next'
+import { Paperclip, Eye, Slash, Send } from '@lucide/vue'
 import SlashCommandDropdown from './SlashCommandDropdown.vue'
 import AttachmentPreview from './AttachmentPreview.vue'
 import type { SlashCommand } from '@/types/slash-command'
@@ -78,6 +78,9 @@ function handleSlashSelect(cmd: SlashCommand) {
 function sendMessage() {
   const text = message.value.trim()
   if (!text && attachments.value.length === 0) return
+  // Enter obeys the same rule as the disabled send button: a file still being read would
+  // otherwise go out as its name alone, without its text.
+  if (isProcessing.value) return
 
   if (text.startsWith('/') && attachments.value.length === 0) {
     const spaceIndex = text.indexOf(' ')
@@ -85,6 +88,8 @@ function sendMessage() {
     const args = spaceIndex === -1 ? '' : text.slice(spaceIndex + 1)
     emit('command', name, args)
   } else {
+    // No model yet (the list still loading): keep what was typed rather than drop it.
+    if (!props.selectedModel) return
     emit('send', text, [...attachments.value])
     clearAttachments()
   }

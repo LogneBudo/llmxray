@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.9] — 2026-10-19
+
+### Fixed
+
+- **Pressing Enter no longer sends a PDF or Word file as its name alone.** While an attached file was still being
+  read, the send button waited but Enter did not; the message went out without the file's text. Enter now waits
+  too.
+- **Pressing Enter before the model list loads keeps what you typed.** It used to clear the box and send nothing.
+- **The Tool Workshop is readable in light mode.** A tool's description and parameter names were dark text on a
+  dark field; the canvas, its blocks and the minimap now follow the theme.
+- **A new chat's "Untitled" follows the language.** After switching to French and back it stayed "Sans titre".
+
+### Changed
+
+- **Requires Node.js 22 or newer**, now stated in `engines`. Node 18 and 20 are past their end of life.
+- **The app server forwards to Ollama with Node's own HTTP**, replacing http-proxy-middleware. Paths, bodies and
+  streams pass through as before; `npm audit` reports no vulnerabilities in what LLMxRay installs.
+- **`npx llmxray` installs only what the server runs**: express, the MCP SDK and zod. The browser libraries are
+  already inside the built app.
+- **The app loads faster**: the first file is 162 kB instead of 669 kB. Each language other than English loads
+  when it is first shown, and each library family is its own file.
+- Every dependency is on its current major version: Vite 8, Vitest 5, vue-i18n 11, Pinia 4, zod 4, TypeScript 6,
+  marked 18, Babel 8, pdfjs-dist 6 (past the 5.6–6.2 releases that run script inside a malicious PDF), and
+  `@lucide/vue` in place of the deprecated `lucide-vue-next`. TypeScript 7 waits for
+  vue-tsc, which cannot run on it yet.
+
 ## [0.8.8] — 2026-10-19
 
 ### Fixed

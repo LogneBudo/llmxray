@@ -2,7 +2,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useModelStore } from '@/stores/model-store'
 import { ollamaClient } from '@/services/ollama-client'
-import { Play, Square, Info } from 'lucide-vue-next'
+import { Play, Square, Info } from '@lucide/vue'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()

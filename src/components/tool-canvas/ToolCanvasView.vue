@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, markRaw, nextTick, watch, onMounted } from 'vue'
-import { Trash2, Download } from 'lucide-vue-next'
+import { Trash2, Download } from '@lucide/vue'
 import { downloadJson } from '@/utils/download'
 import { VueFlow, useVueFlow } from '@vue-flow/core'
 import { Background } from '@vue-flow/background'
@@ -139,7 +139,7 @@ function exportSingleToolJson(toolId: string) {
     <!-- Code panel (collapsible) -->
     <div
       v-if="codePanelOpen"
-      class="w-[440px] flex flex-col border-e border-border-default bg-surface-base shrink-0"
+      class="w-[440px] flex flex-col border-e border-border-default bg-surface shrink-0"
     >
       <!-- Header -->
       <div class="p-3 border-b border-border-default flex items-center justify-between">
@@ -260,7 +260,7 @@ function exportSingleToolJson(toolId: string) {
           <div class="flex items-center gap-3">
             <button
               @click="handleAddTool"
-              class="px-4 py-2 rounded-lg bg-accent text-surface-base font-semibold text-sm hover:opacity-90 transition-opacity cursor-pointer border-none"
+              class="px-4 py-2 rounded-lg bg-accent text-surface font-semibold text-sm hover:opacity-90 transition-opacity cursor-pointer border-none"
             >
               {{ $t('tools.canvas.newTool') }}
             </button>
@@ -348,7 +348,7 @@ function exportSingleToolJson(toolId: string) {
         <button
           v-if="flowNodes.length > 0"
           @click="handleAddTool"
-          class="px-3 py-1.5 rounded-lg bg-accent/90 text-surface-base font-semibold text-xs hover:bg-accent transition-colors cursor-pointer border-none shadow-lg"
+          class="px-3 py-1.5 rounded-lg bg-accent/90 text-surface font-semibold text-xs hover:bg-accent transition-colors cursor-pointer border-none shadow-lg"
         >
           {{ $t('tools.canvas.newTool') }}
         </button>
@@ -385,7 +385,7 @@ function exportSingleToolJson(toolId: string) {
     <!-- Tool Library panel (collapsible, right side) -->
     <div
       v-if="libraryPanelOpen"
-      class="w-[280px] flex flex-col border-s border-border-default bg-surface-base shrink-0"
+      class="w-[280px] flex flex-col border-s border-border-default bg-surface shrink-0"
     >
       <!-- Header -->
       <div class="p-3 border-b border-border-default flex items-center justify-between">
@@ -480,7 +480,7 @@ function exportSingleToolJson(toolId: string) {
 
 /* Vue Flow theme overrides */
 .canvas-flow {
-  background: var(--color-surface-base, #0f172a) !important;
+  background: var(--color-surface) !important;
 }
 
 .canvas-flow .vue-flow__node {
@@ -494,7 +494,7 @@ function exportSingleToolJson(toolId: string) {
   width: 10px;
   height: 10px;
   background: var(--color-accent) !important;
-  border: 2px solid var(--color-surface-base, #0f172a) !important;
+  border: 2px solid var(--color-surface) !important;
 }
 
 .canvas-flow .vue-flow__edge-path {
@@ -503,6 +503,15 @@ function exportSingleToolJson(toolId: string) {
 
 .canvas-flow .vue-flow__minimap {
   background: var(--color-surface-raised, #1e293b) !important;
+}
+
+/* vue-flow paints the mask and the nodes in fixed light greys; these follow the theme. */
+.canvas-flow .vue-flow__minimap-mask {
+  fill: color-mix(in srgb, var(--color-surface) 70%, transparent);
+}
+
+.canvas-flow .vue-flow__minimap-node {
+  fill: color-mix(in srgb, var(--color-accent) 45%, var(--color-surface-raised));
 }
 
 .canvas-flow .vue-flow__controls {

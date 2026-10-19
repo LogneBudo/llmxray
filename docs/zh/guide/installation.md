@@ -2,7 +2,7 @@
 
 ## 前置条件
 
-1. **Node.js 18 或更高版本** —— [下载](https://nodejs.org)
+1. **Node.js 22 或更高版本** —— [下载](https://nodejs.org)
 2. 本地运行的 **Ollama** —— [下载](https://ollama.com/download)
 3. 至少拉取一个模型：
 

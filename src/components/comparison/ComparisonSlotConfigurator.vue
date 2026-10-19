@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { X } from 'lucide-vue-next'
+import { X } from '@lucide/vue'
 import { nanoid } from 'nanoid'
 import { useModelStore } from '@/stores/model-store'
 import { generateSlotLabel } from '@/utils/slot-labels'

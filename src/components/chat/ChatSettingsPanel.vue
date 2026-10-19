@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
-import { X } from 'lucide-vue-next'
+import { X } from '@lucide/vue'
 import type { ChatSettings } from '@/types/conversation'
 import type { OllamaThink } from '@/types/ollama'
 import { useToolWorkshopStore } from '@/stores/tool-workshop-store'

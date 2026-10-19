@@ -2,7 +2,7 @@
 import { ref, watch, computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { nanoid } from 'nanoid'
-import { Pencil, Trash2, Plus, Download, X, Sparkles, Square, CheckSquare } from 'lucide-vue-next'
+import { Pencil, Trash2, Plus, Download, X, Sparkles, Square, CheckSquare } from '@lucide/vue'
 import type { BenchmarkQuestion, BenchmarkSuite } from '@/types/benchmark'
 import QuestionEditor from './QuestionEditor.vue'
 import { useModelStore } from '@/stores/model-store'

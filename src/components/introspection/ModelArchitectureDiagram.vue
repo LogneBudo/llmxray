@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Info } from 'lucide-vue-next'
+import { Info } from '@lucide/vue'
 import type { ModelArchitecture } from '@/types/introspection'
 import { useModelStore } from '@/stores/model-store'
 import { resolveCapabilities } from '@/utils/capability-defs'

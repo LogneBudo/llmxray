@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { Download } from 'lucide-vue-next'
+import { Download } from '@lucide/vue'
 import { useSessionStore } from '@/stores/session-store'
 import { useMetricsStore } from '@/stores/metrics-store'
 import { useTokenStore } from '@/stores/token-store'

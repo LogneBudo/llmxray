@@ -5,7 +5,7 @@
  * services/tool-fidelity.ts; this page only runs and shows.
  */
 import { computed, onMounted, ref } from 'vue'
-import { Wrench } from 'lucide-vue-next'
+import { Wrench } from '@lucide/vue'
 import { useModelStore } from '@/stores/model-store'
 import { TOOL_CASES } from '@/data/tool-fidelity/cases'
 import { runToolFidelity, summarise, type CaseResult, type Outcome } from '@/services/tool-fidelity'
@@ -181,7 +181,7 @@ const TONE: Record<Outcome, string> = {
               </tr>
               <tr v-if="selected && selected.caseId === c.id">
                 <td :colspan="models.length + 1" class="pb-3">
-                  <div class="rounded-md border border-accent/40 bg-surface-base p-4">
+                  <div class="rounded-md border border-accent/40 bg-surface p-4">
                     <div class="flex items-start justify-between gap-3">
                       <div>
                         <h4 class="text-base font-semibold text-text-primary">{{ selected.model }} · {{ $t(`toolcalls.outcome.${selected.outcome}`) }}</h4>

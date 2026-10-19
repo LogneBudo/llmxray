@@ -5,7 +5,7 @@
  * services/ledger.ts and stated on the page in plain words.
  */
 import { computed, onMounted, onUnmounted } from 'vue'
-import { Users } from 'lucide-vue-next'
+import { Users } from '@lucide/vue'
 import { useLiveStore } from '@/stores/live-store'
 import { buildLedger, type LedgerRow } from '@/services/ledger'
 import { formatDuration, formatNumber } from '@/utils/format'

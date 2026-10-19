@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { CheckCircle, X } from 'lucide-vue-next'
+import { CheckCircle, X } from '@lucide/vue'
 import { useModelStore } from '@/stores/model-store'
 import { ollamaClient } from '@/services/ollama-client'
 import {

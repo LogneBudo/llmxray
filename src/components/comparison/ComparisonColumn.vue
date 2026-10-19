@@ -8,7 +8,7 @@ import StatusBadge from '@/components/common/StatusBadge.vue'
 import TokenStreamDisplay from '@/components/token-stream/TokenStreamDisplay.vue'
 import MarkdownTokenStream from '@/components/chat/MarkdownTokenStream.vue'
 import MetricCard from '@/components/metrics/MetricCard.vue'
-import { ChevronDown } from 'lucide-vue-next'
+import { ChevronDown } from '@lucide/vue'
 
 const props = defineProps<{
   execution: ComparisonExecution

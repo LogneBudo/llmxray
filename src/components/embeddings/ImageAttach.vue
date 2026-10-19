@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { ImagePlus, X } from 'lucide-vue-next'
+import { ImagePlus, X } from '@lucide/vue'
 
 /**
  * Pick one image to embed alongside text. Emits the base64 payload WITHOUT the

@@ -31,14 +31,16 @@ const extensions = computed(() => {
     props.language === 'json'
       ? json()
       : javascript({ typescript: true }),
+    // One Dark in both app themes, so the editor keeps its own dark ground; a theme-following
+    // ground would put One Dark's pale text on white.
     oneDark,
     EditorView.theme({
       '&': {
-        backgroundColor: 'var(--color-surface-base, #0f172a)',
+        backgroundColor: '#0f172a',
         minHeight: props.minHeight,
       },
       '.cm-gutters': {
-        backgroundColor: 'var(--color-surface-base, #0f172a)',
+        backgroundColor: '#0f172a',
         borderRight: '1px solid var(--color-border-default)',
         color: 'var(--color-text-muted)',
       },

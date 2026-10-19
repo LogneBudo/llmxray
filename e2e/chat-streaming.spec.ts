@@ -1,15 +1,14 @@
 import { test, expect } from '@playwright/test'
 import { mockOllamaApi, mockOllamaWithThinking, mockOllamaWithNativeThinking } from './helpers/ollama-mock'
-import { sendMessage } from './helpers/commands'
+import { sendMessage, modelPicker } from './helpers/commands'
 
 test.describe('Chat streaming', () => {
   test('sends a message and displays the streamed response', async ({ page }) => {
     await mockOllamaApi(page)
     await page.goto('/')
 
-    const modelSelect = page.locator('select').first()
-    await expect(modelSelect).toBeVisible()
-    await expect(modelSelect).toContainText('llama3:latest')
+    await expect(modelPicker(page)).toBeVisible()
+    await expect(modelPicker(page)).toContainText('llama3:latest')
 
     await expect(page.getByText('Start a conversation with a local model')).toBeVisible()
 

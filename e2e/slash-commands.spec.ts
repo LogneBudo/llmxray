@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 import { mockOllamaApi } from './helpers/ollama-mock'
-import { sendSlashCommand, sendMessage } from './helpers/commands'
+import { sendSlashCommand, sendMessage, modelPicker } from './helpers/commands'
 
 test.describe('Slash commands', () => {
   test.beforeEach(async ({ page }) => {
@@ -61,8 +61,7 @@ test.describe('Slash commands', () => {
     await sendSlashCommand(page, '/model mistral:latest')
     await expect(page.getByText('Switched to mistral:latest')).toBeVisible({ timeout: 3_000 })
 
-    const modelSelect = page.locator('select').first()
-    await expect(modelSelect).toHaveValue('mistral:latest')
+    await expect(modelPicker(page)).toContainText('mistral:latest')
   })
 
   test('/temperature sets temperature with valid value', async ({ page }) => {

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { X } from 'lucide-vue-next'
+import { X } from '@lucide/vue'
 import type { BenchmarkResult } from '@/types/benchmark'
 import { buildBenchmarkMarkdown } from '@/utils/share-benchmark'
 

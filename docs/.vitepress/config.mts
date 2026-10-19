@@ -133,6 +133,14 @@ function communityNav(prefix: string) {
 }
 
 export default defineConfig({
+  vite: {
+    build: {
+      // The largest file here is a language's search index (the French one is past 500 kB):
+      // the text of every page, fetched only when search opens. It is data and cannot be
+      // split; every code file stays well under the default 500 kB.
+      chunkSizeWarningLimit: 1000,
+    },
+  },
   title: 'LLMxRay',
   titleTemplate: ':title · LLMxRay docs',
   description: 'LLMxRay documentation: a local observatory for Ollama. Prompt X-ray, prompt-cache and context diagnostics, Live view of every tool on the machine, GPU map, logprob benchmarks, and the MCP server agents query about their own calls.',

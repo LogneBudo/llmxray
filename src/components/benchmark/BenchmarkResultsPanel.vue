@@ -8,7 +8,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js'
-import { Download, Share2 } from 'lucide-vue-next'
+import { Download, Share2 } from '@lucide/vue'
 import type { BenchmarkResult } from '@/types/benchmark'
 import { getBenchmarkLabel } from '@/data/benchmarks/baselines'
 import {

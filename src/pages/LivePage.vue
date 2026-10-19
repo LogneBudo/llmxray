@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { Radio, Copy, Check, Pause, Play, Trash2, TriangleAlert, Info } from 'lucide-vue-next'
+import { Radio, Copy, Check, Pause, Play, Trash2, TriangleAlert, Info } from '@lucide/vue'
 import { useLiveStore } from '@/stores/live-store'
 import RequestViewer from '@/components/live/RequestViewer.vue'
 import { cacheShare, cacheFixSavingMs, messageTokensEst } from '@/services/live-findings'

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { Loader2, Download } from 'lucide-vue-next'
+import { Loader2, Download } from '@lucide/vue'
 import { downloadJson, downloadMarkdown } from '@/utils/download'
 import { ollamaClient } from '@/services/ollama-client'
 import { useMetricsStore } from '@/stores/metrics-store'

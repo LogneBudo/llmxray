@@ -1,15 +1,17 @@
 import { test, expect } from '@playwright/test'
 import { mockOllamaApi } from './helpers/ollama-mock'
-import { sendMessage } from './helpers/commands'
+import { sendMessage, modelPicker } from './helpers/commands'
 import path from 'path'
 import fs from 'fs'
-import { fileURLToPath } from 'url'
+import os from 'os'
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const fixturesDir = path.join(__dirname, `fixtures-${process.pid}`)
+// Outside the project: the dev server reloads every open page when a file it watches for
+// class names changes, which would reset the tests running beside this one.
+const fixturesDir = path.join(os.tmpdir(), `llmxray-e2e-fixtures-${process.pid}`)
 
 test.beforeAll(() => {
   fs.mkdirSync(fixturesDir, { recursive: true })
+  fs.writeFileSync(path.join(fixturesDir, 'brief.pdf'), pdfWithText('LLMxRay reads PDF files'))
   fs.writeFileSync(path.join(fixturesDir, 'sample.txt'), 'This is a sample document for testing attachments.')
   fs.writeFileSync(path.join(fixturesDir, 'notes.md'), '# Notes\n\nSome markdown notes for testing.')
 
@@ -20,6 +22,29 @@ test.beforeAll(() => {
   )
   fs.writeFileSync(path.join(fixturesDir, 'tiny.png'), pngBuffer)
 })
+
+/** A one-page PDF whose only content is `text`, built byte by byte so the test needs no fixture file. */
+function pdfWithText(text: string): Buffer {
+  const content = `BT /F1 24 Tf 72 700 Td (${text}) Tj ET`
+  const objects = [
+    '<< /Type /Catalog /Pages 2 0 R >>',
+    '<< /Type /Pages /Kids [3 0 R] /Count 1 >>',
+    '<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>',
+    `<< /Length ${content.length} >>\nstream\n${content}\nendstream`,
+    '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>',
+  ]
+  let pdf = '%PDF-1.4\n'
+  const offsets = objects.map((body, i) => {
+    const at = pdf.length
+    pdf += `${i + 1} 0 obj\n${body}\nendobj\n`
+    return at
+  })
+  const xref = pdf.length
+  pdf += `xref\n0 ${objects.length + 1}\n0000000000 65535 f \n`
+  pdf += offsets.map((o) => `${String(o).padStart(10, '0')} 00000 n \n`).join('')
+  pdf += `trailer\n<< /Size ${objects.length + 1} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF\n`
+  return Buffer.from(pdf, 'latin1')
+}
 
 test.afterAll(() => {
   fs.rmSync(fixturesDir, { recursive: true, force: true })
@@ -41,7 +66,7 @@ test.describe('File attachments', () => {
     await mockOllamaApi(page)
     await page.goto('/')
     // Wait for app to fully load
-    await expect(page.locator('select').first()).toBeVisible()
+    await expect(modelPicker(page)).toContainText('llama3:latest')
   })
 
   test('attaching a text file shows preview chip', async ({ page }) => {
@@ -89,5 +114,21 @@ test.describe('File attachments', () => {
     await sendMessage(page, 'What does this file say?')
     await expect(page.getByText('What does this file say?')).toBeVisible()
     await expect(page.locator('button[title="Send message"]')).toBeVisible({ timeout: 10_000 })
+  })
+
+  test('a PDF attachment reaches the model as its text', async ({ page }) => {
+    const sent = new Promise<string>((resolve) => {
+      page.on('request', (r) => {
+        if (r.method() === 'POST' && r.url().includes('/api/chat')) resolve(r.postData() ?? '')
+      })
+    })
+    await page.locator('textarea').first().fill('What does the attachment say?')
+    await attachFiles(page, path.join(fixturesDir, 'brief.pdf'))
+    // The send button turns on once the PDF has been read.
+    await expect(page.locator('button[title="Send message"]')).toBeEnabled({ timeout: 10_000 })
+    await page.locator('textarea').first().press('Enter')
+    const body = JSON.parse(await sent)
+    expect(body.messages.at(-1).content).toContain('[Attached: brief.pdf]\nLLMxRay reads PDF files')
+    expect(body.messages.at(-1).content).toContain('What does the attachment say?')
   })
 })

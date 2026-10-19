@@ -6,7 +6,7 @@ import { useModelStore } from '@/stores/model-store'
 import { useDecisionLabStore } from '@/stores/decision-lab-store'
 import { answerBars } from '@/services/decision-lab'
 import type { DecisionAnswer, DecisionQuestionType } from '@/types/decision'
-import { Play, Square, Info, Scale, Plus, Trash2 } from 'lucide-vue-next'
+import { Play, Square, Info, Scale, Plus, Trash2 } from '@lucide/vue'
 
 const { t } = useI18n()
 const modelStore = useModelStore()

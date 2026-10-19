@@ -1,10 +1,16 @@
 import { createI18n } from 'vue-i18n'
 import en from './locales/en'
-import fr from './locales/fr'
-import zh from './locales/zh'
-import ar from './locales/ar'
-import sr from './locales/sr'
-import srCyrl from './locales/sr-Cyrl'
+
+// English ships in the main bundle as the fallback; every other language is its own file,
+// fetched the first time it is shown.
+type Messages = Record<string, unknown>
+const LOADERS: Record<string, () => Promise<{ default: Messages }>> = {
+  fr: () => import('./locales/fr'),
+  zh: () => import('./locales/zh'),
+  ar: () => import('./locales/ar'),
+  sr: () => import('./locales/sr'),
+  'sr-Cyrl': () => import('./locales/sr-Cyrl'),
+}
 
 const SUPPORTED_LOCALES = ['en', 'fr', 'zh', 'ar', 'sr', 'sr-Cyrl']
 
@@ -28,7 +34,7 @@ export const i18n = createI18n({
   locale: detectLocale(),
   fallbackLocale: 'en',
   globalInjection: true,
-  messages: { en, fr, zh, ar, sr, 'sr-Cyrl': srCyrl },
+  messages: { en },
   numberFormats: {
     en: {
       decimal: { minimumFractionDigits: 0, maximumFractionDigits: 2 },
@@ -82,3 +88,11 @@ export const i18n = createI18n({
     },
   },
 })
+
+export async function loadLocale(locale: string): Promise<void> {
+  const load = LOADERS[locale]
+  if (!load || (i18n.global.availableLocales as string[]).includes(locale)) return
+  // Other languages may miss keys English has; those fall back, so their shape is looser.
+  const setMessages = i18n.global.setLocaleMessage as (locale: string, messages: Messages) => void
+  setMessages(locale, (await load()).default)
+}

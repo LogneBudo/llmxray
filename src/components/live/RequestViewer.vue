@@ -6,7 +6,7 @@
  * the proxy computed is drawn inside the actual text.
  */
 import { computed, ref, watch } from 'vue'
-import { Copy, Check, Download, Search, ChevronDown, ChevronRight, AlertTriangle } from 'lucide-vue-next'
+import { Copy, Check, Download, Search, ChevronDown, ChevronRight, AlertTriangle } from '@lucide/vue'
 import { formatNumber } from '@/utils/format'
 
 const props = defineProps<{

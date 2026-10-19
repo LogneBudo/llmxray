@@ -5,7 +5,7 @@ import { useModelStore } from '@/stores/model-store'
 import { useCacheLabStore } from '@/stores/cache-lab-store'
 import { commonPrefixLength, mutateVolatile } from '@/services/cache-lab'
 import { formatPercent } from '@/utils/format'
-import { Play, Square, Info, DatabaseZap, TriangleAlert, Check } from 'lucide-vue-next'
+import { Play, Square, Info, DatabaseZap, TriangleAlert, Check } from '@lucide/vue'
 
 const { t } = useI18n()
 const modelStore = useModelStore()

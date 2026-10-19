@@ -2,7 +2,7 @@
 
 ## Prérequis
 
-1. **Node.js 18+** -- [Télécharger](https://nodejs.org)
+1. **Node.js 22+** -- [Télécharger](https://nodejs.org)
 2. **Ollama** en cours d'exécution localement -- [Télécharger](https://ollama.com/download)
 3. Au moins un modèle téléchargé :
 

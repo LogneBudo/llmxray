@@ -6,7 +6,7 @@
  * few seconds; the arithmetic is in services/gpu-map.ts.
  */
 import { computed, onMounted, onUnmounted, ref } from 'vue'
-import { MemoryStick } from 'lucide-vue-next'
+import { MemoryStick } from '@lucide/vue'
 import { useI18n } from 'vue-i18n'
 import { ollamaClient } from '@/services/ollama-client'
 import { fetchSystemInfo } from '@/services/system-info-client'

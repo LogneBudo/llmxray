@@ -1,21 +1,20 @@
 import { test, expect } from '@playwright/test'
 import { mockOllamaApi } from './helpers/ollama-mock'
-import { sendSlashCommand } from './helpers/commands'
+import { sendSlashCommand, modelPicker, chooseModel, settingsPanel } from './helpers/commands'
 
 /** Opens the chat settings side panel */
 async function openSettings(page: import('@playwright/test').Page) {
   // The settings button is in the top bar, not the sidebar
   const topBar = page.locator('.border-b.border-border-default.bg-surface-raised')
   await topBar.locator('button').filter({ hasText: 'Settings' }).click()
-  // Wait for the panel header
-  await expect(page.locator('.border-l.border-border-default')).toBeVisible()
+  await expect(settingsPanel(page)).toBeVisible()
 }
 
 /** Expands the Memory collapsible section in the settings panel */
 async function expandMemorySection(page: import('@playwright/test').Page) {
   // The Memory button is deep inside the scrollable settings panel.
   // Scroll the overflow container to the bottom so the button is in view.
-  const scrollContainer = page.locator('.border-l.border-border-default .overflow-y-auto')
+  const scrollContainer = settingsPanel(page).locator('.overflow-y-auto')
   await scrollContainer.evaluate((el) => el.scrollTo(0, el.scrollHeight))
 
   // The Memory toggle button is a full-width collapsible button with ▾ arrow.
@@ -36,21 +35,17 @@ test.describe('Settings panel', () => {
     await openSettings(page)
 
     // Panel header "Chat Settings" visible
-    const panelHeader = page.locator('.border-l.border-border-default').getByText('Chat Settings', { exact: true })
-    await expect(panelHeader).toBeVisible()
+    await expect(settingsPanel(page).getByText('Chat Settings', { exact: true })).toBeVisible()
 
-    // Close via the X button in the panel's header row
-    const headerRow = page.locator('.border-l.border-border-default .border-b')
-    await headerRow.locator('button').click()
+    await settingsPanel(page).getByRole('button', { name: 'Close' }).click()
 
-    // Panel should disappear
-    await expect(page.locator('.border-l.border-border-default')).not.toBeVisible({ timeout: 2_000 })
+    await expect(settingsPanel(page)).not.toBeVisible({ timeout: 2_000 })
   })
 
   test('system prompt textarea is editable', async ({ page }) => {
     await openSettings(page)
 
-    const systemPrompt = page.locator('.border-l textarea')
+    const systemPrompt = settingsPanel(page).locator('textarea').first()
     await systemPrompt.fill('You are a helpful coding assistant.')
     await expect(systemPrompt).toHaveValue('You are a helpful coding assistant.')
   })
@@ -58,12 +53,12 @@ test.describe('Settings panel', () => {
   test('temperature slider adjusts value', async ({ page }) => {
     await openSettings(page)
 
-    const settingsPanel = page.locator('.border-l.border-border-default')
-    await expect(settingsPanel.getByText('Temperature')).toBeVisible()
-    const tempSlider = settingsPanel.locator('input[type="range"]').first()
+    const panel = settingsPanel(page)
+    await expect(panel.getByText('Temperature')).toBeVisible()
+    const tempSlider = panel.locator('input[type="range"]').first()
     await tempSlider.fill('1.5')
 
-    await expect(settingsPanel.getByText('1.50')).toBeVisible()
+    await expect(panel.getByText('1.50')).toBeVisible()
   })
 })
 
@@ -135,20 +130,18 @@ test.describe('Model selector', () => {
     })
     await page.goto('/')
 
-    const select = page.locator('select').first()
-    await expect(select).toBeVisible()
-    const options = select.locator('option')
-    const count = await options.count()
-    expect(count).toBeGreaterThanOrEqual(1)
+    await modelPicker(page).click()
+    const options = page.getByRole('listbox', { name: 'Select a model' }).getByRole('option')
+    await expect(options).toHaveCount(3)
+    await expect(options.filter({ hasText: 'codellama:7b' })).toBeVisible()
   })
 
   test('switching model changes the selection', async ({ page }) => {
     await mockOllamaApi(page)
     await page.goto('/')
 
-    const select = page.locator('select').first()
-    await select.selectOption('mistral:latest')
-    await expect(select).toHaveValue('mistral:latest')
+    await chooseModel(page, 'mistral:latest')
+    await expect(modelPicker(page)).toContainText('mistral:latest')
   })
 })
 
@@ -169,3 +162,33 @@ test.describe('Navigation', () => {
     await expect(page.getByText('Settings panel opened')).toBeVisible({ timeout: 3_000 })
   })
 })
+
+test.describe('Language', () => {
+  test('switching to French loads it and shows it', async ({ page }) => {
+    await mockOllamaApi(page)
+    await page.goto('/')
+    await expect(page.getByText('Chat Diagnostics').first()).toBeVisible()
+
+    await page.getByRole('button', { name: 'Language' }).click()
+    await page.getByRole('option', { name: 'Français' }).click()
+
+    await expect(page.getByText('Diagnostic de chat').first()).toBeVisible({ timeout: 5_000 })
+    await expect(page.locator('html')).toHaveAttribute('lang', 'fr')
+    await expect(page.getByText('Sans titre')).toBeVisible()
+
+    // And back: nothing stays behind in French, the unnamed chat included.
+    await page.getByRole('button', { name: 'Langue' }).click()
+    await page.getByRole('option', { name: 'English' }).click()
+    await expect(page.getByText('Chat Diagnostics').first()).toBeVisible()
+    await expect(page.getByText('Untitled')).toBeVisible()
+    await expect(page.getByText('Sans titre')).toHaveCount(0)
+  })
+
+  test('a saved French choice is in place on the first paint', async ({ page }) => {
+    await mockOllamaApi(page)
+    await page.addInitScript(() => localStorage.setItem('llmxray-locale', 'fr'))
+    await page.goto('/')
+    await expect(page.getByText('Diagnostic de chat').first()).toBeVisible()
+  })
+})
+

@@ -3,7 +3,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useModelStore } from '@/stores/model-store'
 import { useProtocolObservatoryStore, type ProtocolRunState } from '@/stores/protocol-observatory-store'
-import { Play, Square, Info, Network } from 'lucide-vue-next'
+import { Play, Square, Info, Network } from '@lucide/vue'
 
 const { t } = useI18n()
 const modelStore = useModelStore()

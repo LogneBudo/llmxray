@@ -15,7 +15,7 @@ LLMxRay is a **free, local-first** tool for understanding what happens inside lo
 
 ### Prerequisites
 
-- **Node.js 18+** — [Download](https://nodejs.org)
+- **Node.js 22+** — [Download](https://nodejs.org)
 - **Ollama** running locally — [Download](https://ollama.com/download)
 - At least one model pulled: `ollama pull llama3.2`
 

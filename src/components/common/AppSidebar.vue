@@ -26,7 +26,7 @@ import {
   Users,
   MemoryStick,
   Wrench,
-} from 'lucide-vue-next'
+} from '@lucide/vue'
 import FeedbackOverlay from './FeedbackOverlay.vue'
 
 const route = useRoute()

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { i18n } from '@/i18n'
+import { i18n, loadLocale } from '@/i18n'
 
 export type Locale = 'en' | 'fr' | 'ar' | 'he' | 'zh' | 'ja' | 'sr' | 'sr-Cyrl'
 
@@ -22,7 +22,8 @@ export const AVAILABLE_LOCALES: { code: Locale; label: string; flag: string }[] 
 export const useLocaleStore = defineStore('locale', () => {
   const locale = ref<Locale>(i18n.global.locale.value as Locale)
 
-  function setLocale(l: Locale) {
+  async function setLocale(l: Locale) {
+    await loadLocale(l)
     locale.value = l
     ;(i18n.global.locale as unknown as { value: string }).value = l
     localStorage.setItem('llmxray-locale', l)

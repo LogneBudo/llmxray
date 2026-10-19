@@ -1,5 +1,5 @@
 import type { Component } from 'vue'
-import { PenLine, Wrench, Lightbulb, Eye, Compass, AudioLines, Scale } from 'lucide-vue-next'
+import { PenLine, Wrench, Lightbulb, Eye, Compass, AudioLines, Scale } from '@lucide/vue'
 
 export interface CapabilityDef {
   key: string

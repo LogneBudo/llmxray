@@ -24,7 +24,7 @@ import type { ChatAttachment } from '@/types/attachment'
 import ChatSettingsPanel from './ChatSettingsPanel.vue'
 import ModelCapabilityIcons from '@/components/common/ModelCapabilityIcons.vue'
 import { useI18n } from 'vue-i18n'
-import { ChevronDown, Pencil, X, Clock, Settings, Download } from 'lucide-vue-next'
+import { ChevronDown, Pencil, X, Clock, Settings, Download } from '@lucide/vue'
 
 const { t } = useI18n()
 
@@ -170,13 +170,14 @@ const latestSessionId = computed(() => {
   return null
 })
 
-// Pending name for conversations not yet created (pre-chat naming)
-const pendingName = ref(t('dashboard.conversation.untitled'))
+// Pending name for conversations not yet created (pre-chat naming). Empty means none yet,
+// shown as "Untitled" in whatever language is on screen, so a language switch follows it.
+const pendingName = ref('')
 const editingName = ref(false)
 const editNameValue = ref('')
 
 /** The display name — from the active conversation, or the pending name if none exists yet */
-const displayName = computed(() => conversation.value?.name ?? pendingName.value)
+const displayName = computed(() => conversation.value?.name ?? (pendingName.value || t('dashboard.conversation.untitled')))
 
 function startEditName() {
   editNameValue.value = displayName.value
@@ -277,10 +278,10 @@ async function handleSend(text: string, attachments: ChatAttachment[] = []) {
   if (!convId) {
     convId = conversationStore.createConversation(selectedModel.value)
     // Apply pending name if user set one before chatting
-    if (pendingName.value !== t('dashboard.conversation.untitled')) {
+    if (pendingName.value) {
       conversationStore.renameConversation(convId, pendingName.value)
     }
-    pendingName.value = t('dashboard.conversation.untitled')
+    pendingName.value = ''
   }
   // Update the conversation's model if user changed it
   const conv0 = conversationStore.conversations.get(convId)
@@ -486,7 +487,7 @@ function handleCancel() {
 
 function startNewChat() {
   conversationStore.setActiveConversation(null)
-  pendingName.value = t('dashboard.conversation.untitled')
+  pendingName.value = ''
 }
 
 function openSession(sessionId: string) {
@@ -659,6 +660,9 @@ async function handleCommand(name: string, args: string) {
         <div class="relative">
           <button
             class="flex items-center gap-2 rounded-lg border border-border-default bg-surface px-3 py-1.5 text-sm text-text-primary outline-none hover:border-accent/50 focus:border-accent"
+            aria-haspopup="listbox"
+            :aria-expanded="modelDropdownOpen"
+            :aria-label="selectedModel ? `${$t('common.model.selectModel')}: ${selectedModel}` : $t('common.model.noModels')"
             @click="modelDropdownOpen = !modelDropdownOpen"
             @blur="closeDropdownDelayed"
           >
@@ -671,11 +675,15 @@ async function handleCommand(name: string, args: string) {
           </button>
           <div
             v-if="modelDropdownOpen"
+            role="listbox"
+            :aria-label="$t('common.model.selectModel')"
             class="absolute left-0 top-full z-50 mt-1 max-h-64 w-max min-w-full overflow-y-auto rounded-lg border border-border-default bg-surface-raised shadow-lg"
           >
             <button
               v-for="name in modelStore.chatModelNames"
               :key="name"
+              role="option"
+              :aria-selected="name === selectedModel"
               class="flex w-full items-center gap-2 px-3 py-1.5 text-start text-sm transition-colors"
               :class="name === selectedModel ? 'bg-accent/10 text-accent' : 'text-text-primary hover:bg-surface-overlay'"
               @mousedown.prevent="selectedModel = name; modelDropdownOpen = false"
@@ -774,7 +782,7 @@ async function handleCommand(name: string, args: string) {
           <span class="text-xs font-medium text-text-secondary">{{ $t('dashboard.conversation.chatHistory') }}</span>
           <button
             class="text-text-muted hover:text-text-primary transition-colors text-xs"
-            aria-label="Close history"
+            :aria-label="$t('common.actions.close')"
             @click="showHistory = false"
           >
             ✕
@@ -860,12 +868,15 @@ async function handleCommand(name: string, args: string) {
       <!-- Settings side panel -->
       <div
         v-if="showSettings"
+        role="complementary"
+        :aria-label="$t('dashboard.settings.chatSettings')"
         class="w-72 shrink-0 border-s border-border-default bg-surface-raised"
       >
         <div class="flex items-center justify-between border-b border-border-default px-4 py-2">
           <span class="text-xs font-medium text-text-secondary">{{ $t('dashboard.settings.chatSettings') }}</span>
           <button
             class="text-text-muted hover:text-text-primary transition-colors text-xs"
+            :aria-label="$t('common.actions.close')"
             @click="showSettings = false"
           >
             ✕
