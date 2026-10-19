@@ -5,6 +5,7 @@
 <h1 align="center">LLMxRay</h1>
 
 <p align="center">
+  <a href="https://nicklaunches.com/products/llmxray/" target="_blank" rel="noopener"><img src="https://nicklaunches.com/badges/featured.png" alt="LLMxRay on Nick Launches" width="244" height="56" /></a>
   <span style="display:inline-block;text-align:center;font-family:system-ui,sans-serif;line-height:1;">
   <a href="https://tools.launchllama.co/products/llmxray?utm_source=badge&utm_medium=referral" target="_blank" rel="noopener noreferrer" style="display:block;line-height:0;">
   <img src="https://tools.launchllama.co/featured-badge.png?v=2"
