@@ -14,8 +14,8 @@
   "license": "Apache-2.0",
   "type": "module",
   "bin": {
-    "llmxray": "./bin/cli.mjs",
-    "llmxray-mcp": "./bin/mcp.mjs"
+    "llmxray": "bin/cli.mjs",
+    "llmxray-mcp": "bin/mcp.mjs"
   },
   "files": [
     "dist/",
