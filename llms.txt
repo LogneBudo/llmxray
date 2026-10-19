@@ -4,6 +4,7 @@
 
 ## Install
 
+- Current version: 0.8.10. Needs Node.js 22 or newer for `npx`; tested against Ollama 0.40.x.
 - Ollama must be running with at least one model pulled (`ollama pull llama3.2`).
 - `npx llmxray`, or `docker run -p 5174:5174 djovaneli/llmxray`, then open http://localhost:5174
 - To observe other tools: point them at port 11435 instead of 11434. It behaves exactly like Ollama and forwards everything; LLMxRay only records what passes.
@@ -21,6 +22,7 @@
 - [Installation](https://lognebudo.github.io/llmxray/docs/en/guide/installation.html)
 - [Prompt X-ray](https://lognebudo.github.io/llmxray/docs/en/guide/xray.html): each turn's prompt drawn to scale, cached, recomputed or cut
 - [Live](https://lognebudo.github.io/llmxray/docs/en/guide/live.html): every tool on the machine that talks to Ollama, turn by turn
+- [Runs](https://lognebudo.github.io/llmxray/docs/en/guide/runs.html): one tool's calls end to end as a waterfall, with what each call sent and got back
 - [Shared box](https://lognebudo.github.io/llmxray/docs/en/guide/shared-box.html): why Ollama is slow right now, and which tool did it
 - [GPU map](https://lognebudo.github.io/llmxray/docs/en/guide/gpu-map.html): what sits in video memory now
 - [Tool calls](https://lognebudo.github.io/llmxray/docs/en/guide/tool-calls.html): how reliably a model calls tools
