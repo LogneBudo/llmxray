@@ -1,0 +1,60 @@
+{
+  "title": "Radiographie de l'invite",
+  "subtitle": "Chaque ligne est un message envoyé par un outil, dessiné à l'échelle. Les parties atténuées étaient déjà dans la mémoire du modèle et n'ont rien coûté. Les parties vives ont dû être relues. Les parties hachurées ne sont jamais arrivées au modèle.",
+  "empty": "Rien à dessiner pour l'instant. La radiographie lit les tours que la page En direct enregistre : pointez un outil vers le port d'observation et envoyez quelques messages.",
+  "emptyLink": "Ouvrir En direct pour le configurer",
+  "pick": "Conversation",
+  "pickOption": "{client} · {model} · {turns} tours",
+  "scale": "{tokens} tokens",
+  "turn": "tour {n}",
+  "cost": {
+    "first": "premier tour, rien encore en mémoire",
+    "cached": "{share} % en mémoire",
+    "unknown": "le démon n'a pas donné de compte",
+    "cut": "{lost} tokens coupés"
+  },
+  "legend": {
+    "what": "Ce que c'est :",
+    "system": "invite système",
+    "tools": "schémas d'outils",
+    "history": "tours précédents",
+    "message": "le nouveau message",
+    "happened": "Ce qui lui est arrivé :",
+    "cached": "déjà dans la mémoire du modèle, n'a rien coûté",
+    "recomputed": "relu à ce tour",
+    "cut": "coupé par le démon, jamais vu"
+  },
+  "note": {
+    "first": "Premier tour de cet outil avec ce modèle. Tout a dû être lu.",
+    "reloaded": "Le modèle a été rechargé pour ce tour ({seconds} s), donc rien n'était en mémoire. L'invite n'y est pour rien.",
+    "break": "Tout à partir de la partie « {part} » a été relu. L'invite a cessé de correspondre au tour précédent vers le token {tokens} (une estimation à partir des caractères). Un seul octet changé à cet endroit vide le reste de la mémoire. Cliquez sur cette partie de la barre pour voir le texte.",
+    "breakNoTokens": "Tout à partir de la partie « {part} » a été relu. L'invite a cessé de correspondre au tour précédent à l'intérieur de celle-ci. Un seul octet changé à cet endroit vide le reste de la mémoire. Cliquez sur cette partie de la barre pour voir le texte.",
+    "breakCost": "Cette relecture a coûté environ {seconds} s qu'une invite stable aurait évitées (une estimation).",
+    "toolsAdded": "Des outils ont été activés : {tools} schémas, environ {tokens} tokens, figurent désormais dans chaque invite. Ils restent en mémoire à partir d'ici, mais ils occupent de la place dans le contexte.",
+    "cut": "L'invite a dépassé le contexte de {context} tokens. Le démon a gardé les premiers tokens et la fin, et a supprimé sans rien dire environ {lost} tokens du début. Le modèle a répondu sans eux. Augmentez num_ctx ou raccourcissez la conversation.",
+    "cutSystem": "L'invite système faisait partie de ce qui a été supprimé.",
+    "cutTools": "Les schémas d'outils faisaient partie de ce qui a été supprimé : le modèle ne pouvait pas les appeler."
+  },
+  "part": {
+    "system": "invite système",
+    "tools": "schémas d'outils",
+    "history": "tours précédents",
+    "message": "nouveau message"
+  },
+  "totals": {
+    "title": "Ce que cette conversation a coûté, et ce qu'elle aurait pu éviter",
+    "line": "La lecture de l'invite a pris {total} s sur {turns} tours.",
+    "avoidable": "Environ {avoidable} s de ce temps n'auraient pas eu lieu avec une invite stable (une estimation).",
+    "cut": "{n} tour a répondu à une invite qui n'a pas été envoyée en entier. | {n} tours ont répondu à des invites qui n'ont pas été envoyées en entier.",
+    "noPrefill": "Le démon n'a pas donné les temps de lecture de l'invite pour ces tours."
+  },
+  "request": {
+    "title": "La requête telle qu'envoyée",
+    "hint": "Cliquez sur n'importe quelle partie d'une barre et la requête de ce tour apparaît ici, en commençant par la partie cliquée. Conserver le texte de l'invite est un interrupteur de la page En direct ; sans lui, seules les tailles sont connues.",
+    "none": "Rien de sélectionné pour l'instant. Essayez un segment vif sur un tour relu, ou un segment hachuré.",
+    "noText": "Le texte de l'invite n'a pas été conservé pour ce tour. Les tailles ci-dessus sont exactes ; activez « Conserver le texte de l'invite » sur la page En direct pour voir le texte des tours suivants.",
+    "selected": "tour {n} · {part} · {state}",
+    "openRun": "Voir cet appel dans son exécution"
+  },
+  "foot": "Ce que cette page ne sait pas : le découpage en tokens propre au modèle. Les largeurs sont les comptes de tokens du démon ; quand une ligne est découpée en parties, le découpage est proportionnel aux caractères. La partie hachurée est dimensionnée d'après l'écart entre ce qui a été envoyé et ce que le démon a compté."
+}

@@ -8,7 +8,7 @@
     "fim": "Compl\u00e9tion de code",
     "live": "En direct",
     "cacheLab": "Labo de cache",
-    "decisionLab": "Labo de décision",
+    "decisionLab": "Labo de d\u00e9cision",
     "protocols": "Observatoire de protocoles",
     "aiTraining": "Entra\u00eenement IA",
     "models": "Mod\u00e8les",
@@ -17,7 +17,12 @@
     "analytics": "Analytique",
     "mySystem": "Mon syst\u00e8me",
     "settings": "Param\u00e8tres",
-    "tagline": "Observatoire local de LLM"
+    "tagline": "Observatoire local de LLM",
+    "xray": "Radiographie de l'invite",
+    "runs": "Ex\u00e9cutions",
+    "ledger": "Machine partag\u00e9e",
+    "gpu": "Carte du GPU",
+    "toolcalls": "Appels d'outils"
   },
   "header": {
     "chatDiagnostics": "Diagnostic de chat",
@@ -35,7 +40,12 @@
     "analytics": "Analytique",
     "mySystem": "Mon syst\u00e8me",
     "settings": "Param\u00e8tres",
-    "default": "LLMxRay"
+    "default": "LLMxRay",
+    "xray": "Radiographie de l'invite",
+    "runs": "Ex\u00e9cutions",
+    "ledger": "Machine partag\u00e9e",
+    "gpu": "Carte du GPU",
+    "toolcalls": "Appels d'outils"
   },
   "status": {
     "ollamaConnected": "Ollama connect\u00e9",

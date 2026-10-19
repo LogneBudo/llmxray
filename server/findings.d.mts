@@ -26,6 +26,10 @@ export interface LiveClientSummary {
   cacheFixSavesMs: number | null
 }
 
+/** Where the 0.40.6 under-report is tracked. */
+export const UNDER_REPORT_ISSUE: string
+/** True when Ollama's loaded footprint is under half the model's file: impossible, so not to be drawn. */
+export function underReportedMemory(reportedBytes: number | null | undefined, fileBytes: number | null | undefined): boolean
 export function median(values: number[]): number | null
 /** True when the daemon (re)loaded the model for this turn; such a turn proves nothing about the prompt. */
 export function reloaded(t: LiveTurn): boolean

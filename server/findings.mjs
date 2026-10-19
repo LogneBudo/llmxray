@@ -18,6 +18,17 @@ const TOOLS_SHARE_FLOOR = 0.25
 const RELOAD_MS = 500
 
 /** True when the daemon (re)loaded the model for this turn. */
+/**
+ * Ollama's /api/ps footprint for a loaded model, checked against the model's own file. A footprint
+ * under half the file cannot be true: the weights alone are the file. Ollama 0.40.6 reports such
+ * figures on its llama.cpp runner (432 MB for a 6.1 GB gemma4; ollama/ollama#19089), so the figure
+ * is flagged and the file size stands in for it.
+ */
+export const UNDER_REPORT_ISSUE = 'https://github.com/ollama/ollama/issues/19089'
+export function underReportedMemory(reportedBytes, fileBytes) {
+  return reportedBytes != null && fileBytes != null && fileBytes > 0 && reportedBytes < fileBytes * 0.5
+}
+
 export function reloaded(t) {
   return t.loadMs != null && t.loadMs > RELOAD_MS
 }

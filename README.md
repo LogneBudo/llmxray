@@ -77,6 +77,8 @@ Every page below is one of those answers.
 
 Each turn your tool sent, as a bar. Colour is what each part of the prompt was: system prompt, tool schemas, earlier turns, the new message. Brightness is what happened to it: dim was already in the model's memory and cost nothing, bright had to be read again, striped was cut by the daemon and never seen. Stack the turns of a conversation and you watch the cache grow, see the turn where a timestamp in the system prompt emptied it, and the turn where the prompt outgrew the context and Ollama silently dropped the start, system prompt included, and answered anyway. Click a part and the request opens at that place in the text.
 
+![Prompt X-ray: each turn of a real agent run drawn to scale, cached parts dim, recomputed parts bright](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/xray.png)
+
 ### Runs: one tool's work, end to end
 
 One tool's calls to the model laid out in time, as a waterfall. Each call is split into what Ollama reports: waiting, loading the model, reading the prompt, writing the answer. Between calls, the tool's own time, named after the tools the model asked for. Steps start where the tool began a fresh conversation, so an agent that throws its cache away at every step shows it at a glance, and so does a model that was not in memory when the run began. Click any row for what that call sent and what came back, the model's thinking and its tool calls with their arguments included, or for what a tool was asked and what it returned. Every row has its own link. Switch on *Keep the prompt text* on the Live page to see the text; the timings need nothing.
@@ -87,13 +89,19 @@ One tool's calls to the model laid out in time, as a waterfall. Each call is spl
 
 One line per tool, sorted by what it cost the others, in seconds: the one that sends `keep_alive: 0` and unloads the model after every run, the one that asks for a 128K context on 4K prompts and drops the daemon to one request at a time, the one that waited 22 seconds behind them. Each with the setting to change. A tool that cost nothing is listed too, so you can see what good looks like.
 
+![Shared box: what one tool asked of the daemon and what it cost the others](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/shared-box.png)
+
 ### GPU map: what is in video memory, and what else would fit
 
 One bar the width of your card: each loaded model as a block split into its weights and what its context costs on top, then the free space. Under it, every pulled model with one of three verdicts: fits now, fits only if what is loaded unloads first, larger than the card.
 
+![GPU map: a loaded model at its real size, with what else would fit](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/gpu-map.png)
+
 ### Tool calls: can this model drive an agent?
 
 Thirteen request shapes agents send all day, scored on what the daemon returned: the right tool, the right arguments, the right number of calls, no call when none is needed. Each cell is one sentence: "the path argument is missing", "wrote the call into the answer text", "called search_web when no tool was needed". Click it for what the model returned.
+
+![Tool calls: thirteen agent request shapes scored on gemma4](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/tool-calls.png)
 
 ### Chat, token by token
 

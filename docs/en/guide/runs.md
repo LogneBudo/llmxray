@@ -4,6 +4,7 @@
 
 **Sidebar item:** Runs (below Live)
 **Route:** `/runs`
+**Added in:** v0.8.7 (October 2026)
 **Requires:** calls on the Live page. Point a tool at `http://localhost:11435` and let it work. To see what each call sent and got back, switch on **Keep the prompt text** on the Live page first.
 
 ## What's the point?

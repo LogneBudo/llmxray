@@ -14,7 +14,7 @@ import { fileURLToPath } from 'node:url'
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { z } from 'zod'
-import { computeFindings, summariseClients, cacheShare, renderFinding, reloaded, median } from './findings.mjs'
+import { computeFindings, summariseClients, cacheShare, renderFinding, reloaded, median, underReportedMemory, UNDER_REPORT_ISSUE } from './findings.mjs'
 
 function packageVersion() {
   try {
@@ -215,6 +215,7 @@ export function createTools({ serverUrl, ollamaUrl, fetchImpl = fetch }) {
       if (loaded) {
         const inVram = loaded.size ? loaded.size_vram / loaded.size : null
         lines.push(inVram == null ? 'VRAM share unknown.' : inVram >= 0.99 ? 'The loaded model sits fully in video memory.' : `${Math.round(inVram * 100)}% of the loaded model is in video memory; the rest runs from RAM, slower.`)
+        if (underReportedMemory(loaded.size, pulled.size)) lines.push(underReportLine(loaded.size, pulled.size))
       } else if (vram) {
         lines.push(pulled.size <= vram * 0.85 ? `Its weights (${gb(pulled.size)} GB) fit in video memory (${gb(vram)} GB) with room for context.` : pulled.size <= vram ? `Its weights (${gb(pulled.size)} GB) fit in video memory (${gb(vram)} GB) only with a small context.` : `Its weights (${gb(pulled.size)} GB) are larger than video memory (${gb(vram)} GB): it will run partly on CPU.`)
       }
@@ -273,6 +274,7 @@ export function createTools({ serverUrl, ollamaUrl, fetchImpl = fetch }) {
         if (l) {
           const inVram = l.size ? l.size_vram / l.size : null
           fit = `  LOADED now${l.context_length ? ` with a ${l.context_length}-token context` : ''}${inVram == null ? '' : inVram >= 0.99 ? ', fully in VRAM' : `, ${Math.round(inVram * 100)}% in VRAM (the rest runs from RAM, slower)`}`
+          if (underReportedMemory(l.size, m.size)) fit += ` ${underReportLine(l.size, m.size)}`
         } else if (vram) {
           fit = m.size <= vram * 0.85 ? '  fits in VRAM with room for context' : m.size <= vram ? '  fits in VRAM only with a small context' : '  larger than VRAM: will run partly on CPU'
         }
@@ -281,6 +283,11 @@ export function createTools({ serverUrl, ollamaUrl, fetchImpl = fetch }) {
       return lines.join('\n')
     },
   }
+}
+
+/** What an agent should know when Ollama's loaded size cannot be true (ollama#19089). */
+function underReportLine(reported, file) {
+  return `Note: Ollama reports ${gb(reported)} GB in memory for it, less than its ${gb(file)} GB file, which cannot be true; this Ollama version under-reports memory on its llama.cpp runner (${UNDER_REPORT_ISSUE}). Treat the file size as the floor of what it occupies.`
 }
 
 function gb(bytes) {

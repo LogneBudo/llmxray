@@ -13,6 +13,23 @@ function running(name: string, gb: number, vramGb: number, ctx: number, expiresA
 }
 
 describe('buildGpuMap', () => {
+  it('does not draw an impossible footprint: Ollama 0.40.6 reports 432 MB for a 6.1 GB gemma4 (ollama#19089)', () => {
+    const buggy = { ...running('gemma4:latest', 0, 0, 65536, new Date(now + 60_000).toISOString()), size: 432285940, size_vram: 432285940 } as OllamaRunningModel
+    const m = buildGpuMap([buggy], [pulled('gemma4:latest', 6.1), pulled('nimble:latest', 8.9, '9B')], 12 * GB, now)
+    const b = m.blocks[0]!
+    expect(b.reportedBytes).toBe(432285940)
+    expect(b.vramBytes).toBe(6.1 * GB)
+    expect(b.contextBytes).toBeNull()
+    expect(b.cpuBytes).toBe(0)
+    // Against the corrected 6.1 GB, nimble's 8.9 GB no longer "fits now".
+    expect(m.candidates.find((c) => c.name === 'nimble:latest')!.verdict).toBe('fits-alone')
+  })
+
+  it('leaves a true footprint alone', () => {
+    const m = buildGpuMap([running('gemma4:latest', 7.4, 7.4, 32768, new Date(now + 60_000).toISOString())], [pulled('gemma4:latest', 6.1)], 12 * GB, now)
+    expect(m.blocks[0]!.reportedBytes).toBeUndefined()
+  })
+
   it('splits a loaded model into weights and what the context costs, and knows what is free', () => {
     const m = buildGpuMap([running('gemma4:latest', 7.4, 7.4, 32768, new Date(now + 4 * 60_000).toISOString())], [pulled('gemma4:latest', 6.1)], 12 * GB, now)
     const b = m.blocks[0]!

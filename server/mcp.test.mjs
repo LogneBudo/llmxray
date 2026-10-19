@@ -134,6 +134,25 @@ describe('list_local_models', () => {
     expect(out).toMatch(/gemma4:latest: 6\.6 GB on disk, 7\.5B parameters, Q4_K_M, gemma4\.\s+LOADED now with a 32768-token context, fully in VRAM/)
     expect(out).toMatch(/qwen2\.5:14b.*fits in VRAM with room for context/)
     expect(out).toMatch(/big:70b.*larger than VRAM: will run partly on CPU/)
+    expect(out).not.toMatch(/under-reports/)
+  })
+
+  it('says so when Ollama reports less memory than the model file (Ollama 0.40.6, ollama#19089)', async () => {
+    // The figures read from Ollama 0.40.6 on 2026-10-19: 432,285,940 bytes for a 6.1 GB gemma4.
+    const tools = createTools({
+      ...base,
+      fetchImpl: fakeFetch({
+        '/api/tags': { models: [{ name: 'gemma4:latest', size: 6.1 * 1024 ** 3, details: { parameter_size: '7.5B' } }] },
+        '/api/ps': { models: [{ name: 'gemma4:latest', size: 432285940, size_vram: 432285940, context_length: 65536 }] },
+        '/__system-info': { gpu: [{ name: 'RTX 5070', adapterRamBytes: 12 * 1024 ** 3 }], memory: { totalBytes: 32 * 1024 ** 3 } },
+        '/__observe/turns': { turns: [] },
+      }),
+    })
+    const listed = await tools.list_local_models()
+    expect(listed).toMatch(/fully in VRAM Note: Ollama reports 0\.4 GB in memory for it, less than its 6\.1 GB file, which cannot be true/)
+    expect(listed).toContain('https://github.com/ollama/ollama/issues/19089')
+    const estimate = await tools.estimate_my_prompt({ model: 'gemma4', prompt_tokens: 4000 })
+    expect(estimate).toMatch(/under-reports memory on its llama\.cpp runner/)
   })
 })
 

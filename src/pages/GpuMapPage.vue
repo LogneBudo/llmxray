@@ -11,6 +11,7 @@ import { useI18n } from 'vue-i18n'
 import { ollamaClient } from '@/services/ollama-client'
 import { fetchSystemInfo } from '@/services/system-info-client'
 import { buildGpuMap, type GpuBlock, type GpuMap } from '@/services/gpu-map'
+import { UNDER_REPORT_ISSUE } from '@/services/live-findings'
 import { formatBytes, formatDuration, formatNumber } from '@/utils/format'
 import type { OllamaModel, OllamaRunningModel } from '@/types/ollama'
 
@@ -115,6 +116,10 @@ function colour(i: number): string {
               {{ $t('gpu.block.weights') }} {{ formatBytes(weightsOf(b)) }}<template v-if="contextOf(b) > 0"> · {{ $t('gpu.block.context') }} {{ formatBytes(contextOf(b)) }}</template>
               <span v-if="b.cpuBytes > 0" class="text-warning"> · {{ $t('gpu.block.spilled', { bytes: formatBytes(b.cpuBytes) }) }}</span>
             </div>
+            <p v-if="b.reportedBytes != null" class="mt-1 rounded-r border-l-[3px] border-warning bg-warning/5 px-2 py-1 text-sm text-text-secondary">
+              {{ $t('gpu.block.underReported', { reported: formatBytes(b.reportedBytes), file: formatBytes(b.weightsBytes ?? 0) }) }}
+              <a :href="UNDER_REPORT_ISSUE" target="_blank" rel="noopener noreferrer" class="text-accent underline">ollama#19089</a>
+            </p>
           </div>
           <span class="text-sm text-text-muted">{{ expiry(b) }}</span>
         </div>

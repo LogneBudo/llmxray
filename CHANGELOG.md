@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.8] — 2026-10-19
+
+### Fixed
+
+- **The GPU map no longer draws a footprint Ollama 0.40.6 got wrong.** On its llama.cpp runner, Ollama 0.40.6
+  reports a loaded model's memory as a fraction of the real figure (432 MB for a 6.1 GB gemma4 while the card
+  holds 9 GB; ollama/ollama#19089). A loaded model cannot take less than its own file, so when Ollama reports
+  under half of it the map uses the file size, says so under the model with what Ollama reported, leaves the
+  context's share out, and judges what else would fit against the corrected figure. `list_local_models` and
+  `estimate_my_prompt` add the same sentence for agents.
+
+### Added
+
+- **French for the 0.8 pages**: Runs, Prompt X-ray, Shared box, GPU map and Tool calls, in the app and in the
+  docs, which now list them in the French sidebar too.
+- Screenshots of Prompt X-ray, Shared box, GPU map and Tool calls in the README, taken from a real agent run.
+
 ## [0.8.7] — 2026-10-19
 
 ### Added

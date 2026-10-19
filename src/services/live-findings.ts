@@ -15,5 +15,7 @@ export {
   silentlyTruncated,
   estimateTokens,
   requestContext,
+  underReportedMemory,
+  UNDER_REPORT_ISSUE,
 } from '../../server/findings.mjs'
 export type { LiveFinding, LiveFindingKind, LiveClientSummary } from '../../server/findings.mjs'

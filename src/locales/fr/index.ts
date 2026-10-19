@@ -18,6 +18,11 @@ import protocols from './protocols.json'
 import cachelab from './cachelab.json'
 import decisionlab from './decisionlab.json'
 import live from './live.json'
+import runs from './runs.json'
+import xray from './xray.json'
+import ledger from './ledger.json'
+import gpu from './gpu.json'
+import toolcalls from './toolcalls.json'
 
 export default {
   common,
@@ -40,4 +45,9 @@ export default {
   cachelab,
   decisionlab,
   live,
+  runs,
+  xray,
+  ledger,
+  gpu,
+  toolcalls,
 }

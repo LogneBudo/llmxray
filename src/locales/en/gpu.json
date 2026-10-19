@@ -12,7 +12,8 @@
     "context_length": "{n}-token context",
     "expires": "unloads in {time} unless used",
     "forever": "kept loaded",
-    "expired": "unloading"
+    "expired": "unloading",
+    "underReported": "Ollama reports {reported} in memory for this model, less than its own {file} file: that cannot be true, the weights alone are the file. This Ollama version under-reports memory on its llama.cpp runner, so the map uses the file size instead and cannot show the context's share."
   },
   "free": "free",
   "fits": {

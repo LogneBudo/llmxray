@@ -9,6 +9,7 @@
  * the context's share is footprint minus file: an estimate, labelled as one.
  */
 import type { OllamaModel, OllamaRunningModel } from '@/types/ollama'
+import { underReportedMemory } from '@/services/live-findings'
 
 export interface GpuBlock {
   name: string
@@ -25,6 +26,11 @@ export interface GpuBlock {
   expiresInMs: number | null
   parameterSize: string | null
   quantization: string | null
+  /**
+   * Set when Ollama's own footprint was impossible (under half the model's file, ollama#19089):
+   * what it reported. The block then uses the file size, and the context's share is unknown.
+   */
+  reportedBytes?: number
 }
 
 export type FitVerdict = 'fits-now' | 'fits-alone' | 'too-big'
@@ -63,14 +69,20 @@ export function buildGpuMap(loaded: OllamaRunningModel[], pulled: OllamaModel[],
     .map((m) => {
       const file = fileOf.get(m.name) ?? fileOf.get(m.model ?? '')
       const weights = file?.size ?? null
-      const vram = m.size_vram ?? 0
-      const total = m.size ?? vram
+      const reported = m.size ?? m.size_vram ?? 0
+      // An impossible footprint is not drawn: the file size stands in for it, scaled by the share
+      // Ollama put in video memory (that ratio is still right when both figures are under-reported).
+      const wrong = underReportedMemory(reported, weights)
+      const share = reported > 0 ? (m.size_vram ?? reported) / reported : 1
+      const total = wrong ? weights! : reported
+      const vram = wrong ? (share >= 0.999 ? weights! : Math.round(weights! * share)) : (m.size_vram ?? 0)
       return {
         name: m.name,
         vramBytes: vram,
         cpuBytes: Math.max(0, total - vram),
         weightsBytes: weights,
-        contextBytes: weights != null ? Math.max(0, total - weights) : null,
+        contextBytes: wrong ? null : weights != null ? Math.max(0, total - weights) : null,
+        ...(wrong ? { reportedBytes: reported } : {}),
         contextLength: m.context_length ?? null,
         expiresInMs: expiresIn(m.expires_at, now),
         parameterSize: m.details?.parameter_size ?? file?.details?.parameter_size ?? null,

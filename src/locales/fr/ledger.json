@@ -1,0 +1,48 @@
+{
+  "title": "Machine partagée",
+  "subtitle": "Ce que chaque outil a demandé au démon, et ce que cela a coûté aux autres outils. Mesuré sur les requêtes passées par le port d'observation ; rien n'est estimé sauf quand c'est indiqué.",
+  "empty": "Rien à montrer pour l'instant. Cette page lit les tours que la page En direct enregistre : pointez vos outils vers le port d'observation et laissez-les travailler un moment.",
+  "emptyLink": "Ouvrir En direct pour le configurer",
+  "lead": {
+    "one": "Un outil a utilisé {models} sur cette machine sur une période de {span}. Il n'a rien coûté à personne : il n'y avait personne d'autre.",
+    "fine": "{tools} outils ont utilisé {models} sur cette machine sur une période de {span}. Aucun de leurs réglages n'a rien coûté aux autres.",
+    "cost": "{tools} outils ont utilisé {models} sur cette machine sur une période de {span}. Leurs réglages ont coûté {cost} d'attente aux autres."
+  },
+  "models": "{n} modèle | {n} modèles",
+  "rows": {
+    "title": "Qui a coûté quoi à qui",
+    "hint": "Trié par le temps pris aux autres. Un outil est désigné par le nom qu'il se donne, ou par son logiciel quand il n'en donne pas. Ce qu'un outil se coûte à lui-même est affiché mais pas compté contre lui.",
+    "requests": "{n} requête | {n} requêtes",
+    "costToOthers": "payé par les autres",
+    "noCost": "aucun coût pour les autres",
+    "keepAliveZero": "Envoie keep_alive: 0, si bien que le modèle est déchargé après chacune de ses requêtes. L'outil suivant a payé le rechargement {n} fois. | Envoie keep_alive: 0, si bien que le modèle est déchargé après chacune de ses requêtes. L'outil suivant a payé le rechargement {n} fois.",
+    "keepAliveZeroFix": "Correction : retirez keep_alive de la requête, ou réglez-le pour couvrir l'intervalle entre deux exécutions, par exemple keep_alive: \"15m\".",
+    "context": "Demande un contexte de {context} tokens pour des invites d'au plus {prompt} tokens. Le démon réserve toute la fenêtre d'avance, pour cet outil seul.",
+    "contextFix": "Correction : demandez le contexte que vous utilisez, par exemple num_ctx: {suggested}. Rien d'autre ne change.",
+    "switches": "A chargé un autre modèle {n} fois, ce qui a déchargé celui que les autres utilisaient. | A chargé un autre modèle {n} fois, ce qui a déchargé celui que les autres utilisaient.",
+    "waited": "A attendu {ms} au total, derrière {who}.",
+    "waitedNobody": "N'a jamais attendu.",
+    "paidReloads": "A payé lui-même {ms} de chargement du modèle.",
+    "fine": "A gardé son invite stable et son contexte raisonnable. N'a rien coûté aux autres."
+  },
+  "events": {
+    "title": "Ce qui est arrivé au modèle, dans l'ordre",
+    "hint": "Chaque chargement et chaque attente, avec qui l'a causé quand c'était un autre outil.",
+    "load": "{client} a attendu {ms} pendant le chargement de {model}",
+    "wait": "{client} a attendu {ms} le démon",
+    "causeKeepalive": "parce que {by} l'avait déchargé avec keep_alive: 0",
+    "causeSwitch": "parce que {by} avait fait passer la machine à un autre modèle",
+    "causeIdle": "parce qu'il était resté inactif plus longtemps que keep_alive ; la faute de personne",
+    "causeFirst": "premier chargement de la session",
+    "behind": "derrière {by}",
+    "none": "Aucun chargement et aucune attente dans cette fenêtre. Le modèle est resté en mémoire et personne n'a fait la queue."
+  },
+  "slots": {
+    "title": "Combien d'outils la machine peut servir à la fois",
+    "hint": "Ollama sert plusieurs requêtes en même temps seulement tant qu'elles tiennent en mémoire vidéo. Quand un outil réserve un grand contexte, le démon passe à moins de requêtes à la fois. Il ne le dit nulle part ; c'est lu dans le contexte qu'il annonce, comparé au contexte que chaque requête a demandé.",
+    "steady": "{n} à la fois, sur toute la fenêtre.",
+    "change": "Est passé de {from} à {to} à {time}, quand {client} a tourné avec un contexte de {model}.",
+    "unknown": "Inconnu : le démon n'a pas annoncé de contexte chargé pour ces tours."
+  },
+  "foot": "Ce que cette page ne sait pas : tout ce qui n'est pas passé par le port d'observation. Un outil qui parle directement à Ollama sur 11434 est invisible ici, ce qui vaut la peine d'être su quand les chiffres ne tombent pas juste. L'attente en file est notre temps total moins celui du démon, c'est donc une estimation."
+}

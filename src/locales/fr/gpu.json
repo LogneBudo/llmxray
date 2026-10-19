@@ -1,0 +1,28 @@
+{
+  "title": "Carte du GPU",
+  "subtitle": "Ce qui occupe la mémoire vidéo en ce moment, modèle par modèle, et ce qui tiendrait encore. Lu dans Ollama toutes les quelques secondes.",
+  "noVram": "La taille de la mémoire vidéo de cette machine n'est pas connue : la carte montre ce qui est chargé, mais pas ce qui est libre. Sur NVIDIA, elle vient du pilote ; sur les autres cartes, du système.",
+  "memory": "{used} sur {total} utilisés · {free} libres",
+  "memoryNoTotal": "{used} chargés",
+  "nothingLoaded": "Rien n'est chargé. La première requête paiera le temps de chargement du modèle.",
+  "block": {
+    "weights": "poids",
+    "context": "contexte et tampons (estimation)",
+    "spilled": "{bytes} n'ont pas tenu et tournent depuis la RAM système, plus lentement",
+    "context_length": "contexte de {n} tokens",
+    "expires": "déchargé dans {time} s'il ne sert pas",
+    "forever": "gardé chargé",
+    "expired": "en cours de déchargement",
+    "underReported": "Ollama annonce {reported} en mémoire pour ce modèle, moins que son propre fichier de {file} : c'est impossible, les poids à eux seuls font la taille du fichier. Cette version d'Ollama sous-estime la mémoire sur son moteur llama.cpp ; la carte utilise donc la taille du fichier à la place et ne peut pas montrer la part du contexte."
+  },
+  "free": "libre",
+  "fits": {
+    "title": "Ce qui tiendrait encore",
+    "hint": "Chaque modèle téléchargé qui n'est pas chargé, face à l'espace libre. Un modèle a besoin d'environ 15 % de plus que son fichier pour un contexte modeste.",
+    "fits-now": "tient maintenant, à côté de ce qui est chargé",
+    "fits-alone": "tient seulement si ce qui est chargé est d'abord déchargé",
+    "too-big": "plus grand que cette carte : tournerait en partie depuis la RAM système",
+    "none": "Tous les modèles téléchargés sont chargés."
+  },
+  "foot": "Ce que cette page ne sait pas : comment le démon répartit l'empreinte d'un modèle entre les poids et le contexte. Les poids sont le fichier sur disque ; le reste est le cache du contexte et les tampons de travail, donc cette répartition est une estimation. L'espace libre est la mémoire vidéo moins ce qu'Ollama annonce comme chargé ; les autres programmes qui utilisent le GPU ne sont pas comptés."
+}

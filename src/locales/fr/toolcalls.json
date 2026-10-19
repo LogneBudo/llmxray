@@ -1,0 +1,44 @@
+{
+  "title": "Appels d'outils",
+  "subtitle": "Un modèle local sait-il appeler un outil comme un agent en a besoin ? Treize formes de requêtes que les agents envoient toute la journée, notées sur ce que le démon a renvoyé : le bon outil, les bons arguments, le bon nombre d'appels, et aucun appel quand il n'en faut pas.",
+  "models": "Modèles à tester",
+  "modelsHint": "Les modèles qui déclarent savoir utiliser des outils sont listés en premier ; les autres peuvent aussi être cochés.",
+  "run": "Lancer {n} cas sur {m} modèle | Lancer {n} cas sur {m} modèles",
+  "running": "En cours… {done} sur {total}",
+  "stop": "Arrêter",
+  "noModels": "Choisissez au moins un modèle.",
+  "results": {
+    "title": "Résultats",
+    "score": "{n} % des cas réussis",
+    "cases": "{n} cas",
+    "legend": "Chaque case est un cas pour un modèle. Survolez pour la phrase ; cliquez pour voir ce que le modèle a renvoyé.",
+    "working": "en cours…",
+    "queued": "en attente"
+  },
+  "outcome": {
+    "valid": "juste",
+    "wrong-tool": "mauvais outil",
+    "hallucinated-tool": "outil qui n'existe pas",
+    "missing-args": "argument manquant",
+    "bad-args": "argument faux",
+    "in-prose": "appel écrit en texte",
+    "no-call": "n'a pas appelé",
+    "unneeded-call": "a appelé sans raison",
+    "wrong-count": "mauvais nombre d'appels",
+    "error": "erreur"
+  },
+  "detail": {
+    "title": "Ce que le modèle a renvoyé",
+    "calls": "Appels",
+    "noCalls": "aucun appel d'outil",
+    "content": "Texte de la réponse",
+    "noContent": "aucun texte de réponse",
+    "ms": "{ms} ms",
+    "close": "Fermer",
+    "noContentCall": "aucun texte de réponse : le modèle a répondu par l'appel, ce qui est exactement à quoi ressemble un appel d'outil correct",
+    "thinking": "Ce que le modèle a pensé d'abord (renvoyé par le démon)"
+  },
+  "why": "Pourquoi ce cas compte",
+  "saved": "Dernière exécution conservée dans ce navigateur. La relancer la remplace.",
+  "foot": "Ce que cette page ne sait pas : si un appel d'outil aurait fonctionné une fois exécuté. Elle juge l'appel lui-même, face au schéma donné au modèle, comme le fait un framework avant d'exécuter quoi que ce soit. Température 0, sans streaming, par /api/chat."
+}

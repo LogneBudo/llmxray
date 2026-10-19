@@ -21,15 +21,11 @@ function guideNav(prefix: string) {
         { text: fr ? "Atelier d'Outils" : 'Tool Workshop', link: `${prefix}/guide/tool-workshop` },
         { text: fr ? 'Complétion au Milieu (FIM)' : 'Fill-in-the-Middle (FIM)', link: `${prefix}/guide/fim` },
         { text: fr ? 'En direct' : 'Live', link: `${prefix}/guide/live` },
-        ...(fr
-          ? []
-          : [
-              { text: 'Runs', link: `${prefix}/guide/runs` },
-              { text: 'Prompt X-ray', link: `${prefix}/guide/xray` },
-              { text: 'Shared box', link: `${prefix}/guide/shared-box` },
-              { text: 'GPU map', link: `${prefix}/guide/gpu-map` },
-              { text: 'Tool calls', link: `${prefix}/guide/tool-calls` },
-            ]),
+        { text: fr ? 'Exécutions' : 'Runs', link: `${prefix}/guide/runs` },
+        { text: fr ? "Radiographie de l'invite" : 'Prompt X-ray', link: `${prefix}/guide/xray` },
+        { text: fr ? 'Machine partagée' : 'Shared box', link: `${prefix}/guide/shared-box` },
+        { text: fr ? 'Carte du GPU' : 'GPU map', link: `${prefix}/guide/gpu-map` },
+        { text: fr ? "Appels d'outils" : 'Tool calls', link: `${prefix}/guide/tool-calls` },
         { text: fr ? 'Labo de cache' : 'Cache Lab', link: `${prefix}/guide/cache-lab` },
         { text: fr ? 'Labo de décision' : 'Decision Lab', link: `${prefix}/guide/decision-lab` },
         { text: fr ? 'Observatoire des Protocoles' : 'Protocol Observatory', link: `${prefix}/guide/protocols` },
