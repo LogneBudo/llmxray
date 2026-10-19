@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.10] — 2026-10-19
+
+### Changed
+
+- **The four MCP tools that read turns say which question each one answers**, and each names the other three:
+  diagnose_my_turns (is anything wrong), read_my_last_turn (what exactly happened on the latest turn),
+  list_my_turns (what happened turn by turn), compare_my_turns (did a change help). list_my_turns no longer
+  speaks of turn numbers for compare_my_turns, which splits by minutes.
+
 ## [0.8.9] — 2026-10-19
 
 ### Fixed

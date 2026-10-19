@@ -302,7 +302,13 @@ function gb(bytes) {
  */
 const READ_ONLY = { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false }
 
-/** The server with its three tools registered, not yet connected to a transport. Tests connect it in memory. */
+// Said in each of the four tools that read turns, so an agent reading any one of them sees the whole split.
+const TURN_TOOLS =
+  'Four tools read your turns, one question each: diagnose_my_turns, is anything wrong (a verdict over several turns); ' +
+  'read_my_last_turn, what exactly happened on the latest turn (one turn in full); list_my_turns, what happened turn by turn ' +
+  '(the sequence, one line each); compare_my_turns, did a change help (before against after).\n'
+
+/** The server with its seven tools registered, not yet connected to a transport. Tests connect it in memory. */
 export function buildServer({ serverUrl, ollamaUrl, fetchImpl }) {
   const tools = createTools({ serverUrl, ollamaUrl, ...(fetchImpl ? { fetchImpl } : {}) })
   const server = new McpServer({ name: 'llmxray', version: packageVersion() })
@@ -312,8 +318,9 @@ export function buildServer({ serverUrl, ollamaUrl, fetchImpl }) {
     {
       title: 'Diagnose my turns',
       description:
-        'What went wrong, if anything, in the Ollama calls your client sent through LLMxRay on port 11435, judged over several turns. It looks for a prompt rejected or silently cut by the context, the cache lost on every turn or on one turn, a model partly on CPU, and tool schemas crowding the prompt.\n' +
-        'Call it after a few turns, and again after a change. For one turn in numbers use read_my_last_turn. For which model or context fits use list_local_models.\n' +
+        'Is anything wrong with the Ollama calls your client sent through LLMxRay on port 11435? A verdict judged over several turns: a prompt rejected or silently cut by the context, the cache lost on every turn or on one turn, a model partly on CPU, tool schemas crowding the prompt.\n' +
+        TURN_TOOLS +
+        'Call it after a few turns, and again after a change. For which model or context fits use list_local_models.\n' +
         'Returns text. First one line per client seen, then one finding per line tagged [high], [medium] or [low], each ending with the fix. It says so when nothing stands out, and explains how to route through 11435 when no turn was seen.\n' +
         'client: your X-LLMxRay-Client name; without it on a shared machine you read every tool\'s turns. since_minutes: 1 to 10080, minutes since your change. They combine.\n' +
         'Needs LLMxRay running (npx llmxray) and says so if not. Under a second, from records already kept. No model is called.',
@@ -331,8 +338,9 @@ export function buildServer({ serverUrl, ollamaUrl, fetchImpl }) {
     {
       title: 'Read my last turn',
       description:
-        'The most recent turn seen through LLMxRay, as numbers: prompt tokens and cached share, prefill time and speed, generated tokens and speed, stop reason, prompt make-up (system, tools, history, new message), context requested, VRAM fit, and where the prompt stopped matching the previous turn.\n' +
-        'Use it to budget the next call or to confirm a change helped. For a verdict across turns use diagnose_my_turns. For what is installed and loaded use list_local_models.\n' +
+        'What exactly happened on your latest turn through LLMxRay, in numbers: prompt tokens and cached share, prefill time and speed, generated tokens and speed, stop reason, prompt make-up (system, tools, history, new message), context requested, VRAM fit, and where the prompt stopped matching the previous turn.\n' +
+        TURN_TOOLS +
+        'Use it to budget the next call. For what is installed and loaded use list_local_models.\n' +
         'Returns text, one fact per line. Explains how to route through 11435 when no turn was seen.\n' +
         'client: a substring of the label LLMxRay shows, which is the name you set in X-LLMxRay-Client. On a shared machine the latest turn may be another tool\'s, so pass your own name. Omit it when you are the only caller.\n' +
         'Needs LLMxRay running (npx llmxray) and says so if not. Under a second, from records already kept. No model is called.',
@@ -364,8 +372,9 @@ export function buildServer({ serverUrl, ollamaUrl, fetchImpl }) {
     {
       title: 'List my turns',
       description:
-        'The turns your client sent through LLMxRay on port 11435, newest last, one line each: turn number, time, client, model, prompt tokens with cached share, prefill ms, generation speed, stop reason, and flags (reloaded, rejected or cut by the context, error).\n' +
-        'Use it to see the sequence behind a finding, or to pick the turn numbers for compare_my_turns. For a verdict use diagnose_my_turns; for one turn in full use read_my_last_turn.\n' +
+        'What happened, turn by turn: the turns your client sent through LLMxRay on port 11435, newest last, one line each: turn number, time, client, model, prompt tokens with cached share, prefill ms, generation speed, stop reason, and flags (reloaded, rejected or cut by the context, error).\n' +
+        TURN_TOOLS +
+        'Use it to see the sequence behind a finding, or to find when a change took effect before calling compare_my_turns with that many minutes.\n' +
         'client: your X-LLMxRay-Client name; without it on a shared machine you read every tool\'s turns. since_minutes: 1 to 10080. limit: 1 to 100, default 20, the newest kept. The three combine.\n' +
         'Needs LLMxRay running (npx llmxray). Under a second. No model is called.',
       inputSchema: {
@@ -384,7 +393,8 @@ export function buildServer({ serverUrl, ollamaUrl, fetchImpl }) {
       title: 'Compare my turns',
       description:
         'Did a change help? Medians of cached share, prefill time, generation speed and prompt size for the turns before and after a moment, with the difference and a one-line verdict on the cache.\n' +
-        'Use it after you changed a system prompt, keep_alive, num_ctx or the tool list. For the finding that prompted the change use diagnose_my_turns; for the raw sequence use list_my_turns.\n' +
+        TURN_TOOLS +
+        'Use it after you changed a system prompt, keep_alive, num_ctx or the tool list.\n' +
         'split_minutes_ago: 1 to 10080, default 60: turns older than that are "before", newer are "after"; set it to the minutes since your change. client: your X-LLMxRay-Client name, so another tool\'s turns do not mix in. Both sides need at least one turn, else it says what to move.\n' +
         'Needs LLMxRay running (npx llmxray). Under a second. No model is called.',
       inputSchema: {

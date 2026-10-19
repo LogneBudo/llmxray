@@ -232,6 +232,16 @@ describe('what a client sees in tools/list', () => {
     }
   })
 
+  it('names all four turn tools, each with its own question, in every one of them', async () => {
+    const { tools } = await listed()
+    const turnTools = ['diagnose_my_turns', 'read_my_last_turn', 'list_my_turns', 'compare_my_turns']
+    for (const name of turnTools) {
+      const t = tools.find((x) => x.name === name)
+      for (const other of turnTools) expect(t.description, `${name} names ${other}`).toContain(other)
+      expect(t.description, `${name} carries the split`).toMatch(/is anything wrong.*what exactly happened.*turn by turn.*did a change help/s)
+    }
+  })
+
   it('answers a call over the wire with text, not a transport error, when nothing was seen', async () => {
     const { client } = await listed()
     const r = await client.callTool({ name: 'diagnose_my_turns', arguments: {} })
