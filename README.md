@@ -5,6 +5,14 @@
 <h1 align="center">LLMxRay</h1>
 
 <p align="center">
+  <span style="display:inline-block;text-align:center;font-family:system-ui,sans-serif;line-height:1;">
+  <a href="https://tools.launchllama.co/products/llmxray?utm_source=badge&utm_medium=referral" target="_blank" rel="noopener noreferrer" style="display:block;line-height:0;">
+  <img src="https://tools.launchllama.co/featured-badge.png?v=2"
+    alt="Featured on Launch"
+    width="200" height="52" style="display:block;border:0;" />
+</a>
+  <a href="https://launchmcp.co/?utm_source=badge&utm_medium=referral" target="_blank" rel="noopener noreferrer" style="display:block;margin-top:-2px;padding-top:0;font-size:7px;font-weight:600;color:#888;text-decoration:none;line-height:1;letter-spacing:0.02em;">Launch</a>
+</span>
   <a href="https://glama.ai/mcp/servers/LogneBudo/llmxray"><img src="https://glama.ai/mcp/servers/LogneBudo/llmxray/badges/card.svg" alt="LLMxRay MCP server: quality and maintenance score on Glama" width="380" height="200" /></a>
   <a href="https://trendshift.io/repositories/271331?utm_source=trendshift-badge&amp;utm_medium=badge&amp;utm_campaign=badge-trendshift-271331" target="_blank" rel="noopener noreferrer"><img src="https://trendshift.io/api/badge/trendshift/repositories/271331/daily?language=Vue" alt="LogneBudo%2Fllmxray | Trendshift" width="250" height="55"/></a>
 </p>
