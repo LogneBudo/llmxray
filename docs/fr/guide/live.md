@@ -82,14 +82,31 @@ Une carte par client : tours, tokens, appels d'outils, préremplissage total, et
 
 ## Confidentialité
 
-Désactivé par défaut : seuls les comptes et les durées sont gardés, en mémoire, pour la session. Rien n'est écrit sur le disque.
+Désactivé par défaut : seuls les comptes et les durées sont gardés. L'enregistrement de chaque tour (tokens, cache, durées, client, modèle, jamais le texte) va dans un fichier sous votre dossier personnel, `~/.llmxray/observe/turns-<date>.jsonl`, un par jour. Au redémarrage, LLMxRay remet les 500 derniers tours en place : En direct, les [Exécutions](./runs) et les outils MCP reprennent là où ils s'étaient arrêtés. Les fichiers de plus de 30 jours sont supprimés. **Effacer** oublie tout, fichiers compris, après avoir demandé. Définissez `LLMXRAY_DATA_DIR` pour les garder ailleurs.
 
-**Conserver le texte des invites** enregistre les corps de requête dans un fichier sous votre dossier personnel (`~/.llmxray/observe/`, un fichier par jour) et affiche le texte autour de chaque rupture sur la page. Cela débloque aussi la **vue de la requête** sous le tour : la requête rendue comme une conversation, un bloc par message avec de vrais retours à la ligne, les appels d'outils en cartes, les résultats d'outils repliés, et la liste des outils avec nom, description, nombre de paramètres et taille. La rupture du cache est dessinée dans le message où elle est tombée. Une recherche couvre messages et outils, et un onglet JSON brut avec Copier et Télécharger garde chaque octet accessible. Désactivez-le et le texte conservé est retiré de la mémoire ; les fichiers restent jusqu'à ce que vous les supprimiez.
+**Conserver le texte des invites** enregistre en plus les corps de requête à côté (`~/.llmxray/observe/<date>.jsonl`, un fichier par jour, avec les mêmes 30 jours) et affiche le texte autour de chaque rupture sur la page. Cela débloque aussi la **vue de la requête** sous le tour : la requête rendue comme une conversation, un bloc par message avec de vrais retours à la ligne, les appels d'outils en cartes, les résultats d'outils repliés, et la liste des outils avec nom, description, nombre de paramètres et taille. La rupture du cache est dessinée dans le message où elle est tombée. Une recherche couvre messages et outils, et un onglet JSON brut avec Copier et Télécharger garde chaque octet accessible. Désactivez-le et le texte conservé est retiré de la mémoire ; les fichiers restent jusqu'à leurs 30 jours ou jusqu'à ce que vous appuyiez sur Effacer.
 
 Dans les deux modes, rien ne quitte votre machine. Le port d'observation parle à l'adresse Ollama avec laquelle LLMxRay a été lancé, et à rien d'autre.
 
+## Envoyer les tours vers votre visualiseur de traces
+
+Si votre équipe lit déjà ses traces dans Jaeger, Arize Phoenix, Langfuse ou Grafana, LLMxRay peut y envoyer ses tours. Chaque appel au modèle devient un span OpenTelemetry et chaque exécution une trace : le visualiseur montre la même cascade que les [Exécutions](./runs), avec entre deux appels un span pour les outils demandés par le modèle.
+
+Sous l'interrupteur de confidentialité, dans **Envoyer les tours vers votre visualiseur de traces**, donnez l'adresse du collecteur et appuyez sur **Commencer l'envoi**. **Envoyer un span de test** vérifie d'abord l'adresse. LLMxRay envoie de l'OTLP sur HTTP (protobuf, l'encodage par défaut d'OTLP) à l'adresse suivie de `/v1/traces` ; les réglages standard `OTEL_EXPORTER_OTLP_ENDPOINT` et `OTEL_EXPORTER_OTLP_HEADERS` la remplissent aussi, pour Docker ou un script.
+
+| Visualiseur | Le lancer | Adresse |
+|---|---|---|
+| Jaeger | `docker run -p 16686:16686 -p 4318:4318 jaegertracing/jaeger` | `http://localhost:4318`, puis ouvrez localhost:16686 |
+| Arize Phoenix | `docker run -p 6006:6006 arizephoenix/phoenix` | `http://localhost:6006` |
+| Langfuse | | `https://cloud.langfuse.com/api/public/otel`, avec un en-tête `Authorization: Basic` fait de vos clés publique et secrète |
+| Grafana Tempo, un OpenTelemetry Collector | | son adresse OTLP HTTP, en général le port 4318 |
+
+Chaque span porte les attributs GenAI que les visualiseurs lisent déjà (`gen_ai.request.model`, `gen_ai.usage.input_tokens`, `gen_ai.usage.output_tokens`, `gen_ai.response.finish_reasons`) et ce que seul LLMxRay sait, sous `llmxray.*` : le client, les tokens en cache et leur part, les temps de préremplissage, de chargement et d'attente, si le démon a coupé l'invite, la part du modèle en RAM système, les outils appelés.
+
+Le texte des invites ne part que si **Conserver le texte des invites** est activé *et* **Inclure le texte des invites dans chaque span** aussi, sous `gen_ai.input.messages` et `gen_ai.output.messages`. Langfuse Cloud est hors de votre machine ; le panneau le dit. Les en-têtes, souvent une clé, sont gardés tels quels dans `~/.llmxray/export.json`. Si le collecteur est injoignable, le panneau dit pourquoi, le tour suivant réessaie, et LLMxRay continue de fonctionner.
+
 ## Ce que cette page ne fait pas
 
-Elle ne tokenise pas (les proportions sont en caractères, les comptes sont ceux du démon), elle ne garde pas les tours entre deux redémarrages, et elle ne modifie rien de ce qui la traverse. C'est une fenêtre, pas un filtre.
+Elle ne tokenise pas (les proportions sont en caractères, les comptes sont ceux du démon), et elle ne modifie rien de ce qui la traverse. C'est une fenêtre, pas un filtre.
 
 Ce dernier point a une conséquence visible. Une requête en flux sur le point d'entrée compatible OpenAI ne porte aucun compte de tokens sauf si le client les a demandés avec `stream_options: { include_usage: true }` ; Ollama, comme OpenAI, n'ajoute le fragment d'usage que sur demande. LLMxRay n'ajoute pas cette option à la place du client, parce que certains clients s'étrangleraient sur le fragment supplémentaire. Ces tours affichent *non rapporté* dans la colonne du cache, leur anatomie d'invite restant en place. L'API native (`/api/chat`, `/api/generate`) rapporte toujours les comptes, et c'est elle qu'utilisent la ligne de commande Ollama, les SDK Ollama et le fournisseur Ollama de VS Code Copilot.

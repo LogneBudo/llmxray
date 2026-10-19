@@ -82,14 +82,31 @@ One card per client: turns, tokens, tool calls, total prefill, and **Cache fix s
 
 ## Privacy
 
-Off by default, only counts and timings are kept, in memory, for the session. Nothing is written to disk.
+Off by default, only counts and timings are kept: each turn's record (tokens, cache, timings, client, model, never the text) goes to a file under your home directory, `~/.llmxray/observe/turns-<date>.jsonl`, one per day. When LLMxRay starts again it puts the last 500 turns back, so Live, [Runs](./runs) and the MCP tools carry on where they stopped. Files older than 30 days are deleted. **Clear** forgets everything, the files on disk included, after asking. Set `LLMXRAY_DATA_DIR` to keep them somewhere else.
 
-**Keep the prompt text** switches on saving the request bodies to a file under your home directory (`~/.llmxray/observe/`, one file per day) and shows the text around each break on the page. It also unlocks the **request viewer** under the turn: the request rendered as a conversation, one message per block with real line breaks, tool calls as cards, tool results collapsed, and the tool list with each tool's name, description, parameter count and size. The cache break is drawn inside the message where it fell. A search box covers messages and tools, and a Raw tab with Copy and Download keeps every byte reachable. Switch it off and the kept text is dropped from memory; the files stay until you delete them.
+**Keep the prompt text** switches on saving the request bodies beside them (`~/.llmxray/observe/<date>.jsonl`, one file per day, under the same 30 days) and shows the text around each break on the page. It also unlocks the **request viewer** under the turn: the request rendered as a conversation, one message per block with real line breaks, tool calls as cards, tool results collapsed, and the tool list with each tool's name, description, parameter count and size. The cache break is drawn inside the message where it fell. A search box covers messages and tools, and a Raw tab with Copy and Download keeps every byte reachable. Switch it off and the kept text is dropped from memory; the files stay until they pass 30 days or you press Clear.
 
 In both modes nothing leaves your machine. The observe port talks to the Ollama address LLMxRay was started with and to nothing else.
 
+## Send turns to your trace viewer
+
+If your team already reads traces in Jaeger, Arize Phoenix, Langfuse or Grafana, LLMxRay can send its turns there. Each model call becomes an OpenTelemetry span and each run a trace, so the viewer shows the same waterfall as [Runs](./runs): the calls, and between them a span for the tools the model asked for.
+
+Below the privacy switch, under **Send turns to your trace viewer**, give the collector's address and press **Start sending**. **Send a test span** checks the address first. LLMxRay posts OTLP over HTTP (protobuf, the OTLP default) to the address plus `/v1/traces`; the standard `OTEL_EXPORTER_OTLP_ENDPOINT` and `OTEL_EXPORTER_OTLP_HEADERS` settings fill it in too, for Docker or a script.
+
+| Viewer | Run it | Address |
+|---|---|---|
+| Jaeger | `docker run -p 16686:16686 -p 4318:4318 jaegertracing/jaeger` | `http://localhost:4318`, then open localhost:16686 |
+| Arize Phoenix | `docker run -p 6006:6006 arizephoenix/phoenix` | `http://localhost:6006` |
+| Langfuse | | `https://cloud.langfuse.com/api/public/otel`, with an `Authorization: Basic` header made of your public and secret keys |
+| Grafana Tempo, an OpenTelemetry Collector | | its OTLP HTTP address, usually port 4318 |
+
+Each span carries the GenAI attributes viewers already read (`gen_ai.request.model`, `gen_ai.usage.input_tokens`, `gen_ai.usage.output_tokens`, `gen_ai.response.finish_reasons`) and what only LLMxRay knows, under `llmxray.*`: the client, the cached tokens and their share, prefill, load and queue time, whether the daemon cut the prompt, the share of the model in system RAM, the tools called.
+
+The prompt text goes along only when **Keep the prompt text** is on *and* **Include the prompt text in each span** is switched on, as `gen_ai.input.messages` and `gen_ai.output.messages`. Langfuse Cloud is outside your machine; the panel says so. Headers, often a key, are kept as written in `~/.llmxray/export.json`. If the collector cannot be reached the panel says why, the next turn tries again, and LLMxRay carries on either way.
+
 ## What this page does not do
 
-It does not tokenise (proportions are by characters, counts are the daemon's), it does not keep turns across restarts, and it does not alter anything that passes through. It is a window, not a filter.
+It does not tokenise (proportions are by characters, counts are the daemon's), and it does not alter anything that passes through. It is a window, not a filter.
 
 That last point has one visible consequence. A streamed request on the OpenAI-compatible endpoint carries no token counts unless the client asked for them with `stream_options: { include_usage: true }`; Ollama, like OpenAI, only adds the usage chunk on request. LLMxRay does not add that option to the request on the client's behalf, because some clients would choke on the extra chunk. Such turns show *not reported* in the cache column, with their prompt anatomy still in place. The native API (`/api/chat`, `/api/generate`) always reports the counts, and that is what the Ollama CLI, the Ollama SDKs and VS Code Copilot's Ollama provider use.

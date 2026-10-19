@@ -24,8 +24,14 @@ vi.mock('@/services/live-client', () => ({
   clearLiveTurns: vi.fn(),
   retryLiveListen: vi.fn(),
   openLiveStream: vi.fn(() => closeStream),
+  fetchLiveExport: vi.fn().mockResolvedValue({
+    address: '', headerNames: [], includeText: false, enabled: false, source: 'none', url: null,
+    state: 'off', sent: 0, runs: 0, failed: 0, lastSentAt: null, lastError: null,
+  }),
+  saveLiveExport: vi.fn(),
+  testLiveExport: vi.fn(),
 }))
-import { fetchLiveStatus, fetchLiveTurns, setLiveKeepText, retryLiveListen } from '@/services/live-client'
+import { fetchLiveStatus, fetchLiveTurns, setLiveKeepText, retryLiveListen, clearLiveTurns } from '@/services/live-client'
 
 function turn(over: Partial<LiveTurn> = {}): LiveTurn {
   return {
@@ -160,7 +166,38 @@ describe('LivePage', () => {
     await flushPromises()
     expect(setLiveKeepText).toHaveBeenCalledWith(true)
     expect(useLiveStore().status?.keepText).toBe(true)
-    expect(wrapper.text()).toContain('prompts are saved to a file on this machine')
+    expect(wrapper.text()).toContain('the prompts are kept too, on this machine, for 30 days')
+  })
+
+  it('says how long turns stay on disk, from the server, and where', async () => {
+    vi.mocked(fetchLiveStatus).mockResolvedValue({ ...status, retentionDays: 7, textDir: '/home/me/.llmxray/observe' })
+    const wrapper = mountPage()
+    await flushPromises()
+    expect(wrapper.text()).toContain('only counts and timings are kept, on this machine, for 7 days')
+    expect(wrapper.text()).toContain('Saved under /home/me/.llmxray/observe')
+  })
+
+  it('asks before Clear deletes the kept turns, and does nothing when the answer is no', async () => {
+    const wrapper = mountPage()
+    await flushPromises()
+    const live = useLiveStore()
+    live.turns.push(turn())
+    await flushPromises()
+    const clear = wrapper.findAll('button').find((b) => b.text() === 'Clear')!
+    // The test DOM has no confirm(); a stand-in answers instead of the person.
+    const ask = vi.fn().mockReturnValueOnce(false)
+    window.confirm = ask
+    await clear.trigger('click')
+    await flushPromises()
+    expect(ask).toHaveBeenCalledWith('Forget every turn and every kept prompt, on disk too? This cannot be undone.')
+    expect(clearLiveTurns).not.toHaveBeenCalled()
+    expect(live.turns).toHaveLength(1)
+
+    ask.mockReturnValueOnce(true)
+    await clear.trigger('click')
+    await flushPromises()
+    expect(clearLiveTurns).toHaveBeenCalledTimes(1)
+    expect(live.turns).toHaveLength(0)
   })
 
   it('closes the stream when the page goes away', async () => {

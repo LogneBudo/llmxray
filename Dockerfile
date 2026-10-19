@@ -22,5 +22,7 @@ ENV PORT=5174
 ENV OBSERVE_PORT=11435
 # Inside a container the ports must bind every interface to be published at all.
 ENV HOST=0.0.0.0
+# The Live page's turn records live here; mount a volume on it to keep them between runs.
+ENV LLMXRAY_DATA_DIR=/data
 
 CMD ["node", "server/index.mjs"]

@@ -49,10 +49,84 @@
   },
   "privacy": {
     "toggle": "保留提示词文本，而不只是数字",
-    "off": "关闭：只在内存中保留本次会话的计数和时间。",
-    "on": "开启：提示词保存到本机的一个文件中，以便查看工具发送了什么。",
+    "off": "关闭：只在本机保留计数和时间，保留 {days} 天。",
+    "on": "开启：提示词也保存在本机，保留 {days} 天，以便查看工具发送了什么。",
     "always": "无论哪种方式，数据都不会离开这台机器。",
     "where": "保存于 {dir}"
+  },
+  "export": {
+    "title": "把轮次发送到你的追踪查看器",
+    "lead": "每个轮次成为一个 OpenTelemetry span，每次运行成为一条 trace，因此 Jaeger、Phoenix、Langfuse 或 Grafana 显示与 Runs 相同的瀑布图。在你填写地址之前，不会发送任何内容。",
+    "state": {
+      "off": "关闭",
+      "sending": "发送中",
+      "failing": "无法连接"
+    },
+    "address": "收集器地址",
+    "addressHelp": "基于 HTTP 的 OTLP。LLMxRay 发送到此地址加上 /v1/traces。设置 OTEL_EXPORTER_OTLP_ENDPOINT 也会填入此处。",
+    "fromEnv": "取自 OTEL_EXPORTER_OTLP_ENDPOINT；在这里保存会替换它。",
+    "headers": "请求头",
+    "headersHint": "（仅当你的查看器需要密钥时）",
+    "headersHelp": "每行一个。按原样保存在本机的 {file} 中。",
+    "headersSet": "已设置：{names}。重新输入即可替换。",
+    "headersRemove": "删除",
+    "includeText": "在每个 span 中包含提示词文本",
+    "includeNeedsKeep": "需要先开启上方的“保留提示词文本”。否则 span 只包含计数和时间。",
+    "includeOff": "关闭：span 只包含计数和时间，即使本机保留了文本。",
+    "includeOn": "开启：每个 span 包含发送的消息和回答，与 Runs 中显示的一致。它们会发往地址指向的任何地方。",
+    "start": "开始发送",
+    "stop": "停止发送",
+    "test": "发送测试 span",
+    "testOk": "测试 span 已发送到 {url}。在你的查看器中查找 llmxray。",
+    "testFail": "测试 span 未能到达 {url}：{error}",
+    "status": {
+      "off": "关闭。没有任何内容离开本机。",
+      "waiting": "正在发送到 {url}。等待第一个轮次。",
+      "sending": "正在发送到 {url}：{runs}中的 {turns}，最近一次在 {ago}。",
+      "failing": "无法连接 {url}：{error}。未发送的轮次：{failed}；每个新轮次都会重试。LLMxRay 照常工作。"
+    },
+    "agoSeconds": "{n} 秒前",
+    "agoMinutes": "{n} 分钟前",
+    "turnsCount": "{n} 个轮次 | {n} 个轮次",
+    "runsCount": "{n} 次运行 | {n} 次运行",
+    "carries": "每个 span 包含的内容",
+    "carry": {
+      "operation": "chat、text_completion 或 embeddings",
+      "provider": "ollama",
+      "model": "模型",
+      "input": "提示词 token",
+      "output": "生成的 token",
+      "finish": "停止的原因",
+      "client": "发送它的工具",
+      "cached": "从缓存读取的提示词 token 及其占比",
+      "timings": "读取提示词、加载模型和等待的时间",
+      "cut": "守护进程截断了提示词以适应上下文",
+      "cpu": "模型位于系统内存中的比例",
+      "tools": "模型调用的工具",
+      "text": "消息和回答，仅在开启“包含提示词文本”时"
+    },
+    "spanNote": "一个 span 随其调用开始和结束。一次运行中两次调用之间的时间是单独的 span，以模型请求的工具命名，与 Runs 中一致。",
+    "where": "发送到哪里",
+    "useThis": "使用此地址",
+    "dest": {
+      "jaeger": {
+        "name": "Jaeger，在本机",
+        "use": "地址 {address}，然后打开 localhost:16686。"
+      },
+      "phoenix": {
+        "name": "Arize Phoenix，在本机",
+        "use": "地址 {address}。"
+      },
+      "langfuse": {
+        "name": "Langfuse",
+        "use": "地址 {address}，以及由你的公钥和私钥组成的 Basic 请求头。",
+        "away": "Langfuse Cloud 在本机之外：轮次会发送到他们的服务器。自托管的 Langfuse 则留在你这里。"
+      },
+      "other": {
+        "name": "Grafana、Tempo 或你自己的收集器",
+        "use": "它的 OTLP HTTP 地址，通常是 4318 端口。"
+      }
+    }
   },
   "live": {
     "listening": "正在监听 {address}",
@@ -62,6 +136,8 @@
     "pause": "暂停",
     "resume": "继续（{n} 条等待中）",
     "clear": "清空",
+    "clearTitle": "忘记本机保存的所有轮次和提示词",
+    "clearConfirm": "忘记所有轮次和已保存的提示词，包括磁盘上的文件？此操作无法撤销。",
     "lead": "你的工具逐轮发送的内容，以及缓存保留了什么、丢弃了什么。"
   },
   "findings": {

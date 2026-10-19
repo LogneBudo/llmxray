@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { startServer } from '../server/index.mjs'
+import { startServer, closeOnSignal } from '../server/index.mjs'
 
 const args = process.argv.slice(2)
 
@@ -43,7 +43,7 @@ startServer({
   observePort: getFlag('--observe-port'),
   observe: !args.includes('--no-observe'),
   host: getFlag('--host'),
-}).catch((e) => {
+}).then((running) => closeOnSignal(running)).catch((e) => {
   console.error(`Error: ${e.message}`)
   process.exit(1)
 })

@@ -577,6 +577,11 @@ export function createTurnLog(capacity = 500) {
       turns.length = 0
       lastCanonical.clear()
     },
+    /** Puts back turns kept from an earlier run, oldest first; numbering carries on after them. */
+    restore(kept) {
+      turns.push(...kept.slice(-capacity))
+      seq = Math.max(seq, ...kept.map((t) => t.seq ?? 0))
+    },
     subscribe(fn) {
       listeners.add(fn)
       return () => listeners.delete(fn)

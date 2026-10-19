@@ -4,12 +4,21 @@ import { useI18n } from 'vue-i18n'
 import { Radio, Copy, Check, Pause, Play, Trash2, TriangleAlert, Info } from '@lucide/vue'
 import { useLiveStore } from '@/stores/live-store'
 import RequestViewer from '@/components/live/RequestViewer.vue'
+import ExportPanel from '@/components/live/ExportPanel.vue'
 import { cacheShare, cacheFixSavingMs, messageTokensEst } from '@/services/live-findings'
 import { formatDuration, formatNumber } from '@/utils/format'
 import type { LiveTurn } from '@/types/live'
 
-const { tm, rt } = useI18n()
+const { t, tm, rt } = useI18n()
 const live = useLiveStore()
+
+/** What the server says it keeps; 30 days is its default. */
+const retentionDays = computed(() => live.status?.retentionDays ?? 30)
+
+/** Clear deletes the kept records and prompts on disk too, so it asks first. */
+function confirmClear() {
+  if (window.confirm(t('live.live.clearConfirm'))) void live.clear()
+}
 
 onMounted(() => live.start())
 onUnmounted(() => live.stop())
@@ -148,7 +157,8 @@ function findingParams(f: { params: Record<string, string | number> }) {
           </button>
           <button
             class="inline-flex items-center gap-1 rounded-md border border-border-default px-2 py-1 text-text-secondary hover:bg-surface-overlay"
-            @click="live.clear"
+            :title="$t('live.live.clearTitle')"
+            @click="confirmClear"
           >
             <Trash2 :size="12" />
             {{ $t('live.live.clear') }}
@@ -211,10 +221,11 @@ function findingParams(f: { params: Record<string, string | number> }) {
                 {{ $t('live.privacy.toggle') }}
               </label>
               <p class="mt-1 text-sm text-text-muted">
-                {{ live.status?.keepText ? $t('live.privacy.on') : $t('live.privacy.off') }}
+                {{ live.status?.keepText ? $t('live.privacy.on', { days: retentionDays }) : $t('live.privacy.off', { days: retentionDays }) }}
                 {{ $t('live.privacy.always') }}
-                <template v-if="live.status?.keepText && live.status.textDir"> {{ $t('live.privacy.where', { dir: live.status.textDir }) }}</template>
+                <template v-if="live.status?.textDir"> {{ $t('live.privacy.where', { dir: live.status.textDir }) }}</template>
               </p>
+              <ExportPanel :keep-text="live.status?.keepText ?? false" :config-dir="live.status?.textDir" />
             </div>
           </div>
 
@@ -517,6 +528,10 @@ function findingParams(f: { params: Record<string, string | number> }) {
               />
               {{ $t('live.privacy.toggle') }}
             </label>
+            <details class="mt-2">
+              <summary class="cursor-pointer text-sm text-text-secondary hover:text-text-primary">{{ $t('live.export.title') }}</summary>
+              <ExportPanel :keep-text="live.status?.keepText ?? false" :config-dir="live.status?.textDir" />
+            </details>
           </div>
         </div>
 

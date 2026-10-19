@@ -49,10 +49,84 @@
   },
   "privacy": {
     "toggle": "Conserver le texte des invites, pas seulement les chiffres",
-    "off": "Désactivé : seuls les comptes et les durées sont gardés, en mémoire, pour cette session.",
-    "on": "Activé : les invites sont enregistrées dans un fichier sur cette machine pour que vous puissiez lire ce qu'un outil a envoyé.",
+    "off": "Désactivé : seuls les comptes et les durées sont gardés, sur cette machine, pendant {days} jours.",
+    "on": "Activé : les invites sont gardées aussi, sur cette machine, pendant {days} jours, pour que vous puissiez lire ce qu'un outil a envoyé.",
     "always": "Dans les deux cas, rien ne quitte cette machine.",
     "where": "Enregistré sous {dir}"
+  },
+  "export": {
+    "title": "Envoyer les tours vers votre visualiseur de traces",
+    "lead": "Chaque tour devient un span OpenTelemetry et chaque exécution une trace : Jaeger, Phoenix, Langfuse ou Grafana affichent la même cascade qu'Exécutions. Rien n'est envoyé tant que vous n'avez pas donné d'adresse.",
+    "state": {
+      "off": "Désactivé",
+      "sending": "Envoi en cours",
+      "failing": "Injoignable"
+    },
+    "address": "Adresse du collecteur",
+    "addressHelp": "OTLP sur HTTP. LLMxRay envoie à cette adresse suivie de /v1/traces. Le réglage OTEL_EXPORTER_OTLP_ENDPOINT la remplit aussi.",
+    "fromEnv": "Remplie depuis OTEL_EXPORTER_OTLP_ENDPOINT ; enregistrer ici la remplace.",
+    "headers": "En-têtes",
+    "headersHint": "(seulement si votre visualiseur demande une clé)",
+    "headersHelp": "Un par ligne. Gardés tels quels dans {file}, sur cette machine.",
+    "headersSet": "Définis : {names}. Retapez-les pour les remplacer.",
+    "headersRemove": "Supprimer",
+    "includeText": "Inclure le texte des invites dans chaque span",
+    "includeNeedsKeep": "Nécessite « Conserver le texte des invites » ci-dessus. Sans cela, les spans ne portent que les comptes et les durées.",
+    "includeOff": "Désactivé : les spans ne portent que les comptes et les durées, même si le texte est gardé ici.",
+    "includeOn": "Activé : chaque span porte les messages envoyés et la réponse, comme les montre Exécutions. Ils partent là où pointe l'adresse.",
+    "start": "Commencer l'envoi",
+    "stop": "Arrêter l'envoi",
+    "test": "Envoyer un span de test",
+    "testOk": "Span de test envoyé à {url}. Cherchez llmxray dans votre visualiseur.",
+    "testFail": "Le span de test n'est pas arrivé à {url} : {error}",
+    "status": {
+      "off": "Désactivé. Rien ne quitte cette machine.",
+      "waiting": "Envoi vers {url}. En attente du premier tour.",
+      "sending": "Envoi vers {url} : {turns} dans {runs}, le dernier {ago}.",
+      "failing": "Impossible de joindre {url} : {error}. Tours non envoyés : {failed} ; chaque nouveau tour réessaie. LLMxRay continue de fonctionner."
+    },
+    "agoSeconds": "il y a {n} s",
+    "agoMinutes": "il y a {n} min",
+    "turnsCount": "{n} tour | {n} tours",
+    "runsCount": "{n} exécution | {n} exécutions",
+    "carries": "Ce que porte chaque span",
+    "carry": {
+      "operation": "chat, text_completion ou embeddings",
+      "provider": "ollama",
+      "model": "le modèle",
+      "input": "tokens de l'invite",
+      "output": "tokens écrits",
+      "finish": "pourquoi il s'est arrêté",
+      "client": "l'outil qui l'a envoyé",
+      "cached": "tokens de l'invite lus depuis le cache, et leur part",
+      "timings": "temps de lecture de l'invite, de chargement du modèle, d'attente",
+      "cut": "le démon a coupé l'invite pour la faire tenir",
+      "cpu": "part du modèle en RAM système",
+      "tools": "outils appelés par le modèle",
+      "text": "les messages et la réponse, seulement avec « Inclure le texte des invites »"
+    },
+    "spanNote": "Un span commence et finit avec son appel. Le temps entre deux appels d'une exécution est un span à part, nommé d'après les outils demandés par le modèle, comme dans Exécutions.",
+    "where": "Où l'envoyer",
+    "useThis": "Utiliser cette adresse",
+    "dest": {
+      "jaeger": {
+        "name": "Jaeger, sur cette machine",
+        "use": "Adresse {address}, puis ouvrez localhost:16686."
+      },
+      "phoenix": {
+        "name": "Arize Phoenix, sur cette machine",
+        "use": "Adresse {address}."
+      },
+      "langfuse": {
+        "name": "Langfuse",
+        "use": "Adresse {address} et un en-tête Basic fait de vos clés publique et secrète.",
+        "away": "Langfuse Cloud est hors de cette machine : les tours partent sur leurs serveurs. Langfuse auto-hébergé reste chez vous."
+      },
+      "other": {
+        "name": "Grafana, Tempo ou votre propre collecteur",
+        "use": "Son adresse OTLP HTTP, en général le port 4318."
+      }
+    }
   },
   "live": {
     "listening": "À l'écoute sur {address}",
@@ -62,6 +136,8 @@
     "pause": "Pause",
     "resume": "Reprendre ({n} en attente)",
     "clear": "Effacer",
+    "clearTitle": "Oublier chaque tour et chaque invite gardés sur cette machine",
+    "clearConfirm": "Oublier tous les tours et toutes les invites gardées, sur le disque aussi ? Impossible de revenir en arrière.",
     "lead": "Ce que vos outils envoient, tour par tour, avec ce que le cache a gardé et ce qu'il a jeté."
   },
   "findings": {

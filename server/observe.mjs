@@ -3,13 +3,17 @@
  * daemon and records each model turn that passes through. Point any client at
  * it instead of :11434 and the Live page sees the traffic.
  *
- * Nothing is written anywhere unless `keepText` is on, and then only to a file
- * under the user's home directory. Metrics live in memory for the session.
+ * Each turn's record (counts, timings, client, model; never the prompt text) is
+ * appended to a dated file under ~/.llmxray/observe, so a restart picks up where
+ * it left off. The prompt text is written beside it only while `keepText` is on.
+ * Files older than `retentionDays` are deleted at start; Clear deletes them all.
+ * Nothing leaves this machine.
  */
 import http from 'node:http'
 import https from 'node:https'
 import { URL } from 'node:url'
 import { appendFile, mkdir } from 'node:fs/promises'
+import { existsSync, readdirSync, readFileSync, rmSync } from 'node:fs'
 import { join } from 'node:path'
 import os from 'node:os'
 import { randomUUID } from 'node:crypto'
@@ -25,12 +29,50 @@ import {
 } from './observe-core.mjs'
 
 const MAX_RECORDED_RESPONSE = 16 * 1024 * 1024
-const TEXT_DIR = join(os.homedir(), '.llmxray', 'observe')
+const DATA_DIR = process.env.LLMXRAY_DATA_DIR
+  ? join(process.env.LLMXRAY_DATA_DIR, 'observe')
+  : join(os.homedir(), '.llmxray', 'observe')
+const DAY_MS = 86_400_000
+/** turns-2026-10-19.jsonl holds records; 2026-10-19.jsonl holds kept text. */
+const TURNS_FILE = /^turns-(\d{4}-\d{2}-\d{2})\.jsonl$/
+const TEXT_FILE = /^(\d{4}-\d{2}-\d{2})\.jsonl$/
 
-export function createObserver({ ollamaUrl, port = 11435, host = '127.0.0.1', keepText = false, capacity = 500 } = {}) {
+/** Every line of a JSONL file that parses; a torn last line from a crash is skipped. */
+function readJsonl(file) {
+  const out = []
+  for (const line of readFileSync(file, 'utf8').split('\n')) {
+    if (!line) continue
+    try {
+      out.push(JSON.parse(line))
+    } catch {
+      /* torn or foreign line */
+    }
+  }
+  return out
+}
+
+export function createObserver({
+  ollamaUrl,
+  port = 11435,
+  host = '127.0.0.1',
+  keepText = false,
+  capacity = 500,
+  dataDir = DATA_DIR,
+  retentionDays = 30,
+} = {}) {
   const target = new URL(ollamaUrl ?? 'http://localhost:11434')
   const log = createTurnLog(capacity)
-  const state = { keepText: Boolean(keepText), port, host, listening: false, error: null, ollamaUrl: target.origin, startedAt: Date.now() }
+  const state = {
+    keepText: Boolean(keepText),
+    port,
+    host,
+    listening: false,
+    error: null,
+    ollamaUrl: target.origin,
+    startedAt: Date.now(),
+    retentionDays,
+    restored: 0,
+  }
   /** Last known load facts per model, refreshed from /api/ps after a turn. */
   const fitByModel = new Map()
   let psTimer = null
@@ -68,6 +110,7 @@ export function createObserver({ ollamaUrl, port = 11435, host = '127.0.0.1', ke
         const fit = fitByModel.get(turn.model)
         if (!fit) continue
         turn.fit = fit
+        void persistTurn(turn)
         for (const fn of listeners) fn({ type: 'update', turn })
       }
     }, 400)
@@ -78,19 +121,82 @@ export function createObserver({ ollamaUrl, port = 11435, host = '127.0.0.1', ke
     for (const fn of listeners) fn({ type: 'turn', turn })
   })
 
-  async function persistText(turn, body, canonical, snippet, answer) {
+  // Writes go one after another, so a record and its later update land in order.
+  let writes = Promise.resolve()
+  function append(file, line) {
+    writes = writes
+      .then(async () => {
+        await mkdir(dataDir, { recursive: true })
+        await appendFile(join(dataDir, file), line + '\n')
+      })
+      .catch(() => {
+        /* a full disk must never break the proxy */
+      })
+    return writes
+  }
+
+  const dayOf = (at) => new Date(at).toISOString().slice(0, 10)
+
+  /** The record again after each change (the load facts arrive later); on reading, the last line per id wins. */
+  function persistTurn(turn) {
+    return append(`turns-${dayOf(turn.at)}.jsonl`, JSON.stringify(turn))
+  }
+
+  function persistText(turn, body, canonical, snippet, answer) {
+    const line = JSON.stringify({ id: turn.id, at: turn.at, client: turn.client.label, model: turn.model, protocol: turn.protocol, request: body, canonical, snippet, answer })
+    return append(`${dayOf(turn.at)}.jsonl`, line)
+  }
+
+  /** In-memory text for kept turns, keyed by turn id; refilled from disk at start. */
+  const textById = new Map()
+
+  function files() {
     try {
-      await mkdir(TEXT_DIR, { recursive: true })
-      const day = new Date(turn.at).toISOString().slice(0, 10)
-      const line = JSON.stringify({ id: turn.id, at: turn.at, client: turn.client.label, model: turn.model, protocol: turn.protocol, request: body, canonical, snippet, answer })
-      await appendFile(join(TEXT_DIR, `${day}.jsonl`), line + '\n')
+      return readdirSync(dataDir)
     } catch {
-      /* a full disk must never break the proxy */
+      return []
     }
   }
 
-  /** In-memory text for the session when keepText is on; keyed by turn id. */
-  const textById = new Map()
+  /** Deletes record and text files older than the retention, by the date in their name. */
+  function prune(now = Date.now()) {
+    const oldest = dayOf(now - retentionDays * DAY_MS)
+    for (const name of files()) {
+      const day = (TURNS_FILE.exec(name) ?? TEXT_FILE.exec(name))?.[1]
+      if (day && day < oldest) rmSync(join(dataDir, name), { force: true })
+    }
+  }
+
+  /** Puts the newest kept turns back, with their text when it was kept. Runs once, before listening. */
+  function restore() {
+    const byId = new Map()
+    const recordFiles = files().filter((n) => TURNS_FILE.test(n)).sort()
+    for (const name of recordFiles) for (const t of readJsonl(join(dataDir, name))) if (t?.id) byId.set(t.id, t)
+    const turns = [...byId.values()].sort((a, b) => a.seq - b.seq || a.at - b.at).slice(-capacity)
+    if (!turns.length) return
+    const wanted = new Map(turns.filter((t) => t.textKept).map((t) => [t.id, t]))
+    for (const day of [...new Set([...wanted.values()].map((t) => dayOf(t.at)))]) {
+      const file = join(dataDir, `${day}.jsonl`)
+      if (!existsSync(file)) continue
+      for (const x of readJsonl(file)) {
+        if (!wanted.has(x.id)) continue
+        textById.set(x.id, { request: x.request, canonical: x.canonical, snippet: x.snippet, answer: x.answer })
+      }
+    }
+    log.restore(turns)
+    // The prefix diff carries on across the restart for clients whose text was kept.
+    for (const t of turns) {
+      const text = textById.get(t.id)
+      if (text?.canonical) log.rememberCanonical(`${t.client.id}|${t.model}`, text.canonical)
+    }
+    state.restored = turns.length
+  }
+
+  prune()
+  restore()
+  // A server left running for weeks still drops files as they pass the retention.
+  const pruneTimer = setInterval(() => prune(), DAY_MS)
+  pruneTimer.unref?.()
 
   function record({ cls, headers, bodyText, responseText, status, startedAt, path }) {
     let body = null
@@ -174,6 +280,7 @@ export function createObserver({ ollamaUrl, port = 11435, host = '127.0.0.1', ke
     }
 
     log.push(turn)
+    void persistTurn(turn)
     scheduleFit()
     return turn
   }
@@ -312,6 +419,7 @@ export function createObserver({ ollamaUrl, port = 11435, host = '127.0.0.1', ke
 
   function close() {
     clearTimeout(psTimer)
+    clearInterval(pruneTimer)
     return new Promise((resolve) => server.close(() => resolve()))
   }
 
@@ -332,11 +440,19 @@ export function createObserver({ ollamaUrl, port = 11435, host = '127.0.0.1', ke
     textFor(id) {
       return textById.get(id) ?? null
     },
-    clear() {
+    /** Forgets every turn: in memory, and every record and text file on disk. */
+    async clear() {
       log.clear()
       textById.clear()
+      await writes
+      for (const name of files()) if (TURNS_FILE.test(name) || TEXT_FILE.test(name)) rmSync(join(dataDir, name), { force: true })
     },
-    textDir: TEXT_DIR,
+    /** Resolves once every pending write has reached the disk. */
+    flush() {
+      return writes
+    },
+    prune,
+    textDir: dataDir,
   }
 }
 
@@ -364,7 +480,7 @@ function sendJson(res, status, data) {
  * handler mounts on Express (npx / Docker) and on Vite's connect server (dev).
  * `req.url` is expected relative to the mount point.
  */
-export function createObserveHandler(observer) {
+export function createObserveHandler(observer, { exporter = null } = {}) {
   return async function handle(req, res) {
     const url = new URL(req.url ?? '/', 'http://local')
     const path = url.pathname.replace(/\/+$/, '') || '/'
@@ -414,8 +530,21 @@ export function createObserveHandler(observer) {
         }
         return sendJson(res, observer.state.listening ? 200 : 409, observer.state)
       }
+      if (exporter && method === 'GET' && path === '/export') {
+        return sendJson(res, 200, exporter.view())
+      }
+      if (exporter && method === 'POST' && path === '/export') {
+        return sendJson(res, 200, await exporter.update(await readJson(req)))
+      }
+      if (exporter && method === 'POST' && path === '/export/test') {
+        // JSON only, like every POST here, so a cross-site page cannot make the server send.
+        if (!/^application\/json\b/i.test(String(req.headers['content-type'] ?? ''))) return sendJson(res, 415, { error: 'JSON only' })
+        return sendJson(res, 200, await exporter.test())
+      }
       if (method === 'POST' && path === '/clear') {
-        observer.clear()
+        // Clear deletes files on disk: JSON only, so a cross-site page cannot send it.
+        if (!/^application\/json\b/i.test(String(req.headers['content-type'] ?? ''))) return sendJson(res, 415, { error: 'JSON only' })
+        await observer.clear()
         return sendJson(res, 200, { ok: true })
       }
       return sendJson(res, 404, { error: 'Not found' })

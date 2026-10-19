@@ -7,6 +7,7 @@ import express from 'express'
 import { collectSystemInfo } from './system-info.mjs'
 import { mountProbeRoutes } from './api-probe.mjs'
 import { createObserver, createObserveHandler } from './observe.mjs'
+import { createOtelExporter } from './otel-export.mjs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const DIST_DIR = join(__dirname, '..', 'dist')
@@ -93,7 +94,10 @@ export async function startServer(options = {}) {
   // Live page: the observe port (an Ollama look-alike that records what passes
   // through) and the routes the page reads it from.
   const observer = createObserver({ ollamaUrl, port: observePort, host })
-  const observeHandler = createObserveHandler(observer)
+  const { version } = JSON.parse(readFileSync(join(__dirname, '..', 'package.json'), 'utf8'))
+  // Sends the turns on to the person's own trace viewer, once they give it an address.
+  const exporter = createOtelExporter({ observer, version })
+  const observeHandler = createObserveHandler(observer, { exporter })
   app.use('/__observe', (req, res) => observeHandler(req, res))
   let observeError = null
   if (observeEnabled) {
@@ -138,11 +142,39 @@ export async function startServer(options = {}) {
   return {
     port: boundPort,
     observePort: observer.state.listening ? observer.state.port : null,
-    close: () => new Promise((r) => { observer.close?.(); server.close(() => r()) }),
+    close: async () => {
+      // The open runs' spans and the last turns' writes go out before the ports close.
+      await exporter.close()
+      await observer.flush?.()
+      await observer.close?.()
+      server.closeAllConnections?.()
+      await new Promise((r) => server.close(() => r()))
+    },
   }
+}
+
+/**
+ * Ctrl+C or `docker stop`: close cleanly, so the last spans and the open run's span reach the
+ * collector. A second signal, or 3 seconds, ends the process regardless.
+ */
+export function closeOnSignal(running, { timeoutMs = 3000, exit = (code) => process.exit(code) } = {}) {
+  let closing = false
+  const stop = async () => {
+    if (closing) return exit(0)
+    closing = true
+    setTimeout(() => exit(0), timeoutMs).unref?.()
+    try {
+      await running.close()
+    } finally {
+      exit(0)
+    }
+  }
+  process.on('SIGINT', stop)
+  process.on('SIGTERM', stop)
+  return stop
 }
 
 // Run directly: node server/index.mjs
 if (process.argv[1] && process.argv[1].endsWith('index.mjs')) {
-  startServer()
+  startServer().then((running) => closeOnSignal(running))
 }

@@ -4,9 +4,10 @@
  * image run) against a fake Ollama. Every test here exercises startServer for real; the Vite
  * dev server has its own proxy and proved nothing about this file for seven months.
  */
-import { describe, it, expect, beforeAll, afterAll } from 'vitest'
+import { describe, it, expect, beforeAll, afterAll, vi } from 'vitest'
 import http from 'node:http'
 import { startServer } from './index.mjs'
+import { decodeTraces } from './otlp-proto.mjs'
 
 let fake // the stand-in Ollama
 let seen = [] // what the fake received: { method, url, body }
@@ -175,5 +176,56 @@ describe('the observe port', () => {
     const again = await fetch(`http://127.0.0.1:${deadApp.port}/__observe/status`)
     expect(again.status).toBe(200)
     await deadApp.close()
+  })
+})
+
+describe('closing the server', () => {
+  it('sends the open run and its last turn to the collector before the ports close', async () => {
+    const received = []
+    const collector = http.createServer((req, res) => {
+      const chunks = []
+      req.on('data', (c) => chunks.push(c))
+      req.on('end', () => {
+        received.push(decodeTraces(Buffer.concat(chunks)))
+        res.end('{}')
+      })
+    })
+    await new Promise((r) => collector.listen(0, '127.0.0.1', r))
+    const ollama = await fakeOllama()
+    // The standard OTel setting, read when the server starts; nothing was saved on the Live page.
+    process.env.OTEL_EXPORTER_OTLP_ENDPOINT = `http://127.0.0.1:${collector.address().port}`
+    const running = await startServer({ port: 0, observePort: 0, ollamaUrl: `http://127.0.0.1:${ollama.address().port}`, quiet: true })
+    delete process.env.OTEL_EXPORTER_OTLP_ENDPOINT
+    await fetch(`http://127.0.0.1:${running.observePort}/api/chat`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'x-llmxray-client': 'closing-test' },
+      body: JSON.stringify({ model: 'fake:latest', messages: [{ role: 'user', content: 'hi' }] }),
+    })
+    await running.close()
+    const names = received.flatMap((p) => p.resourceSpans[0].scopeSpans[0].spans.map((s) => s.name))
+    expect(names).toEqual(expect.arrayContaining(['chat fake:latest', 'run closing-test']))
+    await new Promise((r) => collector.close(r))
+    ollama.close()
+  })
+
+  it('closes on SIGTERM before it exits, and a second signal exits at once', async () => {
+    const { closeOnSignal } = await import('./index.mjs')
+    let release
+    const running = { close: vi.fn(() => new Promise((r) => (release = r))) }
+    const exit = vi.fn()
+    const stop = closeOnSignal(running, { exit, timeoutMs: 60_000 })
+    try {
+      const first = stop()
+      expect(running.close).toHaveBeenCalledTimes(1)
+      expect(exit).not.toHaveBeenCalled()
+      stop()
+      expect(exit).toHaveBeenCalledWith(0)
+      release()
+      await first
+      expect(running.close).toHaveBeenCalledTimes(1)
+    } finally {
+      process.off('SIGINT', stop)
+      process.off('SIGTERM', stop)
+    }
   })
 })

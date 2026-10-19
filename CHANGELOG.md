@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Send turns to your trace viewer.** The Live page can send every turn to Jaeger, Arize Phoenix, Langfuse,
+  Grafana or any OpenTelemetry collector: each model call as a span with the GenAI attributes viewers already
+  read, each run as a trace with the tool time between calls as its own span, the same waterfall as Runs. Off
+  until you give an address, on the Live page or through `OTEL_EXPORTER_OTLP_ENDPOINT`. OTLP over HTTP in
+  protobuf, with no new dependency. The prompt text goes along only with Keep text on and its own switch on.
+  Tested against Jaeger and Phoenix.
+- **LLMxRay closes cleanly on Ctrl+C and `docker stop`**: the open run's spans and the last turns' records are
+  written before it ends.
+- **The Live log survives a restart.** Each turn's record (tokens, cache, timings, client, model, never the text)
+  is written to `~/.llmxray/observe/turns-<date>.jsonl`, and LLMxRay puts the last 500 back when it starts, with
+  their kept text when Keep text was on. Live, Runs, Prompt X-ray and the MCP tools carry on where they stopped.
+- Records and kept prompts are deleted after 30 days. **Clear** now forgets everything, the files on disk
+  included, and asks first. `LLMXRAY_DATA_DIR` moves the folder; the Docker image uses `/data`, so a volume keeps
+  the log between runs.
+
+### Fixed
+
+- **A web page can no longer clear the Live log.** Clear now deletes files, so like every other setting it only
+  answers a JSON request, which a page on another site cannot send from your browser.
+
 ## [0.8.10] — 2026-10-19
 
 ### Changed

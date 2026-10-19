@@ -30,6 +30,25 @@ An agent that sends its calls through 11435 can also ask LLMxRay what went wrong
 | `PORT` | `5174` | Port to serve on |
 | `OBSERVE_PORT` | `11435` | Port other tools point at to appear on the Live page |
 | `OBSERVE` | `1` | Set to `0` to not open the observe port |
+| `LLMXRAY_DATA_DIR` | `/data` | Where the Live page's turn records (and kept prompts) are written, 30 days |
+| `OTEL_EXPORTER_OTLP_ENDPOINT` | | Send each turn to your trace viewer (Jaeger, Phoenix, Langfuse, Grafana) as OpenTelemetry spans, OTLP over HTTP |
+| `OTEL_EXPORTER_OTLP_HEADERS` | | Headers for that collector, `name=value,name=value` |
+
+### Sending turns to your trace viewer
+
+```bash
+docker run -p 5174:5174 -p 11435:11435 -e OTEL_EXPORTER_OTLP_ENDPOINT=http://host.docker.internal:4318 djovaneli/llmxray
+```
+
+Each model call becomes a span and each run a trace. The prompt text is never sent unless you switch it on in the Live page. `docker stop` lets the open run's spans out before the container ends.
+
+### Keeping the Live log across restarts
+
+Each turn's record is written under `/data`, and LLMxRay puts the last 500 back when it starts. A container keeps nothing between runs unless that folder is a volume:
+
+```bash
+docker run -p 5174:5174 -p 11435:11435 -v llmxray-data:/data djovaneli/llmxray
+```
 
 ### Custom Ollama URL
 
@@ -56,6 +75,11 @@ services:
       - "11435:11435"
     environment:
       - OLLAMA_URL=http://host.docker.internal:11434
+    volumes:
+      - llmxray-data:/data
+
+volumes:
+  llmxray-data:
 ```
 
 ### With Ollama as a sibling container

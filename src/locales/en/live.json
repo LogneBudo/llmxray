@@ -49,10 +49,84 @@
   },
   "privacy": {
     "toggle": "Keep the prompt text, not just the numbers",
-    "off": "Off: only counts and timings are kept, in memory, for this session.",
-    "on": "On: prompts are saved to a file on this machine so you can read what a tool sent.",
+    "off": "Off: only counts and timings are kept, on this machine, for {days} days.",
+    "on": "On: the prompts are kept too, on this machine, for {days} days, so you can read what a tool sent.",
     "always": "Either way, nothing leaves this machine.",
     "where": "Saved under {dir}"
+  },
+  "export": {
+    "title": "Send turns to your trace viewer",
+    "lead": "Each turn becomes an OpenTelemetry span and each run a trace, so Jaeger, Phoenix, Langfuse or Grafana show the same waterfall as Runs. Nothing is sent until you give an address.",
+    "state": {
+      "off": "Off",
+      "sending": "Sending",
+      "failing": "Cannot reach"
+    },
+    "address": "Collector address",
+    "addressHelp": "OTLP over HTTP. LLMxRay sends to this address plus /v1/traces. The OTEL_EXPORTER_OTLP_ENDPOINT setting fills it in too.",
+    "fromEnv": "Filled in from OTEL_EXPORTER_OTLP_ENDPOINT; saving here replaces it.",
+    "headers": "Headers",
+    "headersHint": "(only if your viewer asks for a key)",
+    "headersHelp": "One per line. Kept as written in {file}, on this machine.",
+    "headersSet": "Set: {names}. Type them again to replace them.",
+    "headersRemove": "Remove",
+    "includeText": "Include the prompt text in each span",
+    "includeNeedsKeep": "Needs \"Keep the prompt text\" above. Without it, spans carry counts and timings only.",
+    "includeOff": "Off: spans carry counts and timings only, even though the text is kept here.",
+    "includeOn": "On: each span carries the messages sent and the answer, as Runs shows them. They go wherever the address points.",
+    "start": "Start sending",
+    "stop": "Stop sending",
+    "test": "Send a test span",
+    "testOk": "Test span sent to {url}. Look for llmxray in your viewer.",
+    "testFail": "The test span did not arrive at {url}: {error}",
+    "status": {
+      "off": "Off. Nothing leaves this machine.",
+      "waiting": "Sending to {url}. Waiting for the first turn.",
+      "sending": "Sending to {url}: {turns} in {runs}, the last one {ago}.",
+      "failing": "Cannot reach {url}: {error}. Turns not sent: {failed}; each new turn tries again. LLMxRay keeps working either way."
+    },
+    "agoSeconds": "{n} s ago",
+    "agoMinutes": "{n} min ago",
+    "turnsCount": "{n} turn | {n} turns",
+    "runsCount": "{n} run | {n} runs",
+    "carries": "What each span carries",
+    "carry": {
+      "operation": "chat, text_completion or embeddings",
+      "provider": "ollama",
+      "model": "the model",
+      "input": "prompt tokens",
+      "output": "tokens written",
+      "finish": "why it stopped",
+      "client": "the tool that sent it",
+      "cached": "prompt tokens read from the cache, and their share",
+      "timings": "time reading the prompt, loading the model, waiting",
+      "cut": "the daemon cut the prompt to fit",
+      "cpu": "share of the model in system RAM",
+      "tools": "tools the model called",
+      "text": "the messages and the answer, only with \"Include the prompt text\""
+    },
+    "spanNote": "A span starts and ends with its call. The time between two calls of a run is a span of its own, named after the tools the model asked for, as on Runs.",
+    "where": "Where to send it",
+    "useThis": "Use this address",
+    "dest": {
+      "jaeger": {
+        "name": "Jaeger, on this machine",
+        "use": "Address {address}, then open localhost:16686."
+      },
+      "phoenix": {
+        "name": "Arize Phoenix, on this machine",
+        "use": "Address {address}."
+      },
+      "langfuse": {
+        "name": "Langfuse",
+        "use": "Address {address} and a Basic header made of your public and secret keys.",
+        "away": "Langfuse Cloud is outside this machine: turns go to their servers. Self-hosted Langfuse stays with you."
+      },
+      "other": {
+        "name": "Grafana, Tempo or your own collector",
+        "use": "Its OTLP HTTP address, usually port 4318."
+      }
+    }
   },
   "live": {
     "listening": "Listening on {address}",
@@ -62,6 +136,8 @@
     "pause": "Pause",
     "resume": "Resume ({n} waiting)",
     "clear": "Clear",
+    "clearTitle": "Forget every turn and prompt kept on this machine",
+    "clearConfirm": "Forget every turn and every kept prompt, on disk too? This cannot be undone.",
     "lead": "What your tools are sending, turn by turn, with what the cache kept and what it threw away."
   },
   "findings": {

@@ -1,4 +1,4 @@
-import type { LiveStatus, LiveTurn, LiveTurnText } from '@/types/live'
+import type { LiveExport, LiveExportTest, LiveStatus, LiveTurn, LiveTurnText } from '@/types/live'
 
 const BASE = '/__observe'
 
@@ -58,9 +58,39 @@ export async function retryLiveListen(): Promise<LiveStatus | null> {
 
 export async function clearLiveTurns(): Promise<void> {
   try {
-    await fetch(`${BASE}/clear`, { method: 'POST' })
+    await fetch(`${BASE}/clear`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' })
   } catch {
     /* nothing to clear */
+  }
+}
+
+const JSON_POST = { method: 'POST', headers: { 'Content-Type': 'application/json' } } as const
+
+export async function fetchLiveExport(): Promise<LiveExport | null> {
+  try {
+    const res = await fetch(`${BASE}/export`)
+    return res.ok ? ((await res.json()) as LiveExport) : null
+  } catch {
+    return null
+  }
+}
+
+/** Saves a change to the export settings; `headers` is sent only when the person typed new ones. */
+export async function saveLiveExport(change: Partial<{ address: string; headers: string; includeText: boolean; enabled: boolean }>): Promise<LiveExport | null> {
+  try {
+    const res = await fetch(`${BASE}/export`, { ...JSON_POST, body: JSON.stringify(change) })
+    return res.ok ? ((await res.json()) as LiveExport) : null
+  } catch {
+    return null
+  }
+}
+
+export async function testLiveExport(): Promise<LiveExportTest> {
+  try {
+    const res = await fetch(`${BASE}/export/test`, { ...JSON_POST, body: '{}' })
+    return (await res.json()) as LiveExportTest
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : 'unreachable' }
   }
 }
 

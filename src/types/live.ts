@@ -103,7 +103,35 @@ export interface LiveStatus {
   ollamaUrl: string
   startedAt: number
   turns: number
+  /** Where turn records, and kept text, are written. */
   textDir?: string
+  /** Days a record or kept prompt stays on disk before it is deleted. */
+  retentionDays?: number
+  /** Turns put back from disk when the server started. */
+  restored?: number
+}
+
+/** The OpenTelemetry export as the server reports it. Header values never come back, only names. */
+export interface LiveExport {
+  address: string
+  headerNames: string[]
+  includeText: boolean
+  enabled: boolean
+  /** Where the settings came from: the Live page (file), OTEL_* variables (env), or nowhere yet. */
+  source: 'file' | 'env' | 'none'
+  url: string | null
+  state: 'off' | 'sending' | 'failing'
+  sent: number
+  runs: number
+  failed: number
+  lastSentAt: number | null
+  lastError: string | null
+}
+
+export interface LiveExportTest {
+  ok: boolean
+  url?: string
+  error?: string
 }
 
 /** What the model answered, joined from the stream: kept only when Keep text is on. */

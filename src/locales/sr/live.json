@@ -49,10 +49,84 @@
   },
   "privacy": {
     "toggle": "Čuvaj tekst upita, ne samo brojeve",
-    "off": "Isključeno: čuvaju se samo brojevi i vremena, u memoriji, za ovu sesiju.",
-    "on": "Uključeno: upiti se čuvaju u datoteci na ovoj mašini da biste mogli da pročitate šta je alat poslao.",
+    "off": "Isključeno: čuvaju se samo brojevi i vremena, na ovoj mašini, {days} dana.",
+    "on": "Uključeno: čuvaju se i upiti, na ovoj mašini, {days} dana, da biste mogli da pročitate šta je alat poslao.",
     "always": "U oba slučaja ništa ne napušta ovu mašinu.",
     "where": "Sačuvano u {dir}"
+  },
+  "export": {
+    "title": "Šalji poteze u svoj pregledač tragova",
+    "lead": "Svaki potez postaje OpenTelemetry span, a svako izvršavanje trag, pa Jaeger, Phoenix, Langfuse ili Grafana prikazuju isti vodopad kao Runs. Ništa se ne šalje dok ne upišete adresu.",
+    "state": {
+      "off": "Isključeno",
+      "sending": "Šalje se",
+      "failing": "Nedostupno"
+    },
+    "address": "Adresa kolektora",
+    "addressHelp": "OTLP preko HTTP-a. LLMxRay šalje na ovu adresu sa dodatkom /v1/traces. Popunjava je i podešavanje OTEL_EXPORTER_OTLP_ENDPOINT.",
+    "fromEnv": "Popunjeno iz OTEL_EXPORTER_OTLP_ENDPOINT; čuvanje ovde ga zamenjuje.",
+    "headers": "Zaglavlja",
+    "headersHint": "(samo ako pregledač traži ključ)",
+    "headersHelp": "Jedno po redu. Čuvaju se kako su upisana u {file}, na ovoj mašini.",
+    "headersSet": "Postavljeno: {names}. Upišite ih ponovo da biste ih zamenili.",
+    "headersRemove": "Ukloni",
+    "includeText": "Uključi tekst upita u svaki span",
+    "includeNeedsKeep": "Zahteva \"Čuvaj tekst upita\" iznad. Bez toga spanovi nose samo brojeve i vremena.",
+    "includeOff": "Isključeno: spanovi nose samo brojeve i vremena, iako se tekst čuva ovde.",
+    "includeOn": "Uključeno: svaki span nosi poslate poruke i odgovor, kako ih prikazuje Runs. Idu tamo gde pokazuje adresa.",
+    "start": "Počni slanje",
+    "stop": "Zaustavi slanje",
+    "test": "Pošalji probni span",
+    "testOk": "Probni span je poslat na {url}. Potražite llmxray u pregledaču.",
+    "testFail": "Probni span nije stigao na {url}: {error}",
+    "status": {
+      "off": "Isključeno. Ništa ne napušta ovu mašinu.",
+      "waiting": "Šalje se na {url}. Čeka se prvi potez.",
+      "sending": "Šalje se na {url}: {turns} u {runs}, poslednji {ago}.",
+      "failing": "Nije moguće dosegnuti {url}: {error}. Neposlatih poteza: {failed}; svaki novi potez pokušava ponovo. LLMxRay radi i dalje."
+    },
+    "agoSeconds": "pre {n} s",
+    "agoMinutes": "pre {n} min",
+    "turnsCount": "{n} potez | {n} poteza",
+    "runsCount": "{n} izvršavanje | {n} izvršavanja",
+    "carries": "Šta nosi svaki span",
+    "carry": {
+      "operation": "chat, text_completion ili embeddings",
+      "provider": "ollama",
+      "model": "model",
+      "input": "tokeni upita",
+      "output": "napisani tokeni",
+      "finish": "zašto je stao",
+      "client": "alat koji ga je poslao",
+      "cached": "tokeni upita pročitani iz keša i njihov udeo",
+      "timings": "vreme čitanja upita, učitavanja modela, čekanja",
+      "cut": "demon je skratio upit da bi stao",
+      "cpu": "udeo modela u sistemskoj memoriji",
+      "tools": "alati koje je model pozvao",
+      "text": "poruke i odgovor, samo uz \"Uključi tekst upita\""
+    },
+    "spanNote": "Span počinje i završava se sa svojim pozivom. Vreme između dva poziva jednog izvršavanja je zaseban span, nazvan po alatima koje je model tražio, kao u Runs.",
+    "where": "Kuda ga poslati",
+    "useThis": "Koristi ovu adresu",
+    "dest": {
+      "jaeger": {
+        "name": "Jaeger, na ovoj mašini",
+        "use": "Adresa {address}, zatim otvorite localhost:16686."
+      },
+      "phoenix": {
+        "name": "Arize Phoenix, na ovoj mašini",
+        "use": "Adresa {address}."
+      },
+      "langfuse": {
+        "name": "Langfuse",
+        "use": "Adresa {address} i Basic zaglavlje od vašeg javnog i tajnog ključa.",
+        "away": "Langfuse Cloud je van ove mašine: potezi idu na njihove servere. Langfuse na sopstvenom serveru ostaje kod vas."
+      },
+      "other": {
+        "name": "Grafana, Tempo ili vaš kolektor",
+        "use": "Njegova OTLP HTTP adresa, obično port 4318."
+      }
+    }
   },
   "live": {
     "listening": "Sluša na {address}",
@@ -62,6 +136,8 @@
     "pause": "Pauza",
     "resume": "Nastavi ({n} čeka)",
     "clear": "Obriši",
+    "clearTitle": "Zaboravi sve poteze i upite sačuvane na ovoj mašini",
+    "clearConfirm": "Zaboraviti sve poteze i sve sačuvane upite, i na disku? Ovo se ne može poništiti.",
     "lead": "Šta vaši alati šalju, potez po potez, sa onim što je keš zadržao i onim što je odbacio."
   },
   "findings": {

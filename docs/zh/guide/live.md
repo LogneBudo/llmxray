@@ -82,14 +82,31 @@ npx llmxray --no-observe           # 不打开它
 
 ## 隐私
 
-默认关闭：只在内存中保留本次会话的计数和时间。不向磁盘写任何东西。
+默认关闭：只保留计数和时间。每个轮次的记录（token、缓存、时间、客户端、模型，从不包含文本）写入你主目录下的文件 `~/.llmxray/observe/turns-<日期>.jsonl`，每天一个。LLMxRay 重新启动时会恢复最近的 500 个轮次，实时页面、运行页面和 MCP 工具都从中断处继续。超过 30 天的文件会被删除。**清空**会在询问后忘记一切，包括磁盘上的文件。设置 `LLMXRAY_DATA_DIR` 可以把它们放在别处。
 
-**保留提示词文本**开启后，请求体会保存到你主目录下的文件中（`~/.llmxray/observe/`，每天一个文件），页面上会显示每个断裂点附近的文本。它还会在轮次下方解锁**请求视图**：把请求渲染成一段对话，每条消息一个区块并保留真实换行，工具调用以卡片显示，工具结果默认折叠，工具列表给出每个工具的名称、描述、参数数量和大小。缓存断裂点直接标在它所在的消息里。搜索框覆盖消息和工具，原始 JSON 标签页加上复制和下载按钮保证每个字节都可取回。关闭后，内存中保留的文本会被丢弃；文件会一直保留，直到你删除它们。
+**保留提示词文本**开启后，请求体会另外保存在旁边（`~/.llmxray/observe/<日期>.jsonl`，每天一个文件，同样保留 30 天），页面上会显示每个断裂点附近的文本。它还会在轮次下方解锁**请求视图**：把请求渲染成一段对话，每条消息一个区块并保留真实换行，工具调用以卡片显示，工具结果默认折叠，工具列表给出每个工具的名称、描述、参数数量和大小。缓存断裂点直接标在它所在的消息里。搜索框覆盖消息和工具，原始 JSON 标签页加上复制和下载按钮保证每个字节都可取回。关闭后，内存中保留的文本会被丢弃；文件会保留到满 30 天，或直到你点击清空。
 
 两种模式下都没有任何数据离开你的机器。观测端口只与 LLMxRay 启动时指定的 Ollama 地址通信，不与其他任何地方通信。
 
+## 把轮次发送到你的追踪查看器
+
+如果你的团队已经在 Jaeger、Arize Phoenix、Langfuse 或 Grafana 中查看追踪，LLMxRay 可以把它的轮次发送过去。每次模型调用成为一个 OpenTelemetry span，每次运行成为一条 trace，因此查看器显示与运行页面相同的瀑布图：各次调用，以及两次调用之间代表模型请求的工具的 span。
+
+在隐私开关下方的**把轮次发送到你的追踪查看器**中，填写收集器地址并点击**开始发送**。**发送测试 span** 可以先检查地址。LLMxRay 通过 HTTP（protobuf，OTLP 的默认编码）发送 OTLP 到该地址加上 `/v1/traces`；标准设置 `OTEL_EXPORTER_OTLP_ENDPOINT` 和 `OTEL_EXPORTER_OTLP_HEADERS` 也会填入，适合 Docker 或脚本。
+
+| 查看器 | 启动方式 | 地址 |
+|---|---|---|
+| Jaeger | `docker run -p 16686:16686 -p 4318:4318 jaegertracing/jaeger` | `http://localhost:4318`，然后打开 localhost:16686 |
+| Arize Phoenix | `docker run -p 6006:6006 arizephoenix/phoenix` | `http://localhost:6006` |
+| Langfuse | | `https://cloud.langfuse.com/api/public/otel`，加上由公钥和私钥组成的 `Authorization: Basic` 请求头 |
+| Grafana Tempo、OpenTelemetry Collector | | 它的 OTLP HTTP 地址，通常是 4318 端口 |
+
+每个 span 带有查看器已能识别的 GenAI 属性（`gen_ai.request.model`、`gen_ai.usage.input_tokens`、`gen_ai.usage.output_tokens`、`gen_ai.response.finish_reasons`），以及只有 LLMxRay 知道的内容，放在 `llmxray.*` 下：客户端、缓存的 token 及其占比、预填充、加载和排队时间、守护进程是否截断了提示词、模型位于系统内存中的比例、调用的工具。
+
+只有在**保留提示词文本**开启*并且***在每个 span 中包含提示词文本**也开启时，提示词文本才会以 `gen_ai.input.messages` 和 `gen_ai.output.messages` 发送。Langfuse Cloud 在你的机器之外，面板会明确说明。请求头（通常是密钥）按原样保存在 `~/.llmxray/export.json`。如果无法连接收集器，面板会说明原因，下一个轮次会重试，LLMxRay 照常工作。
+
 ## 本页不做的事
 
-它不做分词（比例按字符，计数来自守护进程），不跨重启保留轮次，也不改动任何经过它的内容。它是一扇窗，不是一个过滤器。
+它不做分词（比例按字符，计数来自守护进程），也不改动任何经过它的内容。它是一扇窗，不是一个过滤器。
 
 最后这一点有一个看得见的后果。OpenAI 兼容端点上的流式请求不带 token 计数，除非客户端用 `stream_options: { include_usage: true }` 主动要求；Ollama 和 OpenAI 一样，只在被要求时才追加 usage 块。LLMxRay 不会替客户端加上这个选项，因为有些客户端会被多出来的那个块卡住。这类轮次在缓存列显示*未报告*，提示词构成仍然照常显示。原生 API（`/api/chat`、`/api/generate`）总是报告计数，Ollama 命令行、Ollama SDK 和 VS Code Copilot 的 Ollama 提供方用的正是它。

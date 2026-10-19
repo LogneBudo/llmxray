@@ -1,6 +1,9 @@
 // @vitest-environment node
 import { describe, it, expect, beforeAll, afterAll } from 'vitest'
 import http from 'node:http'
+import { mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
 import { createObserver, createObserveHandler } from './observe.mjs'
 
 /**
@@ -218,8 +221,123 @@ describe('observe port', () => {
     await lonely.close()
   })
 
+  it('refuses a Clear that is not JSON, the kind a cross-site page can send, since Clear deletes files', async () => {
+    const before = JSON.parse((await text(`${uiUrl}/turns`)).body).turns.length
+    expect(before).toBeGreaterThan(0)
+    const r = await text(`${uiUrl}/clear`, { method: 'POST', headers: { 'content-type': 'text/plain' }, body: '{}' })
+    expect(r.status).toBe(415)
+    expect(JSON.parse((await text(`${uiUrl}/turns`)).body).turns).toHaveLength(before)
+  })
+
   it('clears on request', async () => {
-    await text(`${uiUrl}/clear`, { method: 'POST' })
+    await text(`${uiUrl}/clear`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: '{}' })
     expect(JSON.parse((await text(`${uiUrl}/turns`)).body).turns).toHaveLength(0)
+  })
+})
+
+describe('turns kept across a restart', () => {
+  const fake = fakeOllama()
+  let ollamaUrl
+  const dirs = []
+
+  beforeAll(async () => {
+    await new Promise((r) => fake.server.listen(0, '127.0.0.1', r))
+    ollamaUrl = `http://127.0.0.1:${fake.server.address().port}`
+  })
+  afterAll(async () => {
+    await new Promise((r) => fake.server.close(r))
+    for (const d of dirs) rmSync(d, { recursive: true, force: true })
+  })
+
+  const freshDir = () => {
+    const d = mkdtempSync(join(tmpdir(), 'llmxray-observe-'))
+    dirs.push(d)
+    return d
+  }
+
+  async function chatThrough(observer, content) {
+    const p = observer.state.port
+    await text(`http://127.0.0.1:${p}/api/chat`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'x-llmxray-client': 'restart-test' },
+      body: JSON.stringify({ model: 'tiny:latest', messages: [{ role: 'user', content }] }),
+    })
+  }
+
+  it('puts the turns and their kept text back after a restart, and numbering carries on', async () => {
+    const dataDir = freshDir()
+    const first = createObserver({ ollamaUrl, port: 0, host: '127.0.0.1', dataDir, keepText: true })
+    await first.listen()
+    await chatThrough(first, 'first question')
+    await chatThrough(first, 'second question')
+    await new Promise((r) => setTimeout(r, 600)) // the load facts arrive after the turn
+    await first.flush()
+    const before = first.log.all()
+    await first.close()
+    expect(before[0].fit).not.toBeNull()
+
+    const second = createObserver({ ollamaUrl, port: 0, host: '127.0.0.1', dataDir })
+    expect(second.state.restored).toBe(2)
+    const back = second.log.all()
+    expect(back.map((t) => t.id)).toEqual(before.map((t) => t.id))
+    // The later line with the load facts wins over the first one written.
+    expect(back[0].fit).toEqual(before[0].fit)
+    expect(second.textFor(back[1].id).request.messages[0].content).toBe('second question')
+    await second.listen()
+    await chatThrough(second, 'after the restart')
+    await second.flush()
+    const latest = second.log.all().at(-1)
+    expect(latest.seq).toBe(before.at(-1).seq + 1)
+    await second.close()
+  })
+
+  it('writes the numbers without the text when Keep text is off', async () => {
+    const dataDir = freshDir()
+    const o = createObserver({ ollamaUrl, port: 0, host: '127.0.0.1', dataDir })
+    await o.listen()
+    await chatThrough(o, 'never on disk')
+    await o.flush()
+    await o.close()
+    const names = readdirSync(dataDir)
+    expect(names.some((n) => n.startsWith('turns-'))).toBe(true)
+    expect(names.filter((n) => !n.startsWith('turns-'))).toEqual([])
+    const onDisk = names.map((n) => readFileSync(join(dataDir, n), 'utf8')).join('')
+    expect(onDisk).not.toContain('never on disk')
+  })
+
+  it('skips a torn last line, the trace of a crash mid-write', async () => {
+    const dataDir = freshDir()
+    const o = createObserver({ ollamaUrl, port: 0, host: '127.0.0.1', dataDir })
+    await o.listen()
+    await chatThrough(o, 'one')
+    await o.flush()
+    await o.close()
+    const file = join(dataDir, readdirSync(dataDir).find((n) => n.startsWith('turns-')))
+    writeFileSync(file, readFileSync(file, 'utf8') + '{"id":"torn","seq":9')
+    expect(createObserver({ ollamaUrl, port: 0, host: '127.0.0.1', dataDir }).state.restored).toBe(1)
+  })
+
+  it('deletes record and text files past the retention, and keeps the rest', async () => {
+    const dataDir = freshDir()
+    const day = (ago) => new Date(Date.now() - ago * 86_400_000).toISOString().slice(0, 10)
+    for (const name of [`turns-${day(31)}.jsonl`, `${day(31)}.jsonl`, `turns-${day(2)}.jsonl`, `${day(2)}.jsonl`, 'notes.txt']) {
+      writeFileSync(join(dataDir, name), '')
+    }
+    createObserver({ ollamaUrl, port: 0, host: '127.0.0.1', dataDir, retentionDays: 30 }).close()
+    expect(readdirSync(dataDir).sort()).toEqual([`${day(2)}.jsonl`, 'notes.txt', `turns-${day(2)}.jsonl`].sort())
+  })
+
+  it('Clear forgets everything: memory, records and kept text on disk', async () => {
+    const dataDir = freshDir()
+    writeFileSync(join(dataDir, 'notes.txt'), 'not ours')
+    const o = createObserver({ ollamaUrl, port: 0, host: '127.0.0.1', dataDir, keepText: true })
+    await o.listen()
+    await chatThrough(o, 'to be forgotten')
+    await o.flush()
+    await o.clear()
+    expect(o.log.size).toBe(0)
+    expect(readdirSync(dataDir)).toEqual(['notes.txt'])
+    await o.close()
+    expect(createObserver({ ollamaUrl, port: 0, host: '127.0.0.1', dataDir }).state.restored).toBe(0)
   })
 })
