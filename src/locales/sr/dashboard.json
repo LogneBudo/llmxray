@@ -243,5 +243,19 @@
       "jsonFormatToggled": "JSON format prebačen. To utiče na sledeći zahtev.",
       "none": "(nema)"
     }
+  },
+  "tokenStream": {
+    "probability": "Verovatnoća",
+    "pace": "Ritam",
+    "low": "Niska",
+    "high": "Visoka",
+    "slow": "Sporo",
+    "fast": "Brzo",
+    "probabilityNote": "verovatnoća koju model daje svakom tokenu, iz Ollama logprobs",
+    "paceNote": "koliko brzo je svaki token stigao u odnosu na ostatak odgovora; nije pouzdanost (Ollama nije poslao verovatnoće)",
+    "token": "Token #{n}",
+    "latency": "Kašnjenje",
+    "text": "Tekst",
+    "waiting": "Čeka se na tokene…"
   }
 }

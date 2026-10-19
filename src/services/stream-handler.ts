@@ -140,8 +140,16 @@ export async function executeGenerateStream(
       const interTokenLatency = now - lastTokenTime
       cumulativeText += chunk.response
 
-      // Compute confidence from inter-token latency
-      const confidence = computeConfidenceFromLatency(interTokenLatency, tokenLatencies)
+      // The model's probability when Ollama sent the logprob; a timing figure otherwise, which the
+      // token view names "pace", never confidence.
+      let confidence: number
+      let logprobValue: number | undefined
+      if (chunk.logprobs && chunk.logprobs.length > 0) {
+        logprobValue = chunk.logprobs[0]!.logprob
+        confidence = Math.exp(logprobValue)
+      } else {
+        confidence = computeConfidenceFromLatency(interTokenLatency, tokenLatencies)
+      }
 
       const token: StreamToken = {
         id: nanoid(),
@@ -149,6 +157,7 @@ export async function executeGenerateStream(
         text: chunk.response,
         timestamp: now,
         confidence,
+        logprob: logprobValue,
         cumulativeText,
         interTokenLatencyMs: interTokenLatency,
       }

@@ -20,10 +20,10 @@ The page is split into two areas:
 2. Type your message in the input area.
 3. Press **Enter** or click Send.
 
-Tokens stream in one by one with **confidence coloring**: each token is tinted based on how quickly the model produced it. Faster tokens = higher confidence (greener). Slower tokens = lower confidence (more orange/red).
+Tokens stream in one by one, each underlined in the colour of the **model's own probability** for it: green where the model was sure, orange to red where it was not. LLMxRay asks Ollama for the token logprobs and colours by those.
 
-::: info Confidence is an approximation
-Since Ollama's `/api/chat` endpoint doesn't expose token logprobs, LLMxRay approximates confidence from inter-token latency. This is clearly labeled in the UI. For real logprobs, use the [Benchmark](./benchmark) feature.
+::: info Probability, or only pace
+The colours mean probability only when Ollama sends logprobs, which current versions do on `/api/chat`. Without them (an older Ollama, or a path that does not return them) the chat leaves tokens un-underlined, and the token view on the session page colours them by **pace**, how fast each came against the rest of the reply, under a legend that says it is not confidence. The CSV export fills its Probability column only from real logprobs.
 :::
 
 ## Features

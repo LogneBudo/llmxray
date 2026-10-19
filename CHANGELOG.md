@@ -26,6 +26,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **"Confidence" means the model's probability, and nothing else.** Chat and Compare colour each token by the
+  logprob Ollama returns; Compare never asked for them before and coloured by timing. Without a logprob a
+  token is left uncoloured in the reply, and the session's token view calls the timing colour "Pace", with a
+  legend saying it is not confidence. The CSV exports fill their Probability column only from real logprobs.
 - **A web page can no longer clear the Live log.** Clear now deletes files, so like every other setting it only
   answers a JSON request, which a page on another site cannot send from your browser.
 

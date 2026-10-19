@@ -144,5 +144,19 @@
     "chatConversation": "聊天与对话",
     "modelSettings": "模型与设置",
     "featuresNavigation": "功能与导航"
+  },
+  "tokenStream": {
+    "probability": "概率",
+    "pace": "节奏",
+    "low": "低",
+    "high": "高",
+    "slow": "慢",
+    "fast": "快",
+    "probabilityNote": "模型给每个 token 的概率，来自 Ollama 的 logprobs",
+    "paceNote": "每个 token 相对于其余回答的到达速度；这不是置信度（Ollama 没有发送概率）",
+    "token": "Token #{n}",
+    "latency": "延迟",
+    "text": "文本",
+    "waiting": "等待 token…"
   }
 }

@@ -27,7 +27,11 @@ const style = computed(() => ({
   <span
     class="inline cursor-pointer rounded-sm px-px text-text-primary transition-all hover:bg-surface-overlay"
     :style="[style, isLatest ? { animation: 'glow-in 1.5s ease-in-out infinite', borderRadius: '2px' } : {}]"
-    :title="`Token #${token.index} | Confidence: ${(token.confidence * 100).toFixed(0)}% | Latency: ${token.interTokenLatencyMs}ms`"
+    :title="[
+      $t('dashboard.tokenStream.token', { n: token.index }),
+      token.logprob != null ? `${$t('dashboard.tokenStream.probability')}: ${(token.confidence * 100).toFixed(0)}%` : null,
+      `${$t('dashboard.tokenStream.latency')}: ${token.interTokenLatencyMs} ms`,
+    ].filter(Boolean).join(' | ')"
     @mouseenter="$emit('hover', token)"
     @click="$emit('click', token)"
   >{{ token.text }}</span>

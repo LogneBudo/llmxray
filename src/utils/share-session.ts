@@ -73,16 +73,17 @@ export function exportTokenStreamAsCsv(tokens: StreamToken[], sessionId: string)
   const headers = [
     'Index',
     'Text',
-    'Confidence',
+    'Probability',
     'Logprob',
     'Latency (ms)',
     'Timestamp',
   ]
 
+  // Probability only from a real logprob; empty otherwise, never a number worked out from timing.
   const rows = tokens.map((t) => [
     t.index.toString(),
     t.text,
-    (t.confidence * 100).toFixed(1) + '%',
+    t.logprob != null ? (Math.exp(t.logprob) * 100).toFixed(1) + '%' : '',
     t.logprob !== undefined ? t.logprob.toFixed(4) : '',
     t.interTokenLatencyMs.toFixed(0),
     new Date(t.timestamp).toISOString(),

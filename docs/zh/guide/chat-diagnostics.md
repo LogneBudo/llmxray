@@ -20,10 +20,10 @@
 2. 在输入区输入你的消息。
 3. 按 **Enter** 或点击发送。
 
-Token 会逐个流式到达，并带有**置信度着色**：每个 token 的颜色取决于模型生成它的速度。越快的 token 置信度越高（偏绿），越慢的 token 置信度越低（偏橙或偏红）。
+Token 会逐个流式到达，每个都以**模型自己给它的概率**着色下划线：模型确定的地方偏绿，不确定的地方偏橙或偏红。LLMxRay 向 Ollama 请求 token 的 logprobs，并据此着色。
 
-::: info 置信度是一个近似值
-由于 Ollama 的 `/api/chat` 接口不暴露 token 的 logprobs，LLMxRay 用 token 之间的延迟来近似置信度。界面中对此有明确标注。如果需要真实的 logprobs，请使用[基准测试](./benchmark)功能。
+::: info 概率，或者只是节奏
+只有当 Ollama 发送 logprobs 时，颜色才代表概率；当前版本在 `/api/chat` 上会发送。没有 logprobs 时（较旧的 Ollama，或不返回它们的路径），聊天不给 token 加下划线，会话页面的 token 视图则按**节奏**着色，即每个 token 相对于其余回答的到达速度，图例会说明这不是置信度。CSV 导出只用真实的 logprobs 填写“概率”一列。
 :::
 
 ## 功能

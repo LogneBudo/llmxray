@@ -32,7 +32,7 @@ Each slot displays its settings as pills for quick reference.
 
 ### Grid View
 The default view. All slots display their streaming results in a grid layout. Each slot shows:
-- The model response, rendered as Markdown while it streams, with every token underlined in its confidence colour. A **Text / Tokens** switch above it opens the one-chip-per-token view with the numbers on hover.
+- The model response, rendered as Markdown while it streams, with every token underlined in the colour of the model's own probability for it, from Ollama's logprobs. A **Text / Tokens** switch above it opens the one-chip-per-token view with the numbers on hover.
 - A settings pill showing the model name and temperature
 
 ### Diff View

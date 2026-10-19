@@ -83,12 +83,13 @@ function exportSessionMarkdown() {
 function exportTokenStreamCsv() {
   const tokens = tokenStore.getTokens(props.id)
   if (tokens.length === 0) return
-  const headers = ['Index', 'Token', 'Timestamp', 'Confidence', 'Logprob', 'InterTokenLatencyMs']
+  // Probability only from a real logprob; empty otherwise, never a number worked out from timing.
+  const headers = ['Index', 'Token', 'Timestamp', 'Probability', 'Logprob', 'InterTokenLatencyMs']
   const rows = tokens.map((tok) => [
     String(tok.index),
     tok.text,
     String(tok.timestamp),
-    String(tok.confidence),
+    tok.logprob != null ? String(Math.exp(tok.logprob)) : '',
     String(tok.logprob ?? ''),
     String(tok.interTokenLatencyMs),
   ])

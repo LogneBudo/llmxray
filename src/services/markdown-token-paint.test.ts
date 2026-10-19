@@ -62,6 +62,15 @@ describe('paintTokens', () => {
     for (const [, colour] of spans(painted)) expect(colour).toBe('red')
   })
 
+  it('leaves a token without a colour un-underlined, so nothing is claimed about it', () => {
+    const tokens = [tok('Sure', 'red'), tok(', here', '')]
+    const painted = paintTokens(marked.parse('Sure, here') as string, tokens)
+    expect(spans(painted)).toEqual([
+      ['Sure', 'red'],
+      [', here', ''],
+    ])
+  })
+
   it('returns the html untouched when there are no tokens', () => {
     expect(paintTokens('<p>hi</p>', [])).toBe('<p>hi</p>')
   })

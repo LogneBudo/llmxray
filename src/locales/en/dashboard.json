@@ -243,5 +243,19 @@
       "jsonFormatToggled": "JSON format toggled. This affects the next request.",
       "none": "(none)"
     }
+  },
+  "tokenStream": {
+    "probability": "Probability",
+    "pace": "Pace",
+    "low": "Low",
+    "high": "High",
+    "slow": "Slow",
+    "fast": "Fast",
+    "probabilityNote": "the model's own probability for each token, from Ollama's logprobs",
+    "paceNote": "how quickly each token arrived against the rest of the reply; not confidence (Ollama sent no probabilities)",
+    "token": "Token #{n}",
+    "latency": "Latency",
+    "text": "Text",
+    "waiting": "Waiting for tokens..."
   }
 }

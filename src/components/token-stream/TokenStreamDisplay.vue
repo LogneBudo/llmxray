@@ -18,6 +18,12 @@ const containerRef = ref<HTMLElement | null>(null)
 const hoveredToken = ref<StreamToken | null>(null)
 const mode = computed(() => props.heatmapMode ?? 'confidence')
 
+/**
+ * What the colour means. A token's number is the model's probability only when Ollama sent its
+ * logprob; without one it was worked out from how fast the token came, and is named for that.
+ */
+const source = computed<'probability' | 'pace'>(() => (tokens.value.some((t) => t.logprob != null) ? 'probability' : 'pace'))
+
 function getTokenColor(token: StreamToken): string {
   switch (mode.value) {
     case 'confidence':
@@ -49,14 +55,14 @@ watch(
 
 <template>
   <div class="flex flex-col gap-3">
-    <ConfidenceHeatmap />
+    <ConfidenceHeatmap :source="source" />
 
     <div
       ref="containerRef"
       class="min-h-[200px] max-h-[500px] overflow-auto rounded-lg border border-border-default bg-surface p-4 font-mono text-sm leading-relaxed"
     >
       <span v-if="tokens.length === 0" class="text-text-muted italic">
-        Waiting for tokens...
+        {{ $t('dashboard.tokenStream.waiting') }}
       </span>
       <TokenChip
         v-for="(token, i) in tokens"
@@ -75,15 +81,15 @@ watch(
       class="rounded-lg border border-border-default bg-surface-raised p-3 text-xs space-y-1"
     >
       <div class="flex gap-4">
-        <span class="text-text-muted">Token #{{ hoveredToken.index }}</span>
-        <span class="text-text-muted">
-          Confidence: <span class="text-text-primary">{{ (hoveredToken.confidence * 100).toFixed(0) }}%</span>
+        <span class="text-text-muted">{{ $t('dashboard.tokenStream.token', { n: hoveredToken.index }) }}</span>
+        <span v-if="hoveredToken.logprob != null" class="text-text-muted">
+          {{ $t('dashboard.tokenStream.probability') }}: <span class="text-text-primary">{{ (hoveredToken.confidence * 100).toFixed(0) }}%</span>
         </span>
         <span class="text-text-muted">
-          Latency: <span class="text-text-primary">{{ hoveredToken.interTokenLatencyMs }}ms</span>
+          {{ $t('dashboard.tokenStream.latency') }}: <span class="text-text-primary">{{ hoveredToken.interTokenLatencyMs }} ms</span>
         </span>
         <span class="text-text-muted">
-          Text: <span class="text-text-primary font-mono">"{{ hoveredToken.text }}"</span>
+          {{ $t('dashboard.tokenStream.text') }}: <span class="text-text-primary font-mono">"{{ hoveredToken.text }}"</span>
         </span>
       </div>
     </div>

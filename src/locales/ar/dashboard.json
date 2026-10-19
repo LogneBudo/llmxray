@@ -144,5 +144,19 @@
     "chatConversation": "المحادثة والدردشة",
     "modelSettings": "النموذج والإعدادات",
     "featuresNavigation": "الميزات والتنقل"
+  },
+  "tokenStream": {
+    "probability": "الاحتمال",
+    "pace": "الإيقاع",
+    "low": "منخفض",
+    "high": "مرتفع",
+    "slow": "بطيء",
+    "fast": "سريع",
+    "probabilityNote": "احتمال النموذج لكل رمز، من logprobs في Ollama",
+    "paceNote": "سرعة وصول كل رمز مقارنةً ببقية الجواب؛ وليست ثقة (لم يرسل Ollama احتمالات)",
+    "token": "الرمز #{n}",
+    "latency": "زمن الوصول",
+    "text": "النص",
+    "waiting": "بانتظار الرموز…"
   }
 }

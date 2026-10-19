@@ -243,5 +243,19 @@
       "jsonFormatToggled": "Format JSON bascul\u00e9. Cela affecte la prochaine requ\u00eate.",
       "none": "(aucun)"
     }
+  },
+  "tokenStream": {
+    "probability": "Probabilit\u00e9",
+    "pace": "Rythme",
+    "low": "Basse",
+    "high": "Haute",
+    "slow": "Lent",
+    "fast": "Rapide",
+    "probabilityNote": "la probabilit\u00e9 que le mod\u00e8le donne \u00e0 chaque token, d'apr\u00e8s les logprobs d'Ollama",
+    "paceNote": "la vitesse d'arriv\u00e9e de chaque token par rapport au reste de la r\u00e9ponse ; ce n'est pas une confiance (Ollama n'a pas envoy\u00e9 de probabilit\u00e9s)",
+    "token": "Token n\u00b0{n}",
+    "latency": "Latence",
+    "text": "Texte",
+    "waiting": "En attente des tokens\u2026"
   }
 }

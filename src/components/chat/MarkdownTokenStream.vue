@@ -25,7 +25,9 @@ let timer: ReturnType<typeof setTimeout> | null = null
 let dirty = false
 
 function paint() {
-  const shown = visibleTokens(tokens.value).map((t) => ({ text: t.text, color: getColor(t.confidence) }))
+  // Underlined only with the model's own probability: a colour worked out from timing would look
+  // like confidence here, where there is no legend to say otherwise.
+  const shown = visibleTokens(tokens.value).map((t) => ({ text: t.text, color: t.logprob != null ? getColor(t.confidence) : '' }))
   const html = renderMarkdown(shown.map((t) => t.text).join(''))
   painted.value = paintTokens(html, shown)
   dirty = false

@@ -9,10 +9,10 @@ LLMxRay is a Vue 3 + TypeScript single-page application that communicates with a
 | Layer | Technology |
 |---|---|
 | Framework | Vue 3.5 + Composition API (`<script setup>`) |
-| Language | TypeScript 5.9 (strict) |
-| Build | Vite 7.3 |
-| Styling | Tailwind CSS 4.2 |
-| State | Pinia 3 (one store per concern) |
+| Language | TypeScript 6 (strict) |
+| Build | Vite 8 |
+| Styling | Tailwind CSS 4.3 |
+| State | Pinia 4 (one store per concern) |
 | Routing | Vue Router 5 |
 | Charts | Chart.js 4 + vue-chartjs, D3.js 7 |
 | Canvas | Vue Flow 1.x (node-based visual editor) |

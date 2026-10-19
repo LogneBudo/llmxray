@@ -114,9 +114,9 @@ Thirteen request shapes agents send all day, scored on what the daemon returned:
 
 ### Chat, token by token
 
-Every token is drawn as it arrives, coloured by confidence. You see where the model hesitated and where it was sure. Markdown, multi-turn, file and image attachments, slash commands, and a thinking budget for reasoning models (off, model's choice, or low / medium / high / max).
+Every token is drawn as it arrives, coloured by the model's own probability for it, from Ollama's logprobs. You see where the model hesitated and where it was sure. Markdown, multi-turn, file and image attachments, slash commands, and a thinking budget for reasoning models (off, model's choice, or low / medium / high / max).
 
-![Chat: a response streaming with confidence colouring](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/chat-streaming.png)
+![Chat: a response streaming, each token coloured by its probability](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/chat-streaming.png)
 
 Each response is also checked as it lands. A badge appears only when something is wrong: repetition, a refusal, gibberish, an empty answer, or a reply cut off at the token limit.
 
@@ -342,9 +342,9 @@ Tested against **Ollama 0.40.x** (verified on 0.40.6, October 2026). Works with 
 
 ## Under the hood
 
-Vue 3.5, TypeScript 5.9 (strict), Vite 7, Tailwind CSS 4, Pinia stores per concern, Chart.js and D3 for charts, Vue Flow for the tool canvas, CodeMirror 6 for code. Storage is the browser's IndexedDB. The backend is Ollama, local.
+Vue 3.5, TypeScript 6 (strict), Vite 8, Tailwind CSS 4, Pinia stores per concern, Chart.js and D3 for charts, Vue Flow for the tool canvas, CodeMirror 6 for code. Storage is the browser's IndexedDB. The backend is Ollama, local.
 
-Streaming reads Ollama's NDJSON through `fetch()` and a `ReadableStream`, and tokens update the UI through Pinia. Chat confidence is approximated from inter-token latency and labelled as such; benchmarks use real logprobs. Hardware detection is a small Vite plugin that asks the OS directly. The Live port is a transparent proxy that keeps counts and timings in memory.
+Streaming reads Ollama's NDJSON through `fetch()` and a `ReadableStream`, and tokens update the UI through Pinia. Chat and Compare colour tokens by the real logprobs Ollama returns; without them a token is left uncoloured, and the token view names timing as pace, never as confidence. Benchmarks use real logprobs too. Hardware detection is a small Vite plugin that asks the OS directly. The Live port is a transparent proxy that keeps counts and timings in memory.
 
 | Command | What it does |
 |---|---|

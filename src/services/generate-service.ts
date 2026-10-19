@@ -37,6 +37,8 @@ export async function startGeneration(params: {
         prompt: params.prompt,
         system: params.system,
         options: params.options,
+        // The model's own probability per token, so Compare colours by it like the chat does.
+        logprobs: true,
       },
       abortController.signal,
     )

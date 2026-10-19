@@ -9,10 +9,10 @@ LLMxRay est une application monopage (SPA) Vue 3 + TypeScript qui communique ave
 | Couche | Technologie |
 |---|---|
 | Framework | Vue 3.5 + Composition API (`<script setup>`) |
-| Langage | TypeScript 5.9 (strict) |
-| Build | Vite 7.3 |
-| Styles | Tailwind CSS 4.2 |
-| État | Pinia 3 (un store par domaine) |
+| Langage | TypeScript 6 (strict) |
+| Build | Vite 8 |
+| Styles | Tailwind CSS 4.3 |
+| État | Pinia 4 (un store par domaine) |
 | Routage | Vue Router 5 |
 | Graphiques | Chart.js 4 + vue-chartjs, D3.js 7 |
 | Canvas | Vue Flow 1.x (éditeur visuel à base de nœuds) |

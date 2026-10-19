@@ -96,7 +96,8 @@ function replaceWithPaintedRuns(
     } else {
       const span = document.createElement('span')
       span.setAttribute(ATTR, String(owner))
-      span.style.borderBottom = `2px solid ${tokens[owner]!.color}`
+      // No colour means no underline: the token kept its span, and nothing is claimed about it.
+      if (tokens[owner]!.color) span.style.borderBottom = `2px solid ${tokens[owner]!.color}`
       span.textContent = run
       frag.appendChild(span)
     }

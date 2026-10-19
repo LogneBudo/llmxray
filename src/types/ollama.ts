@@ -118,6 +118,8 @@ export interface OllamaGenerateRequest {
   format?: 'json' | Record<string, unknown>
   options?: OllamaOptions
   think?: OllamaThink
+  /** Ask for each token's log probability; streamed back per chunk. */
+  logprobs?: boolean
 }
 
 export interface OllamaChatRequest {

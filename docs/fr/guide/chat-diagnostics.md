@@ -20,10 +20,10 @@ La page est divisée en deux zones :
 2. Saisissez votre message dans la zone de texte.
 3. Appuyez sur **Entrée** ou cliquez sur Envoyer.
 
-Les tokens arrivent un par un avec une **coloration par confiance** : chaque token est teinté en fonction de la vitesse à laquelle le modèle l'a produit. Tokens rapides = confiance élevée (plus vert). Tokens lents = confiance faible (plus orange/rouge).
+Les tokens arrivent un par un, chacun souligné dans la couleur de la **probabilité que le modèle lui donne** : vert là où le modèle était sûr, orange à rouge là où il ne l'était pas. LLMxRay demande à Ollama les logprobs des tokens et colore d'après eux.
 
-::: info La confiance est une approximation
-Comme le endpoint `/api/chat` d'Ollama n'expose pas les logprobs des tokens, LLMxRay approxime la confiance à partir de la latence inter-tokens. Cela est clairement indiqué dans l'interface. Pour de vrais logprobs, utilisez la fonctionnalité [Benchmark](./benchmark).
+::: info Probabilité, ou seulement rythme
+Les couleurs ne valent probabilité que lorsqu'Ollama envoie les logprobs, ce que les versions actuelles font sur `/api/chat`. Sans eux (un Ollama plus ancien, ou un chemin qui ne les renvoie pas), le chat laisse les tokens sans soulignement, et la vue des tokens de la page de session les colore par **rythme**, la vitesse d'arrivée de chacun par rapport au reste de la réponse, sous une légende qui précise que ce n'est pas une confiance. L'export CSV ne remplit sa colonne Probabilité qu'à partir de vrais logprobs.
 :::
 
 ## Fonctionnalités
