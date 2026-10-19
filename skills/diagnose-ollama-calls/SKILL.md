@@ -4,7 +4,7 @@ description: Find out what went wrong with your own Ollama calls and fix it, usi
 compatibility: Requires Node.js 22+ (npx) and a local Ollama daemon. LLMxRay runs on the same machine; nothing leaves it.
 metadata:
   author: LogneBudo
-  version: "0.8.10"
+  version: "0.8.11"
   homepage: https://github.com/LogneBudo/llmxray
   openclaw:
     emoji: "🩻"
