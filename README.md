@@ -22,8 +22,8 @@
 </p>
 <p align="center"><strong>See what your local AI is actually doing.</strong></p>
 <p align="center">
-  One command, one browser tab. Token-by-token streaming, cache diagnostics, model comparison, benchmarks and cost tracking<br/>
-  for the models running on your own machine through Ollama. No cloud. No API keys. No cost.
+  Point VS Code Copilot, Open WebUI, Continue, n8n or your own agent at LLMxRay instead of Ollama, and see every turn:<br/>
+  what was cached, what was read again, what the daemon silently cut, which tool evicted which model. No cloud. No API keys. No cost.
 </p>
 
 <p align="center">
@@ -45,7 +45,10 @@
 
 <p align="center">
   <a href="#quick-start">Quick Start</a> &bull;
-  <a href="#what-llmxray-shows-you">What it shows you</a> &bull;
+  <a href="#what-your-tools-really-send">What your tools send</a> &bull;
+  <a href="#keep-it-and-send-it-on">Send it on</a> &bull;
+  <a href="#for-agents">For agents</a> &bull;
+  <a href="#also-in-the-box">Also in the box</a> &bull;
   <a href="#who-is-this-for">Who is this for</a> &bull;
   <a href="#install">Install</a> &bull;
   <a href="#ollama-compatibility">Ollama compatibility</a> &bull;
@@ -69,18 +72,35 @@ npx llmxray
 Or with Docker:
 
 ```bash
-docker run -p 5174:5174 djovaneli/llmxray
+docker run -p 5174:5174 -p 11435:11435 djovaneli/llmxray
 ```
 
-Open **http://localhost:5174**. Pick a model, send a message, and watch what happens. That's it.
+Now point your tools at **http://localhost:11435** instead of Ollama's 11434: VS Code Copilot, Open WebUI, Continue, n8n, your own scripts. It behaves exactly like Ollama and forwards everything. Open **http://localhost:5174**, go to **Live**, and watch their turns arrive.
+
+Just want to try a model? Open the Chat page, pick one, and send a message.
 
 ---
 
-## What LLMxRay shows you
+## What your tools really send
 
-You run a local model. You chat with it. LLMxRay answers the questions that come next: how fast was each token, what did the prompt cost, did the cache help, which setting was actually better, and what are your *other* tools sending to the same model.
+Your editor, your agents and your scripts all talk to the same Ollama. These pages show what each of them sends, what the daemon does with it, and what that costs the others.
 
-Every page below is one of those answers.
+### Live: what your other tools send
+
+LLMxRay opens a second port, **11435**, that behaves exactly like Ollama and forwards everything to it. Point VS Code Copilot, Open WebUI, Continue, n8n or your own script at `http://localhost:11435` and every turn they send appears here: client, model, prompt size, how much came from the cache, prefill and generation speed, tool calls.
+
+```
+VS Code Copilot ─┐
+Open WebUI ──────┤                                    ┌─ Live page: every turn,
+Continue / n8n ──┼─► http://localhost:11435 ─► Ollama ┤  cache hits, prefill speed,
+your scripts ────┘        (LLMxRay)                   └─ where the cache broke
+```
+
+![Live: turns from two clients, with findings](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/live.png)
+
+Select a turn to see what the prompt is made of and the exact point where it stopped matching the previous one, which is where the cache broke. Findings are plain sentences, each linked to the turn that proves it: a client re-reading its whole prompt every turn, a prompt the daemon silently cut to fit the context (Ollama keeps the first few tokens and the end, drops the rest, and says nothing), a model running partly on CPU, tool schemas taking 40% of every prompt. Only counts and timings are kept, on this machine for 30 days, so a restart picks up where it stopped. Prompt text is an opt-in that writes to a local file. Nothing leaves your machine unless you send the turns on to your own trace viewer: each model call as an OpenTelemetry span, each run as a trace, for Jaeger, Phoenix, Langfuse or Grafana.
+
+Both ports answer only this machine by default, because the Live log holds whatever your tools sent. Start with `npx llmxray --host 0.0.0.0` to let other machines on your network reach them, for a Live page on a second screen or a shared GPU box.
 
 ### Prompt X-ray: the prompt itself, drawn to scale
 
@@ -112,37 +132,6 @@ Thirteen request shapes agents send all day, scored on what the daemon returned:
 
 ![Tool calls: thirteen agent request shapes scored on gemma4](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/tool-calls.png)
 
-### Chat, token by token
-
-Every token is drawn as it arrives, coloured by the model's own probability for it, from Ollama's logprobs. You see where the model hesitated and where it was sure. Markdown, multi-turn, file and image attachments, slash commands, and a thinking budget for reasoning models (off, model's choice, or low / medium / high / max).
-
-![Chat: a response streaming, each token coloured by its probability](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/chat-streaming.png)
-
-Each response is also checked as it lands. A badge appears only when something is wrong: repetition, a refusal, gibberish, an empty answer, or a reply cut off at the token limit.
-
-### Session deep dive
-
-Open any turn to see it as a timeline: time to first token, inter-token gaps, the reasoning block if there was one, tool calls, and the exact prompt that was sent.
-
-![Session details: stream timeline and metrics](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/session.png)
-
-### Live: what your other tools send
-
-LLMxRay opens a second port, **11435**, that behaves exactly like Ollama and forwards everything to it. Point VS Code Copilot, Open WebUI, Continue, n8n or your own script at `http://localhost:11435` and every turn they send appears here: client, model, prompt size, how much came from the cache, prefill and generation speed, tool calls.
-
-```
-VS Code Copilot ─┐
-Open WebUI ──────┤                                    ┌─ Live page: every turn,
-Continue / n8n ──┼─► http://localhost:11435 ─► Ollama ┤  cache hits, prefill speed,
-your scripts ────┘        (LLMxRay)                   └─ where the cache broke
-```
-
-![Live: turns from two clients, with findings](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/live.png)
-
-Select a turn to see what the prompt is made of and the exact point where it stopped matching the previous one, which is where the cache broke. Findings are plain sentences, each linked to the turn that proves it: a client re-reading its whole prompt every turn, a prompt the daemon silently cut to fit the context (Ollama keeps the first few tokens and the end, drops the rest, and says nothing), a model running partly on CPU, tool schemas taking 40% of every prompt. Only counts and timings are kept, on this machine for 30 days, so a restart picks up where it stopped. Prompt text is an opt-in that writes to a local file. Nothing leaves your machine unless you send the turns on to your own trace viewer: each model call as an OpenTelemetry span, each run as a trace, for Jaeger, Phoenix, Langfuse or Grafana.
-
-Both ports answer only this machine by default, because the Live log holds whatever your tools sent. Start with `npx llmxray --host 0.0.0.0` to let other machines on your network reach them, for a Live page on a second screen or a shared GPU box.
-
 ### Cache Lab
 
 A local model reuses its prompt cache only while the prompt matches from the very first token. One timestamp near the top forfeits everything below it. Cache Lab finds the values that change between turns, shows where reuse dies, and then **measures** against your own daemon what moving them to the end saves.
@@ -151,107 +140,28 @@ A local model reuses its prompt cache only while the prompt matches from the ver
 
 Measured on a real 324-token prompt: 4 tokens reused and 64.6 ms of prefill with the timestamp at the front, 290 reused and 18.6 ms with it at the back. **3.5x faster, same words.**
 
-### Compare
-
-The same prompt against up to four slots, each with its own model, temperature and system prompt, streaming side by side. One-click presets: Temperature Sweep, Deterministic Pair, Language Compare. A word-level diff shows exactly what changed between two answers.
-
-![Compare: temperature sweep on one model](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/compare.png)
-
-### Surgical Benchmark
-
-Score models on curated question suites (MMLU-Pro, ARC-Challenge, HellaSwag, GSM8K, TruthfulQA) using the model's **real token logprobs**, not whether the answer happened to look right. Confidence versus accuracy per category, so you see where a model is confidently wrong. Import your own suites as JSON.
-
-![Benchmark: confidence versus accuracy](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/benchmark.png)
-
-### Decision Lab
-
-Decision models (nimble, tev1, clef) answer typed questions with probabilities instead of prose. Give the lab a situation and ask for a choice among candidates, a yes/no probability, or a score on a scale. Every answer comes back as the model's own distribution, drawn as bars.
-
-![Decision Lab: probability bars behind each answer](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/decision-lab.png)
-
 ### Protocol Observatory
 
 The same prompt through Ollama's three serving protocols in parallel: native `/api/chat`, OpenAI-compatible `/v1/chat/completions`, and Anthropic-compatible `/v1/messages`. Side-by-side streaming, per-protocol metrics, and an envelope diff that shows how each one frames finish reasons, token counts and errors.
 
 ![Protocol Observatory: three protocols side by side](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/protocols.png)
 
-### Knowledge Base and Embeddings
+---
 
-Drop in PDF, DOCX, Markdown or CSV files. They are chunked, embedded and searchable, so you see what retrieval actually returns before a model ever sees it. The Embeddings page lets you compare any two texts by cosine similarity, visualise the vectors, and see what Matryoshka truncation costs.
+## Keep it, and send it on
 
-<table>
-<tr>
-<td width="50%">
+Every turn's record (tokens, cache, timings, client, model, never the text) stays on your machine for 30 days, so a restart picks up where it stopped. Live, Runs, Prompt X-ray and the MCP tools carry on as if nothing happened.
 
-![Knowledge Base: search results with scores](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/knowledge-base.png)
+If your team already reads traces, send the turns there: each model call becomes an OpenTelemetry span with the GenAI attributes viewers already read, each run a trace, and the tool time between calls its own span, the same waterfall as Runs. Set an address on the Live page, or `OTEL_EXPORTER_OTLP_ENDPOINT`.
 
-</td>
-<td width="50%">
+| Viewer | Address |
+|---|---|
+| Jaeger (`docker run -p 16686:16686 -p 4318:4318 jaegertracing/jaeger`) | `http://localhost:4318` |
+| Arize Phoenix (`docker run -p 6006:6006 arizephoenix/phoenix`) | `http://localhost:6006` |
+| Langfuse | `https://cloud.langfuse.com/api/public/otel`, with a Basic header from your keys |
+| Grafana Tempo, an OpenTelemetry Collector | its OTLP HTTP address, usually port 4318 |
 
-![Embeddings: cosine similarity between two texts](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/embeddings.png)
-
-</td>
-</tr>
-</table>
-
-Everything stays in your browser's IndexedDB.
-
-### Code Completion
-
-Fill-in-the-middle for Qwen-Coder, CodeLlama, Codestral, DeepSeek-Coder and StarCoder: a prefix, a suffix, and the model fills the gap. The stitched preview shows the result as your editor would.
-
-![Code Completion: prefix, suffix and stitched preview](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/fim.png)
-
-### Tool Workshop
-
-A node canvas for building tool definitions, with the TypeScript kept in sync both ways: edit the nodes or edit the code. Probe an API, generate the schema, and test the tool with a live call.
-
-![Tool Workshop: node canvas with the code panel open](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/tools.png)
-
-### Analytics and Costs
-
-Latency percentiles (P50 / P95 / P99) for requests and first tokens, quality over turns, errors by model, a usage heatmap, and temperature against tokens per second. The cost page prices your local usage at cloud rates, so you see what running locally saves.
-
-<table>
-<tr>
-<td width="50%">
-
-![Analytics: latency percentiles and quality](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/analytics.png)
-
-</td>
-<td width="50%">
-
-![Costs: cloud-equivalent pricing per model](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/costs.png)
-
-</td>
-</tr>
-</table>
-
-### My System and Models
-
-Hardware, runtime and inference overview on one page: CPU, memory, GPU, which models are loaded and where. The Models tab lists every installed model with its parameters, template and runner, and pulls new ones from the catalog.
-
-<table>
-<tr>
-<td width="50%">
-
-![My System: hardware and Ollama status](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/system.png)
-
-</td>
-<td width="50%">
-
-![Models: installed models and catalog](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/models.png)
-
-</td>
-</tr>
-</table>
-
-### Also in the box
-
-- **AI Training Pipeline.** Curate pairs from your conversations, tag and review them, export JSONL for fine-tuning.
-- **Local history database.** Every chat, comparison and benchmark is archived in IndexedDB with filters, trends, exports and retention rules.
-- **Educators Kit.** Nine lesson modules on the [docs site](https://lognebudo.github.io/llmxray/docs/community/educators/), each built around an LLMxRay page.
-- **Five languages.** English, French, Serbian (Latin and Cyrillic), Chinese and Arabic, with RTL layout. Scaffolds ready for Hebrew and Japanese.
+The prompt text goes along only if you switch on both *Keep the prompt text* and *Include the prompt text in each span*.
 
 ---
 
@@ -283,6 +193,165 @@ LLMxRay itself must be running (`npx llmxray`). The MCP server reads from it ove
 The same procedure, as an [Agent Skill](https://agentskills.io) your agent can load: `npx skills add LogneBudo/llmxray` (skills.sh) or `clawhub install llmxray-diagnose-ollama-calls` (ClawHub). Source: [skills/diagnose-ollama-calls/SKILL.md](skills/diagnose-ollama-calls/SKILL.md).
 
 Name yourself so your turns are yours: send the header `X-LLMxRay-Client: my-agent`, or use `http://localhost:11435/?client=my-agent` as the base URL, and pass `my-agent` as `client` to the tools. Where to set the base URL: Ollama SDKs and CLI `OLLAMA_HOST=127.0.0.1:11435`; OpenAI-compatible clients `base_url=http://localhost:11435/v1`; Claude Code `ANTHROPIC_BASE_URL=http://localhost:11435`; Continue `apiBase`; Open WebUI `OLLAMA_BASE_URL`.
+
+---
+
+## Also in the box
+
+You run a local model. You chat with it. LLMxRay answers the questions that come next: how fast was each token, what did the prompt cost, did the cache help, which setting was actually better, and what are your *other* tools sending to the same model.
+
+Every page below is one of those answers.
+
+### Chat, token by token
+
+Every token is drawn as it arrives, coloured by the model's own probability for it, from Ollama's logprobs. You see where the model hesitated and where it was sure. Markdown, multi-turn, file and image attachments, slash commands, and a thinking budget for reasoning models (off, model's choice, or low / medium / high / max).
+
+
+Each response is also checked as it lands. A badge appears only when something is wrong: repetition, a refusal, gibberish, an empty answer, or a reply cut off at the token limit.
+
+<details><summary>Screenshot</summary>
+
+![Chat: a response streaming, each token coloured by its probability](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/chat-streaming.png)
+
+</details>
+
+### Session deep dive
+
+Open any turn to see it as a timeline: time to first token, inter-token gaps, the reasoning block if there was one, tool calls, and the exact prompt that was sent.
+
+<details><summary>Screenshot</summary>
+
+![Session details: stream timeline and metrics](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/session.png)
+
+</details>
+
+### Compare
+
+The same prompt against up to four slots, each with its own model, temperature and system prompt, streaming side by side. One-click presets: Temperature Sweep, Deterministic Pair, Language Compare. A word-level diff shows exactly what changed between two answers.
+
+<details><summary>Screenshot</summary>
+
+![Compare: temperature sweep on one model](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/compare.png)
+
+</details>
+
+### Surgical Benchmark
+
+Score models on curated question suites (MMLU-Pro, ARC-Challenge, HellaSwag, GSM8K, TruthfulQA) using the model's **real token logprobs**, not whether the answer happened to look right. Confidence versus accuracy per category, so you see where a model is confidently wrong. Import your own suites as JSON.
+
+<details><summary>Screenshot</summary>
+
+![Benchmark: confidence versus accuracy](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/benchmark.png)
+
+</details>
+
+### Decision Lab
+
+Decision models (nimble, tev1, clef) answer typed questions with probabilities instead of prose. Give the lab a situation and ask for a choice among candidates, a yes/no probability, or a score on a scale. Every answer comes back as the model's own distribution, drawn as bars.
+
+<details><summary>Screenshot</summary>
+
+![Decision Lab: probability bars behind each answer](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/decision-lab.png)
+
+</details>
+
+### Knowledge Base and Embeddings
+
+Drop in PDF, DOCX, Markdown or CSV files. They are chunked, embedded and searchable, so you see what retrieval actually returns before a model ever sees it. The Embeddings page lets you compare any two texts by cosine similarity, visualise the vectors, and see what Matryoshka truncation costs.
+
+
+Everything stays in your browser's IndexedDB.
+
+<details><summary>Screenshot</summary>
+
+<table>
+<tr>
+<td width="50%">
+
+![Knowledge Base: search results with scores](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/knowledge-base.png)
+
+</td>
+<td width="50%">
+
+![Embeddings: cosine similarity between two texts](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/embeddings.png)
+
+</td>
+</tr>
+</table>
+
+</details>
+
+### Code Completion
+
+Fill-in-the-middle for Qwen-Coder, CodeLlama, Codestral, DeepSeek-Coder and StarCoder: a prefix, a suffix, and the model fills the gap. The stitched preview shows the result as your editor would.
+
+<details><summary>Screenshot</summary>
+
+![Code Completion: prefix, suffix and stitched preview](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/fim.png)
+
+</details>
+
+### Tool Workshop
+
+A node canvas for building tool definitions, with the TypeScript kept in sync both ways: edit the nodes or edit the code. Probe an API, generate the schema, and test the tool with a live call.
+
+<details><summary>Screenshot</summary>
+
+![Tool Workshop: node canvas with the code panel open](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/tools.png)
+
+</details>
+
+### Analytics and Costs
+
+Latency percentiles (P50 / P95 / P99) for requests and first tokens, quality over turns, errors by model, a usage heatmap, and temperature against tokens per second. The cost page prices your local usage at cloud rates, so you see what running locally saves.
+
+<details><summary>Screenshot</summary>
+
+<table>
+<tr>
+<td width="50%">
+
+![Analytics: latency percentiles and quality](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/analytics.png)
+
+</td>
+<td width="50%">
+
+![Costs: cloud-equivalent pricing per model](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/costs.png)
+
+</td>
+</tr>
+</table>
+
+</details>
+
+### My System and Models
+
+Hardware, runtime and inference overview on one page: CPU, memory, GPU, which models are loaded and where. The Models tab lists every installed model with its parameters, template and runner, and pulls new ones from the catalog.
+
+<details><summary>Screenshot</summary>
+
+<table>
+<tr>
+<td width="50%">
+
+![My System: hardware and Ollama status](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/system.png)
+
+</td>
+<td width="50%">
+
+![Models: installed models and catalog](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/models.png)
+
+</td>
+</tr>
+</table>
+
+</details>
+
+### More
+- **AI Training Pipeline.** Curate pairs from your conversations, tag and review them, export JSONL for fine-tuning.
+- **Local history database.** Every chat, comparison and benchmark is archived in IndexedDB with filters, trends, exports and retention rules.
+- **Educators Kit.** Nine lesson modules on the [docs site](https://lognebudo.github.io/llmxray/docs/community/educators/), each built around an LLMxRay page.
+- **Five languages.** English, French, Serbian (Latin and Cyrillic), Chinese and Arabic, with RTL layout. Scaffolds ready for Hebrew and Japanese.
 
 ---
 
@@ -359,9 +428,13 @@ Streaming reads Ollama's NDJSON through `fetch()` and a `ReadableStream`, and to
 
 Contributions welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for setup and guidelines. Community translations are especially welcome: scaffold files are ready for Hebrew and Japanese.
 
+---
+
 ## License
 
 [Apache License 2.0](LICENSE)
+
+---
 
 ## Trademark
 
