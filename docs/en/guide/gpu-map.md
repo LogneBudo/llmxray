@@ -19,7 +19,7 @@ Under the bar, each loaded model with its size, its quantisation, the context it
 
 ## When Ollama's figure cannot be true
 
-Ollama 0.40.6 under-reports memory on its llama.cpp runner: it can report 432 MB for a gemma4 whose file is 6.1 GB, while the card holds 9 GB ([ollama#19089](https://github.com/ollama/ollama/issues/19089)). A loaded model cannot take less than its own file, so when Ollama reports under half of it, the map does not draw that figure. It uses the file size instead, says so under the model with what Ollama reported, and leaves the context's share out because it is not known. The verdicts below are judged against the corrected figure. The MCP tools `list_local_models` and `estimate_my_prompt` add the same sentence for agents.
+Ollama 0.40.6 to 0.40.10 under-report memory on its llama.cpp runner: it can report 432 MB for a gemma4 whose file is 6.1 GB, while the card holds 9 GB ([ollama#19089](https://github.com/ollama/ollama/issues/19089)). A loaded model cannot take less than its own file, so when Ollama reports under half of it, the map does not draw that figure. It uses the file size instead, says so under the model with what Ollama reported, and leaves the context's share out because it is not known. The verdicts below are judged against the corrected figure. The MCP tools `list_local_models` and `estimate_my_prompt` add the same sentence for agents.
 
 ## What else would fit
 

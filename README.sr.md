@@ -377,7 +377,7 @@ npm run dev     # http://localhost:5173
 
 ## Ollama kompatibilnost
 
-Testirano sa **Ollama 0.40.x** (provereno na 0.40.6, oktobar 2026). Radi sa 0.20 i novijim; starije verzije ćaskaju, ali nemaju `think` ni `format` po JSON šemi. **Preporučeno: 0.33.3 ili novije**, koje prijavljuje ponovnu upotrebu keša prompta, pa se brzina prefill-a meri na tokenima koji su zaista obrađeni.
+Testirano sa **Ollama 0.40.x** (provereno na 0.40.10, oktobar 2026). Radi sa 0.20 i novijim; starije verzije ćaskaju, ali nemaju `think` ni `format` po JSON šemi. **Preporučeno: 0.33.3 ili novije**, koje prijavljuje ponovnu upotrebu keša prompta, pa se brzina prefill-a meri na tokenima koji su zaista obrađeni.
 
 | Endpoint | Koristi se za |
 |---|---|

@@ -19,7 +19,7 @@ Sous la barre, chaque modèle chargé avec sa taille, sa quantification, le cont
 
 ## Quand le chiffre d'Ollama ne peut pas être vrai
 
-Ollama 0.40.6 sous-estime la mémoire sur son moteur llama.cpp : il peut annoncer 432 Mo pour un gemma4 dont le fichier fait 6,1 Go, alors que la carte en contient 9 ([ollama#19089](https://github.com/ollama/ollama/issues/19089)). Un modèle chargé ne peut pas occuper moins que son propre fichier ; quand Ollama annonce moins de la moitié de ce fichier, la carte ne dessine pas ce chiffre. Elle utilise la taille du fichier à la place, le dit sous le modèle avec ce qu'Ollama a annoncé, et laisse de côté la part du contexte, qui n'est pas connue. Les verdicts ci-dessous sont jugés sur le chiffre corrigé. Les outils MCP `list_local_models` et `estimate_my_prompt` ajoutent la même phrase pour les agents.
+Ollama 0.40.6 à 0.40.10 sous-estiment la mémoire sur son moteur llama.cpp : il peut annoncer 432 Mo pour un gemma4 dont le fichier fait 6,1 Go, alors que la carte en contient 9 ([ollama#19089](https://github.com/ollama/ollama/issues/19089)). Un modèle chargé ne peut pas occuper moins que son propre fichier ; quand Ollama annonce moins de la moitié de ce fichier, la carte ne dessine pas ce chiffre. Elle utilise la taille du fichier à la place, le dit sous le modèle avec ce qu'Ollama a annoncé, et laisse de côté la part du contexte, qui n'est pas connue. Les verdicts ci-dessous sont jugés sur le chiffre corrigé. Les outils MCP `list_local_models` et `estimate_my_prompt` ajoutent la même phrase pour les agents.
 
 ## Ce qui tiendrait encore
 

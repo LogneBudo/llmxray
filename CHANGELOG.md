@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.12] — 2026-10-24
+
+### Fixed
+
+- **A chat that outgrew the context is caught.** Measured on Ollama 0.40.6 and 0.40.10: a conversation longer
+  than the context loses its oldest messages, and the system prompt and the new message are kept; the model
+  answers without the dropped messages and can invent what they held. Only a system prompt too long on its own
+  loses its start, cut to about half the context. LLMxRay only knew the second case, and only at the context
+  ceiling, so it missed both. The Live finding, Prompt X-ray and the MCP turn list now catch both and say which
+  one happened: the oldest messages are striped in the X-ray, or the start.
+- The README and the docs no longer say the system prompt is always among what is cut.
+- A lost-cache finding keeps the space between its two sentences.
+
+### Changed
+
+- Verified on Ollama 0.40.10. It still under-reports memory on its llama.cpp runner, so the GPU map keeps drawing
+  from the model file.
+
 ## [0.8.11] — 2026-10-19
 
 ### Added

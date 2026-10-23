@@ -394,7 +394,7 @@ npm run dev     # http://localhost:5173
 
 ## Ollama compatibility
 
-Tested against **Ollama 0.40.x** (verified on 0.40.6, October 2026). Works with 0.20 and newer; older versions chat but lack `think` and JSON-schema `format`. **Recommended: 0.33.3 or newer**, which reports prompt-cache reuse, so prefill speed is measured over the tokens actually evaluated.
+Tested against **Ollama 0.40.x** (verified on 0.40.10, October 2026). Works with 0.20 and newer; older versions chat but lack `think` and JSON-schema `format`. **Recommended: 0.33.3 or newer**, which reports prompt-cache reuse, so prefill speed is measured over the tokens actually evaluated.
 
 | Endpoint | Used for |
 |---|---|
