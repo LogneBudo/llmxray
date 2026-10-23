@@ -1,15 +1,23 @@
 # LLMxRay
 
-> A free, local observatory for Ollama. It shows what your local models actually do with each prompt: what was cached, what was recomputed, what the daemon silently cut to fit the context, which tool on the machine evicted which model, and how each model fits in video memory. Agents can query it about their own calls through a read-only MCP server. Everything runs on your machine: no account, no API key, nothing sent anywhere. Apache-2.0.
+> A free, local observatory for Ollama. It shows what Ollama silently does to the prompts your tools send: what was cached, what was read again, what the daemon cut to fit the context, which tool on the machine evicted which model, and how each model fits in video memory. Agents can query it about their own calls through a read-only MCP server. Everything runs on your machine: no account, no API key, nothing sent anywhere. Apache-2.0.
 
 ## Install
 
-- Current version: 0.8.11. Needs Node.js 22 or newer for `npx`; tested against Ollama 0.40.x.
+- Current version: 0.8.12. Needs Node.js 22 or newer for `npx`; tested against Ollama 0.40.x.
 - Ollama must be running with at least one model pulled (`ollama pull llama3.2`).
-- `npx llmxray`, or `docker run -p 5174:5174 djovaneli/llmxray`, then open http://localhost:5174
-- To observe other tools: point them at port 11435 instead of 11434. It behaves exactly like Ollama and forwards everything; LLMxRay only records what passes.
+- `npx llmxray`, or `docker run -p 5174:5174 -p 11435:11435 djovaneli/llmxray`, then open http://localhost:5174
+- To observe other tools: point them at port 11435 instead of 11434. It behaves exactly like Ollama and forwards everything; LLMxRay only records what passes (counts and timings; prompt text is opt-in).
 - Turns are kept on this machine for 30 days (`~/.llmxray/observe`, or `LLMXRAY_DATA_DIR`) and come back after a restart.
 - To send them to a trace viewer (Jaeger, Arize Phoenix, Langfuse, Grafana): set an address on the Live page or `OTEL_EXPORTER_OTLP_ENDPOINT`. One OpenTelemetry span per model call with gen_ai.* attributes, one trace per run, OTLP/HTTP protobuf. The prompt text is sent only if two switches are on.
+
+## This site
+
+- [Home](https://lognebudo.github.io/llmxray/): the recorded silent cut, cache break, shared GPU and agent cache waste, each drawn from real turns
+- [What it shows](https://lognebudo.github.io/llmxray/observer): Live, Prompt X-ray, Runs, Shared box, GPU map, Cache Lab
+- [For agents](https://lognebudo.github.io/llmxray/agents): the MCP server, the Agent Skill, the client header, OpenTelemetry export
+- The Lab: [Diagnostics](https://lognebudo.github.io/llmxray/diagnostics) (chat token by token, compare, benchmark), [Embeddings and RAG](https://lognebudo.github.io/llmxray/ai-intelligence), [Tool calls and Tool Workshop](https://lognebudo.github.io/llmxray/tool-workshop)
+- [Contact](https://lognebudo.github.io/llmxray/contact), [Terms](https://lognebudo.github.io/llmxray/terms), [Privacy](https://lognebudo.github.io/llmxray/privacy)
 
 ## For agents
 

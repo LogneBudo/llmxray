@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://lognebudo.github.io/llmxray/</loc><lastmod>2026-10-19</lastmod></url>
-  <url><loc>https://lognebudo.github.io/llmxray/diagnostics</loc><lastmod>2026-10-19</lastmod></url>
-  <url><loc>https://lognebudo.github.io/llmxray/ai-intelligence</loc><lastmod>2026-10-19</lastmod></url>
-  <url><loc>https://lognebudo.github.io/llmxray/tool-workshop</loc><lastmod>2026-10-19</lastmod></url>
-  <url><loc>https://lognebudo.github.io/llmxray/contact</loc><lastmod>2026-10-19</lastmod></url>
-  <url><loc>https://lognebudo.github.io/llmxray/terms</loc><lastmod>2026-10-19</lastmod></url>
-  <url><loc>https://lognebudo.github.io/llmxray/privacy</loc><lastmod>2026-10-19</lastmod></url>
+  <url><loc>https://lognebudo.github.io/llmxray/</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://lognebudo.github.io/llmxray/observer</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://lognebudo.github.io/llmxray/agents</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://lognebudo.github.io/llmxray/diagnostics</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://lognebudo.github.io/llmxray/ai-intelligence</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://lognebudo.github.io/llmxray/tool-workshop</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://lognebudo.github.io/llmxray/contact</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://lognebudo.github.io/llmxray/terms</loc><lastmod>2026-10-24</lastmod></url>
+  <url><loc>https://lognebudo.github.io/llmxray/privacy</loc><lastmod>2026-10-24</lastmod></url>
 </urlset>

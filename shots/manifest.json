@@ -1,0 +1,112 @@
+{
+ "live-light.webp": {
+  "w": 2432,
+  "h": 2388,
+  "source": "http://localhost:5174/live",
+  "theme": "light",
+  "at": "2026-10-23"
+ },
+ "live-dark.webp": {
+  "w": 2432,
+  "h": 2388,
+  "source": "http://localhost:5174/live",
+  "theme": "dark",
+  "at": "2026-10-23"
+ },
+ "xray-light.webp": {
+  "w": 2432,
+  "h": 2188,
+  "source": "http://localhost:5174/xray",
+  "theme": "light",
+  "at": "2026-10-23"
+ },
+ "xray-dark.webp": {
+  "w": 2432,
+  "h": 2188,
+  "source": "http://localhost:5174/xray",
+  "theme": "dark",
+  "at": "2026-10-23"
+ },
+ "runs-light.webp": {
+  "w": 2432,
+  "h": 2188,
+  "source": "http://localhost:5174/runs",
+  "theme": "light",
+  "at": "2026-10-23"
+ },
+ "runs-dark.webp": {
+  "w": 2432,
+  "h": 2188,
+  "source": "http://localhost:5174/runs",
+  "theme": "dark",
+  "at": "2026-10-23"
+ },
+ "shared-box-light.webp": {
+  "w": 2432,
+  "h": 2388,
+  "source": "http://localhost:5174/shared-box",
+  "theme": "light",
+  "at": "2026-10-23"
+ },
+ "shared-box-dark.webp": {
+  "w": 2432,
+  "h": 2388,
+  "source": "http://localhost:5174/shared-box",
+  "theme": "dark",
+  "at": "2026-10-23"
+ },
+ "docs-cache-lab.webp": {
+  "w": 2880,
+  "h": 1800,
+  "source": "docs/public/screenshots/cache-lab.png",
+  "theme": "dark"
+ },
+ "docs-chat-streaming.webp": {
+  "w": 2880,
+  "h": 1800,
+  "source": "docs/public/screenshots/chat-streaming.png",
+  "theme": "dark"
+ },
+ "docs-compare.webp": {
+  "w": 2880,
+  "h": 1800,
+  "source": "docs/public/screenshots/compare.png",
+  "theme": "dark"
+ },
+ "docs-benchmark.webp": {
+  "w": 2880,
+  "h": 1800,
+  "source": "docs/public/screenshots/benchmark.png",
+  "theme": "dark"
+ },
+ "docs-knowledge-base.webp": {
+  "w": 2880,
+  "h": 1800,
+  "source": "docs/public/screenshots/knowledge-base.png",
+  "theme": "dark"
+ },
+ "docs-embeddings.webp": {
+  "w": 2880,
+  "h": 1800,
+  "source": "docs/public/screenshots/embeddings.png",
+  "theme": "dark"
+ },
+ "docs-tools.webp": {
+  "w": 2880,
+  "h": 1800,
+  "source": "docs/public/screenshots/tools.png",
+  "theme": "dark"
+ },
+ "docs-tool-calls.webp": {
+  "w": 2880,
+  "h": 1800,
+  "source": "docs/public/screenshots/tool-calls.png",
+  "theme": "dark"
+ },
+ "docs-gpu-map.webp": {
+  "w": 2880,
+  "h": 1800,
+  "source": "docs/public/screenshots/gpu-map.png",
+  "theme": "dark"
+ }
+}
