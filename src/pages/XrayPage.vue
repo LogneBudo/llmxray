@@ -154,7 +154,7 @@ watch(
               </template>
               <template v-else-if="x.note.kind === 'tools-added'">{{ $t('xray.note.toolsAdded', { tools: x.note.tools, tokens: formatNumber(x.note.toolTokens) }) }}</template>
               <template v-else-if="x.note.kind === 'cut'">
-                <span class="font-medium text-error">{{ $t('xray.note.cut', { context: formatNumber(x.note.context), lost: formatNumber(x.note.lostTokens) }) }}</span>
+                <span class="font-medium text-error">{{ $t(x.note.mode === 'history' ? 'xray.note.cutHistory' : 'xray.note.cut', { context: formatNumber(x.note.context), lost: formatNumber(x.note.lostTokens) }) }}</span>
                 <span v-if="x.note.systemLost"> {{ $t('xray.note.cutSystem') }}</span>
                 <span v-if="x.note.toolsLost"> {{ $t('xray.note.cutTools') }}</span>
               </template>

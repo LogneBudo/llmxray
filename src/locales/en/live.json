@@ -150,8 +150,9 @@
     },
     "truncated": {
       "title": "{client} sends about {tokens}-token prompts to {model}, loaded with a {context}-token context, and the daemon silently cut them.",
-      "body": "Ollama answered as if nothing was wrong. It kept the first few tokens and the end and dropped about {lost} tokens from the start, the system prompt included. Nothing in the response says so; the prompt count sitting exactly at the context size is the only trace. Raise num_ctx (or OLLAMA_CONTEXT_LENGTH) above the prompt size, or shorten the prompt: the answer was to a prompt you did not send.",
-      "bodyNoSystem": "Ollama answered as if nothing was wrong. It kept the first few tokens and the end and dropped about {lost} tokens from the start. Nothing in the response says so; the prompt count sitting exactly at the context size is the only trace. Raise num_ctx (or OLLAMA_CONTEXT_LENGTH) above the prompt size, or shorten the prompt: the answer was to a prompt you did not send."
+      "body": "Ollama answered as if nothing was wrong. The system prompt and the new message alone did not fit, so it kept the first few tokens and the end and dropped about {lost} tokens from the start, the system prompt included. Nothing in the response says so; a prompt count far below what was sent is the only trace. Raise num_ctx (or OLLAMA_CONTEXT_LENGTH) above the prompt size, or shorten the prompt: the answer was to a prompt you did not send.",
+      "bodyNoSystem": "Ollama answered as if nothing was wrong. It kept the first few tokens and the end and dropped about {lost} tokens from the start. Nothing in the response says so; a prompt count far below what was sent is the only trace. Raise num_ctx (or OLLAMA_CONTEXT_LENGTH) above the prompt size, or shorten the prompt: the answer was to a prompt you did not send.",
+      "bodyHistory": "Ollama answered as if nothing was wrong. It dropped the oldest messages, about {lost} tokens, and kept the system prompt and the new message. The model answered without them and may make up what it no longer has. Nothing in the response says so; a prompt count far below what was sent is the only trace. Raise num_ctx (or OLLAMA_CONTEXT_LENGTH) above the conversation size, or shorten the conversation."
     },
     "prefix": {
       "title": "{client} re-reads about {tokens} tokens on every turn with {model}.",

@@ -14,7 +14,7 @@ import { fileURLToPath } from 'node:url'
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { z } from 'zod'
-import { computeFindings, summariseClients, cacheShare, renderFinding, reloaded, median, underReportedMemory, UNDER_REPORT_ISSUE } from './findings.mjs'
+import { computeFindings, summariseClients, cacheShare, renderFinding, reloaded, truncation, median, underReportedMemory, UNDER_REPORT_ISSUE } from './findings.mjs'
 
 function packageVersion() {
   try {
@@ -135,7 +135,8 @@ export function createTools({ serverUrl, ollamaUrl, fetchImpl = fetch }) {
         const flags = []
         if (reloaded(t)) flags.push('reloaded')
         if (t.contextExceeded) flags.push('rejected: over context')
-        if (t.fit?.contextLength != null && t.prompt.tokens != null && t.prompt.tokens >= t.fit.contextLength && !t.contextExceeded) flags.push('cut to context')
+        const cut = truncation(t)
+        if (cut) flags.push(cut.mode === 'history' ? 'cut: oldest messages dropped' : 'cut: start dropped')
         if (t.error) flags.push(`error: ${t.error}`)
         lines.push(
           `${t.seq}  ${new Date(t.at).toISOString().slice(0, 19)}Z  ${t.client.label}  ${t.model}  ${t.prompt.tokens ?? '?'} tok` +

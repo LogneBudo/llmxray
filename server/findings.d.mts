@@ -33,9 +33,11 @@ export function underReportedMemory(reportedBytes: number | null | undefined, fi
 export function median(values: number[]): number | null
 /** True when the daemon (re)loaded the model for this turn; such a turn proves nothing about the prompt. */
 export function reloaded(t: LiveTurn): boolean
-/** The daemon reported exactly a context-full prompt while the prompt was clearly larger: it was cut silently. */
 /** The context one request can use: its own num_ctx, else the loaded figure (which is num_ctx times the parallel slots). */
 export function requestContext(t: LiveTurn): number | null
+/** How the daemon cut a prompt that did not fit: the oldest messages ('history') or the start ('start'). */
+export function truncation(t: LiveTurn): { mode: 'history' | 'start'; lost: number } | null
+/** True when the daemon cut the prompt silently, either way. */
 export function silentlyTruncated(t: LiveTurn): boolean
 /** Tokens a prompt most likely had, from its characters (about 3.5 per token plus template overhead). An estimate. */
 export function estimateTokens(t: LiveTurn): number

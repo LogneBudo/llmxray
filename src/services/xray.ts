@@ -9,7 +9,7 @@
  * from characters, and every consumer must say so: it is an estimate.
  */
 import type { LiveTurn } from '@/types/live'
-import { cacheShare, cacheFixSavingMs, silentlyTruncated, estimateTokens, requestContext, reloaded } from '@/services/live-findings'
+import { cacheShare, cacheFixSavingMs, truncation, estimateTokens, requestContext, reloaded } from '@/services/live-findings'
 
 export type XrayPart = 'system' | 'tools' | 'history' | 'message'
 export type XrayState = 'cached' | 'recomputed' | 'cut'
@@ -28,7 +28,7 @@ export type XrayNote =
   | { kind: 'reloaded'; loadMs: number }
   | { kind: 'break'; part: XrayPart; breakChar: number; breakTokens: number | null; costMs: number | null }
   | { kind: 'tools-added'; tools: number; toolTokens: number }
-  | { kind: 'cut'; lostTokens: number; context: number; systemLost: boolean; toolsLost: boolean }
+  | { kind: 'cut'; mode: 'history' | 'start'; lostTokens: number; context: number; systemLost: boolean; toolsLost: boolean }
 
 export interface XrayTurn {
   turn: LiveTurn
@@ -76,13 +76,18 @@ function cachedChars(t: LiveTurn, total: number): number {
   return Math.round(total * Math.min(1, share))
 }
 
-/** Characters cut from the start when the daemon truncated silently. */
-function cutChars(t: LiveTurn, total: number): number {
-  if (!silentlyTruncated(t)) return 0
-  const ctx = requestContext(t) ?? 0
+/**
+ * The character range the daemon cut silently: the oldest messages, right after the system prompt
+ * and tools, or the start of the prompt. Empty when nothing was cut.
+ */
+function cutRange(t: LiveTurn, total: number): { from: number; to: number; mode: 'history' | 'start' } | null {
+  const cut = truncation(t)
+  if (!cut) return null
   const est = estimateTokens(t)
-  if (!ctx || est <= ctx) return 0
-  return Math.min(total, Math.round(total * ((est - ctx) / est)))
+  const lostChars = Math.min(total, Math.round(total * (cut.lost / est)))
+  if (cut.mode === 'start') return { from: 0, to: lostChars, mode: 'start' }
+  const from = t.anatomy.systemChars + t.anatomy.toolsChars
+  return { from, to: Math.min(from + t.anatomy.historyChars, from + lostChars), mode: 'history' }
 }
 
 export function xrayTurn(t: LiveTurn, previous: LiveTurn | null): XrayTurn {
@@ -91,8 +96,8 @@ export function xrayTurn(t: LiveTurn, previous: LiveTurn | null): XrayTurn {
   const tokens = t.prompt.tokens
   const perChar = tokens != null && total > 0 ? tokens / total : 0
 
-  const cut = cutChars(t, total)
-  const cached = cut > 0 ? 0 : cachedChars(t, total)
+  const cut = cutRange(t, total)
+  const cached = cut ? 0 : cachedChars(t, total)
 
   // Walk the parts in canonical order and split each at the state boundaries.
   const segments: XraySegment[] = []
@@ -101,13 +106,13 @@ export function xrayTurn(t: LiveTurn, previous: LiveTurn | null): XrayTurn {
     const len = chars[part]
     if (len <= 0) continue
     const boundaries = [pos, pos + len]
-    for (const b of [cut, cached]) if (b > pos && b < pos + len) boundaries.push(b)
+    for (const b of cut ? [cut.from, cut.to] : [cached]) if (b > pos && b < pos + len) boundaries.push(b)
     boundaries.sort((a, b) => a - b)
     for (let i = 0; i < boundaries.length - 1; i++) {
       const a = boundaries[i]!
       const z = boundaries[i + 1]!
       if (z <= a) continue
-      const state: XrayState = a < cut ? 'cut' : a < cached ? 'cached' : 'recomputed'
+      const state: XrayState = cut && a >= cut.from && a < cut.to ? 'cut' : a < cached ? 'cached' : 'recomputed'
       segments.push({ part, state, chars: z - a, tokens: Math.round((z - a) * perChar) })
     }
     pos += len
@@ -127,16 +132,22 @@ function partAt(t: LiveTurn, charPos: number): XrayPart {
   return 'message'
 }
 
-function noteFor(t: LiveTurn, previous: LiveTurn | null, cut: number, total: number, perChar: number): XrayNote | null {
-  if (cut > 0) {
-    const ctx = requestContext(t) ?? 0
+function noteFor(
+  t: LiveTurn,
+  previous: LiveTurn | null,
+  cut: { from: number; to: number; mode: 'history' | 'start' } | null,
+  total: number,
+  perChar: number,
+): XrayNote | null {
+  if (cut && cut.to > cut.from) {
     const chars = partChars(t)
     return {
       kind: 'cut',
-      lostTokens: Math.round(estimateTokens(t) - ctx),
-      context: ctx,
-      systemLost: chars.system > 0 && cut >= chars.system,
-      toolsLost: chars.tools > 0 && cut >= chars.system + chars.tools,
+      mode: cut.mode,
+      lostTokens: truncation(t)?.lost ?? 0,
+      context: requestContext(t) ?? 0,
+      systemLost: chars.system > 0 && cut.from < chars.system,
+      toolsLost: chars.tools > 0 && cut.from < chars.system + chars.tools && cut.to > chars.system,
     }
   }
   if (!previous) return { kind: 'first' }

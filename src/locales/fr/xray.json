@@ -32,6 +32,7 @@
     "breakCost": "Cette relecture a coûté environ {seconds} s qu'une invite stable aurait évitées (une estimation).",
     "toolsAdded": "Des outils ont été activés : {tools} schémas, environ {tokens} tokens, figurent désormais dans chaque invite. Ils restent en mémoire à partir d'ici, mais ils occupent de la place dans le contexte.",
     "cut": "L'invite a dépassé le contexte de {context} tokens. Le démon a gardé les premiers tokens et la fin, et a supprimé sans rien dire environ {lost} tokens du début. Le modèle a répondu sans eux. Augmentez num_ctx ou raccourcissez la conversation.",
+    "cutHistory": "La conversation a dépassé le contexte de {context} tokens. Le démon a supprimé sans rien dire les messages les plus anciens, environ {lost} tokens, et a gardé l'invite système et le nouveau message. Le modèle a répondu sans eux et peut inventer ce qu'il n'a plus. Augmentez num_ctx ou raccourcissez la conversation.",
     "cutSystem": "L'invite système faisait partie de ce qui a été supprimé.",
     "cutTools": "Les schémas d'outils faisaient partie de ce qui a été supprimé : le modèle ne pouvait pas les appeler."
   },

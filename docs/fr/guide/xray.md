@@ -13,7 +13,8 @@ Trois choses tournent mal avec une invite sur un modèle local, et aucune n'est 
 
 - L'invite cesse de correspondre au tour précédent quelque part vers le début, si bien que le modèle relit tout ce qui suit. Un horodatage dans l'invite système fait cela à chaque tour.
 - Des schémas d'outils sont activés et prennent dès lors une part fixe de chaque invite.
-- L'invite dépasse le contexte : Ollama garde les premiers tokens et la fin, supprime le milieu, et répond comme si de rien n'était. L'invite système fait généralement partie de ce qui a été supprimé.
+- La conversation dépasse le contexte : Ollama supprime les messages les plus anciens, garde l'invite système et le nouveau message, et répond comme si de rien n'était. Le modèle peut inventer ce qu'il n'a plus.
+- L'invite système et le nouveau message sont trop longs à eux seuls : Ollama garde les premiers tokens et la fin, supprime le début, invite système comprise, et répond quand même.
 
 La radiographie montre les trois sous forme d'image de l'invite elle-même.
 

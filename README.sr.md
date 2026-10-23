@@ -85,7 +85,7 @@ Podrazumevano, oba porta odgovaraju samo ovoj mašini, jer Live dnevnik čuva on
 
 ### Rendgen prompta: sam prompt, nacrtan u razmeri
 
-Svaki korak koji je vaš alat poslao, kao traka. Boja pokazuje šta je bio svaki deo prompta: sistemski prompt, šeme alata, raniji koraci, nova poruka. Svetlina pokazuje šta mu se desilo: bledo je već bilo u memoriji modela i nije koštalo ništa, jarko je moralo ponovo da se pročita, prugasto je demon odsekao i nikada nije viđeno. Složite korake jednog razgovora i vidite kako keš raste, korak u kom ga je vremenska oznaka u sistemskom promptu ispraznila, i korak u kom je prompt prerastao kontekst pa je Ollama tiho odbacio početak, sistemski prompt uključen, i ipak odgovorio. Kliknite na deo i zahtev se otvara na tom mestu u tekstu.
+Svaki korak koji je vaš alat poslao, kao traka. Boja pokazuje šta je bio svaki deo prompta: sistemski prompt, šeme alata, raniji koraci, nova poruka. Svetlina pokazuje šta mu se desilo: bledo je već bilo u memoriji modela i nije koštalo ništa, jarko je moralo ponovo da se pročita, prugasto je demon odsekao i nikada nije viđeno. Složite korake jednog razgovora i vidite kako keš raste, korak u kom ga je vremenska oznaka u sistemskom promptu ispraznila, i korak u kom je razgovor prerastao kontekst pa je Ollama tiho odbacio najstarije poruke i ipak odgovorio. Kada je sam sistemski prompt predugačak, odbacuje se njegov početak. Kliknite na deo i zahtev se otvara na tom mestu u tekstu.
 
 ![Rendgen prompta: svaki korak pravog agentskog izvršavanja nacrtan u razmeri, keširani delovi bledi, ponovo računati jarki](https://raw.githubusercontent.com/LogneBudo/llmxray/master/docs/public/screenshots/xray.png)
 

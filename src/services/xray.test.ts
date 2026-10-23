@@ -73,6 +73,17 @@ describe('xrayTurn', () => {
     expect((x.note as { lostTokens: number }).lostTokens).toBeGreaterThan(2000)
   })
 
+  it('marks the oldest messages as cut, not the system prompt, when a chat outgrew the context', () => {
+    // Recorded 2026-10-23: num_ctx 2048, read 1982 of about 3240 tokens; system and new message kept.
+    const t = turn({ tokens: 1982, sys: 5064, hist: 6174, msg: 40 })
+    t.prompt.contextRequested = 2048
+    const x = xrayTurn(t, null)
+    expect(x.segments[0]).toMatchObject({ part: 'system', state: 'recomputed', chars: 5064 })
+    expect(x.segments.find((s) => s.part === 'history' && s.state === 'cut')).toBeTruthy()
+    expect(x.segments.find((s) => s.part === 'message')).toMatchObject({ state: 'recomputed' })
+    expect(x.note).toMatchObject({ kind: 'cut', mode: 'history', context: 2048, systemLost: false })
+  })
+
   it('notes the turn where tools first appeared and a turn where the model was reloaded', () => {
     const prev = turn({ tokens: 500 })
     const withTools = turn({ tokens: 1700, cached: 400, tools: 4800, prefix: { breakChar: 400, breakShare: 0.08, breakTokensEst: 400, identical: false } })

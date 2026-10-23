@@ -32,6 +32,7 @@
     "breakCost": "That reading cost about {seconds} s that a stable prompt would have skipped (an estimate).",
     "toolsAdded": "Tools were switched on: {tools} schemas, about {tokens} tokens, now sit in every prompt. They are kept in memory from here on, but they take room in the context.",
     "cut": "The prompt outgrew the {context}-token context. The daemon kept the first few tokens and the end and silently dropped about {lost} tokens from the start. The model answered without them. Raise num_ctx or shorten the conversation.",
+    "cutHistory": "The conversation outgrew the {context}-token context. The daemon silently dropped the oldest messages, about {lost} tokens, and kept the system prompt and the new message. The model answered without them and may make up what it no longer has. Raise num_ctx or shorten the conversation.",
     "cutSystem": "The system prompt was among what was dropped.",
     "cutTools": "The tool schemas were among what was dropped: the model could not call them."
   },

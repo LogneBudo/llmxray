@@ -1,4 +1,4 @@
-import { computeFindings, summariseClients, cacheFixSavingMs, median } from './live-findings'
+import { computeFindings, summariseClients, cacheFixSavingMs, median, renderFinding } from './live-findings'
 import type { LiveTurn } from '@/types/live'
 
 let seq = 0
@@ -189,6 +189,39 @@ describe('silent truncation', () => {
     expect(f!.params.context).toBe(1024)
     expect(Number(f!.params.lost)).toBeGreaterThan(3_000)
     expect(f!.params.systemChars).toBe(80)
+  })
+
+  it('fires when a chat outgrew the context and the oldest messages were dropped, system prompt kept', () => {
+    // Recorded 2026-10-23 on Ollama 0.40.6: num_ctx 2048, 11 278 characters in 14 messages, HTTP 200,
+    // prompt_eval_count 1982. The daemon dropped old messages whole; the runner cut nothing.
+    const t = turn({ tokens: 1982, cached: 0 })
+    t.prompt.contextRequested = 2048
+    t.anatomy = { systemChars: 5064, toolsChars: 0, historyChars: 6174, messageChars: 40, totalChars: 11_278, messages: 14 }
+    const f = computeFindings([t]).find((x) => x.kind === 'truncated')
+    expect(f).toBeTruthy()
+    expect(f!.params.mode).toBe('history')
+    expect(Number(f!.params.lost)).toBeGreaterThan(1000)
+    expect(renderFinding(f!)).toContain('dropped the oldest messages')
+    expect(renderFinding(f!)).not.toContain('system prompt included')
+  })
+
+  it('cuts the start when the system prompt and message alone do not fit, even below the context', () => {
+    // Measured 2026-10-24 on Ollama 0.40.6: num_ctx 2048, a 2417-token system prompt, read 1026.
+    const t = turn({ tokens: 1026, cached: 0 })
+    t.prompt.contextRequested = 2048
+    t.anatomy = { systemChars: 10_900, toolsChars: 0, historyChars: 0, messageChars: 30, totalChars: 10_930, messages: 2 }
+    const f = computeFindings([t]).find((x) => x.kind === 'truncated')
+    expect(f).toBeTruthy()
+    expect(f!.params.mode).toBe('start')
+    expect(renderFinding(f!)).toContain('system prompt included')
+  })
+
+  it('does not fire on a prose prompt just under the context, where characters overstate tokens', () => {
+    // 4.4 characters per token is ordinary English: 8 800 characters is about 2000 tokens, read in full.
+    const t = turn({ tokens: 2000, cached: 0 })
+    t.prompt.contextRequested = 2048
+    t.anatomy = { systemChars: 400, toolsChars: 0, historyChars: 8000, messageChars: 400, totalChars: 8800, messages: 9 }
+    expect(computeFindings([t]).find((x) => x.kind === 'truncated')).toBeUndefined()
   })
 
   it('does not fire on a prompt that merely fills the context, nor on a rejected one', () => {

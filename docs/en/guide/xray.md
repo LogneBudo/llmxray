@@ -13,7 +13,8 @@ Three things go wrong with a prompt on a local model, and none of them is visibl
 
 - The prompt stops matching the previous turn somewhere near the start, so the model reads everything after that point again. A timestamp in the system prompt does this on every turn.
 - Tool schemas get switched on and take a fixed slice of every prompt from then on.
-- The prompt outgrows the context, and Ollama keeps the first few tokens and the end, drops the middle, and answers as if nothing was wrong. The system prompt is usually in what was dropped.
+- The conversation outgrows the context, and Ollama drops the oldest messages, keeps the system prompt and the new message, and answers as if nothing was wrong. The model may make up what it no longer has.
+- The system prompt and the new message are too long on their own, and Ollama keeps the first few tokens and the end, drops the start, system prompt included, and answers anyway.
 
 The X-ray shows all three as a picture of the prompt itself.
 

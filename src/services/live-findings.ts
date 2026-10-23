@@ -13,6 +13,7 @@ export {
   renderFinding,
   reloaded,
   silentlyTruncated,
+  truncation,
   estimateTokens,
   requestContext,
   underReportedMemory,

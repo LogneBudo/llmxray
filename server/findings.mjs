@@ -73,7 +73,6 @@ export function estimateTokens(t) {
   return t.anatomy.totalChars / 3.5 + 20
 }
 
-/** The daemon answered, reported exactly a context-full prompt, and the prompt was clearly larger than that. */
 /**
  * The context one request can use. The request's own num_ctx when it set one; otherwise the
  * loaded figure, which /api/ps reports as num_ctx times the parallel slots (measured 2026-10-16:
@@ -83,11 +82,32 @@ export function requestContext(t) {
   return t.prompt.contextRequested ?? t.fit?.contextLength ?? null
 }
 
-export function silentlyTruncated(t) {
+/**
+ * How the daemon cut a prompt that did not fit, or null when it did not. Measured on Ollama 0.40.6
+ * (2026-10-24, num_ctx 2048, HTTP 200 both times, nothing in the response):
+ * - 'history': a chat that outgrew the context. Ollama drops the OLDEST MESSAGES whole and keeps the
+ *   system prompt and the new message; the runner then sees less than the context and cuts nothing.
+ * - 'start': the system prompt, tools and new message do not fit even alone. The runner keeps the
+ *   first 4 tokens and the end (to about half the context) and drops the start, system prompt included.
+ * The signature is a prompt whose characters say it was far larger than the count the daemon read.
+ * Characters overstate tokens for plain prose by up to about a third, so a count at the context
+ * ceiling needs a 15% margin and a count below it needs 50%.
+ */
+export function truncation(t) {
   const ctx = requestContext(t)
-  if (!ctx || t.prompt.tokens == null || t.contextExceeded || t.error) return false
-  if (t.prompt.tokens < ctx - 8) return false
-  return estimateTokens(t) > ctx * 1.15
+  if (!ctx || t.prompt.tokens == null || t.contextExceeded || t.error) return null
+  const est = estimateTokens(t)
+  const atCeiling = t.prompt.tokens >= ctx - 8 && est > ctx * 1.15
+  const farBelow = est > ctx * 1.5 && t.prompt.tokens < est * 0.8
+  if (!atCeiling && !farBelow) return null
+  const a = t.anatomy
+  const essentials = (a.systemChars + a.toolsChars + a.messageChars) / 3.5 + 20
+  const mode = a.historyChars > 0 && essentials <= ctx ? 'history' : 'start'
+  return { mode, lost: Math.max(0, Math.round(est - t.prompt.tokens)) }
+}
+
+export function silentlyTruncated(t) {
+  return truncation(t) != null
 }
 
 function groupBy(items, key) {
@@ -123,13 +143,11 @@ export function computeFindings(turns) {
     })
   }
 
-  // 0b. Prompts the daemon silently cut to fit the loaded context. Measured on Ollama 0.40.4:
-  //     HTTP 200, prompt_eval_count equal to the context (plus a few), only the first handful of
-  //     tokens kept, the system prompt gone, no field in the response. The count at the ceiling
-  //     while the prompt's characters say it was far larger is the signature.
+  // 0b. Prompts the daemon silently cut to fit the loaded context: either the oldest messages
+  //     dropped or the start cut, see truncation().
   for (const [, group] of groupBy(turns.filter(silentlyTruncated), (t) => `${t.client.id}|${t.model}`)) {
     const latest = group[group.length - 1]
-    const est = estimateTokens(latest)
+    const cut = truncation(latest)
     findings.push({
       kind: 'truncated',
       severity: 'error',
@@ -138,8 +156,9 @@ export function computeFindings(turns) {
         client: latest.client.label,
         model: latest.model,
         context: requestContext(latest),
-        tokens: Math.round(est),
-        lost: Math.round(est - requestContext(latest)),
+        tokens: Math.round(estimateTokens(latest)),
+        lost: cut.lost,
+        mode: cut.mode,
         systemChars: latest.anatomy.systemChars,
         turns: group.length,
       },
@@ -310,9 +329,11 @@ export function renderFinding(f) {
     case 'truncated':
       return (
         `${p.client} sent about ${p.tokens}-token prompts to ${p.model}, loaded with a ${p.context}-token context, and the daemon answered as if nothing was wrong. ` +
-        `It kept the first few tokens and the end, and dropped about ${p.lost} tokens from the start${p.systemChars > 0 ? ', the system prompt included' : ''}. ` +
-        `Nothing in the response says so; the prompt count sitting exactly at the context size is the only trace. ` +
-        `${p.turns === 1 ? 'Seen on 1 turn' : `Seen on ${p.turns} turns`}. Raise num_ctx (or OLLAMA_CONTEXT_LENGTH) above the prompt size, or shorten the prompt; the answer you got was to a prompt you did not send.`
+        (p.mode === 'history'
+          ? `It dropped the oldest messages, about ${p.lost} tokens, and kept the system prompt and the new message; the model answered without them and may make up what it no longer has. `
+          : `It kept the first few tokens and the end, and dropped about ${p.lost} tokens from the start${p.systemChars > 0 ? ', the system prompt included' : ''}. `) +
+        `Nothing in the response says so; a prompt count far below what was sent is the only trace. ` +
+        `${p.turns === 1 ? 'Seen on 1 turn' : `Seen on ${p.turns} turns`}. Raise num_ctx (or OLLAMA_CONTEXT_LENGTH) above the prompt size, or shorten the ${p.mode === 'history' ? 'conversation' : 'prompt'}; the answer you got was to a prompt you did not send.`
       )
     case 'prefix':
       return (
