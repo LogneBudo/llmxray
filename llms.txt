@@ -1,6 +1,6 @@
 # LLMxRay
 
-> A free, local observatory for Ollama. It shows what Ollama silently does to the prompts your tools send: what was cached, what was read again, what the daemon cut to fit the context, which tool on the machine evicted which model, and how each model fits in video memory. Agents can query it about their own calls through a read-only MCP server. Everything runs on your machine: no account, no API key, nothing sent anywhere. Apache-2.0.
+> A free, local tool to observe and diagnose Ollama. It shows the prompts your tools send: what was cached, what was read again, what was cut to fit the context, which tool on the machine evicted which model, and how each model fits in video memory. Agents can query it about their own calls through a read-only MCP server. Everything runs on your machine: no account, no API key, nothing sent anywhere. Apache-2.0.
 
 ## Install
 
@@ -13,7 +13,7 @@
 
 ## This site
 
-- [Home](https://lognebudo.github.io/llmxray/): the recorded silent cut, cache break, shared GPU and agent cache waste, each drawn from real turns
+- [Home](https://lognebudo.github.io/llmxray/): a chat that outgrew the context, a cache break, a shared GPU and an agent that restarts at every step, each from real turns
 - [What it shows](https://lognebudo.github.io/llmxray/observer): Live, Prompt X-ray, Runs, Shared box, GPU map, Cache Lab
 - [For agents](https://lognebudo.github.io/llmxray/agents): the MCP server, the Agent Skill, the client header, OpenTelemetry export
 - The Lab: [Diagnostics](https://lognebudo.github.io/llmxray/diagnostics) (chat token by token, compare, benchmark), [Embeddings and RAG](https://lognebudo.github.io/llmxray/ai-intelligence), [Tool calls and Tool Workshop](https://lognebudo.github.io/llmxray/tool-workshop)
