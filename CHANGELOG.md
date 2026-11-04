@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.13] — 2026-11-04
+
+### Changed
+- Verified on Ollama 0.40.14 (November 2026). The prompt-cache fields are unchanged on all three protocols. The OpenAI `timings` prompt rate is still inflated on a cache hit ([ollama#18948](https://github.com/ollama/ollama/issues/18948)), and the llama.cpp runner still under-reports loaded memory ([ollama#19089](https://github.com/ollama/ollama/issues/19089)), so the GPU map keeps drawing the file size.
+
 ## [0.8.12] — 2026-10-24
 
 ### Fixed
